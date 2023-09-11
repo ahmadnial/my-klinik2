@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('fm_nm_medis');
             $table->string('fm_sip_medis');
             $table->string('fm_kadaluarsa_sip');
+            $table->string('fm_layanan');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -76,9 +76,10 @@
                         <div class="form-group col-sm-6">
                             <label for="">Layanan</label>
                             <select name="fs_jenis_kelamin" id="fr_layanan" class="form-control">
-                                <option value="Laki-laki">Layanan</option>
-                                <option value="Laki-laki">Laki-Laki</option>
-                                <option value="Perempuan">Perempuan</option>
+                                <option value="">--Select--</option>
+                                @foreach ($layanan as $lay)
+                                    <option value="{{ $lay->fm_kd_layanan }}">{{ $lay->fm_nm_layanan }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group col-sm-6">

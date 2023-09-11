@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\dataSosialCreate;
+use App\Models\mstr_layanan;
 use App\Models\registrasiCreate;
 use Illuminate\Support\Facades\DB;
 
@@ -41,7 +42,9 @@ class HomeController extends Controller
             $kd_reg = $temp;
         }
 
-        return view('Pages.registrasi', ['kd_reg' => $kd_reg]);
+        $layanan = mstr_layanan::all();
+
+        return view('Pages.registrasi', ['kd_reg' => $kd_reg], ['layanan' => $layanan]);
     }
 
 

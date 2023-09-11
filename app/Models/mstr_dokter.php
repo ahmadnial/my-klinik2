@@ -15,5 +15,6 @@ class mstr_dokter extends Model
         'fm_nm_medis',
         'fm_sip_medis',
         'fm_kadaluarsa_sip',
+        'fm_layanan',
     ];
 }

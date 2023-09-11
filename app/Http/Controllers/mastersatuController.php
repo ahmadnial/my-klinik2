@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\mstr_dokter;
 use Illuminate\Http\Request;
 use App\Models\mstr_layanan;
 use Dflydev\DotAccessData\Data;
@@ -55,7 +56,32 @@ class mastersatuController extends Controller
 
     public function medis()
     {
-        return view('pages.mstr1.mstr-medis');
+        $isview = mstr_dokter::all();
+        $isviewlayanan = mstr_layanan::all();
+
+        return view('pages.mstr1.mstr-medis', ['isview' => $isview], ['islayanan' => $isviewlayanan]);
+    }
+
+
+    public function DokterCreate(Request $request)
+    {
+        $request->validate([
+            'fm_kd_medis' => 'required',
+            'fm_nm_medis' => 'required',
+            'fm_sip_medis' => 'required',
+            'fm_kadaluarsa_sip' => 'required',
+            'fm_layanan' => 'required',
+        ]);
+
+        $data = mstr_dokter::create($request->all());
+
+        if ($data->save()) {
+            toast('Berhasil Tersimpan', 'success')->autoClose(5000);
+            return back();
+        } else {
+            toast('Gagal Tersimpan!', 'error')->autoClose(5000);
+            return back();
+        }
     }
 
 

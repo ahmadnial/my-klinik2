@@ -14,60 +14,61 @@
                     <table id="example2" class="table table-hover">
                         <thead class="">
                             <tr>
-                                <th>Kode Medis</th>
+                                {{-- <th>Kode Medis</th> --}}
                                 <th>Nama Medis</th>
                                 <th>SIP</th>
-                                <th>Aktif</th>
-                                <th>Habis</th>
+                                <th>Tgl Kadaluarsa SIP</th>
+                                <th>Layanan</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach ($isview as $tz) --}}
-                            <td id="kdlayananview"></td>
-                            <td id="namalayananview"></td>
-                            <td id="namalayananview"></td>
-                            <td id="namalayananview"></td>
-                            <td id="namalayananview"></td>
-                            <td><button class="btn btn-xs btn-success"
-                                    data-toggle="modal"data-target="#EditMedis">Edit</button>
-                                <button class="btn btn-xs btn-danger">Hapus</button>
-                            </td>
-                            <!-- The modal Create -->
-                            <div class="modal fade" id="EditMedis">
-                                <div class="modal-dialog modal-sm">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title">Edit Layanan</h4>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="form-group col-sm">
-                                                <label for="">Kode Layanan</label>
-                                                <input type="text" class="form-control" name="fm_kd_layanan"
-                                                    id="" readonly value="">
+                            @foreach ($isview as $tz)
+                                {{-- <td id="kdlayananview"></td> --}}
+                                <td id="">{{ $tz->fm_nm_medis }}</td>
+                                <td id="">{{ $tz->fm_sip_medis }}</td>
+                                <td id="">{{ $tz->fm_kadaluarsa_sip }}</td>
+                                <td id="">{{ $tz->fm_layanan }}</td>
+                                <td><button class="btn btn-xs btn-success"
+                                        data-toggle="modal"data-target="#EditMedis">Edit</button>
+                                    <button class="btn btn-xs btn-danger">Hapus</button>
+                                </td>
+                                <!-- The modal Create -->
+                                <div class="modal fade" id="EditMedis">
+                                    <div class="modal-dialog modal-sm">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Edit Layanan</h4>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
                                             </div>
-                                            <div class="form-group col-sm">
-                                                <label for="">Nama Layanan</label>
-                                                <input type="text" class="form-control" name="fm_nm_layanan"
-                                                    id="" placeholder="Nama Layanan">
+                                            <div class="modal-body">
+                                                <div class="form-group col-sm">
+                                                    <label for="">Kode Layanan</label>
+                                                    <input type="text" class="form-control" name="fm_kd_layanan"
+                                                        id="" readonly value="">
+                                                </div>
+                                                <div class="form-group col-sm">
+                                                    <label for="">Nama Layanan</label>
+                                                    <input type="text" class="form-control" name="fm_nm_layanan"
+                                                        id="" placeholder="Nama Layanan">
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            {{-- <button type="" class=""></button> --}}
-                                            <button type="button" id="edits" class="btn btn-success float-right"><i
-                                                    class="fa fa-save"></i>
-                                                &nbsp;
-                                                Save</button>
+                                            <div class="modal-footer">
+                                                {{-- <button type="" class=""></button> --}}
+                                                <button type="button" id="edits" class="btn btn-success float-right"><i
+                                                        class="fa fa-save"></i>
+                                                    &nbsp;
+                                                    Save</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            {{-- End Modal --}}
+                                {{-- End Modal --}}
                         </tbody>
-                        {{-- @endforeach --}}
+                        @endforeach
                     </table>
                 </div>
             </div>
@@ -104,6 +105,15 @@
                         <input type="date" class="form-control" name="fm_kadaluarsa_sip" id="fm_kadaluarsa_sip"
                             placeholder="">
                     </div>
+                    <div class="form-group col-sm">
+                        <label for="">Layanan</label>
+                        <select name="fm_layanan" id="fm_layanan" class="form-control">
+                            <option value="">--Select--</option>
+                            @foreach ($islayanan as $lay)
+                                <option value="{{ $lay->fm_kd_layanan }}">{{ $lay->fm_nm_layanan }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     {{-- <button type="" class=""></button> --}}
@@ -127,6 +137,7 @@
                 var fm_nm_medis = $('#fm_nm_medis').val();
                 var fm_sip_medis = $('#fm_sip_medis').val();
                 var fm_kadaluarsa_sip = $('#fm_kadaluarsa_sip').val();
+                var fm_layanan = $('#fm_layanan').val();
                 // alert(fm_nm_layanan);
                 if (fm_nm_medis != "") {
                     $.ajax({
@@ -141,6 +152,7 @@
                             fm_nm_medis: fm_nm_medis,
                             fm_sip_medis: fm_sip_medis,
                             fm_kadaluarsa_sip: fm_kadaluarsa_sip,
+                            fm_layanans: fm_layanans,
                         },
                         cache: false,
                         success: function(dataResult) {
