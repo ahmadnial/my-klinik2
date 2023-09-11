@@ -77,7 +77,7 @@ class HomeController extends Controller
     public function getLayananMedis(request $id_layanan)
     {
         // $true = 'LA1';
-        $islayananMedis = mstr_dokter::where('fm_layanan', $id_layanan->$id_layanan)->get();
+        $islayananMedis = mstr_dokter::where('fm_layanan', $id_layanan->fm_layanan)->get();
 
         // dd($islayananMedis);
         return response()->json($islayananMedis);

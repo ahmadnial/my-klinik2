@@ -84,9 +84,8 @@
                         </div>
                         <div class="form-group col-sm-6">
                             <label for="">Dokter</label>
-                            <select name="fs_jenis_kelamin" id="fr_dokter" class="form-control">
-                                <option value="Laki-laki">Dokter</option>
-                                <option value="Perempuan">Perempuan</option>
+                            <select name="fr_dokter" id="fr_dokter" class="form-control">
+
                             </select>
                         </div>
                         <div class="form-group col-sm-6">
@@ -181,7 +180,7 @@
         $(document).ready(function() {
             $('#fr_layanan').on('change', function() {
                 var id_layanan = $(this).val();
-                console.log(id_layanan);
+                // console.log(id_layanan);
                 if (id_layanan) {
                     $.ajax({
                         headers: {
@@ -194,14 +193,24 @@
                         },
                         dataType: 'json',
                         success: function(islayananMedis) {
-                            console.log(islayananMedis);
-
+                            // console.log(islayananMedis);
+                            if (islayananMedis) {
+                                $('#fr_dokter').emty();
+                                $('#fr_dokter').append('<option value="">--Select</option>');
+                                $.each(islayananMedis, function(key, fr_dokter) {
+                                    $('select[name="fr_dokter"]').append {
+                                        '<option value="' + fr_dokter.fm_kd_medis +
+                                            '">' + fr_dokter.fm_nm_medis +
+                                            '</option>'
+                                    };
+                                });
+                            }
                         }
-                    })
+                    });
                 } else {
 
                 }
-            });
+            })
         });
     </script>
 @endpush
