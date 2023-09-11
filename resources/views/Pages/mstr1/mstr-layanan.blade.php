@@ -1,21 +1,19 @@
 @extends('pages.master')
 
 @section('konten')
-    <div class="mb-4">
-        <button type="button" class="btn btn-success mb-4 pull-right" data-toggle="modal"
-            data-target="#TambahLayanan">Tambah</button>
-    </div>
-    {{-- <br>  --}}
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="box box-warning">
-                <div class="box-header">
-                    <h3 class="box-title">Master Layanan</h3>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body">
-                    <table id="table1" class="table table-bordered table-hover">
-                        <thead class="bg-success">
+    <section class="content">
+        <div class="card">
+            <div class="card-header">
+                <button type="submit" class="btn btn-success float-right" data-toggle="modal"
+                    data-target="#TambahLayanan">Tambah
+                    Layanan</button>
+                <h3 class="card-title">jsGrid</h3>
+            </div>
+
+            <div class="card-body">
+                <div id="">
+                    <table id="example2" class="table table-hover">
+                        <thead class="">
                             <tr>
                                 <th>Kode Layanan</th>
                                 <th>Layanan</th>
@@ -23,33 +21,70 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <td></td>
-                            <td></td>
-                            <td><button class="btn btn-xs btn-success">Edit</button>
-                                <button class="btn btn-xs btn-danger">Hapus</button>
-                            </td>
+                            @foreach ($isview as $tz)
+                                <td id="kdlayananview">{{ $tz->fm_kd_layanan }}</td>
+                                <td id="namalayananview">{{ $tz->fm_nm_layanan }}</td>
+                                <td><button class="btn btn-xs btn-success"
+                                        data-toggle="modal"data-target="#EditLayanan{{ $tz->fm_kd_layanan }}">Edit</button>
+                                    <button class="btn btn-xs btn-danger">Hapus</button>
+                                </td>
+                                <!-- The modal Create -->
+                                <div class="modal fade" id="EditLayanan{{ $tz->fm_kd_layanan }}">
+                                    <div class="modal-dialog modal-sm">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Edit Layanan</h4>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group col-sm">
+                                                    <label for="">Kode Layanan</label>
+                                                    <input type="text" class="form-control" name="fm_kd_layanan"
+                                                        id="" readonly value="">
+                                                </div>
+                                                <div class="form-group col-sm">
+                                                    <label for="">Nama Layanan</label>
+                                                    <input type="text" class="form-control" name="fm_nm_layanan"
+                                                        id="" placeholder="Nama Layanan">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                {{-- <button type="" class=""></button> --}}
+                                                <button type="button" id="edits" class="btn btn-success float-right"><i
+                                                        class="fa fa-save"></i>
+                                                    &nbsp;
+                                                    Save</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- End Modal --}}
                         </tbody>
+                        @endforeach
                     </table>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- The modal -->
-    <div class="modal fade" id="TambahLayanan" aria-labelledby="modalLabelLarge" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content modal-sm">
-
+    <!-- The modal Create -->
+    <div class="modal fade" id="TambahLayanan">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
                 <div class="modal-header">
+                    <h4 class="modal-title">Tambah Layanan</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title" id="modalLabelLarge">Tambah Layanan</h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group col-sm">
                         <label for="">Kode Layanan</label>
-                        <input type="text" class="form-control" name="fm_kd_layanan" readonly value="">
+                        <input type="text" class="form-control" name="fm_kd_layanan" id="fm_kd_layanan" readonly
+                            value="{{ $kd_layanan }}">
                     </div>
                     <div class="form-group col-sm">
                         <label for="">Nama Layanan</label>
@@ -58,13 +93,10 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    {{-- <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button> --}}
-                    {{-- <form> --}}
-                    {{-- <div class="col-sm-12"> --}}
-                    <button type="submit" id="buat" class="btn btn-success"><i class="fa fa-save"></i> &nbsp;
+                    {{-- <button type="" class=""></button> --}}
+                    <button type="button" id="buat" class="btn btn-success float-right"><i class="fa fa-save"></i>
+                        &nbsp;
                         Save</button>
-                    {{-- </div> --}}
-                    {{-- </form> --}}
                 </div>
             </div>
         </div>
@@ -78,10 +110,10 @@
         $(document).ready(function() {
 
             $('#buat').on('click', function() {
-                // alert('tes');
+                var fm_kd_layanan = $('#fm_kd_layanan').val();
                 var fm_nm_layanan = $('#fm_nm_layanan').val();
+                // alert(fm_nm_layanan);
                 if (fm_nm_layanan != "") {
-                    // alert(fm_nm_layanan);
                     $.ajax({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -89,14 +121,18 @@
                         url: "{{ route('add-mstr-layanan') }}",
                         type: "POST",
                         data: {
-                            type: 1,
+                            type: 2,
+                            fm_kd_layanan: fm_kd_layanan,
                             fm_nm_layanan: fm_nm_layanan,
                         },
                         cache: false,
                         success: function(dataResult) {
-
-                            $('.close').click();
-                            document.getElementById("fm_nm_layanan").value = "";
+                            // $('.close').click();
+                            // document.getElementById("fm_nm_layanan").value = "";
+                            window.location.replace("{{ url('mstr-layanan') }}")
+                            toastr.success('Saved');
+                            // view()
+                            // url = "{{ url('mstr-layanan') }}";
                         }
                     });
                 } else {
@@ -104,5 +140,33 @@
                 }
             });
         });
+
+        function view() {
+            $.ajax({
+                url: "{{ route('view-mstr-layanan') }}",
+                type: 'get',
+                success: function(isview) {
+                    console.log(isview);
+                    var kd_layanan = isview.fm_kd_layanan;
+                    // $("#namalayananview").val(kd_layanan);
+                }
+            });
+        }
+
+        // $(document).ready(function() {
+        //     $('#table1').DataTable({
+        //         processing: true,
+        //         serverside: true,
+        //         ajax: "{{ route('view-mstr-layanan') }}",
+        //         cloumns: [{
+        //             data: 'fm_kd_layanan',
+        //             name: 'fm_kd_layanan',
+
+        //         }, {
+        //             data: 'fm_nm_layanan',
+        //             name: 'fm_nm_layanan',
+        //         }]
+        //     })
+        // })
     </script>
 @endpush

@@ -42,6 +42,13 @@ Route::controller(mastersatuController::class)->group(function () {
 // MSTR SATU POST
 Route::controller(mastersatuController::class)->group(function () {
     Route::post('add-mstr-layanan', 'layananCreate')->name('add-mstr-layanan');
+    Route::post('add-mstr-medis', 'medis')->name('add-mstr-medis');
+    Route::get('mstr-jaminan', 'jaminan')->name('jaminan');
+});
+
+// VIEW AFTER POST
+Route::controller(mastersatuController::class)->group(function () {
+    Route::get('view-mstr-layanan', 'viewLayanan')->name('view-mstr-layanan');
     Route::get('mstr-medis', 'medis')->name('meids');
     Route::get('mstr-jaminan', 'jaminan')->name('jaminan');
 });

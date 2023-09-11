@@ -13,6 +13,7 @@ class mstr_layanan extends Model
 
     protected $table = 'mstr_layanan';
     protected $fillable = [
+        'fm_kd_layanan',
         'fm_nm_layanan',
     ];
 }

@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 return new class extends Migration
 {
@@ -11,9 +12,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mstr_layanan', function (Blueprint $table) {
-            $table->string('fm_kd_layanan')->unique()->autoIncrement();
-            $table->string('fm_nm_layanan');
+        Schema::create('mstr_dokter', function (Blueprint $table) {
+            $table->id();
+            $table->string('fm_kd_medis');
+            $table->string('fm_nm_medis');
+            $table->string('fm_sip_medis');
+            $table->string('fm_kadaluarsa_sip');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -24,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mstr_layanan');
+        Schema::dropIfExists('mstr_dokter');
     }
 };
