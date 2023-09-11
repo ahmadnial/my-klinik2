@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\dataSosialCreate;
+use App\Models\mstr_dokter;
 use App\Models\mstr_layanan;
 use App\Models\registrasiCreate;
 use Illuminate\Support\Facades\DB;
@@ -71,6 +72,15 @@ class HomeController extends Controller
 
         // return view('Pages.registrasi', ['isdata' => $isdata2]);
         return response()->json($isdata2);
+    }
+
+    public function getLayananMedis(request $id_layanan)
+    {
+        // $true = 'LA1';
+        $islayananMedis = mstr_dokter::where('fm_layanan', $id_layanan->$id_layanan)->get();
+
+        // dd($islayananMedis);
+        return response()->json($islayananMedis);
     }
 
     public function antrian()

@@ -75,7 +75,7 @@
                         <hr> <br>
                         <div class="form-group col-sm-6">
                             <label for="">Layanan</label>
-                            <select name="fs_jenis_kelamin" id="fr_layanan" class="form-control">
+                            <select name="fr_layanan" id="fr_layanan" class="form-control">
                                 <option value="">--Select--</option>
                                 @foreach ($layanan as $lay)
                                     <option value="{{ $lay->fm_kd_layanan }}">{{ $lay->fm_nm_layanan }}</option>
@@ -177,5 +177,31 @@
                 }
             })
         };
+
+        $(document).ready(function() {
+            $('#fr_layanan').on('change', function() {
+                var id_layanan = $(this).val();
+                console.log(id_layanan);
+                if (id_layanan) {
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: "{{ url('getLayananMedis') }}/" + id_layanan,
+                        type: 'get',
+                        data: {
+                            'fm_layanan': id_layanan
+                        },
+                        dataType: 'json',
+                        success: function(islayananMedis) {
+                            console.log(islayananMedis);
+
+                        }
+                    })
+                } else {
+
+                }
+            });
+        });
     </script>
 @endpush

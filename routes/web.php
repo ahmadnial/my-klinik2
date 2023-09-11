@@ -30,6 +30,7 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('registrasi', 'registrasi');
     Route::get('registrasiSearch', 'registrasiSearch')->name('registrasiSearch');
     Route::get('getDasos/{fs_mr}', 'getDasos')->name('getDasos');
+    Route::get('getLayananMedis/{id_layanan}', 'getLayananMedis')->name('getLayananMedis');
 });
 
 // MSTR SATU GET

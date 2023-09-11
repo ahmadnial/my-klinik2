@@ -369,11 +369,11 @@
 
     <!-- Bootstrap 4 -->
     <script src="{{ asset('src/plugins/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('src/dist/js/select2.min.js') }}"></script>
     <script src="{{ asset('src/dist/js/ajax.min.js') }}"></script>
     {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js') }}"></script> --}}
     <script src="{{ asset('src/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('src/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('src/dist/js/select2.min.js') }}"></script>
     <script src="{{ asset('src/plugins/jsgrid/jsgrid.min.js') }}"></script>
     {{-- <script src="{{ asset('srcplugins/jsgrid/demos/db.js') }}"></script> --}}
     <!-- ChartJS -->
