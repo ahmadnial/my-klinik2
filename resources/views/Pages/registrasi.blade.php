@@ -196,18 +196,19 @@
                             // console.log(islayananMedis);
                             if (islayananMedis) {
                                 $('#fr_dokter').emty();
-                                $('#fr_dokter').append('<option value="">--Select</option>');
-                                $.each(islayananMedis, function(key, fr_dokter) {
-                                    $('select[name="fr_dokter"]').append {
-                                        '<option value="' + fr_dokter.fm_kd_medis +
-                                            '">' + fr_dokter.fm_nm_medis +
-                                            '</option>'
-                                    };
-                                });
+                                $('#fr_dokter').append('<option value="">--Select--</option>');
+                                // $.each(islayananMedis, function(key, fr_dokter) {
+                                //     $('select[name="fr_dokter"]').append {
+                                //         '<option value="' + fr_dokter.fm_kd_medis +
+                                //             '">' + fr_dokter.fm_nm_medis +
+                                //             '</option>'
+                                //     };
+                                // });
                             }
                         }
                     });
                 } else {
+                    // $('#fr_dokter').append('<option value="">--Select--</option>');
 
                 }
             })

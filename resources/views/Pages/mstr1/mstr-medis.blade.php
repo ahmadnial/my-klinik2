@@ -152,7 +152,7 @@
                             fm_nm_medis: fm_nm_medis,
                             fm_sip_medis: fm_sip_medis,
                             fm_kadaluarsa_sip: fm_kadaluarsa_sip,
-                            fm_layanans: fm_layanans,
+                            fm_layanan: fm_layanan,
                         },
                         cache: false,
                         success: function(dataResult) {
