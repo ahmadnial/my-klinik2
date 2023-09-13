@@ -5,15 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\dataSosialCreate;
 use App\Models\mstr_dokter;
+use App\Models\mstr_jaminan;
 use App\Models\mstr_layanan;
 use App\Models\registrasiCreate;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         return view('Pages.index');
@@ -35,8 +33,9 @@ class HomeController extends Controller
     public function registrasi()
     {
         $cekreg = registrasiCreate::count();
+        $num = str_pad(0001, 6, 0, STR_PAD_LEFT);
         if ($cekreg == 0) {
-            $kd_reg = 'RG' . 100001;
+            $kd_reg = 'RG' . $num;
         } else {
             $continue = registrasiCreate::all()->last();
             $temp = 'RG' . '-' . (int)substr($continue->fr_kd_reg, -6) + 1;
@@ -44,8 +43,14 @@ class HomeController extends Controller
         }
 
         $layanan = mstr_layanan::all();
+        $jaminan = mstr_jaminan::all();
 
-        return view('Pages.registrasi', ['kd_reg' => $kd_reg], ['layanan' => $layanan]);
+        return view(
+            'Pages.registrasi',
+            ['kd_reg' => $kd_reg, 'jaminan' => $jaminan],
+            ['layanan' => $layanan],
+            // ['jaminan' => $jaminan]
+        );
     }
 
 

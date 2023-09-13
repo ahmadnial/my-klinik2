@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\mstr_dokter;
+use App\Models\mstr_jaminan;
 use Illuminate\Http\Request;
 use App\Models\mstr_layanan;
 use Dflydev\DotAccessData\Data;
@@ -13,12 +14,17 @@ class mastersatuController extends Controller
 
     public function layanan()
     {
+        $num = str_pad(001, 3, 0, STR_PAD_LEFT);
+
         $cekid = mstr_layanan::count();
         if ($cekid == 0) {
-            $kd_layanan =  'LA'  . 001;
+            $kd_layanan =  'LA'  . $num;
         } else {
             $continue = mstr_layanan::all()->last();
-            $temp = 'LA' . (int)substr($continue->fm_kd_layanan, -1) + 1;
+            $plus = 1;
+            // dd($continue);
+            $fix = substr($continue->fm_kd_layanan, -3);
+            $temp = 'LA' . '00' . str_pad($fix, 3, 0, STR_PAD_LEFT) + 1;
             $kd_layanan = $temp;
         }
 
@@ -87,6 +93,26 @@ class mastersatuController extends Controller
 
     public function jaminan()
     {
-        return view('pages.mstr1.mstr-jaminan');
+        $isjaminan = mstr_jaminan::all();
+
+        return view('pages.mstr1.mstr-jaminan', ['isjaminan' => $isjaminan]);
+    }
+
+    public function jaminanCreate(Request $request)
+    {
+        $request->validate([
+            'fm_kd_jaminan' => 'required',
+            'fm_nm_jaminan' => 'required',
+        ]);
+
+        $data = mstr_jaminan::create($request->all());
+
+        if ($data->save()) {
+            toast('Berhasil Tersimpan', 'success')->autoClose(5000);
+            return back();
+        } else {
+            toast('Gagal Tersimpan!', 'error')->autoClose(5000);
+            return back();
+        }
     }
 }

@@ -22,16 +22,23 @@ use App\Http\Controllers\registrasiController;
 
 Route::get('/', [HomeController::class, 'index']);
 
-Route::get('/data-sosial', [HomeController::class, 'dasos']);
 Route::get('/antrian', [HomeController::class, 'antrian']);
 
 // RM SEARCH
 Route::controller(HomeController::class)->group(function () {
     Route::get('registrasi', 'registrasi');
+    Route::get('data-sosial', 'dasos');
     Route::get('registrasiSearch', 'registrasiSearch')->name('registrasiSearch');
     Route::get('getDasos/{fs_mr}', 'getDasos')->name('getDasos');
     Route::get('getLayananMedis/{id_layanan}', 'getLayananMedis')->name('getLayananMedis');
 });
+
+// REG + DASOS CREATE
+Route::controller(registrasiController::class)->group(function () {
+    Route::post('create-dasos', 'store')->name('create-dasos');
+    Route::post('create-registrasi', 'registrasiCreate')->name('create-registrasi');
+});
+
 
 // MSTR SATU GET
 Route::controller(mastersatuController::class)->group(function () {
@@ -44,16 +51,14 @@ Route::controller(mastersatuController::class)->group(function () {
 Route::controller(mastersatuController::class)->group(function () {
     Route::post('add-mstr-layanan', 'layananCreate')->name('add-mstr-layanan');
     Route::post('add-mstr-medis', 'DokterCreate')->name('add-mstr-medis');
-    Route::get('mstr-jaminan', 'jaminan')->name('jaminan');
+    Route::post('add-mstr-jaminan', 'jaminanCreate')->name('add-mstr-jaminan');
 });
 
 // VIEW AFTER POST
 Route::controller(mastersatuController::class)->group(function () {
     Route::get('view-mstr-layanan', 'viewLayanan')->name('view-mstr-layanan');
-    Route::get('mstr-medis', 'medis')->name('meids');
-    Route::get('mstr-jaminan', 'jaminan')->name('jaminan');
+    Route::get('view-mstr-medis', 'medis')->name('medis');
+    Route::get('view-mstr-jaminan', 'jaminan')->name('view-mstr-jaminan');
 });
 
-Route::post('/create-dasos', [registrasiController::class, 'store']);
-
-Route::get('/registrasi', [HomeController::class, 'registrasi']);
+// Route::post('/create-dasos', [registrasiController::class, 'store']);

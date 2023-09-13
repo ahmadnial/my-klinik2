@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\dataSosialCreate;
+use App\Models\registrasiCreate;
 
 class registrasiController extends Controller
 {
@@ -30,6 +31,32 @@ class registrasiController extends Controller
         ]);
 
         $data = dataSosialCreate::create($request->all());
+
+        if ($data->save()) {
+            toast('Berhasil Tersimpan', 'success')->autoClose(5000);
+            return back();
+        } else {
+            toast('Gagal Tersimpan!', 'error')->autoClose(5000);
+            return back();
+        }
+    }
+
+    public function registrasiCreate(Request $request)
+    {
+        $request->validate([
+            'fr_kd_reg' => 'required',
+            'fr_mr' => 'required',
+            // 'fr_nama' => 'required',
+            'fr_tgl_lahir' => 'required',
+            'fr_jenis_kelamin' => 'required',
+            'fr_alamat' => 'required',
+            'fr_no_hp' => 'required',
+            'fr_layanan' => 'required',
+            'fr_dokter' => 'required',
+            'fr_jaminan' => 'required'
+        ]);
+
+        $data = registrasiCreate::create($request->all());
 
         if ($data->save()) {
             toast('Berhasil Tersimpan', 'success')->autoClose(5000);

@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('ta_registrasi', function (Blueprint $table) {
-            $table->bigInteger('fr_kd_reg');
+            $table->string('fr_kd_reg');
             $table->string('fr_mr');
             $table->string('fr_nama');
             $table->string('fr_tgl_lahir');
@@ -21,13 +21,13 @@ return new class extends Migration
             $table->string('fr_alamat');
             $table->string('fr_no_hp');
             $table->string('fr_layanan');
-            $table->string('fr_medis');
+            $table->string('fr_dokter');
             $table->string('fr_jaminan');
             $table->string('fr_bb');
             $table->string('fr_alergi');
             $table->string('fr_user')->nullable();
-            $table->timestamps();
             $table->softDeletes();
+            $table->timestamps();
         });
     }
 

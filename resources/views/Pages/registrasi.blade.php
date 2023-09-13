@@ -7,12 +7,12 @@
                 <button type="submit" class="btn btn-success float-right" data-toggle="modal"
                     data-target="#TambahPasien">Tambah
                     Pasien</button>
-                <h3 class="card-title">jsGrid</h3>
+                <h3 class="card-title">Registrasi Pasien</h3>
             </div>
 
             <div class="card-body">
                 <div id="">
-                    <table id="table1" class="table table-hover">
+                    <table id="example2" class="table table-hover">
                         <thead class="">
                             <tr>
                                 <th>Nama Pasien</th>
@@ -42,7 +42,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Large Modal</h4>
+                    <h4 class="modal-title">Registrasi Pasien</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -51,22 +51,23 @@
                     <div class="row">
                         <div class="form-group col-sm-6">
                             <label for="">Kode Registrasi</label>
-                            <input type="text" class="form-control" name="fr_kd_reg" readonly
+                            <input type="text" class="form-control" name="fr_kd_reg" id="fr_kd_reg" readonly
                                 value="{{ $kd_reg }}">
                         </div>
                         <div class="form-group col-sm-6">
                             <label for="">Nama Pasien/No. MR</label>
-                            <select class="form-control-pasien" id="search" style="width: 100%;" name="fr_nm_pasien"
+                            <select class="form-control-pasien" id="fr_mr" style="width: 100%;" name="fr_mr"
                                 onchange="getData()"></select>
                         </div>
                         <div class="form-group col-sm-6">
                             <label for="">Tanggal Lahir</label>
-                            <input type="date" class="form-control" name="fr_tgl_lahir"
+                            <input type="date" class="form-control" name="fr_tgl_lahir" id="fr_tgl_lahir"
                                 placeholder="Tanggal Lahir Pasien">
                         </div>
                         <div class="form-group col-sm-6">
                             <label for="">Jenis Kelamin</label>
-                            <select name="fs_jenis_kelamin" id="fr_jenis_kelamin" class="form-control">
+                            <select name="fr_jenis_kelamin" id="fr_jenis_kelamin" class="form-control">
+                                <option value="">--Select--</option>
                                 <option value="Laki-laki">Laki-Laki</option>
                                 <option value="Perempuan">Perempuan</option>
                             </select>
@@ -90,34 +91,39 @@
                         </div>
                         <div class="form-group col-sm-6">
                             <label for="">Jaminan</label>
-                            <select name="fs_jenis_kelamin" id="fr_jaminan" class="form-control">
-                                <option value="Laki-laki">Laki-Laki</option>
-                                <option value="Perempuan">Perempuan</option>
+                            <select name="fr_jaminan" id="fr_jaminan" class="form-control">
+                                <option value="">--Select--</option>
+                                @foreach ($jaminan as $jam)
+                                    <option value="{{ $jam->fm_kd_jaminan }}">{{ $jam->fm_nm_jaminan }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
                     <hr>
                     <div class="form-group col-sm-12">
                         <label for="">Berat Badan</label>
-                        <input type="text" class="form-control" name="fr_bb" placeholder="Nomor Telephone/WA Pasien">
+                        <input type="number" class="form-control" name="fr_bb" id="fr_bb"
+                            placeholder="Nomor Telephone/WA Pasien">
                     </div>
                     <div class="form-group col-sm-12">
                         <label for="">Alergi</label>
-                        <input type="text" class="form-control" name="fr_alergi" id="fr_alamat"
+                        <input type="text" class="form-control" name="fr_alergi" id="fr_alergi"
                             placeholder="Nomor Telephone/WA Pasien">
                     </div>
                     <div class="form-group col-sm-12">
                         <label for="">Alamat</label>
-                        <textarea type="date" class="form-control" name="">Alamat Lengkap Pasien</textarea>
+                        <textarea type="date" class="form-control" name="fr_alamat" id="fr_alamat"></textarea>
                     </div>
                     <div class="form-group col-sm-12">
                         <label for="">Nomor Telephone</label>
-                        <input type="text" class="form-control" name="fr_no_tlp" placeholder="Nomor Telephone/WA Pasien">
+                        <input type="text" class="form-control" name="fr_no_hp" id="fr_no_hp"
+                            placeholder="Nomor Telephone/WA Pasien">
                     </div>
                 </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="" data-dismiss="modal"></button>
-                    <button type="button" class="btn btn-success float-rights"><i class="fa fa-save"></i> &nbsp;
+                <div class="modal-footer">
+                    {{-- <button type="button" class="" data-dismiss="modal"></button> --}}
+                    <button type="submit" id="create" class="btn btn-success float-rights"><i
+                            class="fa fa-save"></i> &nbsp;
                         Save</button>
                 </div>
             </div>
@@ -127,10 +133,23 @@
 
 @push('scripts')
     <script>
-        // Ajax Search Registrasi
+        function autonumber() {
+            let id = "ABCD9991";
+
+            for (let i = 0; i < 100; i++) {
+                let strings = id.replace(/[0-9]/g, '');
+                let digits = (parseInt(id.replace(/[^0-9]/g, '')) + 1).toString();
+                if (digits.length < 4)
+                    digits = ("000" + digits).substr(-4);
+                id = strings + digits;
+                console.log(id);
+            }
+        }
+
+        // Ajax Search RM untuk Registrasi
         var path = "{{ route('registrasiSearch') }}";
 
-        $('#search').select2({
+        $('#fr_mr').select2({
             placeholder: 'Nama Pasien / no.MR',
             ajax: {
                 url: path,
@@ -152,8 +171,9 @@
             }
         });
 
+        // Call Hasil Search
         function getData() {
-            var fs_mr = $('#search').val();
+            var fs_mr = $('#fr_mr').val();
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -164,19 +184,18 @@
                     'fs_mr': fs_mr
                 },
                 success: function(isdata2) {
-                    var json = isdata2;
-                    obj = JSON.stringify(json);
-                    // var tz = object.value(obj);
-                    // for (var key in obj) {
-                    // Console logs all the values in the objArr Array:
-                    alert(obj)
-                    // console.log(obj);
-                    // }
-                    $("#fr_alamat").val(obj);
+                    // var json = isdata2;
+                    $.each(isdata2, function(key, datavalue) {
+                        $('#fr_alamat').val(datavalue.fs_alamat);
+                        $('#fr_no_hp').val(datavalue.fs_no_hp);
+                        $('#fr_tgl_lahir').val(datavalue.fs_tgl_lahir);
+                        $('#fr_jenis_kelamin').val(datavalue.fs_jenis_kelamin);
+                    })
                 }
             })
         };
 
+        // Dependent Select Layanan Medis
         $(document).ready(function() {
             $('#fr_layanan').on('change', function() {
                 var id_layanan = $(this).val();
@@ -194,24 +213,76 @@
                         dataType: 'json',
                         success: function(islayananMedis) {
                             // console.log(islayananMedis);
-                            if (islayananMedis) {
-                                $('#fr_dokter').emty();
-                                $('#fr_dokter').append('<option value="">--Select--</option>');
-                                // $.each(islayananMedis, function(key, fr_dokter) {
-                                //     $('select[name="fr_dokter"]').append {
-                                //         '<option value="' + fr_dokter.fm_kd_medis +
-                                //             '">' + fr_dokter.fm_nm_medis +
-                                //             '</option>'
-                                //     };
-                                // });
-                            }
+                            $('#fr_dokter').empty();
+                            $('#fr_dokter').append('<option value="">--Select--</option>');
+                            $.each(islayananMedis, function(key, value) {
+                                $('#fr_dokter').append('<option value="' + value
+                                    .fm_kd_medis +
+                                    '">' + value.fm_nm_medis +
+                                    '</option>');
+                            })
+                        }
+                    });
+                }
+            });
+
+        });
+
+        // Create Registrasi
+        $(document).ready(function() {
+
+            $('#create').on('click', function() {
+                var fr_kd_reg = $('#fr_kd_reg').val();
+                var fr_mr = $('#fr_mr').val();
+                var fr_nama = $('#fr_nama').val();
+                var fr_tgl_lahir = $('#fr_tgl_lahir').val();
+                var fr_jenis_kelamin = $('#fr_jenis_kelamin').val();
+                var fr_alamat = $('#fr_alamat').val();
+                var fr_no_hp = $('#fr_no_hp').val();
+                var fr_layanan = $('#fr_layanan').val();
+                var fr_dokter = $('#fr_dokter').val();
+                var fr_jaminan = $('#fr_jaminan').val();
+                var fr_bb = $('#fr_bb').val();
+                var fr_alergi = $('#fr_alergi').val();
+                var fr_user = $('#fr_user').val();
+                // alert(fm_nm_layanan);
+                if (fr_mr != "") {
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: "{{ route('create-registrasi') }}",
+                        type: "POST",
+                        data: {
+                            type: 2,
+                            fr_kd_reg: fr_kd_reg,
+                            fr_mr: fr_mr,
+                            fr_nama: fr_nama,
+                            fr_tgl_lahir: fr_tgl_lahir,
+                            fr_jenis_kelamin: fr_jenis_kelamin,
+                            fr_alamat: fr_alamat,
+                            fr_no_hp: fr_no_hp,
+                            fr_layanan: fr_layanan,
+                            fr_dokter: fr_dokter,
+                            fr_jaminan: fr_jaminan,
+                            fr_bb: fr_bb,
+                            fr_alergi: fr_alergi,
+                            fr_user: fr_user
+                        },
+                        cache: false,
+                        success: function(dataResult) {
+                            // $('.close').click();
+                            // document.getElementById("fm_nm_layanan").value = "";
+                            window.location.replace("{{ url('mstr-jaminan') }}")
+                            toastr.success('Saved');
+                            // view()
+                            // url = "{{ url('mstr-layanan') }}";
                         }
                     });
                 } else {
-                    // $('#fr_dokter').append('<option value="">--Select--</option>');
-
+                    alert('Please fill all the field !');
                 }
-            })
+            });
         });
     </script>
 @endpush
