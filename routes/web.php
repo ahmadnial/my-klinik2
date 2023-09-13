@@ -27,6 +27,7 @@ Route::get('/antrian', [HomeController::class, 'antrian']);
 // RM SEARCH
 Route::controller(HomeController::class)->group(function () {
     Route::get('registrasi', 'registrasi');
+    Route::get('registrasiView', 'registrasiView')->name('registrasiView');
     Route::get('data-sosial', 'dasos');
     Route::get('registrasiSearch', 'registrasiSearch')->name('registrasiSearch');
     Route::get('getDasos/{fs_mr}', 'getDasos')->name('getDasos');

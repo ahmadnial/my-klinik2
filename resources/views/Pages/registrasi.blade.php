@@ -273,7 +273,7 @@
                         success: function(dataResult) {
                             // $('.close').click();
                             // document.getElementById("fm_nm_layanan").value = "";
-                            window.location.replace("{{ url('mstr-jaminan') }}")
+                            window.location.replace("{{ url('registrasi') }}")
                             toastr.success('Saved');
                             // view()
                             // url = "{{ url('mstr-layanan') }}";

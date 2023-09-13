@@ -32,25 +32,32 @@ class HomeController extends Controller
 
     public function registrasi()
     {
-        $cekreg = registrasiCreate::count();
-        $num = str_pad(0001, 6, 0, STR_PAD_LEFT);
-        if ($cekreg == 0) {
-            $kd_reg = 'RG' . $num;
+        $num = str_pad(0001, 4, 0, STR_PAD_LEFT);
+        $cekid = registrasiCreate::count();
+        if ($cekid == 0) {
+            $kd_reg =  'RG'  . $num;
         } else {
             $continue = registrasiCreate::all()->last();
-            $temp = 'RG' . '-' . (int)substr($continue->fr_kd_reg, -6) + 1;
-            $kd_reg = $temp;
-        }
+            $de = substr($continue->fr_kd_reg, -3);
+            $kd_reg = 'RG' . str_pad(($de + 1), 4, '0', STR_PAD_LEFT);
+            // dd($kd_reg);
+        };
 
         $layanan = mstr_layanan::all();
         $jaminan = mstr_jaminan::all();
+        $isviewreg = registrasiCreate::all();
 
         return view(
             'Pages.registrasi',
-            ['kd_reg' => $kd_reg, 'jaminan' => $jaminan],
+            ['kd_reg' => $kd_reg, 'jaminan' => $jaminan, 'isviewreg' => $isviewreg],
             ['layanan' => $layanan],
             // ['jaminan' => $jaminan]
         );
+    }
+
+    public function registrasiView()
+    {
+        // $isviewreg = registrasiCreate::all();
     }
 
 
@@ -64,7 +71,6 @@ class HomeController extends Controller
                 ->get();
         }
         // dd($data);
-
         return response()->json($isdata);
     }
 

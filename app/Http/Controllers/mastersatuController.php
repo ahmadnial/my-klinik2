@@ -21,11 +21,9 @@ class mastersatuController extends Controller
             $kd_layanan =  'LA'  . $num;
         } else {
             $continue = mstr_layanan::all()->last();
-            $plus = 1;
-            // dd($continue);
-            $fix = substr($continue->fm_kd_layanan, -3);
-            $temp = 'LA' . '00' . str_pad($fix, 3, 0, STR_PAD_LEFT) + 1;
-            $kd_layanan = $temp;
+            $de = substr($continue->fm_kd_layanan, -3);
+            $kd_layanan = 'LA' . str_pad(($de + 1), 3, '0', STR_PAD_LEFT);
+            // dd($kd_layanan);
         }
 
         $isview = mstr_layanan::all();
