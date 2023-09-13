@@ -13,9 +13,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('ta_registrasi', function (Blueprint $table) {
-            $table->string('fr_kd_reg');
+            $table->string('fr_kd_reg')->unique();
             $table->string('fr_mr');
-            $table->string('fr_nama');
+            $table->string('fr_nama')->nullable();
             $table->string('fr_tgl_lahir');
             $table->string('fr_jenis_kelamin');
             $table->string('fr_alamat');

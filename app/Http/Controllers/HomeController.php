@@ -19,27 +19,32 @@ class HomeController extends Controller
 
     public function dasos()
     {
+        $num_mr = str_pad(000001, 6, 0, STR_PAD_LEFT);
         $cekid = dataSosialCreate::count();
         if ($cekid == 0) {
-            $no_mr = 100011;
+            $mr =  '2022'  . $num_mr;
         } else {
             $continue = dataSosialCreate::all()->last();
-            $temp = (int)substr($continue->fs_mr, -6) + 1;
-            $no_mr = $temp;
-        }
-        return view('Pages.data-sosial', ['no_mr' => $no_mr]);
+            $de = substr($continue->fs_mr, -3);
+            $mr = '2022' . str_pad(($de + 1), 6, '0', STR_PAD_LEFT);
+            // dd($kd_reg);
+        };
+
+        $isdatasosial = dataSosialCreate::all();
+
+        return view('Pages.data-sosial', ['mr' => $mr, 'isdatasosial' => $isdatasosial]);
     }
 
     public function registrasi()
     {
-        $num = str_pad(0001, 4, 0, STR_PAD_LEFT);
+        $num = str_pad(00001, 5, 0, STR_PAD_LEFT);
         $cekid = registrasiCreate::count();
         if ($cekid == 0) {
             $kd_reg =  'RG'  . $num;
         } else {
             $continue = registrasiCreate::all()->last();
             $de = substr($continue->fr_kd_reg, -3);
-            $kd_reg = 'RG' . str_pad(($de + 1), 4, '0', STR_PAD_LEFT);
+            $kd_reg = 'RG' . str_pad(($de + 1), 5, '0', STR_PAD_LEFT);
             // dd($kd_reg);
         };
 
@@ -49,15 +54,15 @@ class HomeController extends Controller
 
         return view(
             'Pages.registrasi',
-            ['kd_reg' => $kd_reg, 'jaminan' => $jaminan, 'isviewreg' => $isviewreg],
-            ['layanan' => $layanan],
-            // ['jaminan' => $jaminan]
+            ['kd_reg' => $kd_reg, 'jaminan' => $jaminan, 'layanan' => $layanan, 'isviewreg' => $isviewreg]
         );
     }
 
     public function registrasiView()
     {
         // $isviewreg = registrasiCreate::all();
+
+        // return response()->json($isviewreg);
     }
 
 

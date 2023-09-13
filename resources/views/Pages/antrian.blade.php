@@ -10,9 +10,9 @@
                     <h3 class="box-title">Antrian List</h3>
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body">
-                    <div class="box bo-solid">
-                        <div class="box-header bg-danger">
+                <div class="card-body">
+                    <div class="card bo-solid">
+                        <div class="card-header bg-danger">
                             nama: <br>
                             fasfa: <br>
                             asdasd: <br>

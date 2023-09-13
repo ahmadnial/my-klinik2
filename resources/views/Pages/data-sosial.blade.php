@@ -7,7 +7,7 @@
                 <button type="submit" class="btn btn-success float-right" data-toggle="modal"
                     data-target="#TambahPasien">Tambah
                     Pasien</button>
-                <h3 class="card-title">jsGrid</h3>
+                <h3 class="card-title">Data Sosial Pasien</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -15,23 +15,31 @@
                     <table id="example2" class="table table-hover">
                         <thead class="">
                             <tr>
-                                <th>No</th>
-                                <th>BED</th>
+                                <th>No.MR</th>
                                 <th>Nama</th>
-                                <th>Pasien ID</th>
-                                <th>DPJD</th>
-                                <th>Diet</th>
+                                <th>Tgl Lahir</th>
+                                <th>Jenis Kelamin</th>
+                                <th>Alamat</th>
+                                <th>No.Hp</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            @foreach ($isdatasosial as $item)
+                                <tr>
+                                    <td>{{ $item->fs_mr }}</td>
+                                    <td>{{ $item->fs_nama }}</td>
+                                    <td>{{ $item->fs_tgl_lahir }}</td>
+                                    <td>{{ $item->fs_jenis_kelamin }}</td>
+                                    <td>{{ $item->fs_alamat }}</td>
+                                    <td>{{ $item->fs_no_hp }}</td>
+                                    <td>
+                                        <button class="btn btn-xs btn-success"
+                                            data-toggle="modal"data-target="#Edit">Edit</button>
+                                        <button class="btn btn-xs btn-danger">Hapus</button>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -48,17 +56,17 @@
             <div class="modal-content">
 
                 <div class="modal-header">
+                    <h4 class="modal-title" id="modalLabelLarge">Data Pasien Baru</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title" id="modalLabelLarge">Data Pasien Baru</h4>
                 </div>
                 <form action="{{ url('/create-dasos') }}" method="post">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="">No. Rekam Medis</label>
-                            <input type="text" class="form-control" name="fs_mr" value="{{ $no_mr }}" readonly>
+                            <input type="text" class="form-control" name="fs_mr" value="{{ $mr }}" readonly>
                         </div>
                         <div class="form-group">
                             <label for="">Nama</label>

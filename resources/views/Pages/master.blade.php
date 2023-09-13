@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>AdminLTE 3 | Dashboard</title>
+    <title>Klinik Asla | Dev</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -282,8 +282,17 @@
                                 </li> --}}
                             </ul>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ url('antrian') }}" class="nav-link">
+                                <i class="nav-icon far fa-calendar-alt"></i>
+                                <p>
+                                    Antrian
+                                    <span class="badge badge-info right">2</span>
+                                </p>
+                            </a>
+                        </li>
 
-                        <li class="nav-header">EXAMPLES</li>
+                        <li class="nav-header">DATA MASTER</li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-bed"></i>
@@ -314,7 +323,7 @@
                             </ul>
                         </li>
 
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="pages/calendar.html" class="nav-link">
                                 <i class="nav-icon far fa-calendar-alt"></i>
                                 <p>
@@ -322,7 +331,7 @@
                                     <span class="badge badge-info right">2</span>
                                 </p>
                             </a>
-                        </li>
+                        </li> --}}
 
                     </ul>
                 </nav>

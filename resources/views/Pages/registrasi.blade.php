@@ -1,5 +1,21 @@
 @extends('pages.master')
-
+@php
+    function hitung_umur($tanggal_lahir)
+    {
+        $birthDate = new DateTime($tanggal_lahir);
+        $today = new DateTime('today');
+        if ($birthDate > $today) {
+            exit('0 tahun 0 bulan 0 hari');
+        }
+        $y = $today->diff($birthDate)->y;
+        $m = $today->diff($birthDate)->m;
+        $d = $today->diff($birthDate)->d;
+        return $y . ' tahun ' . $m . ' bulan ' . $d . ' hari';
+    }
+    
+    // echo hitung_umur('1980-12-01');
+    
+@endphp
 @section('konten')
     <section class="content">
         <div class="card">
@@ -11,25 +27,42 @@
             </div>
 
             <div class="card-body">
-                <div id="">
+                <div id="result" class="">
                     <table id="example2" class="table table-hover">
                         <thead class="">
                             <tr>
-                                <th>Nama Pasien</th>
                                 <th>Kode Registrasi</th>
+                                <th>No.MR</th>
+                                <th>Nama Pasien</th>
                                 <th>Layanan</th>
+                                <th>Dokter</th>
                                 <th>Umur</th>
                                 <th>BB</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+
+                        <tbody id="tb">
+                            @foreach ($isviewreg as $item)
+                                <tr>
+                                    <td>{{ $item->fr_kd_reg }}</td>
+                                    <td>{{ $item->fr_mr }}</td>
+                                    <td>{{ $item->fr_nama }}</td>
+                                    <td>{{ $item->fr_layanan }}</td>
+                                    <td>{{ $item->fr_dokter }}</td>
+                                    <td>
+                                        @php
+                                            echo hitung_umur($item->fr_tgl_lahir);
+                                        @endphp
+                                    </td>
+                                    <td>{{ $item->fr_bb }}Kg</td>
+                                    <td>
+                                        <button class="btn btn-xs btn-success"
+                                            data-toggle="modal"data-target="#Edit">Edit</button>
+                                        <button class="btn btn-xs btn-danger">Hapus</button>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -94,7 +127,7 @@
                             <select name="fr_jaminan" id="fr_jaminan" class="form-control">
                                 <option value="">--Select--</option>
                                 @foreach ($jaminan as $jam)
-                                    <option value="{{ $jam->fm_kd_jaminan }}">{{ $jam->fm_nm_jaminan }}</option>
+                                    <option value="{{ $jam->fm_nm_jaminan }}">{{ $jam->fm_nm_jaminan }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -228,6 +261,29 @@
 
         });
 
+        // View Registrasi
+        // $(document).ready(function() {
+        //     viewRegistrasi()
+        // });
+
+        // function viewRegistrasi() {
+        //     $.get("{{ url('registrasiView') }}", {}, function(isviewreg, status) {
+        //         // $.each(isviewreg, function(key, datavalue) {
+        //         var container = document.getElementById("result");
+        //         isviewreg.forEach(function(count) {
+        //             // console.log(count);
+        //             let tableBody = document.getElementById("tb");
+        //             tableBody.innerHTML += '<tr><td>' + count.fr_kd_reg +
+        //                 '</td><td>' +
+        //                 count.fr_mr + '</td><td>' +
+        //                 count.fr_nama + '</td><td>' +
+        //                 count.fr_layanan + '</td></tr>';
+        //         })
+        //         // container.innerHTML = '</table></div>'
+        //         // })
+        //     });
+        // }
+
         // Create Registrasi
         $(document).ready(function() {
 
@@ -271,9 +327,10 @@
                         },
                         cache: false,
                         success: function(dataResult) {
-                            // $('.close').click();
+                            $('.close').click();
                             // document.getElementById("fm_nm_layanan").value = "";
                             window.location.replace("{{ url('registrasi') }}")
+                            // viewRegistrasi()
                             toastr.success('Saved');
                             // view()
                             // url = "{{ url('mstr-layanan') }}";
