@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\masterFarmasiController;
 use App\Http\Controllers\mastersatuController;
 use App\Http\Controllers\registrasiController;
 use App\Http\Controllers\TindakanController;
@@ -70,4 +71,24 @@ Route::controller(TindakanController::class)->group(function () {
     // Route::get('view-mstr-jaminan', 'jaminan')->name('view-mstr-jaminan');
 });
 
+
+// VIEW MSTR FARMASI
+Route::controller(masterFarmasiController::class)->group(function () {
+    Route::get('mstr-kategori-produk', 'katProd')->name('mstr-kategori-produk');
+    Route::get('mstr-satuan', 'satuan')->name('mstr-satuan');
+    Route::get('mstr-lokasi-stock', 'lokStock')->name('mstr-lokasi-stock');
+    Route::get('mstr-jenis-obat', 'jenBat')->name('mstr-jenis-obat');
+    Route::get('mstr-supplier', 'supplier')->name('mstr-supplier');
+    Route::get('mstr-obat', 'obat')->name('mstr-Obat');
+});
+
+// CREATE MSTR FARMASI
+Route::controller(masterFarmasiController::class)->group(function () {
+    Route::post('add-mstr-kategori-produk', 'katProdCreate')->name('add-mstr-kategori-produk');
+    Route::get('mstr-satuan', 'satuan')->name('mstr-satuan');
+    Route::get('mstr-lokasi-stock', 'lokStock')->name('mstr-lokasi-stock');
+    Route::get('mstr-jenis-obat', 'jenBat')->name('mstr-jenis-obat');
+    Route::get('mstr-supplier', 'supplier')->name('mstr-supplier');
+    Route::get('mstr-obat', 'obat')->name('mstr-Obat');
+});
 // Route::post('/create-dasos', [registrasiController::class, 'store']);

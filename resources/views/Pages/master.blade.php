@@ -53,7 +53,7 @@
         </div> --}}
 
         <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-teal navbar-light">
+        <nav class="main-header navbar navbar-expand navbar-teal  navbar-light">
             <!-- Left navbar links -->
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -316,7 +316,7 @@
                             </a>
                         </li>
 
-                        <li class="nav-header">DATA MASTER</li>
+                        <li class="nav-header">DATA MASTER KLINIK</li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-bed"></i>
@@ -342,6 +342,55 @@
                                     <a href="{{ url('/mstr-jaminan') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Jaminan</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-header">DATA MASTER APOTEK</li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-bed"></i>
+                                <p>
+                                    Master Apotek
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('/mstr-kategori-produk') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Kategori Produk</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('/mstr-satuan') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Satuan</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('/mstr-lokasi-stok') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Lokasi Stok</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('/mstr-jenis-obat') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Jenis Obat</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('/mstr-obat') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Obat</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('/mstr-supplier') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Supplier</p>
                                     </a>
                                 </li>
                             </ul>
