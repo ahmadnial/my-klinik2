@@ -211,17 +211,17 @@
             <div class="sidebar">
                 <!-- Sidebar user panel (optional) -->
                 <!-- SidebarSearch Form -->
-                <div class="form-inline">
-                    {{-- <div class="input-group" data-widget="sidebar-search">
-                        <input class="form-control form-control-sidebar" type="search" placeholder="Search"
-                            aria-label="Search">
+                {{-- <div class="form-inline">
+                    <div class="input-group" data-widget="sidebar-search">
+                        <input class="form-control form-control-sidebar">
                         <div class="input-group-append">
                             <button class="btn btn-sidebar">
                                 <i class="fas fa-search fa-fw"></i>
                             </button>
+                            <br><br><br>
                         </div>
-                    </div> --}}
-                </div>
+                    </div>
+                </div> --}}
 
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
@@ -250,7 +250,8 @@
 
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-bed"></i>
+                                {{-- <i class="nav-icon fas fa-bed"></i> --}}
+                                <i class="nav-icon fa fa-light fa-notes-medical"></i>
                                 <p>
                                     Registrasi
                                     <i class="right fas fa-angle-left"></i>
@@ -289,6 +290,28 @@
                                 <p>
                                     Antrian
                                     <span class="badge badge-info right">2</span>
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ url('tindakan') }}" class="nav-link">
+                                {{-- <i class="nav-icon fa fa-syringe"></i> --}}
+                                <i class="nav-icon fa fa-regular fa-book-medical"></i>
+                                <p>
+                                    Assesment Awal
+                                    <span class="badge badge-info right"></span>
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ url('/tindakan-medis') }}" class="nav-link">
+                                {{-- <i class="nav-icon fa fa-syringe"></i> --}}
+                                <i class="nav-icon fa fa-stethoscope"></i>
+                                <p>
+                                    Tindakan Medis
+                                    <span class="badge badge-info right"></span>
                                 </p>
                             </a>
                         </li>

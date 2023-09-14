@@ -20,13 +20,14 @@
     <section class="content">
         <div class="card">
             <div class="card-header">
+                <h3 class="card-title">Registrasi Pasien</h3>
                 <button type="submit" class="btn btn-success float-right" data-toggle="modal"
                     data-target="#TambahPasien">Tambah
                     Pasien</button>
-                <h3 class="card-title">Registrasi Pasien</h3>
             </div>
 
             <div class="card-body">
+                <div class="button"></div>
                 <div id="result" class="">
                     <table id="example2" class="table table-hover">
                         <thead class="">

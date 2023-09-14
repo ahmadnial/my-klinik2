@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\mastersatuController;
 use App\Http\Controllers\registrasiController;
+use App\Http\Controllers\TindakanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +61,13 @@ Route::controller(mastersatuController::class)->group(function () {
     Route::get('view-mstr-layanan', 'viewLayanan')->name('view-mstr-layanan');
     Route::get('view-mstr-medis', 'medis')->name('medis');
     Route::get('view-mstr-jaminan', 'jaminan')->name('view-mstr-jaminan');
+});
+
+
+Route::controller(TindakanController::class)->group(function () {
+    Route::get('tindakan-medis', 'tindakanMedis')->name('tindakan-medis');
+    // Route::get('view-mstr-medis', 'medis')->name('medis');
+    // Route::get('view-mstr-jaminan', 'jaminan')->name('view-mstr-jaminan');
 });
 
 // Route::post('/create-dasos', [registrasiController::class, 'store']);
