@@ -85,10 +85,21 @@ Route::controller(masterFarmasiController::class)->group(function () {
 // CREATE MSTR FARMASI
 Route::controller(masterFarmasiController::class)->group(function () {
     Route::post('add-mstr-kategori-produk', 'katProdCreate')->name('add-mstr-kategori-produk');
-    Route::get('mstr-satuan', 'satuan')->name('mstr-satuan');
-    Route::get('mstr-lokasi-stock', 'lokStock')->name('mstr-lokasi-stock');
+    Route::post('add-mstr-satuan', 'satuanCreate')->name('add-mstr-satuan');
+    Route::post('add-mstr-lokasi-stock', 'lokstockCreate')->name('add-mstr-lokasi-stock');
     Route::get('mstr-jenis-obat', 'jenBat')->name('mstr-jenis-obat');
     Route::get('mstr-supplier', 'supplier')->name('mstr-supplier');
     Route::get('mstr-obat', 'obat')->name('mstr-Obat');
 });
-// Route::post('/create-dasos', [registrasiController::class, 'store']);
+
+// DELETE MSTR FARMASI
+Route::controller(masterFarmasiController::class)->group(function () {
+    Route::delete('destroy-mstr-kategori-produk/{id}', 'katProdCreate')->name('destroy-mstr-kategori-produk');
+    Route::delete('destroy-mstr-satuan/{id}', 'satuanDestroy')->name('destroy-mstr-satuan');
+    Route::delete('destroy-mstr-lokasi-stock/{id}', 'lokStockDestroy')->name('destroy-mstr-lokasi-stock');
+    Route::delete('destroy-mstr-jenis-obat/{id}', 'jenBat')->name('destroy-mstr-jenis-obat');
+    Route::delete('destroy-mstr-supplier/{id}', 'supplier')->name('destroy-mstr-supplier');
+    Route::delete('destroy-mstr-obat/{id}', 'obat')->name('destroy-mstr-Obat');
+    // Route::post('/create-dasos', [registrasiController::class, 'store']);
+});
+Route::delete('{id}/destroy', [UserController::class, 'destroy'])->name('destroy');

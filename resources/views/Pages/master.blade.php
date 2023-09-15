@@ -370,7 +370,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ url('/mstr-lokasi-stok') }}" class="nav-link">
+                                    <a href="{{ url('/mstr-lokasi-stock') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Lokasi Stok</p>
                                     </a>
