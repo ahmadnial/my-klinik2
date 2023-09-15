@@ -4,11 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class mstr_jenis_obat extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable, SoftDeletes;
 
-    private $table = 'mstr_jenis_obat';
-    private $fillable = ['fm_nm_jenis_obat'];
+    protected $table = 'mstr_jenis_obat';
+    protected $fillable = ['fm_nm_jenis_obat'];
 }

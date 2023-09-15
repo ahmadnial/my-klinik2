@@ -70,7 +70,7 @@
 
 
     @foreach ($lokstock as $tz)
-        <!-- The modal Create -->
+        <!-- The modal Edit -->
         <div class="modal fade" id="EditSatuan{{ $tz->id }}">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">

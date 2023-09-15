@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\mstr_jenis_obat;
 use App\Models\mstr_kategori_produk;
 use App\Models\mstr_lokasi_stock;
 use App\Models\mstr_satuan;
@@ -95,15 +96,48 @@ class masterFarmasiController extends Controller
     }
     // ============= LOKASI STOCK ============================================
 
+
+    // ============= JENIS OBAT ==============================================
+
     public function jenBat()
     {
-        return view('pages.mstr2.mstr-jenis-obat');
+        $jenbat = mstr_jenis_obat::all();
+
+        return view('pages.mstr2.mstr-jenis-obat', ['jenbat' => $jenbat]);
     }
+
+    public function jenbatCreate(Request $request)
+    {
+        $request->validate([
+            'fm_nm_jenis_obat' => 'required',
+        ]);
+
+        mstr_jenis_obat::create($request->all());
+    }
+
+    public function jenbatDestroy($id)
+    {
+        $data = mstr_jenis_obat::findOrFail($id);
+        $data->delete();
+
+        if ($data->save()) {
+            toastr()->success('Data Berhasil Terhapus');
+            return back();
+        } else {
+            toastr()->error('Gagal!');
+            return back();
+        }
+    }
+    // ============= JENIS OBAT ==============================================
+
+    // ============= SUPPLIER ================================================
 
     public function supplier()
     {
         return view('pages.mstr2.mstr-supplier');
     }
+
+    // ============= SUPPLIER ================================================
 
     public function obat()
     {
