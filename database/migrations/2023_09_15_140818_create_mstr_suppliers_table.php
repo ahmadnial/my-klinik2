@@ -12,7 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('mstr_supplier', function (Blueprint $table) {
-            $table->id();
+            $table->string('fm_kd_supplier');
+            $table->string('fm_nm_supplier');
+            $table->string('fm_email');
+            $table->string('fm_no_tlp');
+            $table->string('fm_alamat');
+            $table->string('fm_kota');
+            $table->string('fm_kd_pos');
+            $table->string('fm_npwp');
             $table->timestamps();
             $table->softDeletes();
         });

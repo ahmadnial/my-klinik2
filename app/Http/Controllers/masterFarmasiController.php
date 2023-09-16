@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\mstr_jenis_obat;
 use App\Models\mstr_kategori_produk;
 use App\Models\mstr_lokasi_stock;
+use App\Models\mstr_obat;
 use App\Models\mstr_satuan;
+use App\Models\mstr_supplier;
 use Illuminate\Http\Request;
 
 class masterFarmasiController extends Controller
@@ -134,13 +136,83 @@ class masterFarmasiController extends Controller
 
     public function supplier()
     {
-        return view('pages.mstr2.mstr-supplier');
+        $num = str_pad(001, 3, 0, STR_PAD_LEFT);
+        $cekid = mstr_supplier::count();
+        if ($cekid == 0) {
+            $kd_supplier =  'SP'  . $num;
+        } else {
+            $continue = mstr_supplier::all()->last();
+            $de = substr($continue->fm_kd_supplier, -3);
+            // dd($de);
+            $kd_supplier = 'SP' . str_pad(($de + 1), 3, '0', STR_PAD_LEFT);
+            // dd($kd_reg);
+        };
+
+        $supplier = mstr_supplier::all();
+
+        return view('pages.mstr2.mstr-supplier', ['supplier' => $supplier, 'kd_supplier' => $kd_supplier]);
+    }
+
+    public function supplierCreate(Request $request)
+    {
+        $request->validate([
+            'fm_kd_supplier' => 'required',
+            'fm_nm_supplier' => 'required',
+            // 'fm_email',
+            // 'fm_no_tlp',
+            // 'fm_alamat',
+            // 'fm_kota',
+            // 'fm_kd_pos',
+            // 'fm_npwp'
+        ]);
+
+        mstr_supplier::create($request->all());
+    }
+
+    public function supplierDestroy($id)
+    {
+        $data = mstr_supplier::findOrFail($id);
+        $data->delete();
+
+        if ($data->save()) {
+            toastr()->success('Data Berhasil Terhapus');
+            return back();
+        } else {
+            toastr()->error('Gagal!');
+            return back();
+        }
     }
 
     // ============= SUPPLIER ================================================
 
     public function obat()
     {
-        return view('pages.mstr2.mstr-obat');
+        $num = str_pad(00001, 5, 0, STR_PAD_LEFT);
+        $cekid = mstr_supplier::count();
+        if ($cekid == 0) {
+            $kd_obat =  'TB'  . $num;
+        } else {
+            $continue = mstr_supplier::all()->last();
+            $de = substr($continue->fm_kd_supplier, -3);
+            // dd($de);
+            $kd_obat = 'TB' . str_pad(($de + 1), 5, '0', STR_PAD_LEFT);
+            // dd($kd_reg);
+        };
+        $supplier = mstr_supplier::all();
+        $kategori = mstr_kategori_produk::all();
+        $satuanBeli = mstr_satuan::all();
+
+        return view('pages.mstr2.mstr-obat', ['supplier' => $supplier, 'kategori' => $kategori, 'kd_obat' => $kd_obat, 'satuanBeli' => $satuanBeli]);
+    }
+
+    public function obatCreate(Request $request)
+    {
+        $request->validate([
+            'fm_kd_obat' => 'required',
+            'fm_nm_obat' => 'required',
+
+        ]);
+
+        mstr_obat::create($request->all());
     }
 }

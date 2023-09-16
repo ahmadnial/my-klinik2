@@ -89,7 +89,7 @@ Route::controller(masterFarmasiController::class)->group(function () {
     Route::post('add-mstr-lokasi-stock', 'lokstockCreate')->name('add-mstr-lokasi-stock');
     Route::post('add-mstr-jenis-obat', 'jenBatCreate')->name('add-mstr-jenis-obat');
     Route::post('add-mstr-supplier', 'supplierCreate')->name('add-mstr-supplier');
-    Route::post('add-mstr-obat', 'obat')->name('add-mstr-Obat');
+    Route::post('add-mstr-obat', 'obatCreate')->name('add-mstr-obat');
 });
 
 // DELETE MSTR FARMASI

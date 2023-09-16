@@ -8,20 +8,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-
-class mstr_supplier extends Model
+class mstr_obat extends Model
 {
     use HasFactory, Notifiable, SoftDeletes;
 
-    protected $table = 'mstr_supplier';
-    protected $fillable = [
-        'fm_kd_supplier',
-        'fm_nm_supplier',
-        'fm_email',
-        'fm_no_tlp',
-        'fm_alamat',
-        'fm_kota',
-        'fm_kd_pos',
-        'fm_npwp'
-    ];
+    protected $table = 'mstr_obat';
+    protected $fillable = ['fm_nm_lokasi_stock'];
 }
