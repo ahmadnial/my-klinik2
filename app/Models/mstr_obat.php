@@ -13,5 +13,20 @@ class mstr_obat extends Model
     use HasFactory, Notifiable, SoftDeletes;
 
     protected $table = 'mstr_obat';
-    protected $fillable = ['fm_nm_lokasi_stock'];
+    protected $fillable = [
+        'fm_kd_obat',
+        'fm_nm_obat',
+        'fm_kategori',
+        'fm_supplier',
+        'fm_satuan_pembelian',
+        'fm_isi_satuan_pembelian',
+        'fm_hrg_beli',
+        'fm_satuan_jual',
+        'fm_hrg_jual_non_resep',
+        'fm_hrg_jual_resep',
+        'fm_hrg_jual_nakes',
+        'isActive',
+        'isOpenPrice',
+        'user'
+    ];
 }

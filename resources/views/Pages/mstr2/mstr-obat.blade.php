@@ -21,27 +21,33 @@
                                 <th>Sat. Beli</th>
                                 <th>Sat. Jual</th>
                                 <th>Hrg Beli</th>
-                                <th>NPWP</th>
+                                <th>Hrg Jual Non-resep</th>
+                                <th>Hrg Jual Resep</th>
+                                <th>Hrg Jual Nakes</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach ($supplier as $tz)
-                                <td id="">{{ $tz->fm_kd_supplier }}</td>
-                                <td id="">{{ $tz->fm_nm_supplier }}</td>
-                                <td id="">{{ $tz->fm_email }}</td>
-                                <td id="">{{ $tz->fm_no_tlp }}</td>
-                                <td id="">{{ $tz->fm_alamat }}</td>
-                                <td id="">{{ $tz->fm_kota }}</td>
-                                <td id="">{{ $tz->fm_kd_pos }}</td>
-                                <td id="">{{ $tz->fm_npwp }}</td>
-                                <td><button class="btn btn-xs btn-success" data-toggle="modal"
-                                        data-target="#EditSupplier{{ $tz->fm_kd_supplier }}">Edit</button>
-                                    <button class="btn btn-xs btn-danger" data-toggle="modal"
-                                        data-target="#DeleteSupplier{{ $tz->fm_kd_supplier }}">Hapus</button>
-                                </td>
+                            <tr>
+                                @foreach ($obatView as $tz)
+                                    <td id="">{{ $tz->fm_kd_obat }}</td>
+                                    <td id="">{{ $tz->fm_nm_obat }}</td>
+                                    <td id="">{{ $tz->fm_nm_kategori_produk }}</td>
+                                    <td id="">{{ $tz->fm_supplier }}</td>
+                                    <td id="">{{ $tz->fm_satuan_pembelian }}</td>
+                                    <td id="">{{ $tz->fm_satuan_jual }}</td>
+                                    <td id="">{{ $tz->fm_hrg_beli }}</td>
+                                    <td id="">{{ $tz->fm_hrg_jual_non_resep }}</td>
+                                    <td id="">{{ $tz->fm_hrg_jual_resep }}</td>
+                                    <td id="">{{ $tz->fm_hrg_jual_nakes }}</td>
+                                    <td><button class="btn btn-xs btn-success" data-toggle="modal"
+                                            data-target="#EditSupplier{{ $tz->fm_kd_supplier }}">Edit</button>
+                                        <button class="btn btn-xs btn-danger" data-toggle="modal"
+                                            data-target="#DeleteSupplier{{ $tz->fm_kd_supplier }}">Hapus</button>
+                                    </td>
+                                @endforeach
+                            </tr>
                         </tbody>
-                        @endforeach --}}
                     </table>
                 </div>
             </div>
@@ -75,7 +81,8 @@
                             <select class="form-control-pasien" id="fm_kategori" style="width: 100%;" name="fm_kategori">
                                 <option value="">--Select--</option>
                                 @foreach ($kategori as $kt)
-                                    <option value="{{ $kt->fm_nm_supplier }}">{{ $kt->fm_nm_supplier }}</option>
+                                    <option value="{{ $kt->fm_nm_kategori_produk }}">{{ $kt->fm_nm_kategori_produk }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -120,8 +127,8 @@
                         </div>
                         <div class="form-group col-sm-6">
                             <label for="">Harga Beli Per xxx</label>
-                            <input type="text" class="form-control" name="fm_hrg_beli" id="fm_hrg_beli" value=""
-                                placeholder="Input Harga Beli">
+                            <input type="text" class="form-control" name="fm_hrg_beli" id="fm_hrg_beli"
+                                value="" placeholder="Input Harga Beli">
                         </div>
                     </div>
                     <hr>
@@ -142,6 +149,19 @@
                             <input type="text" class="form-control" name="fm_hrg_jual_nakes" id="fm_hrg_jual_nakes"
                                 value="" placeholder="Input Harga Jual Nakes">
                         </div>
+                        <div class="">
+                            <div class="custom-control custom-checkbox col-md ml-3">
+                                <input class="custom-control-input custom-control-input-danger" type="checkbox"
+                                    id="isActive" name="isActive" value="1">
+                                <label for="isActive" class="custom-control-label">Aktif</label>
+                            </div>
+                            <div class="custom-control custom-checkbox col-md ml-3">
+                                <input class="custom-control-input custom-control-input-danger" type="checkbox"
+                                    id="isOpenPrice" name="isOpenPrice" value="1">
+                                <label for="isOpenPrice" class="custom-control-label">Open Price</label>
+                            </div>
+                        </div>
+                        <input type="hidden" id="user" name="user" value="tes">
                     </div>
                     <div class="modal-footer">
                         {{-- <button type="" class=""></button> --}}
@@ -243,6 +263,7 @@
                 $('#buat').on('click', function() {
                     var fm_kd_obat = $('#fm_kd_obat').val();
                     var fm_nm_obat = $('#fm_nm_obat').val();
+                    var fm_kategori = $('#fm_kategori').val();
                     var fm_supplier = $('#fm_supplier').val();
                     var fm_satuan_pembelian = $('#fm_satuan_pembelian').val();
                     var fm_isi_satuan_pembelian = $('#fm_isi_satuan_pembelian').val();
@@ -251,6 +272,9 @@
                     var fm_hrg_jual_non_resep = $('#fm_hrg_jual_non_resep').val();
                     var fm_hrg_jual_resep = $('#fm_hrg_jual_resep').val();
                     var fm_hrg_jual_nakes = $('#fm_hrg_jual_nakes').val();
+                    var isActive = $('#isActive').val();
+                    var isOpenPrice = $('#isOpenPrice').val();
+                    var user = $('#user').val();
                     if (fm_nm_obat != "") {
                         $.ajax({
                             headers: {
@@ -262,6 +286,7 @@
                                 type: 2,
                                 fm_kd_obat: fm_kd_obat,
                                 fm_nm_obat: fm_nm_obat,
+                                fm_kategori: fm_kategori,
                                 fm_supplier: fm_supplier,
                                 fm_satuan_pembelian: fm_satuan_pembelian,
                                 fm_isi_satuan_pembelian: fm_isi_satuan_pembelian,
@@ -269,7 +294,10 @@
                                 fm_satuan_jual: fm_satuan_jual,
                                 fm_hrg_jual_non_resep: fm_hrg_jual_non_resep,
                                 fm_hrg_jual_resep: fm_hrg_jual_resep,
-                                fm_hrg_jual_nakes: fm_hrg_jual_nakes
+                                fm_hrg_jual_nakes: fm_hrg_jual_nakes,
+                                isActive: isActive,
+                                isOpenPrice: isOpenPrice,
+                                user: user
                             },
                             cache: false,
                             success: function(dataResult) {

@@ -188,7 +188,7 @@ class masterFarmasiController extends Controller
     public function obat()
     {
         $num = str_pad(00001, 5, 0, STR_PAD_LEFT);
-        $cekid = mstr_supplier::count();
+        $cekid = mstr_obat::count();
         if ($cekid == 0) {
             $kd_obat =  'TB'  . $num;
         } else {
@@ -201,8 +201,9 @@ class masterFarmasiController extends Controller
         $supplier = mstr_supplier::all();
         $kategori = mstr_kategori_produk::all();
         $satuanBeli = mstr_satuan::all();
+        $obatview = mstr_obat::all();
 
-        return view('pages.mstr2.mstr-obat', ['supplier' => $supplier, 'kategori' => $kategori, 'kd_obat' => $kd_obat, 'satuanBeli' => $satuanBeli]);
+        return view('pages.mstr2.mstr-obat', ['supplier' => $supplier, 'kategori' => $kategori, 'kd_obat' => $kd_obat, 'satuanBeli' => $satuanBeli, 'obatView' => $obatview]);
     }
 
     public function obatCreate(Request $request)
@@ -210,9 +211,21 @@ class masterFarmasiController extends Controller
         $request->validate([
             'fm_kd_obat' => 'required',
             'fm_nm_obat' => 'required',
-
+            'fm_kategori' => 'required',
+            'fm_supplier' => 'required',
+            'fm_satuan_pembelian' => 'required',
+            'fm_isi_satuan_pembelian' => 'required',
+            'fm_hrg_beli' => 'required',
+            'fm_satuan_jual' => 'required',
+            'fm_hrg_jual_non_resep' => 'required',
+            'fm_hrg_jual_resep' => 'required',
+            'fm_hrg_jual_nakes' => 'required',
+            'isActive' => 'required',
+            'isOpenPrice' => 'required',
+            'user'
         ]);
-
+        // http_response_code(500);
+        // dd($request);
         mstr_obat::create($request->all());
     }
 }
