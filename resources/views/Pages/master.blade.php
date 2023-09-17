@@ -315,7 +315,30 @@
                                 </p>
                             </a>
                         </li>
-
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                {{-- <i class="nav-icon fas fa-bed"></i> --}}
+                                <i class="nav-icon fa fa-light fa-notes-medical"></i>
+                                <p>
+                                    Farmasi
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('/purchase-order') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Purchase Order</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('/delivery-order') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Delivery Order</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                         <li class="nav-header">DATA MASTER KLINIK</li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">

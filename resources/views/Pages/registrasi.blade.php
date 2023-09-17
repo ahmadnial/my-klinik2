@@ -205,7 +205,7 @@
             }
         });
 
-        // Call Hasil Search
+        // Call Hasil Search MR
         function getData() {
             var fs_mr = $('#fr_mr').val();
             $.ajax({

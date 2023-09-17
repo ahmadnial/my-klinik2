@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\masterFarmasiController;
 use App\Http\Controllers\mastersatuController;
+use App\Http\Controllers\poDoController;
 use App\Http\Controllers\registrasiController;
 use App\Http\Controllers\TindakanController;
 
@@ -102,4 +103,9 @@ Route::controller(masterFarmasiController::class)->group(function () {
     Route::delete('destroy-mstr-obat/{id}', 'obat')->name('destroy-mstr-Obat');
     // Route::post('/create-dasos', [registrasiController::class, 'store']);
 });
-// Route::delete('{id}/destroy', [UserController::class, 'destroy'])->name('destroy');
+
+// VIEW PO-DO
+Route::controller(poDoController::class)->group(function () {
+    Route::get('purchase-order', 'po')->name('purchase-order');
+    Route::get('delivery-order', 'do')->name('delivery-order');
+});

@@ -192,8 +192,8 @@ class masterFarmasiController extends Controller
         if ($cekid == 0) {
             $kd_obat =  'TB'  . $num;
         } else {
-            $continue = mstr_supplier::all()->last();
-            $de = substr($continue->fm_kd_supplier, -3);
+            $continue = mstr_obat::all()->last();
+            $de = substr($continue->fm_kd_obat, -5);
             // dd($de);
             $kd_obat = 'TB' . str_pad(($de + 1), 5, '0', STR_PAD_LEFT);
             // dd($kd_reg);
