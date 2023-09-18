@@ -106,7 +106,7 @@
                             </select>
                         </div>
                         <div class="form-group col-sm-6">
-                            <label for="">Isi Satuan Pembelian Per<input style="border:none" type="text"
+                            <label for="">Isi Satuan Pembelian | Satuan :<input style="border:none" type="text"
                                     id="isiSatuanBeli" class="text-danger text-bold col-4" readonly> </label>
                             <input type="text" class="form-control" name="fm_isi_satuan_pembelian"
                                 id="fm_isi_satuan_pembelian" value="" placeholder="Input Isi Satuan Pembelian">
@@ -126,6 +126,13 @@
                                     id="hrgBeliPer" class="text-danger text-bold" readonly></label>
                             <input type="text" class="autocurrency form-control" name="fm_hrg_beli" id="fm_hrg_beli"
                                 value="" placeholder="HNA+PPN">
+                            <div class="">
+                                <label for="">Hrga Beli Per<input style="border:none" type="text"
+                                        id="hrgBeliPerDetail" class="text-danger text-bold col-4" readonly>
+                                </label>
+                                <input type="text" class="form-control" name="fm_hrg_beli_detail"
+                                    id="fm_hrg_beli_detail" value="" placeholder="Input Isi Satuan Pembelian">
+                            </div>
                         </div>
                     </div>
                     <hr>
@@ -148,13 +155,15 @@
                         </div>
                         <div class="">
                             <div class="custom-control custom-checkbox col-md ml-3">
+                                <input type="hidden" value="0" id="isActive[0]" name="isActive[0]">
                                 <input class="custom-control-input custom-control-input-danger" type="checkbox"
                                     id="isActive" name="isActive" value="1">
                                 <label for="isActive" class="custom-control-label">Aktif</label>
                             </div>
                             <div class="custom-control custom-checkbox col-md ml-3">
+                                <input type="hidden" value="0" id="isOpenPrice[0]" name="isOpenPrice">
                                 <input class="custom-control-input custom-control-input-danger" type="checkbox"
-                                    id="isOpenPrice" name="isOpenPrice" value="1">
+                                    id="isOpenPrice[0]" name="isOpenPrice" value="1">
                                 <label for="isOpenPrice" class="custom-control-label">Open Price</label>
                             </div>
                         </div>
@@ -228,9 +237,8 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-sm-6">
-                                    <label for="">Isi Satuan Pembelian Per<input style="border:none"
-                                            type="text" id="isiSatuanBeli" class="text-danger text-bold col-4"
-                                            readonly> </label>
+                                    <label for="">Isi Satuan Pembelian <input style="border:none" type="text"
+                                            id="isiSatuanBeli" class="text-danger text-bold col-4" readonly> </label>
                                     <input type="text" class="form-control" name="fm_isi_satuan_pembelian"
                                         id="fm_isi_satuan_pembelian" value=""
                                         placeholder="Input Isi Satuan Pembelian">
@@ -471,6 +479,7 @@
                     var fm_isi_satuan_pembelian = $('#fm_isi_satuan_pembelian').val();
                     var fm_satuan_jual = $('#fm_satuan_jual').val();
                     var fm_hrg_beli = $('#fm_hrg_beli').val();
+                    var fm_hrg_beli_detail = $('#fm_hrg_beli_detail').val();
                     var fm_hrg_jual_non_resep = $('#fm_hrg_jual_non_resep').val();
                     var fm_hrg_jual_resep = $('#fm_hrg_jual_resep').val();
                     var fm_hrg_jual_nakes = $('#fm_hrg_jual_nakes').val();
@@ -480,6 +489,7 @@
 
                     // ubah currency ke string biasa
                     var sfm_hrg_beli = parseInt(fm_hrg_beli.replace(/,.*|[^0-9]/g, ''), 10);
+                    // var sfm_hrg_beli = parseInt(fm_hrg_beli.replace(/,.*|[^0-9]/g, ''), 10);
                     var sfm_hrg_jual_non_resep = parseInt(fm_hrg_jual_non_resep.replace(/,.*|[^0-9]/g, ''), 10);
                     var sfm_hrg_jual_resep = parseInt(fm_hrg_jual_resep.replace(/,.*|[^0-9]/g, ''), 10);
                     var sfm_hrg_jual_nakes = parseInt(fm_hrg_jual_nakes.replace(/,.*|[^0-9]/g, ''), 10);
@@ -500,6 +510,7 @@
                                 fm_satuan_pembelian: fm_satuan_pembelian,
                                 fm_isi_satuan_pembelian: fm_isi_satuan_pembelian,
                                 fm_hrg_beli: sfm_hrg_beli,
+                                fm_hrg_beli_detail: fm_hrg_beli_detail,
                                 fm_satuan_jual: fm_satuan_jual,
                                 fm_hrg_jual_non_resep: sfm_hrg_jual_non_resep,
                                 fm_hrg_jual_resep: sfm_hrg_jual_resep,
@@ -545,6 +556,21 @@
                     // alert(sat_jual);
                     if (sat_jual) {
                         $('#isiSatuanBeli').val(sat_jual);
+                        $('#hrgBeliPerDetail').val(sat_jual);
+                    }
+                });
+            });
+
+            // Pembagian detail harga beli
+            $(document).ready(function() {
+                $('#fm_hrg_beli').on('keyup', function() {
+                    var hrg_beli1 = $(this).val();
+                    var hrg_beli2 = parseInt(hrg_beli1.replace(/,.*|[^0-9]/g, ''), 10);
+                    var satuan_beli_terkecil = $('#fm_isi_satuan_pembelian').val();
+                    var detail_hrg = (hrg_beli2 / satuan_beli_terkecil);
+                    // console.log(detail_hrg);
+                    if (detail_hrg) {
+                        $('#fm_hrg_beli_detail').val(detail_hrg);
                     }
                 });
             });

@@ -58,12 +58,12 @@
         .modal .modal-dialog {
             width: 100%;
             max-width: none;
-            height: 100%;
+            height: auto;
             margin: 40;
         }
 
         .modal .modal-content {
-            height: 100%;
+            height: auto;
             border: 0;
             border-radius: 0;
         }
@@ -115,7 +115,9 @@
 
                         <input type="hidden" id="user" name="user" value="tes">
                     </div>
-                    <hr>
+
+                    {{-- <hr> --}}
+
                     <table class="table" id="addTbRow">
                         <thead>
                             <tr>
@@ -132,8 +134,8 @@
                                 <th>Total</th>
                             </tr>
                         </thead>
-                        <tbody id="addNewRow">
-                            <tr>
+                        <tbody>
+                            <tr id="addNewRow">
                                 {{-- <td>
                                     <input type="text" class="form-control">
                                 </td> --}}
@@ -168,11 +170,16 @@
                                     <input type="text" class="form-control">
                                 </td>
                                 <td>
-                                    <button class="btn btn-xs btn-info" onclick="addRow()">Add</button>
+                                    <button class="remove btn btn-xs btn-danger " id="delRow">-</button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
+                    <div class="float-right">
+                        <button class="btn btn-xs btn-warning" id="addRow"> Tambah Barang</button>
+                    </div>
+                    <br>
+                    <hr>
                     <div class="modal-footer">
                         <button type="button" id="buat" class="btn btn-success float-right"><i class="fa fa-save"></i>
                             &nbsp;
@@ -222,23 +229,40 @@
 
     @push('scripts')
         <script>
-            function addRow(addNewRow) {
-                // Get a reference to the table
-                let tableRef = document.getElementById(addNewRow);
+            $(document).ready(function() {
+                let baris = 1
 
-                // Insert a row at the end of the table
-                let newRow = tableRef.insertRow(-1);
+                $(document).on('click', '#addRow', function() {
+                    // alert(baris);
+                    baris = baris + 1
+                    var html = "<tr id='addNewRow'" + baris + ">"
+                    html += "<td><input type='text' class='form-control' id='do_obat'></td>"
+                    html += "<td><input type='text' class='form-control'></td>"
+                    html += "<td><input type='text' class='form-control'></td>"
+                    html += "<td><input type='text' class='form-control'></td>"
+                    html += "<td><input type='text' class='form-control'></td>"
+                    html += "<td><input type='text' class='form-control'></td>"
+                    html += "<td><input type='text' class='form-control'></td>"
+                    html += "<td><input type='date' class='form-control'></td>"
+                    html += "<td><input type='text' class='form-control'></td>"
+                    html += "<td><input type='text' class='form-control'></td>"
+                    html += "<td><button class='remove btn btn-xs btn-danger' id='delRow'>-</button></td>"
+                    html += "</tr>"
 
-                // Insert a cell in the row at index 0
-                let newCell = newRow.insertCell(0);
+                    $('#addTbRow').append(html)
+                })
+            });
 
-                // Append a text node to the cell
-                let newText = document.createTextNode("New bottom row");
-                newCell.appendChild(newText);
-            };
+            // $(document).on('click', '#delRow', function() {
+            //     let hapus = $(this).data('row')
+            //     $('#' + hapus).remove()
+            // });
 
-            // Call addRow() with the table's ID
-            addRow("addNewRow");
+
+            $(document).on('click', '.remove', function() {
+                var delete_row = $(this).data("row");
+                $('#' + delete_row).remove();
+            });
 
 
             // Select2 call

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('fm_satuan_pembelian');
             $table->string('fm_isi_satuan_pembelian');
             $table->string('fm_hrg_beli');
+            $table->string('fm_hrg_beli_detail');
             $table->string('fm_satuan_jual');
             $table->string('fm_hrg_jual_non_resep');
             $table->string('fm_hrg_jual_resep');

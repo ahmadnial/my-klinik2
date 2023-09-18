@@ -21,6 +21,7 @@ class mstr_obat extends Model
         'fm_satuan_pembelian',
         'fm_isi_satuan_pembelian',
         'fm_hrg_beli',
+        'fm_hrg_beli_detail',
         'fm_satuan_jual',
         'fm_hrg_jual_non_resep',
         'fm_hrg_jual_resep',

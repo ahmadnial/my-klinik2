@@ -216,6 +216,7 @@ class masterFarmasiController extends Controller
             'fm_satuan_pembelian' => 'required',
             'fm_isi_satuan_pembelian' => 'required',
             'fm_hrg_beli' => 'required',
+            'fm_hrg_beli_detail' => 'required',
             'fm_satuan_jual' => 'required',
             'fm_hrg_jual_non_resep' => 'required',
             'fm_hrg_jual_resep' => 'required',
