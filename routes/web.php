@@ -111,3 +111,8 @@ Route::controller(poDoController::class)->group(function () {
     Route::get('obatSearch', 'obatSearch')->name('obatSearch');
     Route::get('getObatList/{obat}', 'getObatList')->name('getObatList');
 });
+
+// CREATE PO-DO
+Route::controller(poDoController::class)->group(function () {
+    Route::post('add-delivery-order', 'doCreate')->name('add-delivery-order');
+});
