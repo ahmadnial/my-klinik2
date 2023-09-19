@@ -189,8 +189,7 @@
                         </tbody>
                     </table>
                     <div class="float-right">
-                        <button class="btn btn-xs btn-info"
-                            id="111111111111111111111111111111111111111111111111111111111"> Tambah Barang</button>
+                        <button class="btn btn-xs btn-info" id="addRow"> Tambah Barang</button>
                     </div>
                     <br>
                     <hr>
