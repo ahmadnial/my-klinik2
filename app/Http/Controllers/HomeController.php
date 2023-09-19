@@ -81,7 +81,7 @@ class HomeController extends Controller
 
     public function getDasos(request $fs_mr)
     {
-        $true = '100013';
+        // $true = '100013';
         $isdata2 = dataSosialCreate::where('fs_mr', $fs_mr->fs_mr)->get();
 
         // dd($isdata2);

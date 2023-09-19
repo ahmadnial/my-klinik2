@@ -6,7 +6,7 @@
             <div class="card-header">
                 <button type="submit" class="btn btn-success float-right" data-toggle="modal" data-target="#TambahPO">Tambah
                     DO</button>
-                <h3 class="card-title">DELIVERY ORDER</h3>
+                <h3 class="card-title"><i class="fa fa-truck">&nbsp;</i>DELIVERY ORDER</h3>
             </div>
 
             <div class="card-body">
@@ -77,8 +77,8 @@
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Pembuatan DO</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <h4 class="modal-title"><i class="fa fa-truck">&nbsp;</i>Delivery Order</h4>
+                    <button type="button" class="close btn btn-danger" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -96,7 +96,8 @@
                         </div> --}}
                         <div class="form-group col-sm-3">
                             <label for="">Nomor Faktur</label>
-                            <input type="text" class="form-control" name="fp_kd_po" id="fp_kd_po" value="">
+                            <input type="text" class="form-control" name="fp_kd_po" id="fp_kd_po" value=""
+                                placeholder="Input Nomor Faktur">
                         </div>
                         <div class="form-group col-sm-3">
                             <label for="">Supplier</label>
@@ -118,70 +119,84 @@
 
                     {{-- <hr> --}}
 
-                    <table class="table" id="addTbRow">
+                    <table class="table">
                         <thead>
                             <tr>
                                 {{-- <th>Kode Obat</th> --}}
                                 <th>Obat</th>
-                                <th>Satuan</th>
+                                <th>Sat.Beli</th>
                                 <th>Tipe Diskon</th>
                                 <th>Diskon</th>
                                 <th>Qty</th>
-                                <th>Hrg.Satuan</th>
+                                <th>Isi</th>
+                                <th>Sat.Jual</th>
+                                <th>Hrg.Beli</th>
                                 <th>Pajak</th>
                                 <th>Tgl.Exp</th>
                                 <th>Batch Number</th>
                                 <th>Total</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="addTbRow">
                             <tr id="addNewRow">
                                 {{-- <td>
                                     <input type="text" class="form-control">
                                 </td> --}}
-                                <td class="">
-                                    <input type="text" class="form-control" id="do_obat">
+                                <td>
+                                    <select class="do_obat form-control" style='width: 100%;' id="do_obat"
+                                        name="do_obat[]" onchange="getDataObat()"></select>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" id="do_satuan_pembelian">
                                 </td>
                                 <td>
                                     <input type="text" class="form-control">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" id="do_diskon" name="do_diskon">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" id="do_qty" name="do_qty">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" id="do_isi_pembelian"
+                                        name="do_isi_pembelian">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" id="do_satuan_jual" name="do_satuan_jual">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" id="do_hrg_beli" name="do_hrg_beli">
                                 </td>
                                 <td>
-                                    <input type="date" class="form-control">
+                                    <input type="text" class="form-control" id="do_pajak" name="do_pajak">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control">
+                                    <input type="date" class="form-control" id="do_tgl_exp" name="do_tgl_exp">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" id="do_batch_number"
+                                        name="do_batch_number">
                                 </td>
                                 <td>
-                                    <button class="remove btn btn-xs btn-danger " id="delRow">-</button>
+                                    <input type="text" class="form-control" id="do_total" name="do_total">
+                                </td>
+                                <td>
+                                    <button class="remove btn btn-xs btn-danger " id="delRow"><i
+                                            class="fa fa-close"></i></button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                     <div class="float-right">
-                        <button class="btn btn-xs btn-warning" id="addRow"> Tambah Barang</button>
+                        <button class="btn btn-xs btn-info"
+                            id="111111111111111111111111111111111111111111111111111111111"> Tambah Barang</button>
                     </div>
                     <br>
                     <hr>
                     <div class="modal-footer">
-                        <button type="button" id="buat" class="btn btn-success float-right"><i class="fa fa-save"></i>
+                        <button type="button" id="buat" class="btn btn-success float-right"><i
+                                class="fa fa-save"></i>
                             &nbsp;
                             Save</button>
                     </div>
@@ -232,25 +247,31 @@
             $(document).ready(function() {
                 let baris = 1
 
-                $(document).on('click', '#addRow', function() {
-                    // alert(baris);
-                    baris = baris + 1
-                    var html = "<tr id='addNewRow'" + baris + ">"
-                    html += "<td><input type='text' class='form-control' id='do_obat'></td>"
-                    html += "<td><input type='text' class='form-control'></td>"
-                    html += "<td><input type='text' class='form-control'></td>"
-                    html += "<td><input type='text' class='form-control'></td>"
-                    html += "<td><input type='text' class='form-control'></td>"
-                    html += "<td><input type='text' class='form-control'></td>"
-                    html += "<td><input type='text' class='form-control'></td>"
-                    html += "<td><input type='date' class='form-control'></td>"
-                    html += "<td><input type='text' class='form-control'></td>"
-                    html += "<td><input type='text' class='form-control'></td>"
-                    html += "<td><button class='remove btn btn-xs btn-danger' id='delRow'>-</button></td>"
-                    html += "</tr>"
+                $(document).on('click',
+                    '#222222222222222222222222222222222222222222222222222222222222222222222222222211111111111111111111',
+                    function() {
+                        // alert(baris);
+                        baris = baris + 1
+                        var html = "<tr id='addNewRow'" + baris + ">"
+                        html +=
+                            "<td><select class='do_obat form-control' style='width: 100%;' id='do_obat' name='do_obat[]' onchange='getDataObat()'></select></td>"
+                        html += "<td><input type='text' class='form-control'></td>"
+                        html += "<td><input type='text' class='form-control'></td>"
+                        html += "<td><input type='text' class='form-control'></td>"
+                        html += "<td><input type='text' class='form-control'></td>"
+                        html += "<td><input type='text' class='form-control'></td>"
+                        html += "<td><input type='text' class='form-control'></td>"
+                        html += "<td><input type='date' class='form-control'></td>"
+                        html += "<td><input type='text' class='form-control'></td>"
+                        html += "<td><input type='text' class='form-control'></td>"
+                        html += "<td><input type='text' class='form-control'></td>"
+                        html += "<td><input type='text' class='form-control'></td>"
+                        html +=
+                            "<td><button class='remove btn btn-xs btn-danger' id='delRow'><i class='fa fa-close'></i></button></td>"
+                        html += "</tr>"
 
-                    $('#addTbRow').append(html)
-                })
+                        $('#addTbRow').append(html)
+                    })
             });
 
             // $(document).on('click', '#delRow', function() {
@@ -270,125 +291,85 @@
                 placeholder: 'Supplier',
             });
 
-            $('#do_obat').select2({
-                placeholder: 'Obat / Barang',
-            });
-            // $('#fm_kategori').select2({
-            //     placeholder: 'Kategori Produk',
-            // });
 
-            // $('#fm_satuan_pembelian').select2({
-            //     placeholder: 'Satuan Pembelian Produk',
-            // });
+            // Ajax Search Obat
+            var path = "{{ route('obatSearch') }}";
 
-            // $('#fm_satuan_jual').select2({
-            //     placeholder: 'Satuan Jual Terkecil',
-            // });
+            $('.do_obat') 4 t7555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555
+                .select2({
+                    placeholder: 'Obat / Barang',
+                    ajax: {
+                        url: path,
+                        dataType: 'json',
+                        delay: 150,
+                        processResults: function(isdataObat) {
+                            return {
+                                results: $.map(isdataObat, function(item) {
+                                    return {
+                                        // text: item.fs_mr,
+                                        text: item.fm_nm_obat,
+                                        id: item.fm_kd_obat,
+                                        // alamat: item.fs_alamat,
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
+                    }
+                });
 
-            // Auto Currency
-            var rupiah1 = document.getElementById("fm_hrg_beli");
-            // var rupiah = document.getElementById('fm_hrg_jual_resep');
-            rupiah1.addEventListener('keyup', function(e) {
-                // tambahkan 'Rp.' pada saat form di ketik
-                // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
-                rupiah1.value = formatRupiah(this.value, 'Rp. ');
-            });
-
-            /* Fungsi formatRupiah */
-            function formatRupiah(angka, prefix) {
-                var number_string = angka.replace(/[^,\d]/g, '').toString(),
-                    split = number_string.split(','),
-                    sisa = split[0].length % 3,
-                    rupiah1 = split[0].substr(0, sisa),
-                    ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-
-                // tambahkan titik jika yang di input sudah menjadi angka ribuan
-                if (ribuan) {
-                    separator = sisa ? '.' : '';
-                    rupiah1 += separator + ribuan.join('.');
-                }
-
-                rupiah1 = split[1] != undefined ? rupiah1 + ',' + split[1] : rupiah1;
-                return prefix == undefined ? rupiah1 : (rupiah1 ? 'Rp. ' + rupiah1 : '');
+            // Call Hasil Search Obat
+            function getDataObat() {
+                var obat = $('#do_obat').val();
+                // alert(obat);
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "{{ url('getObatList') }}/" + obat,
+                    type: 'GET',
+                    data: {
+                        'fm_kd_obat': obat
+                    },
+                    success: function(isdataObat) {
+                        // var json = isdata2;
+                        $.each(isdataObat, function(key, datavalue) {
+                            $('#do_satuan_pembelian').val(datavalue.fm_satuan_pembelian);
+                            $('#do_hrg_beli').val(datavalue.fm_hrg_beli);
+                            $('#do_satuan_jual').val(datavalue.fm_satuan_jual);
+                            $('#do_isi_pembelian').val(datavalue.fm_isi_satuan_pembelian);
+                            // $('#fr_tgl_lahir').val(datavalue.fs_tgl_lahir);
+                            // $('#fr_jenis_kelamin').val(datavalue.fs_jenis_kelamin);
+                        })
+                    }
+                })
             };
 
-            var rupiah2 = document.getElementById("fm_hrg_jual_non_resep");
-            // var rupiah = document.getElementById('fm_hrg_jual_resep');
-            rupiah2.addEventListener('keyup', function(e) {
-                // tambahkan 'Rp.' pada saat form di ketik
-                // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
-                rupiah2.value = formatRupiah(this.value, 'Rp. ');
-            });
+            // Auto Currency
+            // var rupiah1 = document.getElementById("fm_hrg_beli");
 
-            /* Fungsi formatRupiah */
-            function formatRupiah(angka, prefix) {
-                var number_string = angka.replace(/[^,\d]/g, '').toString(),
-                    split = number_string.split(','),
-                    sisa = split[0].length % 3,
-                    rupiah2 = split[0].substr(0, sisa),
-                    ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+            // rupiah1.addEventListener('keyup', function(e) {
 
-                // tambahkan titik jika yang di input sudah menjadi angka ribuan
-                if (ribuan) {
-                    separator = sisa ? '.' : '';
-                    rupiah2 += separator + ribuan.join('.');
-                }
+            //     rupiah1.value = formatRupiah(this.value, 'Rp. ');
+            // });
 
-                rupiah2 = split[1] != undefined ? rupiah1 + ',' + split[1] : rupiah2;
-                return prefix == undefined ? rupiah2 : (rupiah2 ? 'Rp. ' + rupiah2 : '');
-            }
 
-            var rupiah3 = document.getElementById("fm_hrg_jual_resep");
-            // var rupiah = document.getElementById('fm_hrg_jual_resep');
-            rupiah3.addEventListener('keyup', function(e) {
-                // tambahkan 'Rp.' pada saat form di ketik
-                // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
-                rupiah3.value = formatRupiah(this.value, 'Rp. ');
-            });
+            // function formatRupiah(angka, prefix) {
+            //     var number_string = angka.replace(/[^,\d]/g, '').toString(),
+            //         split = number_string.split(','),
+            //         sisa = split[0].length % 3,
+            //         rupiah1 = split[0].substr(0, sisa),
+            //         ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+            //     if (ribuan) {
+            //         separator = sisa ? '.' : '';
+            //         rupiah1 += separator + ribuan.join('.');
+            //     }
 
-            /* Fungsi formatRupiah */
-            function formatRupiah(angka, prefix) {
-                var number_string = angka.replace(/[^,\d]/g, '').toString(),
-                    split = number_string.split(','),
-                    sisa = split[0].length % 3,
-                    rupiah3 = split[0].substr(0, sisa),
-                    ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+            //     rupiah1 = split[1] != undefined ? rupiah1 + ',' + split[1] : rupiah1;
+            //     return prefix == undefined ? rupiah1 : (rupiah1 ? 'Rp. ' + rupiah1 : '');
+            // };
 
-                // tambahkan titik jika yang di input sudah menjadi angka ribuan
-                if (ribuan) {
-                    separator = sisa ? '.' : '';
-                    rupiah3 += separator + ribuan.join('.');
-                }
 
-                rupiah3 = split[1] != undefined ? rupiah3 + ',' + split[1] : rupiah3;
-                return prefix == undefined ? rupiah3 : (rupiah3 ? 'Rp. ' + rupiah3 : '');
-            }
-
-            var rupiah4 = document.getElementById("fm_hrg_jual_nakes");
-            // var rupiah = document.getElementById('fm_hrg_jual_resep');
-            rupiah4.addEventListener('keyup', function(e) {
-                // tambahkan 'Rp.' pada saat form di ketik
-                // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
-                rupiah4.value = formatRupiah(this.value, 'Rp. ');
-            });
-
-            /* Fungsi formatRupiah */
-            function formatRupiah(angka, prefix) {
-                var number_string = angka.replace(/[^,\d]/g, '').toString(),
-                    split = number_string.split(','),
-                    sisa = split[0].length % 3,
-                    rupiah4 = split[0].substr(0, sisa),
-                    ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-
-                // tambahkan titik jika yang di input sudah menjadi angka ribuan
-                if (ribuan) {
-                    separator = sisa ? '.' : '';
-                    rupiah4 += separator + ribuan.join('.');
-                }
-
-                rupiah4 = split[1] != undefined ? rupiah4 + ',' + split[1] : rupiah4;
-                return prefix == undefined ? rupiah4 : (rupiah4 ? 'Rp. ' + rupiah4 : '');
-            }
 
             // $(document).ready(function() {
             //     $('#buat').on('click', function() {

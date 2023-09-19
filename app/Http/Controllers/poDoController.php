@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\mstr_obat;
 use App\Models\mstr_supplier;
 use Illuminate\Http\Request;
 
@@ -30,5 +31,27 @@ class poDoController extends Controller
     {
         $supplier = mstr_supplier::all();
         return view('pages.delivery-order', ['supplier' => $supplier]);
+    }
+
+    public function obatSearch(Request $request)
+    {
+        $isdataObat = [];
+
+        if ($request->filled('q')) {
+            $isdataObat = mstr_obat::select("fm_kd_obat", "fm_nm_obat", "fm_satuan_pembelian", "fm_hrg_beli")
+                ->where('fm_nm_obat', 'LIKE', '%' . $request->get('q') . '%')
+                ->get();
+        }
+        // dd($data);
+        return response()->json($isdataObat);
+    }
+
+    public function getObatList(request $obat)
+    {
+        // $true = 'Amoxcillin 500mg';
+        $isdataObat = mstr_obat::where('fm_kd_obat', $obat->fm_kd_obat)->get();
+
+        // dd($isdata2);
+        return response()->json($isdataObat);
     }
 }

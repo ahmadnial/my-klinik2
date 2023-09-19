@@ -176,7 +176,7 @@
                 if (digits.length < 4)
                     digits = ("000" + digits).substr(-4);
                 id = strings + digits;
-                console.log(id);
+                // console.log(id);
             }
         }
 
