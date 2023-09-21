@@ -21,6 +21,15 @@ return new class extends Migration
             $table->string('user');
             $table->timestamps();
             $table->softDeletes();
+            $table->primary('do_hdr_kd');
+        });
+
+        Schema::table('do_detail_item', function ($table) {
+            $table->foreign('do_hdr_kd')
+                ->references('do_hdr_kd')
+                ->on('do_hdr')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

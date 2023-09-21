@@ -8,6 +8,7 @@ use App\Models\mstr_lokasi_stock;
 use App\Models\mstr_obat;
 use App\Models\mstr_supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class poDoController extends Controller
 {
@@ -35,8 +36,12 @@ class poDoController extends Controller
     {
         $supplier = mstr_supplier::all();
         $lokasi = mstr_lokasi_stock::all();
+        $viewDO = DB::table('do_hdr')
+            ->leftJoin('do_detail_item', 'do_hdr.do_hdr_kd', 'do_detail_item.do_hdr_kd')
+            ->select('do_hdr.*', 'do_detail_item.*')->get();
+        // $viewDO = do_hdr::all();
 
-        return view('pages.delivery-order', ['supplier' => $supplier, 'lokasi' => $lokasi]);
+        return view('pages.delivery-order', ['supplier' => $supplier, 'lokasi' => $lokasi, 'viewDO' => $viewDO]);
     }
 
     public function obatSearch(Request $request)
@@ -83,7 +88,7 @@ class poDoController extends Controller
             'do_tgl_exp' => 'required',
             // 'do_batch_number',
             'do_sub_total' => 'required',
-            'do_hdr_kd' => 'required'
+            // 'do_hdr_id' => 'required'
         ]);
 
 
@@ -111,10 +116,11 @@ class poDoController extends Controller
         $do_detail_item->do_batch_number = $request->do_batch_number;
         $do_detail_item->do_sub_total = $request->do_sub_total;
         $do_detail_item->do_hdr_kd = $request->do_hdr_kd;
+        // $do_detail_item->do_hdr_id = $request->do_hdr_kd;
 
         // $do_detail_item->save();
 
+        // dd($do_detail_item);
         $do_hdr->do_detail_item()->save($do_detail_item);
-        // dd($request);
     }
 }

@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class do_hdr extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable, SoftDeletes;
 
     protected $table = 'do_hdr';
     protected $fillable = [
@@ -20,8 +23,8 @@ class do_hdr extends Model
         'user'
     ];
 
-    public function do_detail_item()
-    {
-        return $this->hasMany('App\Models\do_detail_item');
-    }
+    // public function do_detail_item()
+    // {
+    //     return $this->hasMany('App\Models\do_detail_item');
+    // }
 }

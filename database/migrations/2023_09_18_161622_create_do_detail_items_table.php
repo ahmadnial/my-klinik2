@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('do_detail_item', function (Blueprint $table) {
+            $table->id();
             $table->string('do_obat');
             $table->string('do_satuan_pembelian');
             $table->string('do_diskon');
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->string('do_batch_number');
             $table->string('do_sub_total');
             $table->string('do_hdr_kd');
+            $table->string('do_hdr_id');
             $table->timestamps();
             $table->softDeletes();
         });

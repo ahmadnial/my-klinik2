@@ -221,8 +221,8 @@ class masterFarmasiController extends Controller
             'fm_hrg_jual_non_resep' => 'required',
             'fm_hrg_jual_resep' => 'required',
             'fm_hrg_jual_nakes' => 'required',
-            'isActive' => 'required',
-            'isOpenPrice' => 'required',
+            // 'isActive' => 'required',
+            // 'isOpenPrice' => 'required',
             'user'
         ]);
         // http_response_code(500);

@@ -14,7 +14,7 @@
                     <table id="example2" class="table table-hover">
                         <thead class="">
                             <tr>
-                                <th>Tanggal</th>
+                                {{-- <th>Tanggal</th> --}}
                                 <th>No Ref</th>
                                 <th>No Faktur</th>
                                 <th>Supplier</th>
@@ -25,25 +25,26 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach ($obatView as $tz)
+                            @foreach ($viewDO as $tz)
                                 <tr>
-                                    <td id="">{{ $tz->fm_kd_obat }}</td>
-                                    <td id="">{{ $tz->fm_nm_obat }}</td>
-                                    <td id="">{{ $tz->fm_kategori }}</td>
-                                    <td id="">{{ $tz->fm_supplier }}</td>
-                                    <td id="">{{ $tz->fm_satuan_pembelian }}</td>
-                                    <td id="">{{ $tz->fm_satuan_jual }}</td>
-                                    <td id="">@currency($tz->fm_hrg_beli)</td>
+                                    {{-- <td id="">{{ $tz->created_at }}</td> --}}
+                                    <td id="">{{ $tz->do_hdr_kd }}</td>
+                                    <td id="">{{ $tz->do_hdr_no_faktur }}</td>
+                                    <td id="">{{ $tz->do_hdr_supplier }}</td>
+                                    <td id="">{{ $tz->do_hdr_tgl_tempo }}</td>
+                                    <td id="">{{ $tz->created_at }}</td>
+                                    <td id="">{{ $tz->do_obat }}</td>
+                                    {{-- <td id="">@currency($tz->fm_hrg_beli)</td>
                                     <td id="">@currency($tz->fm_hrg_jual_non_resep)</td>
                                     <td id="">@currency($tz->fm_hrg_jual_resep)</td>
-                                    <td id="">@currency($tz->fm_hrg_jual_nakes)</td>
+                                    <td id="">@currency($tz->fm_hrg_jual_nakes)</td> --}}
                                     <td><button class="btn btn-xs btn-success" data-toggle="modal"
-                                            data-target="#EditObat{{ $tz->fm_kd_obat }}">Edit</button>
+                                            data-target="#EditObat">Edit</button>
                                         <button class="btn btn-xs btn-danger" data-toggle="modal"
-                                            data-target="#DeleteSupplier{{ $tz->fm_kd_supplier }}">Hapus</button>
+                                            data-target="#DeleteSupplier">Hapus</button>
                                     </td>
                                 </tr>
-                            @endforeach --}}
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -427,7 +428,7 @@
                 var do_tgl_exp = $('#do_tgl_exp').val();
                 var do_batch_number = $('#do_batch_number').val();
                 var do_sub_total = $('#do_sub_total').val();
-                var do_hdr_kd = $('#do_hdr_kd').val();
+                // var do_hdr_kd = $('#do_hdr_kd').val();
 
                 // ubah currency ke string biasa
                 // var sfm_hrg_beli = parseInt(fm_hrg_beli.replace(/,.*|[^0-9]/g, ''), 10);
@@ -464,7 +465,7 @@
                             do_tgl_exp: do_tgl_exp,
                             do_batch_number: do_batch_number,
                             do_sub_total: do_sub_total,
-                            do_hdr_kd: do_hdr_kd
+                            // do_hdr_id: do_hdr_kd
                         },
                         cache: false,
                         success: function(dataResult) {

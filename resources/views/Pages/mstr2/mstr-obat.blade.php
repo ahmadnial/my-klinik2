@@ -155,15 +155,15 @@
                         </div>
                         <div class="">
                             <div class="custom-control custom-checkbox col-md ml-3">
-                                <input type="hidden" value="0" id="isActive[0]" name="isActive[0]">
+                                {{-- <input type="hidden" value="0" id="isActive[0]" name="isActive[0]"> --}}
                                 <input class="custom-control-input custom-control-input-danger" type="checkbox"
                                     id="isActive" name="isActive" value="1">
                                 <label for="isActive" class="custom-control-label">Aktif</label>
                             </div>
                             <div class="custom-control custom-checkbox col-md ml-3">
-                                <input type="hidden" value="0" id="isOpenPrice[0]" name="isOpenPrice">
+                                {{-- <input type="hidden" value="0" id="isOpenPrice[0]" name="isOpenPrice"> --}}
                                 <input class="custom-control-input custom-control-input-danger" type="checkbox"
-                                    id="isOpenPrice[0]" name="isOpenPrice" value="1">
+                                    id="isOpenPrice" name="isOpenPrice" value="1">
                                 <label for="isOpenPrice" class="custom-control-label">Open Price</label>
                             </div>
                         </div>
