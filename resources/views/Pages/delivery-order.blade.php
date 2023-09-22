@@ -84,53 +84,51 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="form-group col-sm-2">
-                            <label for="">Nomor Ref</label>
-                            <input type="text" class="form-control" name="do_hdr_kd" id="do_hdr_kd" value="">
+                    <form method="POST" action="{{ url('add-delivery-order') }}">
+                        @csrf
+                        <div class="row">
+                            <div class="form-group col-sm-2">
+                                <label for="">Nomor Ref</label>
+                                <input type="text" class="form-control" name="do_hdr_kd" id="do_hdr_kd" value="">
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label for="">Nomor Faktur</label>
+                                <input type="text" class="form-control" name="do_hdr_no_faktur" id="do_hdr_no_faktur"
+                                    value="" placeholder="Input Nomor Faktur">
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label for="">Supplier</label>
+                                <select class="form-control-pasien" id="do_hdr_supplier" style="width: 100%;"
+                                    name="do_hdr_supplier">
+                                    <option value="">--Select--</option>
+                                    @foreach ($supplier as $sp)
+                                        <option value="{{ $sp->fm_nm_supplier }}">{{ $sp->fm_nm_supplier }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label for="">Tanggal Jatuh Tempo</label>
+                                <input type="date" class="form-control" name="do_hdr_tgl_tempo" id="do_hdr_tgl_tempo"
+                                    value="">
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label for="">Lokasi</label>
+                                <select class="form-control-pasien" id="do_hdr_lokasi_stock" style="width: 100%;"
+                                    name="do_hdr_lokasi_stock">
+                                    <option value="">--Select--</option>
+                                    @foreach ($lokasi as $lok)
+                                        <option value="{{ $lok->fm_nm_lokasi_stock }}">{{ $lok->fm_nm_lokasi_stock }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <input type="hidden" id="user" name="user" value="tes">
                         </div>
-                        {{-- <div class="form-group col-sm-3">
-                            <label for="">Tanggal DO</label>
-                            <input type="date" class="form-control" name="fp_tgl_po" id="fp_tgl_po" value=""
-                                placeholder="Input Nama Supplier">
-                        </div> --}}
-                        <div class="form-group col-sm-3">
-                            <label for="">Nomor Faktur</label>
-                            <input type="text" class="form-control" name="do_hdr_no_faktur" id="do_hdr_no_faktur"
-                                value="" placeholder="Input Nomor Faktur">
-                        </div>
-                        <div class="form-group col-sm-2">
-                            <label for="">Supplier</label>
-                            <select class="form-control-pasien" id="do_hdr_supplier" style="width: 100%;"
-                                name="do_hdr_supplier">
-                                <option value="">--Select--</option>
-                                @foreach ($supplier as $sp)
-                                    <option value="{{ $sp->fm_nm_supplier }}">{{ $sp->fm_nm_supplier }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group col-sm-2">
-                            <label for="">Tanggal Jatuh Tempo</label>
-                            <input type="date" class="form-control" name="do_hdr_tgl_tempo" id="do_hdr_tgl_tempo"
-                                value="">
-                        </div>
-                        <div class="form-group col-sm-2">
-                            <label for="">Lokasi</label>
-                            <select class="form-control-pasien" id="do_hdr_lokasi_stock" style="width: 100%;"
-                                name="do_hdr_lokasi_stock">
-                                <option value="">--Select--</option>
-                                @foreach ($lokasi as $lok)
-                                    <option value="{{ $lok->fm_nm_lokasi_stock }}">{{ $lok->fm_nm_lokasi_stock }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <input type="hidden" id="user" name="user" value="tes">
-                    </div>
                 </div>
 
                 {{-- <hr> --}}
 
-                <table class="table">
+                <table class="table" id="doTable">
                     <thead>
                         <tr>
                             {{-- <th>Kode Obat</th> --}}
@@ -150,54 +148,59 @@
                     </thead>
                     <tbody id="addTbRow">
                         <tr id="addNewRow">
-                            {{-- <td>
-                                    <input type="text" class="form-control">
-                                </td> --}}
                             <td>
-                                <select class="do_obat form-control" style='width: 100%;' id="do_obat" name="do_obat"
+                                <select class="do_obat form-control" style='width: 100%;' id="do_obat" name="do_obat[]"
                                     onchange="getDataObat()"></select>
                             </td>
                             <td>
-                                <input type="text" class="form-control" id="do_satuan_pembelian" readonly>
+                                <input type="text" class="form-control" id="do_satuan_pembelian"
+                                    name="do_satuan_pembelian[]" readonly>
                             </td>
                             <td>
                                 <input type="text" class="form-control">
                             </td>
                             <td>
-                                <input type="text" class="form-control" id="do_diskon" name="do_diskon">
+                                <input type="text" class="form-control" id="do_diskon" name="do_diskon[]">
                             </td>
                             <td>
-                                <input type="text" class="do_qty form-control" id="do_qty" name="do_qty">
+                                <input type="text" class="do_qty form-control" id="do_qty[]" name="do_qty[]">
                             </td>
                             <td>
-                                <input type="text" class="form-control" id="do_isi_pembelian" name="do_isi_pembelian"
+                                <input type="text" class="form-control" id="do_isi_pembelian"
+                                    name="do_isi_pembelian[]" readonly>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="do_satuan_jual" name="do_satuan_jual[]"
                                     readonly>
                             </td>
                             <td>
-                                <input type="text" class="form-control" id="do_satuan_jual" name="do_satuan_jual"
+                                <input type="text" class="form-control" id="do_hrg_beli" name="do_hrg_beli[]"
                                     readonly>
                             </td>
                             <td>
-                                <input type="text" class="form-control" id="do_hrg_beli" name="do_hrg_beli" readonly>
+                                <input type="text" class="form-control" id="do_pajak" name="do_pajak[]">
                             </td>
                             <td>
-                                <input type="text" class="form-control" id="do_pajak" name="do_pajak">
+                                <input type="date" class="form-control" id="do_tgl_exp" name="do_tgl_exp[]">
                             </td>
                             <td>
-                                <input type="date" class="form-control" id="do_tgl_exp" name="do_tgl_exp">
+                                <input type="text" class="form-control" id="do_batch_number"
+                                    name="do_batch_number[]">
                             </td>
                             <td>
-                                <input type="text" class="form-control" id="do_batch_number" name="do_batch_number">
-                            </td>
-                            <td>
-                                <input type="text" class="form-control" id="do_sub_total" name="do_sub_total"
+                                <input type="text" class="form-control" id="do_sub_total" name="do_sub_total[]"
                                     readonly>
                             </td>
+                            <td>
+                                <a href="javascript:void(0)" class="text-success" id="addRow" title="Remove"><i
+                                        class="fa fa-plus"></i></a>
+                            </td>
+
                             <input type="hidden" name="user" id="user" value="tes user">
-                            <td>
+                            {{-- <td>
                                 <button class="remove btn btn-xs btn-danger " id="delRow"><i
                                         class="fa fa-close"></i></button>
-                            </td>
+                            </td> --}}
                         </tr>
                     </tbody>
                 </table>
@@ -207,19 +210,20 @@
                         <input type="text" class="form-control float-right" name="do_hdr_total_faktur"
                             id="do_hdr_total_faktur" value="556667" readonly>
                     </div>
-                    <div class="float-right">
+                    {{-- <div class="float-right">
                         <button class="btn btn-xs btn-info" id="addRow">Tambah Barang</button>
-                    </div>
+                    </div> --}}
                 </div>
                 <br>
                 {{-- <hr> --}}
                 <div class="modal-footer">
-                    <button type="button" id="buat" class="btn btn-success float-right"><i
+                    <button type="submit" id="buat" class="btn btn-success float-right"><i
                             class="fa fa-save"></i>&nbsp;Save
                     </button>
                 </div>
             </div>
         </div>
+        </form>
     </div>
 
 
@@ -262,40 +266,61 @@
 
 @push('scripts')
     <script>
-        $(document).ready(function() {
-            let baris = 1
+        // $(document).ready(function() {
+        //     let baris = 1
 
-            $(document).on('click', '#addRow', function() {
-                // alert(baris);
-                baris = baris + 1
-                var html = "<tr class='addNewRow' id='addNewRow'" + baris + ">"
-                html +=
-                    "<td><select class='do_obat form-control' style='width: 100%;' id='do_obat' name='do_obat[]' onchange='getDataObat()'></select></td>"
-                html += "<td><input type='text' class='form-control' id='do_satuan_pembelian'></td>"
-                html += "<td><input type='text' class='form-control' id=''></td>"
-                html += "<td><input type='text' class='form-control' id='do_diskon' name='do_diskon'></td>"
-                html += "<td><input type='text' class='form-control' id='do_qty' name='do_qty'></td>"
-                html +=
-                    "<td><input type='text' class='form-control' id='do_isi_pembelian' name='do_isi_pembelian'></td>"
-                html +=
-                    "<td><input type='text' class='form-control' id='do_satuan_jual' name='do_satuan_jual'></td>"
-                html +=
-                    "<td><input type='text' class='form-control' id='do_hrg_beli' name='do_hrg_beli'></td>"
-                html += "<td><input type='text' class='form-control' id='do_pajak' name='do_pajak'></td>"
-                html +=
-                    "<td><input type='date' class='form-control' id='do_tgl_exp' name='do_tgl_exp'></td>"
-                html +=
-                    "<td><input type='text' class='form-control' id='do_batch_number' name='do_batch_number'></td>"
-                html +=
-                    "<td><input type='text' class='form-control' id='do_total' name='do_total' readonly></td>"
-                html +=
-                    "<td><button class='remove btn btn-xs btn-danger' id='delRow'><i class='fa fa-close'></i></button></td>"
-                html += "</tr>"
+        //     $(document).on('click', '#addRow', function() {
+        //         // alert(baris);
+        //         baris = baris + 1
+        //         var html = "<tr class='addNewRow' id='addNewRow'" + baris + ">"
+        //         html +=
+        //             "<td><select class='do_obat form-control' style='width: 100%;' id='do_obat' name='do_obat[]' onchange='getDataObat()'></select></td>"
+        //         html +=
+        //             "<td><input type='text' class='form-control' id='do_satuan_pembelian' id='do_satuan_pembelian[]'></td>"
+        //         html += "<td><input type='text' class='form-control' id=''></td>"
+        //         html +=
+        //             "<td><input type='text' class='form-control' id='do_diskon' name='do_diskon[]'></td>"
+        //         html += "<td><input type='text' class='form-control' id='do_qty' name='do_qty[]'></td>"
+        //         html +=
+        //             "<td><input type='text' class='form-control' id='do_isi_pembelian' name='do_isi_pembelian[]'></td>"
+        //         html +=
+        //             "<td><input type='text' class='form-control' id='do_satuan_jual' name='do_satuan_jual[]'></td>"
+        //         html +=
+        //             "<td><input type='text' class='form-control' id='do_hrg_beli' name='do_hrg_beli[]'></td>"
+        //         html += "<td><input type='text' class='form-control' id='do_pajak' name='do_pajak[]'></td>"
+        //         html +=
+        //             "<td><input type='date' class='form-control' id='do_tgl_exp' name='do_tgl_exp[]'></td>"
+        //         html +=
+        //             "<td><input type='text' class='form-control' id='do_batch_number' name='do_batch_number[]'></td>"
+        //         html +=
+        //             "<td><input type='text' class='form-control' id='do_total' name='do_total[]' readonly></td>"
+        //         html +=
+        //             "<td><button class='remove btn btn-xs btn-danger' id='delRow'><i class='fa fa-close'></i></button></td>"
+        //         html += "</tr>"
 
-                $('#addTbRow').append(html)
-            });
-            // var newSelect = $("#addTbRow").find(".do_obat").last();
-            // Select2(newSelect);
+        //         $('#addTbRow').append(html)
+        //     });
+        // });
+
+        var rowIdx = 1;
+        $("#addRow").on("click", function() {
+            // Adding a row inside the tbody.
+            $("#doTable tbody").append(`
+                <tr id="R${++rowIdx}">
+                    <td><select class='do_obat form-control' style='width: 100%;' id='do_obat' name='do_obat[]' onchange='getDataObat()'></select></td>
+                    <td><input type='text' class='form-control' id='do_satuan_pembelian' id='do_satuan_pembelian[]'></td>"
+                    <td><input type="text" class="form-control" id="do_diskon" name="do_diskon[]"></td>
+                    <td><input type="text" class="form-control" id="" name=""></td>
+                    <td><input type="text" class="do_qty form-control" id="do_qty[]" name="do_qty[]"></td>
+                    <td><input type="text" class="form-control" id="do_isi_pembelian" name="do_isi_pembelian[]" readonly></td>
+                    <td><input type="text" class="form-control" id="do_satuan_jual" name="do_satuan_jual[]" readonly></td>
+                    <td><input type="text" class="form-control" id="do_hrg_beli" name="do_hrg_beli[]" readonly></td>
+                    <td><input type="text" class="form-control" id="do_pajak" name="do_pajak[]"></td>
+                    <td><input type="date" class="form-control" id="do_tgl_exp" name="do_tgl_exp[]"></td>
+                    <td><input type="text" class="form-control" id="do_batch_number" name="do_batch_number[]"></td>
+                    <td><input type="text" class="form-control" id="do_sub_total" name="do_sub_total[]" readonly></td>
+                    <td><a href="javascript:void(0)" class="text-danger font-18 remove" title="Remove"><i class="fa fa-trash"></i></a></td>
+                </tr>`);
         });
 
         // $(document).on('click', '#delRow', function() {
@@ -407,7 +432,7 @@
 
         // Create 
         $(document).ready(function() {
-            $('#buat').on('click', function() {
+            $('#buatt').on('click', function() {
                 var do_hdr_kd = $('#do_hdr_kd').val();
                 var do_hdr_no_faktur = $('#do_hdr_no_faktur').val();
                 var do_hdr_supplier = $('#do_hdr_supplier').val();
@@ -437,11 +462,18 @@
                 // var sfm_hrg_jual_nakes = parseInt(fm_hrg_jual_nakes.replace(/,.*|[^0-9]/g, ''), 10);
 
                 if (do_hdr_no_faktur != "") {
+                    var selWeight = [];
+                    $('input[name="do_obat"]').each(function() {
+                        if ($(this).val() != '') {
+                            selWeight.push($(this).val());
+                        }
+                    });
+                    alert(selWeight);
                     $.ajax({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
-                        url: "{{ route('add-delivery-order') }}",
+                        url: "{{ url('add-delivery-order') }}",
                         type: "POST",
                         data: {
                             type: 2,

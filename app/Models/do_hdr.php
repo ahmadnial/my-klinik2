@@ -23,8 +23,8 @@ class do_hdr extends Model
         'user'
     ];
 
-    // public function do_detail_item()
-    // {
-    //     return $this->hasMany('App\Models\do_detail_item');
-    // }
+    public function do_detail_item()
+    {
+        return $this->hasMany('App\Models\do_detail_item');
+    }
 }

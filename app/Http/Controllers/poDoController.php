@@ -10,6 +10,7 @@ use App\Models\mstr_supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+
 class poDoController extends Controller
 {
 
@@ -68,6 +69,7 @@ class poDoController extends Controller
 
     public function doCreate(Request $request)
     {
+        // dd($request);
         $request->validate([
             'do_hdr_kd' => 'required',
             'do_hdr_no_faktur' => 'required',
@@ -91,36 +93,45 @@ class poDoController extends Controller
             // 'do_hdr_id' => 'required'
         ]);
 
+        DB::beginTransaction();
+        try {
+            $do_hdr = new do_hdr;
+            $do_hdr->do_hdr_kd = $request->do_hdr_kd;
+            $do_hdr->do_hdr_no_faktur = $request->do_hdr_no_faktur;
+            $do_hdr->do_hdr_supplier = $request->do_hdr_supplier;
+            $do_hdr->do_hdr_tgl_tempo = $request->do_hdr_tgl_tempo;
+            $do_hdr->do_hdr_lokasi_stock = $request->do_hdr_lokasi_stock;
+            $do_hdr->do_hdr_total_faktur = $request->do_hdr_total_faktur;
+            $do_hdr->user = $request->user;
 
-        $do_hdr = new do_hdr;
-        $do_hdr->do_hdr_kd = $request->do_hdr_kd;
-        $do_hdr->do_hdr_no_faktur = $request->do_hdr_no_faktur;
-        $do_hdr->do_hdr_supplier = $request->do_hdr_supplier;
-        $do_hdr->do_hdr_tgl_tempo = $request->do_hdr_tgl_tempo;
-        $do_hdr->do_hdr_lokasi_stock = $request->do_hdr_lokasi_stock;
-        $do_hdr->do_hdr_total_faktur = $request->do_hdr_total_faktur;
-        $do_hdr->user = $request->user;
+            $do_hdr->save();
 
-        $do_hdr->save();
 
-        $do_detail_item = new do_detail_item();
-        $do_detail_item->do_obat = $request->do_obat;
-        $do_detail_item->do_satuan_pembelian = $request->do_satuan_pembelian;
-        $do_detail_item->do_diskon = $request->do_diskon;
-        $do_detail_item->do_qty = $request->do_qty;
-        $do_detail_item->do_isi_pembelian = $request->do_isi_pembelian;
-        $do_detail_item->do_satuan_jual = $request->do_satuan_jual;
-        $do_detail_item->do_hrg_beli = $request->do_hrg_beli;
-        $do_detail_item->do_pajak = $request->do_pajak;
-        $do_detail_item->do_tgl_exp = $request->do_tgl_exp;
-        $do_detail_item->do_batch_number = $request->do_batch_number;
-        $do_detail_item->do_sub_total = $request->do_sub_total;
-        $do_detail_item->do_hdr_kd = $request->do_hdr_kd;
-        // $do_detail_item->do_hdr_id = $request->do_hdr_kd;
+            foreach ($request->do_obat as $key => $items) {
+                $do_detail_item = new do_detail_item();
+                $do_detail_item['do_obat']              = $items;
+                $do_detail_item['do_satuan_pembelian']  = $request->do_satuan_pembelian[$key];
+                $do_detail_item['do_diskon']            = $request->do_diskon[$key];
+                $do_detail_item['do_qty']               = $request->do_qty[$key];
+                $do_detail_item['do_isi_pembelian']     = $request->do_isi_pembelian[$key];
+                $do_detail_item['do_satuan_jual']       = $request->do_satuan_jual[$key];
+                $do_detail_item['do_hrg_beli']          = $request->do_hrg_beli[$key];
+                $do_detail_item['do_pajak']             = $request->do_pajak[$key];
+                $do_detail_item['do_tgl_exp']           = $request->do_tgl_exp[$key];
+                $do_detail_item['do_batch_number']      = $request->do_batch_number[$key];
+                $do_detail_item['do_sub_total']         = $request->do_sub_total[$key];
+                $do_detail_item['do_hdr_kd']            = $request->do_hdr_kd[$key];
+            }
 
-        // $do_detail_item->save();
-
-        // dd($do_detail_item);
-        $do_hdr->do_detail_item()->save($do_detail_item);
+            dd($do_detail_item);
+            $do_hdr->do_detail_item()->save($do_detail_item);
+            DB::commit();
+            Toastr::success('Create new Estimates successfully :)', 'Success');
+            return redirect()->route('form/estimates/page');
+        } catch (\Exception $e) {
+            DB::rollback();
+            Toastr::error('Add Estimates fail :)', 'Error');
+            return redirect()->back();
+        }
     }
 }
