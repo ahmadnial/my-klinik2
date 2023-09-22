@@ -301,49 +301,6 @@
         //         $('#addTbRow').append(html)
         //     });
         // });
-
-        var rowIdx = 1;
-        $("#addRow").on("click", function() {
-            // Adding a row inside the tbody.
-            $("#doTable tbody").append(`
-                <tr id="R${++rowIdx}">
-                    <td><select class='do_obat form-control' style='width: 100%;' id='do_obat' name='do_obat[]' onchange='getDataObat()'></select></td>
-                    <td><input type='text' class='form-control' id='do_satuan_pembelian' id='do_satuan_pembelian[]'></td>"
-                    <td><input type="text" class="form-control" id="do_diskon" name="do_diskon[]"></td>
-                    <td><input type="text" class="form-control" id="" name=""></td>
-                    <td><input type="text" class="do_qty form-control" id="do_qty[]" name="do_qty[]"></td>
-                    <td><input type="text" class="form-control" id="do_isi_pembelian" name="do_isi_pembelian[]" readonly></td>
-                    <td><input type="text" class="form-control" id="do_satuan_jual" name="do_satuan_jual[]" readonly></td>
-                    <td><input type="text" class="form-control" id="do_hrg_beli" name="do_hrg_beli[]" readonly></td>
-                    <td><input type="text" class="form-control" id="do_pajak" name="do_pajak[]"></td>
-                    <td><input type="date" class="form-control" id="do_tgl_exp" name="do_tgl_exp[]"></td>
-                    <td><input type="text" class="form-control" id="do_batch_number" name="do_batch_number[]"></td>
-                    <td><input type="text" class="form-control" id="do_sub_total" name="do_sub_total[]" readonly></td>
-                    <td><a href="javascript:void(0)" class="text-danger font-18 remove" title="Remove"><i class="fa fa-trash"></i></a></td>
-                </tr>`);
-        });
-
-        // $(document).on('click', '#delRow', function() {
-        //     let hapus = $(this).data('row')
-        //     $('#' + hapus).remove()
-        // });
-
-
-        $(document).on('click', '.remove', function() {
-            // var delete_row = $(this).data("row");
-            $('.addNewRow').remove();
-        });
-
-
-        // Select2 call
-        $('#do_hdr_supplier').select2({
-            placeholder: 'Supplier',
-        });
-
-        $('#do_hdr_lokasi_stock').select2({
-            placeholder: 'Lokasi Stock',
-        });
-
         // Ajax Search Obat
         var path = "{{ route('obatSearch') }}";
 
@@ -395,6 +352,101 @@
                 }
             })
         };
+
+        var rowIdx = 1;
+        $("#addRow").on("click", function() {
+            // Adding a row inside the tbody.
+            $("#doTable tbody").append(`
+                <tr id="R${++rowIdx}">
+                    <td><select class='do_obat form-control' style='width: 100%;' id='do_obat[]' name='do_obat[]' onchange='getDataObat()'></select></td>
+                    <td><input type='text' class='do_satuan_pembelian form-control' id='do_satuan_pembelian[]' name='do_satuan_pembelian[]'></td>"
+                    <td><input type="text" class="form-control" id="do_diskon[]" name="do_diskon[]"></td>
+                    <td><input type="text" class="form-control" id="" name=""></td>
+                    <td><input type="text" class="do_qty form-control" id="do_qty[]" name="do_qty[]"></td>
+                    <td><input type="text" class="form-control" id="do_isi_pembelian" name="do_isi_pembelian[]" readonly></td>
+                    <td><input type="text" class="form-control" id="do_satuan_jual" name="do_satuan_jual[]" readonly></td>
+                    <td><input type="text" class="form-control" id="do_hrg_beli" name="do_hrg_beli[]" readonly></td>
+                    <td><input type="text" class="form-control" id="do_pajak" name="do_pajak[]"></td>
+                    <td><input type="date" class="form-control" id="do_tgl_exp" name="do_tgl_exp[]"></td>
+                    <td><input type="text" class="form-control" id="do_batch_number" name="do_batch_number[]"></td>
+                    <td><input type="text" class="form-control" id="do_sub_total" name="do_sub_total[]" readonly></td>
+                    <td><a href="javascript:void(0)" class="text-danger font-18 remove" title="Remove"><i class="fa fa-trash"></i></a></td>
+                </tr>`);
+            // Ajax Search Obat
+            var path = "{{ route('obatSearch') }}";
+
+            $('.do_obat').select2({
+                placeholder: 'Obat / Barang',
+                ajax: {
+                    url: path,
+                    dataType: 'json',
+                    delay: 150,
+                    processResults: function(isdataObat) {
+                        return {
+                            results: $.map(isdataObat, function(item) {
+                                return {
+                                    // text: item.fs_mr,
+                                    text: item.fm_nm_obat,
+                                    id: item.fm_kd_obat,
+                                    // alamat: item.fs_alamat,
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                }
+            });
+
+            // Call Hasil Search Obat
+            function getDataObat() {
+                var obat = $('#do_obat').val();
+                // alert(obat);
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "{{ url('getObatList') }}/" + obat,
+                    type: 'GET',
+                    data: {
+                        'fm_kd_obat': obat
+                    },
+                    success: function(isdataObat) {
+                        // var json = isdata2;
+                        $.each(isdataObat, function(key, datavalue) {
+                            $('#do_satuan_pembelian').val(datavalue.fm_satuan_pembelian);
+                            $('#do_hrg_beli').val(datavalue.fm_hrg_beli);
+                            $('#do_satuan_jual').val(datavalue.fm_satuan_jual);
+                            $('#do_isi_pembelian').val(datavalue.fm_isi_satuan_pembelian);
+                            // $('#fr_tgl_lahir').val(datavalue.fs_tgl_lahir);
+                            // $('#fr_jenis_kelamin').val(datavalue.fs_jenis_kelamin);
+                        })
+                    }
+                })
+            };
+        });
+
+        // $(document).on('click', '#delRow', function() {
+        //     let hapus = $(this).data('row')
+        //     $('#' + hapus).remove()
+        // });
+
+
+        $(document).on('click', '.remove', function() {
+            // var delete_row = $(this).data("row");
+            $('.addNewRow').remove();
+        });
+
+
+        // Select2 call
+        $('#do_hdr_supplier').select2({
+            placeholder: 'Supplier',
+        });
+
+        $('#do_hdr_lokasi_stock').select2({
+            placeholder: 'Lokasi Stock',
+        });
+
+
 
         // Auto Currency
         // var rupiah1 = document.getElementById("fm_hrg_beli");
