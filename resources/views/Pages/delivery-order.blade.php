@@ -75,7 +75,7 @@
     </style>
     <!-- The modal Create -->
     <div class="modal fade" id="TambahPO" data-backdrop="static">
-        <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title"><i class="fa fa-truck">&nbsp;</i>Delivery Order</h4>
@@ -149,7 +149,7 @@
                     <tbody id="addTbRow">
                         <tr id="addNewRow">
                             <td>
-                                <select class="do_obat form-control" style='width: 100%;' id="do_obat" name="do_obat[]"
+                                <select class="do_obat form-control" style='width: 100%;' id="do_obat[]" name="do_obat[]"
                                     onchange="getDataObat()"></select>
                             </td>
                             <td>
@@ -197,6 +197,7 @@
                             </td>
 
                             <input type="hidden" name="user" id="user" value="tes user">
+                            {{-- <input type="hidden" name="do_hdr_kd[]" id="do_hdr_kd">  --}}
                             {{-- <td>
                                 <button class="remove btn btn-xs btn-danger " id="delRow"><i
                                         class="fa fa-close"></i></button>
@@ -262,116 +263,9 @@
                     </div>
                 </div>
         @endforeach --}}
-@endsection
 
-@push('scripts')
-    <script>
-        // $(document).ready(function() {
-        //     let baris = 1
-
-        //     $(document).on('click', '#addRow', function() {
-        //         // alert(baris);
-        //         baris = baris + 1
-        //         var html = "<tr class='addNewRow' id='addNewRow'" + baris + ">"
-        //         html +=
-        //             "<td><select class='do_obat form-control' style='width: 100%;' id='do_obat' name='do_obat[]' onchange='getDataObat()'></select></td>"
-        //         html +=
-        //             "<td><input type='text' class='form-control' id='do_satuan_pembelian' id='do_satuan_pembelian[]'></td>"
-        //         html += "<td><input type='text' class='form-control' id=''></td>"
-        //         html +=
-        //             "<td><input type='text' class='form-control' id='do_diskon' name='do_diskon[]'></td>"
-        //         html += "<td><input type='text' class='form-control' id='do_qty' name='do_qty[]'></td>"
-        //         html +=
-        //             "<td><input type='text' class='form-control' id='do_isi_pembelian' name='do_isi_pembelian[]'></td>"
-        //         html +=
-        //             "<td><input type='text' class='form-control' id='do_satuan_jual' name='do_satuan_jual[]'></td>"
-        //         html +=
-        //             "<td><input type='text' class='form-control' id='do_hrg_beli' name='do_hrg_beli[]'></td>"
-        //         html += "<td><input type='text' class='form-control' id='do_pajak' name='do_pajak[]'></td>"
-        //         html +=
-        //             "<td><input type='date' class='form-control' id='do_tgl_exp' name='do_tgl_exp[]'></td>"
-        //         html +=
-        //             "<td><input type='text' class='form-control' id='do_batch_number' name='do_batch_number[]'></td>"
-        //         html +=
-        //             "<td><input type='text' class='form-control' id='do_total' name='do_total[]' readonly></td>"
-        //         html +=
-        //             "<td><button class='remove btn btn-xs btn-danger' id='delRow'><i class='fa fa-close'></i></button></td>"
-        //         html += "</tr>"
-
-        //         $('#addTbRow').append(html)
-        //     });
-        // });
-        // Ajax Search Obat
-        var path = "{{ route('obatSearch') }}";
-
-        $('.do_obat').select2({
-            placeholder: 'Obat / Barang',
-            ajax: {
-                url: path,
-                dataType: 'json',
-                delay: 150,
-                processResults: function(isdataObat) {
-                    return {
-                        results: $.map(isdataObat, function(item) {
-                            return {
-                                // text: item.fs_mr,
-                                text: item.fm_nm_obat,
-                                id: item.fm_kd_obat,
-                                // alamat: item.fs_alamat,
-                            }
-                        })
-                    };
-                },
-                cache: true
-            }
-        });
-
-        // Call Hasil Search Obat
-        function getDataObat() {
-            var obat = $('#do_obat').val();
-            // alert(obat);
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: "{{ url('getObatList') }}/" + obat,
-                type: 'GET',
-                data: {
-                    'fm_kd_obat': obat
-                },
-                success: function(isdataObat) {
-                    // var json = isdata2;
-                    $.each(isdataObat, function(key, datavalue) {
-                        $('#do_satuan_pembelian').val(datavalue.fm_satuan_pembelian);
-                        $('#do_hrg_beli').val(datavalue.fm_hrg_beli);
-                        $('#do_satuan_jual').val(datavalue.fm_satuan_jual);
-                        $('#do_isi_pembelian').val(datavalue.fm_isi_satuan_pembelian);
-                        // $('#fr_tgl_lahir').val(datavalue.fs_tgl_lahir);
-                        // $('#fr_jenis_kelamin').val(datavalue.fs_jenis_kelamin);
-                    })
-                }
-            })
-        };
-
-        var rowIdx = 1;
-        $("#addRow").on("click", function() {
-            // Adding a row inside the tbody.
-            $("#doTable tbody").append(`
-                <tr id="R${++rowIdx}">
-                    <td><select class='do_obat form-control' style='width: 100%;' id='do_obat[]' name='do_obat[]' onchange='getDataObat()'></select></td>
-                    <td><input type='text' class='do_satuan_pembelian form-control' id='do_satuan_pembelian[]' name='do_satuan_pembelian[]'></td>"
-                    <td><input type="text" class="form-control" id="do_diskon[]" name="do_diskon[]"></td>
-                    <td><input type="text" class="form-control" id="" name=""></td>
-                    <td><input type="text" class="do_qty form-control" id="do_qty[]" name="do_qty[]"></td>
-                    <td><input type="text" class="form-control" id="do_isi_pembelian" name="do_isi_pembelian[]" readonly></td>
-                    <td><input type="text" class="form-control" id="do_satuan_jual" name="do_satuan_jual[]" readonly></td>
-                    <td><input type="text" class="form-control" id="do_hrg_beli" name="do_hrg_beli[]" readonly></td>
-                    <td><input type="text" class="form-control" id="do_pajak" name="do_pajak[]"></td>
-                    <td><input type="date" class="form-control" id="do_tgl_exp" name="do_tgl_exp[]"></td>
-                    <td><input type="text" class="form-control" id="do_batch_number" name="do_batch_number[]"></td>
-                    <td><input type="text" class="form-control" id="do_sub_total" name="do_sub_total[]" readonly></td>
-                    <td><a href="javascript:void(0)" class="text-danger font-18 remove" title="Remove"><i class="fa fa-trash"></i></a></td>
-                </tr>`);
+    @push('scripts')
+        <script>
             // Ajax Search Obat
             var path = "{{ route('obatSearch') }}";
 
@@ -423,188 +317,261 @@
                     }
                 })
             };
-        });
 
-        // $(document).on('click', '#delRow', function() {
-        //     let hapus = $(this).data('row')
-        //     $('#' + hapus).remove()
-        // });
+            var rowIdx = 1;
+            $("#addRow").on("click", function() {
+                // Adding a row inside the tbody.
+                $("#doTable tbody").append(`
+                <tr id="addNewRow">
+                    <td><select class="do_obat form-control" style='width: 100%;' id='do_obat[]' name="do_obat[]" onchange="getDataObat()"></select></td>
+                    <td><input type='text' class='do_satuan_pembelian form-control' id='do_satuan_pembelian[]' name='do_satuan_pembelian[]'></td>"
+                    <td><input type="text" class="form-control" id="do_diskon[]" name="do_diskon[]"></td>
+                    <td><input type="text" class="form-control" id="" name=""></td>
+                    <td><input type="text" class="do_qty form-control" id="do_qty[]" name="do_qty[]"></td>
+                    <td><input type="text" class="form-control" id="do_isi_pembelian" name="do_isi_pembelian[]" readonly></td>
+                    <td><input type="text" class="form-control" id="do_satuan_jual" name="do_satuan_jual[]" readonly></td>
+                    <td><input type="text" class="form-control" id="do_hrg_beli" name="do_hrg_beli[]" readonly></td>
+                    <td><input type="text" class="form-control" id="do_pajak" name="do_pajak[]"></td>
+                    <td><input type="date" class="form-control" id="do_tgl_exp" name="do_tgl_exp[]"></td>
+                    <td><input type="text" class="form-control" id="do_batch_number" name="do_batch_number[]"></td>
+                    <td><input type="text" class="form-control" id="do_sub_total" name="do_sub_total[]" readonly></td>
+                    <td><a href="javascript:void(0)" class="text-danger font-18 remove" title="Remove"><i class="fa fa-trash"></i></a></td>
+                    <input type="hidden" name="do_hdr_kd[]" id="do_hdr_kd">
+                </tr>`);
+                // Ajax Search Obat
+                var path = "{{ route('obatSearch') }}";
 
+                $('.do_obat').select2({
+                    placeholder: 'Obat / Barang',
+                    ajax: {
+                        url: path,
+                        dataType: 'json',
+                        delay: 150,
+                        processResults: function(isdataObat) {
+                            return {
+                                results: $.map(isdataObat, function(item) {
+                                    return {
+                                        // text: item.fs_mr,
+                                        text: item.fm_nm_obat,
+                                        id: item.fm_kd_obat,
+                                        // alamat: item.fs_alamat,
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
+                    }
+                });
 
-        $(document).on('click', '.remove', function() {
-            // var delete_row = $(this).data("row");
-            $('.addNewRow').remove();
-        });
-
-
-        // Select2 call
-        $('#do_hdr_supplier').select2({
-            placeholder: 'Supplier',
-        });
-
-        $('#do_hdr_lokasi_stock').select2({
-            placeholder: 'Lokasi Stock',
-        });
-
-
-
-        // Auto Currency
-        // var rupiah1 = document.getElementById("fm_hrg_beli");
-
-        // rupiah1.addEventListener('keyup', function(e) {
-
-        //     rupiah1.value = formatRupiah(this.value, 'Rp. ');
-        // });
-
-
-        // function formatRupiah(angka, prefix) {
-        //     var number_string = angka.replace(/[^,\d]/g, '').toString(),
-        //         split = number_string.split(','),
-        //         sisa = split[0].length % 3,
-        //         rupiah1 = split[0].substr(0, sisa),
-        //         ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-        //     if (ribuan) {
-        //         separator = sisa ? '.' : '';
-        //         rupiah1 += separator + ribuan.join('.');
-        //     }
-
-        //     rupiah1 = split[1] != undefined ? rupiah1 + ',' + split[1] : rupiah1;
-        //     return prefix == undefined ? rupiah1 : (rupiah1 ? 'Rp. ' + rupiah1 : '');
-        // };
-
-
-
-        // $(document).ready(function() {
-        //     $('#buat').on('click', function() {
-        //         var fm_hrg_beli = $('#fm_hrg_beli').val();
-        //         var show = parseInt(fm_hrg_beli.replace(/,.*|[^0-9]/g, ''), 10);
-        //         alert(show);
-        //     })
-        // });
-
-        // Create 
-        $(document).ready(function() {
-            $('#buatt').on('click', function() {
-                var do_hdr_kd = $('#do_hdr_kd').val();
-                var do_hdr_no_faktur = $('#do_hdr_no_faktur').val();
-                var do_hdr_supplier = $('#do_hdr_supplier').val();
-                var do_hdr_tgl_tempo = $('#do_hdr_tgl_tempo').val();
-                var do_hdr_lokasi_stock = $('#do_hdr_lokasi_stock').val();
-                var do_hdr_total_faktur = $('#do_hdr_total_faktur').val();
-                var user = $('#user').val();
-
-                // Detail Do
-                var do_obat = $('#do_obat').val();
-                var do_satuan_pembelian = $('#do_satuan_pembelian').val();
-                var do_diskon = $('#do_diskon').val();
-                var do_qty = $('#do_qty').val();
-                var do_isi_pembelian = $('#do_isi_pembelian').val();
-                var do_satuan_jual = $('#do_satuan_jual').val();
-                var do_hrg_beli = $('#do_hrg_beli').val();
-                var do_pajak = $('#do_pajak').val();
-                var do_tgl_exp = $('#do_tgl_exp').val();
-                var do_batch_number = $('#do_batch_number').val();
-                var do_sub_total = $('#do_sub_total').val();
-                // var do_hdr_kd = $('#do_hdr_kd').val();
-
-                // ubah currency ke string biasa
-                // var sfm_hrg_beli = parseInt(fm_hrg_beli.replace(/,.*|[^0-9]/g, ''), 10);
-                // var sfm_hrg_jual_non_resep = parseInt(fm_hrg_jual_non_resep.replace(/,.*|[^0-9]/g, ''), 10);
-                // var sfm_hrg_jual_resep = parseInt(fm_hrg_jual_resep.replace(/,.*|[^0-9]/g, ''), 10);
-                // var sfm_hrg_jual_nakes = parseInt(fm_hrg_jual_nakes.replace(/,.*|[^0-9]/g, ''), 10);
-
-                if (do_hdr_no_faktur != "") {
-                    var selWeight = [];
-                    $('input[name="do_obat"]').each(function() {
-                        if ($(this).val() != '') {
-                            selWeight.push($(this).val());
-                        }
-                    });
-                    alert(selWeight);
+                // Call Hasil Search Obat
+                function getDataObat() {
+                    var obat = $('#do_obat').val();
+                    // alert(obat);
                     $.ajax({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
-                        url: "{{ url('add-delivery-order') }}",
-                        type: "POST",
+                        url: "{{ url('getObatList') }}/" + obat,
+                        type: 'GET',
                         data: {
-                            type: 2,
-                            do_hdr_kd: do_hdr_kd,
-                            do_hdr_no_faktur: do_hdr_no_faktur,
-                            do_hdr_supplier: do_hdr_supplier,
-                            do_hdr_tgl_tempo: do_hdr_tgl_tempo,
-                            do_hdr_lokasi_stock: do_hdr_lokasi_stock,
-                            do_hdr_total_faktur: do_hdr_total_faktur,
-                            user: user,
-
-                            // Detail Do
-                            do_obat: do_obat,
-                            do_satuan_pembelian: do_satuan_pembelian,
-                            do_diskon: do_diskon,
-                            do_qty: do_qty,
-                            do_isi_pembelian: do_isi_pembelian,
-                            do_satuan_jual: do_satuan_jual,
-                            do_hrg_beli: do_hrg_beli,
-                            do_pajak: do_pajak,
-                            do_tgl_exp: do_tgl_exp,
-                            do_batch_number: do_batch_number,
-                            do_sub_total: do_sub_total,
-                            // do_hdr_id: do_hdr_kd
+                            'fm_kd_obat': obat
                         },
-                        cache: false,
-                        success: function(dataResult) {
-                            // $('.close').click();
-                            // document.getElementById("fm_nm_kategori_produk").value = "";
-                            toastr.success('Saved!', 'Your fun', {
-                                timeOut: 2000,
-                                preventDuplicates: true,
-                                positionClass: 'toast-top-right',
-                            });
-                            return window.location.href = "{{ url('delivery-order') }}";
+                        success: function(isdataObat) {
+                            // var json = isdata2;
+                            $.each(isdataObat, function(key, datavalue) {
+                                $('#do_satuan_pembelian').val(datavalue.fm_satuan_pembelian);
+                                $('#do_hrg_beli').val(datavalue.fm_hrg_beli);
+                                $('#do_satuan_jual').val(datavalue.fm_satuan_jual);
+                                $('#do_isi_pembelian').val(datavalue.fm_isi_satuan_pembelian);
+                                // $('#fr_tgl_lahir').val(datavalue.fs_tgl_lahir);
+                                // $('#fr_jenis_kelamin').val(datavalue.fs_jenis_kelamin);
+                            })
                         }
-                    });
-                } else {
-                    alert('Please fill all the field !');
-                }
-            });
-        });
-
-        // Custom Harga Beli Perxxx
-        $(document).ready(function() {
-            $('#fm_satuan_pembelian').on('change', function() {
-                var sat_beli = $(this).val();
-                // alert(sat_beli);
-                if (sat_beli) {
-                    $('#hrgBeliPer').val(sat_beli);
-                }
+                    })
+                };
             });
 
-        });
+            // $(document).on('click', '#delRow', function() {
+            //     let hapus = $(this).data('row')
+            //     $('#' + hapus).remove()
+            // });
 
-        // Custom Isi Satuan Pembelian
-        $(document).ready(function() {
-            $('#fm_satuan_jual').on('change', function() {
-                var sat_jual = $(this).val();
-                // alert(sat_jual);
-                if (sat_jual) {
-                    $('#isiSatuanBeli').val(sat_jual);
-                }
-            });
-        });
 
-        // Qty x hrg 
-        $(document).ready(function() {
-            $('.do_qty').on('keyup', function() {
-                var qty = $(this).val();
-                var hrg = $('#do_hrg_beli').val();
-                // alert(qty);
-                if (hrg == '') {
-                    $('#do_sub_total').val('');
-                } else {
-                    var total = qty * hrg
-                    $('#do_sub_total').val(total);
-                }
+            $(document).on('click', '.remove', function() {
+                // var delete_row = $(this).data("row");
+                $('.addNewRow').remove();
             });
-        });
-    </script>
-@endpush
+
+
+            // Select2 call
+            $('#do_hdr_supplier').select2({
+                placeholder: 'Supplier',
+            });
+
+            $('#do_hdr_lokasi_stock').select2({
+                placeholder: 'Lokasi Stock',
+            });
+
+
+
+            // Auto Currency
+            // var rupiah1 = document.getElementById("fm_hrg_beli");
+
+            // rupiah1.addEventListener('keyup', function(e) {
+
+            //     rupiah1.value = formatRupiah(this.value, 'Rp. ');
+            // });
+
+
+            // function formatRupiah(angka, prefix) {
+            //     var number_string = angka.replace(/[^,\d]/g, '').toString(),
+            //         split = number_string.split(','),
+            //         sisa = split[0].length % 3,
+            //         rupiah1 = split[0].substr(0, sisa),
+            //         ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+            //     if (ribuan) {
+            //         separator = sisa ? '.' : '';
+            //         rupiah1 += separator + ribuan.join('.');
+            //     }
+
+            //     rupiah1 = split[1] != undefined ? rupiah1 + ',' + split[1] : rupiah1;
+            //     return prefix == undefined ? rupiah1 : (rupiah1 ? 'Rp. ' + rupiah1 : '');
+            // };
+
+
+
+            // $(document).ready(function() {
+            //     $('#buat').on('click', function() {
+            //         var fm_hrg_beli = $('#fm_hrg_beli').val();
+            //         var show = parseInt(fm_hrg_beli.replace(/,.*|[^0-9]/g, ''), 10);
+            //         alert(show);
+            //     })
+            // });
+
+            // Create 
+            $(document).ready(function() {
+                $('#buatt').on('click', function() {
+                    var do_hdr_kd = $('#do_hdr_kd').val();
+                    var do_hdr_no_faktur = $('#do_hdr_no_faktur').val();
+                    var do_hdr_supplier = $('#do_hdr_supplier').val();
+                    var do_hdr_tgl_tempo = $('#do_hdr_tgl_tempo').val();
+                    var do_hdr_lokasi_stock = $('#do_hdr_lokasi_stock').val();
+                    var do_hdr_total_faktur = $('#do_hdr_total_faktur').val();
+                    var user = $('#user').val();
+
+                    // Detail Do
+                    var do_obat = $('#do_obat').val();
+                    var do_satuan_pembelian = $('#do_satuan_pembelian').val();
+                    var do_diskon = $('#do_diskon').val();
+                    var do_qty = $('#do_qty').val();
+                    var do_isi_pembelian = $('#do_isi_pembelian').val();
+                    var do_satuan_jual = $('#do_satuan_jual').val();
+                    var do_hrg_beli = $('#do_hrg_beli').val();
+                    var do_pajak = $('#do_pajak').val();
+                    var do_tgl_exp = $('#do_tgl_exp').val();
+                    var do_batch_number = $('#do_batch_number').val();
+                    var do_sub_total = $('#do_sub_total').val();
+                    // var do_hdr_kd = $('#do_hdr_kd').val();
+
+                    // ubah currency ke string biasa
+                    // var sfm_hrg_beli = parseInt(fm_hrg_beli.replace(/,.*|[^0-9]/g, ''), 10);
+                    // var sfm_hrg_jual_non_resep = parseInt(fm_hrg_jual_non_resep.replace(/,.*|[^0-9]/g, ''), 10);
+                    // var sfm_hrg_jual_resep = parseInt(fm_hrg_jual_resep.replace(/,.*|[^0-9]/g, ''), 10);
+                    // var sfm_hrg_jual_nakes = parseInt(fm_hrg_jual_nakes.replace(/,.*|[^0-9]/g, ''), 10);
+
+                    if (do_hdr_no_faktur != "") {
+                        var selWeight = [];
+                        $('input[name="do_obat"]').each(function() {
+                            if ($(this).val() != '') {
+                                selWeight.push($(this).val());
+                            }
+                        });
+                        alert(selWeight);
+                        $.ajax({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            url: "{{ url('add-delivery-order') }}",
+                            type: "POST",
+                            data: {
+                                type: 2,
+                                do_hdr_kd: do_hdr_kd,
+                                do_hdr_no_faktur: do_hdr_no_faktur,
+                                do_hdr_supplier: do_hdr_supplier,
+                                do_hdr_tgl_tempo: do_hdr_tgl_tempo,
+                                do_hdr_lokasi_stock: do_hdr_lokasi_stock,
+                                do_hdr_total_faktur: do_hdr_total_faktur,
+                                user: user,
+
+                                // Detail Do
+                                do_obat: do_obat,
+                                do_satuan_pembelian: do_satuan_pembelian,
+                                do_diskon: do_diskon,
+                                do_qty: do_qty,
+                                do_isi_pembelian: do_isi_pembelian,
+                                do_satuan_jual: do_satuan_jual,
+                                do_hrg_beli: do_hrg_beli,
+                                do_pajak: do_pajak,
+                                do_tgl_exp: do_tgl_exp,
+                                do_batch_number: do_batch_number,
+                                do_sub_total: do_sub_total,
+                                // do_hdr_id: do_hdr_kd
+                            },
+                            cache: false,
+                            success: function(dataResult) {
+                                // $('.close').click();
+                                // document.getElementById("fm_nm_kategori_produk").value = "";
+                                toastr.success('Saved!', 'Your fun', {
+                                    timeOut: 2000,
+                                    preventDuplicates: true,
+                                    positionClass: 'toast-top-right',
+                                });
+                                return window.location.href = "{{ url('delivery-order') }}";
+                            }
+                        });
+                    } else {
+                        alert('Please fill all the field !');
+                    }
+                });
+            });
+
+            // Custom Harga Beli Perxxx
+            $(document).ready(function() {
+                $('#fm_satuan_pembelian').on('change', function() {
+                    var sat_beli = $(this).val();
+                    // alert(sat_beli);
+                    if (sat_beli) {
+                        $('#hrgBeliPer').val(sat_beli);
+                    }
+                });
+
+            });
+
+            // Custom Isi Satuan Pembelian
+            $(document).ready(function() {
+                $('#fm_satuan_jual').on('change', function() {
+                    var sat_jual = $(this).val();
+                    // alert(sat_jual);
+                    if (sat_jual) {
+                        $('#isiSatuanBeli').val(sat_jual);
+                    }
+                });
+            });
+
+            // Qty x hrg 
+            $(document).ready(function() {
+                $('.do_qty').on('keyup', function() {
+                    var qty = $(this).val();
+                    var hrg = $('#do_hrg_beli').val();
+                    // alert(qty);
+                    if (hrg == '') {
+                        $('#do_sub_total').val('');
+                    } else {
+                        var total = qty * hrg
+                        $('#do_sub_total').val(total);
+                    }
+                });
+            });
+        </script>
+    @endpush
+@endsection
