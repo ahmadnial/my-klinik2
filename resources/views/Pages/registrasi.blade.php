@@ -88,6 +88,7 @@
                             <input type="text" class="form-control" name="fr_kd_reg" id="fr_kd_reg" readonly
                                 value="{{ $kd_reg }}">
                         </div>
+                        <input type="hidden" id="fr_nama" name="fr_nama">
                         <div class="form-group col-sm-6">
                             <label for="">Nama Pasien/No. MR</label>
                             <select class="form-control-pasien" id="fr_mr" style="width: 100%;" name="fr_mr"
@@ -113,7 +114,7 @@
                             <select name="fr_layanan" id="fr_layanan" class="form-control">
                                 <option value="">--Select--</option>
                                 @foreach ($layanan as $lay)
-                                    <option value="{{ $lay->fm_kd_layanan }}">{{ $lay->fm_nm_layanan }}</option>
+                                    <option value="{{ $lay->fm_nm_layanan }}">{{ $lay->fm_nm_layanan }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -220,6 +221,7 @@
                 success: function(isdata2) {
                     // var json = isdata2;
                     $.each(isdata2, function(key, datavalue) {
+                        $('#fr_nama').val(datavalue.fs_nama);
                         $('#fr_alamat').val(datavalue.fs_alamat);
                         $('#fr_no_hp').val(datavalue.fs_no_hp);
                         $('#fr_tgl_lahir').val(datavalue.fs_tgl_lahir);
@@ -251,7 +253,7 @@
                             $('#fr_dokter').append('<option value="">--Select--</option>');
                             $.each(islayananMedis, function(key, value) {
                                 $('#fr_dokter').append('<option value="' + value
-                                    .fm_kd_medis +
+                                    .fm_nm_medis +
                                     '">' + value.fm_nm_medis +
                                     '</option>');
                             })

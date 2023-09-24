@@ -110,7 +110,7 @@
                         <select name="fm_layanan" id="fm_layanan" class="form-control">
                             <option value="">--Select--</option>
                             @foreach ($islayanan as $lay)
-                                <option value="{{ $lay->fm_kd_layanan }}">{{ $lay->fm_nm_layanan }}</option>
+                                <option value="{{ $lay->fm_nm_layanan }}">{{ $lay->fm_nm_layanan }}</option>
                             @endforeach
                         </select>
                     </div>

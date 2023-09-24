@@ -68,8 +68,8 @@ Route::controller(mastersatuController::class)->group(function () {
 
 Route::controller(TindakanController::class)->group(function () {
     Route::get('tindakan-medis', 'tindakanMedis')->name('tindakan-medis');
-    // Route::get('view-mstr-medis', 'medis')->name('medis');
-    // Route::get('view-mstr-jaminan', 'jaminan')->name('view-mstr-jaminan');
+    Route::get('SearchRegister/{kdReg}', 'registerSearch')->name('SearchRegister');
+    Route::post('chartCreate', 'chartCreate')->name('chartCreate');
 });
 
 
