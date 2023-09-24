@@ -128,7 +128,7 @@
 
                 {{-- <hr> --}}
 
-                <table class="table" id="doTable">
+                <table class="table table-responsive" id="doTable">
                     <thead>
                         <tr>
                             {{-- <th>Kode Obat</th> --}}
@@ -146,10 +146,10 @@
                             <th>Total</th>
                         </tr>
                     </thead>
-                    <tbody id="addTbRow">
-                        <tr id="addNewRow">
+                    <tbody>
+                        <tr>
                             <td>
-                                <select class="do_obat form-control" style='width: 100%;' id="do_obat[]" name="do_obat[]"
+                                <select class="form-control" style='width: 100%;' id="do_obat" name="do_obat[]"
                                     onchange="getDataObat()"></select>
                             </td>
                             <td>
@@ -227,49 +227,12 @@
         </form>
     </div>
 
-
-    <!-- The modal Edit -->
-    {{-- @foreach ($obatView as $tz)
-          
-        {{-- End Modal --}}
-
-    <!-- The modal Delete -->
-    {{-- <div class="modal fade" id="DeleteSupplier{{ $tz->fm_kd_obat }}">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title">Konfirmasi</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="container">
-                                    Hapus data Supplier : <b> {{ $tz->fm_nm_obat }} </b> ?
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <form class="d-inline" action="{{ url('destroy-mstr-supplier', [$tz->fm_kd_obat]) }}"
-                                    method="POST">
-                                    @csrf
-                                    <input type="hidden" value="DELETE" name="_method">
-                                    <button type="submit" id="Delete" value="Delete"
-                                        class="btn btn-danger float-right">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-        @endforeach --}}
-
     @push('scripts')
         <script>
             // Ajax Search Obat
             var path = "{{ route('obatSearch') }}";
 
-            $('.do_obat').select2({
+            $('#do_obat').select2({
                 placeholder: 'Obat / Barang',
                 ajax: {
                     url: path,
@@ -322,19 +285,50 @@
             $("#addRow").on("click", function() {
                 // Adding a row inside the tbody.
                 $("#doTable tbody").append(`
-                <tr id="addNewRow">
-                    <td><select class="do_obat form-control" style='width: 100%;' id='do_obat[]' name="do_obat[]" onchange="getDataObat()"></select></td>
-                    <td><input type='text' class='do_satuan_pembelian form-control' id='do_satuan_pembelian[]' name='do_satuan_pembelian[]'></td>"
-                    <td><input type="text" class="form-control" id="do_diskon[]" name="do_diskon[]"></td>
-                    <td><input type="text" class="form-control" id="" name=""></td>
-                    <td><input type="text" class="do_qty form-control" id="do_qty[]" name="do_qty[]"></td>
-                    <td><input type="text" class="form-control" id="do_isi_pembelian" name="do_isi_pembelian[]" readonly></td>
-                    <td><input type="text" class="form-control" id="do_satuan_jual" name="do_satuan_jual[]" readonly></td>
-                    <td><input type="text" class="form-control" id="do_hrg_beli" name="do_hrg_beli[]" readonly></td>
-                    <td><input type="text" class="form-control" id="do_pajak" name="do_pajak[]"></td>
-                    <td><input type="date" class="form-control" id="do_tgl_exp" name="do_tgl_exp[]"></td>
-                    <td><input type="text" class="form-control" id="do_batch_number" name="do_batch_number[]"></td>
-                    <td><input type="text" class="form-control" id="do_sub_total" name="do_sub_total[]" readonly></td>
+                <tr id="R${++rowIdx}">
+                    <td>
+                         <select class="do_obat form-control" style='width: 100%;' id="do_obat[]" name="do_obat[]"
+                                    onchange="getDataObat()"></select>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="do_satuan_pembelian[]"
+                                    name="do_satuan_pembelian[]" readonly>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="do_diskon" name="do_diskon[]">
+                            </td>
+                            <td>
+                                <input type="text" class="do_qty form-control" id="do_qty[]" name="do_qty[]">
+                            </td>
+                            <td>
+                                <input type="text" class="do_isi_pembelian form-control" id="do_isi_pembelian"
+                                    name="do_isi_pembelian[]" readonly>
+                            </td>
+                            <td>
+                                <input type="text" class="do_satuan_jual form-control" id="do_satuan_jual" name="do_satuan_jual[]"
+                                    readonly>
+                            </td>
+                            <td>
+                                <input type="text" class="do_hrg_beli form-control" id="do_hrg_beli" name="do_hrg_beli[]"
+                                    readonly>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="do_pajak" name="do_pajak[]">
+                            </td>
+                            <td>
+                                <input type="date" class="form-control" id="do_tgl_exp" name="do_tgl_exp[]">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="do_batch_number"
+                                    name="do_batch_number[]">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="do_sub_total" name="do_sub_total[]"
+                                    readonly>
+                            </td>
                     <td><a href="javascript:void(0)" class="text-danger font-18 remove" title="Remove"><i class="fa fa-trash"></i></a></td>
                     <input type="hidden" name="do_hdr_kd[]" id="do_hdr_kd">
                 </tr>`);
@@ -349,11 +343,11 @@
                         delay: 150,
                         processResults: function(isdataObat) {
                             return {
-                                results: $.map(isdataObat, function(item) {
+                                results: $.map(isdataObat, function(item2) {
                                     return {
                                         // text: item.fs_mr,
-                                        text: item.fm_nm_obat,
-                                        id: item.fm_kd_obat,
+                                        text: item2.fm_nm_obat,
+                                        id: item2.fm_kd_obat,
                                         // alamat: item.fs_alamat,
                                     }
                                 })
@@ -365,7 +359,7 @@
 
                 // Call Hasil Search Obat
                 function getDataObat() {
-                    var obat = $('#do_obat').val();
+                    var obat = $('.do_obat').val();
                     // alert(obat);
                     $.ajax({
                         headers: {
@@ -378,11 +372,11 @@
                         },
                         success: function(isdataObat) {
                             // var json = isdata2;
-                            $.each(isdataObat, function(key, datavalue) {
-                                $('#do_satuan_pembelian').val(datavalue.fm_satuan_pembelian);
-                                $('#do_hrg_beli').val(datavalue.fm_hrg_beli);
-                                $('#do_satuan_jual').val(datavalue.fm_satuan_jual);
-                                $('#do_isi_pembelian').val(datavalue.fm_isi_satuan_pembelian);
+                            $.each(isdataObat, function(key, datavalue2) {
+                                $('#do_satuan_pembelian').val(datavalue2.fm_satuan_pembelian);
+                                $('.do_hrg_beli').val(datavalue2.fm_hrg_beli);
+                                $('.do_satuan_jual').val(datavalue2.fm_satuan_jual);
+                                $('.do_isi_pembelian').val(datavalue2.fm_isi_satuan_pembelian);
                                 // $('#fr_tgl_lahir').val(datavalue.fs_tgl_lahir);
                                 // $('#fr_jenis_kelamin').val(datavalue.fs_jenis_kelamin);
                             })

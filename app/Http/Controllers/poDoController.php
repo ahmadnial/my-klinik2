@@ -70,23 +70,24 @@ class poDoController extends Controller
     public function doCreate(Request $request)
     {
         dd($request->all());
-        $data = $request->all();
+        // $data = $request->all();
         foreach ($request->do_obat as $key => $do_obat) {
-            $do_detail_item = new do_detail_item();
-            $do_detail_item['do_obat']              = $do_obat;
-            $do_detail_item['do_satuan_pembelian']  = $request->do_satuan_pembelian[$key];
-            $do_detail_item['do_diskon']            = $request->do_diskon[$key];
-            $do_detail_item['do_qty']               = $request->do_qty[$key];
-            $do_detail_item['do_isi_pembelian']     = $request->do_isi_pembelian[$key];
-            $do_detail_item['do_satuan_jual']       = $request->do_satuan_jual[$key];
-            $do_detail_item['do_hrg_beli']          = $request->do_hrg_beli[$key];
-            $do_detail_item['do_pajak']             = $request->do_pajak[$key];
-            $do_detail_item['do_tgl_exp']           = $request->do_tgl_exp[$key];
-            $do_detail_item['do_batch_number']      = $request->do_batch_number[$key];
-            $do_detail_item['do_sub_total']         = $request->do_sub_total[$key];
-            $do_detail_item['do_hdr_kd']            = $request->do_hdr_kd[$key];
+            // $dataD = [];
+            $dataD['do_obat']              = $do_obat;
+            $dataD['do_satuan_pembelian']  = $request->do_satuan_pembelian[$key];
+            $dataD['do_diskon']            = $request->do_diskon[$key];
+            $dataD['do_qty']               = $request->do_qty[$key];
+            $dataD['do_isi_pembelian']     = $request->do_isi_pembelian[$key];
+            $dataD['do_satuan_jual']       = $request->do_satuan_jual[$key];
+            $dataD['do_hrg_beli']          = $request->do_hrg_beli[$key];
+            $dataD['do_pajak']             = $request->do_pajak[$key];
+            $dataD['do_tgl_exp']           = $request->do_tgl_exp[$key];
+            $dataD['do_batch_number']      = $request->do_batch_number[$key];
+            $dataD['do_sub_total']         = $request->do_sub_total[$key];
+            // $do_detail_item['do_hdr_kd']            = $request->do_hdr_kd[$key];
+            print_r($dataD);
         }
-        dd($do_detail_item);
+        die();
 
         // if (count($data['do_obat'] > 0)) {
         // foreach ($data['do_obat'] as $uy => $values) {

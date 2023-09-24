@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\registrasiCreate;
 use Illuminate\Http\Request;
 
 class TindakanController extends Controller
@@ -11,7 +12,9 @@ class TindakanController extends Controller
      */
     public function tindakanMedis()
     {
-        return view('pages.tindakan-medis');
+        $isRegActive = registrasiCreate::all();
+
+        return view('pages.tindakan-medis', ['isRegActive' => $isRegActive]);
     }
 
     /**
