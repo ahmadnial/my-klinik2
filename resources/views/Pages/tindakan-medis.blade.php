@@ -7,7 +7,8 @@
                 <div class="row">
                     <div class="form-group col-sm-3">
                         <label for="">Search Registrasi</label>
-                        <select class="form-control-pasien" id="tr_kd_reg" style="width: 100%;" name="tr_kd_reg">
+                        <select class="form-control-pasien" id="tr_kd_reg" style="width: 100%;" name="tr_kd_reg"
+                            onselect="getSessionMR();">
                             @foreach ($isRegActive as $reg)
                                 <option value="">--Select--</option>
                                 <option value="{{ $reg->fr_kd_reg }}">
@@ -287,14 +288,14 @@
                 //     result.innerHTML += `<p class="wishing">Happy Birthday!🎂🎈🎈</p>`;
                 // }
                 var hasil = years + months + days;
-                alert(hasil);
+                // alert(hasil);
             }
             // calculate.addEventListener('click', calculateAge);
 
             // // run calculate on enter key
             // document.addEventListener('keypress', (e) => {
             //     if (e.keyCode == 13) {
-            //         calculate.click();
+            //         calculate.click(); 
             //     }
             // });
         });
@@ -348,7 +349,9 @@
                                 preventDuplicates: true,
                                 positionClass: 'toast-top-right',
                             });
+                            // getSessionMR();
                             return window.location.href = "{{ url('tindakan-medis') }}";
+                            // getIDChart();
                             // document.location.reload()
                         }
                     });
@@ -358,21 +361,62 @@
             });
         });
 
+        function getSessionMR() {
+            // sessionStorage.clear();
+            var dataMR = $('#tr_kd_reg').val();
+            // if (dataMR) {
+            sessionStorage.setItem("mrhistory", $('#tr_kd_reg').val());
+            const details = {
+                mr: $('#chart_mr').val()
+            }
+            const result = JSON.stringify(details);
+            // Now we set the value to the storage
+            sessionStorage.setItem("mrHistory", result);
+            // }
+        }
 
-        window.onload = function() {
-            localStorage.setItem("mr", $('#tr_no_mr').val());
-            var mr = localStorage.getItem('mr');
-            console.log(mr);
+        function getTimeline() {
+            var mrGetSsn = sessionStorage.getItem("mrHistory");
+            var sessionMR = JSON.parse(mrGetSsn);
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ url('getTimeline') }}/" + sessionMR,
+                type: 'GET',
+                data: {
+                    chart_mr: sessionMR
+                },
+                success: function(isTindakanChart) {
+                    alert($isTindakanChart);
+                    // $.each(chart_id, function(key, lastID) {
+                    //     $('#chart_id').val(lastID.chart_id);
+                    //     console.log(lastID.chart_id);
+                    // })
+                }
+            })
         };
+        // window.onload = function() {
+        //     localStorage.setItem("mr", $('#tr_no_mr').val());
+        //     var mr = localStorage.getItem('mr');
+        //     console.log(mr);
+        // };
 
-        // Search History MR
+        // document.getElementById("tr_no_mr").value = getSavedValue("tr_no_mr"); // set the value to this input
 
-        //  To print the value of localStorage variable name
+        // //Save the value function - save it to localStorage as (ID, VALUE)
+        // function saveValue(e) {
+        //     var id = e.id; // get the sender's id to save it . 
+        //     var val = e.value; // get the value. 
+        //     localStorage.setItem(id, val); // Every time user writing something, the localStorage's value will override . 
+        // }
 
-        // if (condition) {
-
-        // } else {
-
+        // //get the saved value function - return the value of "v" from localStorage. 
+        // function getSavedValue(v) {
+        //     if (!localStorage.getItem(v)) {
+        //         return localStorage.getItem(v) // You can change this to your defualt value. 
+        //     }
+        //     return localStorage.getItem(v);
         // }
     </script>
 @endpush
