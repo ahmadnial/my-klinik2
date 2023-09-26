@@ -7,8 +7,7 @@
                 <div class="row">
                     <div class="form-group col-sm-3">
                         <label for="">Search Registrasi</label>
-                        <select class="form-control-pasien" id="tr_kd_reg" style="width: 100%;" name="tr_kd_reg"
-                            onselect="getSessionMR();">
+                        <select class="form-control-pasien" id="tr_kd_reg" style="width: 100%;" name="tr_kd_reg">
                             @foreach ($isRegActive as $reg)
                                 <option value="">--Select--</option>
                                 <option value="{{ $reg->fr_kd_reg }}">
@@ -47,6 +46,8 @@
                         <label for="">Alamat</label>
                         <textarea type="text" class="form-control" name="tr_alamat" id="tr_alamat" value="" readonly></textarea>
                     </div>
+                    {{-- <input type="text" id="chart_id" name="chart_id" value=""> --}}
+
                     <input type="hidden" id="tr_tgl_lahir" name="tr_tgl_lahir">
                     <input type="hidden" id="user" name="user" value="tes">
                 </div>
@@ -88,7 +89,7 @@
                                         <div class="card-body">
                                             {{-- Hidden value --}}
                                             <input type="hidden" id="chart_id" name="chart_id"
-                                                value="{{ $chart_id }}">
+                                                value="{{ $isLastChartID }}">
                                             <input type="hidden" id="chart_kd_reg" name="chart_kd_reg" value="">
                                             <input type="hidden" id="chart_mr" name="chart_mr" value="">
                                             <input type="hidden" id="chart_nm_pasien" name="chart_nm_pasien"
@@ -119,7 +120,7 @@
                                     <div class="modal-footer">
                                         {{-- <button type="button" class="" data-dismiss="modal"></button> --}}
                                         <button type="submit" id="createSOAP" class="btn btn-success float-rights"><i
-                                                class="fa fa-save" onclick="getTimelineOnSubmit()"></i>
+                                                class="fa fa-save"></i>
                                             &nbsp;
                                             Save</button>
                                     </div>
@@ -208,7 +209,6 @@
         // Call Hasil Search Registrasi
         $("#tr_kd_reg").on("change", function() {
             var kdReg = $('#tr_kd_reg').val();
-            // alert(kdReg);
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -219,7 +219,6 @@
                     'fr_kd_reg': kdReg
                 },
                 success: function(isRegSearch) {
-                    // alert($isRegSearch);
                     $.each(isRegSearch, function(key, dataregvalue) {
                         $('#tr_no_mr').val(dataregvalue.fr_mr);
                         $('#tr_nm_pasien').val(dataregvalue.fr_nama);
@@ -247,10 +246,26 @@
             })
         });
 
+        // setInterval(getChartID, 3000);
+
+        // function getChartID() {
+        //     $.ajax({
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //         },
+        //         url: "{{ url('getLastID') }}",
+        //         type: 'GET',
+        //         success: function(chart_id) {
+        //             $.each(chart_id, function(key, id) {
+        //                 $('#chart_id').val(id);
+        //             })
+        //         }
+        //     })
+        // };
+
+
         $("#tr_tgl_lahir").on("change", function() {
-            // var kdReg = $('#tr_kd_reg').val();
-            // alert(kdReg);
-            // selecting the elements
+
             var date = $('#tr_tgl_lahir').val();
 
             // var date = document.getElementById('tr_tgl_lahir');
@@ -264,7 +279,8 @@
 
                 // Calculate years
                 var years;
-                if (today.getMonth() > birthDate.getMonth() || (today.getMonth() == birthDate.getMonth() && today
+                if (today.getMonth() > birthDate.getMonth() || (today.getMonth() == birthDate.getMonth() &&
+                        today
                         .getDate() >=
                         birthDate.getDate())) {
                     years = today.getFullYear() - birthDate.getFullYear();
@@ -310,8 +326,6 @@
             //     }
             // });
         });
-        // onload focus on date input
-        // date.focus();
 
         // Create 
         $(document).ready(function() {
@@ -354,16 +368,14 @@
                         cache: false,
                         success: function(dataResult) {
                             // $('.close').click();
-                            // document.getElementById("fm_nm_kategori_produk").value = "";
                             toastr.success('Saved!', 'Your fun', {
                                 timeOut: 2000,
                                 preventDuplicates: true,
                                 positionClass: 'toast-top-right',
                             });
-                            // getSessionMR();
                             return window.location.href = "{{ url('tindakan-medis') }}";
-                            // getIDChart();
-                            // document.location.reload()
+                            getTimeline();
+
                         }
                     });
                 } else {
@@ -378,9 +390,6 @@
 
             if (data != null) {
                 dataObject = JSON.parse(data);
-                // $("#myText").val(dataObject.Text)
-
-                // localStorage.removeItem("dataMR"); //Remove data, otherwise it'll be there for a long time.
             }
             $.ajax({
                 headers: {
@@ -415,6 +424,9 @@
                 }
             })
         };
+
+        // Get Data setelah reload
+        window.onload = getTimelineOnSubmit();
 
         function getTimelineOnSubmit() {
             var data = sessionStorage.getItem("dataMR");
@@ -422,9 +434,6 @@
 
             if (data != null) {
                 dataObject = JSON.parse(data);
-                // $("#myText").val(dataObject.Text)
-
-                // localStorage.removeItem("dataMR"); //Remove data, otherwise it'll be there for a long time.
             }
             $.ajax({
                 headers: {
@@ -439,12 +448,21 @@
                     // alert($isTimelineHistory);
                     if (isTimelineHistory != '') {
                         $.each(isTimelineHistory, function(key, timeline) {
+                            // header informasi
+                            $('#tr_tgl_trs').val(timeline.chart_tgl_trs);
+                            $('#tr_kd_reg').val(timeline.chart_kd_reg);
+                            $('#tr_no_mr').val(timeline.chart_mr);
+                            $('#tr_nm_pasien').val(timeline.chart_nm_pasien);
+                            $('#tr_layanan').val(timeline.chart_layanan);
+                            $('#tr_dokter').val(timeline.chart_dokter);
+                            // $('#tr_alamat').val(timeline.chart_alamat);
+
                             $('#show_chart_S').val(timeline.chart_S);
                             $('#show_chart_O').val(timeline.chart_O);
                             $('#show_chart_A').val(timeline.chart_A);
                             $('#show_chart_P').val(timeline.chart_P);
                             // console.log(timeline.chart_S);
-                            $('#labelTimeline').val(timeline.chart_kd_reg + '' + timeline
+                            $('#labelTimeline').val(timeline.chart_kd_reg + '-' + timeline
                                 .chart_nm_pasien + '-' + timeline
                                 .chart_dokter + '-' + timeline.chart_layanan + '-' + timeline
                                 .chart_tgl_trs);
@@ -459,27 +477,5 @@
                 }
             })
         };
-        // window.onload = function() {
-        //     localStorage.setItem("mr", $('#tr_no_mr').val());
-        //     var mr = localStorage.getItem('mr');
-        //     console.log(mr);
-        // };
-
-        // document.getElementById("tr_no_mr").value = getSavedValue("tr_no_mr"); // set the value to this input
-
-        // //Save the value function - save it to localStorage as (ID, VALUE)
-        // function saveValue(e) {
-        //     var id = e.id; // get the sender's id to save it . 
-        //     var val = e.value; // get the value. 
-        //     localStorage.setItem(id, val); // Every time user writing something, the localStorage's value will override . 
-        // }
-
-        // //get the saved value function - return the value of "v" from localStorage. 
-        // function getSavedValue(v) {
-        //     if (!localStorage.getItem(v)) {
-        //         return localStorage.getItem(v) // You can change this to your defualt value. 
-        //     }
-        //     return localStorage.getItem(v);
-        // }
     </script>
 @endpush

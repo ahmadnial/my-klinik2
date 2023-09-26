@@ -26,10 +26,32 @@ class TindakanController extends Controller
         $isTindakanChart = ChartTindakan::where('chart_mr', '=', $request)->get();
         $isRegActive = registrasiCreate::all();
 
-        // return response()->json($chart_id);
+        // $data = response()->json($chart_id);
+        // $isLastChartID = $chart_id;
 
-        return view('pages.tindakan-medis', ['isRegActive' => $isRegActive, 'chart_id' => $chart_id, 'isTindakanChart' => $isTindakanChart]);
+
+        return view('pages.tindakan-medis', ['isRegActive' => $isRegActive, 'isLastChartID' => $chart_id, 'isTindakanChart' => $isTindakanChart]);
+        // return response()->json($chart_id);
     }
+
+    // public function getLastID()
+    // {
+    //     $id = str_pad(00000001, 8, 0, STR_PAD_LEFT);
+    //     $vardate = date("Y-m");
+    //     $cekid = ChartTindakan::count();
+    //     if ($cekid == 0) {
+    //         $chart_id =  'CH' . '-' . $vardate . $id;
+    //     } else {
+    //         $continue = ChartTindakan::all()->last();
+    //         $de = substr($continue->chart_id, -3);
+    //         $chart_id = 'CH' . '-' . $vardate . str_pad(($de + 1), 8, '0', STR_PAD_LEFT);
+    //     };
+    //     return response()->json($chart_id);
+    //     // return view('pages.tindakan-medis', ['chart_id' => $chart_id]);
+    //     // $isLastChartID = json_decode($data);
+
+    //     // return view('pages.tindakan-medis', ['isLastChartID' => $isLastChartID]);
+    // }
 
     // public function getTimeline(Request $request)
     // {
