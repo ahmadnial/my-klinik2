@@ -119,7 +119,7 @@
                                     <div class="modal-footer">
                                         {{-- <button type="button" class="" data-dismiss="modal"></button> --}}
                                         <button type="submit" id="createSOAP" class="btn btn-success float-rights"><i
-                                                class="fa fa-save"></i>
+                                                class="fa fa-save" onclick="getTimelineOnSubmit()"></i>
                                             &nbsp;
                                             Save</button>
                                     </div>
@@ -138,7 +138,7 @@
     <div class="row">
         <div class="col" id="accordion">
             <div class="card card-primary card-outline">
-                <a class="d-block w-100" data-toggle="collapse" href="#collapseOne">
+                <a class="d-block w-100" data-toggle="" href="#collapseOne">
                     <div class="card-header">
                         <h4 class="card-title w-100">
                             SOAP
@@ -146,47 +146,50 @@
                     </div>
                 </a>
                 <div id="collapseOne" class="collapse show" data-parent="#accordion">
-                    @foreach ($isTindakanChart as $tc)
-                        <div class="card-body">
-                            {{-- ================================ --}}
-                            <div class="row">
-                                <div class="col-md">
-                                    <div class="card card-primary">
-                                        <div class="card-header">
-                                            <h3 class="card-title">
-                                                {{ $tc->chart_dokter . '-' . '' . $tc->chart_tgl_trs . '-' . '' . $tc->chart_layanan }}
-                                            </h3>
+                    {{-- @foreach ($isTindakanChart as $tc) --}}
+                    <div class="card-body">
+                        {{-- ================================ --}}
+                        <div class="row">
+                            <div class="col-md">
+                                <div class="card card-primary">
+                                    <div class="card-header">
+                                        <h3 class="card-title col-6">
+                                            <div class="col">
+                                                <input type="text" style="border:none" class="form-control bg-primary"
+                                                    id="labelTimeline" readonly>
+                                            </div>
+                                        </h3>
 
-                                            <div class="card-tools">
-                                                <button type="button" class="btn btn-tool" data-card-widget="collapse"
-                                                    title="Collapse">
-                                                    <i class="fas fa-minus"></i>
-                                                </button>
-                                            </div>
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse"
+                                                title="Collapse">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
                                         </div>
-                                        <div class="card-body">
-                                            <div class="form-group">
-                                                <label for="inputDescription">Subjective</label>
-                                                <textarea id="inputDescription" class="form-control" rows="4" readonly>{{ $tc->chart_S }}</textarea>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="inputDescription">Objective</label>
-                                                <textarea id="inputDescription" class="form-control" rows="4" readonly>{{ $tc->chart_O }}</textarea>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="inputDescription">Assesment</label>
-                                                <textarea id="inputDescription" class="form-control" rows="4" readonly>{{ $tc->chart_A }}</textarea>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="inputDescription">Plan</label>
-                                                <textarea id="inputDescription" class="form-control" rows="4" readonly>{{ $tc->chart_P }}</textarea>
-                                            </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="inputDescription">Subjective</label>
+                                            <textarea id="show_chart_S" class="form-control" rows="4" readonly></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputDescription">Objective</label>
+                                            <textarea id="show_chart_O" class="form-control" rows="4" readonly></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputDescription">Assesment</label>
+                                            <textarea id="show_chart_A" class="form-control" rows="4" readonly></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputDescription">Plan</label>
+                                            <textarea id="show_chart_P" class="form-control" rows="4" readonly></textarea>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                    </div>
+                    {{-- @endforeach --}}
                 </div>
             </div>
         </div>
@@ -231,6 +234,14 @@
                         $('#chart_nm_pasien').val(dataregvalue.fr_nama);
                         $('#chart_layanan').val(dataregvalue.fr_layanan);
                         $('#chart_dokter').val(dataregvalue.fr_dokter);
+
+                        // Get MR & save  di sessionStorage
+                        var mr = {};
+                        mr.Text = $("#tr_no_mr").val();
+                        // mr.isProcessed = false;
+                        sessionStorage.setItem("dataMR", JSON.stringify(mr));
+
+                        getTimeline();
                     })
                 }
             })
@@ -361,38 +372,90 @@
             });
         });
 
-        function getSessionMR() {
-            // sessionStorage.clear();
-            var dataMR = $('#tr_kd_reg').val();
-            // if (dataMR) {
-            sessionStorage.setItem("mrhistory", $('#tr_kd_reg').val());
-            const details = {
-                mr: $('#chart_mr').val()
-            }
-            const result = JSON.stringify(details);
-            // Now we set the value to the storage
-            sessionStorage.setItem("mrHistory", result);
-            // }
-        }
-
         function getTimeline() {
-            var mrGetSsn = sessionStorage.getItem("mrHistory");
-            var sessionMR = JSON.parse(mrGetSsn);
+            var data = sessionStorage.getItem("dataMR");
+            var dataObject;
+
+            if (data != null) {
+                dataObject = JSON.parse(data);
+                // $("#myText").val(dataObject.Text)
+
+                // localStorage.removeItem("dataMR"); //Remove data, otherwise it'll be there for a long time.
+            }
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: "{{ url('getTimeline') }}/" + sessionMR,
+                url: "{{ url('getTimeline') }}/" + dataObject,
                 type: 'GET',
                 data: {
-                    chart_mr: sessionMR
+                    chart_mr: dataObject
                 },
-                success: function(isTindakanChart) {
-                    alert($isTindakanChart);
-                    // $.each(chart_id, function(key, lastID) {
-                    //     $('#chart_id').val(lastID.chart_id);
-                    //     console.log(lastID.chart_id);
-                    // })
+                success: function(isTimelineHistory) {
+                    // alert($isTimelineHistory);
+                    if (isTimelineHistory != '') {
+                        $.each(isTimelineHistory, function(key, timeline) {
+                            $('#show_chart_S').val(timeline.chart_S);
+                            $('#show_chart_O').val(timeline.chart_O);
+                            $('#show_chart_A').val(timeline.chart_A);
+                            $('#show_chart_P').val(timeline.chart_P);
+                            // console.log(timeline.chart_S);
+                            $('#labelTimeline').val(timeline.chart_kd_reg + '' + timeline
+                                .chart_nm_pasien + '-' + timeline
+                                .chart_dokter + '-' + timeline.chart_layanan + '-' + timeline
+                                .chart_tgl_trs);
+                        });
+                    } else {
+                        $('#show_chart_S').val('');
+                        $('#show_chart_O').val('');
+                        $('#show_chart_A').val('');
+                        $('#show_chart_P').val('');
+                        $('#labelTimeline').val('');
+                    }
+                }
+            })
+        };
+
+        function getTimelineOnSubmit() {
+            var data = sessionStorage.getItem("dataMR");
+            var dataObject;
+
+            if (data != null) {
+                dataObject = JSON.parse(data);
+                // $("#myText").val(dataObject.Text)
+
+                // localStorage.removeItem("dataMR"); //Remove data, otherwise it'll be there for a long time.
+            }
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ url('getTimeline') }}/" + dataObject,
+                type: 'GET',
+                data: {
+                    chart_mr: dataObject
+                },
+                success: function(isTimelineHistory) {
+                    // alert($isTimelineHistory);
+                    if (isTimelineHistory != '') {
+                        $.each(isTimelineHistory, function(key, timeline) {
+                            $('#show_chart_S').val(timeline.chart_S);
+                            $('#show_chart_O').val(timeline.chart_O);
+                            $('#show_chart_A').val(timeline.chart_A);
+                            $('#show_chart_P').val(timeline.chart_P);
+                            // console.log(timeline.chart_S);
+                            $('#labelTimeline').val(timeline.chart_kd_reg + '' + timeline
+                                .chart_nm_pasien + '-' + timeline
+                                .chart_dokter + '-' + timeline.chart_layanan + '-' + timeline
+                                .chart_tgl_trs);
+                        });
+                    } else {
+                        $('#show_chart_S').val('');
+                        $('#show_chart_O').val('');
+                        $('#show_chart_A').val('');
+                        $('#show_chart_P').val('');
+                        $('#labelTimeline').val('');
+                    }
                 }
             })
         };

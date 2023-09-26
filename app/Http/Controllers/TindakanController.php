@@ -88,12 +88,11 @@ class TindakanController extends Controller
         ChartTindakan::create($request->all());
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function getTimeline(Request $request)
     {
-        //
+        $isTimelineHistory = ChartTindakan::where('chart_mr', $request->chart_mr)->get();
+
+        return response()->json($isTimelineHistory);
     }
 
     /**
