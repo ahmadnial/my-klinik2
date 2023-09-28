@@ -112,7 +112,7 @@ class TindakanController extends Controller
 
     public function getTimeline(Request $request)
     {
-        $isTimelineHistory = ChartTindakan::where('chart_mr', $request->chart_mr)->get();
+        $isTimelineHistory = ChartTindakan::where('chart_mr', $request->chart_mr)->latest()->get();
 
         return response()->json($isTimelineHistory);
     }

@@ -48,6 +48,7 @@
                     </div>
                     {{-- <input type="text" id="chart_id" name="chart_id" value=""> --}}
 
+
                     <input type="hidden" id="tr_tgl_lahir" name="tr_tgl_lahir">
                     <input type="hidden" id="user" name="user" value="tes">
                 </div>
@@ -137,6 +138,25 @@
     {{-- ========================END MODAL SOAP============================= --}}
 
     <div class="row">
+        {{-- <table class="table">
+            <thead>
+                <tr>
+                    <th>s</th>
+                    <th>o</th>
+                    <th>a</th>
+                    <th>pp</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="show_chart_S"><input type="text" name="" id="show_chart_S"></td>
+                    <td id="show_chart_O"></td>
+                    <td id="show_chart_A"></td>
+                    <td id="show_chart_P"></td>
+                    <td id=""></td>
+                </tr>
+            </tbody>
+        </table> --}}
         <div class="col" id="accordion">
             <div class="card card-primary card-outline">
                 <a class="d-block w-100" data-toggle="" href="#collapseOne">
@@ -146,13 +166,13 @@
                         </h4>
                     </div>
                 </a>
-                <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                <div id="" class="isTimeline collapse show" data-parent="#accordion">
                     {{-- @foreach ($isTindakanChart as $tc) --}}
-                    <div class="card-body">
-                        {{-- ================================ --}}
+                    {{-- <div class="card-body">
+                       
                         <div class="row">
                             <div class="col-md">
-                                <div class="card card-primary">
+                                <div class="card card-primary" id="hdrLoop">
                                     <div class="card-header">
                                         <h3 class="card-title col-6">
                                             <div class="col">
@@ -189,7 +209,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     {{-- @endforeach --}}
                 </div>
             </div>
@@ -240,7 +260,10 @@
                         // mr.isProcessed = false;
                         sessionStorage.setItem("dataMR", JSON.stringify(mr));
 
+
                         getTimeline();
+                        // $(".isTimeline").empty();
+
                     })
                 }
             })
@@ -263,69 +286,6 @@
         //     })
         // };
 
-
-        $("#tr_tgl_lahir").on("change", function() {
-
-            var date = $('#tr_tgl_lahir').val();
-
-            // var date = document.getElementById('tr_tgl_lahir');
-            // alert(date);
-            // set maximum date to today
-            date.max = new Date().toISOString().split('T')[0];
-
-            function calculateAge() {
-                var today = new Date();
-                var birthDate = new Date(date.value);
-
-                // Calculate years
-                var years;
-                if (today.getMonth() > birthDate.getMonth() || (today.getMonth() == birthDate.getMonth() &&
-                        today
-                        .getDate() >=
-                        birthDate.getDate())) {
-                    years = today.getFullYear() - birthDate.getFullYear();
-                } else {
-                    years = today.getFullYear() - birthDate.getFullYear() - 1;
-                }
-
-                // Calculate months
-                var months;
-                if (today.getDate() >= birthDate.getDate()) {
-                    months = today.getMonth() - birthDate.getMonth();
-                } else if (today.getDate() < birthDate.getDate()) {
-                    months = today.getMonth() - birthDate.getMonth() - 1;
-                }
-                // make month positive
-                months = months < 0 ? months + 12 : months;
-
-                // Calculate days
-                var days;
-                // days of months in a year
-                var monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-                if (today.getDate() >= birthDate.getDate()) {
-                    days = today.getDate() - birthDate.getDate();
-                } else {
-                    days = today.getDate() - birthDate.getDate() + monthDays[birthDate.getMonth()];
-                }
-
-                // Display result
-                // result.innerHTML = `<p class="birthdate">You were born on ${birthDate.toDateString()}.</p>`;
-                // result.innerHTML += `<p class="age">You are ${years} years, ${months} months and ${days} days old.</p>`;
-                // if (months == 0 && days == 0) {
-                //     result.innerHTML += `<p class="wishing">Happy Birthday!🎂🎈🎈</p>`;
-                // }
-                var hasil = years + months + days;
-                // alert(hasil);
-            }
-            // calculate.addEventListener('click', calculateAge);
-
-            // // run calculate on enter key
-            // document.addEventListener('keypress', (e) => {
-            //     if (e.keyCode == 13) {
-            //         calculate.click(); 
-            //     }
-            // });
-        });
 
         // Create 
         $(document).ready(function() {
@@ -385,6 +345,9 @@
         });
 
         function getTimeline() {
+
+            $(".isTimeline").empty();
+
             var data = sessionStorage.getItem("dataMR");
             var dataObject;
 
@@ -401,32 +364,88 @@
                     chart_mr: dataObject
                 },
                 success: function(isTimelineHistory) {
-                    // alert($isTimelineHistory);
-                    if (isTimelineHistory != '') {
-                        $.each(isTimelineHistory, function(key, timeline) {
-                            $('#show_chart_S').val(timeline.chart_S);
-                            $('#show_chart_O').val(timeline.chart_O);
-                            $('#show_chart_A').val(timeline.chart_A);
-                            $('#show_chart_P').val(timeline.chart_P);
-                            // console.log(timeline.chart_S);
-                            $('#labelTimeline').val(timeline.chart_kd_reg + '' + timeline
-                                .chart_nm_pasien + '-' + timeline
-                                .chart_dokter + '-' + timeline.chart_layanan + '-' + timeline
-                                .chart_tgl_trs);
-                        });
-                    } else {
-                        $('#show_chart_S').val('');
-                        $('#show_chart_O').val('');
-                        $('#show_chart_A').val('');
-                        $('#show_chart_P').val('');
-                        $('#labelTimeline').val('');
-                    }
+
+
+                    // if (isTimelineHistory != '') {
+                    // isTimelineHistory.forEach(function(item, index) {
+                    //     console.log(index);
+                    //     $('#show_chart_S').val(index.chart_S);
+
+                    // });
+                    // for (var i = 0; i < isTimelineHistory.length; i++) {
+                    $.each(isTimelineHistory, function(key, getVal) {
+                        // $('#hdrLoop')[i];
+                        // $('.labelTimeline').val(getVal.chart_kd_reg + '-' +
+                        //     getVal.chart_nm_pasien + '-' + getVal.chart_dokter + '-' + getVal
+                        //     .chart_layanan + '-' +
+                        //     getVal.chart_tgl_trs);
+                        // $('.show_chart_S').val(getVal.chart_S);
+                        // $('.show_chart_O').val(getVal.chart_O);
+                        // $('.show_chart_A').val(getVal.chart_A);
+                        // $('.show_chart_P').val(getVal.chart_P);
+                        // console.log(timeline.chart_S);
+                        // };
+                        // $(".isTimeline").parent().remove();
+                        $(".isTimeline").append(`
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md">
+                                <div class="card card-primary" id="hdrLoop">
+                                    <div class="card-header">
+                                        <h3 class="card-title col-6">
+                                            <div>
+                                                <button type="button" class="btn btn-xs "><i class="fa fa-pen"></i></button>
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" style="border:none" class="form-control bg-primary"
+                                                    id="" value="${getVal.chart_kd_reg + '-' + getVal.chart_nm_pasien + '-' + getVal.chart_dokter + '-' + getVal.chart_layanan + '-' +
+                                                    getVal.chart_tgl_trs}" readonly>
+                                            </div>
+                                        </h3>
+
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse"
+                                                title="Collapse">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="inputDescription">Subjective</label>
+                                            <textarea id="" class="show_chart_S form-control" rows="4" readonly value="">${getVal.chart_S}</textarea>
+                                        </div>
+                                        <div class="show_chart_O form-group">
+                                            <label for="inputDescription">Objective</label>
+                                            <textarea id="" class="show_chart_O form-control" rows="4" readonly>${getVal.chart_O}</textarea>
+                                        </div>
+                                        <div class="show_chart_A form-group">
+                                            <label for="inputDescription">Assesment</label>
+                                            <textarea id="" class="show_chart_A form-control" rows="4" readonly>${getVal.chart_A}</textarea>
+                                        </div>
+                                        <div class="show_chart_P form-group">
+                                            <label for="inputDescription">Plan</label>
+                                            <textarea id="" class="show_chart_P form-control" rows="4" readonly>${getVal.chart_P}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`)
+                    })
+                    // } else {
+                    // $('#show_chart_S').val('');
+                    // $('#show_chart_O').val('');
+                    // $('#show_chart_A').val('');
+                    // $('#show_chart_P').val('');
+                    // $('#labelTimeline').val('');
+                    // };
                 }
             })
         };
 
         // Get Data setelah reload
-        window.onload = getTimelineOnSubmit();
+        window.onload = getTimeline();
 
         function getTimelineOnSubmit() {
             var data = sessionStorage.getItem("dataMR");
@@ -464,7 +483,8 @@
                             // console.log(timeline.chart_S);
                             $('#labelTimeline').val(timeline.chart_kd_reg + '-' + timeline
                                 .chart_nm_pasien + '-' + timeline
-                                .chart_dokter + '-' + timeline.chart_layanan + '-' + timeline
+                                .chart_dokter + '-' + timeline.chart_layanan + '-' +
+                                timeline
                                 .chart_tgl_trs);
                         });
                     } else {

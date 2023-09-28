@@ -332,6 +332,7 @@
                     <td><a href="javascript:void(0)" class="text-danger font-18 remove" title="Remove"><i class="fa fa-trash"></i></a></td>
                     <input type="hidden" name="do_hdr_kd[]" id="do_hdr_kd">
                 </tr>`);
+
                 // Ajax Search Obat
                 var path = "{{ route('obatSearch') }}";
 
