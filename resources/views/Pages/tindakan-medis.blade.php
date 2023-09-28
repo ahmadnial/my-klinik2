@@ -110,7 +110,14 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="inputDescription">Assesment</label>
-                                                <textarea id="chart_A" class="form-control" rows="4"></textarea>
+                                                <select class="form-control mb-3" style="width: 100%;" name="chart_icdx"
+                                                    id="chart_icdx">
+                                                    @foreach ($icdx as $x)
+                                                        <option value="{{ $x->name_id }}">
+                                                            {{ $x->code . '-' . $x->name_en }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <textarea id="chart_A" class="form-control mt-3" rows="4"></textarea>
                                             </div>
                                             <div class="form-group">
                                                 <label for="inputDescription">Plan</label>
@@ -224,6 +231,10 @@
         // Ajax Search Registrasi
         $('#tr_kd_reg').select2({
             placeholder: 'Search Registrasi',
+        });
+
+        $('#chart_icdx').select2({
+            placeholder: 'Search ICD X / Diagnosa',
         });
 
         // Call Hasil Search Registrasi
@@ -386,20 +397,24 @@
                         // console.log(timeline.chart_S);
                         // };
                         // $(".isTimeline").parent().remove();
+                        var dateFormat = getVal.created_at;
+                        // var dateConvert = moment().format(
+                        //     dateFormat); // "2014-09-08T08:02:17-05:00" (ISO 8601)
+                        var dateView = moment(dateFormat).format("dddd, D MMMM YYYY, h:mm:ss a");
                         $(".isTimeline").append(`
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md">
                                 <div class="card card-primary" id="hdrLoop">
                                     <div class="card-header">
-                                        <h3 class="card-title col-6">
+                                        <h3 class="card-title col-8">
                                             <div>
                                                 <button type="button" class="btn btn-xs "><i class="fa fa-pen"></i></button>
                                             </div>
                                             <div class="col">
                                                 <input type="text" style="border:none" class="form-control bg-primary"
-                                                    id="" value="${getVal.chart_kd_reg + '-' + getVal.chart_nm_pasien + '-' + getVal.chart_dokter + '-' + getVal.chart_layanan + '-' +
-                                                    getVal.chart_tgl_trs}" readonly>
+                                                    id="" value="${getVal.chart_kd_reg + '&nbsp;&nbsp;-&nbsp&nbsp;' + getVal.chart_nm_pasien + '&nbsp;&nbsp;-&nbsp&nbsp;' + getVal.chart_dokter + '&nbsp;&nbsp;-&nbsp&nbsp;' + getVal.chart_layanan + '&nbsp;&nbsp;-&nbsp&nbsp;' +
+                                                    dateView}" readonly>
                                             </div>
                                         </h3>
 

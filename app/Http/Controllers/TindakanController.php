@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ChartTindakan;
+use App\Models\mstr_icdx;
 use App\Models\registrasiCreate;
 use Illuminate\Http\Request;
 
@@ -25,12 +26,13 @@ class TindakanController extends Controller
         };
         $isTindakanChart = ChartTindakan::where('chart_mr', '=', $request)->get();
         $isRegActive = registrasiCreate::all();
+        $icdx = mstr_icdx::all();
 
         // $data = response()->json($chart_id);
         // $isLastChartID = $chart_id;
 
 
-        return view('pages.tindakan-medis', ['isRegActive' => $isRegActive, 'isLastChartID' => $chart_id, 'isTindakanChart' => $isTindakanChart]);
+        return view('pages.tindakan-medis', ['isRegActive' => $isRegActive, 'isLastChartID' => $chart_id, 'isTindakanChart' => $isTindakanChart, 'icdx' => $icdx]);
         // return response()->json($chart_id);
     }
 
