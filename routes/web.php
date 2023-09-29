@@ -49,6 +49,7 @@ Route::controller(mastersatuController::class)->group(function () {
     Route::get('mstr-layanan', 'layanan')->name('layanan');
     Route::get('mstr-medis', 'medis')->name('meids');
     Route::get('mstr-jaminan', 'jaminan')->name('jaminan');
+    Route::get('mstr-tindakan', 'tindakan')->name('tindakan');
 });
 
 // MSTR SATU POST
@@ -56,6 +57,7 @@ Route::controller(mastersatuController::class)->group(function () {
     Route::post('add-mstr-layanan', 'layananCreate')->name('add-mstr-layanan');
     Route::post('add-mstr-medis', 'DokterCreate')->name('add-mstr-medis');
     Route::post('add-mstr-jaminan', 'jaminanCreate')->name('add-mstr-jaminan');
+    Route::post('add-mstr-tindakan', 'tindakanCreate')->name('add-mstr-tindakan');
 });
 
 // VIEW AFTER POST
@@ -63,6 +65,7 @@ Route::controller(mastersatuController::class)->group(function () {
     Route::get('view-mstr-layanan', 'viewLayanan')->name('view-mstr-layanan');
     Route::get('view-mstr-medis', 'medis')->name('medis');
     Route::get('view-mstr-jaminan', 'jaminan')->name('view-mstr-jaminan');
+    Route::get('view-mstr-tindakan', 'tindakan')->name('view-mstr-tindakan');
 });
 
 

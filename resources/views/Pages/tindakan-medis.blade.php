@@ -81,9 +81,9 @@
                                             </h3>
 
                                             <div class="card-tools">
-                                                <button type="button" class="btn btn-tool" data-card-widget="collapse"
+                                                <button type="button" class="btn btn-tool" data-card-widget="disable"
                                                     title="Collapse">
-                                                    <i class="fas fa-minus"></i>
+                                                    {{-- <i class="fas fa-minus"></i> --}}
                                                 </button>
                                             </div>
                                         </div>
@@ -110,17 +110,25 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="inputDescription">Assesment</label>
-                                                <select class="form-control mb-3" style="width: 100%;" name="chart_icdx"
-                                                    id="chart_icdx">
+                                                <select class="form-control mb-3" style="width: 100%;"
+                                                    name="chart_A_diagnosa" id="chart_A_diagnosa">
                                                     @foreach ($icdx as $x)
-                                                        <option value="{{ $x->name_id }}">
+                                                        <option value="">--Select--</option>
+                                                        <option value="{{ $x->code . '-' . $x->name_en }}">
                                                             {{ $x->code . '-' . $x->name_en }}</option>
                                                     @endforeach
                                                 </select>
-                                                <textarea id="chart_A" class="form-control mt-3" rows="4"></textarea>
+                                                <textarea id="chart_A" class="form-control mt-3 mb-2" rows="4"></textarea>
                                             </div>
                                             <div class="form-group">
                                                 <label for="inputDescription">Plan</label>
+                                                <div class="float-right mb-1">
+                                                    <button type="button"
+                                                        class="btn btn-xs btn-warning floar-right text-white"
+                                                        data-toggle="modal" data-target="#addTindakan">Tindakan</button>
+                                                    <button type="button"
+                                                        class="btn btn-xs btn-info floar-right">Resep</button>
+                                                </div>
                                                 <textarea id="chart_P" class="form-control" rows="4"></textarea>
                                             </div>
                                         </div>
@@ -144,6 +152,65 @@
 
     {{-- ========================END MODAL SOAP============================= --}}
 
+    {{-- ===============ADD TINDAKAN MODAL================= --}}
+    <div class="modal fade" id="addTindakan">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    {{-- <h4 class="modal-title">Tindakan</h4> --}}
+                    {{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button> --}}
+                </div>
+                <div class="modal-body">
+                    <div id="" class="collapse show" data-parent="#">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md">
+                                    <div class="card card-success">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Tambah Tindakan
+                                            </h3>
+
+                                            <div class="card-tools">
+                                                {{-- <button type="button" class="btn btn-tool" data-card-widget="disable"
+                                                    title="Collapse">
+                                                    <i class="fas fa-minus"></i>
+                                                </button> --}}
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            {{-- Hidden value --}}
+                                            <input type="hidden" id="chart_id" name="chart_id" value="">
+                                            <div class="form-group">
+                                                <label for="inputDescription">Tindakan</label>
+                                                <select class="form-control mb-3" style="width: 100%;"
+                                                    name="chart_tindakan" id="chart_tindakan">
+                                                    @foreach ($isTindakanTarif as $t)
+                                                        <option value="">--Select--</option>
+                                                        <option value="{{ $t->nm_tindakan }}">{{ $t->nm_tindakan }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger"
+                                            data-dismiss="modal">cancel</button>
+                                        <button type="button" id="addTdk" class="btn btn-success float-rights">
+                                            Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- ========================END MODAL ADD TINDAKANs============================= --}}
     <div class="row">
         {{-- <table class="table">
             <thead>
@@ -233,8 +300,11 @@
             placeholder: 'Search Registrasi',
         });
 
-        $('#chart_icdx').select2({
+        $('#chart_A_diagnosa').select2({
             placeholder: 'Search ICD X / Diagnosa',
+        });
+        $('#chart_tindakan').select2({
+            placeholder: 'Search Tindakan',
         });
 
         // Call Hasil Search Registrasi
@@ -312,6 +382,7 @@
                 var chart_S = $('#chart_S').val();
                 var chart_O = $('#chart_O').val();
                 var chart_A = $('#chart_A').val();
+                var chart_A_diagnosa = $('#chart_A_diagnosa').val();
                 var chart_P = $('#chart_P').val();
 
                 if (chart_kd_reg != "") {
@@ -322,7 +393,6 @@
                         url: "{{ route('chartCreate') }}",
                         type: "POST",
                         data: {
-                            type: 2,
                             chart_id: chart_id,
                             chart_tgl_trs: chart_tgl_trs,
                             chart_kd_reg: chart_kd_reg,
@@ -334,12 +404,13 @@
                             chart_S: chart_S,
                             chart_O: chart_O,
                             chart_A: chart_A,
+                            chart_A_diagnosa: chart_A_diagnosa,
                             chart_P: chart_P,
                         },
                         cache: false,
                         success: function(dataResult) {
                             // $('.close').click();
-                            toastr.success('Saved!', 'Your fun', {
+                            toastr.success('Saved!', 'Berhasil Tersimpan', {
                                 timeOut: 2000,
                                 preventDuplicates: true,
                                 positionClass: 'toast-top-right',
@@ -436,6 +507,7 @@
                                         </div>
                                         <div class="show_chart_A form-group">
                                             <label for="inputDescription">Assesment</label>
+                                            <textarea id="" class="show_chart_A form-control mb-3" rows="2" readonly>${getVal.chart_A_diagnosa}</textarea>
                                             <textarea id="" class="show_chart_A form-control" rows="4" readonly>${getVal.chart_A}</textarea>
                                         </div>
                                         <div class="show_chart_P form-group">

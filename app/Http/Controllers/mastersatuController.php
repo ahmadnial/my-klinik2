@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\mstr_dokter;
 use App\Models\mstr_jaminan;
+use App\Models\mstr_tindakan;
 use Illuminate\Http\Request;
 use App\Models\mstr_layanan;
 use Dflydev\DotAccessData\Data;
@@ -104,6 +105,31 @@ class mastersatuController extends Controller
         ]);
 
         $data = mstr_jaminan::create($request->all());
+
+        if ($data->save()) {
+            toast('Berhasil Tersimpan', 'success')->autoClose(5000);
+            return back();
+        } else {
+            toast('Gagal Tersimpan!', 'error')->autoClose(5000);
+            return back();
+        }
+    }
+
+    public function tindakan()
+    {
+        $istindakan = mstr_tindakan::all();
+
+        return view('pages.mstr1.mstr-tindakan', ['istindakan' => $istindakan]);
+    }
+
+    public function tindakanCreate(Request $request)
+    {
+        $request->validate([
+            'nm_tindakan' => 'required',
+            'tarif_tindakan' => 'required',
+        ]);
+
+        $data = mstr_tindakan::create($request->all());
 
         if ($data->save()) {
             toast('Berhasil Tersimpan', 'success')->autoClose(5000);
