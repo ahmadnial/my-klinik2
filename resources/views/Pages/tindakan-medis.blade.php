@@ -156,12 +156,12 @@
     <div class="modal fade" id="addTindakan">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header">
-                    {{-- <h4 class="modal-title">Tindakan</h4> --}}
-                    {{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                {{-- <div class="modal-header">
+                    <h4 class="modal-title">Tindakan</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
-                    </button> --}}
-                </div>
+                    </button>
+                </div> --}}
                 <div class="modal-body">
                     <div id="" class="collapse show" data-parent="#">
                         <div class="card-body">
@@ -195,7 +195,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="modal-footer">
+                                    <div class="float-right">
                                         <button type="button" class="btn btn-danger"
                                             data-dismiss="modal">cancel</button>
                                         <button type="button" id="addTdk" class="btn btn-success float-rights">
