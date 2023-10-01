@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tb_trs_billing', function (Blueprint $table) {
+        Schema::create('trs_chart', function (Blueprint $table) {
             $table->string('kd_trs');
             $table->string('tgl_trs');
             $table->string('layanan');
@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('mr_pasien');
             $table->string('nm_pasien');
             $table->string('nm_tarif');
+            $table->string('nm_dokter_jm');
             $table->string('sub_total');
             $table->string('user');
             $table->timestamps();
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tb_trs_billing');
+        Schema::dropIfExists('trs_chart');
     }
 };
