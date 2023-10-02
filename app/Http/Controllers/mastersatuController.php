@@ -7,6 +7,7 @@ use App\Models\mstr_jaminan;
 use App\Models\mstr_tindakan;
 use Illuminate\Http\Request;
 use App\Models\mstr_layanan;
+use App\Models\mstr_nilai_tindakan;
 use Dflydev\DotAccessData\Data;
 use DataTables;
 
@@ -130,6 +131,33 @@ class mastersatuController extends Controller
         ]);
 
         $data = mstr_tindakan::create($request->all());
+
+        if ($data->save()) {
+            toast('Berhasil Tersimpan', 'success')->autoClose(5000);
+            return back();
+        } else {
+            toast('Gagal Tersimpan!', 'error')->autoClose(5000);
+            return back();
+        }
+    }
+
+    public function nilaiTindakan()
+    {
+        $isnilaitindakan = mstr_nilai_tindakan::all();
+        $istindakan = mstr_tindakan::all();
+
+        return view('pages.mstr1.mstr-nilai-tindakan', ['isnilaitindakan' => $isnilaitindakan, 'istindakan' => $istindakan]);
+    }
+
+    public function nilaiTindakanCreate(Request $request)
+    {
+        $request->validate([
+            'id_tindakan' => 'required',
+            // 'nm_tindakan' => 'required',
+            'nilai_tarif' => 'required',
+        ]);
+
+        $data = mstr_nilai_tindakan::create($request->all());
 
         if ($data->save()) {
             toast('Berhasil Tersimpan', 'success')->autoClose(5000);

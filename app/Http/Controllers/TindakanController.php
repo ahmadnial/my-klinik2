@@ -114,29 +114,29 @@ class TindakanController extends Controller
 
     public function chartCreate(Request $request)
     {
-        $yes = $request->all();
-        dd($yes);
+        // $yes = $request->all();
+        // dd($yes);
 
         $request->validate([
-            'user' => 'required',
-            'chart_id' => 'required',
-            // 'chart_tgl_trs' => 'required',
-            'chart_kd_reg' => 'required',
-            'chart_mr' => 'required',
-            'chart_nm_pasien' => 'required',
-            'chart_layanan' => 'required',
-            'chart_dokter' => 'required',
-            'user' => 'required',
-            'kd_trs' => 'required',
-            'tgl_trs' => 'required',
-            'layanan' => 'required',
-            'kd_reg' => 'required',
-            'mr_pasien' => 'required',
-            'nm_pasien' => 'required',
-            'nm_tarif' => 'required',
-            'nm_dokter_jm' => 'required',
-            // 'sub_total' => 'required',
-            'user' => 'required',
+            // 'user' => 'required',
+            // 'chart_id' => 'required',
+            // // 'chart_tgl_trs' => 'required',
+            // 'chart_kd_reg' => 'required',
+            // 'chart_mr' => 'required',
+            // 'chart_nm_pasien' => 'required',
+            // 'chart_layanan' => 'required',
+            // 'chart_dokter' => 'required',
+            // 'user' => 'required',
+            // 'kd_trs' => 'required',
+            // 'tgl_trs' => 'required',
+            // 'layanan' => 'required',
+            // 'kd_reg' => 'required',
+            // 'mr_pasien' => 'required',
+            // 'nm_pasien' => 'required',
+            // 'nm_tarif' => 'required',
+            // 'nm_dokter_jm' => 'required',
+            // // 'sub_total' => 'required',
+            // 'user' => 'required',
             // 'chart_S',
             // 'chart_O',
             // 'chart_A',
@@ -148,7 +148,7 @@ class TindakanController extends Controller
         DB::beginTransaction();
         // try {
 
-        $nerChart = new ChartTindakan();
+        $nerChart = new ChartTindakan;
         $nerChart->chart_id = $request->chart_id;
         $nerChart->chart_tgl_trs = $request->chart_tgl_trs;
         $nerChart->chart_kd_reg  = $request->chart_kd_reg;
@@ -156,7 +156,7 @@ class TindakanController extends Controller
         $nerChart->chart_nm_pasien = $request->chart_nm_pasien;
         $nerChart->chart_layanan = $request->chart_layanan;
         $nerChart->chart_dokter = $request->chart_dokter;
-        $nerChart->user   = $request->user;
+        $nerChart->user   = $request->user_create;
         $nerChart->chart_S = $request->chart_S;
         $nerChart->chart_O = $request->chart_O;
         $nerChart->chart_A    = $request->chart_A;
@@ -164,7 +164,7 @@ class TindakanController extends Controller
         $nerChart->chart_P = $request->chart_P;
         $nerChart->save();
 
-
+        // dd($nerChart);
         // $newTrsChart = new trs_chart();
         // $newTrsChart->kd_trs = $request->kd_trs;
         // $newTrsChart->tgl_trs = $request->tgl_trs;
@@ -178,23 +178,24 @@ class TindakanController extends Controller
         // $newTrsChart->user = $request->user;
         // $newTrsChart->save();
 
-        foreach ($request->nm_tarif as $key => $nm_tarif) {
-            // $x = $request->nm_tarif[$key];
-            // dd($nm_tarif);
-            trs_chart::create([
-                'kd_trs' => $request->kd_trs,
-                'tgl_trs' => $request->tgl_trs,
-                'layanan' => $request->layanan,
-                'kd_reg' => $request->kd_reg,
-                'mr_pasien' => $request->mr_pasien,
-                'nm_pasien' => $request->nm_pasien,
-                'nm_tarif' => $request->nm_tarif[$key],
-                'nm_dokter_jm' => $request->nm_dokter_jm,
-                'sub_total' => $request->sub_total,
-                'user' => $request->user,
-            ]);
-        };
-
+        if (count($request->nm_tarif) > 0) {
+            foreach ($request->nm_tarif as $key => $val) {
+                $newData = [
+                    'kd_trs' => $request->kd_trs,
+                    'tgl_trs' => $request->chart_tgl_trs,
+                    'layanan' => $request->chart_layanan,
+                    'kd_reg' => $request->chart_kd_reg,
+                    'mr_pasien' => $request->chart_mr,
+                    'nm_pasien' => $request->chart_nm_pasien,
+                    'nm_tarif' => $request->nm_tarif[$key],
+                    'nm_dokter_jm' => $request->chart_dokter,
+                    'sub_total' => $request->sub_total,
+                    'user' => $request->user_create,
+                ];
+                trs_chart::create($newData);
+            };
+        }
+        // dd($newData);
         DB::commit();
         // Toastr::success('Create new Estimates successfully :)', 'Success');
         return redirect()->route('tindakan-medis')->with('success', 'Thank You');
@@ -203,7 +204,7 @@ class TindakanController extends Controller
         DB::rollback();
         // Toastr::error('Add Estimates fail :)', 'Error');
         // return redirect()->back();
-        return redirect()->route('tindakan-medis')
+        return redirect()->route('tindakan-mediss')
             ->with('warning', 'Something Went Wrong!');
         // }
     }

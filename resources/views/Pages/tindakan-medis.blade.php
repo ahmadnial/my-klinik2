@@ -95,6 +95,8 @@
                                                     value="{{ $isLastChartID }}">
                                                 <input type="hidden" id="chart_kd_reg" name="chart_kd_reg"
                                                     value="">
+                                                <input type="hidden" id="chart_tgl_trs" name="chart_tgl_trs"
+                                                    value="">
                                                 <input type="hidden" id="chart_mr" name="chart_mr" value="">
                                                 <input type="hidden" id="chart_nm_pasien" name="chart_nm_pasien"
                                                     value="">
@@ -136,11 +138,28 @@
                                                     </div>
                                                     <textarea id="chart_P" name="chart_P" class="form-control" rows="4"></textarea>
                                                 </div>
+                                                <div class="tindakan">
+                                                    <table class="table table-stripped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Tindakan</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>wewre</td>
+                                                                {{-- <td>rer</td>
+                                                                <td>rere</td> --}}
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <input type="hidden" id="user" name="user_create" value="tes">
                                         </div>
                                     </div>
                                     <div class="modal-footer">
                                         {{-- <button type="button" class="" data-dismiss="modal"></button> --}}
-                                        <button type="submit" id="" class="btn btn-success float-rights"><i
+                                        <button type="submit" id="createSOAPP" class="btn btn-success float-rights"><i
                                                 class="fa fa-save"></i>
                                             &nbsp;
                                             Save</button>
@@ -189,7 +208,23 @@
                                             <div class="row form-group col form-inline">
                                                 <label for="inputDescription">Tindakan</label>
                                                 <select class="nm_tarif form-control" style="width:100%;"
-                                                    name="nm_tarif[]" id="nm_tarif">
+                                                    name="nm_tarif[]" id="nm_tarif[]">
+                                                    @foreach ($isTindakanTarif as $t)
+                                                        <option value="">--Select--</option>
+                                                        <option value="{{ $t->nm_tindakan }}">{{ $t->nm_tindakan }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <input type="hidden" id="kd_trs" name="kd_trs"
+                                                    value="{{ $kd_trs }}">
+                                                <input type="hidden" id="sub_total" name="sub_total" value="6000">
+                                                <button type="button"
+                                                    class="nm_tarif_add btn btn-xs btn-info">add</button>
+                                            </div>
+                                            <div class="row form-group col form-inline">
+                                                <label for="inputDescription">Tindakan</label>
+                                                <select class="nm_tarif form-control" style="width:100%;"
+                                                    name="nm_tarif[]" id="nm_tarif[]">
                                                     @foreach ($isTindakanTarif as $t)
                                                         <option value="">--Select--</option>
                                                         <option value="{{ $t->nm_tindakan }}">{{ $t->nm_tindakan }}
@@ -416,7 +451,7 @@
                 var nm_tarif = [];
                 var sub_total = $('#sub_total').val();
 
-                $('.nm_tarif').val(function() {
+                $('#nm_tarif').val(function() {
                     nm_tarif.push($(this).text());
                 });
 
@@ -544,9 +579,9 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <div class="form-group">
+                                        <div class="form-group ">
                                             <label for="inputDescription">Subjective</label>
-                                            <textarea id="" style="border:none" class="show_chart_S form-control" rows="4" readonly value="">${getVal.chart_S}</textarea>
+                                            <textarea id=""  class="show_chart_S form-control" rows="4" readonly value="">${getVal.chart_S}</textarea>
                                         </div>
                                         <div class="show_chart_O form-group">
                                             <label for="inputDescription">Objective</label>
@@ -561,6 +596,22 @@
                                             <label for="inputDescription">Plan</label>
                                             <textarea id="" class="show_chart_P form-control" rows="4" readonly>${getVal.chart_P}</textarea>
                                         </div>
+                                        <div class="tindakan">
+                                                    <table class="table table-stripped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Tindakan</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>wewre</td>
+                                                                {{-- <td>rer</td>
+                                                                <td>rere</td> --}}
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                     </div>
                                 </div>
                             </div>

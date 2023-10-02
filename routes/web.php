@@ -47,9 +47,10 @@ Route::controller(registrasiController::class)->group(function () {
 // MSTR SATU GET
 Route::controller(mastersatuController::class)->group(function () {
     Route::get('mstr-layanan', 'layanan')->name('layanan');
-    Route::get('mstr-medis', 'medis')->name('meids');
+    Route::get('mstr-medis', 'medis')->name('medis');
     Route::get('mstr-jaminan', 'jaminan')->name('jaminan');
     Route::get('mstr-tindakan', 'tindakan')->name('tindakan');
+    Route::get('mstr-nilai-tindakan', 'nilaiTindakan')->name('nilai-tindakan');
 });
 
 // MSTR SATU POST
@@ -58,6 +59,7 @@ Route::controller(mastersatuController::class)->group(function () {
     Route::post('add-mstr-medis', 'DokterCreate')->name('add-mstr-medis');
     Route::post('add-mstr-jaminan', 'jaminanCreate')->name('add-mstr-jaminan');
     Route::post('add-mstr-tindakan', 'tindakanCreate')->name('add-mstr-tindakan');
+    Route::post('add-mstr-nilai-tindakan', 'nilaiTindakanCreate')->name('add-mstr-nilai-tindakan');
 });
 
 // VIEW AFTER POST
