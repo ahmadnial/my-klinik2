@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('trs_chart', function (Blueprint $table) {
             $table->string('kd_trs');
+            $table->string('chart_id');
             $table->string('tgl_trs');
             $table->string('layanan');
             $table->string('kd_reg');

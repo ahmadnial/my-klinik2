@@ -138,22 +138,6 @@
                                                     </div>
                                                     <textarea id="chart_P" name="chart_P" class="form-control" rows="4"></textarea>
                                                 </div>
-                                                <div class="tindakan">
-                                                    <table class="table table-stripped">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Tindakan</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>wewre</td>
-                                                                {{-- <td>rer</td>
-                                                                <td>rere</td> --}}
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
                                                 <input type="hidden" id="user" name="user_create" value="tes">
                                         </div>
                                     </div>
@@ -221,7 +205,7 @@
                                                 <button type="button"
                                                     class="nm_tarif_add btn btn-xs btn-info">add</button>
                                             </div>
-                                            <div class="row form-group col form-inline">
+                                            {{-- <div class="row form-group col form-inline">
                                                 <label for="inputDescription">Tindakan</label>
                                                 <select class="nm_tarif form-control" style="width:100%;"
                                                     name="nm_tarif[]" id="nm_tarif[]">
@@ -236,7 +220,7 @@
                                                 <input type="hidden" id="sub_total" name="sub_total" value="6000">
                                                 <button type="button"
                                                     class="nm_tarif_add btn btn-xs btn-info">add</button>
-                                            </div>
+                                            </div> --}}
                                             <div class="nm_tarif_plus"></div>
                                         </div>
                                     </div>
@@ -257,25 +241,6 @@
 
     {{-- ========================END MODAL ADD TINDAKANs============================= --}}
     <div class="row">
-        {{-- <table class="table">
-            <thead>
-                <tr>
-                    <th>s</th>
-                    <th>o</th>
-                    <th>a</th>
-                    <th>pp</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td id="show_chart_S"><input type="text" name="" id="show_chart_S"></td>
-                    <td id="show_chart_O"></td>
-                    <td id="show_chart_A"></td>
-                    <td id="show_chart_P"></td>
-                    <td id=""></td>
-                </tr>
-            </tbody>
-        </table> --}}
         <div class="col" id="accordion">
             <div class="card card-primary card-outline">
                 <a class="d-block w-100" data-toggle="" href="#collapseOne">
@@ -286,50 +251,6 @@
                     </div>
                 </a>
                 <div id="" class="isTimeline collapse show" data-parent="#accordion">
-                    {{-- @foreach ($isTindakanChart as $tc) --}}
-                    {{-- <div class="card-body">
-                       
-                        <div class="row">
-                            <div class="col-md">
-                                <div class="card card-primary" id="hdrLoop">
-                                    <div class="card-header">
-                                        <h3 class="card-title col-6">
-                                            <div class="col">
-                                                <input type="text" style="border:none" class="form-control bg-primary"
-                                                    id="labelTimeline" readonly>
-                                            </div>
-                                        </h3>
-
-                                        <div class="card-tools">
-                                            <button type="button" class="btn btn-tool" data-card-widget="collapse"
-                                                title="Collapse">
-                                                <i class="fas fa-minus"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="form-group">
-                                            <label for="inputDescription">Subjective</label>
-                                            <textarea id="show_chart_S" class="form-control" rows="4" readonly></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="inputDescription">Objective</label>
-                                            <textarea id="show_chart_O" class="form-control" rows="4" readonly></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="inputDescription">Assesment</label>
-                                            <textarea id="show_chart_A" class="form-control" rows="4" readonly></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="inputDescription">Plan</label>
-                                            <textarea id="show_chart_P" class="form-control" rows="4" readonly></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
-                    {{-- @endforeach --}}
                 </div>
             </div>
         </div>
@@ -351,6 +272,58 @@
         $('.nm_tarif').select2({
             placeholder: 'Search Tindakan',
         });
+
+        // Hitung Umur
+        function getUmurDetail(dateString) {
+            var today = new Date();
+            var DOB = new Date(dateString);
+            var totalMonths = (today.getFullYear() - DOB.getFullYear()) * 12 + today.getMonth() - DOB.getMonth();
+            totalMonths += today.getDay() < DOB.getDay() ? -1 : 0;
+            var years = today.getFullYear() - DOB.getFullYear();
+            if (DOB.getMonth() > today.getMonth())
+                years = years - 1;
+            else if (DOB.getMonth() === today.getMonth())
+                if (DOB.getDate() > today.getDate())
+                    years = years - 1;
+
+            var days;
+            var months;
+
+            if (DOB.getDate() > today.getDate()) {
+                months = (totalMonths % 12);
+                if (months == 0)
+                    months = 11;
+                var x = today.getMonth();
+                switch (x) {
+                    case 1:
+                    case 3:
+                    case 5:
+                    case 7:
+                    case 8:
+                    case 10:
+                    case 12: {
+                        var a = DOB.getDate() - today.getDate();
+                        days = 31 - a;
+                        break;
+                    }
+                    default: {
+                        var a = DOB.getDate() - today.getDate();
+                        days = 30 - a;
+                        break;
+                    }
+                }
+
+            } else {
+                days = today.getDate() - DOB.getDate();
+                if (DOB.getMonth() === today.getMonth())
+                    months = (totalMonths % 12);
+                else
+                    months = (totalMonths % 12) + 1;
+            }
+            var age = years + ' Tahun ' + months + ' Bulan ' + days + ' Hari';
+            return age;
+        }
+
 
         // Call Hasil Search Registrasi
         $("#tr_kd_reg").on("change", function() {
@@ -379,6 +352,10 @@
                         $('#chart_nm_pasien').val(dataregvalue.fr_nama);
                         $('#chart_layanan').val(dataregvalue.fr_layanan);
                         $('#chart_dokter').val(dataregvalue.fr_dokter);
+
+                        var isDateBirthday = dataregvalue.fr_tgl_lahir;
+                        var isAgeNow = getUmurDetail(isDateBirthday);
+                        $('#tr_umur').val(isAgeNow);
 
                         // Get MR & save  di sessionStorage
                         var mr = {};
@@ -537,6 +514,14 @@
                     // });
                     // for (var i = 0; i < isTimelineHistory.length; i++) {
                     $.each(isTimelineHistory, function(key, getVal) {
+                        $('#tr_tgl_trs').val(getVal.chart_tgl_trs);
+                        $('#tr_kd_reg').val(getVal.chart_kd_reg);
+                        $('#tr_no_mr').val(getVal.chart_mr);
+                        $('#tr_nm_pasien').val(getVal.chart_nm_pasien);
+                        $('#tr_layanan').val(getVal.chart_layanan);
+                        $('#tr_dokter').val(getVal.chart_dokter);
+                        // $('#tr_umur').val(isAgeNow);
+                        // $('#tr_alamat').val(timeline.chart_alamat);
                         // $('#hdrLoop')[i];
                         // $('.labelTimeline').val(getVal.chart_kd_reg + '-' +
                         //     getVal.chart_nm_pasien + '-' + getVal.chart_dokter + '-' + getVal
@@ -580,38 +565,38 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="form-group ">
-                                            <label for="inputDescription">Subjective</label>
+                                            <label for="inputDescription" class="bg-danger">Subjective</label>
                                             <textarea id=""  class="show_chart_S form-control" rows="4" readonly value="">${getVal.chart_S}</textarea>
                                         </div>
                                         <div class="show_chart_O form-group">
-                                            <label for="inputDescription">Objective</label>
+                                            <label for="inputDescription" class="bg-info">Objective</label>
                                             <textarea id="" class="show_chart_O form-control" rows="4" readonly>${getVal.chart_O}</textarea>
                                         </div>
                                         <div class="show_chart_A form-group">
-                                            <label for="inputDescription">Assesment</label>
+                                            <label for="inputDescription" class="bg-jeje">Assesment</label>
                                             <textarea id="" class="show_chart_A form-control mb-3" rows="2" readonly>${getVal.chart_A_diagnosa}</textarea>
                                             <textarea id="" class="show_chart_A form-control" rows="4" readonly>${getVal.chart_A}</textarea>
                                         </div>
                                         <div class="show_chart_P form-group">
-                                            <label for="inputDescription">Plan</label>
+                                            <label for="inputDescription" class="bg-nial">Plan</label>
                                             <textarea id="" class="show_chart_P form-control" rows="4" readonly>${getVal.chart_P}</textarea>
                                         </div>
                                         <div class="tindakan">
-                                                    <table class="table table-stripped">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Tindakan</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>wewre</td>
-                                                                {{-- <td>rer</td>
-                                                                <td>rere</td> --}}
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+                                             <table class="table table-hover">
+                                                <thead class="bg-nial">
+                                                     <tr>
+                                                          <th>Tindakan</th>
+                                                     </tr>
+                                                </thead>
+                                                <tbody>
+                                                    
+                                                    <tr>
+                                                     <td>${getVal.nm_tarif}</td>
+                                                    </tr>
+                                                  
+                                                 </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -632,55 +617,55 @@
         // Get Data setelah reload
         window.onload = getTimeline();
 
-        function getTimelineOnSubmit() {
-            var data = sessionStorage.getItem("dataMR");
-            var dataObject;
+        // function getTimelineOnSubmit() {
+        //     var data = sessionStorage.getItem("dataMR");
+        //     var dataObject;
 
-            if (data != null) {
-                dataObject = JSON.parse(data);
-            }
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: "{{ url('getTimeline') }}/" + dataObject,
-                type: 'GET',
-                data: {
-                    chart_mr: dataObject
-                },
-                success: function(isTimelineHistory) {
-                    // alert($isTimelineHistory);
-                    if (isTimelineHistory != '') {
-                        $.each(isTimelineHistory, function(key, timeline) {
-                            // header informasi
-                            $('#tr_tgl_trs').val(timeline.chart_tgl_trs);
-                            $('#tr_kd_reg').val(timeline.chart_kd_reg);
-                            $('#tr_no_mr').val(timeline.chart_mr);
-                            $('#tr_nm_pasien').val(timeline.chart_nm_pasien);
-                            $('#tr_layanan').val(timeline.chart_layanan);
-                            $('#tr_dokter').val(timeline.chart_dokter);
-                            // $('#tr_alamat').val(timeline.chart_alamat);
+        //     if (data != null) {
+        //         dataObject = JSON.parse(data);
+        //     }
+        //     $.ajax({
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //         },
+        //         url: "{{ url('getTimeline') }}/" + dataObject,
+        //         type: 'GET',
+        //         data: {
+        //             chart_mr: dataObject
+        //         },
+        //         success: function(isTimelineHistory) {
+        //             // alert($isTimelineHistory);
+        //             if (isTimelineHistory != '') {
+        //                 $.each(isTimelineHistory, function(key, timeline) {
+        //                     // header informasi
+        //                     $('#tr_tgl_trs').val(timeline.chart_tgl_trs);
+        //                     $('#tr_kd_reg').val(timeline.chart_kd_reg);
+        //                     $('#tr_no_mr').val(timeline.chart_mr);
+        //                     $('#tr_nm_pasien').val(timeline.chart_nm_pasien);
+        //                     $('#tr_layanan').val(timeline.chart_layanan);
+        //                     $('#tr_dokter').val(timeline.chart_dokter);
+        //                     // $('#tr_alamat').val(timeline.chart_alamat);
 
-                            $('#show_chart_S').val(timeline.chart_S);
-                            $('#show_chart_O').val(timeline.chart_O);
-                            $('#show_chart_A').val(timeline.chart_A);
-                            $('#show_chart_P').val(timeline.chart_P);
-                            // console.log(timeline.chart_S);
-                            $('#labelTimeline').val(timeline.chart_kd_reg + '-' + timeline
-                                .chart_nm_pasien + '-' + timeline
-                                .chart_dokter + '-' + timeline.chart_layanan + '-' +
-                                timeline
-                                .chart_tgl_trs);
-                        });
-                    } else {
-                        $('#show_chart_S').val('');
-                        $('#show_chart_O').val('');
-                        $('#show_chart_A').val('');
-                        $('#show_chart_P').val('');
-                        $('#labelTimeline').val('');
-                    }
-                }
-            })
-        };
+        //                     $('#show_chart_S').val(timeline.chart_S);
+        //                     $('#show_chart_O').val(timeline.chart_O);
+        //                     $('#show_chart_A').val(timeline.chart_A);
+        //                     $('#show_chart_P').val(timeline.chart_P);
+        //                     // console.log(timeline.chart_S);
+        //                     $('#labelTimeline').val(timeline.chart_kd_reg + '-' + timeline
+        //                         .chart_nm_pasien + '-' + timeline
+        //                         .chart_dokter + '-' + timeline.chart_layanan + '-' +
+        //                         timeline
+        //                         .chart_tgl_trs);
+        //                 });
+        //             } else {
+        //                 $('#show_chart_S').val('');
+        //                 $('#show_chart_O').val('');
+        //                 $('#show_chart_A').val('');
+        //                 $('#show_chart_P').val('');
+        //                 $('#labelTimeline').val('');
+        //             }
+        //         }
+        //     })
+        // };
     </script>
 @endpush

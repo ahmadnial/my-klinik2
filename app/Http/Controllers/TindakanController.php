@@ -44,7 +44,7 @@ class TindakanController extends Controller
         $isRegActive = registrasiCreate::all();
         $icdx = mstr_icdx::all();
         $isTindakanTarif = mstr_tindakan::all();
-        // $isDokter = mstr_dokter::all();
+        $isHistoryTindakan = trs_chart::all();
 
         // $data = response()->json($chart_id);
         // $isLastChartID = $chart_id;
@@ -57,6 +57,7 @@ class TindakanController extends Controller
             'icdx' => $icdx,
             'isTindakanTarif' => $isTindakanTarif,
             'kd_trs' => $kd_trs,
+            'isHistoryTindakan' => $isHistoryTindakan,
         ]);
         // return response()->json($chart_id);
     }
@@ -182,6 +183,7 @@ class TindakanController extends Controller
             foreach ($request->nm_tarif as $key => $val) {
                 $newData = [
                     'kd_trs' => $request->kd_trs,
+                    'chart_id' => $request->chart_id,
                     'tgl_trs' => $request->chart_tgl_trs,
                     'layanan' => $request->chart_layanan,
                     'kd_reg' => $request->chart_kd_reg,
@@ -211,32 +213,15 @@ class TindakanController extends Controller
 
     public function getTimeline(Request $request)
     {
-        $isTimelineHistory = ChartTindakan::where('chart_mr', $request->chart_mr)->latest()->get();
+        // $isTimelineHistory = ChartTindakan::where('chart_mr', $request->chart_mr)->latest()->get();
+
+        $isTimelineHistory = DB::table('chart_tindakan')
+            ->leftJoin('trs_chart', 'chart_tindakan.chart_id', 'trs_chart.chart_id')
+            ->select('chart_tindakan.*', 'trs_chart.*')
+            ->where('chart_tindakan.chart_mr', $request->chart_mr)
+            ->orderBy('chart_tindakan.created_at', 'DESC')
+            ->get();
 
         return response()->json($isTimelineHistory);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }

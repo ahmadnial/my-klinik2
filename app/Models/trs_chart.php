@@ -14,6 +14,7 @@ class trs_chart extends Model
     protected $table = 'trs_chart';
     protected $fillable = [
         'kd_trs',
+        'chart_id',
         'tgl_trs',
         'layanan',
         'kd_reg',
