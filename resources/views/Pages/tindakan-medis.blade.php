@@ -129,15 +129,32 @@
                                                 <div class="form-group">
                                                     <label for="inputDescription">Plan</label>
                                                     <div class="float-right mb-1">
-                                                        <button type="button"
-                                                            class="btn btn-xs btn-warning floar-right text-white"
-                                                            data-toggle="modal"
-                                                            data-target="#addTindakan">Tindakan</button>
+                                                        <button type="button" id="addTindakan"
+                                                            class="btn btn-xs btn-warning floar-right text-white">Tindakan</button>
                                                         <button type="button"
                                                             class="btn btn-xs btn-info floar-right">Resep</button>
                                                     </div>
                                                     <textarea id="chart_P" name="chart_P" class="form-control" rows="4"></textarea>
                                                 </div>
+                                                <div class="showOrHideTdk"></div>
+                                                {{-- <div class="row form-group col form-inline">
+                                                    <label for="inputDescription">Tindakan</label>
+                                                    <select class="nm_tarif form-control" style="width:100%;"
+                                                        name="nm_tarif[]" id="nm_tarif[]">
+                                                        @foreach ($isTindakanTarif as $t)
+                                                            <option value="">--Select--</option>
+                                                            <option value="{{ $t->nm_tindakan }}">{{ $t->nm_tindakan }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    <input type="hidden" id="kd_trs" name="kd_trs"
+                                                        value="{{ $kd_trs }}">
+                                                    <input type="hidden" id="sub_total" name="sub_total"
+                                                        value="6000">
+                                                    <button type="button"
+                                                        class="nm_tarif_add btn btn-xs btn-info">add</button>
+                                                </div>
+                                                <div class="nm_tarif_plus"></div> --}}
                                                 <input type="hidden" id="user" name="user_create" value="tes">
                                         </div>
                                     </div>
@@ -161,7 +178,7 @@
     {{-- ========================END MODAL SOAP============================= --}}
 
     {{-- ===============ADD TINDAKAN MODAL================= --}}
-    <div class="modal fade" id="addTindakan">
+    <div class="modal fade" id="#">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 {{-- <div class="modal-header">
@@ -187,24 +204,8 @@
                                                 </button> --}}
                                             </div>
                                         </div>
-                                        <div class="card-body">
+                                        <div class="nm_tarif_plus card-body">
                                             {{-- Hidden value --}}
-                                            <div class="row form-group col form-inline">
-                                                <label for="inputDescription">Tindakan</label>
-                                                <select class="nm_tarif form-control" style="width:100%;"
-                                                    name="nm_tarif[]" id="nm_tarif[]">
-                                                    @foreach ($isTindakanTarif as $t)
-                                                        <option value="">--Select--</option>
-                                                        <option value="{{ $t->nm_tindakan }}">{{ $t->nm_tindakan }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                <input type="hidden" id="kd_trs" name="kd_trs"
-                                                    value="{{ $kd_trs }}">
-                                                <input type="hidden" id="sub_total" name="sub_total" value="6000">
-                                                <button type="button"
-                                                    class="nm_tarif_add btn btn-xs btn-info">add</button>
-                                            </div>
                                             {{-- <div class="row form-group col form-inline">
                                                 <label for="inputDescription">Tindakan</label>
                                                 <select class="nm_tarif form-control" style="width:100%;"
@@ -220,8 +221,19 @@
                                                 <input type="hidden" id="sub_total" name="sub_total" value="6000">
                                                 <button type="button"
                                                     class="nm_tarif_add btn btn-xs btn-info">add</button>
+                                            </div>
+                                            <div class="nm_tarif_plus"></div> --}}
+                                            {{-- <div class="row form-group col form-inline">
+                                                <label for="inputDescription">Tindakan</label>
+                                                <select class="nm_tarif form-control" style="width:100%;"
+                                                    name="nm_tarif[]" id="nm_tarif[]">
+                                                    @foreach ($isTindakanTarif as $t)
+                                                        <option value="">--Select--</option>
+                                                        <option value="{{ $t->nm_tindakan }}">{{ $t->nm_tindakan }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                             </div> --}}
-                                            <div class="nm_tarif_plus"></div>
                                         </div>
                                     </div>
                                     <div class="float-right">
@@ -243,7 +255,7 @@
     <div class="row">
         <div class="col" id="accordion">
             <div class="card card-primary card-outline">
-                <a class="d-block w-100" data-toggle="" href="#collapseOne">
+                <a class="d-block w-100" data-toggle="" href="#">
                     <div class="card-header">
                         <h4 class="card-title w-100">
                             SOAP
@@ -388,24 +400,49 @@
         //         }
         //     })
         // };
-
-        $(".nm_tarif_add").on("click", function() {
-            // Adding a row inside the tbody.
-            // var tubuh =
-            //     '<div><div class="nm_tarif row form-group col form-inline"><label for="inputDescription"></label><select class="nm_tarif form-control" style="width:100%;" name="nm_tarif[]" id="nm_tarif"><option value="">--Select--</option>@foreach ($isTindakanTarif as $t)<option value="{{ $t->nm_tindakan }}">{{ $t->nm_tindakan }}</option>@endforeach</select><input type="hidden" id="kd_trs" name="kd_trs" value="{{ $kd_trs }}"><input type="hidden" id="sub_total" name="sub_total" value="6000"></div></div>';
-            // console.log(tubuh);
-            $(".nm_tarif_plus").append(`<div>
-                <div class="nm_tarif row form-group col form-inline">
-                     <label for="inputDescription"></label>
-                     <select class="nm_tarif form-control" style="width:100%;" name="nm_tarif[]" id="nm_tarif">
-                         <option value="">--Select--</option>
-                         @foreach ($isTindakanTarif as $t)
-                             <option value="{{ $t->nm_tindakan }}">{{ $t->nm_tindakan }}</option>
-                         @endforeach
+        $(document).on("click", "#addTindakan", function() {
+            // $('.nm_tarif_plus').append(tubuh);
+            $(".showOrHideTdk").append(
+                `<div class="row form-group">
+                    <label>Tindakan</label>
+                    <div class="float-right mb-1">
+                    <button type="button"
+                        class="nm_tarif_add btn btn-xs btn-primary float-right">add more
+                    </button>
+                    </div>
+                    <select class="nm_tarif form-control" style="width:100%;"
+                        name="nm_tarif[]" id="nm_tarif[]">
+                        @foreach ($isTindakanTarif as $t)
+                            <option value="">--Select--</option>
+                            <option value="{{ $t->nm_tindakan }}">{{ $t->nm_tindakan }}
+                            </option>
+                        @endforeach
                     </select>
-                </div>`);
+                    <input type="hidden" id="kd_trs" name="kd_trs"
+                        value="{{ $kd_trs }}">
+                    <input type="hidden" id="sub_total" name="sub_total"
+                        value="6000">
+                </div>
+                <div class="nm_tarif_plus form-group"></div>`
+            );
         });
 
+        $(document).on("click", ".nm_tarif_add", function() {
+            // var tubuh =
+            //     '<div class="nm_tarif row form-group col form-inline"><label for="inputDescription"></label><select class="nm_tarif form-control" style="width:100%;" name="nm_tarif[]" id="nm_tarif"><option value="">--Select--</option>@foreach ($isTindakanTarif as $t)<option value="{{ $t->nm_tindakan }}">{{ $t->nm_tindakan }}</option>@endforeach</select><input type="hidden" id="kd_trs" name="kd_trs" value="{{ $kd_trs }}"><input type="hidden" id="sub_total" name="sub_total" value="6000"></div>';
+            // console.log(tubuh);
+            // $('.nm_tarif_plus').append(tubuh);
+            $(".nm_tarif_plus").append(
+                '<div class="row form-group">' +
+                '<label for="inputDescription"></label>' +
+                '<select class="nm_tarif form-control" style="width:100%;" name="nm_tarif[]" id="nm_tarif[]">' +
+                '<option value="">--Select--</option>' +
+                '@foreach ($isTindakanTarif as $t)' +
+                '<option value="{{ $t->nm_tindakan }}">{{ $t->nm_tindakan }}</option>' +
+                ' @endforeach' +
+                '</select>' +
+                '</div>');
+        });
 
         // Create 
         $(document).ready(function() {
