@@ -441,7 +441,13 @@
                 '<option value="{{ $t->nm_tindakan }}">{{ $t->nm_tindakan }}</option>' +
                 ' @endforeach' +
                 '</select>' +
+                '<button type="button" class="rmvItm btn btn-danger">rmv</button>' +
                 '</div>');
+
+        });
+
+        $(".nm_tarif_plus").on('click', '.rmvItm', function() {
+            $(this).parent().parent().remove();
         });
 
         // Create 
