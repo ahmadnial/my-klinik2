@@ -412,8 +412,8 @@
                     </div>
                     <select class="nm_tarif form-control" style="width:100%;"
                         name="nm_tarif[]" id="nm_tarif[]">
+                        <option value="">--Select--</option>
                         @foreach ($isTindakanTarif as $t)
-                            <option value="">--Select--</option>
                             <option value="{{ $t->nm_tindakan }}">{{ $t->nm_tindakan }}
                             </option>
                         @endforeach
