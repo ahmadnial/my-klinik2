@@ -42,7 +42,7 @@
     <link rel="stylesheet" href="{{ asset('src/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed">
     @include('sweetalert::alert')
     <div class="wrapper">
 
@@ -53,7 +53,7 @@
         </div> --}}
 
         <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-teal  navbar-light">
+        <nav class="main-header navbar navbar-expand navbar-teal  navbar-light" id="nv">
             <!-- Left navbar links -->
             <ul class="navbar-nav">
                 <li class="nav-item">

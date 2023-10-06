@@ -115,8 +115,8 @@ class TindakanController extends Controller
 
     public function chartCreate(Request $request)
     {
-        // $yes = $request->all();
-        // dd($yes);
+        $yes = $request->all();
+        dd($yes);
 
         $request->validate([
             // 'user' => 'required',

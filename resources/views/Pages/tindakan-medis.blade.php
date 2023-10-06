@@ -1,7 +1,32 @@
 @extends('Pages.master')
 
 @section('konten')
-    <section class="content">
+    <style>
+        /* Split the screen in half */
+
+
+        .splitRight {
+            right: 0%;
+            height: 100%;
+            width: 43%;
+            position: absolute;
+            z-index: 0;
+            top: 0;
+            overflow-x: hidden;
+            padding-top: 95px;
+        }
+
+        @media (min-width: 576px) {
+            #Right {
+                position: fixed;
+                max-width: 100%;
+                top: 0;
+                bottom: 0;
+                left: unset;
+            }
+        }
+    </style>
+    <section class="splitRight col-lg-9 content" id="Right">
         <div class="card">
             <div class="card-body">
                 <div class="row">
@@ -52,198 +77,121 @@
                     <input type="hidden" id="tr_tgl_lahir" name="tr_tgl_lahir">
                     <input type="hidden" id="user" name="user" value="tes">
                 </div>
-                <div class="float-right">
+                {{-- <div class="float-right">
                     <button class="btn btn-success" data-toggle="modal" data-target="#TambahSOAP"><i class="fa fa-plus"></i>
                         SOAP</button>
+                </div> --}}
+                {{-- <div class="card-body"> --}}
+                <div class="row">
+                    <div class="col">
+                        <div class="card card-success">
+                            <div class="card-header">
+                                <h3 class="card-title">Form SOAP
+                                </h3>
+                            </div>
+                            <div class="card-body">
+                                {{-- Hidden value --}}
+                                <form action="{{ url('chartCreate') }}" method="post">
+                                    @csrf
+                                    <input type="hidden" id="chart_id" name="chart_id" value="{{ $isLastChartID }}">
+                                    <input type="hidden" id="chart_kd_reg" name="chart_kd_reg" value="">
+                                    <input type="hidden" id="chart_tgl_trs" name="chart_tgl_trs" value="">
+                                    <input type="hidden" id="chart_mr" name="chart_mr" value="">
+                                    <input type="hidden" id="chart_nm_pasien" name="chart_nm_pasien" value="">
+                                    <input type="hidden" id="chart_layanan" name="chart_layanan" value="">
+                                    <input type="hidden" id="chart_dokter" name="chart_dokter" value="">
+                                    <input type="hidden" id="user" name="user" value="">
+                                    {{-- Hidden value --}}
+                                    <div class="form-group">
+                                        <label for="inputDescription">Subjective</label>
+                                        <textarea id="chart_S" name="chart_S" class="form-control" rows="4"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputDescription">Objective</label>
+                                        <textarea id="chart_O" name="chart_O" class="form-control" rows="4"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputDescription">Assesment</label>
+                                        <select class="form-control mb-3" style="width: 100%;" name="chart_A_diagnosa"
+                                            id="chart_A_diagnosa">
+                                            @foreach ($icdx as $x)
+                                                <option value="">--Select--</option>
+                                                <option value="{{ $x->code . '-' . $x->name_en }}">
+                                                    {{ $x->code . '-' . $x->name_en }}</option>
+                                            @endforeach
+                                        </select>
+                                        <textarea id="chart_A" class="form-control mt-3 mb-2" rows="4"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputDescription">Plan</label>
+                                        <div class="float-right mb-1">
+                                            <button type="button" id="addTindakann"
+                                                class="btn btn-xs btn-warning floar-right text-white" data-toggle="modal"
+                                                data-target="#addTindakans">Tindakan</button>
+                                            <button type="button" class="btn btn-xs btn-info floar-right">Resep</button>
+                                        </div>
+                                        <textarea id="chart_P" name="chart_P" class="form-control" rows="4"></textarea>
+                                    </div>
+
+                                    <div class="showOrHideTdk"></div>
+
+                                    <input type="hidden" id="user" name="user_create" value="tes">
+                            </div>
+                        </div>
+                        <div class="">
+                            {{-- <button type="button" class="" data-dismiss="modal"></button> --}}
+                            <button type="submit" id="createSOAPP" class="btn btn-success float-rights"><i
+                                    class="fa fa-save"></i>
+                                &nbsp;
+                                Save</button>
+                            {{-- </div> --}}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     {{-- ===============SOAP MODAL================= --}}
-    <div class="modal fade" id="TambahSOAP">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Kartu Pemeriksaan Pasien</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div id="collapseOne" class="collapse show" data-parent="#accordion">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md">
-                                    <div class="card card-primary">
-                                        <div class="card-header">
-                                            <h3 class="card-title">Form SOAP
-                                            </h3>
 
-                                            <div class="card-tools">
-                                                <button type="button" class="btn btn-tool" data-card-widget="disable"
-                                                    title="Collapse">
-                                                    {{-- <i class="fas fa-minus"></i> --}}
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            {{-- Hidden value --}}
-                                            <form action="{{ url('chartCreate') }}" method="post">
-                                                @csrf
-                                                <input type="hidden" id="chart_id" name="chart_id"
-                                                    value="{{ $isLastChartID }}">
-                                                <input type="hidden" id="chart_kd_reg" name="chart_kd_reg"
-                                                    value="">
-                                                <input type="hidden" id="chart_tgl_trs" name="chart_tgl_trs"
-                                                    value="">
-                                                <input type="hidden" id="chart_mr" name="chart_mr" value="">
-                                                <input type="hidden" id="chart_nm_pasien" name="chart_nm_pasien"
-                                                    value="">
-                                                <input type="hidden" id="chart_layanan" name="chart_layanan"
-                                                    value="">
-                                                <input type="hidden" id="chart_dokter" name="chart_dokter"
-                                                    value="">
-                                                <input type="hidden" id="user" name="user" value="">
-                                                {{-- Hidden value --}}
-                                                <div class="form-group">
-                                                    <label for="inputDescription">Subjective</label>
-                                                    <textarea id="chart_S" name="chart_S" class="form-control" rows="4"></textarea>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="inputDescription">Objective</label>
-                                                    <textarea id="chart_O" name="chart_O" class="form-control" rows="4"></textarea>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="inputDescription">Assesment</label>
-                                                    <select class="form-control mb-3" style="width: 100%;"
-                                                        name="chart_A_diagnosa" id="chart_A_diagnosa">
-                                                        @foreach ($icdx as $x)
-                                                            <option value="">--Select--</option>
-                                                            <option value="{{ $x->code . '-' . $x->name_en }}">
-                                                                {{ $x->code . '-' . $x->name_en }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <textarea id="chart_A" class="form-control mt-3 mb-2" rows="4"></textarea>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="inputDescription">Plan</label>
-                                                    <div class="float-right mb-1">
-                                                        <button type="button" id="addTindakan"
-                                                            class="btn btn-xs btn-warning floar-right text-white">Tindakan</button>
-                                                        <button type="button"
-                                                            class="btn btn-xs btn-info floar-right">Resep</button>
-                                                    </div>
-                                                    <textarea id="chart_P" name="chart_P" class="form-control" rows="4"></textarea>
-                                                </div>
-                                                <div class="showOrHideTdk"></div>
-                                                {{-- <div class="row form-group col form-inline">
-                                                    <label for="inputDescription">Tindakan</label>
-                                                    <select class="nm_tarif form-control" style="width:100%;"
-                                                        name="nm_tarif[]" id="nm_tarif[]">
-                                                        @foreach ($isTindakanTarif as $t)
-                                                            <option value="">--Select--</option>
-                                                            <option value="{{ $t->nm_tindakan }}">{{ $t->nm_tindakan }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                    <input type="hidden" id="kd_trs" name="kd_trs"
-                                                        value="{{ $kd_trs }}">
-                                                    <input type="hidden" id="sub_total" name="sub_total"
-                                                        value="6000">
-                                                    <button type="button"
-                                                        class="nm_tarif_add btn btn-xs btn-info">add</button>
-                                                </div>
-                                                <div class="nm_tarif_plus"></div> --}}
-                                                <input type="hidden" id="user" name="user_create" value="tes">
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        {{-- <button type="button" class="" data-dismiss="modal"></button> --}}
-                                        <button type="submit" id="createSOAPP" class="btn btn-success float-rights"><i
-                                                class="fa fa-save"></i>
-                                            &nbsp;
-                                            Save</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
     {{-- ========================END MODAL SOAP============================= --}}
 
     {{-- ===============ADD TINDAKAN MODAL================= --}}
-    <div class="modal fade" id="#">
-        <div class="modal-dialog modal-lg">
+    <div class="modal fade" id="addTindakans">
+        <div class="modal-dialog modal-lg" tabindex="-1">
             <div class="modal-content">
-                {{-- <div class="modal-header">
+                <div class="modal-header">
                     <h4 class="modal-title">Tindakan</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                </div> --}}
+                </div>
                 <div class="modal-body">
-                    <div id="" class="collapse show" data-parent="#">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md">
-                                    <div class="card card-success">
-                                        <div class="card-header">
-                                            <h3 class="card-title">Tambah Tindakan
-                                            </h3>
-
-                                            <div class="card-tools">
-                                                {{-- <button type="button" class="btn btn-tool" data-card-widget="disable"
-                                                    title="Collapse">
-                                                    <i class="fas fa-minus"></i>
-                                                </button> --}}
-                                            </div>
-                                        </div>
-                                        <div class="nm_tarif_plus card-body">
-                                            {{-- Hidden value --}}
-                                            {{-- <div class="row form-group col form-inline">
-                                                <label for="inputDescription">Tindakan</label>
-                                                <select class="nm_tarif form-control" style="width:100%;"
-                                                    name="nm_tarif[]" id="nm_tarif[]">
-                                                    @foreach ($isTindakanTarif as $t)
-                                                        <option value="">--Select--</option>
-                                                        <option value="{{ $t->nm_tindakan }}">{{ $t->nm_tindakan }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                <input type="hidden" id="kd_trs" name="kd_trs"
-                                                    value="{{ $kd_trs }}">
-                                                <input type="hidden" id="sub_total" name="sub_total" value="6000">
-                                                <button type="button"
-                                                    class="nm_tarif_add btn btn-xs btn-info">add</button>
-                                            </div>
-                                            <div class="nm_tarif_plus"></div> --}}
-                                            {{-- <div class="row form-group col form-inline">
-                                                <label for="inputDescription">Tindakan</label>
-                                                <select class="nm_tarif form-control" style="width:100%;"
-                                                    name="nm_tarif[]" id="nm_tarif[]">
-                                                    @foreach ($isTindakanTarif as $t)
-                                                        <option value="">--Select--</option>
-                                                        <option value="{{ $t->nm_tindakan }}">{{ $t->nm_tindakan }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div> --}}
-                                        </div>
-                                    </div>
-                                    <div class="float-right">
-                                        <button type="button" class="btn btn-success" data-dismiss="modal">add</button>
-                                        {{-- <button type="button" id="addTdk" class="btn btn-success float-rights">
-                                            Add</button> --}}
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="container">
+                        <div class="float-right mb-1 mt-1">
+                            <button type="button" class="nm_tarif_add btn btn-xs btn-primary float-right">add more
+                            </button>
                         </div>
+                        <div class="">
+                            <select class="nm_tarif form-control" style="width:100%;" name="nm_tarif[]" id="nm_tarif[]">
+                                <option value="">--Select--</option>
+                                @foreach ($isTindakanTarif as $t)
+                                    <option value="{{ $t->nm_tindakan }}">{{ $t->nm_tindakan }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="nm_tarif_plus">
+
+                        </div>
+                    </div>
+                    <input type="hidden" id="kd_trs" name="kd_trs" value="{{ $kd_trs }}">
+                    <input type="hidden" id="sub_total" name="sub_total" value="6000">
+                    {{-- <div class="nm_tarif_plus"></div> --}}
+                    <div class="float-right mt-2">
+                        <button type="button" class="btn btn-success">add</button>
                     </div>
                 </div>
             </div>
@@ -252,17 +200,17 @@
     </form>
 
     {{-- ========================END MODAL ADD TINDAKANs============================= --}}
-    <div class="row">
+    <div class="splitLeft col-sm-12 col-lg-6 row">
         <div class="col" id="accordion">
             <div class="card card-primary card-outline">
                 <a class="d-block w-100" data-toggle="" href="#">
                     <div class="card-header">
                         <h4 class="card-title w-100">
-                            SOAP
+                            History Timeline
                         </h4>
                     </div>
                 </a>
-                <div id="" class="isTimeline collapse show" data-parent="#accordion">
+                <div id="" class="isTimeline collapse show bg-gray" data-parent="#accordion">
                 </div>
             </div>
         </div>
@@ -400,40 +348,37 @@
         //         }
         //     })
         // };
-        $(document).on("click", "#addTindakan", function() {
-            // $('.nm_tarif_plus').append(tubuh);
-            $(".showOrHideTdk").append(
-                `<div class="row form-group">
-                    <label>Tindakan</label>
-                    <div class="float-right mb-1">
-                    <button type="button"
-                        class="nm_tarif_add btn btn-xs btn-primary float-right">add more
-                    </button>
-                    </div>
-                    <select class="nm_tarif form-control" style="width:100%;"
-                        name="nm_tarif[]" id="nm_tarif[]">
-                        <option value="">--Select--</option>
-                        @foreach ($isTindakanTarif as $t)
-                            <option value="{{ $t->nm_tindakan }}">{{ $t->nm_tindakan }}
-                            </option>
-                        @endforeach
-                    </select>
-                    <input type="hidden" id="kd_trs" name="kd_trs"
-                        value="{{ $kd_trs }}">
-                    <input type="hidden" id="sub_total" name="sub_total"
-                        value="6000">
-                </div>
-                <div class="nm_tarif_plus form-group"></div>`
-            );
-        });
+        // $(document).on("click", "#addTindakan", function() {
+        //     // $('.nm_tarif_plus').append(tubuh);
+        //     $(".showOrHideTdk").append(
+        //         `<div class="">
+    //             <label>Tindakan</label>
+    //             <div class="float-right mb-1">
+    //             <button type="button"
+    //                 class="nm_tarif_add btn btn-xs btn-primary float-right">add more
+    //             </button>
+    //             </div>
+    //             <select class="nm_tarif form-control" style="width:100%;"
+    //                 name="nm_tarif[]" id="nm_tarif[]">
+    //                 <option value="">--Select--</option>
+    //                 @foreach ($isTindakanTarif as $t)
+    //                     <option value="{{ $t->nm_tindakan }}">{{ $t->nm_tindakan }}
+    //                     </option>
+    //                 @endforeach
+    //             </select>
+    //             <input type="hidden" id="kd_trs" name="kd_trs"
+    //                 value="{{ $kd_trs }}">
+    //             <input type="hidden" id="sub_total" name="sub_total"
+    //                 value="6000">
+    //         </div>
+    //         <div class="nm_tarif_plus"></div>`
+        //     );
+        // });
 
-        $(document).on("click", ".nm_tarif_add", function() {
-            // var tubuh =
-            //     '<div class="nm_tarif row form-group col form-inline"><label for="inputDescription"></label><select class="nm_tarif form-control" style="width:100%;" name="nm_tarif[]" id="nm_tarif"><option value="">--Select--</option>@foreach ($isTindakanTarif as $t)<option value="{{ $t->nm_tindakan }}">{{ $t->nm_tindakan }}</option>@endforeach</select><input type="hidden" id="kd_trs" name="kd_trs" value="{{ $kd_trs }}"><input type="hidden" id="sub_total" name="sub_total" value="6000"></div>';
-            // console.log(tubuh);
-            // $('.nm_tarif_plus').append(tubuh);
+
+        $(".nm_tarif_add").on("click", function(e) {
             $(".nm_tarif_plus").append(
-                '<div class="row form-group">' +
+                '<div class="">' +
                 '<label for="inputDescription"></label>' +
                 '<select class="nm_tarif form-control" style="width:100%;" name="nm_tarif[]" id="nm_tarif[]">' +
                 '<option value="">--Select--</option>' +
@@ -441,13 +386,14 @@
                 '<option value="{{ $t->nm_tindakan }}">{{ $t->nm_tindakan }}</option>' +
                 ' @endforeach' +
                 '</select>' +
-                '<button type="button" class="rmvItm btn btn-danger">rmv</button>' +
+                '<a href="javascript:void(0)" class="rmvItm text-danger"><i class="fa fa-trash"></i></a>' +
                 '</div>');
+            e.preventDefault();
 
         });
 
-        $(".nm_tarif_plus").on('click', '.rmvItm', function() {
-            $(this).parent().parent().remove();
+        $(document).on('click', '.rmvItm', function() {
+            $(this).parent().remove();
         });
 
         // Create 
@@ -583,17 +529,17 @@
                         var dateView = moment(dateFormat).format(
                             "dddd, D MMMM YYYY, h:mm:ss a");
                         $(".isTimeline").append(`
-                    <div class="card-body">
+                    <div class="left card-body">
                         <div class="row">
-                            <div class="col-md">
-                                <div class="card card-primary" id="hdrLoop">
+                            <div class="col">
+                                <div class="card card-info" id="hdrLoop">
                                     <div class="card-header">
                                         <h3 class="card-title col-8">
                                             <div>
                                                 <button type="button" class="btn btn-xs "><i class="fa fa-pen"></i></button>
                                             </div>
                                             <div class="col">
-                                                <input type="text" style="border:none" class="form-control bg-primary"
+                                                <input type="text" style="border:none" class="form-control bg-info"
                                                     id="" value="${getVal.chart_kd_reg + '&nbsp;&nbsp;-&nbsp&nbsp;' + getVal.chart_nm_pasien + '&nbsp;&nbsp;-&nbsp&nbsp;' + getVal.chart_dokter + '&nbsp;&nbsp;-&nbsp&nbsp;' + getVal.chart_layanan + '&nbsp;&nbsp;-&nbsp&nbsp;' +
                                                     dateView}" readonly>
                                             </div>
