@@ -19,18 +19,20 @@
         @media (min-width: 576px) {
             #Right {
                 position: fixed;
-                max-width: 100%;
+                width: auto;
+                max-width: 44%;
                 top: 0;
                 bottom: 0;
+                right: 0;
                 left: unset;
             }
         }
     </style>
-    <section class="splitRight col-lg-9 content" id="Right">
+    <section class="splitRight col-lg-6 content" id="Right">
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <div class="form-group col-sm-3">
+                    <div class="form-group col-sm-4">
                         <label for="">Search Registrasi</label>
                         <select class="form-control-pasien" id="tr_kd_reg" style="width: 100%;" name="tr_kd_reg">
                             @foreach ($isRegActive as $reg)
@@ -41,33 +43,33 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group col-sm-3">
+                    <div class="form-group col-sm-4">
                         <label for="">Tanggal</label>
                         <input type="date" class="form-control" name="tr_tgl_trs" id="tr_tgl_trs" value="">
                     </div>
-                    <div class="form-group col-sm-3">
+                    <div class="form-group col-sm-4">
                         <label for="">Nomor RM</label>
                         <input type="text" class="form-control" name="tr_no_mr" id="tr_no_mr" value="" readonly>
                     </div>
-                    <div class="form-group col-sm-3">
+                    <div class="form-group col-sm-4">
                         <label for="">Nama Pasien</label>
                         <input type="text" class="form-control" name="tr_nm_pasien" id="tr_nm_pasien" value=""
                             readonly>
                     </div>
-                    <div class="form-group col-sm-3">
+                    <div class="form-group col-sm-4">
                         <label for="">Layanan</label>
                         <input type="text" class="form-control" name="tr_layanan" id="tr_layanan" value=""
                             readonly>
                     </div>
-                    <div class="form-group col-sm-3">
+                    <div class="form-group col-sm-4">
                         <label for="">Dokter</label>
                         <input type="text" class="form-control" name="tr_dokter" id="tr_dokter" value="" readonly>
                     </div>
-                    <div class="form-group col-sm-3">
+                    <div class="form-group col-sm-4">
                         <label for="">Umur</label>
                         <input type="text" class="form-control" name="tr_umur" id="tr_umur" value="" readonly>
                     </div>
-                    <div class="form-group col-sm-3">
+                    <div class="form-group col-sm-6">
                         <label for="">Alamat</label>
                         <textarea type="text" class="form-control" name="tr_alamat" id="tr_alamat" value="" readonly></textarea>
                     </div>
@@ -84,7 +86,7 @@
                 {{-- <div class="card-body"> --}}
                 <div class="row">
                     <div class="col">
-                        <div class="card card-success">
+                        <div class="card card-info">
                             <div class="card-header">
                                 <h3 class="card-title">Form SOAP
                                 </h3>
@@ -202,7 +204,7 @@
     {{-- ========================END MODAL ADD TINDAKANs============================= --}}
     <div class="splitLeft col-sm-12 col-lg-6 row">
         <div class="col" id="accordion">
-            <div class="card card-primary card-outline">
+            <div class="card card-primary">
                 <a class="d-block w-100" data-toggle="" href="#">
                     <div class="card-header">
                         <h4 class="card-title w-100">
@@ -210,7 +212,7 @@
                         </h4>
                     </div>
                 </a>
-                <div id="" class="isTimeline collapse show bg-gray" data-parent="#accordion">
+                <div id="" class="isTimeline collapse show bg-light" data-parent="#accordion">
                 </div>
             </div>
         </div>
@@ -523,6 +525,7 @@
                         // console.log(timeline.chart_S);
                         // };
                         // $(".isTimeline").parent().remove();
+                        var x = 1;
                         var dateFormat = getVal.created_at;
                         // var dateConvert = moment().format(
                         //     dateFormat); // "2014-09-08T08:02:17-05:00" (ISO 8601)
@@ -532,44 +535,41 @@
                     <div class="left card-body">
                         <div class="row">
                             <div class="col">
-                                <div class="card card-info" id="hdrLoop">
-                                    <div class="card-header">
-                                        <h3 class="card-title col-8">
-                                            <div>
-                                                <button type="button" class="btn btn-xs "><i class="fa fa-pen"></i></button>
-                                            </div>
-                                            <div class="col">
-                                                <input type="text" style="border:none" class="form-control bg-info"
+                            
+                                <div class="col" id="accordion">
+                                    <div class="card card-purple card-outline">
+                                        <a class="d-block w-100" data-toggle="collapse" href="#collapse${x++}">
+                                            <div class="card-header">
+                                                <h4 class="card-title w-100">
+                                                    <input type="text" style="border:none" class="form-control"
                                                     id="" value="${getVal.chart_kd_reg + '&nbsp;&nbsp;-&nbsp&nbsp;' + getVal.chart_nm_pasien + '&nbsp;&nbsp;-&nbsp&nbsp;' + getVal.chart_dokter + '&nbsp;&nbsp;-&nbsp&nbsp;' + getVal.chart_layanan + '&nbsp;&nbsp;-&nbsp&nbsp;' +
                                                     dateView}" readonly>
+                                                </h4>
                                             </div>
-                                        </h3>
-
-                                        <div class="card-tools">
-                                            <button type="button" class="btn btn-tool" data-card-widget="collapse"
-                                                title="Collapse">
-                                                <i class="fas fa-minus"></i>
-                                            </button>
-                                        </div>
-                                    </div>
+                                        </a>
+                                <div id="collapse${x++}" class="collapse show" data-parent="#accordion">
                                     <div class="card-body">
                                         <div class="form-group ">
                                             <label for="inputDescription" class="bg-danger">Subjective</label>
-                                            <textarea id=""  class="show_chart_S form-control" rows="4" readonly value="">${getVal.chart_S}</textarea>
+                                            <textarea id=""  class="show_chart_S form-control" style="border:none;" rows="4" readonly value="">${getVal.chart_S}</textarea>
                                         </div>
+                                        <hr>
                                         <div class="show_chart_O form-group">
                                             <label for="inputDescription" class="bg-info">Objective</label>
-                                            <textarea id="" class="show_chart_O form-control" rows="4" readonly>${getVal.chart_O}</textarea>
+                                            <textarea id="" class="show_chart_O form-control" style="border:none;" rows="4" readonly>${getVal.chart_O}</textarea>
                                         </div>
+                                        <hr>
                                         <div class="show_chart_A form-group">
                                             <label for="inputDescription" class="bg-jeje">Assesment</label>
-                                            <textarea id="" class="show_chart_A form-control mb-3" rows="2" readonly>${getVal.chart_A_diagnosa}</textarea>
-                                            <textarea id="" class="show_chart_A form-control" rows="4" readonly>${getVal.chart_A}</textarea>
+                                            <textarea id="" class="show_chart_A form-control mb-3" style="border:none;" rows="2" readonly>${getVal.chart_A_diagnosa}</textarea>
+                                            <textarea id="" class="show_chart_A form-control" rows="4" style="border:none;" readonly>${getVal.chart_A}</textarea>
                                         </div>
+                                        <hr>
                                         <div class="show_chart_P form-group">
                                             <label for="inputDescription" class="bg-nial">Plan</label>
-                                            <textarea id="" class="show_chart_P form-control" rows="4" readonly>${getVal.chart_P}</textarea>
+                                            <textarea id="" class="show_chart_P form-control" rows="4" style="border:none;" readonly>${getVal.chart_P}</textarea>
                                         </div>
+                                        <hr>
                                         <div class="tindakan">
                                              <table class="table table-hover">
                                                 <thead class="bg-nial">
