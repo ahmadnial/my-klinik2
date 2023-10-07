@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('ta_registrasi', function (Blueprint $table) {
             $table->string('fr_kd_reg')->unique();
             $table->string('fr_mr');
-            $table->string('fr_nama')->nullable();
+            $table->string('fr_nama');
             $table->string('fr_tgl_lahir');
             $table->string('fr_jenis_kelamin');
             $table->string('fr_alamat');
@@ -23,8 +23,12 @@ return new class extends Migration
             $table->string('fr_layanan');
             $table->string('fr_dokter');
             $table->string('fr_jaminan');
-            $table->string('fr_bb');
-            $table->string('fr_alergi');
+            $table->string('fr_bb')->nullable();
+            $table->string('fr_alergi')->nullable();
+            $table->string('fr_tgl_void')->nullable()->default('');
+            $table->string('fr_user_void')->nullable()->default('');
+            $table->string('fr_tgl_keluar')->nullable()->default('');
+            $table->string('fr_jam_keluar')->nullable()->default('');
             $table->string('fr_user')->nullable();
             $table->softDeletes();
             $table->timestamps();

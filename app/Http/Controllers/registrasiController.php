@@ -5,29 +5,25 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\dataSosialCreate;
 use App\Models\registrasiCreate;
+use RealRashid\SweetAlert\Toaster;
+use Yoeunes\Toastr\Toastr;
 
 class registrasiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
         $request->validate([
             'fs_mr' => 'required',
             'fs_nama' => 'required',
             'fs_tgl_lahir' => 'required',
-            'fs_jenis_kelamin' => 'required',
-            'fs_alamat' => 'required',
-            'fs_no_hp' => 'required'
+            'fs_jenis_kelamin' => 'required'
         ]);
 
         $data = dataSosialCreate::create($request->all());
@@ -59,10 +55,10 @@ class registrasiController extends Controller
         $data = registrasiCreate::create($request->all());
 
         if ($data->save()) {
-            toast('Berhasil Tersimpan', 'success')->autoClose(5000);
+            Toastr('Berhasil Tersimpan', 'success');
             return back();
         } else {
-            toast('Gagal Tersimpan!', 'error')->autoClose(5000);
+            toastr('Gagal Tersimpan!', 'error');
             return back();
         }
     }
