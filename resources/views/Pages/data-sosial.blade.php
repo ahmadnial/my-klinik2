@@ -192,20 +192,20 @@
         </div>
     </div>
 
+    <!-- The modal Edit -->
     @foreach ($isdatasosial as $d)
-        <!-- The modal Create -->
         <div class="modal fade" id="Edit{{ $d->fs_mr }}" tabindex="-1" role="dialog"
             aria-labelledby="modalLabelLarge" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <h4 class="modal-title" id="modalLabelLarge">Data Pasien Baru</h4>
+                        <h4 class="modal-title" id="modalLabelLarge">Edit Data Pasien</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form action="{{ url('') }}" method="post">
+                    <form action="{{ url('edit-dasos') }}" method="post">
                         @csrf
                         <div class="modal-body">
                             <div class="row">
@@ -218,6 +218,9 @@
                                     <label for="">Nama</label>
                                     <input type="text" class="form-control" name="fs_nama" placeholder="Nama Pasien"
                                         value="{{ $d->fs_nama }}">
+                                    @if ($errors->has('fs_nama'))
+                                        <small class="error">{{ $errors->first('fs_nama') }}</small>
+                                    @endif
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <label for="">Tanggal Lahir</label>

@@ -40,6 +40,7 @@ Route::controller(HomeController::class)->group(function () {
 // REG + DASOS CREATE
 Route::controller(registrasiController::class)->group(function () {
     Route::post('create-dasos', 'store')->name('create-dasos');
+    Route::post('edit-dasos', 'editDasos')->name('edit-dasos');
     Route::post('create-registrasi', 'registrasiCreate')->name('create-registrasi');
 });
 
