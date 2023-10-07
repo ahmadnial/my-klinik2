@@ -9,6 +9,7 @@ use RealRashid\SweetAlert\Toaster;
 use Yoeunes\Toastr\Toastr;
 use Illuminate\Support\Facades\DB;
 
+
 class registrasiController extends Controller
 {
 
@@ -101,12 +102,14 @@ class registrasiController extends Controller
         // }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+
+    public function deleteDasos(Request $request)
     {
-        //
+        $delete =  DB::table('tc_mr')->where('fs_mr', $request->fs_mr)->get();
+        dd($delete);
+        $delete->delete();
+
+        return back();
     }
 
     /**

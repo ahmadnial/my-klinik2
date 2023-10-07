@@ -38,7 +38,8 @@
                                             data-toggle="modal"data-target="#Detail">Detail</button>
                                         <button class="btn btn-xs btn-success"
                                             data-toggle="modal"data-target="#Edit{{ $item->fs_mr }}">Edit</button>
-                                        <button class="btn btn-xs btn-danger">Hapus</button>
+                                        <button class="btn btn-xs btn-danger"
+                                            data-toggle="modal"data-target="#Delete{{ $item->fs_mr }}">Delete</button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -337,6 +338,36 @@
                         </div>
                 </div>
                 </form>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="Delete{{ $d->fs_mr }}" tabindex="-1" role="dialog"
+            aria-labelledby="modalLabelLarge" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modalLabelLarge">Konfirmasi Hapus Data</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="{{ url('delete-dasos') }}" method="DELETE">
+                        @csrf
+                        <div class="modal-body">
+                            <div class="row">
+                                <input type="text" class="form-control" style="border: none"
+                                    value="Hapus Data RM Pasien : {{ $d->fs_nama }} ?" readonly>
+                            </div>
+                            <div class="modal-footer">
+                                {{-- <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button> --}}
+                                <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> &nbsp;
+                                    Delete</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     @endforeach
