@@ -10,6 +10,8 @@ use App\Models\registrasiCreate;
 use App\Models\trs_chart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+// use Illuminate\Support\Carbon;
+use Carbon\Carbon;
 
 class TindakanController extends Controller
 {
@@ -45,10 +47,11 @@ class TindakanController extends Controller
         $icdx = mstr_icdx::all();
         $isTindakanTarif = mstr_tindakan::all();
         $isHistoryTindakan = trs_chart::all();
+        $dateNow = Carbon::now()->format("d-m-Y");
 
         // $data = response()->json($chart_id);
         // $isLastChartID = $chart_id;
-
+        // dd($dateNow);
 
         return view('pages.tindakan-medis', [
             'isRegActive' => $isRegActive,
@@ -58,6 +61,7 @@ class TindakanController extends Controller
             'isTindakanTarif' => $isTindakanTarif,
             'kd_trs' => $kd_trs,
             'isHistoryTindakan' => $isHistoryTindakan,
+            'dateNow' => $dateNow,
         ]);
         // return response()->json($chart_id);
     }
@@ -115,8 +119,8 @@ class TindakanController extends Controller
 
     public function chartCreate(Request $request)
     {
-        $yes = $request->all();
-        dd($yes);
+        // $yes = $request->all();
+        // dd($yes);
 
         $request->validate([
             // 'user' => 'required',

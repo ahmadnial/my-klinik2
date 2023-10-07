@@ -45,7 +45,8 @@
                     </div>
                     <div class="form-group col-sm-4">
                         <label for="">Tanggal</label>
-                        <input type="date" class="form-control" name="tr_tgl_trs" id="tr_tgl_trs" value="">
+                        <input type="text" class="form-control" name="tr_tgl_trs" id="tr_tgl_trs"
+                            value="{{ $dateNow }}" readonly>
                     </div>
                     <div class="form-group col-sm-4">
                         <label for="">Nomor RM</label>
@@ -134,7 +135,6 @@
                                         </div>
                                         <textarea id="chart_P" name="chart_P" class="form-control" rows="4"></textarea>
                                     </div>
-
                                     <div class="showOrHideTdk"></div>
 
                                     <input type="hidden" id="user" name="user_create" value="tes">
@@ -161,6 +161,7 @@
     {{-- ========================END MODAL SOAP============================= --}}
 
     {{-- ===============ADD TINDAKAN MODAL================= --}}
+    <div class="appendTIndakan"></div>
     <div class="modal fade" id="addTindakans">
         <div class="modal-dialog modal-lg" tabindex="-1">
             <div class="modal-content">
@@ -191,7 +192,6 @@
                     </div>
                     <input type="hidden" id="kd_trs" name="kd_trs" value="{{ $kd_trs }}">
                     <input type="hidden" id="sub_total" name="sub_total" value="6000">
-                    {{-- <div class="nm_tarif_plus"></div> --}}
                     <div class="float-right mt-2">
                         <button type="button" class="btn btn-success">add</button>
                     </div>
@@ -378,7 +378,7 @@
         // });
 
 
-        $(".nm_tarif_add").on("click", function(e) {
+        $(".nm_tarif_add").on("click", function() {
             $(".nm_tarif_plus").append(
                 '<div class="">' +
                 '<label for="inputDescription"></label>' +
@@ -390,7 +390,6 @@
                 '</select>' +
                 '<a href="javascript:void(0)" class="rmvItm text-danger"><i class="fa fa-trash"></i></a>' +
                 '</div>');
-            e.preventDefault();
 
         });
 
@@ -505,7 +504,7 @@
                     // });
                     // for (var i = 0; i < isTimelineHistory.length; i++) {
                     $.each(isTimelineHistory, function(key, getVal) {
-                        $('#tr_tgl_trs').val(getVal.chart_tgl_trs);
+                        // $('#tr_tgl_trs').val(getVal.chart_tgl_trs);
                         $('#tr_kd_reg').val(getVal.chart_kd_reg);
                         $('#tr_no_mr').val(getVal.chart_mr);
                         $('#tr_nm_pasien').val(getVal.chart_nm_pasien);
@@ -541,14 +540,40 @@
                                         <a class="d-block w-100" data-toggle="collapse" href="#collapse${x++}">
                                             <div class="card-header">
                                                 <h4 class="card-title w-100">
-                                                    <input type="text" style="border:none" class="form-control"
-                                                    id="" value="${getVal.chart_kd_reg + '&nbsp;&nbsp;-&nbsp&nbsp;' + getVal.chart_nm_pasien + '&nbsp;&nbsp;-&nbsp&nbsp;' + getVal.chart_dokter + '&nbsp;&nbsp;-&nbsp&nbsp;' + getVal.chart_layanan + '&nbsp;&nbsp;-&nbsp&nbsp;' +
-                                                    dateView}" readonly>
+                                                    <input type="text" style="border:none" class="form-control bg-nial"
+                                                    id="" value="${'&nbsp;&nbsp;&nbsp&nbsp;' + dateView}" readonly>
                                                 </h4>
                                             </div>
                                         </a>
                                 <div id="collapse${x++}" class="collapse show" data-parent="#accordion">
                                     <div class="card-body">
+                                         <div class="">
+                                        <table class="table table-striped table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Kd.Registrasi :</td>
+                                                    <td>${getVal.chart_kd_reg}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>No.MR :</td>
+                                                    <td>${getVal.chart_mr}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Nama :</td>
+                                                    <td>${getVal.chart_nm_pasien}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Layanan :</td>
+                                                    <td>${getVal.chart_layanan}</td>
+                                                </tr>
+                                                 <tr>
+                                                    <td>Created By :</td>
+                                                    <td>${getVal.chart_dokter}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <hr>
                                         <div class="form-group ">
                                             <label for="inputDescription" class="bg-danger">Subjective</label>
                                             <textarea id=""  class="show_chart_S form-control" style="border:none;" rows="4" readonly value="">${getVal.chart_S}</textarea>
@@ -572,7 +597,7 @@
                                         <hr>
                                         <div class="tindakan">
                                              <table class="table table-hover">
-                                                <thead class="bg-nial">
+                                                <thead class="bg-info">
                                                      <tr>
                                                           <th>Tindakan</th>
                                                      </tr>
