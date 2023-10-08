@@ -8,6 +8,8 @@ use App\Models\mstr_tindakan;
 use Illuminate\Http\Request;
 use App\Models\mstr_layanan;
 use App\Models\mstr_nilai_tindakan;
+use Yoeunes\Toastr\Toastr;
+use Illuminate\Support\Facades\DB;
 use Dflydev\DotAccessData\Data;
 use DataTables;
 
@@ -43,7 +45,7 @@ class mastersatuController extends Controller
         $data = mstr_layanan::create($request->all());
 
         if ($data->save()) {
-            toast('Berhasil Tersimpan', 'success')->autoClose(5000);
+            toastr()->success('Data Tersimpan!');
             return back();
         } else {
             toast('Gagal Tersimpan!', 'error')->autoClose(5000);
@@ -82,10 +84,10 @@ class mastersatuController extends Controller
         $data = mstr_dokter::create($request->all());
 
         if ($data->save()) {
-            toast('Berhasil Tersimpan', 'success')->autoClose(5000);
+            toastr()->success('Data Tersimpan!');
             return back();
         } else {
-            toast('Gagal Tersimpan!', 'error')->autoClose(5000);
+            toastr()->error('Gagal Tersimpan!');
             return back();
         }
     }
@@ -108,10 +110,10 @@ class mastersatuController extends Controller
         $data = mstr_jaminan::create($request->all());
 
         if ($data->save()) {
-            toast('Berhasil Tersimpan', 'success')->autoClose(5000);
+            toastr()->success('Data Tersimpan!');
             return back();
         } else {
-            toast('Gagal Tersimpan!', 'error')->autoClose(5000);
+            toastr()->error('Gagal Tersimpan!');
             return back();
         }
     }
@@ -127,23 +129,27 @@ class mastersatuController extends Controller
     {
         $request->validate([
             'nm_tindakan' => 'required',
-            'tarif_tindakan' => 'required',
+            // 'tarif_tindakan' => 'required',
         ]);
 
         $data = mstr_tindakan::create($request->all());
 
         if ($data->save()) {
-            toast('Berhasil Tersimpan', 'success')->autoClose(5000);
+            toastr()->success('Data Tersimpan!');
             return back();
         } else {
-            toast('Gagal Tersimpan!', 'error')->autoClose(5000);
+            toastr()->error('Gagal Tersimpan!');
             return back();
         }
     }
 
     public function nilaiTindakan()
     {
-        $isnilaitindakan = mstr_nilai_tindakan::all();
+        $isnilaitindakan = DB::table('mstr_nilai_tindakan')
+            ->leftJoin('mstr_tindakan', 'mstr_nilai_tindakan.id_tindakan', 'mstr_tindakan.id')
+            ->select('mstr_nilai_tindakan.*', 'mstr_tindakan.*')
+            ->get();
+        dd($isnilaitindakan);
         $istindakan = mstr_tindakan::all();
 
         return view('pages.mstr1.mstr-nilai-tindakan', ['isnilaitindakan' => $isnilaitindakan, 'istindakan' => $istindakan]);
@@ -160,7 +166,7 @@ class mastersatuController extends Controller
         $data = mstr_nilai_tindakan::create($request->all());
 
         if ($data->save()) {
-            toast('Berhasil Tersimpan', 'success')->autoClose(5000);
+            toastr()->success('Data Tersimpan!');
             return back();
         } else {
             toast('Gagal Tersimpan!', 'error')->autoClose(5000);

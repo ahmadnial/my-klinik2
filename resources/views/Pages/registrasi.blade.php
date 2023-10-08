@@ -29,7 +29,7 @@
             <div class="card-body">
                 <div class="button"></div>
                 <div id="result" class="">
-                    <table id="example2" class="table table-hover">
+                    <table id="example1" class="table table-hover">
                         <thead class="">
                             <tr>
                                 <th>Kode Registrasi</th>
@@ -133,17 +133,25 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="form-group col-sm-6">
+                            <label for="">Session Poli</label>
+                            <select name="fr_jaminan" id="fr_jaminan" class="form-control">
+                                <option value="">--Select--</option>
+                                <option value="Pagi">Pagi</option>
+                                <option value="Sore">Sore</option>
+                            </select>
+                        </div>
                     </div>
                     <hr>
                     <div class="form-group col-sm-12">
                         <label for="">Berat Badan</label>
                         <input type="number" class="form-control" name="fr_bb" id="fr_bb"
-                            placeholder="Nomor Telephone/WA Pasien">
+                            placeholder="Berat Badan Pasien">
                     </div>
                     <div class="form-group col-sm-12">
                         <label for="">Alergi</label>
                         <input type="text" class="form-control" name="fr_alergi" id="fr_alergi"
-                            placeholder="Nomor Telephone/WA Pasien">
+                            placeholder="Alergi Pasien">
                     </div>
                     <div class="form-group col-sm-12">
                         <label for="">Alamat</label>

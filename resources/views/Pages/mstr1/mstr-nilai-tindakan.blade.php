@@ -22,7 +22,7 @@
                         </thead>
                         <tbody>
                             @foreach ($isnilaitindakan as $tz)
-                                <td id="">{{ $tz->nm_tindakan }}</td>
+                                <td id="">{{ $tz['nm_tindakan'] }}</td>
                                 <td id="">{{ $tz->nilai_tarif }}</td>
                                 <td><button class="btn btn-xs btn-success"
                                         data-toggle="modal"data-target="#EditLayanan{{ $tz->id }}">Edit</button>
@@ -140,7 +140,7 @@
                             // $('.close').click();
                             // document.getElementById("fm_nm_layanan").value = "";
                             window.location.replace("{{ url('mstr-nilai-tindakan') }}")
-                            toastr.success('Saved');
+                            // toastr.success('Saved');
                             // view()
                             // url = "{{ url('mstr-layanan') }}";
                         }

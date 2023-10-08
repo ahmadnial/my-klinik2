@@ -19,9 +19,10 @@ return new class extends Migration
             $table->string('fr_tgl_lahir');
             $table->string('fr_jenis_kelamin');
             $table->string('fr_alamat');
-            $table->string('fr_no_hp');
+            $table->string('fr_no_hp')->nullable();
             $table->string('fr_layanan');
             $table->string('fr_dokter');
+            $table->string('fr_session_poli');
             $table->string('fr_jaminan');
             $table->string('fr_bb')->nullable();
             $table->string('fr_alergi')->nullable();

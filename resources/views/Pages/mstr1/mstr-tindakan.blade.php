@@ -124,14 +124,14 @@
                         data: {
                             type: 2,
                             nm_tindakan: nm_tindakan,
-                            tarif_tindakan: tarif_tindakan,
+                            // tarif_tindakan: tarif_tindakan,
                         },
                         cache: false,
                         success: function(dataResult) {
                             // $('.close').click();
                             // document.getElementById("fm_nm_layanan").value = "";
                             window.location.replace("{{ url('mstr-tindakan') }}")
-                            toastr.success('Saved');
+                            // toastr.success('Saved');
                             // view()
                             // url = "{{ url('mstr-layanan') }}";
                         }

@@ -119,8 +119,8 @@ class TindakanController extends Controller
 
     public function chartCreate(Request $request)
     {
-        // $yes = $request->all();
-        // dd($yes);
+        $yes = $request->all();
+        dd($yes);
 
         $request->validate([
             // 'user' => 'required',
@@ -200,6 +200,7 @@ class TindakanController extends Controller
                 ];
                 trs_chart::create($newData);
             };
+        } else {
         }
         // dd($newData);
         DB::commit();
@@ -215,6 +216,7 @@ class TindakanController extends Controller
         // }
     }
 
+    // get timeline pemeriksaan
     public function getTimeline(Request $request)
     {
         // $isTimelineHistory = ChartTindakan::where('chart_mr', $request->chart_mr)->latest()->get();

@@ -31,10 +31,10 @@ class registrasiController extends Controller
         $data = dataSosialCreate::create($request->all());
 
         if ($data->save()) {
-            toast('Berhasil Tersimpan', 'success')->autoClose(5000);
+            toastr()->success('Data Tersimpan!');
             return back();
         } else {
-            toast('Gagal Tersimpan!', 'error')->autoClose(5000);
+            toastr()->error('Gagal Tersimpan!');
             return back();
         }
     }

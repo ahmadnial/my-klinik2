@@ -13,7 +13,7 @@ class mstr_tindakan extends Model
 
     protected $table = 'mstr_tindakan';
     protected $fillable = [
-        'nm_tindakan',
-        'tarif_tindakan',
+        // 'id_nilai_tindakan',
+        'nm_tindakan'
     ];
 }

@@ -98,7 +98,8 @@
                                     @csrf
                                     <input type="hidden" id="chart_id" name="chart_id" value="{{ $isLastChartID }}">
                                     <input type="hidden" id="chart_kd_reg" name="chart_kd_reg" value="">
-                                    <input type="hidden" id="chart_tgl_trs" name="chart_tgl_trs" value="">
+                                    <input type="hidden" id="chart_tgl_trs" name="chart_tgl_trs"
+                                        value="{{ $dateNow }}">
                                     <input type="hidden" id="chart_mr" name="chart_mr" value="">
                                     <input type="hidden" id="chart_nm_pasien" name="chart_nm_pasien" value="">
                                     <input type="hidden" id="chart_layanan" name="chart_layanan" value="">
@@ -154,6 +155,7 @@
         </div>
     </section>
 
+
     {{-- ===============SOAP MODAL================= --}}
 
 
@@ -163,7 +165,7 @@
     {{-- ===============ADD TINDAKAN MODAL================= --}}
     <div class="appendTIndakan"></div>
     <div class="modal fade" id="addTindakans">
-        <div class="modal-dialog modal-lg" tabindex="-1">
+        <div class="modal-dialog" tabindex="-1">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Tindakan</h4>
@@ -173,11 +175,24 @@
                 </div>
                 <div class="modal-body">
                     <div class="container">
-                        <div class="float-right mb-1 mt-1">
+                        <div class="">
+                            <label for="">Tarif Dasar</label>
+                            <select class="nm_tarif form-control" style="width:100%;" name="tarif_dasar"
+                                id="tarif_dasar">
+                                <option value="">--Select--</option>
+                                <option value="20000">Tarif 1 - Rp.20.000</option>
+                                <option value="30000">Tarif 2 - Rp.30.000</option>
+                                <option value="40000">Tarif 3 - Rp.40.000</option>
+                                <option value="50000">Tarif 4 - Rp.50.000</option>
+                                <option value="60000">Tarif 5 - Rp.60.000</option>
+                            </select>
+                        </div>
+                        <div class="float-right mb-1 mt-4">
                             <button type="button" class="nm_tarif_add btn btn-xs btn-primary float-right">add more
                             </button>
                         </div>
-                        <div class="">
+                        <div class="mt-4">
+                            <label for="">Tarif/Tindakan Tambahan</label>
                             <select class="nm_tarif form-control" style="width:100%;" name="nm_tarif[]" id="nm_tarif[]">
                                 <option value="">--Select--</option>
                                 @foreach ($isTindakanTarif as $t)
@@ -480,6 +495,8 @@
 
             var data = sessionStorage.getItem("dataMR");
             var dataObject;
+            // const cekTindakan = getVal.nm_tarif;
+
 
             if (data != null) {
                 dataObject = JSON.parse(data);
@@ -494,15 +511,6 @@
                     chart_mr: dataObject
                 },
                 success: function(isTimelineHistory) {
-
-
-                    // if (isTimelineHistory != '') {
-                    // isTimelineHistory.forEach(function(item, index) {
-                    //     console.log(index);
-                    //     $('#show_chart_S').val(index.chart_S);
-
-                    // });
-                    // for (var i = 0; i < isTimelineHistory.length; i++) {
                     $.each(isTimelineHistory, function(key, getVal) {
                         // $('#tr_tgl_trs').val(getVal.chart_tgl_trs);
                         $('#tr_kd_reg').val(getVal.chart_kd_reg);
@@ -510,20 +518,8 @@
                         $('#tr_nm_pasien').val(getVal.chart_nm_pasien);
                         $('#tr_layanan').val(getVal.chart_layanan);
                         $('#tr_dokter').val(getVal.chart_dokter);
-                        // $('#tr_umur').val(isAgeNow);
-                        // $('#tr_alamat').val(timeline.chart_alamat);
-                        // $('#hdrLoop')[i];
-                        // $('.labelTimeline').val(getVal.chart_kd_reg + '-' +
-                        //     getVal.chart_nm_pasien + '-' + getVal.chart_dokter + '-' + getVal
-                        //     .chart_layanan + '-' +
-                        //     getVal.chart_tgl_trs);
-                        // $('.show_chart_S').val(getVal.chart_S);
-                        // $('.show_chart_O').val(getVal.chart_O);
-                        // $('.show_chart_A').val(getVal.chart_A);
-                        // $('.show_chart_P').val(getVal.chart_P);
-                        // console.log(timeline.chart_S);
-                        // };
-                        // $(".isTimeline").parent().remove();
+
+                        // const cekTindakan = getVal.nm_tarif;
                         var x = 1;
                         var dateFormat = getVal.created_at;
                         // var dateConvert = moment().format(
@@ -596,20 +592,20 @@
                                         </div>
                                         <hr>
                                         <div class="tindakan">
-                                             <table class="table table-hover">
+                                               
+                                            <table class="table table-hover">
                                                 <thead class="bg-info">
-                                                     <tr>
-                                                          <th>Tindakan</th>
-                                                     </tr>
+                                                    <tr>
+                                                        <th>Tindakan</th>
+                                                    </tr>
                                                 </thead>
                                                 <tbody>
-                                                    
                                                     <tr>
-                                                     <td>${getVal.nm_tarif}</td>
+                                                        <td>${getVal.nm_tarif}</td>
                                                     </tr>
-                                                  
-                                                 </tbody>
+                                                </tbody>
                                             </table>
+                                        
                                         </div>
                                     </div>
                                 </div>
