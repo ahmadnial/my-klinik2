@@ -119,27 +119,27 @@ class TindakanController extends Controller
 
     public function chartCreate(Request $request)
     {
-        $yes = $request->all();
-        dd($yes);
+        // $yes = $request->all();
+        // dd($yes);
 
         $request->validate([
             // 'user' => 'required',
-            // 'chart_id' => 'required',
-            // // 'chart_tgl_trs' => 'required',
-            // 'chart_kd_reg' => 'required',
-            // 'chart_mr' => 'required',
-            // 'chart_nm_pasien' => 'required',
-            // 'chart_layanan' => 'required',
-            // 'chart_dokter' => 'required',
-            // 'user' => 'required',
-            // 'kd_trs' => 'required',
-            // 'tgl_trs' => 'required',
-            // 'layanan' => 'required',
-            // 'kd_reg' => 'required',
-            // 'mr_pasien' => 'required',
-            // 'nm_pasien' => 'required',
-            // 'nm_tarif' => 'required',
-            // 'nm_dokter_jm' => 'required',
+            'chart_id' => 'required',
+            // 'chart_tgl_trs' => 'required',
+            'chart_kd_reg' => 'required',
+            'chart_mr' => 'required',
+            'chart_nm_pasien' => 'required',
+            'chart_layanan' => 'required',
+            'chart_dokter' => 'required',
+            'user' => 'required',
+            'kd_trs' => 'required',
+            'tgl_trs' => 'required',
+            'layanan' => 'required',
+            'kd_reg' => 'required',
+            'mr_pasien' => 'required',
+            'nm_pasien' => 'required',
+            'nm_tarif' => 'required',
+            'nm_dokter_jm' => 'required',
             // // 'sub_total' => 'required',
             // 'user' => 'required',
             // 'chart_S',

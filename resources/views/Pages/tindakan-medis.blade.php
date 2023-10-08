@@ -28,13 +28,15 @@
             }
         }
     </style>
+
     <section class="splitRight col-lg-6 content" id="Right">
         <div class="card">
             <div class="card-body">
                 <div class="row">
                     <div class="form-group col-sm-4">
                         <label for="">Search Registrasi</label>
-                        <select class="form-control-pasien" id="tr_kd_reg" style="width: 100%;" name="tr_kd_reg">
+                        <select class="form-control-pasien @error('chart_kd_reg') is-invalid @enderror" id="tr_kd_reg"
+                            style="width: 100%;" name="tr_kd_reg">
                             @foreach ($isRegActive as $reg)
                                 <option value="">--Select--</option>
                                 <option value="{{ $reg->fr_kd_reg }}">
@@ -165,7 +167,7 @@
     {{-- ===============ADD TINDAKAN MODAL================= --}}
     <div class="appendTIndakan"></div>
     <div class="modal fade" id="addTindakans">
-        <div class="modal-dialog" tabindex="-1">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Tindakan</h4>
@@ -208,7 +210,7 @@
                     <input type="hidden" id="kd_trs" name="kd_trs" value="{{ $kd_trs }}">
                     <input type="hidden" id="sub_total" name="sub_total" value="6000">
                     <div class="float-right mt-2">
-                        <button type="button" class="btn btn-success">add</button>
+                        <button type="button" id="exitModal" class="btn btn-success">add</button>
                     </div>
                 </div>
             </div>
@@ -249,6 +251,14 @@
         $('.nm_tarif').select2({
             placeholder: 'Search Tindakan',
         });
+
+        $("#exitModal").click(function() {
+            $("#addTindakans").modal("hide");
+        });
+
+        // $("#addTindakans").on('hide.bs.modal', function() {
+
+        // });
 
         // Hitung Umur
         function getUmurDetail(dateString) {
