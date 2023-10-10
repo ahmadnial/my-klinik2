@@ -50,7 +50,8 @@ class HomeController extends Controller
 
         $layanan = mstr_layanan::all();
         $jaminan = mstr_jaminan::all();
-        $isviewreg = registrasiCreate::all();
+        $isviewreg = registrasiCreate::where('fr_tgl_keluar', '=', '')->get();
+        // dd($isviewreg);
 
         return view(
             'Pages.registrasi',

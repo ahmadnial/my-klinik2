@@ -342,7 +342,7 @@
                             // document.getElementById("fm_nm_layanan").value = "";
                             window.location.replace("{{ url('registrasi') }}")
                             // viewRegistrasi()
-                            toastr.success('Saved');
+                            // toastr.success('Saved');
                             // view()
                             // url = "{{ url('mstr-layanan') }}";
                         }

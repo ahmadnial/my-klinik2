@@ -194,18 +194,26 @@
                             </button>
                         </div>
                         <div class="mt-4">
-                            <label for="">Tarif/Tindakan Tambahan</label>
-                            <select class="nm_tarif form-control" style="width:100%;" name="nm_tarif[]" id="nm_tarif[]">
-                                <option value="">--Select--</option>
-                                @foreach ($isTindakanTarif as $t)
-                                    <option value="{{ $t->nm_tindakan }}">{{ $t->nm_tindakan }}
-                                    </option>
-                                @endforeach
-                            </select>
+                            <table class="table table-bordered">
+                                <tbody id="nm_tarif_plus">
+                                    <tr>
+                                        <td>
+                                            <label for="">Tarif/Tindakan Tambahan</label>
+                                            <select class="nm_tarif form-control" style="width:100%;" name="nm_tarif[]">
+                                                <option value="">--Select--</option>
+                                                @foreach ($isTindakanTarif as $t)
+                                                    <option value="{{ $t->nm_tindakan }}">{{ $t->nm_tindakan }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="nm_tarif_plus">
+                        {{-- <div class="nm_tarif_plus">
 
-                        </div>
+                        </div> --}}
                     </div>
                     <input type="hidden" id="kd_trs" name="kd_trs" value="{{ $kd_trs }}">
                     <input type="hidden" id="sub_total" name="sub_total" value="6000">
@@ -404,17 +412,17 @@
 
 
         $(".nm_tarif_add").on("click", function() {
-            $(".nm_tarif_plus").append(
-                '<div class="">' +
+            $("#nm_tarif_plus").append(
+
                 '<label for="inputDescription"></label>' +
-                '<select class="nm_tarif form-control" style="width:100%;" name="nm_tarif[]" id="nm_tarif[]">' +
+                '<select class="nm_tarif form-control" style="width:100%;" name="nm_tarif[]">' +
                 '<option value="">--Select--</option>' +
                 '@foreach ($isTindakanTarif as $t)' +
                 '<option value="{{ $t->nm_tindakan }}">{{ $t->nm_tindakan }}</option>' +
                 ' @endforeach' +
                 '</select>' +
-                '<a href="javascript:void(0)" class="rmvItm text-danger"><i class="fa fa-trash"></i></a>' +
-                '</div>');
+                '<a href="javascript:void(0)" class="rmvItm text-danger"><i class="fa fa-trash"></i></a>'
+            );
 
         });
 
