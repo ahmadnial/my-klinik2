@@ -135,7 +135,7 @@
                         </div>
                         <div class="form-group col-sm-6">
                             <label for="">Session Poli</label>
-                            <select name="fr_jaminan" id="fr_jaminan" class="form-control">
+                            <select name="fr_session_poli" id="fr_session_poli" class="form-control">
                                 <option value="">--Select--</option>
                                 <option value="Pagi">Pagi</option>
                                 <option value="Sore">Sore</option>
@@ -309,6 +309,7 @@
                 var fr_layanan = $('#fr_layanan').val();
                 var fr_dokter = $('#fr_dokter').val();
                 var fr_jaminan = $('#fr_jaminan').val();
+                var fr_session_poli = $('#fr_session_poli').val();
                 var fr_bb = $('#fr_bb').val();
                 var fr_alergi = $('#fr_alergi').val();
                 var fr_user = $('#fr_user').val();
@@ -332,6 +333,7 @@
                             fr_layanan: fr_layanan,
                             fr_dokter: fr_dokter,
                             fr_jaminan: fr_jaminan,
+                            fr_session_poli: fr_session_poli,
                             fr_bb: fr_bb,
                             fr_alergi: fr_alergi,
                             fr_user: fr_user

@@ -22,6 +22,7 @@ class registrasiCreate extends Model
         'fr_layanan',
         'fr_dokter',
         'fr_jaminan',
+        'fr_session_poli',
         'fr_bb',
         'fr_alergi',
         'fr_user'

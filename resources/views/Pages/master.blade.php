@@ -222,6 +222,7 @@
                         </div>
                     </div>
                 </div> --}}
+                <br>
 
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
@@ -237,7 +238,7 @@
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a> --}}
-                        <ul class="nav nav-treeview">
+                        {{-- <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a href="./index.html" class="nav-link active">
                                     <i class="far fa-circle nav-icon"></i>
@@ -245,7 +246,7 @@
                                 </a>
                             </li>
 
-                        </ul>
+                        </ul> --}}
                         {{-- </li> --}}
 
                         <li class="nav-item">
@@ -310,7 +311,7 @@
                                 {{-- <i class="nav-icon fa fa-syringe"></i> --}}
                                 <i class="nav-icon fa fa-stethoscope"></i>
                                 <p>
-                                    Tindakan Medis
+                                    Medical Chart
                                     <span class="badge badge-info right"></span>
                                 </p>
                             </a>
@@ -335,6 +336,30 @@
                                     <a href="{{ url('/delivery-order') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Delivery Order</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                {{-- <i class="nav-icon fas fa-bed"></i> --}}
+                                <i class="nav-icon fa fa-light fa-money"></i>
+                                <p>
+                                    Kassa
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('/kasir-poli') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Kasir Poliklinik</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('/kasir-apotek') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Kasir Apotek</p>
                                     </a>
                                 </li>
                             </ul>
@@ -445,15 +470,7 @@
                 </nav>
             </div>
         </aside>
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+
         <div class="content-wrapper">
             <div class="content-header">
                 <div class="container-fluid">
@@ -473,7 +490,15 @@
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
-
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     @yield('konten')
                 </div>
             </section>

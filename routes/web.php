@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\kasirPoliController;
+use App\Http\Controllers\kasirPoliklinik;
 use App\Http\Controllers\masterFarmasiController;
 use App\Http\Controllers\mastersatuController;
 use App\Http\Controllers\poDoController;
@@ -124,4 +126,15 @@ Route::controller(poDoController::class)->group(function () {
 // CREATE PO-DO
 Route::controller(poDoController::class)->group(function () {
     Route::post('add-delivery-order', 'doCreate')->name('add-delivery-order');
+});
+
+// VIEW TRS-KASIR-POLI
+Route::controller(kasirPoliController::class)->group(function () {
+    Route::get('kasir-poli', 'kasirPoli')->name('kasir-poli');
+    Route::get('SearchRegister/{kdReg}', 'xregisterSearch')->name('SearchRegister');
+
+    Route::get('kasir-apotek', 'kasirApotek')->name('kasir-apotek');
+    Route::get('delivery-order', 'do')->name('delivery-order');
+    Route::get('obatSearch', 'obatSearch')->name('obatSearch');
+    Route::get('getObatList/{obat}', 'getObatList')->name('getObatList');
 });

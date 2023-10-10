@@ -11,6 +11,7 @@ use App\Models\trs_chart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 // use Illuminate\Support\Carbon;
+use Yoeunes\Toastr\Facades\Toastr;
 use Carbon\Carbon;
 
 class TindakanController extends Controller
@@ -119,8 +120,8 @@ class TindakanController extends Controller
 
     public function chartCreate(Request $request)
     {
-        $yes = $request->all();
-        dd($yes);
+        // $yes = $request->all();
+        // dd($yes);
 
         $request->validate([
             // 'user' => 'required',
@@ -131,15 +132,15 @@ class TindakanController extends Controller
             'chart_nm_pasien' => 'required',
             'chart_layanan' => 'required',
             'chart_dokter' => 'required',
-            'user' => 'required',
-            'kd_trs' => 'required',
-            'tgl_trs' => 'required',
-            'layanan' => 'required',
-            'kd_reg' => 'required',
-            'mr_pasien' => 'required',
-            'nm_pasien' => 'required',
-            'nm_tarif' => 'required',
-            'nm_dokter_jm' => 'required',
+            'user_create' => 'required',
+            // 'kd_trs' => 'required',
+            // 'tgl_trs' => 'required',
+            // 'layanan' => 'required',
+            // 'kd_reg' => 'required',
+            // 'mr_pasien' => 'required',
+            // 'nm_pasien' => 'required',
+            // 'nm_tarif' => 'required',
+            // 'nm_dokter_jm' => 'required',
             // // 'sub_total' => 'required',
             // 'user' => 'required',
             // 'chart_S',
@@ -194,18 +195,18 @@ class TindakanController extends Controller
                     'mr_pasien' => $request->chart_mr,
                     'nm_pasien' => $request->chart_nm_pasien,
                     'nm_tarif' => $request->nm_tarif[$key],
+                    'nm_tarif_dasar' => $request->nm_tarif_dasar,
                     'nm_dokter_jm' => $request->chart_dokter,
                     'sub_total' => $request->sub_total,
                     'user' => $request->user_create,
                 ];
                 trs_chart::create($newData);
             };
-        } else {
         }
         // dd($newData);
         DB::commit();
         // Toastr::success('Create new Estimates successfully :)', 'Success');
-        return redirect()->route('tindakan-medis')->with('success', 'Thank You');
+        return redirect()->route('tindakan-medis')->toastr()->success('Data Tersimpan!');
         // return redirect()->route('/tindakan-medis');
         // } catch (\Exception $e) {
         DB::rollback();
@@ -223,7 +224,7 @@ class TindakanController extends Controller
 
         $isTimelineHistory = DB::table('chart_tindakan')
             ->leftJoin('trs_chart', 'chart_tindakan.chart_id', 'trs_chart.chart_id')
-            ->select('chart_tindakan.*', 'trs_chart.*')
+            ->select('chart_tindakan.*', 'trs_chart.nm_tarif')
             ->where('chart_tindakan.chart_mr', $request->chart_mr)
             ->orderBy('chart_tindakan.created_at', 'DESC')
             ->get();

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('trs_chart', function (Blueprint $table) {
             $table->string('kd_trs');
+            $table->string('kd_resep')->nullable();
             $table->string('chart_id');
             $table->string('tgl_trs')->nullable();
             $table->string('layanan');
@@ -20,6 +21,7 @@ return new class extends Migration
             $table->string('mr_pasien');
             $table->string('nm_pasien');
             $table->string('nm_tarif');
+            $table->string('resep')->nullable();
             $table->string('nm_tarif_dasar');
             $table->string('nm_nilai_tarif');
             $table->string('nm_dokter_jm');

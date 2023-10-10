@@ -51,7 +51,8 @@ class registrasiController extends Controller
             'fr_no_hp' => 'required',
             'fr_layanan' => 'required',
             'fr_dokter' => 'required',
-            'fr_jaminan' => 'required'
+            'fr_jaminan' => 'required',
+            'fr_session_poli' => 'required'
         ]);
 
         $data = registrasiCreate::create($request->all());

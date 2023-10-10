@@ -14,6 +14,7 @@ class trs_chart extends Model
     protected $table = 'trs_chart';
     protected $fillable = [
         'kd_trs',
+        'kd_resep',
         'chart_id',
         'tgl_trs',
         'layanan',
@@ -21,8 +22,12 @@ class trs_chart extends Model
         'mr_pasien',
         'nm_pasien',
         'nm_tarif',
+        'resep',
+        'nm_tarif_dasar',
         'nm_dokter_jm',
         'sub_total',
+        'tgl_void',
+        'user_void',
         'user',
     ];
 }

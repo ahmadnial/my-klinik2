@@ -179,8 +179,8 @@
                     <div class="container">
                         <div class="">
                             <label for="">Tarif Dasar</label>
-                            <select class="nm_tarif form-control" style="width:100%;" name="tarif_dasar"
-                                id="tarif_dasar">
+                            <select class="nm_tarif_dasar form-control" style="width:100%;" name="nm_tarif_dasar"
+                                id="nm_tarif_dasar">
                                 <option value="">--Select--</option>
                                 <option value="20000">Tarif 1 - Rp.20.000</option>
                                 <option value="30000">Tarif 2 - Rp.30.000</option>
@@ -199,7 +199,8 @@
                                     <tr>
                                         <td>
                                             <label for="">Tarif/Tindakan Tambahan</label>
-                                            <select class="nm_tarif form-control" style="width:100%;" name="nm_tarif[]">
+                                            <select class="nm_tarif form-control" style="width:100%;" multiple
+                                                name="nm_tarif[]">
                                                 <option value="">--Select--</option>
                                                 @foreach ($isTindakanTarif as $t)
                                                     <option value="{{ $t->nm_tindakan }}">{{ $t->nm_tindakan }}
@@ -212,11 +213,12 @@
                             </table>
                         </div>
                         {{-- <div class="nm_tarif_plus">
-
+                            
                         </div> --}}
                     </div>
                     <input type="hidden" id="kd_trs" name="kd_trs" value="{{ $kd_trs }}">
                     <input type="hidden" id="sub_total" name="sub_total" value="6000">
+                    </form>
                     <div class="float-right mt-2">
                         <button type="button" id="exitModal" class="btn btn-success">add</button>
                     </div>
@@ -224,7 +226,6 @@
             </div>
         </div>
     </div>
-    </form>
 
     {{-- ========================END MODAL ADD TINDAKANs============================= --}}
     <div class="splitLeft col-sm-12 col-lg-6 row">
@@ -257,7 +258,7 @@
             placeholder: 'Search ICD X / Diagnosa',
         });
         $('.nm_tarif').select2({
-            placeholder: 'Search Tindakan',
+            // placeholder: 'Search Tindakan',
         });
 
         $("#exitModal").click(function() {
@@ -413,18 +414,30 @@
 
         $(".nm_tarif_add").on("click", function() {
             $("#nm_tarif_plus").append(
-
-                '<label for="inputDescription"></label>' +
+                '<tr>' +
+                '<td>' +
                 '<select class="nm_tarif form-control" style="width:100%;" name="nm_tarif[]">' +
                 '<option value="">--Select--</option>' +
                 '@foreach ($isTindakanTarif as $t)' +
                 '<option value="{{ $t->nm_tindakan }}">{{ $t->nm_tindakan }}</option>' +
                 ' @endforeach' +
                 '</select>' +
-                '<a href="javascript:void(0)" class="rmvItm text-danger"><i class="fa fa-trash"></i></a>'
+                '<a href="javascript:void(0)" class="rmvItm text-danger"><i class="fa fa-trash"></i></a>' +
+                '</td>' +
+                '</tr>'
             );
 
         });
+
+        // $("#exitModal").on("click", function() {
+        //     var teat = [];
+
+        //     $('.nm_tarif').val(function() {
+        //         nm_tarif.push($(this).text());
+        //     });
+        //     alert(teat);
+
+        // });
 
         $(document).on('click', '.rmvItm', function() {
             $(this).parent().remove();
