@@ -131,7 +131,7 @@ Route::controller(poDoController::class)->group(function () {
 // VIEW TRS-KASIR-POLI
 Route::controller(kasirPoliController::class)->group(function () {
     Route::get('kasir-poli', 'kasirPoli')->name('kasir-poli');
-    Route::get('SearchRegister/{kdReg}', 'xregisterSearch')->name('SearchRegister');
+    Route::get('SearchRegisterKsr/{kdReg}', 'xregisterSearch')->name('SearchRegisterKsr');
 
     Route::get('kasir-apotek', 'kasirApotek')->name('kasir-apotek');
     Route::get('delivery-order', 'do')->name('delivery-order');

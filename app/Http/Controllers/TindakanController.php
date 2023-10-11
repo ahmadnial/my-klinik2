@@ -206,14 +206,18 @@ class TindakanController extends Controller
         // dd($newData);
         DB::commit();
         // Toastr::success('Create new Estimates successfully :)', 'Success');
-        return redirect()->route('tindakan-medis')->toastr()->success('Data Tersimpan!');
+        // return redirect()->route('tindakan-medis')->toastr()->success('Data Tersimpan!');
+        toastr()->success('Data Tersimpan!');
+        return back();
         // return redirect()->route('/tindakan-medis');
         // } catch (\Exception $e) {
         DB::rollback();
+        toastr()->error('Gagal Tersimpan! Hubungi Admin');
+        return back();
         // Toastr::error('Add Estimates fail :)', 'Error');
         // return redirect()->back();
-        return redirect()->route('tindakan-mediss')
-            ->with('warning', 'Something Went Wrong!');
+        // return redirect()->route('tindakan-mediss')
+        //     ->with('warning', 'Something Went Wrong!');
         // }
     }
 

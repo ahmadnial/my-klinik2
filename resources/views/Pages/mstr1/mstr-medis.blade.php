@@ -6,7 +6,7 @@
             <div class="card-header">
                 <button type="submit" class="btn btn-success float-right" data-toggle="modal" data-target="#TambahMedis">Tambah
                     Medis</button>
-                <h3 class="card-title">jsGrid</h3>
+                <h3 class="card-title">Dokter / Medis</h3>
             </div>
 
             <div class="card-body">
@@ -159,7 +159,7 @@
                             // $('.close').click();
                             // document.getElementById("fm_nm_layanan").value = "";
                             window.location.replace("{{ url('mstr-medis') }}")
-                            toastr.success('Saved');
+                            // toastr.success('Saved');
                             // view()
                             // url = "{{ url('mstr-layanan') }}";
                         }

@@ -35,8 +35,7 @@
                 <div class="row">
                     <div class="form-group col-sm-4">
                         <label for="">Search Registrasi</label>
-                        <select class="form-control-pasien @error('chart_kd_reg') is-invalid @enderror" id="tr_kd_reg"
-                            style="width: 100%;" name="tr_kd_reg">
+                        <select class="form-control-pasien" id="tr_kd_reg" style="width: 100%;" name="tr_kd_reg">
                             @foreach ($isRegActive as $reg)
                                 <option value="">--Select--</option>
                                 <option value="{{ $reg->fr_kd_reg }}">
@@ -126,7 +125,7 @@
                                                     {{ $x->code . '-' . $x->name_en }}</option>
                                             @endforeach
                                         </select>
-                                        <textarea id="chart_A" class="form-control mt-3 mb-2" rows="4"></textarea>
+                                        <textarea id="chart_A" name="chart_A" class="form-control mt-3 mb-2" rows="4"></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputDescription">Plan</label>

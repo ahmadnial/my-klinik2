@@ -7,7 +7,7 @@
                 <button type="submit" class="btn btn-success float-right" data-toggle="modal"
                     data-target="#TambahLayanan">Tambah
                     Jaminan</button>
-                <h3 class="card-title"></h3>
+                <h3 class="card-title">Jaminan</h3>
             </div>
 
             <div class="card-body">
@@ -129,7 +129,7 @@
                             // $('.close').click();
                             // document.getElementById("fm_nm_layanan").value = "";
                             window.location.replace("{{ url('mstr-jaminan') }}")
-                            toastr.success('Saved');
+                            // toastr.success('Saved');
                             // view()
                             // url = "{{ url('mstr-layanan') }}";
                         }

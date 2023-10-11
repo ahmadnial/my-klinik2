@@ -33,26 +33,26 @@
         </div>
     </section>
     <style>
-        .modal {
-            padding: 0 !important; // override inline padding-right added from js
-        }
+        /* .modal {
+                                            padding: 0 !important; // override inline padding-right added from js
+                                        }
 
-        .modal .modal-dialog {
-            width: 100%;
-            max-width: none;
-            height: auto;
-            margin: 40;
-        }
+                                        .modal .modal-dialog {
+                                            width: 100%;
+                                            max-width: none;
+                                            height: auto;
+                                            margin: 40;
+                                        }
 
-        .modal .modal-content {
-            height: auto;
-            border: 0;
-            border-radius: 0;
-        }
+                                        .modal .modal-content {
+                                            height: auto;
+                                            border: 0;
+                                            border-radius: 0;
+                                        }
 
-        .modal .modal-body {
-            overflow-y: auto;
-        }
+                                        .modal .modal-body {
+                                            overflow-y: auto;
+                                        } */
     </style>
     <!-- The modal Create -->
     <div class="modal fade" id="TambahPO" data-backdrop="static">
@@ -116,13 +116,13 @@
 
                 {{-- <hr> --}}
 
-                <table class="table table-responsive" id="doTable">
+                <table class="table table-stripped" id="">
                     <thead>
                         <tr>
                             <th>No.Trs</th>
                             <th>Keterangan Biaya</th>
                             <th>Nilai</th>
-                            <th>Diskon</th>
+                            {{-- <th>Diskon</th> --}}
                             {{-- <th>Qty</th>
                             <th>Isi</th>
                             <th>Sat.Jual</th>
@@ -133,7 +133,7 @@
                             <th>Total</th> --}}
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="showAlltdk">
                         <tr>
                             {{-- <td>
                                 <select class="form-control" style='width: 100%;' id="do_obat" name="do_obat[]"
@@ -150,9 +150,9 @@
                                 <input type="text" class="form-control" id="trs_kp_nilai_tarif"
                                     name="trs_kp_nilai_tarif">
                             </td>
-                            <td>
-                                <input type="text" class="do_qty form-control" id="do_qty[]" name="do_qty[]">
-                            </td>
+                            {{-- <td>
+                                <input type="text" class="form-control" id="trs_kp_diskon" name="trs_kp_diskon">
+                            </td> --}}
 
                             <input type="hidden" name="user" id="user" value="tes user">
                         </tr>
@@ -194,7 +194,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    url: "{{ url('SearchRegister') }}/" + kdReg,
+                    url: "{{ url('SearchRegisterKsr') }}/" + kdReg,
                     type: 'GET',
                     data: {
                         'kd_reg': kdReg
@@ -209,6 +209,22 @@
 
                             $('#trs_kp_kd_trs_chart').val(dataregvalue.kd_trs);
                             $('#trs_kp_nm_tarif').val(dataregvalue.nm_tarif);
+
+                            $("#showAlltdk").append(`
+                            <tr>
+                            <td>
+                                <input type="text" class="form-control" id="trs_kp_kd_trs_chart"
+                                    name="trs_kp_kd_trs_chart" readonly value="${dataregvalue.kd_trs}">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="trs_kp_nm_tarif" value="${dataregvalue.nm_tarif}">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="trs_kp_nilai_tarif"
+                                    name="trs_kp_nilai_tarif">
+                            </td>
+                            </tr>
+                        `)
                         })
                     }
                 })
