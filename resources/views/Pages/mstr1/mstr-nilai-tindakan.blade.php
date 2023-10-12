@@ -22,7 +22,7 @@
                         </thead>
                         <tbody>
                             @foreach ($isnilaitindakan as $tz)
-                                <td id="">{{ $tz['nm_tindakan'] }}</td>
+                                <td id="">{{ $tz->id_tindakan }}</td>
                                 <td id="">{{ $tz->nilai_tarif }}</td>
                                 <td><button class="btn btn-xs btn-success"
                                         data-toggle="modal"data-target="#EditLayanan{{ $tz->id }}">Edit</button>
@@ -48,8 +48,7 @@
                                                 <div class="form-group col-sm">
                                                     <label for="">Nilai Tindakan</label>
                                                     <input type="text" class="form-control" name="" id=""
-                                                        placeholder="Nilai Tarif Tindakan"
-                                                        value="{{ $tz->tarif_tindakan }}">
+                                                        placeholder="Nilai Tarif Tindakan" value="{{ $tz->nilai_tarif }}">
                                                 </div>
                                             </div>
                                             <div class="modal-footer">

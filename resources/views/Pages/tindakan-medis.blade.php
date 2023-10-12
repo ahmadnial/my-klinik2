@@ -202,7 +202,7 @@
                                                 name="nm_tarif[]">
                                                 <option value="">--Select--</option>
                                                 @foreach ($isTindakanTarif as $t)
-                                                    <option value="{{ $t->nm_tindakan }}">{{ $t->nm_tindakan }}
+                                                    <option value="{{ $t->id }}">{{ $t->nm_tindakan }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -631,7 +631,7 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td>${getVal.nm_tarif}</td>
+                                                        <td>${getVal.nm_tindakan}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>

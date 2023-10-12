@@ -34,25 +34,25 @@
     </section>
     <style>
         /* .modal {
-                                            padding: 0 !important; // override inline padding-right added from js
-                                        }
+                                                                                                    padding: 0 !important; // override inline padding-right added from js
+                                                                                                }
 
-                                        .modal .modal-dialog {
-                                            width: 100%;
-                                            max-width: none;
-                                            height: auto;
-                                            margin: 40;
-                                        }
+                                                                                                .modal .modal-dialog {
+                                                                                                    width: 100%;
+                                                                                                    max-width: none;
+                                                                                                    height: auto;
+                                                                                                    margin: 40;
+                                                                                                }
 
-                                        .modal .modal-content {
-                                            height: auto;
-                                            border: 0;
-                                            border-radius: 0;
-                                        }
+                                                                                                .modal .modal-content {
+                                                                                                    height: auto;
+                                                                                                    border: 0;
+                                                                                                    border-radius: 0;
+                                                                                                }
 
-                                        .modal .modal-body {
-                                            overflow-y: auto;
-                                        } */
+                                                                                                .modal .modal-body {
+                                                                                                    overflow-y: auto;
+                                                                                                } */
     </style>
     <!-- The modal Create -->
     <div class="modal fade" id="TambahPO" data-backdrop="static">
@@ -103,11 +103,16 @@
                             {{-- <div class="form-group col-sm-2">
                                 <label for="">Jaminan</label>
                                 <input type="text" class="form-control" name="do_hdr_no_faktur" id="do_hdr_no_faktur"
-                                    value="" >
+                                value="" >
                             </div> --}}
                             <div class="form-group col-sm-2">
                                 <label for="">Dokter</label>
                                 <input type="text" class="form-control" name="trs_kp_dokter" id="trs_kp_dokter"
+                                    value="" readonly>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label for="">Tarif Dasar</label>
+                                <input type="text" class="form-control" name="nm_tarif_dasar" id="nm_tarif_dasar"
                                     value="" readonly>
                             </div>
                             <input type="hidden" id="user" name="user" value="tes">
@@ -116,7 +121,7 @@
 
                 {{-- <hr> --}}
 
-                <table class="table table-stripped" id="">
+                <table class="table table-stripped" id="tblTrs">
                     <thead>
                         <tr>
                             <th>No.Trs</th>
@@ -139,7 +144,7 @@
                                 <select class="form-control" style='width: 100%;' id="do_obat" name="do_obat[]"
                                     onchange="getDataObat()"></select>
                             </td> --}}
-                            <td>
+                            {{-- <td>
                                 <input type="text" class="form-control" id="trs_kp_kd_trs_chart"
                                     name="trs_kp_kd_trs_chart" readonly>
                             </td>
@@ -149,7 +154,7 @@
                             <td>
                                 <input type="text" class="form-control" id="trs_kp_nilai_tarif"
                                     name="trs_kp_nilai_tarif">
-                            </td>
+                            </td> --}}
                             {{-- <td>
                                 <input type="text" class="form-control" id="trs_kp_diskon" name="trs_kp_diskon">
                             </td> --}}
@@ -160,13 +165,8 @@
                 </table>
                 {{-- <hr> --}}
                 <div class="float-right col-4">
-                    <div class="float-right col-4">
-                        <input type="text" class="form-control float-right" name="do_hdr_total_faktur"
-                            id="do_hdr_total_faktur" value="556667" readonly>
-                    </div>
-                    {{-- <div class="float-right">
-                        <button class="btn btn-xs btn-info" id="addRow">Tambah Barang</button>
-                    </div> --}}
+                    <input type="text" class="form-control float-right" name="do_hdr_total_faktur"
+                        id="do_hdr_total_faktur" value="556667" readonly>
                 </div>
                 <br>
                 {{-- <hr> --}}
@@ -201,11 +201,13 @@
                     },
                     success: function(isRegSearchResult) {
                         $.each(isRegSearchResult, function(key, dataregvalue) {
+                            $('#tblTrs').val('');
                             $('#tr_no_mr').val(dataregvalue.fr_mr);
                             $('#trs_kp_nm_pasien').val(dataregvalue.nm_pasien);
                             $('#trs_kp_no_mr').val(dataregvalue.mr_pasien);
                             $('#trs_kp_layanan').val(dataregvalue.layanan);
                             $('#trs_kp_dokter').val(dataregvalue.nm_dokter_jm);
+                            $('#nm_tarif_dasar').val(dataregvalue.nm_tarif_dasar);
 
                             $('#trs_kp_kd_trs_chart').val(dataregvalue.kd_trs);
                             $('#trs_kp_nm_tarif').val(dataregvalue.nm_tarif);
@@ -217,15 +219,16 @@
                                     name="trs_kp_kd_trs_chart" readonly value="${dataregvalue.kd_trs}">
                             </td>
                             <td>
-                                <input type="text" class="form-control" id="trs_kp_nm_tarif" value="${dataregvalue.nm_tarif}">
+                                <input type="text" class="form-control" id="trs_kp_nm_tarif" value="${dataregvalue.nm_tindakan}">
                             </td>
                             <td>
                                 <input type="text" class="form-control" id="trs_kp_nilai_tarif"
-                                    name="trs_kp_nilai_tarif">
+                                    name="trs_kp_nilai_tarif" value="${dataregvalue.nilai_tarif}">
                             </td>
                             </tr>
                         `)
                         })
+                        var total = $('#trs_kp_nilai_tarif').val();
                     }
                 })
             });

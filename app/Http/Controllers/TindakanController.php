@@ -228,7 +228,8 @@ class TindakanController extends Controller
 
         $isTimelineHistory = DB::table('chart_tindakan')
             ->leftJoin('trs_chart', 'chart_tindakan.chart_id', 'trs_chart.chart_id')
-            ->select('chart_tindakan.*', 'trs_chart.nm_tarif')
+            ->leftJoin('mstr_tindakan', 'mstr_tindakan.id', 'trs_chart.nm_tarif')
+            ->select('chart_tindakan.*', 'trs_chart.nm_tarif', 'mstr_tindakan.nm_tindakan')
             ->where('chart_tindakan.chart_mr', $request->chart_mr)
             ->orderBy('chart_tindakan.created_at', 'DESC')
             ->get();

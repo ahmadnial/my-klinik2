@@ -149,7 +149,7 @@ class mastersatuController extends Controller
             ->leftJoin('mstr_tindakan', 'mstr_nilai_tindakan.id_tindakan', 'mstr_tindakan.id')
             ->select('mstr_nilai_tindakan.*', 'mstr_tindakan.*')
             ->get();
-        dd($isnilaitindakan);
+        // dd($isnilaitindakan);
         $istindakan = mstr_tindakan::all();
 
         return view('pages.mstr1.mstr-nilai-tindakan', ['isnilaitindakan' => $isnilaitindakan, 'istindakan' => $istindakan]);

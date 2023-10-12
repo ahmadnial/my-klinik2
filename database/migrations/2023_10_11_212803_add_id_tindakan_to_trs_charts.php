@@ -11,13 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mstr_nilai_tindakan', function (Blueprint $table) {
-            $table->id();
+        Schema::table('trs_chart', function (Blueprint $table) {
             $table->string('id_tindakan');
-            // $table->string('nm_tindakan');
-            $table->string('nilai_tarif');
-            $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -26,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mstr_nilai_tindakan');
+        Schema::table('trs_charts', function (Blueprint $table) {
+            //
+        });
     }
 };
