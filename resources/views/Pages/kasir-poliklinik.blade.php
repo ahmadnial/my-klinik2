@@ -34,25 +34,25 @@
     </section>
     <style>
         /* .modal {
-                                                                                                    padding: 0 !important; // override inline padding-right added from js
-                                                                                                }
+                                                                                                                                                padding: 0 !important; // override inline padding-right added from js
+                                                                                                                                            }
 
-                                                                                                .modal .modal-dialog {
-                                                                                                    width: 100%;
-                                                                                                    max-width: none;
-                                                                                                    height: auto;
-                                                                                                    margin: 40;
-                                                                                                }
+                                                                                                                                            .modal .modal-dialog {
+                                                                                                                                                width: 100%;
+                                                                                                                                                max-width: none;
+                                                                                                                                                height: auto;
+                                                                                                                                                margin: 40;
+                                                                                                                                            }
 
-                                                                                                .modal .modal-content {
-                                                                                                    height: auto;
-                                                                                                    border: 0;
-                                                                                                    border-radius: 0;
-                                                                                                }
+                                                                                                                                            .modal .modal-content {
+                                                                                                                                                height: auto;
+                                                                                                                                                border: 0;
+                                                                                                                                                border-radius: 0;
+                                                                                                                                            }
 
-                                                                                                .modal .modal-body {
-                                                                                                    overflow-y: auto;
-                                                                                                } */
+                                                                                                                                            .modal .modal-body {
+                                                                                                                                                overflow-y: auto;
+                                                                                                                                            } */
     </style>
     <!-- The modal Create -->
     <div class="modal fade" id="TambahPO" data-backdrop="static">
@@ -164,9 +164,12 @@
                     </tbody>
                 </table>
                 {{-- <hr> --}}
-                <div class="float-right col-4">
-                    <input type="text" class="form-control float-right" name="do_hdr_total_faktur"
-                        id="do_hdr_total_faktur" value="556667" readonly>
+                <div class="col">
+                    <div class="float-right col-3">
+                        <label for="">Total.</label>
+                        <input type="text" class="form-control" style="border: none" name="" id=""
+                            value="556667" readonly>
+                    </div>
                 </div>
                 <br>
                 {{-- <hr> --}}
