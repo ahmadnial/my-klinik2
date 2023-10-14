@@ -75,7 +75,7 @@
                         <label for="">Alamat</label>
                         <textarea type="text" class="form-control" name="tr_alamat" id="tr_alamat" value="" readonly></textarea>
                     </div>
-                    {{-- <input type="text" id="chart_id" name="chart_id" value=""> --}}
+                    {{-- <input type="text" id="chart_id_show" name="chart_id" value=""> --}}
 
 
                     <input type="hidden" id="tr_tgl_lahir" name="tr_tgl_lahir">
@@ -198,9 +198,9 @@
                                     <tr>
                                         <td>
                                             <label for="">Tarif/Tindakan Tambahan</label>
-                                            <select class="nm_tarif form-control" style="width:100%;" multiple
+                                            <select class="nm_tarif form-control" style="width:100%;" multiple="multiple"
                                                 name="nm_tarif[]">
-                                                <option value="">--Select--</option>
+                                                <option value="0" selected>--Select--</option>
                                                 @foreach ($isTindakanTarif as $t)
                                                     <option value="{{ $t->id }}">{{ $t->nm_tindakan }}
                                                     </option>
@@ -257,7 +257,7 @@
             placeholder: 'Search ICD X / Diagnosa',
         });
         $('.nm_tarif').select2({
-            // placeholder: 'Search Tindakan',
+            placeholder: 'Search Tindakan',
         });
 
         $("#exitModal").click(function() {
@@ -355,11 +355,20 @@
                         // Get MR & save  di sessionStorage
                         var mr = {};
                         mr.Text = $("#tr_no_mr").val();
+
+                        var kdReg = {};
+                        kdReg.Text = $("#tr_kd_reg").val();
+
+                        var ChartID = {};
+                        ChartID.Text = $("#chart_id").val();
                         // mr.isProcessed = false;
                         sessionStorage.setItem("dataMR", JSON.stringify(mr));
+                        sessionStorage.setItem("kdReg", JSON.stringify(kdReg));
+                        sessionStorage.setItem("ChartID", JSON.stringify(ChartID));
 
 
                         getTimeline();
+                        // getTimelineTindakan();
                         // $(".isTimeline").empty();
 
                     })
@@ -629,8 +638,8 @@
                                                         <th>Tindakan</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
-                                                    <tr>
+                                                <tbody id="TimelineTdk">
+                                                   <tr>
                                                         <td>${getVal.nm_tindakan}</td>
                                                     </tr>
                                                 </tbody>
@@ -654,8 +663,77 @@
             })
         };
 
+        function getTimelineTindakan() {
+
+            $("#TimelineTdk").empty();
+
+            var data = sessionStorage.getItem("dataMR");
+            var dataObject;
+            // const cekTindakan = getVal.nm_tarif;
+
+
+            if (data != null) {
+                dataObject = JSON.parse(data);
+            }
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ url('getTimelineTdk') }}/" + dataObject,
+                type: 'GET',
+                data: {
+                    chart_mr: dataObject
+                },
+                success: function(isTimelineHistoryTdk) {
+                    $.each(isTimelineHistoryTdk, function(key, getValTdk) {
+                        console.log(getValTdk);
+                        $("#TimelineTdk").append(`
+                         <tr>
+                            <td>${getValTdk.nm_tindakan}</td>
+                        </tr>
+                        `)
+                    })
+                }
+            })
+        };
+
+
+        // function getTimelineTindakan() {
+
+        //     $("#TimelineTdk").empty();
+
+        //     var data = sessionStorage.getItem("dataMR");
+        //     var dataObject;
+        //     // const cekTindakan = getVal.nm_tarif;
+
+
+        //     if (data != null) {
+        //         dataObject = JSON.parse(data);
+        //     }
+        //     $.ajax({
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //         },
+        //         url: "{{ url('getTimelineTdk') }}/" + dataObject,
+        //         type: 'GET',
+        //         data: {
+        //             mr_pasien: dataObject
+        //         },
+        //         success: function(isTimelineHistoryTdk) {
+        //             $.each(isTimelineHistoryTdk, function(key, getValTdk) {
+        //                 $("#TimelineTdk").append(`
+    //                  <tr>
+    //                     <td>${getValTdk.nm_tarif}</td>
+    //                 </tr>
+    //                 `)
+        //             })
+        //         }
+        //     })
+        // };
+
         // Get Data setelah reload
         window.onload = getTimeline();
+        // window.onload = getTimelineTindakan();
 
         // function getTimelineOnSubmit() {
         //     var data = sessionStorage.getItem("dataMR");

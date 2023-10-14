@@ -11,7 +11,8 @@ class kasirPoliController extends Controller
 
     public function kasirPoli()
     {
-        $getTrsTdk = DB::table('trs_chart')->select('*')->distinct()->get();
+        // $getTrsTdk = DB::table('trs_chart')->select('kd_reg', 'nm_pasien')->groupBy('kd_reg')->get();
+        $getTrsTdk = trs_chart::select('kd_reg', 'nm_pasien')->distinct()->get();
         return view('pages.kasir-poliklinik', ['isTrsTdk' => $getTrsTdk]);
     }
 
@@ -25,8 +26,11 @@ class kasirPoliController extends Controller
             ->leftJoin('mstr_tindakan', 'mstr_tindakan.id', 'trs_chart.nm_tarif')
             ->leftJoin('mstr_nilai_tindakan', 'mstr_tindakan.id', 'mstr_nilai_tindakan.id_tindakan')
             ->select('trs_chart.*', 'mstr_tindakan.*', 'mstr_nilai_tindakan.*')
+            // ->groupBy('trs_chart.kd_reg')
             ->where('trs_chart.kd_reg', $request->kd_reg)
+            // ->having('trs_chart.kd_reg', '>', 1)
             ->get();
+        // , DB::raw('count(`kd_reg`) as kr')
         return response()->json($isRegSearchResult);
     }
 

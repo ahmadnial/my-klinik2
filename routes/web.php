@@ -79,6 +79,7 @@ Route::controller(TindakanController::class)->group(function () {
     Route::get('tindakan-medis', 'tindakanMedis')->name('tindakan-medis');
     Route::get('SearchRegister/{kdReg}', 'registerSearch')->name('SearchRegister');
     Route::get('getTimeline/{mr}', 'getTimeline')->name('getTimeline');
+    Route::get('getTimelineTdk/{mr}', 'getTimelineTdk')->name('getTimelineTdk');
     Route::get('getLastID', 'getLastID')->name('getLastID');
     Route::post('chartCreate', 'chartCreate')->name('chartCreate');
 });

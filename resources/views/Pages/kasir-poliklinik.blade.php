@@ -34,25 +34,25 @@
     </section>
     <style>
         /* .modal {
-                                                                                                                                                padding: 0 !important; // override inline padding-right added from js
-                                                                                                                                            }
+                                                                                                                                                                padding: 0 !important; // override inline padding-right added from js
+                                                                                                                                                            }
 
-                                                                                                                                            .modal .modal-dialog {
-                                                                                                                                                width: 100%;
-                                                                                                                                                max-width: none;
-                                                                                                                                                height: auto;
-                                                                                                                                                margin: 40;
-                                                                                                                                            }
+                                                                                                                                                            .modal .modal-dialog {
+                                                                                                                                                                width: 100%;
+                                                                                                                                                                max-width: none;
+                                                                                                                                                                height: auto;
+                                                                                                                                                                margin: 40;
+                                                                                                                                                            }
 
-                                                                                                                                            .modal .modal-content {
-                                                                                                                                                height: auto;
-                                                                                                                                                border: 0;
-                                                                                                                                                border-radius: 0;
-                                                                                                                                            }
+                                                                                                                                                            .modal .modal-content {
+                                                                                                                                                                height: auto;
+                                                                                                                                                                border: 0;
+                                                                                                                                                                border-radius: 0;
+                                                                                                                                                            }
 
-                                                                                                                                            .modal .modal-body {
-                                                                                                                                                overflow-y: auto;
-                                                                                                                                            } */
+                                                                                                                                                            .modal .modal-body {
+                                                                                                                                                                overflow-y: auto;
+                                                                                                                                                            } */
     </style>
     <!-- The modal Create -->
     <div class="modal fade" id="TambahPO" data-backdrop="static">
@@ -139,12 +139,12 @@
                         </tr>
                     </thead>
                     <tbody id="showAlltdk">
-                        <tr>
-                            {{-- <td>
+                        {{-- <tr> --}}
+                        {{-- <td>
                                 <select class="form-control" style='width: 100%;' id="do_obat" name="do_obat[]"
                                     onchange="getDataObat()"></select>
                             </td> --}}
-                            {{-- <td>
+                        {{-- <td>
                                 <input type="text" class="form-control" id="trs_kp_kd_trs_chart"
                                     name="trs_kp_kd_trs_chart" readonly>
                             </td>
@@ -155,12 +155,12 @@
                                 <input type="text" class="form-control" id="trs_kp_nilai_tarif"
                                     name="trs_kp_nilai_tarif">
                             </td> --}}
-                            {{-- <td>
+                        {{-- <td>
                                 <input type="text" class="form-control" id="trs_kp_diskon" name="trs_kp_diskon">
                             </td> --}}
 
-                            <input type="hidden" name="user" id="user" value="tes user">
-                        </tr>
+                        {{-- </tr> --}}
+                        <input type="hidden" name="user" id="user" value="tes user">
                     </tbody>
                 </table>
                 {{-- <hr> --}}

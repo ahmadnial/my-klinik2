@@ -44,7 +44,7 @@ class TindakanController extends Controller
             $kd_trs = 'TU' . '-' . $vardate . str_pad(($dec + 1), 8, '0', STR_PAD_LEFT);
         };
         $isTindakanChart = ChartTindakan::where('chart_mr', '=', $request)->get();
-        $isRegActive = registrasiCreate::all();
+        $isRegActive = registrasiCreate::where('fr_tgl_keluar', '=', '')->get();
         $icdx = mstr_icdx::all();
         $isTindakanTarif = mstr_tindakan::all();
         $isHistoryTindakan = trs_chart::all();
@@ -202,6 +202,21 @@ class TindakanController extends Controller
                 ];
                 trs_chart::create($newData);
             };
+        } else {
+            $newData = [
+                'kd_trs' => $request->kd_trs,
+                'chart_id' => $request->chart_id,
+                'tgl_trs' => $request->chart_tgl_trs,
+                'layanan' => $request->chart_layanan,
+                'kd_reg' => $request->chart_kd_reg,
+                'mr_pasien' => $request->chart_mr,
+                'nm_pasien' => $request->chart_nm_pasien,
+                'nm_tarif_dasar' => $request->nm_tarif_dasar,
+                'nm_dokter_jm' => $request->chart_dokter,
+                'sub_total' => $request->sub_total,
+                'user' => $request->user_create,
+            ];
+            trs_chart::create($newData);
         }
         // dd($newData);
         DB::commit();
@@ -230,10 +245,37 @@ class TindakanController extends Controller
             ->leftJoin('trs_chart', 'chart_tindakan.chart_id', 'trs_chart.chart_id')
             ->leftJoin('mstr_tindakan', 'mstr_tindakan.id', 'trs_chart.nm_tarif')
             ->select('chart_tindakan.*', 'trs_chart.nm_tarif', 'mstr_tindakan.nm_tindakan')
+            // ->select('chart_tindakan.*')
             ->where('chart_tindakan.chart_mr', $request->chart_mr)
             ->orderBy('chart_tindakan.created_at', 'DESC')
             ->get();
 
         return response()->json($isTimelineHistory);
     }
+
+
+    // get timeline tindakan
+    public function getTimelineTdk(Request $request)
+    {
+        $isTimelineHistoryTdk = DB::table('chart_tindakan')
+            ->leftJoin('trs_chart', 'chart_tindakan.chart_id', 'trs_chart.chart_id')
+            ->leftJoin('mstr_tindakan', 'mstr_tindakan.id', 'trs_chart.nm_tarif')
+            ->select('mstr_tindakan.*')
+            ->where('chart_tindakan.chart_mr', $request->chart_mr)
+            ->get();
+
+        return response()->json($isTimelineHistoryTdk);
+    }
+
+    // get timeline tindakan
+    // public function getTimelineTdk(Request $request)
+    // {
+
+    //     $isTimelineHistoryTdk = DB::table('trs_chart')
+    //         ->select('trs_chart.nm_tarif')
+    //         ->where('trs_chart.mr_pasien', $request->mr_pasien)
+    //         ->get();
+
+    //     return response()->json($isTimelineHistoryTdk);
+    // }
 }
