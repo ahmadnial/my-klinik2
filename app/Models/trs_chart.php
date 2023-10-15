@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -30,4 +33,14 @@ class trs_chart extends Model
         'user_void',
         'user',
     ];
+
+    public function chart(): HasMany
+    {
+        return $this->hasMany(ChartTindakan::class);
+    }
+
+    public function nm_trf(): HasOne
+    {
+        return $this->hasOne(mstr_tindakan::class, 'id');
+    }
 }

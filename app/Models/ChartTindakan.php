@@ -4,8 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ChartTindakan extends Model
 {
@@ -29,4 +31,9 @@ class ChartTindakan extends Model
         'chart_P_resep',
         'chart_P_tindakan'
     ];
+
+    public function trstdk(): BelongsTo
+    {
+        return $this->BelongsTo(trs_chart::class, 'chart_id', 'chart_id');
+    }
 }

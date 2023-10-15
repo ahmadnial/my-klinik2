@@ -241,16 +241,42 @@ class TindakanController extends Controller
     {
         // $isTimelineHistory = ChartTindakan::where('chart_mr', $request->chart_mr)->latest()->get();
 
-        $isTimelineHistory = DB::table('chart_tindakan')
-            ->leftJoin('trs_chart', 'chart_tindakan.chart_id', 'trs_chart.chart_id')
-            ->leftJoin('mstr_tindakan', 'mstr_tindakan.id', 'trs_chart.nm_tarif')
-            ->select('chart_tindakan.*', 'trs_chart.nm_tarif', 'mstr_tindakan.nm_tindakan')
-            // ->select('chart_tindakan.*')
-            ->where('chart_tindakan.chart_mr', $request->chart_mr)
-            ->orderBy('chart_tindakan.created_at', 'DESC')
+        // $isTimelineHistory = ChartTindakan::select('chart_tindakan.*', 'mstr_tindakan.nm_tindakan')->distinct()
+        //     ->leftJoin('trs_chart', 'chart_tindakan.chart_id', 'trs_chart.chart_id')
+        //     ->leftJoin('mstr_tindakan', 'mstr_tindakan.id', 'trs_chart.nm_tarif')
+        //     ->where('chart_mr', $request->chart_mr)
+        //     ->get();
+
+        $isTimelineHistory = ChartTindakan::with('trstdk')
+            // ->distinct()
+            ->where('chart_mr', $request->chart_mr)
             ->get();
 
+
+        // $isTimelineHistory = DB::table('chart_tindakan')
+        //     ->select('chart_tindakan.*', 'mstr_tindakan.nm_tindakan')
+        //     ->leftJoin('trs_chart', 'chart_tindakan.chart_id', 'trs_chart.chart_id')
+        //     ->leftJoin('mstr_tindakan', 'mstr_tindakan.id', 'trs_chart.nm_tarif')
+        //     // ->select('chart_tindakan.*')
+        //     ->where('chart_tindakan.chart_mr', $request->chart_mr)
+        //     ->orderBy('chart_tindakan.created_at', 'DESC')
+        //     // ->groupBy('chart_tindakan.chart_mr')
+        //     ->get();
+
+        // $isTimelineHistoryTdk = DB::table('chart_tindakan')
+        //     ->leftJoin('trs_chart', 'chart_tindakan.chart_id', 'trs_chart.chart_id')
+        //     ->leftJoin('mstr_tindakan', 'mstr_tindakan.id', 'trs_chart.nm_tarif')
+        //     ->select('mstr_tindakan.*')
+        //     ->where('chart_tindakan.chart_mr', $request->chart_mr)
+        //     ->get();
+
+        // return response()->json([
+        //     'status'    => 'Success',
+        //     'chart'     => $isTimelineHistory,
+        //     'chartTdk'  => $isTimelineHistoryTdk
+        // ]);
         return response()->json($isTimelineHistory);
+        // return response()->json($isTimelineHistory);
     }
 
 
