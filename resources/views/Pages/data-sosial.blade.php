@@ -133,6 +133,7 @@
                                     <option value="Hindu">Hindu</option>
                                     <option value="Budha">Budha</option>
                                     <option value="Konghucu">Konghucu</option>
+                                    <option value="Penghayat">Penghayat</option>
                                     <option value="Tidak Diketahui">Tidak Diketahui</option>
                                 </select>
                             </div>
@@ -176,8 +177,8 @@
                                     <option value="">--Select--</option>
                                     <option value="Belum kawin">Belum kawin</option>
                                     <option value="Kawin">Kawin</option>
-                                    <option value="Janda">Janda</option>
-                                    <option value="Duda">Duda</option>
+                                    <option value="Cerai Hidup">Cerai Hidup</option>
+                                    <option value="Cerai Mati">Cerai Mati</option>
                                     <option value="Tidak Diketahui">Tidak Diketahui</option>
                                 </select>
                             </div>
