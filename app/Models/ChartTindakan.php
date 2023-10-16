@@ -32,8 +32,8 @@ class ChartTindakan extends Model
         'chart_P_tindakan'
     ];
 
-    public function trstdk(): BelongsTo
+    public function trstdk(): HasMany
     {
-        return $this->BelongsTo(trs_chart::class, 'chart_id', 'chart_id');
+        return $this->hasMany(trs_chart::class, 'chart_id', 'chart_id');
     }
 }

@@ -34,13 +34,13 @@ class trs_chart extends Model
         'user',
     ];
 
-    public function chart(): HasMany
-    {
-        return $this->hasMany(ChartTindakan::class);
-    }
+    // public function chart(): HasMany
+    // {
+    //     return $this->hasMany(ChartTindakan::class);
+    // }
 
-    public function nm_trf(): HasOne
-    {
-        return $this->hasOne(mstr_tindakan::class, 'id');
-    }
+    // public function nm_trf(): HasOne
+    // {
+    //     return $this->hasOne(mstr_tindakan::class, 'id');
+    // }
 }
