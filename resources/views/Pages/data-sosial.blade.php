@@ -78,6 +78,11 @@
                                 <input type="text" class="form-control" name="fs_nama" placeholder="Nama Pasien">
                             </div>
                             <div class="form-group col-sm-6">
+                                <label for="">Tempat Lahir</label>
+                                <input type="text" class="form-control" name="fs_tempat_lahir"
+                                    placeholder="Tempat Kelahiran">
+                            </div>
+                            <div class="form-group col-sm-6">
                                 <label for="">Tanggal Lahir</label>
                                 <input type="date" class="form-control" name="fs_tgl_lahir"
                                     placeholder="Tanggal Lahir Pasien">
@@ -104,7 +109,12 @@
                             <div class="form-group col-sm-6">
                                 <label for="">Nomor Identitas</label>
                                 <input type="text" class="form-control" name="fs_no_identitas"
-                                    placeholder="Nomor Telephone/WA Pasien">
+                                    placeholder="Nomor Identitas">
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label for="">Nama Ibu Kandung</label>
+                                <input type="text" class="form-control" name="fs_nm_ibu_kandung"
+                                    placeholder="Nama Ibu Kandung">
                             </div>
                             <div class="form-group col-sm-6">
                                 <label for="">Alamat</label>
