@@ -251,7 +251,7 @@ class TindakanController extends Controller
             ->where('chart_mr', $request->chart_mr)
             // ->distinct()
             ->orderBy('chart_tindakan.created_at', 'DESC')
-            ->groupBy('chart_tindakan.chart_id')
+            // ->groupBy('chart_tindakan.chart_id')
             ->get();
 
 

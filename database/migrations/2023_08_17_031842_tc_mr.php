@@ -15,6 +15,8 @@ return new class extends Migration
         Schema::create('tc_mr', function (Blueprint $table) {
             $table->bigInteger('fs_mr')->unique();
             $table->string('fs_nama');
+            // fs_tempat_lahir
+            // fs_nm_ibu_kandung
             $table->string('fs_tgl_lahir');
             $table->string('fs_jenis_kelamin');
             $table->string('fs_jenis_identitas')->nullable()->default('');

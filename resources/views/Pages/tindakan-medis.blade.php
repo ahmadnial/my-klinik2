@@ -640,7 +640,7 @@
                                                 </thead>
                                                 <tbody id="TimelineTdk">
                                                    <tr>
-                                                        <td>${getVal.trstdk.nm_tarif}</td>
+                                                        <td>${getVal.trstdk[key].nm_tarif}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
