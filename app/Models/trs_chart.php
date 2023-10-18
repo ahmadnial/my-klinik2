@@ -39,8 +39,8 @@ class trs_chart extends Model
     //     return $this->hasMany(ChartTindakan::class);
     // }
 
-    // public function nm_trf(): HasOne
-    // {
-    //     return $this->hasOne(mstr_tindakan::class, 'id');
-    // }
+    public function nm_trf(): HasOne
+    {
+        return $this->hasOne(mstr_tindakan::class, 'nm_tarif', 'id');
+    }
 }

@@ -558,14 +558,14 @@
                         $('#tr_layanan').val(getVal.chart_layanan);
                         $('#tr_dokter').val(getVal.chart_dokter);
 
-                        // const cekTindakan = getVal.nm_tarif;
-                        var x = 1;
-                        var dateFormat = getVal.created_at;
-                        // var dateConvert = moment().format(
-                        //     dateFormat); // "2014-09-08T08:02:17-05:00" (ISO 8601)
-                        var dateView = moment(dateFormat).format(
-                            "dddd, D MMMM YYYY, h:mm:ss a");
-                        $(".isTimeline").append(`
+                        for (var j = 0; j < getVal.length; j++) {
+                            // const cekTindakan = getVal.nm_tarif;
+                            var x = 1;
+                            var dateFormat = getVal.created_at;
+                            // var dateConvert = moment().format(
+                            //     dateFormat); // "2014-09-08T08:02:17-05:00" (ISO 8601)
+                            var dateView = moment(dateFormat).format("dddd, D MMMM YYYY, h:mm:ss a");
+                            $(".isTimeline").append(`
                     <div class="left card-body">
                         <div class="row">
                             <div class="col">
@@ -640,7 +640,7 @@
                                                 </thead>
                                                 <tbody id="TimelineTdk">
                                                    <tr>
-                                                        <td>${getVal.trstdk[key].nm_tarif}</td>
+                                                        <td>${getVal.TrsTdk.nm_tarif}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -651,6 +651,8 @@
                             </div>
                         </div>
                     </div>`)
+                        }
+
                     })
                     // } else {
                     // $('#show_chart_S').val('');
