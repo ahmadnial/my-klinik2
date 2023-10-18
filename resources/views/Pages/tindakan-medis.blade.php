@@ -550,22 +550,35 @@
                     chart_mr: dataObject
                 },
                 success: function(isTimelineHistory) {
-                    $.each(isTimelineHistory, function(key, getVal) {
+                    // $.each(isTimelineHistory, function(key, getVal) {
+                    var getValue = isTimelineHistory;
+                    for (var getVal = 0; getVal < getValue.length; getVal++) {
                         // $('#tr_tgl_trs').val(getVal.chart_tgl_trs);
-                        $('#tr_kd_reg').val(getVal.chart_kd_reg);
-                        $('#tr_no_mr').val(getVal.chart_mr);
-                        $('#tr_nm_pasien').val(getVal.chart_nm_pasien);
-                        $('#tr_layanan').val(getVal.chart_layanan);
-                        $('#tr_dokter').val(getVal.chart_dokter);
+                        $('#tr_kd_reg').val(getValue[getVal].chart_kd_reg);
+                        $('#tr_no_mr').val(getValue[getVal].chart_mr);
+                        $('#tr_nm_pasien').val(getValue[getVal].chart_nm_pasien);
+                        $('#tr_layanan').val(getValue[getVal].chart_layanan);
+                        $('#tr_dokter').val(getValue[getVal].chart_dokter);
 
-                        for (var j = 0; j < getVal.length; j++) {
-                            // const cekTindakan = getVal.nm_tarif;
-                            var x = 1;
-                            var dateFormat = getVal.created_at;
-                            // var dateConvert = moment().format(
-                            //     dateFormat); // "2014-09-08T08:02:17-05:00" (ISO 8601)
-                            var dateView = moment(dateFormat).format("dddd, D MMMM YYYY, h:mm:ss a");
-                            $(".isTimeline").append(`
+                        // $.each(isTimelineHistory, function(key, gettdk) {
+                        // var k = getValue[getVal].trstdk;
+                        // for (var j = 0; j < k.length; j++) {
+                        //     var xz = k[j];
+                        // }
+
+                        const trstdk = getValue[getVal].trstdk;
+                        let html = "";
+                        for (i in trstdk) {
+                            html = `<td>${trstdk[i].nm_tarif}</td>`;
+                        }
+
+                        var x = 1;
+                        var dateFormat = getValue[getVal].created_at;
+                        // var dateConvert = moment().format(
+                        //     dateFormat); // "2014-09-08T08:02:17-05:00" (ISO 8601)
+                        var dateView = moment(dateFormat).format(
+                            "dddd, D MMMM YYYY, h:mm:ss a");
+                        $(".isTimeline").append(`
                     <div class="left card-body">
                         <div class="row">
                             <div class="col">
@@ -587,23 +600,23 @@
                                             <tbody>
                                                 <tr>
                                                     <td>Kd.Registrasi :</td>
-                                                    <td>${getVal.chart_kd_reg}</td>
+                                                    <td>${getValue[getVal].chart_kd_reg}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>No.MR :</td>
-                                                    <td>${getVal.chart_mr}</td>
+                                                    <td>${getValue[getVal].chart_mr}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Nama :</td>
-                                                    <td>${getVal.chart_nm_pasien}</td>
+                                                    <td>${getValue[getVal].chart_nm_pasien}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Layanan :</td>
-                                                    <td>${getVal.chart_layanan}</td>
+                                                    <td>${getValue[getVal].chart_layanan}</td>
                                                 </tr>
                                                  <tr>
                                                     <td>Created By :</td>
-                                                    <td>${getVal.chart_dokter}</td>
+                                                    <td>${getValue[getVal].chart_dokter}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -611,23 +624,23 @@
                                     <hr>
                                         <div class="form-group ">
                                             <label for="inputDescription" class="bg-danger">Subjective</label>
-                                            <textarea id=""  class="show_chart_S form-control" style="border:none;" rows="4" readonly value="">${getVal.chart_S}</textarea>
+                                            <textarea id=""  class="show_chart_S form-control" style="border:none;" rows="4" readonly value="">${getValue[getVal].chart_S}</textarea>
                                         </div>
                                         <hr>
                                         <div class="show_chart_O form-group">
                                             <label for="inputDescription" class="bg-info">Objective</label>
-                                            <textarea id="" class="show_chart_O form-control" style="border:none;" rows="4" readonly>${getVal.chart_O}</textarea>
+                                            <textarea id="" class="show_chart_O form-control" style="border:none;" rows="4" readonly>${getValue[getVal].chart_O}</textarea>
                                         </div>
                                         <hr>
                                         <div class="show_chart_A form-group">
                                             <label for="inputDescription" class="bg-jeje">Assesment</label>
-                                            <textarea id="" class="show_chart_A form-control mb-3" style="border:none;" rows="2" readonly>${getVal.chart_A_diagnosa}</textarea>
-                                            <textarea id="" class="show_chart_A form-control" rows="4" style="border:none;" readonly>${getVal.chart_A}</textarea>
+                                            <textarea id="" class="show_chart_A form-control mb-3" style="border:none;" rows="2" readonly>${getValue[getVal].chart_A_diagnosa}</textarea>
+                                            <textarea id="" class="show_chart_A form-control" rows="4" style="border:none;" readonly>${getValue[getVal].chart_A}</textarea>
                                         </div>
                                         <hr>
                                         <div class="show_chart_P form-group">
                                             <label for="inputDescription" class="bg-nial">Plan</label>
-                                            <textarea id="" class="show_chart_P form-control" rows="4" style="border:none;" readonly>${getVal.chart_P}</textarea>
+                                            <textarea id="" class="show_chart_P form-control" rows="4" style="border:none;" readonly>${getValue[getVal].chart_P}</textarea>
                                         </div>
                                         <hr>
                                         <div class="tindakan">
@@ -640,7 +653,7 @@
                                                 </thead>
                                                 <tbody id="TimelineTdk">
                                                    <tr>
-                                                        <td>${getVal.TrsTdk.nm_tarif}</td>
+                                                        ${html}
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -651,9 +664,9 @@
                             </div>
                         </div>
                     </div>`)
-                        }
+                        // }
 
-                    })
+                    }
                     // } else {
                     // $('#show_chart_S').val('');
                     // $('#show_chart_O').val('');
