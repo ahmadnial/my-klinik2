@@ -568,9 +568,10 @@
 
                         const trstdk = getValue[getVal].trstdk;
                         let html = "";
-                        for (i in trstdk) {
+                        for (i in trstdk;) {
                             html = `<td>${trstdk[i].nm_tarif}</td>`;
                         }
+                        console.log(trstdk[i]);
 
                         var x = 1;
                         var dateFormat = getValue[getVal].created_at;
