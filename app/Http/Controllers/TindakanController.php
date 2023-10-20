@@ -247,7 +247,7 @@ class TindakanController extends Controller
         //     ->where('chart_mr', $request->chart_mr)
         //     ->get();
 
-        $isTimelineHistory = ChartTindakan::with('trstdk')
+        $isTimelineHistory = ChartTindakan::with('trstdk', 'nm_trf')
             ->where('chart_mr', $request->chart_mr)
             // ->distinct()
             ->orderBy('chart_tindakan.created_at', 'DESC')

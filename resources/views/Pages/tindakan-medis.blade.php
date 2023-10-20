@@ -560,19 +560,20 @@
                         $('#tr_layanan').val(getValue[getVal].chart_layanan);
                         $('#tr_dokter').val(getValue[getVal].chart_dokter);
 
-                        // $.each(isTimelineHistory, function(key, gettdk) {
-                        // var k = getValue[getVal].trstdk;
-                        // for (var j = 0; j < k.length; j++) {
-                        //     var xz = k[j];
-                        // }
-
                         const trstdk = getValue[getVal].trstdk;
                         let html = "";
-                        for (i in trstdk;) {
-                            html = `<td>${trstdk[i].nm_tarif}</td>`;
+                        for (i in trstdk) {
+                            html += `<tr><td>${trstdk[i].nm_tarif}</td></tr>`;
                         }
-                        console.log(trstdk[i]);
 
+                        // const trstdk = getValue[getVal].trstdk;
+                        // let html = "";
+                        // trstdk.forEach(xkx => {
+                        //     html =+<td>${xkx.nm_tarif}</td>
+
+                        //     // html = `<td>${xkx.nm_tarif}</td>`;
+                        //     console.log(xkx);
+                        // });
                         var x = 1;
                         var dateFormat = getValue[getVal].created_at;
                         // var dateConvert = moment().format(
@@ -653,9 +654,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody id="TimelineTdk">
-                                                   <tr>
                                                         ${html}
-                                                    </tr>
                                                 </tbody>
                                             </table>
                                         
