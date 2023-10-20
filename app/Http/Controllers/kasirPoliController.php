@@ -28,6 +28,7 @@ class kasirPoliController extends Controller
             ->select('trs_chart.*', 'mstr_tindakan.*', 'mstr_nilai_tindakan.*')
             // ->groupBy('trs_chart.kd_reg')
             ->where('trs_chart.kd_reg', $request->kd_reg)
+            // ->orwherenotNull('trs_chart.nm_tarif')
             // ->having('trs_chart.kd_reg', '>', 1)
             ->get();
         // , DB::raw('count(`kd_reg`) as kr')

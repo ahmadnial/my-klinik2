@@ -188,10 +188,10 @@
                                 <option value="60000">Tarif 5 - Rp.60.000</option>
                             </select>
                         </div>
-                        <div class="float-right mb-1 mt-4">
+                        {{-- <div class="float-right mb-1 mt-4">
                             <button type="button" class="nm_tarif_add btn btn-xs btn-primary float-right">add more
                             </button>
-                        </div>
+                        </div> --}}
                         <div class="mt-4">
                             <table class="table table-bordered">
                                 <tbody id="nm_tarif_plus">
@@ -199,8 +199,9 @@
                                         <td>
                                             <label for="">Tarif/Tindakan Tambahan</label>
                                             <select class="nm_tarif form-control" style="width:100%;" multiple="multiple"
-                                                name="nm_tarif[]">
-                                                <option value="0" selected>--Select--</option>
+                                                name="nm_tarif[]" id="nm_tarif" val>
+                                                <option>--Select--</option>
+                                                {{-- <option value="0" selected></option> --}}
                                                 @foreach ($isTindakanTarif as $t)
                                                     <option value="{{ $t->id }}">{{ $t->nm_tindakan }}
                                                     </option>
@@ -216,7 +217,7 @@
                         </div> --}}
                     </div>
                     <input type="hidden" id="kd_trs" name="kd_trs" value="{{ $kd_trs }}">
-                    <input type="hidden" id="sub_total" name="sub_total" value="6000">
+                    <input type="hidden" id="sub_total" name="sub_total" value="0">
                     </form>
                     <div class="float-right mt-2">
                         <button type="button" id="exitModal" class="btn btn-success">add</button>
@@ -256,7 +257,7 @@
         $('#chart_A_diagnosa').select2({
             placeholder: 'Search ICD X / Diagnosa',
         });
-        $('.nm_tarif').select2({
+        $('#nm_tarif').select2({
             placeholder: 'Search Tindakan',
         });
 
@@ -437,15 +438,6 @@
 
         });
 
-        // $("#exitModal").on("click", function() {
-        //     var teat = [];
-
-        //     $('.nm_tarif').val(function() {
-        //         nm_tarif.push($(this).text());
-        //     });
-        //     alert(teat);
-
-        // });
 
         $(document).on('click', '.rmvItm', function() {
             $(this).parent().remove();
@@ -563,7 +555,11 @@
                         const trstdk = getValue[getVal].trstdk;
                         let html = "";
                         for (i in trstdk) {
-                            html += `<tr><td>${trstdk[i].nm_trf.nm_tindakan}</td></tr>`;
+                            if (trstdk[i].nm_trf != null) {
+                                html += `<tr><td>${trstdk[i].nm_trf.nm_tindakan}</td></tr>`;
+                            } else {
+                                html += ``;
+                            }
                         }
 
                         // const trstdk = getValue[getVal].trstdk;

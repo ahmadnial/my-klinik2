@@ -184,7 +184,7 @@ class TindakanController extends Controller
         // $newTrsChart->user = $request->user;
         // $newTrsChart->save();
 
-        if (count($request->nm_tarif) > 0) {
+        if ($request->nm_tarif != null) {
             foreach ($request->nm_tarif as $key => $val) {
                 $newData = [
                     'kd_trs' => $request->kd_trs,
@@ -212,8 +212,8 @@ class TindakanController extends Controller
                 'mr_pasien' => $request->chart_mr,
                 'nm_pasien' => $request->chart_nm_pasien,
                 'nm_tarif_dasar' => $request->nm_tarif_dasar,
-                'nm_dokter_jm' => $request->chart_dokter,
-                'sub_total' => $request->sub_total,
+                // 'nm_dokter_jm' => $request->chart_dokter,
+                // 'sub_total' => $request->sub_total,
                 'user' => $request->user_create,
             ];
             trs_chart::create($newData);

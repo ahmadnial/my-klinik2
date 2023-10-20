@@ -20,11 +20,11 @@ return new class extends Migration
             $table->string('kd_reg');
             $table->string('mr_pasien');
             $table->string('nm_pasien');
-            $table->string('nm_tarif');
+            $table->string('nm_tarif')->nullable()->default();
             $table->string('resep')->nullable();
             $table->string('nm_tarif_dasar');
-            $table->string('nm_nilai_tarif');
-            $table->string('nm_dokter_jm');
+            $table->string('nm_nilai_tarif')->nullable();
+            $table->string('nm_dokter_jm')->nullable();
             $table->string('sub_total')->nullable();
             $table->string('tgl_void')->nullable();
             $table->string('user_void')->nullable();
