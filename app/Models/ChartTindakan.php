@@ -36,4 +36,9 @@ class ChartTindakan extends Model
     {
         return $this->hasMany(trs_chart::class, 'chart_id', 'chart_id');
     }
+
+    // public function nm_trff()
+    // {
+    //     return $this->hasManyThrough(trs_chart::class, mstr_tindakan::class,  'id', 'nm_tarif');
+    // }
 }

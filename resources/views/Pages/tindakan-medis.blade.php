@@ -563,7 +563,7 @@
                         const trstdk = getValue[getVal].trstdk;
                         let html = "";
                         for (i in trstdk) {
-                            html += `<tr><td>${trstdk[i].nm_tarif}</td></tr>`;
+                            html += `<tr><td>${trstdk[i].nm_trf.nm_tindakan}</td></tr>`;
                         }
 
                         // const trstdk = getValue[getVal].trstdk;
@@ -678,77 +678,13 @@
             })
         };
 
-        function getTimelineTindakan() {
-
-            $("#TimelineTdk").empty();
-
-            var data = sessionStorage.getItem("dataMR");
-            var dataObject;
-            // const cekTindakan = getVal.nm_tarif;
 
 
-            if (data != null) {
-                dataObject = JSON.parse(data);
-            }
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: "{{ url('getTimelineTdk') }}/" + dataObject,
-                type: 'GET',
-                data: {
-                    chart_mr: dataObject
-                },
-                success: function(isTimelineHistoryTdk) {
-                    $.each(isTimelineHistoryTdk, function(key, getValTdk) {
-                        console.log(getValTdk);
-                        $("#TimelineTdk").append(`
-                         <tr>
-                            <td>${getValTdk.nm_tindakan}</td>
-                        </tr>
-                        `)
-                    })
-                }
-            })
-        };
 
 
-        // function getTimelineTindakan() {
-
-        //     $("#TimelineTdk").empty();
-
-        //     var data = sessionStorage.getItem("dataMR");
-        //     var dataObject;
-        //     // const cekTindakan = getVal.nm_tarif;
-
-
-        //     if (data != null) {
-        //         dataObject = JSON.parse(data);
-        //     }
-        //     $.ajax({
-        //         headers: {
-        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //         },
-        //         url: "{{ url('getTimelineTdk') }}/" + dataObject,
-        //         type: 'GET',
-        //         data: {
-        //             mr_pasien: dataObject
-        //         },
-        //         success: function(isTimelineHistoryTdk) {
-        //             $.each(isTimelineHistoryTdk, function(key, getValTdk) {
-        //                 $("#TimelineTdk").append(`
-    //                  <tr>
-    //                     <td>${getValTdk.nm_tarif}</td>
-    //                 </tr>
-    //                 `)
-        //             })
-        //         }
-        //     })
-        // };
 
         // Get Data setelah reload
         window.onload = getTimeline();
-        // window.onload = getTimelineTindakan();
 
         // function getTimelineOnSubmit() {
         //     var data = sessionStorage.getItem("dataMR");
