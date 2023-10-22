@@ -199,12 +199,11 @@
                                         <td>
                                             <label for="">Tarif/Tindakan Tambahan</label>
                                             <select class="nm_tarif form-control" style="width:100%;" multiple="multiple"
-                                                name="nm_tarif[]" id="nm_tarif" val>
-                                                <option>--Select--</option>
+                                                name="nm_tarif[]" id="nm_tarif">
                                                 {{-- <option value="0" selected></option> --}}
                                                 @foreach ($isTindakanTarif as $t)
-                                                    <option value="{{ $t->id }}">{{ $t->nm_tindakan }}
-                                                    </option>
+                                                    <option>--Select--</option>
+                                                    <option value="{{ $t->id }}">{{ $t->nm_tindakan }}</option>
                                                 @endforeach
                                             </select>
                                         </td>
