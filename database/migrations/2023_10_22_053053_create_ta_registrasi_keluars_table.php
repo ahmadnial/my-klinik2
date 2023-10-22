@@ -13,9 +13,19 @@ return new class extends Migration
     {
         Schema::create('ta_registrasi_keluar', function (Blueprint $table) {
             $table->id();
-            $table->string('kd_trs_reg_out');
+            $table->string('kd_trs_reg_out')->nullable();
             $table->string('kd_reg');
-            $table->string('kd_reg');
+            $table->string('trs_kp_tgl_keluar');
+            $table->string('trs_kp_nm_pasien');
+            $table->string('trs_kp_no_mr');
+            $table->string('trs_kp_layanan');
+            $table->string('trs_kp_dokter');
+            $table->string('nm_tarif_dasar');
+            $table->string('user')->nullable();
+            $table->string('trs_kp_kd_trs_chart');
+            $table->string('trs_kp_nm_tarif');
+            $table->string('trs_kp_nilai_tarif');
+            $table->string('trs_kp_nilai_total');
             $table->timestamps();
             $table->softDeletes();
         });

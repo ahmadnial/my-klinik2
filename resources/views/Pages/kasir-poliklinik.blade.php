@@ -4,8 +4,8 @@
     <section class="content">
         <div class="card">
             <div class="card-header">
-                <button type="submit" class="btn btn-success float-right" data-toggle="modal" data-target="#TambahPO">Tambah
-                    DO</button>
+                <button type="submit" class="btn btn-success float-right" data-toggle="modal" data-target="#TambahPO">Reg
+                    Out</button>
                 <h3 class="card-title"><i class="fa fa-money">&nbsp;</i>KASIR POLIKLINIK</h3>
             </div>
 
@@ -34,25 +34,25 @@
     </section>
     <style>
         /* .modal {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    padding: 0 !important; // override inline padding-right added from js
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding: 0 !important; // override inline padding-right added from js
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                .modal .modal-dialog {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    width: 100%;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    max-width: none;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    height: auto;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin: 40;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    .modal .modal-dialog {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        width: 100%;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        max-width: none;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        height: auto;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin: 40;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                .modal .modal-content {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    height: auto;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    border: 0;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    border-radius: 0;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    .modal .modal-content {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        height: auto;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        border: 0;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        border-radius: 0;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                .modal .modal-body {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    overflow-y: auto;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    .modal .modal-body {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        overflow-y: auto;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    } */
     </style>
     <!-- The modal Create -->
     <div class="modal fade" id="TambahPO" data-backdrop="static">
@@ -64,8 +64,8 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <form method="POST" action="{{ url('add-delivery-order') }}">
+                <form method="POST" action="{{ url('regout') }}">
+                    <div class="modal-body">
                         @csrf
                         <div class="row">
                             <div class="form-group col-sm-2">
@@ -82,8 +82,8 @@
                             </div>
                             <div class="form-group col-sm-2">
                                 <label for="">Tanggal Keluar</label>
-                                <input type="date" class="form-control" name="trs_kp_tgl_keluar" id="trs_kp_tgl_keluar"
-                                    value="">
+                                <input type="text" class="form-control" name="trs_kp_tgl_keluar" id="trs_kp_tgl_keluar"
+                                    value="{{ $dateNow }}" readonly>
                             </div>
                             <div class="form-group col-sm-2">
                                 <label for="">Nama</label>
@@ -117,18 +117,18 @@
                             </div>
                             <input type="hidden" id="user" name="user" value="tes">
                         </div>
-                </div>
+                    </div>
 
-                {{-- <hr> --}}
+                    {{-- <hr> --}}
 
-                <table class="table table-stripped" id="tblTrs">
-                    <thead>
-                        <tr>
-                            <th>No.Trs</th>
-                            <th>Keterangan Biaya</th>
-                            <th>Nilai</th>
-                            {{-- <th>Diskon</th> --}}
-                            {{-- <th>Qty</th>
+                    <table class="table table-stripped" id="tblTrs">
+                        <thead>
+                            <tr>
+                                <th>No.Trs</th>
+                                <th>Keterangan Biaya</th>
+                                <th>Nilai</th>
+                                {{-- <th>Diskon</th> --}}
+                                {{-- <th>Qty</th>
                             <th>Isi</th>
                             <th>Sat.Jual</th>
                             <th>Hrg.Beli</th>
@@ -136,52 +136,32 @@
                             <th>Tgl.Exp</th>
                             <th>Batch Number</th>
                             <th>Total</th> --}}
-                        </tr>
-                    </thead>
-                    <tbody id="showAlltdk">
-                        {{-- <tr> --}}
-                        {{-- <td>
-                                <select class="form-control" style='width: 100%;' id="do_obat" name="do_obat[]"
-                                    onchange="getDataObat()"></select>
-                            </td> --}}
-                        {{-- <td>
-                                <input type="text" class="form-control" id="trs_kp_kd_trs_chart"
-                                    name="trs_kp_kd_trs_chart" readonly>
-                            </td>
-                            <td>
-                                <input type="text" class="form-control" id="trs_kp_nm_tarif">
-                            </td>
-                            <td>
-                                <input type="text" class="form-control" id="trs_kp_nilai_tarif"
-                                    name="trs_kp_nilai_tarif">
-                            </td> --}}
-                        {{-- <td>
-                                <input type="text" class="form-control" id="trs_kp_diskon" name="trs_kp_diskon">
-                            </td> --}}
+                            </tr>
+                        </thead>
+                        <tbody id="showAlltdk">
 
-                        {{-- </tr> --}}
-                        <input type="hidden" name="user" id="user" value="tes user">
-                    </tbody>
-                </table>
-                {{-- <hr> --}}
-                <div class="col">
-                    <div class="float-right col-3">
-                        <label for="">Total.</label>
-                        <input type="text" class="form-control" style="border: none" name=""
-                            id="trs_kp_nilai_total" value="" readonly>
+                            <input type="hidden" name="user" id="user" value="tes user">
+                        </tbody>
+                    </table>
+                    {{-- <hr> --}}
+                    <div class="col">
+                        <div class="float-right col-3">
+                            <label for="">Total.</label>
+                            <input type="text" class="form-control" style="border: none" name=""
+                                id="trs_kp_nilai_total" value="" readonly>
+                        </div>
                     </div>
-                </div>
-                <br>
-                {{-- <hr> --}}
-                <div class="modal-footer">
-                    <button type="submit" id="buat" class="btn btn-success float-right"><i
-                            class="fa fa-save"></i>&nbsp;Save
-                    </button>
-                </div>
+                    <br>
+                    {{-- <hr> --}}
+                    <div class="modal-footer">
+                        <button type="submit" id="buat" class="btn btn-success float-right"><i
+                                class="fa fa-save"></i>&nbsp;Save
+                        </button>
+                    </div>
             </div>
         </div>
-        </form>
     </div>
+    </form>
 
     @push('scripts')
         <script>
@@ -221,14 +201,14 @@
                             <tr>
                             <td>
                                 <input type="text" class="form-control" id="trs_kp_kd_trs_chart"
-                                    name="trs_kp_kd_trs_chart" readonly value="${dataregvalue.kd_trs}">
+                                    name="trs_kp_kd_trs_chart[]" readonly value="${dataregvalue.kd_trs}">
                             </td>
                             <td>
-                                <input type="text" class="form-control" id="trs_kp_nm_tarif" readonly value="${dataregvalue.nm_tindakan}">
+                                <input type="text" class="form-control" id="trs_kp_nm_tarif" name="trs_kp_nm_tarif[]" readonly value="${dataregvalue.nm_tindakan}">
                             </td>
                             <td>
                                 <input type="text" class="form-control" id="trs_kp_nilai_tarif"
-                                    name="trs_kp_nilai_tarif" readonly value="${dataregvalue.nilai_tarif}">
+                                    name="trs_kp_nilai_tarif[]" readonly value="${dataregvalue.nilai_tarif}">
                             </td>
                             </tr>
                         `)

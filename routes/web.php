@@ -135,7 +135,5 @@ Route::controller(kasirPoliController::class)->group(function () {
     Route::get('SearchRegisterKsr/{kdReg}', 'xregisterSearch')->name('SearchRegisterKsr');
 
     Route::get('kasir-apotek', 'kasirApotek')->name('kasir-apotek');
-    Route::get('delivery-order', 'do')->name('delivery-order');
-    Route::get('obatSearch', 'obatSearch')->name('obatSearch');
-    Route::get('getObatList/{obat}', 'getObatList')->name('getObatList');
+    Route::post('regout', 'regOut')->name('regout');
 });
