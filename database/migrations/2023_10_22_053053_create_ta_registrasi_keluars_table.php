@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('ta_registrasi_keluar', function (Blueprint $table) {
             $table->id();
             $table->string('kd_trs_reg_out')->nullable();
-            $table->string('kd_reg');
+            $table->string('trs_kp_kd_reg');
             $table->string('trs_kp_tgl_keluar');
             $table->string('trs_kp_nm_pasien');
             $table->string('trs_kp_no_mr');
