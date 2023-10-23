@@ -116,9 +116,68 @@
                                 <input type="text" class="form-control" name="fs_nm_ibu_kandung"
                                     placeholder="Nama Ibu Kandung">
                             </div>
+                        </div>
+                        <hr>
+                        <div class="row">
                             <div class="form-group col-sm-6">
                                 <label for="">Alamat</label>
                                 <textarea type="date" class="form-control" name="fs_alamat"></textarea>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label class="col-form-label" for="provinsi">Provinsi</label>
+                                <div class="col">
+                                    @php
+                                        $provinces = new App\Http\Controllers\WilayahController();
+                                        $provinces = $provinces->provinces();
+                                    @endphp
+                                    <select class="form-control" name="provinsi" id="provinsi" style="width: 100%"
+                                        required>
+                                        <option>Select</option>
+                                        @foreach ($provinces as $item)
+                                            <option value="{{ $item->id ?? '' }}">{{ $item->name ?? '' }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label class="col-form-label" for="kota">Kabupaten / Kota</label>
+                                <div class="col">
+                                    <select class="form-control" name="kota" id="kota" required>
+                                        <option>Select</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label class="col-form-label" for="kecamatan">Kecamatan</label>
+                                <div class="col">
+                                    <select class="form-control" name="kecamatan" id="kecamatan" required>
+                                        <option>Select</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label class="col-form-label" for="desa">Kelurahan</label>
+                                <div class="col">
+                                    <select class="form-control" name="desa" id="desa" required>
+                                        <option>Select</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="form-group col-sm-6">
+                                <label for="">Suku</label>
+                                <input type="text" class="form-control" name="fs_suku" placeholder="Suku">
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label for="">Bahasa</label>
+                                <select name="fs_bahasa" id="fs_bahasa" class="form-control">
+                                    <option value="">--Select--</option>
+                                    <option value="Indonesia">Indonesia</option>
+                                    <option value="Jawa">Jawa</option>
+                                    <option value="Lain-lain">Lain-lain</option>
+                                </select>
                             </div>
                         </div>
                         <hr>
@@ -387,6 +446,40 @@
     <script>
         $('#fs_pekerjaan').select2({
             placeholder: 'Pekerjaan',
+        });
+        $('#provinsi').select2({
+            placeholder: 'Provinsi',
+        });
+
+        //DependentDropdown Wilayah RI
+        function onChangeSelect(url, id, name) {
+            // send ajax request to get the cities of the selected province and append to the select tag
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    $('#' + name).empty();
+                    $('#' + name).append('<option>Select</option>');
+
+                    $.each(data, function(key, value) {
+                        $('#' + name).append('<option value="' + key + '">' + value + '</option>');
+                    });
+                }
+            });
+        }
+        $(function() {
+            $('#provinsi').on('change', function() {
+                onChangeSelect('{{ route('cities') }}', $(this).val(), 'kota');
+            });
+            $('#kota').on('change', function() {
+                onChangeSelect('{{ route('districts') }}', $(this).val(), 'kecamatan');
+            })
+            $('#kecamatan').on('change', function() {
+                onChangeSelect('{{ route('villages') }}', $(this).val(), 'desa');
+            })
         });
     </script>
 @endpush

@@ -15,13 +15,19 @@ return new class extends Migration
         Schema::create('tc_mr', function (Blueprint $table) {
             $table->bigInteger('fs_mr')->unique();
             $table->string('fs_nama');
-            // fs_tempat_lahir
-            // fs_nm_ibu_kandung
+            $table->string('fs_tempat_lahir');
             $table->string('fs_tgl_lahir');
+            $table->string('fs_nm_ibu_kandung')->nullable()->default('');
+            $table->string('provinsi')->nullable()->default('');
+            $table->string('kota')->nullable()->default('');
+            $table->string('kecamatan')->nullable()->default('');
+            $table->string('desa')->nullable()->default('');
             $table->string('fs_jenis_kelamin');
             $table->string('fs_jenis_identitas')->nullable()->default('');
             $table->string('fs_no_identitas')->nullable()->default('');
             $table->string('fs_alamat')->nullable()->default('');
+            $table->string('fs_suku')->nullable()->default('');
+            $table->string('fs_bahasa')->nullable()->default('');
             $table->string('fs_agama')->nullable()->default('');
             $table->string('fs_pekerjaan')->nullable()->default('');
             $table->string('fs_pendidikan')->nullable()->default('');

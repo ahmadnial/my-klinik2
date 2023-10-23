@@ -169,6 +169,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
+        Laravolt\Indonesia\ServiceProvider::class,
 
     ])->toArray(),
 
@@ -185,6 +186,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
+        'Indonesia' => Laravolt\Indonesia\Facade::class,
     ])->toArray(),
 
 ];

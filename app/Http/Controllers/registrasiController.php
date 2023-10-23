@@ -21,6 +21,8 @@ class registrasiController extends Controller
 
     public function store(Request $request)
     {
+        $yes = $request->all();
+        dd($yes);
         $request->validate([
             'fs_mr' => 'required',
             'fs_nama' => 'required',

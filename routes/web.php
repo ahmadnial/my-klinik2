@@ -9,6 +9,7 @@ use App\Http\Controllers\mastersatuController;
 use App\Http\Controllers\poDoController;
 use App\Http\Controllers\registrasiController;
 use App\Http\Controllers\TindakanController;
+use App\Http\Controllers\WilayahController;
 
 /*
 |--------------------------------------------------------------------------
@@ -136,4 +137,13 @@ Route::controller(kasirPoliController::class)->group(function () {
 
     Route::get('kasir-apotek', 'kasirApotek')->name('kasir-apotek');
     Route::post('regout', 'regOut')->name('regout');
+});
+
+
+//Wilayah
+Route::controller(WilayahController::class)->group(function () {
+    Route::get('provinces', 'provinces')->name('provinces');
+    Route::get('cities', 'cities')->name('cities');
+    Route::get('districts', 'districts')->name('districts');
+    Route::get('villages', 'villages')->name('villages');
 });
