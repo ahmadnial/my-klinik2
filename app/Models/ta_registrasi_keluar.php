@@ -24,9 +24,9 @@ class ta_registrasi_keluar extends Model
         'trs_kp_nm_tarif',
         'trs_kp_nilai_tarif',
         'user',
-        'trs_kp_kd_trs_chart',
-        'trs_kp_nm_tarif',
-        'trs_kp_nilai_tarif',
+        // 'trs_kp_kd_trs_chart',
+        // 'trs_kp_nm_tarif',
+        // 'trs_kp_nilai_tarif',
         'trs_kp_nilai_total'
     ];
 }

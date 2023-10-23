@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\rekening_pendapatan_poliklinik_total;
 use App\Models\ta_registrasi_keluar;
+use App\Models\registrasiCreate;
 use App\Models\trs_chart;
 use App\Models\trs_kasir_poliklinik;
 use Illuminate\Http\Request;
@@ -16,11 +17,18 @@ class kasirPoliController extends Controller
 
     public function kasirPoli()
     {
-        // $getTrsTdk = DB::table('trs_chart')->select('kd_reg', 'nm_pasien')->groupBy('kd_reg')->get();
-        $getTrsTdk = trs_chart::select('kd_reg', 'nm_pasien')->distinct()->get();
+        $getListRegOut = DB::table('ta_registrasi_keluar')
+            ->select('trs_kp_kd_reg', 'trs_kp_tgl_keluar', 'trs_kp_no_mr', 'trs_kp_nm_pasien', 'trs_kp_layanan', 'trs_kp_dokter', 'trs_kp_nilai_total')
+            ->distinct()
+            ->get();
+        $getTrsTdk = registrasiCreate::select('fr_kd_reg', 'fr_nama')->where('fr_tgl_keluar', '=', '')->get();
         $dateNow = Carbon::now()->format("d-m-Y");
 
-        return view('pages.kasir-poliklinik', ['isTrsTdk' => $getTrsTdk, 'dateNow' => $dateNow]);
+        return view('pages.kasir-poliklinik', [
+            'isTrsTdk' => $getTrsTdk,
+            'dateNow' => $dateNow,
+            'getListRegOut' => $getListRegOut
+        ]);
     }
 
     public function xregisterSearch(Request $request)
@@ -107,6 +115,10 @@ class kasirPoliController extends Controller
         $newrekening1->rk_layanan    = $request->trs_kp_layanan;
         $newrekening1->rk_nilai    = $request->trs_kp_nilai_total;
         $newrekening1->save();
+
+        DB::table('ta_registrasi')->where('fr_kd_reg', $request->trs_kp_kd_reg)->update([
+            'fr_tgl_keluar' => $request->trs_kp_tgl_keluar,
+        ]);
         // if ($request->nm_tarif != null) {
         //     foreach ($request->nm_tarif as $key => $val) {
         //         $newData = [
