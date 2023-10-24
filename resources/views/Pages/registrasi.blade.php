@@ -12,9 +12,9 @@
         $d = $today->diff($birthDate)->d;
         return $y . ' tahun ' . $m . ' bulan ' . $d . ' hari';
     }
-    
+
     // echo hitung_umur('1980-12-01');
-    
+
 @endphp
 @section('konten')
     <section class="content">
@@ -22,7 +22,7 @@
             <div class="card-header">
                 <h3 class="card-title">Registrasi Pasien</h3>
                 <button type="submit" class="btn btn-success float-right" data-toggle="modal"
-                    data-target="#TambahPasien">Tambah
+                    data-target="#TambahPasien">Registrasi
                     Pasien</button>
             </div>
 
@@ -59,7 +59,7 @@
                                     <td>{{ $item->fr_bb }}Kg</td>
                                     <td>
                                         <button class="btn btn-xs btn-success"
-                                            data-toggle="modal"data-target="#Edit">Edit</button>
+                                            data-toggle="modal"data-target="#Edit{{ $item->fr_kd_reg }}">Edit</button>
                                         <button class="btn btn-xs btn-danger">Hapus</button>
                                     </td>
                                 </tr>
@@ -71,7 +71,7 @@
         </div>
     </section>
 
-    <!-- The modal -->
+    <!-- The modal Create -->
     <div class="modal fade" id="TambahPasien">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -111,7 +111,7 @@
                         <hr> <br>
                         <div class="form-group col-sm-6">
                             <label for="">Layanan</label>
-                            <select name="fr_layanan" id="fr_layanan" class="form-control">
+                            <select name="fr_layanan" id="fr_layanan" class="fr_layanan form-control">
                                 <option value="">--Select--</option>
                                 @foreach ($layanan as $lay)
                                     <option value="{{ $lay->fm_nm_layanan }}">{{ $lay->fm_nm_layanan }}</option>
@@ -120,7 +120,7 @@
                         </div>
                         <div class="form-group col-sm-6">
                             <label for="">Dokter</label>
-                            <select name="fr_dokter" id="fr_dokter" class="form-control">
+                            <select name="fr_dokter" id="fr_dokter" class="fr_dokter form-control">
 
                             </select>
                         </div>
@@ -148,11 +148,11 @@
                         <input type="number" class="form-control" name="fr_bb" id="fr_bb"
                             placeholder="Berat Badan Pasien">
                     </div>
-                    <div class="form-group col-sm-12">
+                    {{-- <div class="form-group col-sm-12">
                         <label for="">Alergi</label>
                         <input type="text" class="form-control" name="fr_alergi" id="fr_alergi"
                             placeholder="Alergi Pasien">
-                    </div>
+                    </div> --}}
                     <div class="form-group col-sm-12">
                         <label for="">Alamat</label>
                         <textarea type="date" class="form-control" name="fr_alamat" id="fr_alamat"></textarea>
@@ -172,6 +172,115 @@
             </div>
         </div>
     </div>
+
+    <!-- The modal Edit -->
+    @foreach ($isviewreg as $e)
+        <div class="modal fade" id="Edit{{ $e->fr_kd_reg }}">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Edit Registrasi Pasien</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="form-group col-sm-6">
+                                <label for="">Kode Registrasi</label>
+                                <input type="text" class="form-control" name="fr_kd_reg" id="fr_kd_reg" readonly
+                                    value="{{ $e->fr_kd_reg }}">
+                            </div>
+                            <input type="hidden" id="fr_nama" name="fr_nama">
+                            {{-- <div class="form-group col-sm-6">
+                                <label for="">Nama Pasien/No. MR</label>
+                                <select class="form-control-pasien" id="fr_mr" style="width: 100%;" name="fr_mr"
+                                    onchange="getData()"></select>
+                            </div> --}}
+                            <div class="form-group col-sm-6">
+                                <label for="">Nama Pasien/No. MR</label>
+                                <input type="text" class="form-control" name="fr_mr" id="fr_mr"
+                                    value="{{ $e->fr_nama . '-' . $e->fr_mr }}" readonly>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label for="">Tanggal Lahir</label>
+                                <input type="date" class="form-control" name="fr_tgl_lahir" id="fr_tgl_lahir"
+                                    value="{{ $e->fr_tgl_lahir }}" readonly>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label for="">Jenis Kelamin</label>
+                                <input type="text" class="form-control" name="fr_jenis_kelamin" id="fr_jenis_kelamin"
+                                    value="{{ $e->fr_jenis_kelamin }}" readonly>
+                            </div>
+                            <hr>
+                            <hr> <br>
+                            <div class="form-group col-sm-6">
+                                <label for="">Layanan</label>
+                                <select name="fr_layanan" id="fr_layanan_e" class="fr_layanan form-control">
+                                    <option value="">{{ $e->fr_layanan }}</option>
+                                    @foreach ($layanan as $lay)
+                                        <option value="{{ $lay->fm_nm_layanan }}">{{ $lay->fm_nm_layanan }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label for="">Dokter</label>
+                                <select name="fr_dokter" id="fr_dokter_e" class="fr_dokter form-control">
+                                    <option value="{{ $e->fr_dokter }}">{{ $e->fr_dokter }}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label for="">Jaminan</label>
+                                <select name="fr_jaminan" id="fr_jaminan_e" class="form-control">
+                                    <option value="{{ $e->fr_jaminan }}">{{ $e->fr_jaminan }}</option>
+                                    @foreach ($jaminan as $jam)
+                                        <option value="{{ $jam->fm_nm_jaminan }}">{{ $jam->fm_nm_jaminan }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label for="">Session Poli</label>
+                                <select name="fr_session_poli" id="fr_session_poli_e" class="form-control">
+                                    <option value="{{ $e->fr_session_poli }}">{{ $e->fr_session_poli }}</option>
+                                    <option value="Pagi">Pagi</option>
+                                    <option value="Sore">Sore</option>
+                                </select>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group col-sm-12">
+                            <label for="">Berat Badan</label>
+                            <input type="number" class="form-control" name="fr_bb" id="fr_bb_e"
+                                value="{{ $e->fr_bb }}">
+                        </div>
+                        {{-- <div class="form-group col-sm-12">
+                        <label for="">Alergi</label>
+                        <input type="text" class="form-control" name="fr_alergi" id="fr_alergi"
+                            placeholder="Alergi Pasien">
+                    </div> --}}
+                        <div class="form-group col-sm-12">
+                            <label for="">Alamat</label>
+                            <textarea type="date" class="form-control" name="fr_alamat" id="fr_alamat" readonly>{{ $e->fr_alamat }}</textarea>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label for="">Nomor Telephone</label>
+                            <input type="text" class="form-control" name="fr_no_hp" id="fr_no_hp"
+                                placeholder="Nomor Telephone/WA Pasien" value="{{ $e->fr_no_hp }}" readonly>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="float-left">
+                            <i class="text-danger float-left">Last Save by userxxx timestamp</i>
+                        </div>
+                        {{-- <button type="button" class="" data-dismiss="modal"></button> --}}
+                        <button type="submit" id="editdatareg" class="btn btn-success float-rights"><i
+                                class="fa fa-save"></i> &nbsp;
+                            Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
 @endsection
 
 @push('scripts')
@@ -241,7 +350,7 @@
 
         // Dependent Select Layanan Medis
         $(document).ready(function() {
-            $('#fr_layanan').on('change', function() {
+            $('.fr_layanan').on('change', function() {
                 var id_layanan = $(this).val();
                 // console.log(id_layanan);
                 if (id_layanan) {
@@ -257,10 +366,10 @@
                         dataType: 'json',
                         success: function(islayananMedis) {
                             // console.log(islayananMedis);
-                            $('#fr_dokter').empty();
-                            $('#fr_dokter').append('<option value="">--Select--</option>');
+                            $('.fr_dokter').empty();
+                            $('.fr_dokter').append('<option value="">--Select--</option>');
                             $.each(islayananMedis, function(key, value) {
-                                $('#fr_dokter').append('<option value="' + value
+                                $('.fr_dokter').append('<option value="' + value
                                     .fm_nm_medis +
                                     '">' + value.fm_nm_medis +
                                     '</option>');
@@ -311,7 +420,7 @@
                 var fr_jaminan = $('#fr_jaminan').val();
                 var fr_session_poli = $('#fr_session_poli').val();
                 var fr_bb = $('#fr_bb').val();
-                var fr_alergi = $('#fr_alergi').val();
+                // var fr_alergi = $('#fr_alergi').val();
                 var fr_user = $('#fr_user').val();
                 // alert(fm_nm_layanan);
                 if (fr_mr != "") {
@@ -335,7 +444,7 @@
                             fr_jaminan: fr_jaminan,
                             fr_session_poli: fr_session_poli,
                             fr_bb: fr_bb,
-                            fr_alergi: fr_alergi,
+                            // fr_alergi: fr_alergi,
                             fr_user: fr_user
                         },
                         cache: false,
@@ -351,6 +460,54 @@
                     });
                 } else {
                     alert('Please fill all the field !');
+                }
+            });
+        });
+
+        // Edits Registrasi
+        $(document).ready(function() {
+
+            $('#editdatareg').on('click', function() {
+                var fr_kd_reg = $('#fr_kd_reg_e').val();
+                var fr_layanan = $('#fr_layanan_e').val();
+                var fr_dokter = $('#fr_dokter_e').val();
+                var fr_jaminan = $('#fr_jaminan_e').val();
+                var fr_session_poli = $('#fr_session_poli_e').val();
+                var fr_bb = $('#fr_bb').val();
+                // var fr_alergi = $('#fr_alergi').val();
+                var fr_user = $('#fr_user_e').val();
+                // alert(fm_nm_layanan);
+                if (fr_kd_reg != "") {
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: "{{ route('edit-registrasi') }}",
+                        type: "POST",
+                        data: {
+                            type: 2,
+                            fr_kd_reg: fr_kd_reg,
+                            fr_layanan: fr_layanan,
+                            fr_dokter: fr_dokter,
+                            fr_jaminan: fr_jaminan,
+                            fr_session_poli: fr_session_poli,
+                            fr_bb: fr_bb,
+                            // fr_alergi: fr_alergi,
+                            fr_user: fr_user
+                        },
+                        cache: false,
+                        success: function(dataResult) {
+                            $('.close').click();
+                            // document.getElementById("fm_nm_layanan").value = "";
+                            window.location.replace("{{ url('registrasi') }}")
+                            // viewRegistrasi()
+                            // toastr.success('Saved');
+                            // view()
+                            // url = "{{ url('mstr-layanan') }}";
+                        }
+                    });
+                } else {
+                    alert('Please fill the field !');
                 }
             });
         });

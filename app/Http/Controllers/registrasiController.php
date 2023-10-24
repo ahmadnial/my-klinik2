@@ -68,6 +68,24 @@ class registrasiController extends Controller
         }
     }
 
+    public function editRegister(Request $request)
+    {
+        $d =  DB::table('ta_registrasi')->where('fr_kd_reg', $request->fr_kd_reg)->update([
+            'fr_layanan' => $request->fr_layanan,
+            'fr_dokter' => $request->fr_dokter,
+            'fr_jaminan' => $request->fr_jaminan,
+            'fr_session_poli' => $request->fr_session_poli,
+        ]);
+
+        if ($d) {
+            toastr()->success('Edit Data Berhasil!');
+            return back();
+        } else {
+            toastr()->error('Gagal Tersimpan!');
+            return back();
+        }
+    }
+
     /**
      * Display the specified resource.
      */

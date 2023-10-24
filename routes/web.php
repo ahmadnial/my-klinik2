@@ -42,8 +42,9 @@ Route::controller(HomeController::class)->group(function () {
 
 // REG + DASOS CREATE,EDIT DELETE
 Route::controller(registrasiController::class)->group(function () {
-    Route::post('create-dasos', 'store')->name('create-dasos');
     Route::post('create-registrasi', 'registrasiCreate')->name('create-registrasi');
+    Route::post('edit-registrasi', 'editRegister')->name('edit-registrasi');
+    Route::post('create-dasos', 'store')->name('create-dasos');
     Route::post('edit-dasos', 'editDasos')->name('edit-dasos');
     Route::get('delete-dasos', 'deleteDasos')->name('delete-dasos');
 });
