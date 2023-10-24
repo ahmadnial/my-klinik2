@@ -188,7 +188,7 @@
                         <div class="row">
                             <div class="form-group col-sm-6">
                                 <label for="">Kode Registrasi</label>
-                                <input type="text" class="form-control" name="fr_kd_reg" id="fr_kd_reg" readonly
+                                <input type="text" class="form-control" name="fr_kd_reg" id="fr_kd_reg_e" readonly
                                     value="{{ $e->fr_kd_reg }}">
                             </div>
                             <input type="hidden" id="fr_nama" name="fr_nama">
@@ -217,7 +217,7 @@
                             <div class="form-group col-sm-6">
                                 <label for="">Layanan</label>
                                 <select name="fr_layanan" id="fr_layanan_e" class="fr_layanan form-control">
-                                    <option value="">{{ $e->fr_layanan }}</option>
+                                    <option value="{{ $e->fr_layanan }}">{{ $e->fr_layanan }}</option>
                                     @foreach ($layanan as $lay)
                                         <option value="{{ $lay->fm_nm_layanan }}">{{ $lay->fm_nm_layanan }}</option>
                                     @endforeach
@@ -473,9 +473,9 @@
                 var fr_dokter = $('#fr_dokter_e').val();
                 var fr_jaminan = $('#fr_jaminan_e').val();
                 var fr_session_poli = $('#fr_session_poli_e').val();
-                var fr_bb = $('#fr_bb').val();
+                // var fr_bb = $('#fr_bb').val();
                 // var fr_alergi = $('#fr_alergi').val();
-                var fr_user = $('#fr_user_e').val();
+                // var fr_user = $('#fr_user_e').val();
                 // alert(fm_nm_layanan);
                 if (fr_kd_reg != "") {
                     $.ajax({
@@ -491,19 +491,19 @@
                             fr_dokter: fr_dokter,
                             fr_jaminan: fr_jaminan,
                             fr_session_poli: fr_session_poli,
-                            fr_bb: fr_bb,
+                            // fr_bb: fr_bb,
                             // fr_alergi: fr_alergi,
-                            fr_user: fr_user
+                            // fr_user: fr_user
                         },
                         cache: false,
                         success: function(dataResult) {
                             $('.close').click();
-                            // document.getElementById("fm_nm_layanan").value = "";
+                            // // document.getElementById("fm_nm_layanan").value = "";
                             window.location.replace("{{ url('registrasi') }}")
-                            // viewRegistrasi()
-                            // toastr.success('Saved');
-                            // view()
-                            // url = "{{ url('mstr-layanan') }}";
+                            // // viewRegistrasi()
+                            // // toastr.success('Saved');
+                            // // view()
+                            // // url = "{{ url('mstr-layanan') }}";
                         }
                     });
                 } else {

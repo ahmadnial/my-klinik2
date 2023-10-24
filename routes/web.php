@@ -71,7 +71,7 @@ Route::controller(mastersatuController::class)->group(function () {
 // VIEW AFTER POST
 Route::controller(mastersatuController::class)->group(function () {
     Route::get('view-mstr-layanan', 'viewLayanan')->name('view-mstr-layanan');
-    Route::get('view-mstr-medis', 'medis')->name('medis');
+    Route::get('view-mstr-medis', 'medis')->name('view-mstr-medis');
     Route::get('view-mstr-jaminan', 'jaminan')->name('view-mstr-jaminan');
     Route::get('view-mstr-tindakan', 'tindakan')->name('view-mstr-tindakan');
 });
