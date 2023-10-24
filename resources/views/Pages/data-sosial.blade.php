@@ -173,7 +173,7 @@
                             <div class="form-group col-sm-6">
                                 <label for="">Bahasa</label>
                                 <select name="fs_bahasa" id="fs_bahasa" class="form-control">
-                                    <option value="">--Select--</option>
+                                    <option>Select</option>
                                     <option value="Indonesia">Indonesia</option>
                                     <option value="Jawa">Jawa</option>
                                     <option value="Lain-lain">Lain-lain</option>
@@ -294,6 +294,11 @@
                                     @endif
                                 </div>
                                 <div class="form-group col-sm-6">
+                                    <label for="">Tempat Lahir</label>
+                                    <input type="text" class="form-control" name="fs_tempat_lahir"
+                                        placeholder="Tempat Kelahiran" value="{{ $d->fs_tempat_lahir }}">
+                                </div>
+                                <div class="form-group col-sm-6">
                                     <label for="">Tanggal Lahir</label>
                                     <input type="date" class="form-control" name="fs_tgl_lahir"
                                         placeholder="Tanggal Lahir Pasien" value="{{ $d->fs_tgl_lahir }}">
@@ -324,8 +329,73 @@
                                         placeholder="Nomor Identitas" value="{{ $d->fs_no_identitas }}">
                                 </div>
                                 <div class="form-group col-sm-6">
+                                    <label for="">Nama Ibu Kandung</label>
+                                    <input type="text" class="form-control" name="fs_nm_ibu_kandung"
+                                        placeholder="Nama Ibu Kandung" value="{{ $d->fs_nm_ibu_kandung }}">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="form-group col-sm-6">
                                     <label for="">Alamat</label>
                                     <textarea type="date" class="form-control" name="fs_alamat">{{ $d->fs_alamat }}</textarea>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="col-form-label" for="provinsi">Provinsi</label>
+                                    <div class="col">
+                                        @php
+                                            $provinces = new App\Http\Controllers\WilayahController();
+                                            $provinces = $provinces->provinces();
+                                        @endphp
+                                        <select class="form-control" name="provinsi" id="provinsi" style="width: 100%"
+                                            required>
+                                            <option value="{{ $d->provinsi }}">{{ $d->provinsi }}</option>
+                                            @foreach ($provinces as $item)
+                                                <option value="{{ $item->id ?? '' }}">{{ $item->name ?? '' }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="col-form-label" for="kota">Kabupaten / Kota</label>
+                                    <div class="col">
+                                        <select class="form-control" name="kota" id="kota" required>
+                                            <option value="{{ $d->kota }}">{{ $d->kota }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="col-form-label" for="kecamatan">Kecamatan</label>
+                                    <div class="col">
+                                        <select class="form-control" name="kecamatan" id="kecamatan" required>
+                                            <option value="{{ $d->kecamatan }}">{{ $d->kecamatan }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="col-form-label" for="desa">Kelurahan</label>
+                                    <div class="col">
+                                        <select class="form-control" name="desa" id="desa" required>
+                                            <option value="{{ $d->desa }}">{{ $d->desa }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label for="">Suku</label>
+                                    <input type="text" class="form-control" name="fs_suku" placeholder="Suku"
+                                        value="{{ $d->fs_suku }}">
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label for="">Bahasa</label>
+                                    <select name="fs_bahasa" id="fs_bahasa" class="form-control">
+                                        <option value="{{ $d->fs_bahasa }}">{{ $d->fs_bahasa }}</option>
+                                        <option value="Indonesia">Indonesia</option>
+                                        <option value="Jawa">Jawa</option>
+                                        <option value="Lain-lain">Lain-lain</option>
+                                    </select>
                                 </div>
                             </div>
                             <hr>

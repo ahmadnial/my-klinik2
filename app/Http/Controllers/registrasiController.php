@@ -21,8 +21,8 @@ class registrasiController extends Controller
 
     public function store(Request $request)
     {
-        $yes = $request->all();
-        dd($yes);
+        // $yes = $request->all();
+        // dd($yes);
         $request->validate([
             'fs_mr' => 'required',
             'fs_nama' => 'required',
@@ -76,12 +76,16 @@ class registrasiController extends Controller
         $y =  DB::table('tc_mr')->where('fs_mr', $request->fs_mr)->update([
             'fs_mr' => $request->fs_mr,
             'fs_nama' => $request->fs_nama,
+            'fs_tempat_lahir' => $request->fs_tempat_lahir,
             'fs_tgl_lahir' => $request->fs_tgl_lahir,
             'fs_jenis_kelamin' => $request->fs_jenis_kelamin,
             'fs_jenis_identitas' => $request->fs_jenis_identitas,
             'fs_no_identitas' => $request->fs_no_identitas,
+            'fs_nm_ibu_kandung' => $request->fs_nm_ibu_kandung,
             'fs_alamat' => $request->fs_alamat,
             'fs_agama' => $request->fs_agama,
+            'fs_suku' => $request->fs_suku,
+            'fs_bahasa' => $request->fs_bahasa,
             'fs_pekerjaan' => $request->fs_pekerjaan,
             'fs_pendidikan' => $request->fs_pendidikan,
             'fs_status_kawin' => $request->fs_status_kawin,
@@ -90,7 +94,7 @@ class registrasiController extends Controller
         ]);
 
         if ($y) {
-            toastr()->success('Edit Data Saved!');
+            toastr()->success('Edit Data Berhasil!');
             return back();
         } else {
             toastr()->error('Gagal Tersimpan!');
