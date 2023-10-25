@@ -93,10 +93,10 @@
                                 <h3 class="card-title">Form SOAP
                                 </h3>
                             </div>
-                            <div class="card-body">
-                                {{-- Hidden value --}}
-                                <form action="{{ url('chartCreate') }}" method="post">
-                                    @csrf
+                            {{-- Hidden value --}}
+                            <form action="{{ url('chartCreate') }}" method="post">
+                                @csrf
+                                <div class="card-body">
                                     <input type="hidden" id="chart_id" name="chart_id" value="{{ $isLastChartID }}">
                                     <input type="hidden" id="chart_kd_reg" name="chart_kd_reg" value="">
                                     <input type="hidden" id="chart_tgl_trs" name="chart_tgl_trs"
@@ -140,7 +140,7 @@
                                     <div class="showOrHideTdk"></div>
 
                                     <input type="hidden" id="user" name="user_create" value="tes">
-                            </div>
+                                </div>
                         </div>
                         <div class="">
                             {{-- <button type="button" class="" data-dismiss="modal"></button> --}}
@@ -164,7 +164,7 @@
     {{-- ========================END MODAL SOAP============================= --}}
 
     {{-- ===============ADD TINDAKAN MODAL================= --}}
-    <div class="appendTIndakan"></div>
+    {{-- <div class="appendTIndakan"></div> --}}
     <div class="modal fade" id="addTindakans">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -198,11 +198,11 @@
                                     <tr>
                                         <td>
                                             <label for="">Tarif/Tindakan Tambahan</label>
-                                            <select class="nm_tarif form-control" style="width:100%;" multiple="multiple"
-                                                name="nm_tarif[]" id="nm_tarif">
-                                                {{-- <option value="0" selected></option> --}}
+                                            <select class="nm_tarif form-control" style="width:100%;" name="nm_tarif[]"
+                                                id="nm_tarif" multiple="multiple">
+                                                <option value="0" selected></option>
+                                                <option>--Select--</option>
                                                 @foreach ($isTindakanTarif as $t)
-                                                    <option>--Select--</option>
                                                     <option value="{{ $t->id }}">{{ $t->nm_tindakan }}</option>
                                                 @endforeach
                                             </select>
@@ -217,13 +217,13 @@
                     </div>
                     <input type="hidden" id="kd_trs" name="kd_trs" value="{{ $kd_trs }}">
                     <input type="hidden" id="sub_total" name="sub_total" value="0">
-                    </form>
                     <div class="float-right mt-2">
                         <button type="button" id="exitModal" class="btn btn-success">add</button>
                     </div>
                 </div>
             </div>
         </div>
+        </form>
     </div>
 
     {{-- ========================END MODAL ADD TINDAKANs============================= --}}
@@ -322,6 +322,11 @@
 
         // Call Hasil Search Registrasi
         $("#tr_kd_reg").on("change", function() {
+            toastr.info('Pasein Pinned!', {
+                timeOut: 600,
+                // preventDuplicates: true,
+                positionClass: 'toast-top-right',
+            });
             var kdReg = $('#tr_kd_reg').val();
             $.ajax({
                 headers: {

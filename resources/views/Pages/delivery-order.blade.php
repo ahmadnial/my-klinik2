@@ -83,8 +83,8 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <form method="POST" action="{{ url('add-delivery-order') }}">
+                <form method="POST" action="{{ url('add-delivery-order') }}">
+                    <div class="modal-body">
                         @csrf
                         <div class="row">
                             <div class="form-group col-sm-2">
@@ -124,104 +124,104 @@
                             </div>
                             <input type="hidden" id="user" name="user" value="tes">
                         </div>
-                </div>
+                    </div>
 
-                {{-- <hr> --}}
+                    {{-- <hr> --}}
 
-                <table class="table table-responsive" id="doTable">
-                    <thead>
-                        <tr>
-                            {{-- <th>Kode Obat</th> --}}
-                            <th>Obat</th>
-                            <th>Sat.Beli</th>
-                            <th>Tipe Diskon</th>
-                            <th>Diskon</th>
-                            <th>Qty</th>
-                            <th>Isi</th>
-                            <th>Sat.Jual</th>
-                            <th>Hrg.Beli</th>
-                            <th>Pajak</th>
-                            <th>Tgl.Exp</th>
-                            <th>Batch Number</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <select class="form-control" style='width: 100%;' id="do_obat" name="do_obat[]"
-                                    onchange="getDataObat()"></select>
-                            </td>
-                            <td>
-                                <input type="text" class="form-control" id="do_satuan_pembelian"
-                                    name="do_satuan_pembelian[]" readonly>
-                            </td>
-                            <td>
-                                <input type="text" class="form-control">
-                            </td>
-                            <td>
-                                <input type="text" class="form-control" id="do_diskon" name="do_diskon[]">
-                            </td>
-                            <td>
-                                <input type="text" class="do_qty form-control" id="do_qty[]" name="do_qty[]">
-                            </td>
-                            <td>
-                                <input type="text" class="form-control" id="do_isi_pembelian"
-                                    name="do_isi_pembelian[]" readonly>
-                            </td>
-                            <td>
-                                <input type="text" class="form-control" id="do_satuan_jual" name="do_satuan_jual[]"
-                                    readonly>
-                            </td>
-                            <td>
-                                <input type="text" class="form-control" id="do_hrg_beli" name="do_hrg_beli[]"
-                                    readonly>
-                            </td>
-                            <td>
-                                <input type="text" class="form-control" id="do_pajak" name="do_pajak[]">
-                            </td>
-                            <td>
-                                <input type="date" class="form-control" id="do_tgl_exp" name="do_tgl_exp[]">
-                            </td>
-                            <td>
-                                <input type="text" class="form-control" id="do_batch_number"
-                                    name="do_batch_number[]">
-                            </td>
-                            <td>
-                                <input type="text" class="form-control" id="do_sub_total" name="do_sub_total[]"
-                                    readonly>
-                            </td>
-                            <td>
-                                <a href="javascript:void(0)" class="text-success" id="addRow" title="Remove"><i
-                                        class="fa fa-plus"></i></a>
-                            </td>
+                    <table class="table table-responsive" id="doTable">
+                        <thead>
+                            <tr>
+                                {{-- <th>Kode Obat</th> --}}
+                                <th>Obat</th>
+                                <th>Sat.Beli</th>
+                                <th>Tipe Diskon</th>
+                                <th>Diskon</th>
+                                <th>Qty</th>
+                                <th>Isi</th>
+                                <th>Sat.Jual</th>
+                                <th>Hrg.Beli</th>
+                                <th>Pajak</th>
+                                <th>Tgl.Exp</th>
+                                <th>Batch Number</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <select class="form-control" style='width: 100%;' id="do_obat" name="do_obat[]"
+                                        onchange="getDataObat()"></select>
+                                </td>
+                                <td>
+                                    <input type="text" class="do_satuan_pembelian form-control" id="do_satuan_pembelian"
+                                        name="do_satuan_pembelian[]" readonly>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" id="do_diskon" name="do_diskon[]">
+                                </td>
+                                <td>
+                                    <input type="text" class="do_qty form-control" id="do_qty[]" name="do_qty[]">
+                                </td>
+                                <td>
+                                    <input type="text" class="do_isi_pembelian form-control" id="do_isi_pembelian"
+                                        name="do_isi_pembelian[]" readonly>
+                                </td>
+                                <td>
+                                    <input type="text" class="do_satuan_jual form-control" id="do_satuan_jual"
+                                        name="do_satuan_jual[]" readonly>
+                                </td>
+                                <td>
+                                    <input type="text" class="do_hrg_beli form-control" id="do_hrg_beli"
+                                        name="do_hrg_beli[]" readonly>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" id="do_pajak" name="do_pajak[]">
+                                </td>
+                                <td>
+                                    <input type="date" class="form-control" id="do_tgl_exp" name="do_tgl_exp[]">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" id="do_batch_number"
+                                        name="do_batch_number[]">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" id="do_sub_total" name="do_sub_total[]"
+                                        readonly>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" class="text-success" id="addRow" title="Remove"><i
+                                            class="fa fa-plus"></i></a>
+                                </td>
 
-                            <input type="hidden" name="user" id="user" value="tes user">
-                            {{-- <input type="hidden" name="do_hdr_kd[]" id="do_hdr_kd">  --}}
-                            {{-- <td>
+                                <input type="hidden" name="user" id="user" value="tes user">
+                                {{-- <input type="hidden" name="do_hdr_kd[]" id="do_hdr_kd">  --}}
+                                {{-- <td>
                                 <button class="remove btn btn-xs btn-danger " id="delRow"><i
                                         class="fa fa-close"></i></button>
                             </td> --}}
-                        </tr>
-                    </tbody>
-                </table>
-                <hr>
-                <div class="float-right col-4">
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr>
                     <div class="float-right col-4">
-                        <input type="text" class="form-control float-right" name="do_hdr_total_faktur"
-                            id="do_hdr_total_faktur" value="556667" readonly>
-                    </div>
-                    {{-- <div class="float-right">
+                        <div class="float-right col-4">
+                            <input type="text" class="form-control float-right" name="do_hdr_total_faktur"
+                                id="do_hdr_total_faktur" value="556667" readonly>
+                        </div>
+                        {{-- <div class="float-right">
                         <button class="btn btn-xs btn-info" id="addRow">Tambah Barang</button>
                     </div> --}}
-                </div>
-                <br>
-                {{-- <hr> --}}
-                <div class="modal-footer">
-                    <button type="submit" id="buat" class="btn btn-success float-right"><i
-                            class="fa fa-save"></i>&nbsp;Save
-                    </button>
-                </div>
+                    </div>
+                    <br>
+                    {{-- <hr> --}}
+                    <div class="modal-footer">
+                        <button type="submit" id="buat" class="btn btn-success float-right"><i
+                                class="fa fa-save"></i>&nbsp;Save
+                        </button>
+                    </div>
             </div>
         </div>
         </form>
@@ -270,10 +270,10 @@
                     success: function(isdataObat) {
                         // var json = isdata2;
                         $.each(isdataObat, function(key, datavalue) {
-                            $('#do_satuan_pembelian').val(datavalue.fm_satuan_pembelian);
-                            $('#do_hrg_beli').val(datavalue.fm_hrg_beli);
-                            $('#do_satuan_jual').val(datavalue.fm_satuan_jual);
-                            $('#do_isi_pembelian').val(datavalue.fm_isi_satuan_pembelian);
+                            $('.do_satuan_pembelian').val(datavalue.fm_satuan_pembelian);
+                            $('.do_hrg_beli').val(datavalue.fm_hrg_beli);
+                            $('.do_satuan_jual').val(datavalue.fm_satuan_jual);
+                            $('.do_isi_pembelian').val(datavalue.fm_isi_satuan_pembelian);
                             // $('#fr_tgl_lahir').val(datavalue.fs_tgl_lahir);
                             // $('#fr_jenis_kelamin').val(datavalue.fs_jenis_kelamin);
                         })
@@ -291,7 +291,7 @@
                                     onchange="getDataObat()"></select>
                             </td>
                             <td>
-                                <input type="text" class="form-control" id="do_satuan_pembelian[]"
+                                <input type="text" class="do_satuan_pembelian form-control" id="do_satuan_pembelian[]"
                                     name="do_satuan_pembelian[]" readonly>
                             </td>
                             <td>
@@ -359,31 +359,31 @@
                 });
 
                 // Call Hasil Search Obat
-                function getDataObat() {
-                    var obat = $('.do_obat').val();
-                    // alert(obat);
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        url: "{{ url('getObatList') }}/" + obat,
-                        type: 'GET',
-                        data: {
-                            'fm_kd_obat': obat
-                        },
-                        success: function(isdataObat) {
-                            // var json = isdata2;
-                            $.each(isdataObat, function(key, datavalue2) {
-                                $('#do_satuan_pembelian').val(datavalue2.fm_satuan_pembelian);
-                                $('.do_hrg_beli').val(datavalue2.fm_hrg_beli);
-                                $('.do_satuan_jual').val(datavalue2.fm_satuan_jual);
-                                $('.do_isi_pembelian').val(datavalue2.fm_isi_satuan_pembelian);
-                                // $('#fr_tgl_lahir').val(datavalue.fs_tgl_lahir);
-                                // $('#fr_jenis_kelamin').val(datavalue.fs_jenis_kelamin);
-                            })
-                        }
-                    })
-                };
+                // function getDataObat() {
+                //     var obat = $('.do_obat').val();
+                //     // alert(obat);
+                //     $.ajax({
+                //         headers: {
+                //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                //         },
+                //         url: "{{ url('getObatList') }}/" + obat,
+                //         type: 'GET',
+                //         data: {
+                //             'fm_kd_obat': obat
+                //         },
+                //         success: function(isdataObat) {
+                //             // var json = isdata2;
+                //             $.each(isdataObat, function(key, datavalue2) {
+                //                 $('#do_satuan_pembelian').val(datavalue2.fm_satuan_pembelian);
+                //                 $('.do_hrg_beli').val(datavalue2.fm_hrg_beli);
+                //                 $('.do_satuan_jual').val(datavalue2.fm_satuan_jual);
+                //                 $('.do_isi_pembelian').val(datavalue2.fm_isi_satuan_pembelian);
+                //                 // $('#fr_tgl_lahir').val(datavalue.fs_tgl_lahir);
+                //                 // $('#fr_jenis_kelamin').val(datavalue.fs_jenis_kelamin);
+                //             })
+                //         }
+                //     })
+                // };
             });
 
             // $(document).on('click', '#delRow', function() {

@@ -124,18 +124,17 @@ class poDoController extends Controller
 
         DB::beginTransaction();
         try {
-            // $do_hdr = new do_hdr;
-            // $do_hdr->do_hdr_kd = $request->do_hdr_kd;
-            // $do_hdr->do_hdr_no_faktur = $request->do_hdr_no_faktur;
-            // $do_hdr->do_hdr_supplier = $request->do_hdr_supplier;
-            // $do_hdr->do_hdr_tgl_tempo = $request->do_hdr_tgl_tempo;
-            // $do_hdr->do_hdr_lokasi_stock = $request->do_hdr_lokasi_stock;
-            // $do_hdr->do_hdr_total_faktur = $request->do_hdr_total_faktur;
-            // $do_hdr->user = $request->user;
+            $do_hdr = new do_hdr;
+            $do_hdr->do_hdr_kd = $request->do_hdr_kd;
+            $do_hdr->do_hdr_no_faktur = $request->do_hdr_no_faktur;
+            $do_hdr->do_hdr_supplier = $request->do_hdr_supplier;
+            $do_hdr->do_hdr_tgl_tempo = $request->do_hdr_tgl_tempo;
+            $do_hdr->do_hdr_lokasi_stock = $request->do_hdr_lokasi_stock;
+            $do_hdr->do_hdr_total_faktur = $request->do_hdr_total_faktur;
+            $do_hdr->user = $request->user;
+            $do_hdr->save();
 
             // $do_hdr->save();
-
-
             foreach ($request->do_obat as $key => $do_obat) {
                 $do_detail_item = new do_detail_item();
                 $do_detail_item['do_obat']              = $do_obat;
@@ -152,7 +151,6 @@ class poDoController extends Controller
                 $do_detail_item['do_hdr_kd']            = $request->do_hdr_kd[$key];
             }
 
-            dd($do_detail_item);
             // $do_hdr->do_detail_item()->save($do_detail_item);
             // DB::commit();
             // Toastr::success('Create new Estimates successfully :)', 'Success');
