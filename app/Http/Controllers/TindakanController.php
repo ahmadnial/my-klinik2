@@ -258,4 +258,17 @@ class TindakanController extends Controller
 
         return response()->json($isTimelineHistory);
     }
+
+    // Get ChartID utk Edit
+    public function chartIdSearch(Request $request)
+    {
+        $isChartID = ChartTindakan::with('trstdk.nm_trf')
+            ->where('chart_mr', $request->chart_mr)
+            // ->distinct()
+            ->orderBy('chart_tindakan.created_at', 'DESC')
+            // ->groupBy('chart_tindakan.chart_id')
+            ->get();
+
+        return response()->json($isChartID);
+    }
 }

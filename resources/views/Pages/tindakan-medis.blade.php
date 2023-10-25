@@ -596,6 +596,10 @@
                                             </div>
                                         </a>
                                 <div id="collapse${x++}" class="collapse show" data-parent="#accordion">
+                                    <div class="ml-4 mt-2">
+                                        <button type="button" class="btn btn-outline-info btn-xs" id="btneditchart" value="${getValue[getVal].chart_id}" onClick="editChart()"><i class="fa fa-pen"></i></button>
+                                        <button type="button" class="btn btn-outline-danger btn-xs"><i class="fa fa-trash"></i></button>
+                                    </div>
                                     <div class="card-body">
                                          <div class="">
                                         <table class="table table-striped table-bordered">
@@ -679,9 +683,31 @@
         };
 
 
+        // Edit Chart
+        function editChart() {
+            toastr.info('Edit Form Opened!', {
+                timeOut: 600,
+                // preventDuplicates: true,
+                positionClass: 'toast-top-right',
+            });
+            var cahrtid = $('#btneditchart').val();
+            // alert(cahrtid);
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ url('chartIdSearch') }}/" + chartid,
+                type: 'GET',
+                data: {
+                    'chart_id': chartid
+                },
+                success: function(isChartID) {
+                    $.each(isChartID, function(key, dataregvalue) {
 
-
-
+                    })
+                }
+            })
+        }
 
         // Get Data setelah reload
         window.onload = getTimeline();
