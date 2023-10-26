@@ -26,7 +26,7 @@ class do_detail_item extends Model
         'do_batch_number',
         'do_sub_total',
         'do_hdr_kd',
-        // 'do_hdr_id'
+        'do_hdr_id'
     ];
 
     // public function do_hdr()

@@ -69,36 +69,9 @@ class poDoController extends Controller
 
     public function doCreate(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         // $data = $request->all();
-        foreach ($request->do_obat as $key => $do_obat) {
-            // $dataD = [];
-            $dataD['do_obat']              = $do_obat;
-            $dataD['do_satuan_pembelian']  = $request->do_satuan_pembelian[$key];
-            $dataD['do_diskon']            = $request->do_diskon[$key];
-            $dataD['do_qty']               = $request->do_qty[$key];
-            $dataD['do_isi_pembelian']     = $request->do_isi_pembelian[$key];
-            $dataD['do_satuan_jual']       = $request->do_satuan_jual[$key];
-            $dataD['do_hrg_beli']          = $request->do_hrg_beli[$key];
-            $dataD['do_pajak']             = $request->do_pajak[$key];
-            $dataD['do_tgl_exp']           = $request->do_tgl_exp[$key];
-            $dataD['do_batch_number']      = $request->do_batch_number[$key];
-            $dataD['do_sub_total']         = $request->do_sub_total[$key];
-            // $do_detail_item['do_hdr_kd']            = $request->do_hdr_kd[$key];
-            print_r($dataD);
-        }
-        die();
 
-        // if (count($data['do_obat'] > 0)) {
-        // foreach ($data['do_obat'] as $uy => $values) {
-        //     $data2 = array(
-        //         'do_hdr_kd' => $request->do_hdr_kd,
-        //         'do_obat'   => $request['do_obat'][$uy],
-        //         'do_satuan_pembelian'   => $request['do_satuan_pembelian'],
-        //     );
-        //     dd($data);
-        // }
-        // }
         $request->validate([
             'do_hdr_kd' => 'required',
             'do_hdr_no_faktur' => 'required',
@@ -106,7 +79,7 @@ class poDoController extends Controller
             'do_hdr_tgl_tempo' => 'required',
             'do_hdr_lokasi_stock' => 'required',
             // 'do_hdr_total_faktur' => 'required',
-            'user' => 'required',
+            // 'user' => 'required',
 
             'do_obat' => 'required',
             'do_satuan_pembelian' => 'required',
@@ -123,42 +96,45 @@ class poDoController extends Controller
         ]);
 
         DB::beginTransaction();
-        try {
-            $do_hdr = new do_hdr;
-            $do_hdr->do_hdr_kd = $request->do_hdr_kd;
-            $do_hdr->do_hdr_no_faktur = $request->do_hdr_no_faktur;
-            $do_hdr->do_hdr_supplier = $request->do_hdr_supplier;
-            $do_hdr->do_hdr_tgl_tempo = $request->do_hdr_tgl_tempo;
-            $do_hdr->do_hdr_lokasi_stock = $request->do_hdr_lokasi_stock;
-            $do_hdr->do_hdr_total_faktur = $request->do_hdr_total_faktur;
-            $do_hdr->user = $request->user;
-            $do_hdr->save();
+        // try {
+        $newData = [
+            'do_hdr_kd' => $request->do_hdr_kd,
+            'do_hdr_no_faktur' => $request->do_hdr_no_faktur,
+            'do_hdr_supplier' => $request->do_hdr_supplier,
+            'do_hdr_tgl_tempo' => $request->do_hdr_tgl_tempo,
+            'do_hdr_lokasi_stock' => $request->do_hdr_lokasi_stock,
+            'do_hdr_total_faktur' => $request->do_hdr_total_faktur,
+            'user' => $request->user,
+        ];
+        do_hdr::create($newData);
 
-            // $do_hdr->save();
-            foreach ($request->do_obat as $key => $do_obat) {
-                $do_detail_item = new do_detail_item();
-                $do_detail_item['do_obat']              = $do_obat;
-                $do_detail_item['do_satuan_pembelian']  = $request->do_satuan_pembelian[$key];
-                $do_detail_item['do_diskon']            = $request->do_diskon[$key];
-                $do_detail_item['do_qty']               = $request->do_qty[$key];
-                $do_detail_item['do_isi_pembelian']     = $request->do_isi_pembelian[$key];
-                $do_detail_item['do_satuan_jual']       = $request->do_satuan_jual[$key];
-                $do_detail_item['do_hrg_beli']          = $request->do_hrg_beli[$key];
-                $do_detail_item['do_pajak']             = $request->do_pajak[$key];
-                $do_detail_item['do_tgl_exp']           = $request->do_tgl_exp[$key];
-                $do_detail_item['do_batch_number']      = $request->do_batch_number[$key];
-                $do_detail_item['do_sub_total']         = $request->do_sub_total[$key];
-                $do_detail_item['do_hdr_kd']            = $request->do_hdr_kd[$key];
-            }
-
-            // $do_hdr->do_detail_item()->save($do_detail_item);
-            // DB::commit();
-            // Toastr::success('Create new Estimates successfully :)', 'Success');
-            return redirect()->route('delivery-order');
-        } catch (\Exception $e) {
-            DB::rollback();
-            // Toastr::error('Add Estimates fail :)', 'Error');
-            return redirect()->back();
+        foreach ($request->do_obat as $key => $val) {
+            $detail = [
+                'do_obat' => $request->do_obat[$key],
+                'do_satuan_pembelian' => $request->do_satuan_pembelian[$key],
+                'do_diskon' => $request->do_diskon[$key],
+                'do_qty' => $request->do_qty[$key],
+                'do_isi_pembelian' => $request->do_isi_pembelian[$key],
+                'do_satuan_jual' => $request->do_satuan_jual[$key],
+                'do_hrg_beli' => $request->do_hrg_beli[$key],
+                'do_pajak' => $request->do_pajak[$key],
+                'do_tgl_exp' => $request->do_tgl_exp[$key],
+                'do_batch_number' => $request->do_batch_number[$key],
+                'do_sub_total' => $request->do_sub_total[$key],
+                'do_hdr_kd' => $request->do_hdr_kd,
+                // 'do_hdr_id' => $request->do_hdr_kd[$key],
+            ];
+            do_detail_item::create($detail);
         }
+
+        DB::commit();
+
+        toastr()->success('Data Tersimpan!');
+        return back();
+        // return redirect()->route('/tindakan-medis');
+        // } catch (\Exception $e) {
+        DB::rollback();
+        toastr()->error('Gagal Tersimpan!');
+        return back();
     }
 }

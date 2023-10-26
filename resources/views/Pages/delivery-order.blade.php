@@ -84,8 +84,8 @@
                     </button>
                 </div>
                 <form method="POST" action="{{ url('add-delivery-order') }}">
+                    @csrf
                     <div class="modal-body">
-                        @csrf
                         <div class="row">
                             <div class="form-group col-sm-2">
                                 <label for="">Nomor Ref</label>
@@ -222,9 +222,9 @@
                                 class="fa fa-save"></i>&nbsp;Save
                         </button>
                     </div>
+                </form>
             </div>
         </div>
-        </form>
     </div>
 
     @push('scripts')

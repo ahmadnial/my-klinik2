@@ -597,6 +597,7 @@
                                         </a>
                                 <div id="collapse${x++}" class="collapse show" data-parent="#accordion">
                                     <div class="ml-4 mt-2">
+                                        <input type="hidden" id="showChartID" value="${getValue[getVal].chart_id}"></input>
                                         <button type="button" class="btn btn-outline-info btn-xs" id="btneditchart" value="${getValue[getVal].chart_id}" onClick="editChart()"><i class="fa fa-pen"></i></button>
                                         <button type="button" class="btn btn-outline-danger btn-xs"><i class="fa fa-trash"></i></button>
                                     </div>
@@ -690,8 +691,8 @@
                 // preventDuplicates: true,
                 positionClass: 'toast-top-right',
             });
-            var cahrtid = $('#btneditchart').val();
-            // alert(cahrtid);
+            var cahrtid = $('#showChartID').val();
+            alert(cahrtid);
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
