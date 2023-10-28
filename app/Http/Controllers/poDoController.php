@@ -7,6 +7,7 @@ use App\Models\do_hdr;
 use App\Models\mstr_lokasi_stock;
 use App\Models\mstr_obat;
 use App\Models\mstr_supplier;
+use App\Models\tb_stock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -71,6 +72,7 @@ class poDoController extends Controller
     {
         // dd($request->all());
         // $data = $request->all();
+        $getKdObat = tb_stock::all();
 
         $request->validate([
             'do_hdr_kd' => 'required',
@@ -126,6 +128,21 @@ class poDoController extends Controller
             ];
             do_detail_item::create($detail);
         }
+
+        // $cvToNum = $request->do_qty;
+        // $int = (int)$cvToNum;
+        // foreach ($request->do_obat as $keys => $val) {
+        //     DB::table('tb_stock')->increment('qty', 20)->where('kd_obat' ,'=', $request->do_obat[$keys]);
+        // foreach ($getKdObat as $ko) {
+        //     // if ($ko->kd_obat == $request->do_obat) {
+        //     DB::table('tb_stock')->where('kd_obat', $request->do_obat)->update([
+        //         'kd_obat' => $request->do_obat[$keys],
+        //         'qty' => DB::raw('qty' + $request->do_qty),
+        //         // 'qty' => $request->do_qty,
+        //     ]);
+        // }
+        // }
+        // }
 
         DB::commit();
 
