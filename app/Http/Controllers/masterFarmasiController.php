@@ -8,7 +8,9 @@ use App\Models\mstr_lokasi_stock;
 use App\Models\mstr_obat;
 use App\Models\mstr_satuan;
 use App\Models\mstr_supplier;
+use App\Models\tb_stock;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class masterFarmasiController extends Controller
 {
@@ -225,8 +227,27 @@ class masterFarmasiController extends Controller
             // 'isOpenPrice' => 'required',
             'user'
         ]);
-        // http_response_code(500);
-        // dd($request);
-        mstr_obat::create($request->all());
+
+        DB::beginTransaction();
+        try {
+            mstr_obat::create($request->all());
+
+            $newData = [
+                'kd_obat' => $request->fm_kd_obat,
+                'nm_obat' => $request->fm_nm_obat,
+                'satuan' => $request->fm_satuan_jual,
+            ];
+            tb_stock::create($newData);
+
+            DB::commit();
+
+            toastr()->success('Data Tersimpan!');
+            return back();
+            // return redirect()->route('/tindakan-medis');
+        } catch (\Exception $e) {
+            DB::rollback();
+            toastr()->error('Gagal Tersimpan!');
+            return back();
+        }
     }
 }

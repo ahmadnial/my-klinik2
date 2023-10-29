@@ -36,6 +36,18 @@ class poDoController extends Controller
 
     public function do()
     {
+        $num = str_pad(000001, 6, 0, STR_PAD_LEFT);
+        $Y = date("Y");
+        $M = date("m");
+        $cekid = do_hdr::count();
+        if ($cekid == 0) {
+            $noRef =  'DO'  . '-' . substr($Y, -2) . $M . '-' . $num;
+        } else {
+            $continue = do_hdr::all()->last();
+            $de = substr($continue->do_hdr_kd, -6);
+            $noRef = 'DO' . '-' . substr($Y, -2) . $M  . '-' . str_pad(($de + 1), 6, '0', STR_PAD_LEFT);
+        };
+
         $supplier = mstr_supplier::all();
         $lokasi = mstr_lokasi_stock::all();
         $viewDO = DB::table('do_hdr')
@@ -43,7 +55,7 @@ class poDoController extends Controller
             ->select('do_hdr.*', 'do_detail_item.*')->get();
         // $viewDO = do_hdr::all();
 
-        return view('pages.delivery-order', ['supplier' => $supplier, 'lokasi' => $lokasi, 'viewDO' => $viewDO]);
+        return view('pages.delivery-order', ['supplier' => $supplier, 'lokasi' => $lokasi, 'viewDO' => $viewDO, 'noRef' => $noRef]);
     }
 
     public function obatSearch(Request $request)
@@ -98,60 +110,81 @@ class poDoController extends Controller
         ]);
 
         DB::beginTransaction();
-        // try {
-        $newData = [
-            'do_hdr_kd' => $request->do_hdr_kd,
-            'do_hdr_no_faktur' => $request->do_hdr_no_faktur,
-            'do_hdr_supplier' => $request->do_hdr_supplier,
-            'do_hdr_tgl_tempo' => $request->do_hdr_tgl_tempo,
-            'do_hdr_lokasi_stock' => $request->do_hdr_lokasi_stock,
-            'do_hdr_total_faktur' => $request->do_hdr_total_faktur,
-            'user' => $request->user,
-        ];
-        do_hdr::create($newData);
+        try {
+            // $newData = [
+            //     'do_hdr_kd' => $request->do_hdr_kd,
+            //     'do_hdr_no_faktur' => $request->do_hdr_no_faktur,
+            //     'do_hdr_supplier' => $request->do_hdr_supplier,
+            //     'do_hdr_tgl_tempo' => $request->do_hdr_tgl_tempo,
+            //     'do_hdr_lokasi_stock' => $request->do_hdr_lokasi_stock,
+            //     'do_hdr_total_faktur' => $request->do_hdr_total_faktur,
+            //     'user' => $request->user,
+            // ];
+            // do_hdr::create($newData);
+            $newData = new do_hdr;
+            $newData->do_hdr_kd = $request->do_hdr_kd;
+            $newData->do_hdr_no_faktur = $request->do_hdr_no_faktur;
+            $newData->do_hdr_supplier = $request->do_hdr_supplier;
+            $newData->do_hdr_tgl_tempo = $request->do_hdr_tgl_tempo;
+            $newData->do_hdr_lokasi_stock = $request->do_hdr_lokasi_stock;
+            $newData->do_hdr_total_faktur = $request->do_hdr_total_faktur;
+            $newData->user = $request->user;
+            $newData->save();
 
-        foreach ($request->do_obat as $key => $val) {
-            $detail = [
-                'do_obat' => $request->do_obat[$key],
-                'do_satuan_pembelian' => $request->do_satuan_pembelian[$key],
-                'do_diskon' => $request->do_diskon[$key],
-                'do_qty' => $request->do_qty[$key],
-                'do_isi_pembelian' => $request->do_isi_pembelian[$key],
-                'do_satuan_jual' => $request->do_satuan_jual[$key],
-                'do_hrg_beli' => $request->do_hrg_beli[$key],
-                'do_pajak' => $request->do_pajak[$key],
-                'do_tgl_exp' => $request->do_tgl_exp[$key],
-                'do_batch_number' => $request->do_batch_number[$key],
-                'do_sub_total' => $request->do_sub_total[$key],
-                'do_hdr_kd' => $request->do_hdr_kd,
-                // 'do_hdr_id' => $request->do_hdr_kd[$key],
-            ];
-            do_detail_item::create($detail);
+
+            foreach ($request->do_obat as $key => $val) {
+                $detail = [
+                    'do_obat' => $request->do_obat[$key],
+                    'do_satuan_pembelian' => $request->do_satuan_pembelian[$key],
+                    'do_diskon' => $request->do_diskon[$key],
+                    'do_qty' => $request->do_qty[$key],
+                    'do_isi_pembelian' => $request->do_isi_pembelian[$key],
+                    'do_satuan_jual' => $request->do_satuan_jual[$key],
+                    'do_hrg_beli' => $request->do_hrg_beli[$key],
+                    'do_pajak' => $request->do_pajak[$key],
+                    'do_tgl_exp' => $request->do_tgl_exp[$key],
+                    'do_batch_number' => $request->do_batch_number[$key],
+                    'do_sub_total' => $request->do_sub_total[$key],
+                    'do_hdr_kd' => $request->do_hdr_kd,
+                    // 'do_hdr_id' => $request->do_hdr_kd[$key],
+                ];
+                do_detail_item::create($detail);
+            }
+            // foreach ($request->do_obat as $keys => $val) {
+            //     $cvToNum = $request->do_qty[$keys];
+            //     $int = (int)$cvToNum;
+            //     //     DB::table('tb_stock')->increment('qty', 20)->where('kd_obat' ,'=', $request->do_obat[$keys]);
+            //     // foreach ($getKdObat as $ko) {
+            //     // if ($ko->kd_obat == $request->do_obat) {
+            //     DB::table('tb_stock')->where('kd_obat', $request->do_obat[$keys])->increment([
+            //         // 'kd_obat' => $request->do_obat[$keys],
+            //         // 'qty' => DB::raw('qty' + $int),
+            //         'qty', $int,
+            //         // 'qty' => $request->do_qty,
+            //     ]);
+            // }
+            // }
+            // }
+
+            foreach ($request->do_obat as $keys => $val) {
+                $datax =  $request->do_obat[$keys];
+                $dataQty =  $request->do_qty[$keys];
+                $dataIsi =  $request->do_isi_pembelian[$keys];
+                $toInt = (int)$dataQty * (int)$dataIsi;
+
+                tb_stock::where('kd_obat', $datax)->increment("qty", $toInt);
+            }
+
+
+            DB::commit();
+
+            toastr()->success('Data Tersimpan!');
+            return back();
+            // return redirect()->route('/tindakan-medis');
+        } catch (\Exception $e) {
+            DB::rollback();
+            toastr()->error('Gagal Tersimpan!');
+            return back();
         }
-
-        // $cvToNum = $request->do_qty;
-        // $int = (int)$cvToNum;
-        // foreach ($request->do_obat as $keys => $val) {
-        //     DB::table('tb_stock')->increment('qty', 20)->where('kd_obat' ,'=', $request->do_obat[$keys]);
-        // foreach ($getKdObat as $ko) {
-        //     // if ($ko->kd_obat == $request->do_obat) {
-        //     DB::table('tb_stock')->where('kd_obat', $request->do_obat)->update([
-        //         'kd_obat' => $request->do_obat[$keys],
-        //         'qty' => DB::raw('qty' + $request->do_qty),
-        //         // 'qty' => $request->do_qty,
-        //     ]);
-        // }
-        // }
-        // }
-
-        DB::commit();
-
-        toastr()->success('Data Tersimpan!');
-        return back();
-        // return redirect()->route('/tindakan-medis');
-        // } catch (\Exception $e) {
-        DB::rollback();
-        toastr()->error('Gagal Tersimpan!');
-        return back();
     }
 }

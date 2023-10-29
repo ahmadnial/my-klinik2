@@ -12,6 +12,7 @@ class tb_stock extends Model
     protected $table = 'tb_stock';
     protected $fillable = [
         'kd_obat',
+        'nm_obat',
         'qty',
     ];
     protected $cast = [

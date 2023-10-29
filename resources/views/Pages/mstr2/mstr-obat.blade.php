@@ -523,11 +523,11 @@
                             success: function(dataResult) {
                                 // $('.close').click();
                                 // document.getElementById("fm_nm_kategori_produk").value = "";
-                                toastr.success('Saved!', 'Your fun', {
-                                    timeOut: 2000,
-                                    preventDuplicates: true,
-                                    positionClass: 'toast-top-right',
-                                });
+                                // toastr.success('Saved!', 'Your fun', {
+                                //     timeOut: 2000,
+                                //     preventDuplicates: true,
+                                //     positionClass: 'toast-top-right',
+                                // });
                                 return window.location.href = "{{ url('mstr-obat') }}";
                             }
                         });

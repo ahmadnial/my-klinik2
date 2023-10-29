@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('kd_obat');
             $table->string('nm_obat');
             $table->string('qty')->default('0');
+            $table->string('satuan');
             $table->timestamps();
         });
     }

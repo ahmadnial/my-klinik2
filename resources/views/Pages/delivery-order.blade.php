@@ -89,7 +89,8 @@
                         <div class="row">
                             <div class="form-group col-sm-2">
                                 <label for="">Nomor Ref</label>
-                                <input type="text" class="form-control" name="do_hdr_kd" id="do_hdr_kd" value="">
+                                <input type="text" class="form-control" name="do_hdr_kd" id="do_hdr_kd"
+                                    value="{{ $noRef }}" readonly>
                             </div>
                             <div class="form-group col-sm-3">
                                 <label for="">Nomor Faktur</label>
@@ -188,8 +189,7 @@
                                         name="do_batch_number[]">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control" id="do_sub_total" name="do_sub_total[]"
-                                        readonly>
+                                    <input type="text" class="form-control" id="do_sub_total" name="do_sub_total[]">
                                 </td>
                                 <td>
                                     <a href="javascript:void(0)" class="text-success" id="addRow" title="Remove"><i
@@ -327,7 +327,7 @@
                             </td>
                             <td>
                                 <input type="text" class="form-control" id="do_sub_total" name="do_sub_total[]"
-                                    readonly>
+                                    >
                             </td>
                     <td><a href="javascript:void(0)" class="text-danger font-18 remove" title="Remove"><i class="fa fa-trash"></i></a></td>
                     <input type="hidden" name="do_hdr_kd[]" id="do_hdr_kd">
