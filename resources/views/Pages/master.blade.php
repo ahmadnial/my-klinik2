@@ -343,7 +343,7 @@
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 {{-- <i class="nav-icon fas fa-bed"></i> --}}
-                                <i class="nav-icon fa fa-light fa-money"></i>
+                                <i class="nav-icon fa fa-light fa-truck"></i>
                                 <p>
                                     Kassa
                                     <i class="right fas fa-angle-left"></i>
@@ -575,7 +575,7 @@
                 "autoWidth": false,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-            $('#example2').DataTable({
+            $('#exm2').DataTable({
                 "paging": true,
                 "lengthChange": false,
                 "searching": false,

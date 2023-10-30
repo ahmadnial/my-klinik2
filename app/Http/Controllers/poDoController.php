@@ -49,13 +49,20 @@ class poDoController extends Controller
         };
 
         $supplier = mstr_supplier::all();
+        $listObat = mstr_obat::all();
         $lokasi = mstr_lokasi_stock::all();
         $viewDO = DB::table('do_hdr')
             ->leftJoin('do_detail_item', 'do_hdr.do_hdr_kd', 'do_detail_item.do_hdr_kd')
             ->select('do_hdr.*', 'do_detail_item.*')->get();
         // $viewDO = do_hdr::all();
 
-        return view('pages.delivery-order', ['supplier' => $supplier, 'lokasi' => $lokasi, 'viewDO' => $viewDO, 'noRef' => $noRef]);
+        return view('pages.delivery-order', [
+            'supplier' => $supplier,
+            'lokasi' => $lokasi,
+            'viewDO' => $viewDO,
+            'noRef' => $noRef,
+            'listObat' => $listObat
+        ]);
     }
 
     public function obatSearch(Request $request)
