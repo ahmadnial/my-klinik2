@@ -14,6 +14,7 @@ class tb_stock extends Model
         'kd_obat',
         'nm_obat',
         'qty',
+        'satuan',
     ];
     protected $cast = [
         'kd_obat',

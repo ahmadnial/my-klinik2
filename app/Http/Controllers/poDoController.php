@@ -111,25 +111,25 @@ class poDoController extends Controller
 
         DB::beginTransaction();
         try {
-            // $newData = [
-            //     'do_hdr_kd' => $request->do_hdr_kd,
-            //     'do_hdr_no_faktur' => $request->do_hdr_no_faktur,
-            //     'do_hdr_supplier' => $request->do_hdr_supplier,
-            //     'do_hdr_tgl_tempo' => $request->do_hdr_tgl_tempo,
-            //     'do_hdr_lokasi_stock' => $request->do_hdr_lokasi_stock,
-            //     'do_hdr_total_faktur' => $request->do_hdr_total_faktur,
-            //     'user' => $request->user,
-            // ];
-            // do_hdr::create($newData);
-            $newData = new do_hdr;
-            $newData->do_hdr_kd = $request->do_hdr_kd;
-            $newData->do_hdr_no_faktur = $request->do_hdr_no_faktur;
-            $newData->do_hdr_supplier = $request->do_hdr_supplier;
-            $newData->do_hdr_tgl_tempo = $request->do_hdr_tgl_tempo;
-            $newData->do_hdr_lokasi_stock = $request->do_hdr_lokasi_stock;
-            $newData->do_hdr_total_faktur = $request->do_hdr_total_faktur;
-            $newData->user = $request->user;
-            $newData->save();
+            $newData = [
+                'do_hdr_kd' => $request->do_hdr_kd,
+                'do_hdr_no_faktur' => $request->do_hdr_no_faktur,
+                'do_hdr_supplier' => $request->do_hdr_supplier,
+                'do_hdr_tgl_tempo' => $request->do_hdr_tgl_tempo,
+                'do_hdr_lokasi_stock' => $request->do_hdr_lokasi_stock,
+                'do_hdr_total_faktur' => $request->do_hdr_total_faktur,
+                'user' => $request->user,
+            ];
+            do_hdr::create($newData);
+            // $newData = new do_hdr;
+            // $newData->do_hdr_kd = $request->do_hdr_kd;
+            // $newData->do_hdr_no_faktur = $request->do_hdr_no_faktur;
+            // $newData->do_hdr_supplier = $request->do_hdr_supplier;
+            // $newData->do_hdr_tgl_tempo = $request->do_hdr_tgl_tempo;
+            // $newData->do_hdr_lokasi_stock = $request->do_hdr_lokasi_stock;
+            // $newData->do_hdr_total_faktur = $request->do_hdr_total_faktur;
+            // $newData->user = $request->user;
+            // $newData->save();
 
 
             foreach ($request->do_obat as $key => $val) {
@@ -170,9 +170,10 @@ class poDoController extends Controller
                 $datax =  $request->do_obat[$keys];
                 $dataQty =  $request->do_qty[$keys];
                 $dataIsi =  $request->do_isi_pembelian[$keys];
-                $toInt = (int)$dataQty * (int)$dataIsi;
+                $X = (int)$dataQty * (int)$dataIsi;
+                $toInt = (int)$X;
 
-                tb_stock::where('kd_obat', $datax)->increment("qty", $toInt);
+                tb_stock::whereIn('kd_obat', [$datax])->increment("qty", $toInt);
             }
 
 

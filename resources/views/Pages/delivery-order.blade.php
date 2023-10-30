@@ -125,6 +125,9 @@
                             </div>
                             <input type="hidden" id="user" name="user" value="tes">
                         </div>
+                        {{-- <div class="">
+                            <button type="button" class="btn btn-info">tambah</button>
+                        </div> --}}
                     </div>
 
                     {{-- <hr> --}}
@@ -164,7 +167,7 @@
                                     <input type="text" class="form-control" id="do_diskon" name="do_diskon[]">
                                 </td>
                                 <td>
-                                    <input type="text" class="do_qty form-control" id="do_qty[]" name="do_qty[]">
+                                    <input type="number" class="do_qty form-control" id="do_qty[]" name="do_qty[]">
                                 </td>
                                 <td>
                                     <input type="text" class="do_isi_pembelian form-control" id="do_isi_pembelian"
@@ -330,7 +333,7 @@
                                     >
                             </td>
                     <td><a href="javascript:void(0)" class="text-danger font-18 remove" title="Remove"><i class="fa fa-trash"></i></a></td>
-                    <input type="hidden" name="do_hdr_kd[]" id="do_hdr_kd">
+                   
                 </tr>`);
 
                 // Ajax Search Obat
