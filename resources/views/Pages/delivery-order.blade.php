@@ -33,7 +33,7 @@
                                     <td id="">{{ $tz->do_hdr_supplier }}</td>
                                     <td id="">{{ $tz->do_hdr_tgl_tempo }}</td>
                                     <td id="">{{ $tz->created_at }}</td>
-                                    <td id="">{{ $tz->do_obat }}</td>
+                                    <td id="">@currency($tz->do_hdr_total_faktur)</td>
                                     {{-- <td id="">@currency($tz->fm_hrg_beli)</td>
                                     <td id="">@currency($tz->fm_hrg_jual_non_resep)</td>
                                     <td id="">@currency($tz->fm_hrg_jual_resep)</td>
@@ -56,7 +56,7 @@
             padding: 0 !important; // override inline padding-right added from js
         }
 
-        .modal .modal-dialog {
+        #TambahPO .fullmodal {
             width: 100%;
             max-width: none;
             height: auto;
@@ -75,7 +75,7 @@
     </style>
     <!-- The modal Create -->
     <div class="modal fade" id="TambahPO" data-backdrop="static">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog modal-xl fullmodal">
             <div class="modal-content document">
                 <div class="modal-header">
                     <h4 class="modal-title"><i class="fa fa-truck">&nbsp;</i>Delivery Order</h4>
@@ -132,25 +132,26 @@
 
                     {{-- <hr> --}}
 
-                    <table class="table table-responsive" id="doTable">
+                    <table class="table" style="width: 100%">
                         <thead>
                             <tr>
                                 {{-- <th>Kode Obat</th> --}}
                                 <th>Obat</th>
                                 <th>Sat.Beli</th>
-                                <th>Tipe Diskon</th>
-                                <th>Diskon</th>
                                 <th>Qty</th>
                                 <th>Isi</th>
                                 <th>Sat.Jual</th>
                                 <th>Hrg.Beli</th>
+                                <th>Tipe Diskon</th>
+                                <th>Diskon</th>
                                 <th>Pajak</th>
                                 <th>Tgl.Exp</th>
                                 <th>Batch Number</th>
-                                <th>Total</th>
+                                <th>Sub Total</th>
                             </tr>
                         </thead>
-                        <tbody>
+
+                        <tbody id="doTable">
                             <tr>
                                 {{-- <td>
                                     <select class="searchObat form-control" style='width: 100%;' id="do_obat"
@@ -216,12 +217,13 @@
                     <div class="float-right col-4">
                         <div class="float-right col-4">
                             <input type="text" class="form-control float-right" name="do_hdr_total_faktur"
-                                id="do_hdr_total_faktur" value="556667" readonly>
+                                id="do_hdr_total_faktur" value="" readonly>
                         </div>
                         {{-- <div class="float-right">
                         <button class="btn btn-xs btn-info" id="addRow">Tambah Barang</button>
                     </div> --}}
                     </div>
+                    <br>
                     <br>
                     {{-- <hr> --}}
                     <div class="modal-footer">
@@ -234,8 +236,9 @@
         </div>
     </div>
 
+
     <div class="modal fade" id="obatSearch">
-        <div class="modal-dialog modal-sm">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content document">
                 <div class="modal-header">
                     <h4 class="modal-title">Tambah Barang / Obat</h4>
@@ -243,48 +246,47 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <table class="table table-stripped table-hover table-bordered" id=""
-                            style="width: 100%">
-                            <thead>
+                <div class="modal-body table-responsive">
+                    {{-- <div class="row"> --}}
+                    <table class="table table-hover table-stripped" id="exm2" style="width: 100%">
+                        <thead>
+                            <tr>
+                                <th>KD OBAT</th>
+                                <th>Nama Obat</th>
+                                <th>Satuan beli</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        @foreach ($listObat as $lo)
+                            <tbody>
                                 <tr>
-                                    <th>KD OBAT</th>
-                                    <th>Nama Obat</th>
-                                    <th>Satuan beli</th>
-                                    <th></th>
+                                    <td><input class="getItemObat col-6" style="border: none" readonly
+                                            value="{{ $lo->fm_kd_obat }}">
+                                    </td>
+                                    <td>{{ $lo->fm_nm_obat }}</td>
+                                    <td>{{ $lo->fm_satuan_pembelian }}</td>
+                                    <td><button type="button" class="SelectItemObat btn btn-info btn-xs"
+                                            id="SelectItemObat" data-fm_kd_obat="{{ $lo->fm_kd_obat }}"
+                                            data-fm_nm_obat="{{ $lo->fm_nm_obat }}"
+                                            data-fm_satuan_pembelian="{{ $lo->fm_satuan_pembelian }}"
+                                            data-fm_isi_satuan_pembelian="{{ $lo->fm_isi_satuan_pembelian }}"
+                                            data-fm_satuan_jual="{{ $lo->fm_satuan_jual }}"
+                                            data-fm_hrg_beli="{{ $lo->fm_hrg_beli }}">Select</button>
+                                    </td>
                                 </tr>
-                            </thead>
+                            </tbody>
+                        @endforeach
+                    </table>
 
-                            @foreach ($listObat as $lo)
-                                <tbody>
-                                    <tr>
-                                        <td><input class="getItemObat" style="border: none" readonly
-                                                value="{{ $lo->fm_kd_obat }}">{{ $lo->fm_kd_obat }}</input>
-                                        </td>
-                                        <td>{{ $lo->fm_nm_obat }}</td>
-                                        <td>{{ $lo->fm_satuan_pembelian }}</td>
-                                        <td><button type="button" class="SelectItemObat btn btn-info btn-xs"
-                                                id="SelectItemObat" data-fm_kd_obat="{{ $lo->fm_kd_obat }}"
-                                                data-fm_nm_obat="{{ $lo->fm_nm_obat }}"
-                                                data-fm_satuan_pembelian="{{ $lo->fm_satuan_pembelian }}"
-                                                data-fm_isi_satuan_pembelian="{{ $lo->fm_isi_satuan_pembelian }}"
-                                                data-fm_satuan_jual="{{ $lo->fm_satuan_jual }}"
-                                                data-fm_hrg_beli="{{ $lo->fm_hrg_beli }}">Select</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            @endforeach
-                        </table>
-
-                        <input type="hidden" id="user" name="user" value="tes">
-                    </div>
+                    <input type="hidden" id="user" name="user" value="tes">
+                    {{-- </div> --}}
                     <div class="modal-footer">
                         {{-- <button type="" class=""></button> --}}
-                        <button type="button" id="buat" class="btn btn-success float-right"><i
+                        {{-- <button type="button" id="buat" class="btn btn-success float-right"><i
                                 class="fa fa-save"></i>
                             &nbsp;
-                            Save</button>
+                            Save</button> --}}
                     </div>
                 </div>
             </div>
@@ -307,9 +309,8 @@
                     var getSatJual = $(this).data('fm_satuan_jual');
                     var getHrgBeli = $(this).data('fm_hrg_beli');
 
-                    $("#doTable tbody").append(`
-                <tr id="R${++rowIdx}">
-                        
+                    $("#doTable").append(`
+                        <tr id="R${++rowIdx}">
                           <input type="hidden" class="searchObat" id="do_obat"
                                 name="do_obat[]" onchange="getDataObat()" value="${getKdObat}" readonly>
                             
@@ -322,13 +323,7 @@
                                     name="do_satuan_pembelian[]" value="${getSatBeli}" readonly>
                             </td>
                             <td>
-                                <input type="text" class="form-control">
-                            </td>
-                            <td>
-                                <input type="text" class="form-control" id="do_diskon" name="do_diskon[]">
-                            </td>
-                            <td>
-                                <input type="text" class="do_qty form-control" id="do_qty" onKeyUp="getQTY()" name="do_qty[]">
+                                <input type="text" class="do_qty form-control" id="do_qty" onKeyUp="getQTY(this)" name="do_qty[]">
                             </td>
                             <td>
                                 <input type="text" class="do_isi_pembelian form-control" id="do_isi_pembelian"
@@ -343,6 +338,16 @@
                                  value="${getHrgBeli}" readonly>
                             </td>
                             <td>
+                            <select type="text" class="form-control" name="tipe_diskon" id="tipe_diskon">
+                                <option value="0">No Discount</option>
+                                <option value="prosen">(%)prosen</option>
+                                <option value="rupiah">(Rp)Rupiah</option>
+                            </select>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="do_diskon" name="do_diskon[]">
+                            </td>
+                            <td>
                                 <input type="text" class="form-control" id="do_pajak" name="do_pajak[]">
                             </td>
                             <td>
@@ -353,8 +358,7 @@
                                     name="do_batch_number[]">
                             </td>
                             <td>
-                                <input type="text" class="do_sub_total${getKdObat} form-control" id="do_sub_total" name="do_sub_total[]"
-                                    >
+                                <input type="text" class="do_sub_total form-control" id="do_sub_total" name="do_sub_total[]">
                             </td>
                     <td><a href="javascript:void(0)" class="text-danger font-18 remove" title="Remove"><i class="fa fa-trash"></i></a></td>
                    
@@ -363,33 +367,31 @@
                     $('#obatSearch').modal('hide');
                 });
 
-                function getQTY() {
-                    // const table = document.getElementById('doTable');
-                    // const rows = table.getElementsByTagName('tr');
-                    var kdObt = $('#do_obat').val;
-                    var qty = $('.do_qty').val();
-                    var hrg = $('.do_hrg_beli').val();
-                    // alert(kdObt);
-                    if (hrg == '') {
-                        $('.do_sub_totalTB00002').val('');
-                    } else {
-                        var total = qty * hrg
-                        $('.do_sub_totalTB00002').val(total);
-                    }
-                };
-                // Qty x hrg 
+
                 // $(document).ready(function() {
-                //     $('#R3.do_qty').on('keyup', function() {
-                //         var qty = $(this).val();
-                //         var hrg = $('.do_hrg_beli').val();
-                //         if (hrg == '') {
-                //             $('#do_sub_total').val('');
-                //         } else {
-                //             var total = qty * hrg
-                //             $('#do_sub_total').val(total);
-                //         }
-                //     });
-                // });
+                function getQTY(q) {
+
+                    // $('#calculation').on("keyup", ".do_hrg_beli", function() {
+                    var parent = q.parentElement.parentElement;
+                    var quant = $(parent).find('#do_qty').val();
+                    var price = $(parent).find('#do_hrg_beli').val();
+                    console.log(quant);
+                    $(parent).find('#do_sub_total').val(quant * price);
+                    GrandTotal();
+                    // });
+
+                    function GrandTotal() {
+                        var sum = 0;
+
+                        $('.do_sub_total').each(function() {
+                            sum += Number($(this).val());
+                        });
+
+                        $('#do_hdr_total_faktur').val(sum);
+                    }
+
+                };
+
 
                 // Ajax Search Obat
                 var path = "{{ route('obatSearch') }}";
