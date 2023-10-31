@@ -11,7 +11,7 @@
 
             <div class="card-body">
                 <div id="">
-                    <table id="example2" class="table table-hover">
+                    <table id="example1" class="table table-hover">
                         <thead class="">
                             <tr>
                                 {{-- <th>Tanggal</th> --}}
@@ -142,8 +142,8 @@
                                 <th>Isi</th>
                                 <th>Sat.Jual</th>
                                 <th>Hrg.Beli</th>
-                                <th>Tipe Diskon</th>
-                                <th>Diskon</th>
+                                <th>Disc %</th>
+                                <th>Discount</th>
                                 <th>Pajak</th>
                                 <th>Tgl.Exp</th>
                                 <th>Batch Number</th>
@@ -338,14 +338,10 @@
                                  value="${getHrgBeli}" readonly>
                             </td>
                             <td>
-                            <select type="text" class="form-control" name="tipe_diskon" id="tipe_diskon">
-                                <option value="0">No Discount</option>
-                                <option value="prosen">(%)prosen</option>
-                                <option value="rupiah">(Rp)Rupiah</option>
-                            </select>
+                            <input type="text" class="form-control" name="do_diskon_prosen" id="do_diskon_prosen" onKeyUp="discProsen(this)">
                             </td>
                             <td>
-                                <input type="text" class="form-control" id="do_diskon" name="do_diskon[]">
+                                <input type="text" class="form-control" id="do_diskon" name="do_diskon[]" onKeyUp="discRp(this)">
                             </td>
                             <td>
                                 <input type="text" class="form-control" id="do_pajak" name="do_pajak[]">
@@ -370,12 +366,11 @@
 
                 // $(document).ready(function() {
                 function getQTY(q) {
-
                     // $('#calculation').on("keyup", ".do_hrg_beli", function() {
                     var parent = q.parentElement.parentElement;
                     var quant = $(parent).find('#do_qty').val();
                     var price = $(parent).find('#do_hrg_beli').val();
-                    console.log(quant);
+                    // console.log(quant);
                     $(parent).find('#do_sub_total').val(quant * price);
                     GrandTotal();
                     // });
@@ -392,7 +387,37 @@
 
                 };
 
+                function discProsen(x) {
+                    var parentx = x.parentElement.parentElement;
+                    var tdsc = $(parentx).find('#do_diskon_prosen').val();
+                    var price = $(parentx).find('#do_hrg_beli').val();
+                    var subttl = $(parentx).find('#do_sub_total').val();
+                    var calc = (tdsc / 100) * price;
 
+                    var result = calc.toFixed(2);
+
+                    $(parentx).find('#do_diskon').val(result);
+                    var dsc = $(parentx).find('#do_diskon').val();
+
+                    $(parentx).find('#do_sub_total').val(subttl - dsc);
+
+                    // console.log(result);
+                }
+
+                function discRp(r) {
+                    var parentR = r.parentElement.parentElement;
+                    var tdscr = $(parentR).find('#do_diskon').val();
+                    var price = $(parentR).find('#do_hrg_beli').val();
+                    var subttl = $(parentR).find('#do_sub_total').val();
+                    var calc = (tdscr / price) * 100;
+
+                    var result = calc.toFixed(2);
+
+                    $(parentR).find('#do_diskon_prosen').val(result);
+                    $(parentR).find('#do_sub_total').val(subttl - tdscr);
+
+                    // console.log(result);
+                }
                 // Ajax Search Obat
                 var path = "{{ route('obatSearch') }}";
 
