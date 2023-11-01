@@ -326,10 +326,16 @@
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <a href="{{ url('/purchase-order') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Purchase Order</p>
+                                    </a>
+                                </li> --}}
+                                <li class="nav-item">
+                                    <a href="{{ url('/penjualan') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Penjualan</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">

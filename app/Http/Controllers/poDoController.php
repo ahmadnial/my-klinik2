@@ -53,7 +53,9 @@ class poDoController extends Controller
         $lokasi = mstr_lokasi_stock::all();
         $viewDO = DB::table('do_hdr')
             ->leftJoin('do_detail_item', 'do_hdr.do_hdr_kd', 'do_detail_item.do_hdr_kd')
-            ->select('do_hdr.*', 'do_detail_item.*')->get();
+            ->select('do_hdr.*', 'do_detail_item.*')
+            ->distinct()
+            ->get();
         // $viewDO = do_hdr::all();
 
         return view('pages.delivery-order', [

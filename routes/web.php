@@ -6,10 +6,12 @@ use App\Http\Controllers\kasirPoliController;
 use App\Http\Controllers\kasirPoliklinik;
 use App\Http\Controllers\masterFarmasiController;
 use App\Http\Controllers\mastersatuController;
+use App\Http\Controllers\penjualanController;
 use App\Http\Controllers\poDoController;
 use App\Http\Controllers\registrasiController;
 use App\Http\Controllers\TindakanController;
 use App\Http\Controllers\WilayahController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -130,6 +132,14 @@ Route::controller(poDoController::class)->group(function () {
 // CREATE PO-DO
 Route::controller(poDoController::class)->group(function () {
     Route::post('add-delivery-order', 'doCreate')->name('add-delivery-order');
+});
+
+// PENJUALAN FARMASI
+Route::controller(penjualanController::class)->group(function () {
+    Route::get('penjualan', 'penjualan')->name('penjualan');
+    // Route::get('delivery-order', 'do')->name('delivery-order');
+    // Route::get('obatSearch', 'obatSearch')->name('obatSearch');
+    // Route::get('getObatList/{obat}', 'getObatList')->name('getObatList');
 });
 
 // VIEW TRS-KASIR-POLI

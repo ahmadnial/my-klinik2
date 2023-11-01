@@ -344,7 +344,7 @@
                                 <input type="text" class="form-control" id="do_diskon" name="do_diskon[]" onKeyDown="discRp(this)">
                             </td>
                             <td>
-                                <select type="text" class="form-control" id="do_pajak" name="do_pajak[]" onChange="getPPN(this)">
+                                <select type="text" class="form-control" id="do_pajak" name="do_pajak[]" onClick="pajakPPN(this)">
                                     <option value="">Tanpa Pajak</option>
                                     <option value="11">PPN 11%</option>
                                 </select>
@@ -380,18 +380,19 @@
                     GrandTotal();
                     // });
 
-                    function GrandTotal() {
-                        var sum = 0;
-
-                        $('.do_sub_total').each(function() {
-                            sum += Number($(this).val());
-                        });
-                        var result = sum.toFixed(2);
-
-                        $('#do_hdr_total_faktur').val(result);
-                    }
-
                 };
+
+                function GrandTotal() {
+                    var sum = 0;
+
+                    $('.do_sub_total').each(function() {
+                        sum += Number($(this).val());
+                    });
+                    var result = sum.toFixed(2);
+
+                    $('#do_hdr_total_faktur').val(result);
+                }
+
 
                 function discProsen(x) {
                     var parentx = x.parentElement.parentElement;
@@ -406,6 +407,7 @@
                     var dsc = $(parentx).find('#do_diskon').val();
 
                     $(parentx).find('#do_sub_total').val(subttl - dsc);
+                    GrandTotal();
 
                     // console.log(result);
                 }
@@ -427,13 +429,14 @@
                             $(parentR).find('#do_sub_total').val(subttl);
                             // $(parentR).find('#do_diskon_prosen').val();
                         }
+                        GrandTotal();
 
-                        console.log(tdscr);
+                        // console.log(tdscr);
                     }
 
-                    function getPPN(p) {
+                    function pajakPPN(p) {
+                        alert('hi');
                         var parentP = p.parentElement.parentElement;
-
                     }
                     // var parentR = r.parentElement.parentElement;
                     // var price = $(parentR).find('#do_sub_total').val();
