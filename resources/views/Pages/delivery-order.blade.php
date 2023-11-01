@@ -83,7 +83,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form method="POST" action="{{ url('add-delivery-order') }}">
+                <form method="POST" action="{{ url('add-delivery-order') }}" onkeydown="return event.key != 'Enter';">
                     @csrf
                     <div class="modal-body">
                         <div class="row">
@@ -341,10 +341,13 @@
                             <input type="text" class="form-control" name="do_diskon_prosen" id="do_diskon_prosen" onKeyUp="discProsen(this)">
                             </td>
                             <td>
-                                <input type="text" class="form-control" id="do_diskon" name="do_diskon[]" onKeyUp="discRp(this)">
+                                <input type="text" class="form-control" id="do_diskon" name="do_diskon[]" onKeyDown="discRp(this)">
                             </td>
                             <td>
-                                <input type="text" class="form-control" id="do_pajak" name="do_pajak[]">
+                                <select type="text" class="form-control" id="do_pajak" name="do_pajak[]" onChange="getPPN(this)">
+                                    <option value="">Tanpa Pajak</option>
+                                    <option value="11">PPN 11%</option>
+                                </select>
                             </td>
                             <td>
                                 <input type="date" class="form-control" id="do_tgl_exp" name="do_tgl_exp[]">
@@ -371,7 +374,9 @@
                     var quant = $(parent).find('#do_qty').val();
                     var price = $(parent).find('#do_hrg_beli').val();
                     // console.log(quant);
-                    $(parent).find('#do_sub_total').val(quant * price);
+                    var x = quant * price;
+                    var result = x.toFixed(2);
+                    $(parent).find('#do_sub_total').val(result);
                     GrandTotal();
                     // });
 
@@ -381,8 +386,9 @@
                         $('.do_sub_total').each(function() {
                             sum += Number($(this).val());
                         });
+                        var result = sum.toFixed(2);
 
-                        $('#do_hdr_total_faktur').val(sum);
+                        $('#do_hdr_total_faktur').val(result);
                     }
 
                 };
@@ -390,7 +396,7 @@
                 function discProsen(x) {
                     var parentx = x.parentElement.parentElement;
                     var tdsc = $(parentx).find('#do_diskon_prosen').val();
-                    var price = $(parentx).find('#do_hrg_beli').val();
+                    var price = $(parentx).find('#do_sub_total').val();
                     var subttl = $(parentx).find('#do_sub_total').val();
                     var calc = (tdsc / 100) * price;
 
@@ -406,15 +412,39 @@
 
                 function discRp(r) {
                     var parentR = r.parentElement.parentElement;
-                    var tdscr = $(parentR).find('#do_diskon').val();
-                    var price = $(parentR).find('#do_hrg_beli').val();
-                    var subttl = $(parentR).find('#do_sub_total').val();
-                    var calc = (tdscr / price) * 100;
+                    if (event.keyCode == 13) {
+                        var tdscr = $(parentR).find('#do_diskon').val();
+                        var subttl = $(parentR).find('#do_sub_total').val();
+                        var calc = (tdscr / subttl) * 100;
+                        var toFix = subttl - tdscr;
+                        var toDecimal = toFix.toFixed(2);
+                        var result = calc.toFixed(2);
 
-                    var result = calc.toFixed(2);
+                        if (tdscr != 0) {
+                            $(parentR).find('#do_sub_total').val(toDecimal);
+                            $(parentR).find('#do_diskon_prosen').val(result);
+                        } else {
+                            $(parentR).find('#do_sub_total').val(subttl);
+                            // $(parentR).find('#do_diskon_prosen').val();
+                        }
 
-                    $(parentR).find('#do_diskon_prosen').val(result);
-                    $(parentR).find('#do_sub_total').val(subttl - tdscr);
+                        console.log(tdscr);
+                    }
+
+                    function getPPN(p) {
+                        var parentP = p.parentElement.parentElement;
+
+                    }
+                    // var parentR = r.parentElement.parentElement;
+                    // var price = $(parentR).find('#do_sub_total').val();
+                    // var subttl = $(parentR).find('#do_sub_total').val();
+                    // var calc = (tdscr / price) * 100;
+                    // var result = calc.toFixed(2);
+                    // var discNow = $(this).val();
+                    // console.log(subttl - tdscr);
+
+                    // $(parentR).find('#do_diskon_prosen').val(result);
+                    // $(parentR).find('#do_sub_total').val(subttl - tdscr);
 
                     // console.log(result);
                 }
