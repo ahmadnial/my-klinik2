@@ -88,19 +88,31 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="form-group col-sm-2">
-                                <label for="">Nomor Ref</label>
-                                <input type="text" class="form-control" name="do_hdr_kd" id="do_hdr_kd" value=""
+                                <label for="">kd trs</label>
+                                <input type="text" class="form-control" name="tp_kd_trs" id="tp_kd_trs" value=""
                                     readonly>
                             </div>
-                            <div class="form-group col-sm-3">
-                                <label for="">Nomor Faktur</label>
-                                <input type="text" class="form-control" name="do_hdr_no_faktur" id="do_hdr_no_faktur"
-                                    value="" placeholder="Input Nomor Faktur">
+                            <div class="form-group col-sm-2">
+                                <label for="">kd Resep</label>
+                                <select class="form-control" id="tp_kd_order" style="width: 100%;" name="tp_kd_order">
+                                    <option value="">--Select--</option>
+
+                                </select>
                             </div>
                             <div class="form-group col-sm-2">
-                                <label for="">Supplier</label>
-                                <select class="form-control-pasien" id="do_hdr_supplier" style="width: 100%;"
-                                    name="do_hdr_supplier">
+                                <label for="">Resep Dari</label>
+                                <input type="text" class="form-control" name="tp_layanan" id="tp_layanan" value=""
+                                    readonly>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label for="">Dokter</label>
+                                <input type="text" class="form-control" name="tp_dokter" id="tp_dokter" value=""
+                                    readonly>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label for="">Lokasi Stock</label>
+                                <select class="form-control-pasien" id="tp_lokasi_stock" style="width: 100%;"
+                                    name="tp_lokasi_stock">
                                     <option value="">--Select--</option>
 
                                 </select>
@@ -289,5 +301,14 @@
         {{-- End Modal --}}
 
         @push('scripts')
+            <script>
+                $('#tp_kd_order').select2({
+                    placeholder: 'Search E-Resep',
+                });
+
+                $('#tp_lokasi_stock').select2({
+                    placeholder: 'Search Lokasi Stock',
+                });
+            </script>
         @endpush
     @endsection
