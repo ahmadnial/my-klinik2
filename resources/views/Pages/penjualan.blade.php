@@ -5,7 +5,7 @@
         <div class="card">
             <div class="card-header">
                 <button type="submit" class="btn btn-success float-right" data-toggle="modal"
-                    data-target="#TambahPO">Tambah</button>
+                    data-target="#addPenjualan">Tambah</button>
                 <h3 class="card-title"><i class="fa fa-chart">&nbsp;</i>Transaksi Penjualan</h3>
             </div>
 
@@ -56,7 +56,7 @@
             padding: 0 !important; // override inline padding-right added from js
         }
 
-        #TambahPO .fullmodal {
+        #addPenjualan .fullmodal {
             width: 100%;
             max-width: none;
             height: auto;
@@ -74,11 +74,11 @@
         }
     </style>
     <!-- The modal Create -->
-    <div class="modal fade" id="TambahPO" data-backdrop="static">
+    <div class="modal fade" id="addPenjualan" data-backdrop="static">
         <div class="modal-dialog modal-xl fullmodal">
             <div class="modal-content document">
                 <div class="modal-header">
-                    <h4 class="modal-title"><i class="fa fa-truck">&nbsp;</i>Delivery Order</h4>
+                    <h4 class="modal-title"><i class="fa fa-truck">&nbsp;</i>Transaksi Penjualan</h4>
                     <button type="button" class="close btn btn-danger" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -117,106 +117,112 @@
 
                                 </select>
                             </div>
+                            <br>
+                            <hr>
                             <div class="form-group col-sm-2">
-                                <label for="">Tanggal Jatuh Tempo</label>
-                                <input type="date" class="form-control" name="do_hdr_tgl_tempo" id="do_hdr_tgl_tempo"
-                                    value="">
+                                <label for="">kd.Registrasi</label>
+                                <input type="text" class="form-control" name="tp_kd_reg" id="tp_kd_reg" value=""
+                                    readonly>
                             </div>
                             <div class="form-group col-sm-2">
-                                <label for="">Lokasi</label>
-                                <select class="form-control-pasien" id="do_hdr_lokasi_stock" style="width: 100%;"
-                                    name="do_hdr_lokasi_stock">
+                                <label for="">No.RM</label>
+                                <input type="text" class="form-control" name="tp_no_mr" id="tp_no_mr" value=""
+                                    readonly>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label for="">Alamat</label>
+                                <textarea type="text" class="form-control" name="tp_alamat" id="tp_alamat" value="" readonly></textarea>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label for="">Jenis Kelamin</label>
+                                <input type="text" class="form-control" name="tp_jenis_kelamin" id="tp_jenis_kelamin"
+                                    value="" readonly>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label for="">Tgl Lahir</label>
+                                <input type="text" class="form-control" name="tp_tgl_lahir" id="tp_tgl_lahir"
+                                    value="" readonly>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label for="">Tipe Tarif</label>
+                                <select class="form-control-pasien" onchange="getTipeTarif()" id="tp_tipe_tarif"
+                                    style="width: 100%;" name="tp_tipe_tarif">
                                     <option value="">--Select--</option>
-
+                                    <option value="Reguler">Reguler</option>
+                                    <option value="Resep">Resep</option>
+                                    <option value="Nakes">Nakes</option>
                                 </select>
                             </div>
                             <input type="hidden" id="user" name="user" value="tes">
                         </div>
                         <div class="">
-                            <button type="button" id="searchObat" class="btn btn-info">tambah</button>
+                            <button type="button" id="obatSearch" class="btn btn-info">tambah</button>
                         </div>
                     </div>
 
                     {{-- <hr> --}}
 
-                    <table class="table" style="width: 100%">
+                    <table class="table table-stripped" style="width: 100%">
                         <thead>
                             <tr>
-                                {{-- <th>Kode Obat</th> --}}
-                                <th>Obat</th>
-                                <th>Sat.Beli</th>
+                                <th>kd obat</th>
+                                <th>Nama Obat</th>
+                                <th>Dosis</th>
+                                <th>Harga</th>
                                 <th>Qty</th>
-                                <th>Isi</th>
-                                <th>Sat.Jual</th>
-                                <th>Hrg.Beli</th>
-                                <th>Disc %</th>
-                                <th>Discount</th>
-                                <th>Pajak</th>
-                                <th>Tgl.Exp</th>
-                                <th>Batch Number</th>
+                                <th>Disc</th>
+                                <th>Satuan</th>
+                                <th>Tax</th>
                                 <th>Sub Total</th>
                             </tr>
                         </thead>
 
                         <tbody id="doTable">
                             <tr>
-                                {{-- <td>
+                                <td class="">
+                                    <input class="searchObat form-control" style='width: 100%;' style="border: none"
+                                        id="do_obat" name="do_obat[]" placeholder="kode obat" readonly
+                                        style="border: none;">
+                                </td>
+                                <td>
                                     <select class="searchObat form-control" style='width: 100%;' id="do_obat"
                                         name="do_obat[]" onchange="getDataObat()" aria-placeholder="Search"></select>
-                                </td> --}}
-                                {{-- <td>
-                                    <input class="searchObat form-control" style='width: 100%;' id="do_obat"
-                                        name="do_obat[]" onchange="getDataObat()" placeholder="Search" readonly>
                                 </td>
                                 <td>
-                                    <input type="text" class="do_satuan_pembelian form-control" id="do_satuan_pembelian"
-                                        name="do_satuan_pembelian[]" readonly>
+                                    <input type="text" class="do_satuan_pembelian form-control"
+                                        id="do_satuan_pembelian" name="do_satuan_pembelian[]" readonly
+                                        style="border: none;">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" style="border: none;">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control" id="do_diskon" name="do_diskon[]">
+                                    <input type="text" class="form-control" id="do_diskon" name="do_diskon[]"
+                                        style="border: none;">
                                 </td>
                                 <td>
-                                    <input type="number" class="do_qty form-control" id="do_qty[]" name="do_qty[]">
+                                    <input type="number" class="do_qty form-control" id="do_qty[]" name="do_qty[]"
+                                        style="border: none;">
                                 </td>
                                 <td>
                                     <input type="text" class="do_isi_pembelian form-control" id="do_isi_pembelian"
-                                        name="do_isi_pembelian[]" readonly>
+                                        name="do_isi_pembelian[]" readonly style="border: none;">
                                 </td>
                                 <td>
                                     <input type="text" class="do_satuan_jual form-control" id="do_satuan_jual"
-                                        name="do_satuan_jual[]" readonly>
+                                        name="do_satuan_jual[]" readonly style="border: none;">
                                 </td>
                                 <td>
                                     <input type="text" class="do_hrg_beli form-control" id="do_hrg_beli"
-                                        name="do_hrg_beli[]" readonly>
-                                </td>
-                                <td>
-                                    <input type="text" class="form-control" id="do_pajak" name="do_pajak[]">
-                                </td>
-                                <td>
-                                    <input type="date" class="form-control" id="do_tgl_exp" name="do_tgl_exp[]">
-                                </td>
-                                <td>
-                                    <input type="text" class="form-control" id="do_batch_number"
-                                        name="do_batch_number[]">
-                                </td>
-                                <td>
-                                    <input type="text" class="form-control" id="do_sub_total" name="do_sub_total[]">
-                                </td>
-                                <td>
-                                    <a href="javascript:void(0)" class="text-success" id="addRow" title="Remove"><i
-                                            class="fa fa-plus"></i></a>
+                                        name="do_hrg_beli[]" readonly style="border: none;">
                                 </td>
 
-                                <input type="hidden" name="user" id="user" value="tes user"> --}}
+                                <input type="hidden" name="user" id="user" value="tes user">
                                 {{-- <input type="hidden" name="do_hdr_kd[]" id="do_hdr_kd">  --}}
-                                {{-- <td>
-                                <button class="remove btn btn-xs btn-danger " id="delRow"><i
-                                        class="fa fa-close"></i></button>
-                            </td> --}}
+                                <td>
+                                    <button class="remove btn btn-xs btn-danger " id="delRow"><i
+                                            class="fa fa-close"></i></button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -244,7 +250,7 @@
     </div>
 
 
-    <div class="modal fade" id="obatSearch">
+    <div class="modal fade" id="obatSearchShow">
         <div class="modal-dialog modal-lg">
             <div class="modal-content document">
                 <div class="modal-header">
@@ -309,6 +315,42 @@
                 $('#tp_lokasi_stock').select2({
                     placeholder: 'Search Lokasi Stock',
                 });
+
+                $('#tp_tipe_tarif').select2({
+                    placeholder: 'Search Lokasi Stock',
+                });
+
+                $("#obatSearch").on("click", function() {
+                    $('#obatSearchShow').modal('show');
+
+                    // alert('helo');
+                });
+
+                function getTipeTarif() {
+                    var tes = $('#tp_tipe_tarif').val();
+
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: "{{ url('getTimeline') }}/" + dataObject,
+                        type: 'GET',
+                        data: {
+                            chart_mr: dataObject
+                        },
+                        success: function(isTimelineHistory) {
+                            // $.each(isTimelineHistory, function(key, getVal) {
+                            var getValue = isTimelineHistory;
+                            for (var getVal = 0; getVal < getValue.length; getVal++) {
+
+
+                                $(".isTimeline").append(`
+                                    `)
+                            }
+
+                        }
+                    })
+                };
             </script>
         @endpush
     @endsection
