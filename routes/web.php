@@ -137,7 +137,7 @@ Route::controller(poDoController::class)->group(function () {
 // PENJUALAN FARMASI
 Route::controller(penjualanController::class)->group(function () {
     Route::get('penjualan', 'penjualan')->name('penjualan');
-    // Route::get('delivery-order', 'do')->name('delivery-order');
+    Route::get('getListObatReguler', 'getListObatReguler')->name('getListObatReguler');
     // Route::get('obatSearch', 'obatSearch')->name('obatSearch');
     // Route::get('getObatList/{obat}', 'getObatList')->name('getObatList');
 });

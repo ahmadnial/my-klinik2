@@ -177,16 +177,16 @@
                             </tr>
                         </thead>
 
-                        <tbody id="doTable">
-                            <tr>
+                        <tbody id="ListObatJual">
+                            {{-- <tr>
                                 <td class="">
                                     <input class="searchObat form-control" style='width: 100%;' style="border: none"
                                         id="do_obat" name="do_obat[]" placeholder="kode obat" readonly
                                         style="border: none;">
                                 </td>
                                 <td>
-                                    <select class="searchObat form-control" style='width: 100%;' id="do_obat"
-                                        name="do_obat[]" onchange="getDataObat()" aria-placeholder="Search"></select>
+                                    <input class="searchObat form-control" style='width: 100%;' id="do_obat"
+                                        name="do_obat[]" ondblclick="getListObat()" aria-placeholder="Search">
                                 </td>
                                 <td>
                                     <input type="text" class="do_satuan_pembelian form-control"
@@ -218,12 +218,11 @@
                                 </td>
 
                                 <input type="hidden" name="user" id="user" value="tes user">
-                                {{-- <input type="hidden" name="do_hdr_kd[]" id="do_hdr_kd">  --}}
                                 <td>
                                     <button class="remove btn btn-xs btn-danger " id="delRow"><i
                                             class="fa fa-close"></i></button>
                                 </td>
-                            </tr>
+                            </tr> --}}
                         </tbody>
                     </table>
                     <hr>
@@ -266,30 +265,14 @@
                             <tr>
                                 <th>KD OBAT</th>
                                 <th>Nama Obat</th>
-                                <th>Satuan beli</th>
+                                <th>Satuan Jual</th>
+                                <th>Harga Jual Reguler</th>
                                 <th></th>
                             </tr>
                         </thead>
+                        <tbody class="getListObatx" id="getListObatx">
 
-                        {{-- @foreach ($listObat as $lo)
-                            <tbody>
-                                <tr>
-                                    <td><input class="getItemObat col-6" style="border: none" readonly
-                                            value="{{ $lo->fm_kd_obat }}">
-                                    </td>
-                                    <td>{{ $lo->fm_nm_obat }}</td>
-                                    <td>{{ $lo->fm_satuan_pembelian }}</td>
-                                    <td><button type="button" class="SelectItemObat btn btn-info btn-xs"
-                                            id="SelectItemObat" data-fm_kd_obat="{{ $lo->fm_kd_obat }}"
-                                            data-fm_nm_obat="{{ $lo->fm_nm_obat }}"
-                                            data-fm_satuan_pembelian="{{ $lo->fm_satuan_pembelian }}"
-                                            data-fm_isi_satuan_pembelian="{{ $lo->fm_isi_satuan_pembelian }}"
-                                            data-fm_satuan_jual="{{ $lo->fm_satuan_jual }}"
-                                            data-fm_hrg_beli="{{ $lo->fm_hrg_beli }}">Select</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        @endforeach --}}
+                        </tbody>
                     </table>
 
                     <input type="hidden" id="user" name="user" value="tes">
@@ -329,28 +312,109 @@
                 function getTipeTarif() {
                     var tes = $('#tp_tipe_tarif').val();
 
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        url: "{{ url('getTimeline') }}/" + dataObject,
-                        type: 'GET',
-                        data: {
-                            chart_mr: dataObject
-                        },
-                        success: function(isTimelineHistory) {
-                            // $.each(isTimelineHistory, function(key, getVal) {
-                            var getValue = isTimelineHistory;
-                            for (var getVal = 0; getVal < getValue.length; getVal++) {
+                    if (tes == 'Reguler') {
+                        $.ajax({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            url: "{{ url('getListObatReguler') }}",
+                            type: 'GET',
+                            // data: {
+                            //     chart_mr: dataObject
+                            // },
+                            success: function(isObatReguler) {
+                                // $.each(isTimelineHistory, function(key, getVal) {
+                                var getValue = isObatReguler;
+                                for (var getVal = 0; getVal < getValue.length; getVal++) {
+                                    $(".getListObatx").append(`
+                                    <tr>
+                                        <td><input class="getItemObat col-4" style="border: none" readonly value="${getValue[getVal].fm_kd_obat}"></td>
+                                        <td>${getValue[getVal].fm_nm_obat}</td>
+                                        <td>${getValue[getVal].fm_satuan_jual}</td>
+                                        <td>${getValue[getVal].fm_hrg_jual_non_resep}</td>
+                                        <td><button type="button" class="SelectItemObat btn btn-info btn-xs" id="SelectItemObat" onClick="SelectItemObat()"
+                                                data-fm_kd_obat="${getValue[getVal].fm_kd_obat}"
+                                                data-fm_nm_obat="${getValue[getVal].fm_nm_obat}"
+                                                data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}"
+                                                data-fm_hrg_jual_non_resep="${getValue[getVal].fm_hrg_jual_non_resep}">Select</button>
+                                        </td>
+                                    </tr>`)
+                                }
 
-
-                                $(".isTimeline").append(`
-                                    `)
                             }
-
-                        }
-                    })
+                        })
+                        // alert('Reg');
+                    } else if (tes == 'Resep') {
+                        alert('Resep');
+                    } else {
+                        alert('Nakes');
+                    }
                 };
+
+                function getListObat() {
+                    $('#obatSearchShow').modal('show');
+                }
+
+                function SelectItemObat() {
+
+                    var getKdObat = $(this).data('fm_kd_obat');
+                    var getNmObat = $(this).data('fm_nm_obat');
+                    var getSatJual = $(this).data('fm_satuan_jual');
+                    var getHrgnonResep = $(this).data('fm_hrg_jual_non_resep');
+
+                    $("#ListObatJual").append(`
+                    <tr>
+                        <td class="">
+                            <input class="searchObat form-control" style='width: 100%;' style="border: none"
+                                id="do_obat" name="do_obat[]" placeholder="kode obat" readonly
+                                style="border: none;" value="${getKdObat}">
+                        </td>
+                        <td>
+                            <input class="searchObat form-control" style='width: 100%;' id="do_obat"
+                                name="do_obat[]" ondblclick="getListObat()" aria-placeholder="Search" value="${getNmObat}">
+                        </td>
+                        <td>
+                            <input type="text" class="do_satuan_pembelian form-control"
+                                id="do_satuan_pembelian" name="do_satuan_pembelian[]" readonly
+                                style="border: none;">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" style="border: none;">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" id="do_diskon" name="do_diskon[]"
+                                style="border: none;">
+                        </td>
+                        <td>
+                            <input type="number" class="do_qty form-control" id="do_qty[]" name="do_qty[]"
+                                style="border: none;">
+                        </td>
+                        <td>
+                            <input type="text" class="do_isi_pembelian form-control" id="do_isi_pembelian"
+                                name="do_isi_pembelian[]" readonly style="border: none;">
+                        </td>
+                        <td>
+                            <input type="text" class="do_satuan_jual form-control" id="do_satuan_jual"
+                                name="do_satuan_jual[]" readonly style="border: none;">
+                        </td>
+                        <td>
+                            <input type="text" class="do_hrg_beli form-control" id="do_hrg_beli"
+                                name="do_hrg_beli[]" readonly style="border: none;">
+                        </td>
+
+                        <input type="hidden" name="user" id="user" value="tes user">
+                        <td>
+                            <button class="remove btn btn-xs btn-danger " id="delRow"><i
+                                    class="fa fa-close"></i></button>
+                        </td>
+                    </tr>
+                    `);
+                };
+
+
+                shortcut.add("F12", function() {
+                    alert("F12 pressed");
+                });
             </script>
         @endpush
     @endsection
