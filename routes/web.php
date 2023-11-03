@@ -138,8 +138,8 @@ Route::controller(poDoController::class)->group(function () {
 Route::controller(penjualanController::class)->group(function () {
     Route::get('penjualan', 'penjualan')->name('penjualan');
     Route::get('getListObatReguler', 'getListObatReguler')->name('getListObatReguler');
-    // Route::get('obatSearch', 'obatSearch')->name('obatSearch');
-    // Route::get('getObatList/{obat}', 'getObatList')->name('getObatList');
+    Route::get('getListObatResep', 'getListObatResep')->name('getListObatResep');
+    Route::get('getListObatNakes', 'getListObatNakes')->name('getListObatNakes');
 });
 
 // VIEW TRS-KASIR-POLI

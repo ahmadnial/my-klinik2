@@ -310,6 +310,11 @@
                 });
 
                 function getTipeTarif() {
+                    toastr.info('Harga Reguler Selected!', {
+                        timeOut: 600,
+                        // preventDuplicates: true,
+                        positionClass: 'toast-top-right',
+                    });
                     var tes = $('#tp_tipe_tarif').val();
 
                     if (tes == 'Reguler') {
@@ -324,12 +329,13 @@
                             // },
                             success: function(isObatReguler) {
                                 // $.each(isTimelineHistory, function(key, getVal) {
+                                $(".getListObatx").empty();
                                 var getValue = isObatReguler;
                                 for (var getVal = 0; getVal < getValue.length; getVal++) {
                                     $(".getListObatx").append(`
                                     <tr>
                                         <td><input class="getItemObat col-4" style="border: none" readonly value="${getValue[getVal].fm_kd_obat}"></td>
-                                        <td>${getValue[getVal].fm_nm_obat}</td>
+                                        <td id="kd_obat">${getValue[getVal].fm_nm_obat}</td>
                                         <td>${getValue[getVal].fm_satuan_jual}</td>
                                         <td>${getValue[getVal].fm_hrg_jual_non_resep}</td>
                                         <td><button type="button" class="SelectItemObat btn btn-info btn-xs" id="SelectItemObat" onClick="SelectItemObat()"
@@ -343,11 +349,82 @@
 
                             }
                         })
-                        // alert('Reg');
+
                     } else if (tes == 'Resep') {
-                        alert('Resep');
+                        toastr.info('Harga Resep Selected!', {
+                            timeOut: 600,
+                            // preventDuplicates: true,
+                            positionClass: 'toast-top-right',
+                        });
+                        $(".getListObatx").empty();
+                        $.ajax({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            url: "{{ url('getListObatResep') }}",
+                            type: 'GET',
+                            // data: {
+                            //     chart_mr: dataObject
+                            // },
+                            success: function(isObatResep) {
+                                // $.each(isTimelineHistory, function(key, getVal) {
+                                $(".getListObatx").empty();
+                                var getValue = isObatResep;
+                                for (var getVal = 0; getVal < getValue.length; getVal++) {
+                                    $(".getListObatx").append(`
+                                    <tr>
+                                        <td><input class="getItemObat col-4" style="border: none" readonly value="${getValue[getVal].fm_kd_obat}"></td>
+                                        <td>${getValue[getVal].fm_nm_obat}</td>
+                                        <td>${getValue[getVal].fm_satuan_jual}</td>
+                                        <td>${getValue[getVal].fm_hrg_jual_resep}</td>
+                                        <td><button type="button" class="SelectItemObat btn btn-info btn-xs" id="SelectItemObat" onClick="SelectItemObat()"
+                                                data-fm_kd_obat="${getValue[getVal].fm_kd_obat}"
+                                                data-fm_nm_obat="${getValue[getVal].fm_nm_obat}"
+                                                data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}"
+                                                data-fm_hrg_jual_non_resep="${getValue[getVal].fm_hrg_jual_resep}">Select</button>
+                                        </td>
+                                    </tr>`)
+                                }
+
+                            }
+                        })
                     } else {
-                        alert('Nakes');
+                        toastr.info('Harga Nakes Selected!', {
+                            timeOut: 600,
+                            // preventDuplicates: true,
+                            positionClass: 'toast-top-right',
+                        });
+                        $(".getListObatx").empty();
+                        $.ajax({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            url: "{{ url('getListObatNakes') }}",
+                            type: 'GET',
+                            // data: {
+                            //     chart_mr: dataObject
+                            // },
+                            success: function(isObatNakes) {
+                                // $.each(isTimelineHistory, function(key, getVal) {
+                                $(".getListObatx").empty();
+                                var getValue = isObatNakes;
+                                for (var getVal = 0; getVal < getValue.length; getVal++) {
+                                    $(".getListObatx").append(`
+                                    <tr>
+                                        <td><input class="getItemObat col-4" style="border: none" readonly value="${getValue[getVal].fm_kd_obat}"></td>
+                                        <td>${getValue[getVal].fm_nm_obat}</td>
+                                        <td>${getValue[getVal].fm_satuan_jual}</td>
+                                        <td>${getValue[getVal].fm_hrg_jual_nakes}</td>
+                                        <td><button type="button" class="SelectItemObat btn btn-info btn-xs" id="SelectItemObat" onClick="SelectItemObat()"
+                                                data-fm_kd_obat="${getValue[getVal].fm_kd_obat}"
+                                                data-fm_nm_obat="${getValue[getVal].fm_nm_obat}"
+                                                data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}"
+                                                data-fm_hrg_jual_non_resep="${getValue[getVal].fm_hrg_jual_nakes}">Select</button>
+                                        </td>
+                                    </tr>`)
+                                }
+                            }
+                        })
                     }
                 };
 
@@ -361,6 +438,8 @@
                     var getNmObat = $(this).data('fm_nm_obat');
                     var getSatJual = $(this).data('fm_satuan_jual');
                     var getHrgnonResep = $(this).data('fm_hrg_jual_non_resep');
+
+                    console.log(getKdObat);
 
                     $("#ListObatJual").append(`
                     <tr>
@@ -408,13 +487,16 @@
                                     class="fa fa-close"></i></button>
                         </td>
                     </tr>
+                    
                     `);
+                    $('#obatSearchShow').modal('hide');
+
                 };
 
 
-                shortcut.add("F12", function() {
-                    alert("F12 pressed");
-                });
+                // shortcut.add("F12", function() {
+                //     alert("F12 pressed");
+                // });
             </script>
         @endpush
     @endsection
