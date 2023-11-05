@@ -38,11 +38,11 @@
                                     <td id="">@currency($tz->fm_hrg_jual_non_resep)</td>
                                     <td id="">@currency($tz->fm_hrg_jual_resep)</td>
                                     <td id="">@currency($tz->fm_hrg_jual_nakes)</td> --}}
-                                <td><button class="btn btn-xs btn-success" data-toggle="modal"
+                                {{-- <td><button class="btn btn-xs btn-success" data-toggle="modal"
                                         data-target="#EditObat">Edit</button>
                                     <button class="btn btn-xs btn-danger" data-toggle="modal"
                                         data-target="#DeleteSupplier">Hapus</button>
-                                </td>
+                                </td> --}}
                             </tr>
                             {{-- @endforeach --}}
                         </tbody>
@@ -335,10 +335,10 @@
                                     $(".getListObatx").append(`
                                     <tr>
                                         <td><input class="getItemObat col-4" style="border: none" readonly value="${getValue[getVal].fm_kd_obat}"></td>
-                                        <td id="kd_obat">${getValue[getVal].fm_nm_obat}</td>
+                                        <td id="kd_obatToadd">${getValue[getVal].fm_nm_obat}</td>
                                         <td>${getValue[getVal].fm_satuan_jual}</td>
                                         <td>${getValue[getVal].fm_hrg_jual_non_resep}</td>
-                                        <td><button type="button" class="btn btn-info btn-xs" id="SelectItemObat"
+                                        <td><button type="button" class="btn btn-info btn-xs" id="SelectItemObatxxx"
                                                 data-fm_kd_obat="${getValue[getVal].fm_kd_obat}"
                                                 data-fm_nm_obat="${getValue[getVal].fm_nm_obat}"
                                                 data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}"
@@ -377,11 +377,11 @@
                                         <td>${getValue[getVal].fm_nm_obat}</td>
                                         <td>${getValue[getVal].fm_satuan_jual}</td>
                                         <td>${getValue[getVal].fm_hrg_jual_resep}</td>
-                                        <td><button type="button" class="SelectItemObat btn btn-info btn-xs" id="SelectItemObat" onClick="SelectItemObat()"
+                                        <td><button type="button" class="SelectItemObat btn btn-info btn-xs" id="SelectItemObat" onClick="SelectItemObat1()"
                                                 data-fm_kd_obat="${getValue[getVal].fm_kd_obat}"
                                                 data-fm_nm_obat="${getValue[getVal].fm_nm_obat}"
                                                 data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}"
-                                                data-fm_hrg_jual_non_resep="${getValue[getVal].fm_hrg_jual_resep}">Select</button>
+                                                data-fm_hrg_jual_resep="${getValue[getVal].fm_hrg_jual_resep}">Select</button>
                                         </td>
                                     </tr>`)
                                 }
@@ -415,11 +415,11 @@
                                         <td>${getValue[getVal].fm_nm_obat}</td>
                                         <td>${getValue[getVal].fm_satuan_jual}</td>
                                         <td>${getValue[getVal].fm_hrg_jual_nakes}</td>
-                                        <td><button type="button" class="SelectItemObat btn btn-info btn-xs" id="SelectItemObat" onClick="SelectItemObat()"
+                                        <td><button type="button" class="SelectItemObat btn btn-info btn-xs" id="SelectItemObat" onClick="SelectItemObat2()"
                                                 data-fm_kd_obat="${getValue[getVal].fm_kd_obat}"
                                                 data-fm_nm_obat="${getValue[getVal].fm_nm_obat}"
                                                 data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}"
-                                                data-fm_hrg_jual_non_resep="${getValue[getVal].fm_hrg_jual_nakes}">Select</button>
+                                                data-fm_hrg_jual_nakes="${getValue[getVal].fm_hrg_jual_nakes}">Select</button>
                                         </td>
                                     </tr>`)
                                 }
@@ -433,6 +433,8 @@
                 }
 
                 function SelectItemObat() {
+                    // $("#SelectItemObatxxx").on("click", function() {
+
 
                     var getKdObat = $(this).data('fm_kd_obat');
                     var getNmObat = $(this).data('fm_nm_obat');

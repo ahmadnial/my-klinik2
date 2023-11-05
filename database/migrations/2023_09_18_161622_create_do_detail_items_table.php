@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('do_batch_number')->nullable();
             $table->string('do_sub_total');
             $table->string('do_hdr_kd');
-            $table->string('do_hdr_id');
+            $table->string('do_hdr_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
