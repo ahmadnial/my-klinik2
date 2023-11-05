@@ -338,11 +338,11 @@
                                         <td id="kd_obat">${getValue[getVal].fm_nm_obat}</td>
                                         <td>${getValue[getVal].fm_satuan_jual}</td>
                                         <td>${getValue[getVal].fm_hrg_jual_non_resep}</td>
-                                        <td><button type="button" class="SelectItemObat btn btn-info btn-xs" id="SelectItemObat" onClick="SelectItemObat()"
+                                        <td><button type="button" class="btn btn-info btn-xs" id="SelectItemObat"
                                                 data-fm_kd_obat="${getValue[getVal].fm_kd_obat}"
                                                 data-fm_nm_obat="${getValue[getVal].fm_nm_obat}"
                                                 data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}"
-                                                data-fm_hrg_jual_non_resep="${getValue[getVal].fm_hrg_jual_non_resep}">Select</button>
+                                                data-fm_hrg_jual_non_resep="${getValue[getVal].fm_hrg_jual_non_resep}" onClick="SelectItemObat()">Select</button>
                                         </td>
                                     </tr>`)
                                 }
@@ -458,7 +458,7 @@
                                 style="border: none;">
                         </td>
                         <td>
-                            <input type="text" class="form-control" style="border: none;">
+                            <input type="text" class="form-control" style="border: none;" value=${getHrgnonResep}>
                         </td>
                         <td>
                             <input type="text" class="form-control" id="do_diskon" name="do_diskon[]"
