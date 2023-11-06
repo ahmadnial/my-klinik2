@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AssesmentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\kasirPoliController;
@@ -158,4 +159,12 @@ Route::controller(WilayahController::class)->group(function () {
     Route::get('cities', 'cities')->name('cities');
     Route::get('districts', 'districts')->name('districts');
     Route::get('villages', 'villages')->name('villages');
+});
+
+//Assesment Awal
+Route::controller(AssesmentController::class)->group(function () {
+    Route::get('assesment-awal', 'assAwal')->name('assesment-awal');
+    // Route::get('cities', 'cities')->name('cities');
+    // Route::get('districts', 'districts')->name('districts');
+    // Route::get('villages', 'villages')->name('villages');
 });

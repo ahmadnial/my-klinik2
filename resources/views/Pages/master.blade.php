@@ -296,7 +296,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="{{ url('tindakan') }}" class="nav-link">
+                            <a href="{{ url('assesment-awal') }}" class="nav-link">
                                 {{-- <i class="nav-icon fa fa-syringe"></i> --}}
                                 <i class="nav-icon fa fa-regular fa-book-medical"></i>
                                 <p>
@@ -570,6 +570,8 @@
     <script src="{{ asset('src/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('src/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
     <script src="{{ asset('src/plugins/toastr/toastr.min.js') }}"></script>
+    <script src="{{ asset('src/plugins/Assesment/signature_pad.min.js') }}"></script>
+    <script src="{{ asset('src/plugins/Assesment/pencoretan.v3.min.js') }}"></script>
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js') }}"></script> --}}
     {{-- <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js') }}"></script> --}}
 

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('tp_detail_item', function (Blueprint $table) {
             $table->id();
             $table->string('kd_trs');
+            $table->string('kd_reg')->default('000');
             $table->string('kd_obat');
             $table->string('nm_obat');
             $table->string('dosis')->nullable();
