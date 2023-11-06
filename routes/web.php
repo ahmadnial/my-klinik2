@@ -141,6 +141,7 @@ Route::controller(penjualanController::class)->group(function () {
     Route::get('getListObatReguler', 'getListObatReguler')->name('getListObatReguler');
     Route::get('getListObatResep', 'getListObatResep')->name('getListObatResep');
     Route::get('getListObatNakes', 'getListObatNakes')->name('getListObatNakes');
+    Route::post('add-penjualan', 'penjualanCreate')->name('add-penjualan');
 });
 
 // VIEW TRS-KASIR-POLI

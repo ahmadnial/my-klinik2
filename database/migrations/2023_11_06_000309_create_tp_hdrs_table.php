@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('sip_dokter')->nullable();
             $table->string('jaminan')->nullable();
             $table->string('lokasi_stock')->nullable();
-            $table->string('layanan_order')->nullable();
             $table->string('kd_reg')->default('000');
             $table->string('no_mr')->default('000');
             $table->string('nm_pasien')->nullable();
