@@ -22,7 +22,7 @@ class penjualanController extends Controller
             $noRef =  'TP'  . '-' . substr($Y, -2) . $M . '-' . $num;
         } else {
             $continue = tp_hdr::all()->last();
-            $de = substr($continue->do_hdr_kd, -6);
+            $de = substr($continue->kd_trs, -6);
             $noRef = 'TP' . '-' . substr($Y, -2) . $M  . '-' . str_pad(($de + 1), 6, '0', STR_PAD_LEFT);
         };
         return view('Pages.penjualan', ['noRef' => $noRef]);
@@ -56,19 +56,19 @@ class penjualanController extends Controller
         // dd($k);
 
         $request->validate([
-            'kd_trs' => 'required',
+            // 'kd_trs' => 'required',
             // 'kd_reg' => 'required',
-            'kd_obat' => 'required',
-            'nm_obat' => 'required',
-            // 'dosis',
-            'hrg_obat' => 'required',
-            'qty' => 'required',
-            // 'diskon',
-            // 'satuan',
-            // 'tax',
-            // 'tulsah',
-            // 'embalase',
-            'sub_total' => 'required',
+            // 'kd_obat' => 'required',
+            // 'nm_obat' => 'required',
+            // // 'dosis',
+            // 'hrg_obat' => 'required',
+            // 'qty' => 'required',
+            // // 'diskon',
+            // // 'satuan',
+            // // 'tax',
+            // // 'tulsah',
+            // // 'embalase',
+            // 'sub_total' => 'required',
             // 'etiket',
             // 'signa',
             // 'cara_pakai',
@@ -96,38 +96,38 @@ class penjualanController extends Controller
             ];
             tp_hdr::create($newData);
 
-            foreach ($request->kd_obat as $key => $val) {
+            foreach ($request->kd_obat as $key) {
                 $detail = [
-                    'kd_trs'    => $request->tp_kd_trs,
-                    'kd_reg'    => $request->tp_kd_reg,
                     'kd_obat'   => $request->kd_obat[$key],
                     'nm_obat'   => $request->nm_obat[$key],
-                    // 'dosis',
+                    // 'dosis'     => $request->kd_obat[$key],
                     'hrg_obat'  => $request->hrg_obat[$key],
                     'qty'       => $request->qty[$key],
                     'diskon'    => $request->diskom[$key],
                     'satuan'    => $request->satuan[$key],
                     'tax'       => $request->tax[$key],
-                    // 'tulsah',
-                    // 'embalase',
+                    // // 'tulsah',
+                    // // 'embalase',
                     'sub_total' => $request->sub_total[$key],
-                    // 'etiket',
-                    // 'signa',
-                    // 'cara_pakai',
-                    // 'user',
+                    'kd_trs'    => $request->tp_kd_trs,
+                    'kd_reg'    => $request->tp_kd_reg,
+                    // // 'etiket',
+                    // // 'signa',
+                    // // 'cara_pakai',
+                    'user' => $request->tp_kd_trs,
                 ];
                 tp_detail_item::create($detail);
             }
 
-            foreach ($request->kd_obat as $keys => $val) {
-                $datax =  $request->kd_obat[$keys];
-                $dataQty =  $request->qty[$keys];
-                // $dataIsi =  $request->do_isi_pembelian[$keys];
-                // $X = (int)$dataQty * (int)$dataIsi;
-                $toInt = (int)$dataQty;
+            // foreach ($request->kd_obat as $keys => $val) {
+            //     $datax =  $request->kd_obat[$keys];
+            //     $dataQty =  $request->qty[$keys];
+            //     // $dataIsi =  $request->do_isi_pembelian[$keys];
+            //     // $X = (int)$dataQty * (int)$dataIsi;
+            //     $toInt = (int)$dataQty;
 
-                tb_stock::whereIn('kd_obat', [$datax])->decrement("qty", $toInt);
-            }
+            //     tb_stock::whereIn('kd_obat', [$datax])->decrement("qty", $toInt);
+            // }
 
 
             DB::commit();

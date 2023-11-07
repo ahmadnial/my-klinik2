@@ -17,18 +17,18 @@ return new class extends Migration
             $table->string('kd_reg')->default('000');
             $table->string('kd_obat');
             $table->string('nm_obat');
-            $table->string('dosis')->nullable();
+            // $table->string('dosis')->nullable();
             $table->string('hrg_obat');
             $table->string('qty');
             $table->string('diskon')->nullable();
             $table->string('satuan');
             $table->string('tax')->nullable();
-            $table->string('tulsah')->nullable();
-            $table->string('embalase')->nullable();
+            // $table->string('tulsah')->nullable();
+            // $table->string('embalase')->nullable();
             $table->string('sub_total');
-            $table->string('etiket')->nullable();
-            $table->string('signa')->nullable();
-            $table->string('cara_pakai')->nullable();
+            // $table->string('etiket')->nullable();
+            // $table->string('signa')->nullable();
+            // $table->string('cara_pakai')->nullable();
             $table->string('user')->nullable();
 
             $table->timestamps();
