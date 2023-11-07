@@ -92,12 +92,14 @@ class penjualanController extends Controller
                 'jenis_kelamin' => $request->tp_jenis_kelamin,
                 'tgl_lahir' => $request->tp_tgl_lahir,
                 'tipe_tarif' => $request->tp_tipe_tarif,
-                'total_penjualan' => $request->total_penjualan
+                'total_penjualan' => $request->total_penjualan,
             ];
             tp_hdr::create($newData);
 
             foreach ($request->kd_obat as $key) {
-                $detail = [
+                $tpdetail = [
+                    'kd_trs'    => $request->tp_kd_trs,
+                    'kd_reg'    => $request->tp_kd_reg,
                     'kd_obat'   => $request->kd_obat[$key],
                     'nm_obat'   => $request->nm_obat[$key],
                     // 'dosis'     => $request->kd_obat[$key],
@@ -109,14 +111,12 @@ class penjualanController extends Controller
                     // // 'tulsah',
                     // // 'embalase',
                     'sub_total' => $request->sub_total[$key],
-                    'kd_trs'    => $request->tp_kd_trs,
-                    'kd_reg'    => $request->tp_kd_reg,
                     // // 'etiket',
                     // // 'signa',
                     // // 'cara_pakai',
-                    'user' => $request->tp_kd_trs,
+                    'user' => $request->user,
                 ];
-                tp_detail_item::create($detail);
+                tp_detail_item::create($tpdetail);
             }
 
             // foreach ($request->kd_obat as $keys => $val) {

@@ -11,7 +11,7 @@
 
             <div class="card-body">
                 <div id="">
-                    <table id="example2" class="table table-hover">
+                    <table id="example1" class="table table-hover table-striped table-bordered">
                         <thead class="">
                             <tr>
                                 <th>Kode Barang</th>
@@ -40,7 +40,7 @@
                                     <td id="">@currency($tz->fm_hrg_jual_non_resep)</td>
                                     <td id="">@currency($tz->fm_hrg_jual_resep)</td>
                                     <td id="">@currency($tz->fm_hrg_jual_nakes)</td>
-                                    <td><button class="btn btn-xs btn-success" data-toggle="modal"
+                                    <td><button class="btn btn-xs btn-info" data-toggle="modal"
                                             data-target="#EditObat{{ $tz->fm_kd_obat }}">Edit</button>
                                         <button class="btn btn-xs btn-danger" data-toggle="modal"
                                             data-target="#DeleteSupplier{{ $tz->fm_kd_supplier }}">Hapus</button>
@@ -182,8 +182,8 @@
 
 
         <!-- The modal Edit -->
-        @foreach ($obatView as $tz)
-            <div class="modal fade" id="EditObat{{ $tz->fm_kd_obat }}">
+        @foreach ($obatView as $te)
+            <div class="modal fade" id="EditObat{{ $te->fm_kd_obat }}">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">

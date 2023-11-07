@@ -14,14 +14,14 @@ return new class extends Migration
         Schema::create('tp_hdr', function (Blueprint $table) {
             $table->id();
             $table->string('kd_trs');
-            $table->string('kd_order_resep')->default('000');
+            $table->string('kd_order_resep')->nullable();
             $table->string('layanan_order')->nullable();
             $table->string('dokter')->nullable();
             $table->string('sip_dokter')->nullable();
             $table->string('jaminan')->nullable();
             $table->string('lokasi_stock')->nullable();
-            $table->string('kd_reg')->default('000');
-            $table->string('no_mr')->default('000');
+            $table->string('kd_reg')->nullable();
+            $table->string('no_mr')->nullable();
             $table->string('nm_pasien')->nullable();
             $table->string('alamat')->nullable();
             $table->string('jenis_kelamin')->nullable();
