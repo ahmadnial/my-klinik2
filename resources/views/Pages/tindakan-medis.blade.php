@@ -133,7 +133,8 @@
                                             <button type="button" id="addTindakann"
                                                 class="btn btn-xs btn-warning floar-right text-white" data-toggle="modal"
                                                 data-target="#addTindakans">Tindakan</button>
-                                            <button type="button" class="btn btn-xs btn-info floar-right">Resep</button>
+                                            <button type="button" class="btn btn-xs btn-info floar-right"
+                                                data-toggle="modal" data-target="#addResep">Resep</button>
                                         </div>
                                         <textarea id="chart_P" name="chart_P" class="form-control" rows="4"></textarea>
                                     </div>
@@ -227,6 +228,92 @@
     </div>
 
     {{-- ========================END MODAL ADD TINDAKANs============================= --}}
+
+    {{-- ===============ADD TINDAKAN MODAL================= --}}
+    {{-- <div class="appendTIndakan"></div> --}}
+    <div class="modal fade" id="addResep">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-nial">
+                    <h4 class="modal-title">Resep</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="">
+                            <div class="callout callout-success bg-light">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th width="200px">Obat</th>
+                                            <th width="90px">Qty</th>
+                                            <th width="100px">Satuan</th>
+                                            <th width="170px">Signa</th>
+                                            <th width="170px">Cara Pakai</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <select type="text" class="obatResep form-control" id=""
+                                                    name="" style="width: 100%"></select>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control">
+                                            </td>
+                                            <td>
+                                                <select type="text" class="form-control"></select>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control">
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-success btn-sm ml-2"><i
+                                                        class="fa fa-plus"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                {{-- <label for="" class="mt-0 mb-0">Obat</label>
+                                <select type="text" class="form-control col-4"></select>
+
+                                <label for="" class="mt-0 mb-0">Qty</label>
+                                <input type="text" class="form-control col-2">
+
+                                <label for="" class="mt-0 mb-0">Satuan</label>
+                                <select type="text" class="form-control col-3"></select> --}}
+                            </div>
+                        </div>
+                        {{-- <div class="float-right mb-1 mt-4">
+                            <button type="button" class="nm_tarif_add btn btn-xs btn-primary float-right">add more
+                            </button>
+                        </div> --}}
+                        <div class="mt-4">
+
+                        </div>
+                        {{-- <div class="nm_tarif_plus">
+                            
+                        </div> --}}
+                    </div>
+                    <input type="hidden" id="kd_trs" name="kd_trs" value="{{ $kd_trs }}">
+                    <input type="hidden" id="sub_total" name="sub_total" value="0">
+                    <div class="float-right mt-2">
+                        <button type="button" id="exitModal" class="btn btn-success">add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+
+    {{-- ========================END MODAL ADD TINDAKANs============================= --}}
+
+
     <div class="splitLeft col-sm-12 col-lg-6 row">
         <div class="col" id="accordion">
             <div class="card card-primary">
@@ -258,6 +345,9 @@
         });
         $('#nm_tarif').select2({
             placeholder: 'Search Tindakan',
+        });
+        $('.obatResep').select2({
+            placeholder: 'Search Obat',
         });
 
         $("#exitModal").click(function() {

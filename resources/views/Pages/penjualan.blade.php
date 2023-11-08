@@ -15,36 +15,42 @@
                         <thead class="">
                             <tr>
                                 {{-- <th>Tanggal</th> --}}
-                                <th>No Ref</th>
-                                <th>No Faktur</th>
-                                <th>Supplier</th>
-                                <th>Tgl Jatuh Tempo</th>
-                                <th>Dibuat</th>
-                                <th>Nilai Faktur</th>
-                                <th></th>
+                                <th>Tanggal</th>
+                                <th>No Transaksi</th>
+                                <th>Pasien</th>
+                                <th>Tipe Tarif</th>
+                                <th>Jml Penjualan</th>
+                                <th>User</th>
+                                {{-- <th></th> --}}
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach ($viewDO as $tz) --}}
-                            <tr>
-                                {{-- <td id="">{{ $tz->created_at }}</td> --}}
-                                {{-- <td id="">{{ $tz->do_hdr_kd }}</td>
-                                    <td id="">{{ $tz->do_hdr_no_faktur }}</td>
-                                    <td id="">{{ $tz->do_hdr_supplier }}</td>
-                                    <td id="">{{ $tz->do_hdr_tgl_tempo }}</td>
-                                    <td id="">{{ $tz->created_at }}</td>
-                                    <td id="">@currency($tz->do_hdr_total_faktur)</td> --}}
-                                {{-- <td id="">@currency($tz->fm_hrg_beli)</td>
+                            @foreach ($isListPenjualan as $lp)
+                                <tr>
+                                    {{-- <td id="">{{ $tz->created_at }}</td> --}}
+                                    <td id="">{{ $lp->created_at }}</td>
+                                    <td id="">{{ $lp->kd_trs }}</td>
+                                    {{-- @php
+                                        $cekPasien = echo $lp->nm_pasien;
+                                    @endphp
+                                    @if ($cekPasien == '') --}}
+                                    <td id="">{{ $lp->nm_pasien }}</td>
+                                    {{-- @else
+                                        <td id="">{{ 'Penjualan A' }}</td>
+                                    @endif --}}
+                                    <td id="">{{ $lp->tipe_tarif }}</td>
+                                    <td id="">@currency($lp->total_penjualan)</td>
+                                    {{-- <td id="">@currency($tz->fm_hrg_beli)</td>
                                     <td id="">@currency($tz->fm_hrg_jual_non_resep)</td>
                                     <td id="">@currency($tz->fm_hrg_jual_resep)</td>
                                     <td id="">@currency($tz->fm_hrg_jual_nakes)</td> --}}
-                                {{-- <td><button class="btn btn-xs btn-success" data-toggle="modal"
-                                        data-target="#EditObat">Edit</button>
-                                    <button class="btn btn-xs btn-danger" data-toggle="modal"
-                                        data-target="#DeleteSupplier">Hapus</button>
-                                </td> --}}
-                            </tr>
-                            {{-- @endforeach --}}
+                                    <td><button class="btn btn-xs btn-info" data-toggle="modal"
+                                            data-target="#EditObat">Edit</button>
+                                        {{-- <button class="btn btn-xs btn-danger" data-toggle="modal"
+                                            data-target="#DeleteSupplier">Hapus</button> --}}
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -171,7 +177,7 @@
                                 <th width="110px">Satuan</th>
                                 <th width="110px">Harga</th>
                                 <th width="100px">Qty</th>
-                                <th width="110px">Disc</th>
+                                <th width="110px">Disc(Rp.)</th>
                                 <th width="110px">Tax</th>
                                 <th width="200px">Sub Total</th>
                                 <th width="50px"></th>
