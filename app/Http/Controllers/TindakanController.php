@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ChartTindakan;
 use App\Models\mstr_dokter;
 use App\Models\mstr_icdx;
+use App\Models\mstr_obat;
 use App\Models\mstr_tindakan;
 use App\Models\registrasiCreate;
 use App\Models\trs_chart;
@@ -67,6 +68,28 @@ class TindakanController extends Controller
         // return response()->json($chart_id);
     }
 
+    public function obatSearchCH(Request $request)
+    {
+        $isdataObat = [];
+
+        if ($request->filled('q')) {
+            $isdataObat = mstr_obat::select("fm_kd_obat", "fm_nm_obat", "fm_satuan_pembelian", "fm_hrg_beli")
+                ->where('fm_nm_obat', 'LIKE', '%' . $request->get('q') . '%')
+                ->get();
+        }
+        // dd($data);
+        return response()->json($isdataObat);
+    }
+
+    public function getObatListCH(request $obat)
+    {
+        // $true = 'Amoxcillin 500mg';
+        $isdataObatList = mstr_obat::where('fm_kd_obat', $obat->fm_kd_obat)->get();
+
+        // dd($isdata2);
+        return response()->json($isdataObatList);
+    }
+
     // public function getLastID()
     // {
     //     $id = str_pad(00000001, 8, 0, STR_PAD_LEFT);
@@ -120,8 +143,8 @@ class TindakanController extends Controller
 
     public function chartCreate(Request $request)
     {
-        // $yes = $request->all();
-        // dd($yes);
+        $yes = $request->all();
+        dd($yes);
 
         $request->validate([
             // 'user' => 'required',

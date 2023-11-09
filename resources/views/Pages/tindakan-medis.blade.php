@@ -224,13 +224,11 @@
                 </div>
             </div>
         </div>
-        </form>
     </div>
 
     {{-- ========================END MODAL ADD TINDAKANs============================= --}}
 
-    {{-- ===============ADD TINDAKAN MODAL================= --}}
-    {{-- <div class="appendTIndakan"></div> --}}
+    {{-- ===============ADD RESEP MODAL================= --}}
     <div class="modal fade" id="addResep">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
@@ -247,63 +245,57 @@
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th width="200px">Obat</th>
+                                            <th width="370px">Obat</th>
                                             <th width="90px">Qty</th>
-                                            <th width="100px">Satuan</th>
-                                            <th width="170px">Signa</th>
-                                            <th width="170px">Cara Pakai</th>
+                                            <th width="150px">Satuan</th>
+                                            <th width="200px">Signa</th>
+                                            <th width="230px">Cara Pakai</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <select type="text" class="obatResep form-control" id=""
-                                                    name="" style="width: 100%"></select>
+                                                <select type="text" class="obatResep form-control" id="obatResep"
+                                                    name="obatResep[]" style="width: 100%" onchange="pasteTo()"></select>
+                                            </td>
+                                            <input type="hidden" id="namaObatResep" name="namaObatResep">
+                                            <td>
+                                                <input type="text" class="form-control" id="qty_obat"
+                                                    name="qty_obat">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control">
+                                                <input type="text" class="form-control" id="satuan_jual_obat"
+                                                    name="satuan_jual_obat" readonly>
                                             </td>
                                             <td>
-                                                <select type="text" class="form-control"></select>
+                                                <input type="text" class="form-control" id="signa_resep"
+                                                    name="signa_resep">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control">
+                                                <input type="text" class="form-control" id="cara_pakai_resep"
+                                                    name="cara_pakai_resep">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control">
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-success btn-sm ml-2"><i
-                                                        class="fa fa-plus"></i></button>
+                                                <a class="btn btn-success btn-sm ml-2" id="addItemObatResepp"><i
+                                                        class="fa fa-plus"></i></a>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
-                                {{-- <label for="" class="mt-0 mb-0">Obat</label>
-                                <select type="text" class="form-control col-4"></select>
-
-                                <label for="" class="mt-0 mb-0">Qty</label>
-                                <input type="text" class="form-control col-2">
-
-                                <label for="" class="mt-0 mb-0">Satuan</label>
-                                <select type="text" class="form-control col-3"></select> --}}
                             </div>
                         </div>
                         {{-- <div class="float-right mb-1 mt-4">
                             <button type="button" class="nm_tarif_add btn btn-xs btn-primary float-right">add more
                             </button>
                         </div> --}}
-                        <div class="mt-4">
+                        <div class="resepID callout callout-warning mt-5">
 
                         </div>
-                        {{-- <div class="nm_tarif_plus">
-                            
-                        </div> --}}
                     </div>
                     <input type="hidden" id="kd_trs" name="kd_trs" value="{{ $kd_trs }}">
                     <input type="hidden" id="sub_total" name="sub_total" value="0">
                     <div class="float-right mt-2">
-                        <button type="button" id="exitModal" class="btn btn-success">add</button>
+                        <button type="button" id="exitModalResep" class="btn btn-success">add</button>
                     </div>
                 </div>
             </div>
@@ -311,7 +303,7 @@
         </form>
     </div>
 
-    {{-- ========================END MODAL ADD TINDAKANs============================= --}}
+    {{-- ========================END MODAL ADD RESEP============================= --}}
 
 
     <div class="splitLeft col-sm-12 col-lg-6 row">
@@ -346,12 +338,16 @@
         $('.nm_tarif').select2({
             placeholder: 'Search Tindakan',
         });
-        $('.obatResep').select2({
-            placeholder: 'Search Obat',
-        });
+        // $('.obatResep').select2({
+        //     placeholder: 'Search Obat',
+        // });
 
         $("#exitModal").click(function() {
             $("#addTindakans").modal("hide");
+        });
+
+        $("#exitModalResep").click(function() {
+            $("#addResep").modal("hide");
         });
 
         // $("#addTindakans").on('hide.bs.modal', function() {
@@ -530,6 +526,106 @@
                 '</tr>'
             );
 
+        });
+
+
+        // Obat Search
+        var path = "{{ route('obatSearchCH') }}";
+
+        $('.obatResep').select2({
+            placeholder: 'Search Obat',
+            ajax: {
+                url: path,
+                dataType: 'json',
+                delay: 150,
+                processResults: function(isdataObat) {
+                    return {
+                        results: $.map(isdataObat, function(item) {
+                            return {
+                                // text: item.fs_mr,
+                                text: item.fm_kd_obat + ' - ' + item.fm_nm_obat + ' - ' + item
+                                    .fs_tgl_lahir,
+                                id: item.fm_kd_obat,
+                                alamat: item.fm_nm_obat,
+                            }
+                        })
+                    };
+                },
+                cache: true
+            }
+        });
+
+        // Get Satuan Jual
+        function pasteTo() {
+            var kd_obat = $('#obatResep').val();
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ url('getObatListCH') }}/" + kd_obat,
+                type: 'GET',
+                data: {
+                    'fm_kd_obat': kd_obat
+                },
+                success: function(isdataObatList) {
+                    $.each(isdataObatList, function(key, datavalue) {
+                        $('#satuan_jual_obat').val(datavalue.fm_satuan_jual);
+                        $('#namaObatResep').val(datavalue.fm_nm_obat);
+                    })
+                }
+            })
+        }
+
+        // Append Item yang di tambahkan
+        $(document).on('click', '#addItemObatResepp', function() {
+            // $(this).parent().remove();
+            var obatResep = $('#obatResep').val();
+            var namaobatResep = $('#namaObatResep').val();
+            var qty_obat = $('#qty_obat').val();
+            var satuan_jual_obat = $('#satuan_jual_obat').val();
+            var signa_resep = $('#signa_resep').val();
+            var cara_pakai_resep = $('#cara_pakai_resep').val();
+
+            $(".resepID").append(
+                `
+                <table>
+                    <thead>
+                        <tr class="mt-2">
+                            <th width="370px">Obat</th>
+                            <th width="90px">Qty</th>
+                            <th width="150px">Satuan</th>
+                            <th width="200px">Signa</th>
+                            <th width="230px">Cara Pakai</th>
+                        </tr>
+                    </thead>
+                    <tbody class="mt-2">
+                        <tr class="mt-2">
+                            <td class="mt-2">
+                                <input type="text" class="obatResep form-control" id="ch_kd_obat"
+                                    name="ch_kd_obat" style="width: 100%" value="${namaobatResep}" readonly>
+                            </td>
+                            <input type="hidden" id="ch_nm_obat" name="ch_nm_obat[]" value="${obatResep}">
+                            <td>
+                                <input type="text" class="form-control" id="ch_qty_obat" name="ch_qty_obat[]" value="${qty_obat}">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="ch_satuan_obat" name="ch_satuan_obat[]" value="${satuan_jual_obat}">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="ch_signa" name="ch_signa[]" value="${signa_resep}">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="ch_cara_pakai" name="ch_cara_pakai[]" value="${cara_pakai_resep}">
+                            </td>
+                            <td>
+                                <button class="btn btn-danger btn-sm ml-2" id="delItemObatResep"><i
+                                        class="fa fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+               `
+            );
         });
 
 

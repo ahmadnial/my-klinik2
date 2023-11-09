@@ -88,6 +88,8 @@ Route::controller(TindakanController::class)->group(function () {
     Route::get('getTimelineTdk/{mr}', 'getTimelineTdk')->name('getTimelineTdk');
     Route::get('getLastID', 'getLastID')->name('getLastID');
     Route::post('chartCreate', 'chartCreate')->name('chartCreate');
+    Route::get('obatSearchCH', 'obatSearchCH')->name('obatSearchCH');
+    Route::get('getObatListCH/{obat}', 'getObatListCH')->name('getObatListCH');
 });
 
 
