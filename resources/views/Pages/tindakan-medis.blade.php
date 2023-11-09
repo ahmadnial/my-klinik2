@@ -256,24 +256,21 @@
                                         <tr>
                                             <td>
                                                 <select type="text" class="obatResep form-control" id="obatResep"
-                                                    name="obatResep[]" style="width: 100%" onchange="pasteTo()"></select>
+                                                    style="width: 100%" onchange="pasteTo()"></select>
                                             </td>
-                                            <input type="hidden" id="namaObatResep" name="namaObatResep">
+                                            <input type="hidden" id="namaObatResep">
                                             <td>
-                                                <input type="text" class="form-control" id="qty_obat"
-                                                    name="qty_obat">
+                                                <input type="text" class="form-control" id="qty_obat">
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" id="satuan_jual_obat"
-                                                    name="satuan_jual_obat" readonly>
+                                                    readonly>
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="signa_resep"
-                                                    name="signa_resep">
+                                                <input type="text" class="form-control" id="signa_resep">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="cara_pakai_resep"
-                                                    name="cara_pakai_resep">
+                                                <input type="text" class="form-control" id="cara_pakai_resep">
                                             </td>
                                             <td>
                                                 <a class="btn btn-success btn-sm ml-2" id="addItemObatResepp"><i
