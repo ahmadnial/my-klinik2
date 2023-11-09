@@ -202,7 +202,7 @@
                                             <select class="nm_tarif form-control" style="width:100%;" name="nm_tarif[]"
                                                 id="nm_tarif" multiple="multiple">
                                                 <option value="0" selected></option>
-                                                <option>--Select--</option>
+                                                {{-- <option>--Select--</option> --}}
                                                 @foreach ($isTindakanTarif as $t)
                                                     <option value="{{ $t->id }}">{{ $t->nm_tindakan }}</option>
                                                 @endforeach
@@ -232,7 +232,7 @@
     {{-- ===============ADD TINDAKAN MODAL================= --}}
     {{-- <div class="appendTIndakan"></div> --}}
     <div class="modal fade" id="addResep">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header bg-nial">
                     <h4 class="modal-title">Resep</h4>
@@ -343,7 +343,7 @@
         $('#chart_A_diagnosa').select2({
             placeholder: 'Search ICD X / Diagnosa',
         });
-        $('#nm_tarif').select2({
+        $('.nm_tarif').select2({
             placeholder: 'Search Tindakan',
         });
         $('.obatResep').select2({
