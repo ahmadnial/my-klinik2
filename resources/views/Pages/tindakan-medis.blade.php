@@ -86,15 +86,15 @@
                         SOAP</button>
                 </div> --}}
                 {{-- <div class="card-body"> --}}
-                <div class="row">
-                    <div class="col">
-                        <div class="card card-info">
-                            <div class="card-header">
-                                <h3 class="card-title">Form SOAP
-                                </h3>
-                            </div>
-                            {{-- Hidden value --}}
-                            <form action="{{ url('chartCreate') }}" method="post">
+                <form action="{{ url('chartCreate') }}" method="post">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card card-info">
+                                <div class="card-header">
+                                    <h3 class="card-title">Form SOAP
+                                    </h3>
+                                </div>
+                                {{-- Hidden value --}}
                                 @csrf
                                 <div class="card-body">
                                     <input type="hidden" id="chart_id" name="chart_id" value="{{ $isLastChartID }}">
@@ -142,30 +142,23 @@
 
                                     <input type="hidden" id="user" name="user_create" value="tes">
                                 </div>
-                        </div>
-                        <div class="">
-                            {{-- <button type="button" class="" data-dismiss="modal"></button> --}}
-                            <button type="submit" id="createSOAPP" class="btn btn-success float-rights"><i
-                                    class="fa fa-save"></i>
-                                &nbsp;
-                                Save</button>
-                            {{-- </div> --}}
+                            </div>
+                            <div class="">
+                                {{-- <button type="button" class="" data-dismiss="modal"></button> --}}
+                                <button type="submit" id="createSOAPP" class="btn btn-success float-rights"><i
+                                        class="fa fa-save"></i>
+                                    &nbsp;
+                                    Save</button>
+                                {{-- </div> --}}
+                            </div>
                         </div>
                     </div>
-                </div>
             </div>
         </div>
     </section>
 
 
-    {{-- ===============SOAP MODAL================= --}}
-
-
-
-    {{-- ========================END MODAL SOAP============================= --}}
-
     {{-- ===============ADD TINDAKAN MODAL================= --}}
-    {{-- <div class="appendTIndakan"></div> --}}
     <div class="modal fade" id="addTindakans">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -291,13 +284,13 @@
                     </div>
                     <input type="hidden" id="kd_trs" name="kd_trs" value="{{ $kd_trs }}">
                     <input type="hidden" id="sub_total" name="sub_total" value="0">
+                    </form>
                     <div class="float-right mt-2">
                         <button type="button" id="exitModalResep" class="btn btn-success">add</button>
                     </div>
                 </div>
             </div>
         </div>
-        </form>
     </div>
 
     {{-- ========================END MODAL ADD RESEP============================= --}}
