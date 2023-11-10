@@ -32,6 +32,13 @@ class trs_chart extends Model
         'tgl_void',
         'user_void',
         'user',
+        'ch_kd_obat',
+        'ch_nm_obat',
+        'ch_qty_obat',
+        'ch_satuan_obat',
+        'ch_signa',
+        'ch_cara_pakai',
+        'ch_hrg_jual',
     ];
 
     // public function chart(): HasMany

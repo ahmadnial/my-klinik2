@@ -2,9 +2,6 @@
 
 @section('konten')
     <style>
-        /* Split the screen in half */
-
-
         .splitRight {
             right: 0%;
             height: 100%;
@@ -86,7 +83,7 @@
                         SOAP</button>
                 </div> --}}
                 {{-- <div class="card-body"> --}}
-                <form action="{{ url('chartCreate') }}" method="post">
+                <form action="{{ url('chartCreate') }}" method="post" id="CHCreate">
                     <div class="row">
                         <div class="col">
                             <div class="card card-info">
@@ -143,10 +140,9 @@
                                     <input type="hidden" id="user" name="user_create" value="tes">
                                 </div>
                             </div>
-                            <div class="">
+                            <div class="modal-footer">
                                 {{-- <button type="button" class="" data-dismiss="modal"></button> --}}
-                                <button type="submit" id="createSOAPP" class="btn btn-success float-rights"><i
-                                        class="fa fa-save"></i>
+                                <button id="createSOAPP" class="btn btn-success float-rights"><i class="fa fa-save"></i>
                                     &nbsp;
                                     Save</button>
                                 {{-- </div> --}}
@@ -205,14 +201,11 @@
                                 </tbody>
                             </table>
                         </div>
-                        {{-- <div class="nm_tarif_plus">
-                            
-                        </div> --}}
                     </div>
                     <input type="hidden" id="kd_trs" name="kd_trs" value="{{ $kd_trs }}">
                     <input type="hidden" id="sub_total" name="sub_total" value="0">
                     <div class="float-right mt-2">
-                        <button type="button" id="exitModal" class="btn btn-success">add</button>
+                        <a type="button" id="exitModal" class="btn btn-success">add</a>
                     </div>
                 </div>
             </div>
@@ -245,7 +238,7 @@
                                             <th width="230px">Cara Pakai</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="TESCHCreate">
                                         <tr>
                                             <td>
                                                 <select type="text" class="obatResep form-control" id="obatResep"
@@ -274,24 +267,24 @@
                                 </table>
                             </div>
                         </div>
+                        <div class="resepID callout callout-warning mt-5">
+
+                        </div>
                         {{-- <div class="float-right mb-1 mt-4">
                             <button type="button" class="nm_tarif_add btn btn-xs btn-primary float-right">add more
                             </button>
                         </div> --}}
-                        <div class="resepID callout callout-warning mt-5">
-
-                        </div>
                     </div>
                     <input type="hidden" id="kd_trs" name="kd_trs" value="{{ $kd_trs }}">
                     <input type="hidden" id="sub_total" name="sub_total" value="0">
-                    </form>
                     <div class="float-right mt-2">
-                        <button type="button" id="exitModalResep" class="btn btn-success">add</button>
+                        <a type="button" id="exitModalResep" class="btn btn-success">add</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </form>
 
     {{-- ========================END MODAL ADD RESEP============================= --}}
 
@@ -592,9 +585,9 @@
                         <tr class="mt-2">
                             <td class="mt-2">
                                 <input type="text" class="obatResep form-control" id="ch_kd_obat"
-                                    name="ch_kd_obat" style="width: 100%" value="${namaobatResep}" readonly>
+                                    name="ch_kd_obat[]" style="width: 100%" value="${obatResep}" readonly>
                             </td>
-                            <input type="hidden" id="ch_nm_obat" name="ch_nm_obat[]" value="${obatResep}">
+                            <input type="hidden" id="ch_nm_obat" name="ch_nm_obat[]" value="${namaobatResep}">
                             <td>
                                 <input type="text" class="form-control" id="ch_qty_obat" name="ch_qty_obat[]" value="${qty_obat}">
                             </td>
@@ -610,6 +603,34 @@
                             <td>
                                 <button class="btn btn-danger btn-sm ml-2" id="delItemObatResep"><i
                                         class="fa fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+               `
+            );
+
+            $("#CHCreate").append(
+                `
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <input type="hidden" class="obatResep form-control" id="ch_kd_obat"
+                                    name="ch_kd_obat[]" style="width: 100%" value="${obatResep}" readonly>
+                            </td>
+                            <input type="hidden" id="ch_nm_obat" name="ch_nm_obat[]" value="${namaobatResep}">
+                            <td>
+                                <input type="hidden" class="form-control" id="ch_qty_obat" name="ch_qty_obat[]" value="${qty_obat}">
+                            </td>
+                            <td>
+                                <input type="hidden" class="form-control" id="ch_satuan_obat" name="ch_satuan_obat[]" value="${satuan_jual_obat}">
+                            </td>
+                            <td>
+                                <input type="hidden" class="form-control" id="ch_signa" name="ch_signa[]" value="${signa_resep}">
+                            </td>
+                            <td>
+                                <input type="hidden" class="form-control" id="ch_cara_pakai" name="ch_cara_pakai[]" value="${cara_pakai_resep}">
                             </td>
                         </tr>
                     </tbody>

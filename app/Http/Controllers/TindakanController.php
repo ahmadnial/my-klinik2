@@ -143,8 +143,8 @@ class TindakanController extends Controller
 
     public function chartCreate(Request $request)
     {
-        $yes = $request->all();
-        dd($yes);
+        // $yes = $request->all();
+        // dd($yes);
 
         $request->validate([
             // 'user' => 'required',
@@ -193,20 +193,6 @@ class TindakanController extends Controller
         $nerChart->chart_P = $request->chart_P;
         $nerChart->save();
 
-        // dd($nerChart);
-        // $newTrsChart = new trs_chart();
-        // $newTrsChart->kd_trs = $request->kd_trs;
-        // $newTrsChart->tgl_trs = $request->tgl_trs;
-        // $newTrsChart->layanan = $request->layanan;
-        // $newTrsChart->kd_reg = $request->kd_reg;
-        // $newTrsChart->mr_pasien = $request->mr_pasien;
-        // $newTrsChart->nm_pasien = $request->nm_pasien;
-        // $newTrsChart->nm_tarif = $request->nm_tarif;
-        // $newTrsChart->nm_dokter_jm = $request->nm_dokter_jm;
-        // $newTrsChart->sub_total = $request->sub_total;
-        // $newTrsChart->user = $request->user;
-        // $newTrsChart->save();
-
         if ($request->nm_tarif != null) {
             foreach ($request->nm_tarif as $key => $val) {
                 $newData = [
@@ -240,6 +226,21 @@ class TindakanController extends Controller
                 'user' => $request->user_create,
             ];
             trs_chart::create($newData);
+        }
+
+        if ($request->ch_kd_obat != null) {
+            foreach ($request->ch_kd_obat as $far => $val) {
+                $newDataResep = [
+                    'ch_kd_obat' => $request->ch_kd_obat[$far],
+                    'ch_nm_obat' => $request->ch_nm_obat[$far],
+                    'ch_qty_obat' => $request->ch_qty_obat[$far],
+                    'ch_satuan_obat' => $request->ch_satuan_obat[$far],
+                    'ch_signa' => $request->ch_signa[$far],
+                    'ch_cara_pakai' => $request->ch_cara_pakai[$far],
+                ];
+                trs_chart::create($newDataResep);
+            };
+        } else {
         }
         // dd($newData);
         DB::commit();
