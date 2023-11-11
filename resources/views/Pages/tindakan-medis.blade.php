@@ -768,7 +768,7 @@
                         for (i in resep) {
                             if (resep[i] != null) {
                                 resepShow +=
-                                    `<tr><td>${resep[i].ch_nm_obat} - <i>${resep[i].ch_cara_pakai}</i></td></tr>`;
+                                    `<tr><td>${resep[i].ch_nm_obat} - <i class="text-danger">${resep[i].ch_cara_pakai}</i></td></tr>`;
                             } else {
                                 resepShow += ``;
                             }
