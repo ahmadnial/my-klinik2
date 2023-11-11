@@ -190,7 +190,7 @@
                                             <label for="">Tarif/Tindakan Tambahan</label>
                                             <select class="nm_tarif form-control" style="width:100%;" name="nm_tarif[]"
                                                 id="nm_tarif" multiple="multiple">
-                                                <option value="0" selected></option>
+                                                <option value="" selected></option>
                                                 {{-- <option>--Select--</option> --}}
                                                 @foreach ($isTindakanTarif as $t)
                                                     <option value="{{ $t->id }}">{{ $t->nm_tindakan }}</option>
@@ -275,8 +275,8 @@
                             </button>
                         </div> --}}
                     </div>
-                    <input type="hidden" id="kd_trs" name="kd_trs" value="{{ $kd_trs }}">
-                    <input type="hidden" id="sub_total" name="sub_total" value="0">
+                    {{-- <input type="hidden" id="kd_trs" name="kd_trs" value="{{ $kd_trs }}"> --}}
+                    {{-- <input type="hidden" id="sub_total" name="sub_total" value="0"> --}}
                     <div class="float-right mt-2">
                         <a type="button" id="exitModalResep" class="btn btn-success">add</a>
                     </div>
@@ -661,7 +661,7 @@
                 var chart_A_diagnosa = $('#chart_A_diagnosa').val();
                 var chart_P = $('#chart_P').val();
 
-                var kd_trs = $('#kd_trs').val();
+                // var kd_trs = $('#kd_trs').val();
                 var nm_tarif = [];
                 var sub_total = $('#sub_total').val();
 
@@ -763,6 +763,17 @@
                             }
                         }
 
+                        const resep = getValue[getVal].resep;
+                        let resepShow = "";
+                        for (i in resep) {
+                            if (resep[i] != null) {
+                                resepShow +=
+                                    `<tr><td>${resep[i].ch_nm_obat} - <i>${resep[i].ch_cara_pakai}</i></td></tr>`;
+                            } else {
+                                resepShow += ``;
+                            }
+                        }
+
                         // const trstdk = getValue[getVal].trstdk;
                         // let html = "";
                         // trstdk.forEach(xkx => {
@@ -857,6 +868,22 @@
                                                 </thead>
                                                 <tbody id="TimelineTdk">
                                                         ${html}
+                                                </tbody>
+                                            </table>
+                                        
+                                        </div>
+
+                                        <hr>
+                                        <div class="resep">
+                                               
+                                            <table class="table table-hover">
+                                                <thead class="bg-primary">
+                                                    <tr>
+                                                        <th>Resep</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="TimelineResep">
+                                                        ${resepShow}
                                                 </tbody>
                                             </table>
                                         

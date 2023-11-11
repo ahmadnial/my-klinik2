@@ -11,7 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('trs_chart', function (Blueprint $table) {
+        Schema::create('trs_chart_resep', function (Blueprint $table) {
+            $table->string('kd_trs');
+            $table->string('kd_resep')->nullable();
+            $table->string('chart_id');
+            $table->string('tgl_trs');
+            $table->string('layanan');
+            $table->string('kd_reg');
+            $table->string('mr_pasien');
+            $table->string('nm_pasien');
             $table->string('ch_kd_obat');
             $table->string('ch_nm_obat');
             $table->string('ch_qty_obat');
@@ -19,6 +27,8 @@ return new class extends Migration
             $table->string('ch_signa')->nullable();
             $table->string('ch_cara_pakai')->nullable();
             $table->string('ch_hrg_jual')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -27,8 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('trs_chart', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('trs_chart_resep');
     }
 };

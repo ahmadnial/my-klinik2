@@ -9,6 +9,7 @@ use App\Models\mstr_obat;
 use App\Models\mstr_tindakan;
 use App\Models\registrasiCreate;
 use App\Models\trs_chart;
+use App\Models\trs_chart_resep;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 // use Illuminate\Support\Carbon;
@@ -226,11 +227,19 @@ class TindakanController extends Controller
                 'user' => $request->user_create,
             ];
             trs_chart::create($newData);
-        }
+        };
 
         if ($request->ch_kd_obat != null) {
             foreach ($request->ch_kd_obat as $far => $val) {
                 $newDataResep = [
+                    'kd_trs' => $request->kd_trs,
+                    'chart_id' => $request->chart_id,
+                    'layanan' => $request->chart_layanan,
+                    'tgl_trs' => $request->chart_tgl_trs,
+                    'kd_reg' => $request->chart_kd_reg,
+                    'mr_pasien' => $request->chart_mr,
+                    'nm_pasien' => $request->chart_nm_pasien,
+
                     'ch_kd_obat' => $request->ch_kd_obat[$far],
                     'ch_nm_obat' => $request->ch_nm_obat[$far],
                     'ch_qty_obat' => $request->ch_qty_obat[$far],
@@ -238,7 +247,7 @@ class TindakanController extends Controller
                     'ch_signa' => $request->ch_signa[$far],
                     'ch_cara_pakai' => $request->ch_cara_pakai[$far],
                 ];
-                trs_chart::create($newDataResep);
+                trs_chart_resep::create($newDataResep);
             };
         } else {
         }
@@ -263,7 +272,7 @@ class TindakanController extends Controller
     // get timeline pemeriksaan
     public function getTimeline(Request $request)
     {
-        $isTimelineHistory = ChartTindakan::with('trstdk.nm_trf')
+        $isTimelineHistory = ChartTindakan::with('trstdk.nm_trf', 'resep')
             ->where('chart_mr', $request->chart_mr)
             // ->distinct()
             ->orderBy('chart_tindakan.created_at', 'DESC')
