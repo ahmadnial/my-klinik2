@@ -91,6 +91,8 @@ class TindakanController extends Controller
         return response()->json($isdataObatList);
     }
 
+
+
     // public function getLastID()
     // {
     //     $id = str_pad(00000001, 8, 0, STR_PAD_LEFT);
@@ -246,6 +248,7 @@ class TindakanController extends Controller
                     'ch_satuan_obat' => $request->ch_satuan_obat[$far],
                     'ch_signa' => $request->ch_signa[$far],
                     'ch_cara_pakai' => $request->ch_cara_pakai[$far],
+                    'ch_hrg_jual' => $request->ch_hrg_jual[$far],
                 ];
                 trs_chart_resep::create($newDataResep);
             };

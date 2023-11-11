@@ -7,6 +7,7 @@ use App\Models\penjualanFarmasi;
 use App\Models\tb_stock;
 use App\Models\tp_hdr;
 use App\Models\tp_detail_item;
+use App\Models\trs_chart_resep;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -26,10 +27,13 @@ class penjualanController extends Controller
             $noRef = 'TP' . '-' . substr($Y, -2) . $M  . '-' . str_pad(($de + 1), 6, '0', STR_PAD_LEFT);
         };
 
+        $isListRegResep = trs_chart_resep::select("kd_trs", "chart_id", "kd_reg", "mr_pasien", "nm_pasien")->distinct()->get();
+
         $isListPenjualan = tp_hdr::all();
         return view('Pages.penjualan', [
             'noRef' => $noRef,
-            'isListPenjualan' => $isListPenjualan
+            'isListPenjualan' => $isListPenjualan,
+            'isListRegResep' => $isListRegResep,
         ]);
     }
 
@@ -54,9 +58,33 @@ class penjualanController extends Controller
         return response()->json($isObatNakes);
     }
 
+
+    public function getListOrderResep(Request $kd_trs)
+    {
+        $isListOrderResep = trs_chart_resep::select(
+            "kd_trs",
+            "chart_id",
+            "tgl_trs",
+            "layanan",
+            "kd_reg",
+            "mr_pasien",
+            "nm_pasien",
+            "kd_reg",
+            "ch_kd_obat",
+            "ch_nm_obat",
+            "ch_qty_obat",
+            "ch_satuan_obat",
+            "ch_signa",
+            "ch_cara_pakai",
+            "ch_hrg_jual",
+        )->where('kd_trs', $kd_trs->kd_trs)->get();
+        // dd($isdata2);
+        return response()->json($isListOrderResep);
+    }
+
     public function penjualanCreate(Request $request)
     {
-        $k = $request->all();
+        // $k = $request->all();
         // dd($k);
 
         $request->validate([

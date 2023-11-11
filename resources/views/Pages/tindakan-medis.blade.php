@@ -258,6 +258,7 @@
                                             <td>
                                                 <input type="text" class="form-control" id="cara_pakai_resep">
                                             </td>
+                                            <input type="hidden" class="ch_hrg_jual" id="ch_hrg_jual">
                                             <td>
                                                 <a class="btn btn-success btn-sm ml-2" id="addItemObatResepp"><i
                                                         class="fa fa-plus"></i></a>
@@ -554,6 +555,7 @@
                     $.each(isdataObatList, function(key, datavalue) {
                         $('#satuan_jual_obat').val(datavalue.fm_satuan_jual);
                         $('#namaObatResep').val(datavalue.fm_nm_obat);
+                        $('.ch_hrg_jual').val(datavalue.fm_hrg_jual_non_resep);
                     })
                 }
             })
@@ -568,6 +570,7 @@
             var satuan_jual_obat = $('#satuan_jual_obat').val();
             var signa_resep = $('#signa_resep').val();
             var cara_pakai_resep = $('#cara_pakai_resep').val();
+            var hrg_jual = $('.ch_hrg_jual').val();
 
             $(".resepID").append(
                 `
@@ -575,6 +578,7 @@
                     <thead>
                         <tr class="mt-2">
                             <th width="370px">Obat</th>
+                            <th width="90px">Hrg</th>
                             <th width="90px">Qty</th>
                             <th width="150px">Satuan</th>
                             <th width="200px">Signa</th>
@@ -585,9 +589,12 @@
                         <tr class="mt-2">
                             <td class="mt-2">
                                 <input type="text" class="obatResep form-control" id="ch_kd_obat"
-                                    name="ch_kd_obat[]" style="width: 100%" value="${obatResep}" readonly>
+                                    name="ch_kd_obat[]" style="width: 100%" value="${namaobatResep}" readonly>
                             </td>
-                            <input type="hidden" id="ch_nm_obat" name="ch_nm_obat[]" value="${namaobatResep}">
+                            <input type="hidden" id="ch_nm_obat" name="ch_nm_obat[]" value="${obatResep}">
+                            <td>
+                                <input type="text" class="form-control" id="ch_hrg_jual" name="ch_hrg_jual[]" value="${hrg_jual}" readonly>
+                            </td>
                             <td>
                                 <input type="text" class="form-control" id="ch_qty_obat" name="ch_qty_obat[]" value="${qty_obat}">
                             </td>
@@ -599,7 +606,7 @@
                             </td>
                             <td>
                                 <input type="text" class="form-control" id="ch_cara_pakai" name="ch_cara_pakai[]" value="${cara_pakai_resep}">
-                            </td>
+                            </td>                             
                             <td>
                                 <button class="btn btn-danger btn-sm ml-2" id="delItemObatResep"><i
                                         class="fa fa-trash"></i></button>
@@ -632,11 +639,14 @@
                             <td>
                                 <input type="hidden" class="form-control" id="ch_cara_pakai" name="ch_cara_pakai[]" value="${cara_pakai_resep}">
                             </td>
+                                <input type="hidden" class="form-control" id="ch_hrg_jual" name="ch_hrg_jual[]" value="${hrg_jual}">
                         </tr>
                     </tbody>
                 </table>
                `
             );
+
+            // $("#TESCHCreate").empty();
         });
 
 

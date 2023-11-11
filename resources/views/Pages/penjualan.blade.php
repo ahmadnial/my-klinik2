@@ -99,10 +99,14 @@
                                     value="{{ $noRef }}" readonly>
                             </div>
                             <div class="form-group col-sm-2">
-                                <label for="">kd Resep</label>
-                                <select class="form-control" id="tp_kd_order" style="width: 100%;" name="tp_kd_order">
+                                <label for="">kd Reg</label>
+                                <select class="form-control" id="tp_kd_order" style="width: 100%;" name="tp_kd_order"
+                                    onchange="acMapResep()">
                                     <option value="">--Select--</option>
-
+                                    @foreach ($isListRegResep as $lrp)
+                                        <option value="{{ $lrp->kd_trs }}">{{ $lrp->kd_reg . '-' . $lrp->nm_pasien }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-group col-sm-2">
@@ -115,14 +119,14 @@
                                 <input type="text" class="form-control" name="tp_dokter" id="tp_dokter" value=""
                                     readonly>
                             </div>
-                            <div class="form-group col-sm-2">
+                            {{-- <div class="form-group col-sm-2">
                                 <label for="">Lokasi Stock</label>
                                 <select class="form-control-pasien" id="tp_lokasi_stock" style="width: 100%;"
                                     name="tp_lokasi_stock">
                                     <option value="">--Select--</option>
 
                                 </select>
-                            </div>
+                            </div> --}}
                             <br>
                             <hr>
                             <div class="form-group col-sm-2">
@@ -133,6 +137,11 @@
                             <div class="form-group col-sm-2">
                                 <label for="">No.RM</label>
                                 <input type="text" class="form-control" name="tp_no_mr" id="tp_no_mr" value=""
+                                    readonly>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label for="">Nama</label>
+                                <input type="text" class="form-control" name="tp_nama" id="tp_nama" value=""
                                     readonly>
                             </div>
                             <div class="form-group col-sm-2">
@@ -271,6 +280,88 @@
 
                     // alert('helo');
                 });
+
+
+                function acMapResep() {
+                    var kd_trs = $('#tp_kd_order').val();
+
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: "{{ url('getListOrderResep') }}/" + kd_trs,
+                        type: 'GET',
+                        data: {
+                            kd_trs: kd_trs
+                        },
+                        success: function(isListOrderResep) {
+                            // $(".getListObatx").empty();
+                            var getValues = isListOrderResep;
+                            for (var getVals = 0; getVals < getValues.length; getVals++) {
+
+                                $('#tp_layanan').val(getValues[getVals].layanan);
+                                $('#tp_dokter').val(getValues[getVals].layanan);
+                                $('#tp_kd_reg').val(getValues[getVals].kd_reg);
+                                $('#tp_no_mr').val(getValues[getVals].mr_pasien);
+                                $('#tp_nama').val(getValues[getVals].nm_pasien);
+                                $('#tp_alamat').val(getValues[getVals].nm_pasien);
+                                $('#tp_jenis_kelamin').val(getValues[getVals].nm_pasien);
+                                $('#tp_tgl_lahir').val(getValues[getVals].nm_pasien);
+
+                                // var hrg_resep = getValues[getVals].ch_hrg_jual;
+                                // var qty_resep = getValues[getVals].ch_qty_obat;
+
+                                // var sub_total = int(hrg_resep * qty_resep);
+
+
+                                $("#ListObatJual").append(`
+                                <tr>
+                                    <td>
+                                        <input class="searchObat form-control" style="border: none"
+                                            id="kd_obat" name="kd_obat[]" placeholder="kode obat" readonly
+                                            style="border: none;" value="${getValues[getVals].ch_kd_obat}">
+                                    </td>
+                                    <td>
+                                        <input class="searchObat form-control" id="nm_obat"
+                                            name="nm_obat[]" ondblclick="getListObat()" aria-placeholder="Search" value="${getValues[getVals].ch_nm_obat}" readonly>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="do_satuan_pembelian form-control"
+                                            id="satuan" name="satuan[]" readonly
+                                            value="${getValues[getVals].ch_satuan_obat}">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" readonly style="border: none;" id="hrg_obat" name="hrg_obat[]" value="${getValues[getVals].ch_hrg_jual}">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="qty form-control" id="qty" name="qty[]" onKeyUp="getQTY(this)" value="${getValues[getVals].ch_qty_obat}">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" id="diskon"
+                                            name="diskon[]">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" id="tax"
+                                            name="tax[]">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="sub_total form-control" id="sub_total"
+                                            name="sub_total[]" readonly style="border: none;" value="5555">
+                                    </td>
+
+                                    <input type="hidden" name="user" id="user" value="tes user">
+                                    <td>
+                                        <button class="remove btn btn-xs btn-danger " id="delRow"><i
+                                                class="fa fa-close"></i></button>
+                                    </td>
+                                </tr>
+                    
+                    `);
+                            }
+
+                        }
+                    })
+                }
 
                 function getTipeTarif() {
                     toastr.info('Harga Reguler Selected!', {
