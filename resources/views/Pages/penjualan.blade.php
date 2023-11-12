@@ -304,9 +304,9 @@
                                 $('#tp_kd_reg').val(getValues[getVals].kd_reg);
                                 $('#tp_no_mr').val(getValues[getVals].mr_pasien);
                                 $('#tp_nama').val(getValues[getVals].nm_pasien);
-                                $('#tp_alamat').val(getValues[getVals].nm_pasien);
-                                $('#tp_jenis_kelamin').val(getValues[getVals].nm_pasien);
-                                $('#tp_tgl_lahir').val(getValues[getVals].nm_pasien);
+                                $('#tp_alamat').val(getValues[getVals].fs_alamat);
+                                $('#tp_jenis_kelamin').val(getValues[getVals].fs_jenis_kelamin);
+                                $('#tp_tgl_lahir').val(getValues[getVals].fs_tgl_lahir);
 
                                 // var hrg_resep = getValues[getVals].ch_hrg_jual;
                                 // var qty_resep = getValues[getVals].ch_qty_obat;
@@ -331,10 +331,10 @@
                                             value="${getValues[getVals].ch_satuan_obat}">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" readonly style="border: none;" id="hrg_obat" name="hrg_obat[]" value="${getValues[getVals].ch_hrg_jual}">
+                                        <input type="text" class="hrg_obatr form-control" readonly style="border: none;" id="hrg_obatr" name="hrg_obat[]" value="${getValues[getVals].ch_hrg_jual}">
                                     </td>
                                     <td>
-                                        <input type="text" class="qty form-control" id="qty" name="qty[]" onKeyUp="getQTY(this)" value="${getValues[getVals].ch_qty_obat}">
+                                        <input type="text" class="qtyr form-control" id="qtyr" name="qty[]" onClick="getQTYResep(this)" value="${getValues[getVals].ch_qty_obat}">
                                     </td>
                                     <td>
                                         <input type="text" class="form-control" id="diskon"
@@ -345,8 +345,8 @@
                                             name="tax[]">
                                     </td>
                                     <td>
-                                        <input type="text" class="sub_total form-control" id="sub_total"
-                                            name="sub_total[]" readonly style="border: none;" value="5555">
+                                        <input type="text" class="sub_totalr form-control" id="sub_totalr"
+                                            name="sub_total[]" readonly style="border: none;" value="">
                                     </td>
 
                                     <input type="hidden" name="user" id="user" value="tes user">
@@ -356,12 +356,38 @@
                                     </td>
                                 </tr>
                     
-                    `);
+                                `);
                             }
 
                         }
                     })
                 }
+
+                function getQTYResep(q) {
+                    // $('#calculation').on("keyup", ".do_hrg_beli", function() {
+                    var parent = q.parentElement.parentElement;
+                    var quant = $(parent).find('#qtyr').val();
+                    var price = $(parent).find('#hrg_obat').val();
+                    // console.log(quant);
+                    var x = quant * price;
+                    var result = x.toFixed(2);
+                    $(parent).find('#sub_totalr').val(result);
+                    GrandTotalResep();
+                    // });
+
+                };
+
+                function GrandTotalResep() {
+                    var sum = 0;
+
+                    $('.sub_totalr').each(function() {
+                        sum += Number($(this).val());
+                    });
+                    var result = sum.toFixed(2);
+
+                    $('#total_penjualan').val(result);
+                }
+
 
                 function getTipeTarif() {
                     toastr.info('Harga Reguler Selected!', {

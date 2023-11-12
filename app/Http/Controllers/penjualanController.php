@@ -61,24 +61,33 @@ class penjualanController extends Controller
 
     public function getListOrderResep(Request $kd_trs)
     {
-        $isListOrderResep = trs_chart_resep::select(
-            "kd_trs",
-            "chart_id",
-            "tgl_trs",
-            "layanan",
-            "kd_reg",
-            "mr_pasien",
-            "nm_pasien",
-            "kd_reg",
-            "ch_kd_obat",
-            "ch_nm_obat",
-            "ch_qty_obat",
-            "ch_satuan_obat",
-            "ch_signa",
-            "ch_cara_pakai",
-            "ch_hrg_jual",
-        )->where('kd_trs', $kd_trs->kd_trs)->get();
-        // dd($isdata2);
+        // $isListOrderResep = trs_chart_resep::select(
+        //     "kd_trs",
+        //     "chart_id",
+        //     "tgl_trs",
+        //     "layanan",
+        //     "kd_reg",
+        //     "mr_pasien",
+        //     "nm_pasien",
+        //     "kd_reg",
+        //     "ch_kd_obat",
+        //     "ch_nm_obat",
+        //     "ch_qty_obat",
+        //     "ch_satuan_obat",
+        //     "ch_signa",
+        //     "ch_cara_pakai",
+        //     "ch_hrg_jual",
+        // )
+        //     ->leftJoin('do_detail_item', 'do_hdr.do_hdr_kd', 'do_detail_item.do_hdr_kd')
+        //     ->select('do_hdr.*', 'do_detail_item.*')
+        //     ->where('kd_trs', $kd_trs->kd_trs)->get();
+
+        $isListOrderResep = DB::table('trs_chart_resep')
+            ->leftJoin('tc_mr', 'trs_chart_resep.mr_pasien', 'tc_mr.fs_mr')
+            ->select('trs_chart_resep.*', 'tc_mr.*')
+            ->distinct()
+            ->where('kd_trs', $kd_trs->kd_trs)
+            ->get();
         return response()->json($isListOrderResep);
     }
 

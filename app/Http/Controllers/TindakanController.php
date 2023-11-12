@@ -178,26 +178,43 @@ class TindakanController extends Controller
             // 'chart_P_tindakan'
         ]);
         DB::beginTransaction();
-        // try {
+        try {
 
-        $nerChart = new ChartTindakan;
-        $nerChart->chart_id = $request->chart_id;
-        $nerChart->chart_tgl_trs = $request->chart_tgl_trs;
-        $nerChart->chart_kd_reg  = $request->chart_kd_reg;
-        $nerChart->chart_mr    = $request->chart_mr;
-        $nerChart->chart_nm_pasien = $request->chart_nm_pasien;
-        $nerChart->chart_layanan = $request->chart_layanan;
-        $nerChart->chart_dokter = $request->chart_dokter;
-        $nerChart->user   = $request->user_create;
-        $nerChart->chart_S = $request->chart_S;
-        $nerChart->chart_O = $request->chart_O;
-        $nerChart->chart_A    = $request->chart_A;
-        $nerChart->chart_A_diagnosa = $request->chart_A_diagnosa;
-        $nerChart->chart_P = $request->chart_P;
-        $nerChart->save();
+            $nerChart = new ChartTindakan;
+            $nerChart->chart_id = $request->chart_id;
+            $nerChart->chart_tgl_trs = $request->chart_tgl_trs;
+            $nerChart->chart_kd_reg  = $request->chart_kd_reg;
+            $nerChart->chart_mr    = $request->chart_mr;
+            $nerChart->chart_nm_pasien = $request->chart_nm_pasien;
+            $nerChart->chart_layanan = $request->chart_layanan;
+            $nerChart->chart_dokter = $request->chart_dokter;
+            $nerChart->user   = $request->user_create;
+            $nerChart->chart_S = $request->chart_S;
+            $nerChart->chart_O = $request->chart_O;
+            $nerChart->chart_A    = $request->chart_A;
+            $nerChart->chart_A_diagnosa = $request->chart_A_diagnosa;
+            $nerChart->chart_P = $request->chart_P;
+            $nerChart->save();
 
-        if ($request->nm_tarif != null) {
-            foreach ($request->nm_tarif as $key => $val) {
+            if ($request->nm_tarif != null) {
+                foreach ($request->nm_tarif as $key => $val) {
+                    $newData = [
+                        'kd_trs' => $request->kd_trs,
+                        'chart_id' => $request->chart_id,
+                        'tgl_trs' => $request->chart_tgl_trs,
+                        'layanan' => $request->chart_layanan,
+                        'kd_reg' => $request->chart_kd_reg,
+                        'mr_pasien' => $request->chart_mr,
+                        'nm_pasien' => $request->chart_nm_pasien,
+                        'nm_tarif' => $request->nm_tarif[$key],
+                        'nm_tarif_dasar' => $request->nm_tarif_dasar,
+                        'nm_dokter_jm' => $request->chart_dokter,
+                        'sub_total' => $request->sub_total,
+                        'user' => $request->user_create,
+                    ];
+                    trs_chart::create($newData);
+                };
+            } else {
                 $newData = [
                     'kd_trs' => $request->kd_trs,
                     'chart_id' => $request->chart_id,
@@ -206,70 +223,52 @@ class TindakanController extends Controller
                     'kd_reg' => $request->chart_kd_reg,
                     'mr_pasien' => $request->chart_mr,
                     'nm_pasien' => $request->chart_nm_pasien,
-                    'nm_tarif' => $request->nm_tarif[$key],
                     'nm_tarif_dasar' => $request->nm_tarif_dasar,
-                    'nm_dokter_jm' => $request->chart_dokter,
-                    'sub_total' => $request->sub_total,
+                    // 'nm_dokter_jm' => $request->chart_dokter,
+                    // 'sub_total' => $request->sub_total,
                     'user' => $request->user_create,
                 ];
                 trs_chart::create($newData);
             };
-        } else {
-            $newData = [
-                'kd_trs' => $request->kd_trs,
-                'chart_id' => $request->chart_id,
-                'tgl_trs' => $request->chart_tgl_trs,
-                'layanan' => $request->chart_layanan,
-                'kd_reg' => $request->chart_kd_reg,
-                'mr_pasien' => $request->chart_mr,
-                'nm_pasien' => $request->chart_nm_pasien,
-                'nm_tarif_dasar' => $request->nm_tarif_dasar,
-                // 'nm_dokter_jm' => $request->chart_dokter,
-                // 'sub_total' => $request->sub_total,
-                'user' => $request->user_create,
-            ];
-            trs_chart::create($newData);
-        };
 
-        if ($request->ch_kd_obat != null) {
-            foreach ($request->ch_kd_obat as $far => $val) {
-                $newDataResep = [
-                    'kd_trs' => $request->kd_trs,
-                    'chart_id' => $request->chart_id,
-                    'layanan' => $request->chart_layanan,
-                    'tgl_trs' => $request->chart_tgl_trs,
-                    'kd_reg' => $request->chart_kd_reg,
-                    'mr_pasien' => $request->chart_mr,
-                    'nm_pasien' => $request->chart_nm_pasien,
+            if (!empty($request->ch_kd_obat)) {
+                foreach ($request->ch_kd_obat as $far => $val) {
+                    $newDataResep = [
+                        'kd_trs' => $request->kd_trs,
+                        'chart_id' => $request->chart_id,
+                        'layanan' => $request->chart_layanan,
+                        'tgl_trs' => $request->chart_tgl_trs,
+                        'kd_reg' => $request->chart_kd_reg,
+                        'mr_pasien' => $request->chart_mr,
+                        'nm_pasien' => $request->chart_nm_pasien,
 
-                    'ch_kd_obat' => $request->ch_kd_obat[$far],
-                    'ch_nm_obat' => $request->ch_nm_obat[$far],
-                    'ch_qty_obat' => $request->ch_qty_obat[$far],
-                    'ch_satuan_obat' => $request->ch_satuan_obat[$far],
-                    'ch_signa' => $request->ch_signa[$far],
-                    'ch_cara_pakai' => $request->ch_cara_pakai[$far],
-                    'ch_hrg_jual' => $request->ch_hrg_jual[$far],
-                ];
-                trs_chart_resep::create($newDataResep);
-            };
-        } else {
+                        'ch_kd_obat' => $request->ch_kd_obat[$far],
+                        'ch_nm_obat' => $request->ch_nm_obat[$far],
+                        'ch_qty_obat' => $request->ch_qty_obat[$far],
+                        'ch_satuan_obat' => $request->ch_satuan_obat[$far],
+                        'ch_signa' => $request->ch_signa[$far],
+                        'ch_cara_pakai' => $request->ch_cara_pakai[$far],
+                        'ch_hrg_jual' => $request->ch_hrg_jual[$far],
+                    ];
+                    trs_chart_resep::create($newDataResep);
+                };
+            } else {
+            }
+            // dd($newData);
+            DB::commit();
+
+            toastr()->success('Data Tersimpan!');
+            return back();
+            // return redirect()->route('/tindakan-medis');
+        } catch (\Exception $e) {
+            DB::rollback();
+            toastr()->error('Gagal Tersimpan! Hubungi Admin');
+            return back();
+            // Toastr::error('Add Estimates fail :)', 'Error');
+            // return redirect()->back();
+            // return redirect()->route('tindakan-mediss')
+            //     ->with('warning', 'Something Went Wrong!');
         }
-        // dd($newData);
-        DB::commit();
-        // Toastr::success('Create new Estimates successfully :)', 'Success');
-        // return redirect()->route('tindakan-medis')->toastr()->success('Data Tersimpan!');
-        toastr()->success('Data Tersimpan!');
-        return back();
-        // return redirect()->route('/tindakan-medis');
-        // } catch (\Exception $e) {
-        DB::rollback();
-        toastr()->error('Gagal Tersimpan! Hubungi Admin');
-        return back();
-        // Toastr::error('Add Estimates fail :)', 'Error');
-        // return redirect()->back();
-        // return redirect()->route('tindakan-mediss')
-        //     ->with('warning', 'Something Went Wrong!');
-        // }
     }
 
     // get timeline pemeriksaan
