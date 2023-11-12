@@ -285,19 +285,6 @@
 
 @push('scripts')
     <script>
-        function autonumber() {
-            let id = "ABCD9991";
-
-            for (let i = 0; i < 100; i++) {
-                let strings = id.replace(/[0-9]/g, '');
-                let digits = (parseInt(id.replace(/[^0-9]/g, '')) + 1).toString();
-                if (digits.length < 4)
-                    digits = ("000" + digits).substr(-4);
-                id = strings + digits;
-                // console.log(id);
-            }
-        }
-
         // Ajax Search RM untuk Registrasi
         var path = "{{ route('registrasiSearch') }}";
 

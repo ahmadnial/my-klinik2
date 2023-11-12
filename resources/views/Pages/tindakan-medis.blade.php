@@ -114,13 +114,13 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="inputDescription">Assesment</label>
-                                        <select class="form-control mb-3" style="width: 100%;" name="chart_A_diagnosa"
-                                            id="chart_A_diagnosa">
-                                            @foreach ($icdx as $x)
-                                                <option value="">--Select--</option>
+                                        <select class="chart_A_diagnosa form-control mb-3" style="width: 100%;"
+                                            name="chart_A_diagnosa" id="chart_A_diagnosa" onkeyup="getICDX()">
+                                            {{-- <option value="">--Select--</option> --}}
+                                            {{-- @foreach ($icdx as $x)
                                                 <option value="{{ $x->code . '-' . $x->name_en }}">
                                                     {{ $x->code . '-' . $x->name_en }}</option>
-                                            @endforeach
+                                            @endforeach --}}
                                         </select>
                                         <textarea id="chart_A" name="chart_A" class="form-control mt-3 mb-2" rows="4"></textarea>
                                     </div>
@@ -188,9 +188,9 @@
                                     <tr>
                                         <td>
                                             <label for="">Tarif/Tindakan Tambahan</label>
-                                            <select class="nm_tarif form-control" style="width:100%;" name="nm_tarif[]"
-                                                id="nm_tarif" multiple="multiple">
-                                                <option value="" selected></option>
+                                            <select class="nm_tarif form-control" multiple style="width:100%;"
+                                                id="nm_tarif">
+                                                {{-- <option value="" selected></option> --}}
                                                 {{-- <option>--Select--</option> --}}
                                                 @foreach ($isTindakanTarif as $t)
                                                     <option value="{{ $t->id }}">{{ $t->nm_tindakan }}</option>
@@ -316,9 +316,9 @@
             placeholder: 'Search Registrasi',
         });
 
-        $('#chart_A_diagnosa').select2({
-            placeholder: 'Search ICD X / Diagnosa',
-        });
+        // $('#chart_A_diagnosa').select2({
+        //     placeholder: 'Search ICD X / Diagnosa',
+        // });
         $('.nm_tarif').select2({
             placeholder: 'Search Tindakan',
         });
@@ -494,9 +494,45 @@
         //     );
         // });
 
+        // function getICDX() {
+        var path = "{{ route('getIcdX') }}";
+
+        $('#chart_A_diagnosa').select2({
+            placeholder: 'Search Diagnosa',
+            ajax: {
+                url: path,
+                dataType: 'json',
+                delay: 100,
+                processResults: function(isICDX) {
+                    return {
+                        results: $.map(isICDX, function(xicd) {
+                            return {
+                                // text: item.fs_mr,
+                                text: xicd.code + ' - ' + xicd.name_id,
+                                id: xicd.code + '-' + xicd.name_id,
+                            }
+                        })
+                    };
+                },
+                cache: true
+            }
+        });
+        // }
 
         $(".nm_tarif_add").on("click", function() {
+
+            var tindakanSelect = $('#nm_tarif').val();
+
             $("#nm_tarif_plus").append(
+                `<tr> 
+                <td> 
+                <input class="nm_tarif form-control" style="width:100%;" name="nm_tarif[]" readonly value="${tindakanSelect}">
+                <a href="javascript:void(0)" class="rmvItm text-danger"><i class="fa fa-trash"></i></a>' 
+                </td>
+                </tr>`
+            );
+
+            $("#CHCreate").append(
                 '<tr>' +
                 '<td>' +
                 '<select class="nm_tarif form-control" style="width:100%;" name="nm_tarif[]">' +
@@ -868,10 +904,9 @@
                                             <textarea id="" class="show_chart_P form-control" rows="4" style="border:none;" readonly>${getValue[getVal].chart_P}</textarea>
                                         </div>
                                         <hr>
-                                        <div class="tindakan">
-                                               
-                                            <table class="table table-hover">
-                                                <thead class="bg-info">
+                                        <div class="tindakan callout callout-danger">
+                                            <table class="table-hover">
+                                                <thead class="">
                                                     <tr>
                                                         <th>Tindakan</th>
                                                     </tr>
@@ -884,10 +919,9 @@
                                         </div>
 
                                         <hr>
-                                        <div class="resep">
-                                               
-                                            <table class="table table-hover">
-                                                <thead class="bg-primary">
+                                        <div class="resep callout callout-success">
+                                            <table class="table-hover">
+                                                <thead class="">
                                                     <tr>
                                                         <th>Resep</th>
                                                     </tr>
@@ -896,7 +930,6 @@
                                                         ${resepShow}
                                                 </tbody>
                                             </table>
-                                        
                                         </div>
                                     </div>
                                 </div>

@@ -128,7 +128,7 @@ class penjualanController extends Controller
                 'lokasi_stock'  => $request->tp_lokasi_stock,
                 'kd_reg'        => $request->tp_kd_reg,
                 'no_mr'         => $request->tp_no_mr,
-                // 'nm_pasien'  => $request->,
+                'nm_pasien'  => $request->tp_nama,
                 'alamat'        => $request->tp_alamat,
                 'jenis_kelamin' => $request->tp_jenis_kelamin,
                 'tgl_lahir'     => $request->tp_tgl_lahir,

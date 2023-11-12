@@ -90,6 +90,7 @@ Route::controller(TindakanController::class)->group(function () {
     Route::post('chartCreate', 'chartCreate')->name('chartCreate');
     Route::get('obatSearchCH', 'obatSearchCH')->name('obatSearchCH');
     Route::get('getObatListCH/{obat}', 'getObatListCH')->name('getObatListCH');
+    Route::get('getIcdX', 'getIcdX')->name('getIcdX');
 });
 
 

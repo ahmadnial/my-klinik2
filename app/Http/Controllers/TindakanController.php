@@ -146,8 +146,8 @@ class TindakanController extends Controller
 
     public function chartCreate(Request $request)
     {
-        // $yes = $request->all();
-        // dd($yes);
+        $yes = $request->all();
+        dd($yes);
 
         $request->validate([
             // 'user' => 'required',
@@ -305,5 +305,18 @@ class TindakanController extends Controller
             ->get();
 
         return response()->json($isChartID);
+    }
+
+    public function getIcdX(Request $request)
+    {
+        $isICDX = [];
+
+        if ($request->filled('q')) {
+            $isICDX = mstr_icdx::select("code", "name_id")
+                ->where('name_id', 'LIKE', '%' . $request->get('q') . '%')
+                ->get();
+        }
+        // dd($data);
+        return response()->json($isICDX);
     }
 }

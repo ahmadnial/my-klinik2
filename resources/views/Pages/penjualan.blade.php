@@ -308,10 +308,11 @@
                                 $('#tp_jenis_kelamin').val(getValues[getVals].fs_jenis_kelamin);
                                 $('#tp_tgl_lahir').val(getValues[getVals].fs_tgl_lahir);
 
-                                // var hrg_resep = getValues[getVals].ch_hrg_jual;
-                                // var qty_resep = getValues[getVals].ch_qty_obat;
+                                var hrg_resep = getValues[getVals].ch_hrg_jual;
+                                var qty_resep = getValues[getVals].ch_qty_obat;
 
-                                // var sub_total = int(hrg_resep * qty_resep);
+                                var sub_total = hrg_resep * qty_resep;
+                                // console.log(sub_total);
 
 
                                 $("#ListObatJual").append(`
@@ -346,7 +347,7 @@
                                     </td>
                                     <td>
                                         <input type="text" class="sub_totalr form-control" id="sub_totalr"
-                                            name="sub_total[]" readonly style="border: none;" value="">
+                                            name="sub_total[]" readonly style="border: none;" value="${sub_total}">
                                     </td>
 
                                     <input type="hidden" name="user" id="user" value="tes user">
@@ -358,24 +359,12 @@
                     
                                 `);
                             }
+                            GrandTotalResep();
 
                         }
                     })
                 }
 
-                function getQTYResep(q) {
-                    // $('#calculation').on("keyup", ".do_hrg_beli", function() {
-                    var parent = q.parentElement.parentElement;
-                    var quant = $(parent).find('#qtyr').val();
-                    var price = $(parent).find('#hrg_obat').val();
-                    // console.log(quant);
-                    var x = quant * price;
-                    var result = x.toFixed(2);
-                    $(parent).find('#sub_totalr').val(result);
-                    GrandTotalResep();
-                    // });
-
-                };
 
                 function GrandTotalResep() {
                     var sum = 0;
