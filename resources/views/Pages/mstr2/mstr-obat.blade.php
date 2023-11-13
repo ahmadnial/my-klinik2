@@ -512,6 +512,9 @@
                     var fm_hrg_jual_non_resep = $('#fm_hrg_jual_non_resep').val();
                     var fm_hrg_jual_resep = $('#fm_hrg_jual_resep').val();
                     var fm_hrg_jual_nakes = $('#fm_hrg_jual_nakes').val();
+                    var st_isi_pembelian = $('#isiSatuanBeli').val();
+                    var st_hrg_beli_per1 = $('#hrgBeliPer').val();
+                    var st_hrg_beli_per2 = $('#hrgBeliPerDetail').val();
                     var isActive = $('#isActive').val();
                     var isOpenPrice = $('#isOpenPrice').val();
                     var user = $('#user').val();
@@ -544,6 +547,9 @@
                                 fm_hrg_jual_non_resep: sfm_hrg_jual_non_resep,
                                 fm_hrg_jual_resep: sfm_hrg_jual_resep,
                                 fm_hrg_jual_nakes: sfm_hrg_jual_nakes,
+                                st_isi_pembelian: st_isi_pembelian,
+                                st_hrg_beli_per1: st_hrg_beli_per1,
+                                st_hrg_beli_per2: st_hrg_beli_per2,
                                 isActive: isActive,
                                 isOpenPrice: isOpenPrice,
                                 user: user
