@@ -307,6 +307,7 @@
                                 $('#tp_alamat').val(getValues[getVals].fs_alamat);
                                 $('#tp_jenis_kelamin').val(getValues[getVals].fs_jenis_kelamin);
                                 $('#tp_tgl_lahir').val(getValues[getVals].fs_tgl_lahir);
+                                $('#tp_tipe_tarif').val('Resep Klinik');
 
                                 var hrg_resep = getValues[getVals].ch_hrg_jual;
                                 var qty_resep = getValues[getVals].ch_qty_obat;

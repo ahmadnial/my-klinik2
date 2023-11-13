@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('trs_chart', function (Blueprint $table) {
-            $table->string('id_tindakan')->nullable();
+        Schema::table('mstr_obat', function (Blueprint $table) {
+            $table->string('st_isi_pembelian');
+            $table->string('st_hrg_beli_per1');
+            $table->string('st_hrg_beli_per2');
         });
     }
 
@@ -21,7 +23,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('trs_charts', function (Blueprint $table) {
+        Schema::table('mstr_obat', function (Blueprint $table) {
             //
         });
     }

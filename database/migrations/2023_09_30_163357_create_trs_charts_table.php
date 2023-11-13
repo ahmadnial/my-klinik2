@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('kd_reg');
             $table->string('mr_pasien');
             $table->string('nm_pasien');
-            $table->string('nm_tarif')->nullable()->default();
+            $table->string('nm_tarif')->nullable();
             $table->string('resep')->nullable();
             $table->string('nm_tarif_dasar');
             $table->string('nm_nilai_tarif')->nullable();
@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('sub_total')->nullable();
             $table->string('tgl_void')->nullable();
             $table->string('user_void')->nullable();
-            $table->string('user');
+            $table->string('user')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
