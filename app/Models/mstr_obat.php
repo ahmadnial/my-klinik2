@@ -28,6 +28,9 @@ class mstr_obat extends Model
         'fm_hrg_jual_nakes',
         'isActive',
         'isOpenPrice',
-        'user'
+        'user',
+        'st_isi_pembelian',
+        'st_hrg_beli_per1',
+        'st_hrg_beli_per2'
     ];
 }

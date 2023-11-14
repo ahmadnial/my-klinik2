@@ -210,6 +210,9 @@ class masterFarmasiController extends Controller
 
     public function obatCreate(Request $request)
     {
+        // $d = $request->all();
+        // dd($d);
+
         $request->validate([
             'fm_kd_obat' => 'required',
             'fm_nm_obat' => 'required',
@@ -223,6 +226,9 @@ class masterFarmasiController extends Controller
             'fm_hrg_jual_non_resep' => 'required',
             'fm_hrg_jual_resep' => 'required',
             'fm_hrg_jual_nakes' => 'required',
+            'st_isi_pembelian'  => 'required',
+            'st_hrg_beli_per1'  => 'required',
+            'st_hrg_beli_per2'  => 'required',
             // 'isActive' => 'required',
             // 'isOpenPrice' => 'required',
             'user'
