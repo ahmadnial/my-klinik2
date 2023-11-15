@@ -44,7 +44,13 @@
                                             data-id="{{ $tz->fm_kd_obat }}" data-nmobat="{{ $tz->fm_nm_obat }}"
                                             data-kategori="{{ $tz->fm_kategori }}" data-supplier="{{ $tz->fm_supplier }}"
                                             data-satuan_pembelian="{{ $tz->fm_satuan_pembelian }}"
-                                            data-isiSatBeli="{{ $tz->fm_isi_satuan_pembelian }}" id="editObat"
+                                            data-satuan_penjualan="{{ $tz->fm_satuan_jual }}"
+                                            data-isi_sat_beli="{{ $tz->fm_isi_satuan_pembelian }}"
+                                            data-hrg_beli_terbesar="{{ $tz->fm_hrg_beli }}"
+                                            data-hrg_beli_terkecil="{{ $tz->fm_hrg_beli_detail }}"
+                                            data-hrg_jual_reg="{{ $tz->fm_hrg_jual_non_resep }}"
+                                            data-hrg_jual_resep="{{ $tz->fm_hrg_jual_resep }}"
+                                            data-hrg_jual_nakes="{{ $tz->fm_hrg_jual_nakes }}" id="editObat"
                                             onClick="getIDObat(this)">Edit</button>
                                         <button class="btn btn-xs btn-danger" data-toggle="modal"
                                             data-target="#DeleteSupplier{{ $tz->fm_kd_supplier }}">Hapus</button>
@@ -83,7 +89,7 @@
                             <label for="">Kategori</label>
                             <select class="efm_kategori form-control" id="efm_kategori" style="width: 100%;"
                                 name="efm_kategori">
-                                <option value=""></option>
+                                {{-- <option value=""></option> --}}
                                 @foreach ($kategori as $kt)
                                     <option value="{{ $kt->fm_nm_kategori_produk }}">
                                         {{ $kt->fm_nm_kategori_produk }}
@@ -95,8 +101,6 @@
                             <label for="">Supplier</label>
                             <select class="efm_supplier form-control" id="efm_supplier" style="width: 100%;"
                                 name="efm_supplier">
-                                <option value="">
-                                </option>
                                 @foreach ($supplier as $sp)
                                     <option value="{{ $sp->fm_nm_supplier }}">
                                         {{ $sp->fm_nm_supplier }}</option>
@@ -127,8 +131,7 @@
                             <label for="">Satuan Jual</label>
                             <select class="efm_satuan_jual form-control" id="efm_satuan_jual" style="width: 100%;"
                                 name="efm_satuan_jual">
-                                <option value="">
-                                </option>
+                                <option value=""></option>
                                 @foreach ($satuanBeli as $sb)
                                     <option value="{{ $sb->fm_nm_satuan }}">
                                         {{ $sb->fm_nm_satuan }}</option>
@@ -218,12 +221,12 @@
                         <div class="form-group col-sm-6">
                             <label for="">Obat</label>
                             <input type="text" class="form-control" name="fm_nm_obat" id="fm_nm_obat" value=""
-                                placeholder="Input Nama Obat">
+                                placeholder="Input Nama Obat" required>
                         </div>
                         <div class="form-group col-sm-6">
                             <label for="">Kategori</label>
                             <select class="fm_kategori form-control-pasien" id="fm_kategori" style="width: 100%;"
-                                name="fm_kategori">
+                                name="fm_kategori" required>
                                 <option value="">--Select--</option>
                                 @foreach ($kategori as $kt)
                                     <option value="{{ $kt->fm_nm_kategori_produk }}">{{ $kt->fm_nm_kategori_produk }}
@@ -234,7 +237,7 @@
                         <div class="form-group col-sm-6">
                             <label for="">Supplier</label>
                             <select class="fm_supplier form-control-pasien" id="fm_supplier" style="width: 100%;"
-                                name="fm_supplier">
+                                name="fm_supplier" required>
                                 <option value="">--Select--</option>
                                 @foreach ($supplier as $sp)
                                     <option value="{{ $sp->fm_nm_supplier }}">{{ $sp->fm_nm_supplier }}</option>
@@ -244,7 +247,7 @@
                         <div class="form-group col-sm-6">
                             <label for="">Satuan Pembelian</label>
                             <select class="fm_satuan_pembelian form-control-pasien" id="fm_satuan_pembelian"
-                                style="width: 100%;" name="fm_satuan_pembelian">
+                                style="width: 100%;" name="fm_satuan_pembelian" required>
                                 <option value="">--Select--</option>
                                 @foreach ($satuanBeli as $sb)
                                     <option value="{{ $sb->fm_nm_satuan }}">{{ $sb->fm_nm_satuan }}</option>
@@ -258,7 +261,7 @@
                             </label>
                             <input type="text" class="fm_isi_satuan_pembelian form-control"
                                 name="fm_isi_satuan_pembelian" id="fm_isi_satuan_pembelian" value=""
-                                placeholder="Input Isi Satuan Pembelian">
+                                placeholder="Input Isi Satuan Pembelian" required>
                         </div>
                         <div class="form-group col-sm-6">
                             <label for="">Satuan Jual</label>
@@ -287,11 +290,22 @@
                     </div>
                     <hr>
                     <div class="row">
-                        <div class="form-group col-sm-6">
-                            <label for="">Harga Jual Non-Resep</label>
-                            <input type="text" class="fm_hrg_jual_non_resep autocurrency form-control"
-                                name="fm_hrg_jual_non_resep" id="fm_hrg_jual_non_resep" value=""
-                                placeholder="Input Harga Jual Reguler / Non-Resep">
+                        <div class="form-group col-6">
+                            <div class="row form-inline">
+                                <div class="col-4 mr-2">
+                                    <label for="">Harga Jual
+                                        Non-Resep</label>
+                                    <input type="text" class="fm_hrg_jual_non_resep autocurrency form-control"
+                                        name="fm_hrg_jual_non_resep" id="fm_hrg_jual_non_resep" value=""
+                                        placeholder="Input Harga Jual Reguler / Non-Resep">
+                                </div>
+                                <div class="col-4 ml-3">
+                                    <label for="">Harga Jual Non-Resep</label>
+                                    <input type="text" class="fm_hrg_jual_non_resep_persen autocurrency form-control"
+                                        name="fm_hrg_jual_non_resep_persen" id="fm_hrg_jual_non_resep_persen"
+                                        value="" placeholder="Input Harga Jual Reguler / Non-Resep">
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group col-sm-6">
                             <label for="">Harga Jual Resep</label>
@@ -455,15 +469,27 @@
                 var kategori = $(tx).data('kategori');
                 var supplier = $(tx).data('supplier');
                 var satBeli = $(tx).data('satuan_pembelian');
-                var isiSatuanBeli = $(tx).data('isiSatBeli');
+                var satJual = $(tx).data('satuan_penjualan');
+                var isiSatuanBeli = $(tx).data('isi_sat_beli');
+                var hrgBeliTerbesar = $(tx).data('hrg_beli_terbesar');
+                var hrgBeliTerkecil = $(tx).data('hrg_beli_terkecil');
+                var hrgJualReg = $(tx).data('hrg_jual_reg');
+                var hrgJualResep = $(tx).data('hrg_jual_resep');
+                var hrgJualNakes = $(tx).data('hrg_jual_nakes');
                 // alert(ids);
                 $('#EditObatModal').modal('show');
                 $('#efm_kd_obat').val(ids);
                 $('#efm_nm_obat').val(nmobat);
-                $('#efm_kategori').val(kategori);
-                $('#efm_supplier').val(supplier);
-                $('#efm_satuan_pembelian').val(satBeli);
+                $('#efm_kategori').append(`<option value="${kategori}" selected>${kategori}</option>`);
+                $('#efm_supplier').append(`<option value="${supplier}" selected>${supplier}</option>`);
+                $('#efm_satuan_pembelian').append(`<option value="${satBeli}" selected>${satBeli}</option>`);
+                $('#efm_satuan_jual').append(`<option value="${satJual}" selected>${satJual}</option>`);
                 $('#efm_isi_satuan_pembelian').val(isiSatuanBeli);
+                $('#efm_hrg_beli').val(hrgBeliTerbesar);
+                $('#efm_hrg_beli_detail').val(hrgBeliTerkecil);
+                $('#efm_hrg_jual_non_resep').val(hrgJualReg);
+                $('#efm_hrg_jual_resep').val(hrgJualResep);
+                $('#efm_hrg_jual_nakes').val(hrgJualNakes);
             };
 
             // Pembagian detail harga beli
@@ -653,7 +679,11 @@
                             }
                         });
                     } else {
-                        alert('Please fill all the field !');
+                        toastr.info('Data Belum Lengkap', {
+                            timeOut: 2000,
+                            preventDuplicates: true,
+                            positionClass: 'toast-top-right',
+                        });
                     }
                 });
             });
