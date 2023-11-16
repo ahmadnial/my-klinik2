@@ -462,6 +462,54 @@
                 });
             });
 
+            $('#fm_hrg_jual_non_resep_persen').on('input', function() {
+                // alert('gogogo')
+                hrgPersen();
+
+                function hrgPersen() {
+                    var hrg_reg = $('#fm_hrg_jual_non_resep_persen').val();
+                    var hrg_beli = $('#fm_hrg_beli_detail').val();
+                    // var price = $(parentx).find('#do_sub_total').val();
+                    // var subttl = $(parentx).find('#do_sub_total').val();
+                    var calc = (hrg_reg / 100) * hrg_beli;
+
+                    var result = calc.toFixed(2);
+                    // var hrg_beli_to = hrg_beli.toFixed(2);
+                    // var resultint = parseInt(result);
+                    // var hrg_beli_toint = parseInt(hrg_beli_to);
+
+                    var ttl = parseInt(hrg_beli) + parseInt(result);
+
+                    $('#fm_hrg_jual_non_resep').val(ttl);
+                    // var dsc = $(parentx).find('#do_diskon').val();
+
+                    // $(parentx).find('#do_sub_total').val(subttl - dsc);
+
+                    // console.log(result);
+                }
+            });
+
+            $('#fm_hrg_jual_non_resep').on('input', function() {
+                // alert('gogogo')
+                hrgRp();
+
+                function hrgRp() {
+                    var hrg_reg = $('#fm_hrg_jual_non_resep').val();
+                    var hrg_beli = $('#fm_hrg_beli_detail').val();
+                    var pengurangan = (hrg_reg - hrg_beli);
+                    // if (event.keyCode == 13) {
+                    // var tdscr = $(parentR).find('#do_diskon').val();
+                    // var subttl = $(parentR).find('#do_sub_total').val();
+                    var calc = (pengurangan / hrg_beli) * 100;
+                    var result = calc.toFixed(2);
+
+                    // var ttl = parseInt(hrg_beli) + parseInt(result);
+
+                    $('#fm_hrg_jual_non_resep_persen').val(result);
+                }
+            });
+
+
             // modal Edit
             function getIDObat(tx) {
                 var ids = $(tx).data('id');
@@ -531,8 +579,9 @@
             };
 
             // var rupiah2 = $("#fm_hrg_jual_non_resep").val();
-            var rupiah2 = document.getElementById("fm_hrg_jual_non_resep");
-            rupiah2.addEventListener('keyup', function(e) {
+            var rupiah2 = document.getElementBy("fm_hrg_jual_non_resep");
+            rupiah2.addEventListener('input', function(
+                e) {
                 rupiah2.value = formatRupiah(this.value, 'Rp. ');
             });
 
@@ -634,9 +683,13 @@
                     // ubah currency ke int
                     var sfm_hrg_beli = parseInt(fm_hrg_beli.replace(/,.*|[^0-9]/g, ''), 10);
                     // var sfm_hrg_beli = parseInt(fm_hrg_beli.replace(/,.*|[^0-9]/g, ''), 10);
-                    var sfm_hrg_jual_non_resep = parseInt(fm_hrg_jual_non_resep.replace(/,.*|[^0-9]/g, ''), 10);
-                    var sfm_hrg_jual_resep = parseInt(fm_hrg_jual_resep.replace(/,.*|[^0-9]/g, ''), 10);
-                    var sfm_hrg_jual_nakes = parseInt(fm_hrg_jual_nakes.replace(/,.*|[^0-9]/g, ''), 10);
+                    var sfm_hrg_jual_non_resep = parseInt(fm_hrg_jual_non_resep.replace(
+                            /,.*|[^0-9]/g, ''),
+                        10);
+                    var sfm_hrg_jual_resep = parseInt(fm_hrg_jual_resep.replace(/,.*|[^0-9]/g, ''),
+                        10);
+                    var sfm_hrg_jual_nakes = parseInt(fm_hrg_jual_nakes.replace(/,.*|[^0-9]/g, ''),
+                        10);
 
                     if (fm_nm_obat != "") {
                         $.ajax({
