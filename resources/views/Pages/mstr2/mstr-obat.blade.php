@@ -10,56 +10,57 @@
             </div>
 
             <div class="card-body">
-                <div id="">
-                    <table id="example1" class="table table-hover table-striped table-bordered">
-                        <thead class="">
-                            <tr>
-                                <th>Kode Barang</th>
-                                <th>Nama Obat</th>
-                                <th>Kategori</th>
-                                <th>Supplier</th>
-                                <th>Sat. Beli</th>
-                                <th>Sat. Jual</th>
-                                <th>Hrg Beli</th>
-                                <th>Hrg Jual Non-resep</th>
-                                <th>Hrg Jual Resep</th>
-                                <th>Hrg Jual Nakes</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
+                <table id="example1" class="table table-striped table-hover">
+                    <thead class="">
+                        <tr>
+                            <th>Kode Barang</th>
+                            <th>Nama Obat</th>
+                            <th>Kategori</th>
+                            <th>Supplier</th>
+                            <th>Sat. Beli</th>
+                            <th>Sat. Jual</th>
+                            <th>Hrg Beli</th>
+                            <th>Hrg Jual Non-resep</th>
+                            <th>Hrg Jual Resep</th>
+                            <th>Hrg Jual Nakes</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         @foreach ($obatView as $tz)
-                            <tbody>
-                                <tr>
-                                    <td id="">{{ $tz->fm_kd_obat }}</td>
-                                    <td id="">{{ $tz->fm_nm_obat }}</td>
-                                    <td id="">{{ $tz->fm_kategori }}</td>
-                                    <td id="">{{ $tz->fm_supplier }}</td>
-                                    <td id="">{{ $tz->fm_satuan_pembelian }}</td>
-                                    <td id="">{{ $tz->fm_satuan_jual }}</td>
-                                    <td id="">@currency($tz->fm_hrg_beli)</td>
-                                    <td id="">@currency($tz->fm_hrg_jual_non_resep)</td>
-                                    <td id="">@currency($tz->fm_hrg_jual_resep)</td>
-                                    <td id="">@currency($tz->fm_hrg_jual_nakes)</td>
-                                    <td><button class="btn btn-xs btn-info" data-toggle="modal" data-target=""
-                                            data-id="{{ $tz->fm_kd_obat }}" data-nmobat="{{ $tz->fm_nm_obat }}"
-                                            data-kategori="{{ $tz->fm_kategori }}" data-supplier="{{ $tz->fm_supplier }}"
-                                            data-satuan_pembelian="{{ $tz->fm_satuan_pembelian }}"
-                                            data-satuan_penjualan="{{ $tz->fm_satuan_jual }}"
-                                            data-isi_sat_beli="{{ $tz->fm_isi_satuan_pembelian }}"
-                                            data-hrg_beli_terbesar="{{ $tz->fm_hrg_beli }}"
-                                            data-hrg_beli_terkecil="{{ $tz->fm_hrg_beli_detail }}"
-                                            data-hrg_jual_reg="{{ $tz->fm_hrg_jual_non_resep }}"
-                                            data-hrg_jual_resep="{{ $tz->fm_hrg_jual_resep }}"
-                                            data-hrg_jual_nakes="{{ $tz->fm_hrg_jual_nakes }}" id="editObat"
-                                            onClick="getIDObat(this)">Edit</button>
-                                        <button class="btn btn-xs btn-danger" data-toggle="modal"
-                                            data-target="#DeleteSupplier{{ $tz->fm_kd_supplier }}">Hapus</button>
-                                    </td>
-                                </tr>
-                            </tbody>
+                            <tr>
+                                <td id="">{{ $tz->fm_kd_obat }}</td>
+                                <td id="">{{ $tz->fm_nm_obat }}</td>
+                                <td id="">{{ $tz->fm_kategori }}</td>
+                                <td id="">{{ $tz->fm_supplier }}</td>
+                                <td id="">{{ $tz->fm_satuan_pembelian }}</td>
+                                <td id="">{{ $tz->fm_satuan_jual }}</td>
+                                <td id="">@currency($tz->fm_hrg_beli)</td>
+                                <td id="">@currency($tz->fm_hrg_jual_non_resep)</td>
+                                <td id="">@currency($tz->fm_hrg_jual_resep)</td>
+                                <td id="">@currency($tz->fm_hrg_jual_nakes)</td>
+                                <td><button class="btn btn-xs btn-info" data-toggle="modal" data-target=""
+                                        data-id="{{ $tz->fm_kd_obat }}" data-nmobat="{{ $tz->fm_nm_obat }}"
+                                        data-kategori="{{ $tz->fm_kategori }}" data-supplier="{{ $tz->fm_supplier }}"
+                                        data-satuan_pembelian="{{ $tz->fm_satuan_pembelian }}"
+                                        data-satuan_penjualan="{{ $tz->fm_satuan_jual }}"
+                                        data-isi_sat_beli="{{ $tz->fm_isi_satuan_pembelian }}"
+                                        data-isi_satuan_beli="{{ $tz->st_isi_pembelian }}"
+                                        data-hrg_beli_per1="{{ $tz->st_hrg_beli_per1 }}"
+                                        data-hrg_beli_per2="{{ $tz->st_hrg_beli_per2 }}"
+                                        data-hrg_beli_terbesar="{{ $tz->fm_hrg_beli }}"
+                                        data-hrg_beli_terkecil="{{ $tz->fm_hrg_beli_detail }}"
+                                        data-hrg_jual_reg="{{ $tz->fm_hrg_jual_non_resep }}"
+                                        data-hrg_jual_resep="{{ $tz->fm_hrg_jual_resep }}"
+                                        data-hrg_jual_nakes="{{ $tz->fm_hrg_jual_nakes }}" id="editObat"
+                                        onClick="getIDObat(this)">Edit</button>
+                                    <button class="btn btn-xs btn-danger" data-toggle="modal"
+                                        data-target="#DeleteSupplier{{ $tz->fm_kd_supplier }}">Hapus</button>
+                                </td>
+                            </tr>
                         @endforeach
-                    </table>
-                </div>
+                    </tbody>
+                </table>
             </div>
         </div>
     </section>
@@ -155,23 +156,53 @@
                     </div>
                     <hr>
                     <div class="row">
-                        <div class="form-group col-sm-6">
-                            <label for="">Harga Jual Non-Resep</label>
-                            <input type="text" class="efm_hrg_jual_non_resep form-control"
-                                name="efm_hrg_jual_non_resep" id="efm_hrg_jual_non_resep" value=""
-                                placeholder="Input Harga Jual Reguler / Non-Resep">
+                        <div class="form-group form-inline col-6">
+                            <div class="row ">
+                                <div class="col-5">
+                                    <label for="">Non-Resep (Rp.)</label>
+                                    <input type="text" class="efm_hrg_jual_non_resep autocurrency form-control"
+                                        name="efm_hrg_jual_non_resep" id="efm_hrg_jual_non_resep" value=""
+                                        placeholder=" Reguler / Non-Resep">
+                                </div>
+                                <div class="col-5">
+                                    <label for="">Non-Resep (%)</label>
+                                    <input type="text" class="fm_hrg_jual_non_resep_persen autocurrency form-control"
+                                        name="fm_hrg_jual_non_resep_persen" id="fm_hrg_jual_non_resep_persen"
+                                        value="" placeholder=" Reguler / Non-Resep">
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group col-sm-6">
-                            <label for="">Harga Jual Resep</label>
-                            <input type="text" class="autocurrency efm_hrg_jual_resep form-control"
-                                name="efm_hrg_jual_resep" id="efm_hrg_jual_resep" value=""
-                                placeholder="Input Harga Jual Resep">
+                        <div class="form-group form-inline col-6">
+                            <div class="row ">
+                                <div class="col-5">
+                                    <label for="">Hrg Resep (Rp.)</label>
+                                    <input type="text" class="autocurrency efm_hrg_jual_resep form-control"
+                                        name="efm_hrg_jual_resep" id="efm_hrg_jual_resep" value=""
+                                        placeholder="Resep">
+                                </div>
+                                <div class="col-5">
+                                    <label for="">Hrg Resep (%)</label>
+                                    <input type="text" class="autocurrency fm_hrg_jual_resep_persen form-control"
+                                        name="fm_hrg_jual_resep_persen" id="fm_hrg_jual_resep_persen" value=""
+                                        placeholder="Resep">
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group col-sm-6">
-                            <label for="">Harga Jual Nakes</label>
-                            <input type="text" class="autocurrency efm_hrg_jual_nakes form-control"
-                                name="efm_hrg_jual_nakes" id="efm_hrg_jual_nakes" value=""
-                                placeholder="Input Harga Jual Nakes">
+                        <div class="form-group form-inline col-6">
+                            <div class="row ">
+                                <div class="col-5">
+                                    <label for="">Hrg Nakes</label>
+                                    <input type="text" class="autocurrency efm_hrg_jual_nakes form-control"
+                                        name="efm_hrg_jual_nakes" id="efm_hrg_jual_nakes" value=""
+                                        placeholder="Nakes">
+                                </div>
+                                <div class="col-5">
+                                    <label for="">Hrg Nakes</label>
+                                    <input type="text" class="autocurrency fm_hrg_jual_nake_persens form-control"
+                                        name="fm_hrg_jual_nakes_persen" id="fm_hrg_jual_nakes_persen" value=""
+                                        placeholder="Nakes">
+                                </div>
+                            </div>
                         </div>
                         <div class="">
                             <div class="custom-control custom-checkbox col-md ml-3">
@@ -290,34 +321,53 @@
                     </div>
                     <hr>
                     <div class="row">
-                        <div class="form-group col-6">
-                            <div class="row form-inline">
-                                <div class="col-4 mr-2">
-                                    <label for="">Harga Jual
-                                        Non-Resep</label>
+                        <div class="form-group form-inline col-6">
+                            <div class="row ">
+                                <div class="col-5">
+                                    <label for="">Non-Resep (Rp.)</label>
                                     <input type="text" class="fm_hrg_jual_non_resep autocurrency form-control"
                                         name="fm_hrg_jual_non_resep" id="fm_hrg_jual_non_resep" value=""
-                                        placeholder="Input Harga Jual Reguler / Non-Resep">
+                                        placeholder=" Reguler / Non-Resep">
                                 </div>
-                                <div class="col-4 ml-3">
-                                    <label for="">Harga Jual Non-Resep</label>
+                                <div class="col-5">
+                                    <label for="">Non-Resep (%)</label>
                                     <input type="text" class="fm_hrg_jual_non_resep_persen autocurrency form-control"
                                         name="fm_hrg_jual_non_resep_persen" id="fm_hrg_jual_non_resep_persen"
-                                        value="" placeholder="Input Harga Jual Reguler / Non-Resep">
+                                        value="" placeholder=" Reguler / Non-Resep">
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group col-sm-6">
-                            <label for="">Harga Jual Resep</label>
-                            <input type="text" class="autocurrency fm_hrg_jual_resep form-control"
-                                name="fm_hrg_jual_resep" id="fm_hrg_jual_resep" value=""
-                                placeholder="Input Harga Jual Resep">
+                        <div class="form-group form-inline col-6">
+                            <div class="row ">
+                                <div class="col-5">
+                                    <label for="">Hrg Resep (Rp.)</label>
+                                    <input type="text" class="autocurrency fm_hrg_jual_resep form-control"
+                                        name="fm_hrg_jual_resep" id="fm_hrg_jual_resep" value=""
+                                        placeholder="Resep">
+                                </div>
+                                <div class="col-5">
+                                    <label for="">Hrg Resep (%)</label>
+                                    <input type="text" class="autocurrency fm_hrg_jual_resep_persen form-control"
+                                        name="fm_hrg_jual_resep_persen" id="fm_hrg_jual_resep_persen" value=""
+                                        placeholder="Resep">
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group col-sm-6">
-                            <label for="">Harga Jual Nakes</label>
-                            <input type="text" class="autocurrency fm_hrg_jual_nakes form-control"
-                                name="fm_hrg_jual_nakes" id="fm_hrg_jual_nakes" value=""
-                                placeholder="Input Harga Jual Nakes">
+                        <div class="form-group form-inline col-6">
+                            <div class="row ">
+                                <div class="col-5">
+                                    <label for="">Hrg Nakes</label>
+                                    <input type="text" class="autocurrency fm_hrg_jual_nakes form-control"
+                                        name="fm_hrg_jual_nakes" id="fm_hrg_jual_nakes" value=""
+                                        placeholder="Nakes">
+                                </div>
+                                <div class="col-5">
+                                    <label for="">Hrg Nakes</label>
+                                    <input type="text" class="autocurrency fm_hrg_jual_nake_persens form-control"
+                                        name="fm_hrg_jual_nakes_persen" id="fm_hrg_jual_nakes_persen" value=""
+                                        placeholder="Nakes">
+                                </div>
+                            </div>
                         </div>
                         <div class="">
                             <div class="custom-control custom-checkbox col-md ml-3">
@@ -469,9 +519,9 @@
                 function hrgPersen() {
                     var hrg_reg = $('#fm_hrg_jual_non_resep_persen').val();
                     var hrg_beli = $('#fm_hrg_beli_detail').val();
-                    // var price = $(parentx).find('#do_sub_total').val();
-                    // var subttl = $(parentx).find('#do_sub_total').val();
-                    var calc = (hrg_reg / 100) * hrg_beli;
+                    var hrg_regInt = parseInt(hrg_reg.replace(/,.*|[^0-9]/g, ''));
+
+                    var calc = (hrg_regInt / 100) * hrg_beli;
 
                     var result = calc.toFixed(2);
                     // var hrg_beli_to = hrg_beli.toFixed(2);
@@ -509,6 +559,102 @@
                 }
             });
 
+            // Resep
+            $('#fm_hrg_jual_resep_persen').on('input', function() {
+                // alert('gogogo')
+                hrgPersen();
+
+                function hrgPersen() {
+                    var hrg_reg = $('#fm_hrg_jual_resep_persen').val();
+                    var hrg_beli = $('#fm_hrg_beli_detail').val();
+                    var hrg_regInt = parseInt(hrg_reg.replace(/,.*|[^0-9]/g, ''));
+
+                    var calc = (hrg_regInt / 100) * hrg_beli;
+
+                    var result = calc.toFixed(2);
+                    // var hrg_beli_to = hrg_beli.toFixed(2);
+                    // var resultint = parseInt(result);
+                    // var hrg_beli_toint = parseInt(hrg_beli_to);
+
+                    var ttl = parseInt(hrg_beli) + parseInt(result);
+
+                    $('#fm_hrg_jual_resep').val(ttl);
+                    // var dsc = $(parentx).find('#do_diskon').val();
+
+                    // $(parentx).find('#do_sub_total').val(subttl - dsc);
+
+                    // console.log(result);
+                }
+            });
+
+            $('#fm_hrg_jual_resep').on('input', function() {
+                // alert('gogogo')
+                hrgRp();
+
+                function hrgRp() {
+                    var hrg_reg = $('#fm_hrg_jual_resep').val();
+                    var hrg_beli = $('#fm_hrg_beli_detail').val();
+                    var pengurangan = (hrg_reg - hrg_beli);
+                    // if (event.keyCode == 13) {
+                    // var tdscr = $(parentR).find('#do_diskon').val();
+                    // var subttl = $(parentR).find('#do_sub_total').val();
+                    var calc = (pengurangan / hrg_beli) * 100;
+                    var result = calc.toFixed(2);
+
+                    // var ttl = parseInt(hrg_beli) + parseInt(result);
+
+                    $('#fm_hrg_jual_resep_persen').val(result);
+                }
+            });
+
+            // Nakes
+            $('#fm_hrg_jual_nakes_persen').on('input', function() {
+                // alert('gogogo')
+                hrgPersen();
+
+                function hrgPersen() {
+                    var hrg_reg = $('#fm_hrg_jual_nakes_persen').val();
+                    var hrg_beli = $('#fm_hrg_beli_detail').val();
+                    // var price = $(parentx).find('#do_sub_total').val();
+                    // var subttl = $(parentx).find('#do_sub_total').val();
+                    var calc = (hrg_reg / 100) * hrg_beli;
+
+                    var result = calc.toFixed(2);
+                    // var hrg_beli_to = hrg_beli.toFixed(2);
+                    // var resultint = parseInt(result);
+                    // var hrg_beli_toint = parseInt(hrg_beli_to);
+
+                    var ttl = parseInt(hrg_beli) + parseInt(result);
+
+                    $('#fm_hrg_jual_nakes').val(ttl);
+                    // var dsc = $(parentx).find('#do_diskon').val();
+
+                    // $(parentx).find('#do_sub_total').val(subttl - dsc);
+
+                    // console.log(result);
+                }
+            });
+
+            $('#fm_hrg_jual_nakes').on('input', function() {
+                // alert('gogogo')
+                hrgRp();
+
+                function hrgRp() {
+                    var hrg_reg = $('#fm_hrg_jual_nakes').val();
+                    var hrg_beli = $('#fm_hrg_beli_detail').val();
+                    var pengurangan = (hrg_reg - hrg_beli);
+                    // if (event.keyCode == 13) {
+                    // var tdscr = $(parentR).find('#do_diskon').val();
+                    // var subttl = $(parentR).find('#do_sub_total').val();
+                    var calc = (pengurangan / hrg_beli) * 100;
+                    var result = calc.toFixed(2);
+
+                    // var ttl = parseInt(hrg_beli) + parseInt(result);
+
+                    $('#fm_hrg_jual_nakes_persen').val(result);
+                }
+            });
+
 
             // modal Edit
             function getIDObat(tx) {
@@ -519,6 +665,9 @@
                 var satBeli = $(tx).data('satuan_pembelian');
                 var satJual = $(tx).data('satuan_penjualan');
                 var isiSatuanBeli = $(tx).data('isi_sat_beli');
+                var isistbeli = $(tx).data('isi_satuan_beli');
+                var hrgBeliPer1 = $(tx).data('hrg_beli_per1');
+                var hrgBeliPer2 = $(tx).data('hrg_beli_per2');
                 var hrgBeliTerbesar = $(tx).data('hrg_beli_terbesar');
                 var hrgBeliTerkecil = $(tx).data('hrg_beli_terkecil');
                 var hrgJualReg = $(tx).data('hrg_jual_reg');
@@ -533,6 +682,9 @@
                 $('#efm_satuan_pembelian').append(`<option value="${satBeli}" selected>${satBeli}</option>`);
                 $('#efm_satuan_jual').append(`<option value="${satJual}" selected>${satJual}</option>`);
                 $('#efm_isi_satuan_pembelian').val(isiSatuanBeli);
+                $('#eisiSatuanBeli').val(isistbeli);
+                $('#ehrgBeliPer').val(hrgBeliPer1);
+                $('#ehrgBeliPerDetail').val(hrgBeliPer2);
                 $('#efm_hrg_beli').val(hrgBeliTerbesar);
                 $('#efm_hrg_beli_detail').val(hrgBeliTerkecil);
                 $('#efm_hrg_jual_non_resep').val(hrgJualReg);
@@ -579,10 +731,10 @@
             };
 
             // var rupiah2 = $("#fm_hrg_jual_non_resep").val();
-            var rupiah2 = document.getElementBy("fm_hrg_jual_non_resep");
+            var rupiah2 = document.getElementById("fm_hrg_jual_non_resep");
             rupiah2.addEventListener('input', function(
                 e) {
-                rupiah2.value = formatRupiah(this.value, 'Rp. ');
+                rupiah2.value = formatRupiah(this.value);
             });
 
             /* Fungsi formatRupiah */
@@ -606,7 +758,7 @@
             var rupiah3 = document.getElementById("fm_hrg_jual_resep");
             // var rupiah = document.getElementById('fm_hrg_jual_resep');
             rupiah3.addEventListener('keyup', function(e) {
-                rupiah3.value = formatRupiah(this.value, 'Rp. ');
+                rupiah3.value = formatRupiah(this.value);
             });
 
             /* Fungsi formatRupiah */
@@ -629,7 +781,8 @@
 
             var rupiah4 = document.getElementById("fm_hrg_jual_nakes");
             rupiah4.addEventListener('keyup', function(e) {
-                rupiah4.value = formatRupiah(this.value, 'Rp. ');
+                rupiah4.value = formatRupiah(this.value);
+                // rupiah4.value = formatRupiah(this.value, 'Rp. ');
             });
 
             /* Fungsi formatRupiah */
@@ -728,6 +881,7 @@
                                 //     preventDuplicates: true,
                                 //     positionClass: 'toast-top-right',
                                 // });
+                                // return window.location.href = "{{ url('mstr-obat') }}";
                                 return window.location.href = "{{ url('mstr-obat') }}";
                             }
                         });
