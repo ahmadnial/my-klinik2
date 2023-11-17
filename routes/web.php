@@ -112,7 +112,7 @@ Route::controller(masterFarmasiController::class)->group(function () {
     Route::post('add-mstr-jenis-obat', 'jenBatCreate')->name('add-mstr-jenis-obat');
     Route::post('add-mstr-supplier', 'supplierCreate')->name('add-mstr-supplier');
     Route::post('add-mstr-obat', 'obatCreate')->name('add-mstr-obat');
-    Route::post('edit-mstr-obat', 'obatEdit')->name('edit-mstr-obat');
+    Route::post('edit-mstr-obat/{efmkdobat}', 'obatEdit')->name('edit-mstr-obat');
 });
 
 // DELETE MSTR FARMASI

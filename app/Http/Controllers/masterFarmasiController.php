@@ -259,8 +259,8 @@ class masterFarmasiController extends Controller
 
     public function obatEdit(Request $request)
     {
-        // $d = $request->all();
-        // dd($d);
+        $d = $request->all();
+        dd($d);
 
         $request->validate([
             'fm_kd_obat' => 'required',
@@ -280,7 +280,7 @@ class masterFarmasiController extends Controller
             'st_hrg_beli_per2'  => 'required',
             // 'isActive' => 'required',
             // 'isOpenPrice' => 'required',
-            'user'
+            // 'user'
         ]);
 
         // DB::beginTransaction();
@@ -296,18 +296,18 @@ class masterFarmasiController extends Controller
             'fm_hrg_beli' => $request->esfm_hrg_beli,
             'fm_hrg_beli_detail' => $request->efm_hrg_beli_detail,
             'fm_satuan_jual' => $request->efm_satuan_jual,
-            'fm_hrg_jual_non_resep' => $request->xesfm_hrg_jual_non_resep,
+            'fm_hrg_jual_non_resep' => $request->esfm_hrg_jual_non_resep,
             'fm_hrg_jual_resep' => $request->esfm_hrg_jual_resep,
             'fm_hrg_jual_nakes' => $request->esfm_hrg_jual_nakes,
+            'isActive' => $request->eisActive,
+            'isOpenPrice' => $request->eisOpenPrice,
+            'user' => $request->euser,
             'st_isi_pembelian'  => $request->est_isi_pembelian,
             'st_hrg_beli_per1'  => $request->est_hrg_beli_per1,
             'st_hrg_beli_per2'  => $request->est_hrg_beli_per2,
             'fm_hrg_jual_non_resep_persen' => $request->efm_hrg_jual_non_resep_persen,
             'fm_hrg_jual_resep_persen' => $request->efm_hrg_jual_resep_persen,
             'fm_hrg_jual_nakes_persen' => $request->efm_hrg_jual_nakes_persen,
-            'isActive' => $request->eisActive,
-            'isOpenPrice' => $request->eisOpenPrice,
-            'user' => $request->euser
         ]);
 
         if ($y) {

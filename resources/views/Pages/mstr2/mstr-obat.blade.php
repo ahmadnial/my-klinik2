@@ -959,7 +959,7 @@
                                 //     positionClass: 'toast-top-right',
                                 // });
                                 // return window.location.href = "{{ url('mstr-obat') }}";
-                                return window.location.href = "{{ url('mstr-obat') }}";
+                                // return window.location.href = "{{ url('mstr-obat') }}";
                             }
                         });
                     } else {
@@ -1009,11 +1009,12 @@
                         10);
 
                     if (fm_nm_obat != "") {
+                        var efmkdobat = $('#efm_kd_obat').val();
                         $.ajax({
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
-                            url: "{{ route('edit-mstr-obat') }}",
+                            url: "{{ url('edit-mstr-obat') }}/" + efmkdobat,
                             type: "POST",
                             data: {
                                 fm_kd_obat: efm_kd_obat,
