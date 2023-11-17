@@ -52,7 +52,10 @@
                                         data-hrg_beli_terkecil="{{ $tz->fm_hrg_beli_detail }}"
                                         data-hrg_jual_reg="{{ $tz->fm_hrg_jual_non_resep }}"
                                         data-hrg_jual_resep="{{ $tz->fm_hrg_jual_resep }}"
-                                        data-hrg_jual_nakes="{{ $tz->fm_hrg_jual_nakes }}" id="editObat"
+                                        data-hrg_jual_nakes="{{ $tz->fm_hrg_jual_nakes }}"
+                                        data-hrg_jual_reg_persen="{{ $tz->fm_hrg_jual_non_resep_persen }}"
+                                        data-hrg_jual_resep_persen="{{ $tz->fm_hrg_jual_resep_persen }}"
+                                        data-hrg_jual_nakes_persen="{{ $tz->fm_hrg_jual_nakes_persen }}" id="editObat"
                                         onClick="getIDObat(this)">Edit</button>
                                     <button class="btn btn-xs btn-danger" data-toggle="modal"
                                         data-target="#DeleteSupplier{{ $tz->fm_kd_supplier }}">Hapus</button>
@@ -121,7 +124,7 @@
                             </select>
                         </div>
                         <div class="form-group col-sm-6">
-                            <label for="">Isi Satuan Pembelian <input style="border:none" type="text"
+                            <label for="">Isi Satuan Pembelian | Satuan: <input style="border:none" type="text"
                                     id="eisiSatuanBeli" class="eisiSatuanBeli text-danger text-bold col-4" readonly>
                             </label>
                             <input type="text" class="efm_isi_satuan_pembelian form-control"
@@ -166,8 +169,8 @@
                                 </div>
                                 <div class="col-5">
                                     <label for="">Non-Resep (%)</label>
-                                    <input type="text" class="fm_hrg_jual_non_resep_persen autocurrency form-control"
-                                        name="fm_hrg_jual_non_resep_persen" id="fm_hrg_jual_non_resep_persen"
+                                    <input type="text" class="efm_hrg_jual_non_resep_persen autocurrency form-control"
+                                        name="efm_hrg_jual_non_resep_persen" id="efm_hrg_jual_non_resep_persen"
                                         value="" placeholder=" Reguler / Non-Resep">
                                 </div>
                             </div>
@@ -182,8 +185,8 @@
                                 </div>
                                 <div class="col-5">
                                     <label for="">Hrg Resep (%)</label>
-                                    <input type="text" class="autocurrency fm_hrg_jual_resep_persen form-control"
-                                        name="fm_hrg_jual_resep_persen" id="fm_hrg_jual_resep_persen" value=""
+                                    <input type="text" class="autocurrency efm_hrg_jual_resep_persen form-control"
+                                        name="efm_hrg_jual_resep_persen" id="efm_hrg_jual_resep_persen" value=""
                                         placeholder="Resep">
                                 </div>
                             </div>
@@ -198,8 +201,8 @@
                                 </div>
                                 <div class="col-5">
                                     <label for="">Hrg Nakes</label>
-                                    <input type="text" class="autocurrency fm_hrg_jual_nake_persens form-control"
-                                        name="fm_hrg_jual_nakes_persen" id="fm_hrg_jual_nakes_persen" value=""
+                                    <input type="text" class="autocurrency efm_hrg_jual_nake_persens form-control"
+                                        name="efm_hrg_jual_nakes_persen" id="efm_hrg_jual_nakes_persen" value=""
                                         placeholder="Nakes">
                                 </div>
                             </div>
@@ -217,14 +220,14 @@
                                     Price</label>
                             </div>
                         </div>
-                        <input type="hidden" id="user" name="user" value="tes">
+                        <input type="hidden" id="euser" name="user" value="tes">
                     </div>
                     <div class="modal-footer">
                         {{-- <button type="" class=""></button> --}}
-                        <button type="button" id="edit" class="btn btn-success float-right"><i
+                        <button type="button" id="editXObat" class="btn btn-success float-right"><i
                                 class="fa fa-save"></i>
                             &nbsp;
-                            Save</button>
+                            Update</button>
                     </div>
                 </div>
             </div>
@@ -356,13 +359,13 @@
                         <div class="form-group form-inline col-6">
                             <div class="row ">
                                 <div class="col-5">
-                                    <label for="">Hrg Nakes</label>
+                                    <label for="">Hrg Nakes (Rp.)</label>
                                     <input type="text" class="autocurrency fm_hrg_jual_nakes form-control"
                                         name="fm_hrg_jual_nakes" id="fm_hrg_jual_nakes" value=""
                                         placeholder="Nakes">
                                 </div>
                                 <div class="col-5">
-                                    <label for="">Hrg Nakes</label>
+                                    <label for="">Hrg Nakes (%)</label>
                                     <input type="text" class="autocurrency fm_hrg_jual_nake_persens form-control"
                                         name="fm_hrg_jual_nakes_persen" id="fm_hrg_jual_nakes_persen" value=""
                                         placeholder="Nakes">
@@ -520,22 +523,11 @@
                     var hrg_reg = $('#fm_hrg_jual_non_resep_persen').val();
                     var hrg_beli = $('#fm_hrg_beli_detail').val();
                     var hrg_regInt = parseInt(hrg_reg.replace(/,.*|[^0-9]/g, ''));
-
                     var calc = (hrg_regInt / 100) * hrg_beli;
-
                     var result = calc.toFixed(2);
-                    // var hrg_beli_to = hrg_beli.toFixed(2);
-                    // var resultint = parseInt(result);
-                    // var hrg_beli_toint = parseInt(hrg_beli_to);
-
                     var ttl = parseInt(hrg_beli) + parseInt(result);
 
                     $('#fm_hrg_jual_non_resep').val(ttl);
-                    // var dsc = $(parentx).find('#do_diskon').val();
-
-                    // $(parentx).find('#do_sub_total').val(subttl - dsc);
-
-                    // console.log(result);
                 }
             });
 
@@ -547,13 +539,8 @@
                     var hrg_reg = $('#fm_hrg_jual_non_resep').val();
                     var hrg_beli = $('#fm_hrg_beli_detail').val();
                     var pengurangan = (hrg_reg - hrg_beli);
-                    // if (event.keyCode == 13) {
-                    // var tdscr = $(parentR).find('#do_diskon').val();
-                    // var subttl = $(parentR).find('#do_sub_total').val();
                     var calc = (pengurangan / hrg_beli) * 100;
                     var result = calc.toFixed(2);
-
-                    // var ttl = parseInt(hrg_beli) + parseInt(result);
 
                     $('#fm_hrg_jual_non_resep_persen').val(result);
                 }
@@ -568,22 +555,11 @@
                     var hrg_reg = $('#fm_hrg_jual_resep_persen').val();
                     var hrg_beli = $('#fm_hrg_beli_detail').val();
                     var hrg_regInt = parseInt(hrg_reg.replace(/,.*|[^0-9]/g, ''));
-
                     var calc = (hrg_regInt / 100) * hrg_beli;
-
                     var result = calc.toFixed(2);
-                    // var hrg_beli_to = hrg_beli.toFixed(2);
-                    // var resultint = parseInt(result);
-                    // var hrg_beli_toint = parseInt(hrg_beli_to);
-
                     var ttl = parseInt(hrg_beli) + parseInt(result);
 
                     $('#fm_hrg_jual_resep').val(ttl);
-                    // var dsc = $(parentx).find('#do_diskon').val();
-
-                    // $(parentx).find('#do_sub_total').val(subttl - dsc);
-
-                    // console.log(result);
                 }
             });
 
@@ -595,14 +571,8 @@
                     var hrg_reg = $('#fm_hrg_jual_resep').val();
                     var hrg_beli = $('#fm_hrg_beli_detail').val();
                     var pengurangan = (hrg_reg - hrg_beli);
-                    // if (event.keyCode == 13) {
-                    // var tdscr = $(parentR).find('#do_diskon').val();
-                    // var subttl = $(parentR).find('#do_sub_total').val();
                     var calc = (pengurangan / hrg_beli) * 100;
                     var result = calc.toFixed(2);
-
-                    // var ttl = parseInt(hrg_beli) + parseInt(result);
-
                     $('#fm_hrg_jual_resep_persen').val(result);
                 }
             });
@@ -615,23 +585,10 @@
                 function hrgPersen() {
                     var hrg_reg = $('#fm_hrg_jual_nakes_persen').val();
                     var hrg_beli = $('#fm_hrg_beli_detail').val();
-                    // var price = $(parentx).find('#do_sub_total').val();
-                    // var subttl = $(parentx).find('#do_sub_total').val();
                     var calc = (hrg_reg / 100) * hrg_beli;
-
                     var result = calc.toFixed(2);
-                    // var hrg_beli_to = hrg_beli.toFixed(2);
-                    // var resultint = parseInt(result);
-                    // var hrg_beli_toint = parseInt(hrg_beli_to);
-
                     var ttl = parseInt(hrg_beli) + parseInt(result);
-
                     $('#fm_hrg_jual_nakes').val(ttl);
-                    // var dsc = $(parentx).find('#do_diskon').val();
-
-                    // $(parentx).find('#do_sub_total').val(subttl - dsc);
-
-                    // console.log(result);
                 }
             });
 
@@ -644,14 +601,105 @@
                     var hrg_beli = $('#fm_hrg_beli_detail').val();
                     var pengurangan = (hrg_reg - hrg_beli);
                     // if (event.keyCode == 13) {
-                    // var tdscr = $(parentR).find('#do_diskon').val();
-                    // var subttl = $(parentR).find('#do_sub_total').val();
                     var calc = (pengurangan / hrg_beli) * 100;
                     var result = calc.toFixed(2);
 
-                    // var ttl = parseInt(hrg_beli) + parseInt(result);
-
                     $('#fm_hrg_jual_nakes_persen').val(result);
+                }
+            });
+
+
+            // HARGA JUAL EDIT
+            $('#efm_hrg_jual_non_resep_persen').on('input', function() {
+                // alert('gogogo')
+                hrgPersen();
+
+                function hrgPersen() {
+                    var hrg_reg = $('#efm_hrg_jual_non_resep_persen').val();
+                    var hrg_beli = $('#efm_hrg_beli_detail').val();
+                    var hrg_regInt = parseInt(hrg_reg.replace(/,.*|[^0-9]/g, ''));
+                    var calc = (hrg_regInt / 100) * hrg_beli;
+                    var result = calc.toFixed(2);
+                    var ttl = parseInt(hrg_beli) + parseInt(result);
+
+                    $('#efm_hrg_jual_non_resep').val(ttl);
+                }
+            });
+
+            $('#efm_hrg_jual_non_resep').on('input', function() {
+                // alert('gogogo')
+                hrgRp();
+
+                function hrgRp() {
+                    var hrg_reg = $('#efm_hrg_jual_non_resep').val();
+                    var hrg_beli = $('#efm_hrg_beli_detail').val();
+                    var pengurangan = (hrg_reg - hrg_beli);
+                    var calc = (pengurangan / hrg_beli) * 100;
+                    var result = calc.toFixed(2);
+
+                    $('#efm_hrg_jual_non_resep_persen').val(result);
+                }
+            });
+
+            // Resep
+            $('#efm_hrg_jual_resep_persen').on('input', function() {
+                // alert('gogogo')
+                hrgPersen();
+
+                function hrgPersen() {
+                    var hrg_reg = $('#efm_hrg_jual_resep_persen').val();
+                    var hrg_beli = $('#efm_hrg_beli_detail').val();
+                    var hrg_regInt = parseInt(hrg_reg.replace(/,.*|[^0-9]/g, ''));
+                    var calc = (hrg_regInt / 100) * hrg_beli;
+                    var result = calc.toFixed(2);
+                    var ttl = parseInt(hrg_beli) + parseInt(result);
+
+                    $('#efm_hrg_jual_resep').val(ttl);
+                }
+            });
+
+            $('#efm_hrg_jual_resep').on('input', function() {
+                // alert('gogogo')
+                hrgRp();
+
+                function hrgRp() {
+                    var hrg_reg = $('#efm_hrg_jual_resep').val();
+                    var hrg_beli = $('#efm_hrg_beli_detail').val();
+                    var pengurangan = (hrg_reg - hrg_beli);
+                    var calc = (pengurangan / hrg_beli) * 100;
+                    var result = calc.toFixed(2);
+                    $('#efm_hrg_jual_resep_persen').val(result);
+                }
+            });
+
+            // Nakes
+            $('#efm_hrg_jual_nakes_persen').on('input', function() {
+                // alert('gogogo')
+                hrgPersen();
+
+                function hrgPersen() {
+                    var hrg_reg = $('#efm_hrg_jual_nakes_persen').val();
+                    var hrg_beli = $('#efm_hrg_beli_detail').val();
+                    var calc = (hrg_reg / 100) * hrg_beli;
+                    var result = calc.toFixed(2);
+                    var ttl = parseInt(hrg_beli) + parseInt(result);
+                    $('#efm_hrg_jual_nakes').val(ttl);
+                }
+            });
+
+            $('#efm_hrg_jual_nakes').on('input', function() {
+                // alert('gogogo')
+                hrgRp();
+
+                function hrgRp() {
+                    var hrg_reg = $('#efm_hrg_jual_nakes').val();
+                    var hrg_beli = $('#efm_hrg_beli_detail').val();
+                    var pengurangan = (hrg_reg - hrg_beli);
+                    // if (event.keyCode == 13) {
+                    var calc = (pengurangan / hrg_beli) * 100;
+                    var result = calc.toFixed(2);
+
+                    $('#efm_hrg_jual_nakes_persen').val(result);
                 }
             });
 
@@ -673,6 +721,11 @@
                 var hrgJualReg = $(tx).data('hrg_jual_reg');
                 var hrgJualResep = $(tx).data('hrg_jual_resep');
                 var hrgJualNakes = $(tx).data('hrg_jual_nakes');
+
+                var hrgJualRegPersen = $(tx).data('hrg_jual_reg_persen');
+                var hrgJualResepPersen = $(tx).data('hrg_jual_resep_persen');
+                var hrgJualNakesPersen = $(tx).data('hrg_jual_nakes_persen');
+
                 // alert(ids);
                 $('#EditObatModal').modal('show');
                 $('#efm_kd_obat').val(ids);
@@ -690,6 +743,10 @@
                 $('#efm_hrg_jual_non_resep').val(hrgJualReg);
                 $('#efm_hrg_jual_resep').val(hrgJualResep);
                 $('#efm_hrg_jual_nakes').val(hrgJualNakes);
+
+                $('#efm_hrg_jual_non_resep_persen').val(hrgJualRegPersen);
+                $('#efm_hrg_jual_nakes_persen').val(hrgJualResepPersen);
+                $('#efm_hrg_jual_resep_persen').val(hrgJualNakesPersen);
             };
 
             // Pembagian detail harga beli
@@ -702,6 +759,20 @@
                     // console.log(detail_hrg);
                     if (detail_hrg) {
                         $('#fm_hrg_beli_detail').val(detail_hrg);
+                    }
+                });
+            });
+
+            // Pembagian detail harga beli Edit
+            $(document).ready(function() {
+                $('#efm_hrg_beli').on('keyup', function() {
+                    var hrg_beli1 = $(this).val();
+                    var hrg_beli2 = parseInt(hrg_beli1.replace(/,.*|[^0-9]/g, ''), 10);
+                    var satuan_beli_terkecil = $('#efm_isi_satuan_pembelian').val();
+                    var detail_hrg = (hrg_beli2 / satuan_beli_terkecil);
+                    // console.log(detail_hrg);
+                    if (detail_hrg) {
+                        $('#efm_hrg_beli_detail').val(detail_hrg);
                     }
                 });
             });
@@ -829,6 +900,9 @@
                     var st_isi_pembelian = $('#isiSatuanBeli').val();
                     var st_hrg_beli_per1 = $('#hrgBeliPer').val();
                     var st_hrg_beli_per2 = $('#hrgBeliPerDetail').val();
+                    var fm_hrg_jual_non_resep_persen = $('#fm_hrg_jual_non_resep_persen').val();
+                    var fm_hrg_jual_resep_persen = $('#fm_hrg_jual_resep_persen').val();
+                    var fm_hrg_jual_nakes_persen = $('#fm_hrg_jual_nakes_persen').val();
                     var isActive = $('#isActive').val();
                     var isOpenPrice = $('#isOpenPrice').val();
                     var user = $('#user').val();
@@ -868,9 +942,101 @@
                                 st_isi_pembelian: st_isi_pembelian,
                                 st_hrg_beli_per1: st_hrg_beli_per1,
                                 st_hrg_beli_per2: st_hrg_beli_per2,
+                                fm_hrg_jual_non_resep_persen: fm_hrg_jual_non_resep_persen,
+                                fm_hrg_jual_resep_persen: fm_hrg_jual_resep_persen,
+                                fm_hrg_jual_nakes_persen: fm_hrg_jual_nakes_persen,
                                 isActive: isActive,
                                 isOpenPrice: isOpenPrice,
                                 user: user
+                            },
+                            cache: false,
+                            success: function(dataResult) {
+                                // $('.close').click();
+                                // document.getElementById("fm_nm_kategori_produk").value = "";
+                                // toastr.success('Saved!', 'Your fun', {
+                                //     timeOut: 2000,
+                                //     preventDuplicates: true,
+                                //     positionClass: 'toast-top-right',
+                                // });
+                                // return window.location.href = "{{ url('mstr-obat') }}";
+                                return window.location.href = "{{ url('mstr-obat') }}";
+                            }
+                        });
+                    } else {
+                        toastr.info('Data Belum Lengkap', {
+                            timeOut: 2000,
+                            preventDuplicates: true,
+                            positionClass: 'toast-top-right',
+                        });
+                    }
+                });
+            });
+
+            // Edit
+            $(document).ready(function() {
+                $('#editXObat').on('click', function() {
+                    var efm_kd_obat = $('#efm_kd_obat').val();
+                    var efm_nm_obat = $('#efm_nm_obat').val();
+                    var efm_kategori = $('#efm_kategori').val();
+                    var efm_supplier = $('#efm_supplier').val();
+                    var efm_satuan_pembelian = $('#efm_satuan_pembelian').val();
+                    var efm_isi_satuan_pembelian = $('#efm_isi_satuan_pembelian').val();
+                    var efm_satuan_jual = $('#efm_satuan_jual').val();
+                    var efm_hrg_beli = $('#efm_hrg_beli').val();
+                    var efm_hrg_beli_detail = $('#efm_hrg_beli_detail').val();
+                    var efm_hrg_jual_non_resep = $('#efm_hrg_jual_non_resep').val();
+                    var efm_hrg_jual_resep = $('#efm_hrg_jual_resep').val();
+                    var efm_hrg_jual_nakes = $('#efm_hrg_jual_nakes').val();
+                    var est_isi_pembelian = $('#eisiSatuanBeli').val();
+                    var est_hrg_beli_per1 = $('#ehrgBeliPer').val();
+                    var est_hrg_beli_per2 = $('#ehrgBeliPerDetail').val();
+                    var efm_hrg_jual_non_resep_persen = $('#efm_hrg_jual_non_resep_persen').val();
+                    var efm_hrg_jual_resep_persen = $('#efm_hrg_jual_resep_persen').val();
+                    var efm_hrg_jual_nakes_persen = $('#efm_hrg_jual_nakes_persen').val();
+                    var eisActive = $('#eisActive').val();
+                    var eisOpenPrice = $('#eisOpenPrice').val();
+                    var euser = $('#euser').val();
+
+                    // ubah currency ke int
+                    var esfm_hrg_beli = parseInt(efm_hrg_beli.replace(/,.*|[^0-9]/g, ''), 10);
+                    // var sfm_hrg_beli = parseInt(fm_hrg_beli.replace(/,.*|[^0-9]/g, ''), 10);
+                    var esfm_hrg_jual_non_resep = parseInt(efm_hrg_jual_non_resep.replace(
+                            /,.*|[^0-9]/g, ''),
+                        10);
+                    var esfm_hrg_jual_resep = parseInt(efm_hrg_jual_resep.replace(/,.*|[^0-9]/g, ''),
+                        10);
+                    var esfm_hrg_jual_nakes = parseInt(efm_hrg_jual_nakes.replace(/,.*|[^0-9]/g, ''),
+                        10);
+
+                    if (fm_nm_obat != "") {
+                        $.ajax({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            url: "{{ route('edit-mstr-obat') }}",
+                            type: "POST",
+                            data: {
+                                fm_kd_obat: efm_kd_obat,
+                                fm_nm_obat: efm_nm_obat,
+                                fm_kategori: efm_kategori,
+                                fm_supplier: efm_supplier,
+                                fm_satuan_pembelian: efm_satuan_pembelian,
+                                fm_isi_satuan_pembelian: efm_isi_satuan_pembelian,
+                                fm_hrg_beli: esfm_hrg_beli,
+                                fm_hrg_beli_detail: efm_hrg_beli_detail,
+                                fm_satuan_jual: efm_satuan_jual,
+                                fm_hrg_jual_non_resep: esfm_hrg_jual_non_resep,
+                                fm_hrg_jual_resep: esfm_hrg_jual_resep,
+                                fm_hrg_jual_nakes: esfm_hrg_jual_nakes,
+                                st_isi_pembelian: est_isi_pembelian,
+                                st_hrg_beli_per1: est_hrg_beli_per1,
+                                st_hrg_beli_per2: est_hrg_beli_per2,
+                                fm_hrg_jual_non_resep_persen: efm_hrg_jual_non_resep_persen,
+                                fm_hrg_jual_resep_persen: efm_hrg_jual_resep_persen,
+                                fm_hrg_jual_nakes_persen: efm_hrg_jual_nakes_persen,
+                                isActive: eisActive,
+                                isOpenPrice: eisOpenPrice,
+                                user: euser
                             },
                             cache: false,
                             success: function(dataResult) {

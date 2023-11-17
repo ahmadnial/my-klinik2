@@ -256,4 +256,76 @@ class masterFarmasiController extends Controller
             return back();
         }
     }
+
+    public function obatEdit(Request $request)
+    {
+        // $d = $request->all();
+        // dd($d);
+
+        $request->validate([
+            'fm_kd_obat' => 'required',
+            'fm_nm_obat' => 'required',
+            'fm_kategori' => 'required',
+            'fm_supplier' => 'required',
+            'fm_satuan_pembelian' => 'required',
+            'fm_isi_satuan_pembelian' => 'required',
+            'fm_hrg_beli' => 'required',
+            'fm_hrg_beli_detail' => 'required',
+            'fm_satuan_jual' => 'required',
+            'fm_hrg_jual_non_resep' => 'required',
+            'fm_hrg_jual_resep' => 'required',
+            'fm_hrg_jual_nakes' => 'required',
+            'st_isi_pembelian'  => 'required',
+            'st_hrg_beli_per1'  => 'required',
+            'st_hrg_beli_per2'  => 'required',
+            // 'isActive' => 'required',
+            // 'isOpenPrice' => 'required',
+            'user'
+        ]);
+
+        // DB::beginTransaction();
+        // try {
+
+        $y =  DB::table('mstr_obat')->where('fm_kd_obat', $request->efm_kd_obat)->update([
+            'fm_kd_obat' => $request->efm_kd_obat,
+            'fm_nm_obat' => $request->efm_nm_obat,
+            'fm_kategori' => $request->efm_kategori,
+            'fm_supplier' => $request->efm_supplier,
+            'fm_satuan_pembelian' => $request->efm_satuan_pembelian,
+            'fm_isi_satuan_pembelian' => $request->efm_isi_satuan_pembelian,
+            'fm_hrg_beli' => $request->esfm_hrg_beli,
+            'fm_hrg_beli_detail' => $request->efm_hrg_beli_detail,
+            'fm_satuan_jual' => $request->efm_satuan_jual,
+            'fm_hrg_jual_non_resep' => $request->xesfm_hrg_jual_non_resep,
+            'fm_hrg_jual_resep' => $request->esfm_hrg_jual_resep,
+            'fm_hrg_jual_nakes' => $request->esfm_hrg_jual_nakes,
+            'st_isi_pembelian'  => $request->est_isi_pembelian,
+            'st_hrg_beli_per1'  => $request->est_hrg_beli_per1,
+            'st_hrg_beli_per2'  => $request->est_hrg_beli_per2,
+            'fm_hrg_jual_non_resep_persen' => $request->efm_hrg_jual_non_resep_persen,
+            'fm_hrg_jual_resep_persen' => $request->efm_hrg_jual_resep_persen,
+            'fm_hrg_jual_nakes_persen' => $request->efm_hrg_jual_nakes_persen,
+            'isActive' => $request->eisActive,
+            'isOpenPrice' => $request->eisOpenPrice,
+            'user' => $request->euser
+        ]);
+
+        if ($y) {
+            toastr()->success('Edit Data Berhasil!');
+            return back();
+        } else {
+            toastr()->error('Gagal Tersimpan!');
+            return back();
+        }
+        //         DB::commit();
+
+        //         toastr()->success('Data Tersimpan!');
+        //         return back();
+        //         // return redirect()->route('/tindakan-medis');
+        //     } catch (\Exception $e) {
+        //         DB::rollback();
+        //         toastr()->error('Gagal Tersimpan!');
+        //         return back();
+        //     }
+    }
 }
