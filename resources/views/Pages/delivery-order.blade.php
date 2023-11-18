@@ -33,8 +33,8 @@
                                     <td id="">{{ $tz->do_hdr_supplier }}</td>
                                     <td id="">{{ $tz->do_hdr_tgl_tempo }}</td>
                                     <td id="">{{ $tz->created_at }}</td>
-                                    <td id="">{{ $tz->do_obat }}</td>
                                     <td id="">@currency($tz->do_hdr_total_faktur)</td>
+                                    <td id="">{{ $tz->hdrToDetail[0]->do_obat }}</td>
                                     {{-- <td id="">@currency($tz->fm_hrg_beli)</td>
                                     <td id="">@currency($tz->fm_hrg_jual_non_resep)</td>
                                     <td id="">@currency($tz->fm_hrg_jual_resep)</td>
@@ -44,7 +44,7 @@
                                             data-no_faktur="{{ $tz->do_hdr_no_faktur }}"
                                             data-supplier="{{ $tz->do_hdr_supplier }}"
                                             data-tgl_tempo="{{ $tz->do_hdr_tgl_tempo }}" data-kd_obat="{{ $tz->do_obat }}"
-                                            data-nm_obat="{{ $tz->do_satuan_pembelian }}">Edit</button>
+                                            data-nm_obat="{{ $tz->hdrToDetail[0]->do_obat }}">Edit</button>
                                         {{-- <button class="btn btn-xs btn-danger" data-toggle="modal"
                                             data-target="#DeleteSupplier">Hapus</button> --}}
                                     </td>
