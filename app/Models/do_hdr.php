@@ -23,8 +23,13 @@ class do_hdr extends Model
         'user'
     ];
 
-    public function do_detail_item()
+    public function hdrToDetail()
     {
-        return $this->hasMany('App\Models\do_detail_item');
+        return $this->hasMany(do_detail_item::class, 'do_hdr_kd', 'do_hdr_kd');
     }
+
+    // public function trstdk(): HasMany
+    // {
+    //     return $this->hasMany(trs_chart::class, 'chart_id', 'chart_id');
+    // }
 }

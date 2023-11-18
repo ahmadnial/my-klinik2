@@ -51,12 +51,15 @@ class poDoController extends Controller
         $supplier = mstr_supplier::all();
         $listObat = mstr_obat::all();
         $lokasi = mstr_lokasi_stock::all();
-        $viewDO = DB::table('do_hdr')
-            ->leftJoin('do_detail_item', 'do_hdr.do_hdr_kd', 'do_detail_item.do_hdr_kd')
-            ->select('do_hdr.*', 'do_detail_item.*')
-            ->distinct()
+        $viewDO = do_hdr::with('hdrToDetail')
+            // ->where('chart_mr', $request->chart_mr)
+            ->orderBy('created_at', 'DESC')
             ->get();
-        // $viewDO = do_hdr::all();
+        // $viewDO = DB::table('do_hdr')
+        //     ->select('do_hdr.*', 'do_detail_item.*')
+        //     ->distinct()
+        //     ->leftJoin('do_detail_item', 'do_hdr.do_hdr_kd', 'do_detail_item.do_hdr_kd')
+        //     ->get();
 
         return view('pages.delivery-order', [
             'supplier' => $supplier,

@@ -4,9 +4,9 @@
     <section class="content">
         <div class="card">
             <div class="card-header">
-                <button type="submit" class="btn btn-success float-right" data-toggle="modal" data-target="#TambahPO">Tambah
+                <button type="submit" class="btn btn-success float-right" data-toggle="modal" data-target="#TambahDO">Tambah
                     DO</button>
-                <h3 class="card-title"><i class="fa fa-truck">&nbsp;</i>DELIVERY ORDER</h3>
+                <h3 class="card-title"><i class="fa fa-truck">&nbsp;</i>PENERIMAAN BARANG</h3>
             </div>
 
             <div class="card-body">
@@ -33,15 +33,20 @@
                                     <td id="">{{ $tz->do_hdr_supplier }}</td>
                                     <td id="">{{ $tz->do_hdr_tgl_tempo }}</td>
                                     <td id="">{{ $tz->created_at }}</td>
+                                    <td id="">{{ $tz->do_obat }}</td>
                                     <td id="">@currency($tz->do_hdr_total_faktur)</td>
                                     {{-- <td id="">@currency($tz->fm_hrg_beli)</td>
                                     <td id="">@currency($tz->fm_hrg_jual_non_resep)</td>
                                     <td id="">@currency($tz->fm_hrg_jual_resep)</td>
                                     <td id="">@currency($tz->fm_hrg_jual_nakes)</td> --}}
-                                    <td><button class="btn btn-xs btn-success" data-toggle="modal"
-                                            data-target="#EditObat">Edit</button>
-                                        <button class="btn btn-xs btn-danger" data-toggle="modal"
-                                            data-target="#DeleteSupplier">Hapus</button>
+                                    <td><button class="btn btn-xs btn-success" data-toggle="modal" data-target="#EditXDo"
+                                            onclick="getDetailDO(this)" data-kd_do="{{ $tz->do_hdr_kd }}"
+                                            data-no_faktur="{{ $tz->do_hdr_no_faktur }}"
+                                            data-supplier="{{ $tz->do_hdr_supplier }}"
+                                            data-tgl_tempo="{{ $tz->do_hdr_tgl_tempo }}" data-kd_obat="{{ $tz->do_obat }}"
+                                            data-nm_obat="{{ $tz->do_satuan_pembelian }}">Edit</button>
+                                        {{-- <button class="btn btn-xs btn-danger" data-toggle="modal"
+                                            data-target="#DeleteSupplier">Hapus</button> --}}
                                     </td>
                                 </tr>
                             @endforeach
@@ -53,10 +58,10 @@
     </section>
     <style>
         .modal {
-            padding: 0 !important; // override inline padding-right added from js
+            padding: 0 !important;
         }
 
-        #TambahPO .fullmodal {
+        #TambahDO .fullmodal {
             width: 100%;
             max-width: none;
             height: auto;
@@ -74,7 +79,7 @@
         }
     </style>
     <!-- The modal Create -->
-    <div class="modal fade" id="TambahPO" data-backdrop="static">
+    <div class="modal fade" id="TambahDO" data-backdrop="static">
         <div class="modal-dialog modal-xl fullmodal">
             <div class="modal-content document">
                 <div class="modal-header">
@@ -99,8 +104,8 @@
                             </div>
                             <div class="form-group col-sm-2">
                                 <label for="">Supplier</label>
-                                <select class="form-control-pasien" id="do_hdr_supplier" style="width: 100%;"
-                                    name="do_hdr_supplier">
+                                <select class="do_hdr_supplier form-control-pasien" id="do_hdr_supplier"
+                                    style="width: 100%;" name="do_hdr_supplier">
                                     <option value="">--Select--</option>
                                     @foreach ($supplier as $sp)
                                         <option value="{{ $sp->fm_nm_supplier }}">{{ $sp->fm_nm_supplier }}</option>
@@ -114,8 +119,8 @@
                             </div>
                             <div class="form-group col-sm-2">
                                 <label for="">Lokasi</label>
-                                <select class="form-control-pasien" id="do_hdr_lokasi_stock" style="width: 100%;"
-                                    name="do_hdr_lokasi_stock">
+                                <select class="do_hdr_lokasi_stock form-control-pasien" id="do_hdr_lokasi_stock"
+                                    style="width: 100%;" name="do_hdr_lokasi_stock">
                                     <option value="">--Select--</option>
                                     @foreach ($lokasi as $lok)
                                         <option value="{{ $lok->fm_nm_lokasi_stock }}">{{ $lok->fm_nm_lokasi_stock }}
@@ -236,6 +241,11 @@
         </div>
     </div>
 
+    <!-- The modal Edit -->
+    <div class="modal fade" id="EditDO" data-backdrop="static">
+
+    </div>
+
 
     <div class="modal fade" id="obatSearch">
         <div class="modal-dialog modal-lg">
@@ -338,7 +348,7 @@
                                  value="${getHrgBeli}" readonly>
                             </td>
                             <td>
-                            <input type="text" class="form-control" name="do_diskon_prosen" id="do_diskon_prosen" onKeyUp="discProsen(this)">
+                            <input type="text" class="form-control" name="do_diskon_prosen" id="do_diskon_prosen" onKeyDown="discProsen(this)">
                             </td>
                             <td>
                                 <input type="text" class="form-control" id="do_diskon" name="do_diskon[]" onKeyDown="discRp(this)">
@@ -382,34 +392,26 @@
 
                 };
 
-                function GrandTotal() {
-                    var sum = 0;
-
-                    $('.do_sub_total').each(function() {
-                        sum += Number($(this).val());
-                    });
-                    var result = sum.toFixed(2);
-
-                    $('#do_hdr_total_faktur').val(result);
-                }
-
-
                 function discProsen(x) {
-                    var parentx = x.parentElement.parentElement;
-                    var tdsc = $(parentx).find('#do_diskon_prosen').val();
-                    var price = $(parentx).find('#do_sub_total').val();
-                    var subttl = $(parentx).find('#do_sub_total').val();
-                    var calc = (tdsc / 100) * price;
+                    if (event.keyCode == 13) {
+                        var parentx = x.parentElement.parentElement;
+                        var tdsc = $(parentx).find('#do_diskon_prosen').val();
+                        // var price = $(parentx).find('#do_sub_total').val();
+                        var subttl = $(parentx).find('#do_sub_total').val();
+                        var calc = (tdsc / 100) * subttl;
 
-                    var result = calc.toFixed(2);
+                        var result = calc.toFixed(2);
+                        // console.log(result);
+                        $(parentx).find('#do_diskon').val(result);
+                        var dsc = $(parentx).find('#do_diskon').val();
 
-                    $(parentx).find('#do_diskon').val(result);
-                    var dsc = $(parentx).find('#do_diskon').val();
+                        var hasil = parseInt(subttl) - parseInt(dsc);
 
-                    $(parentx).find('#do_sub_total').val(subttl - dsc);
-                    GrandTotal();
+                        $(parentx).find('#do_sub_total').val(hasil);
+                        GrandTotal();
 
-                    // console.log(result);
+                        // console.log(result);
+                    }
                 }
 
                 function discRp(r) {
@@ -434,23 +436,36 @@
                         // console.log(tdscr);
                     }
 
-                    function pajakPPN(p) {
-                        alert('hi');
-                        var parentP = p.parentElement.parentElement;
-                    }
-                    // var parentR = r.parentElement.parentElement;
-                    // var price = $(parentR).find('#do_sub_total').val();
-                    // var subttl = $(parentR).find('#do_sub_total').val();
-                    // var calc = (tdscr / price) * 100;
-                    // var result = calc.toFixed(2);
-                    // var discNow = $(this).val();
-                    // console.log(subttl - tdscr);
-
-                    // $(parentR).find('#do_diskon_prosen').val(result);
-                    // $(parentR).find('#do_sub_total').val(subttl - tdscr);
-
-                    // console.log(result);
                 }
+
+                function GrandTotal() {
+                    var sum = 0;
+
+                    $('.do_sub_total').each(function() {
+                        sum += Number($(this).val());
+                    });
+                    var result = sum.toFixed(2);
+
+                    $('#do_hdr_total_faktur').val(result);
+                }
+
+
+                function pajakPPN(p) {
+                    alert('hi');
+                    var parentP = p.parentElement.parentElement;
+                }
+                // var parentR = r.parentElement.parentElement;
+                // var price = $(parentR).find('#do_sub_total').val();
+                // var subttl = $(parentR).find('#do_sub_total').val();
+                // var calc = (tdscr / price) * 100;
+                // var result = calc.toFixed(2);
+                // var discNow = $(this).val();
+                // console.log(subttl - tdscr);
+
+                // $(parentR).find('#do_diskon_prosen').val(result);
+                // $(parentR).find('#do_sub_total').val(subttl - tdscr);
+
+                // console.log(result);
                 // Ajax Search Obat
                 var path = "{{ route('obatSearch') }}";
 
@@ -621,11 +636,19 @@
 
 
                 // Select2 call
-                $('#do_hdr_supplier').select2({
+                $('.do_hdr_supplier').select2({
                     placeholder: 'Supplier',
                 });
 
-                $('#do_hdr_lokasi_stock').select2({
+                $('.do_hdr_lokasi_stock').select2({
+                    placeholder: 'Lokasi Stock',
+                });
+                // Select2 call
+                $('#edo_hdr_supplier').select2({
+                    placeholder: 'Supplier',
+                });
+
+                $('.#edo_hdr_lokasi_stock').select2({
                     placeholder: 'Lokasi Stock',
                 });
 
@@ -774,6 +797,173 @@
                         }
                     });
                 });
+
+                // modal Edit DO
+                function getDetailDO(tx) {
+                    $('#EditDO').modal('show');
+                    // $(".SelectItemObat").on("click", function() {
+                    var getKdDO = $(tx).data('kd_do');
+                    var getNoFaktur = $(tx).data('no_faktur');
+                    var getSupplier = $(tx).data('supplier');
+                    var getTglTempo = $(tx).data('tgl_tempo');
+                    var getKdObat = $(tx).data('kd_obat');
+                    var getNmObat = $(tx).data('nm_obat');
+
+                    $("#EditDO").append(`
+                     <div class="modal-dialog modal-xl fullmodal">
+                        <div class="modal-content document">
+                        <div class="modal-header">
+                            <h4 class="modal-title"><i class="fa fa-truck">&nbsp;</i>Delivery Order</h4>
+                            <button type="button" class="close btn btn-danger" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form method="POST" action="{{ url('add-delivery-order') }}" onkeydown="return event.key != 'Enter';">
+                            @csrf
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="form-group col-sm-2">
+                                        <label for="">Nomor Ref</label>
+                                        <input type="text" class="form-control" name="edo_hdr_kd" id="edo_hdr_kd"
+                                            value="${getKdDO}" readonly>
+                                    </div>
+                                    <div class="form-group col-sm-3">
+                                        <label for="">Nomor Faktur</label>
+                                        <input type="text" class="form-control" name="edo_hdr_no_faktur"
+                                            id="edo_hdr_no_faktur" value="${getNoFaktur}" placeholder="Input Nomor Faktur">
+                                    </div>
+                                    <div class="form-group col-sm-2">
+                                        <label for="">Supplier</label>
+                                        <select class="do_hdr_supplier form-control-pasien" id="edo_hdr_supplier"
+                                            style="width: 100%;" name="edo_hdr_supplier">
+                                            <option value="${getSupplier}">${getSupplier}</option>
+                                            @foreach ($supplier as $sp)
+                                                <option value="{{ $sp->fm_nm_supplier }}">{{ $sp->fm_nm_supplier }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-2">
+                                        <label for="">Tanggal Jatuh Tempo</label>
+                                        <input type="date" class="form-control" name="edo_hdr_tgl_tempo"
+                                            id="edo_hdr_tgl_tempo" value="${getTglTempo}">
+                                    </div>
+                                    <div class="form-group col-sm-2">
+                                        <label for="">Lokasi</label>
+                                        <select class="do_hdr_lokasi_stock form-control-pasien" id="edo_hdr_lokasi_stock"
+                                            style="width: 100%;" name="edo_hdr_lokasi_stock">
+                                            <option value="">--Select--</option>
+                                            @foreach ($lokasi as $lok)
+                                                <option value="{{ $lok->fm_nm_lokasi_stock }}">{{ $lok->fm_nm_lokasi_stock }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <input type="hidden" id="euser" name="euser" value="tes">
+                                </div>
+                                <div class="">
+                                    <button type="button" id="searchObat" class="btn btn-info">tambah</button>
+                                </div>
+                            </div>
+
+                            {{-- <hr> --}}
+
+                            <table class="table" style="width: 100%">
+                                <thead>
+                                    <tr>
+                                        {{-- <th>Kode Obat</th> --}}
+                                        <th>Obat</th>
+                                        <th>Sat.Beli</th>
+                                        <th>Qty</th>
+                                        <th>Isi</th>
+                                        <th>Sat.Jual</th>
+                                        <th>Hrg.Beli</th>
+                                        <th>Disc %</th>
+                                        <th>Discount</th>
+                                        <th>Pajak</th>
+                                        <th>Tgl.Exp</th>
+                                        <th>Batch Number</th>
+                                        <th>Sub Total</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="doTableEdit">
+                                <tr id="R${++rowIdx}">
+                                <input type="hidden" class="searchObat" id="do_obat"
+                                        name="do_obat[]" onchange="getDataObat()" value="${getKdObat}" readonly>
+                                    
+                                    <td>
+                                <input class="form-control" style='width: 100%;' id="nm_obat"
+                                        name="nm_obat[]" onchange="getDataObat()" value="${getNmObat}" readonly>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="do_satuan_pembelian form-control" id="do_satuan_pembelian[]"
+                                            name="do_satuan_pembelian[]" value="" readonly>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="do_qty form-control" id="do_qty" onKeyUp="getQTY(this)" name="do_qty[]">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="do_isi_pembelian form-control" id="do_isi_pembelian"
+                                            name="do_isi_pembelian[]" value="" readonly>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="do_satuan_jual form-control" id="do_satuan_jual" name="do_satuan_jual[]"
+                                            value="" readonly>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="do_hrg_beli form-control" id="do_hrg_beli" name="do_hrg_beli[]"
+                                        value="" readonly>
+                                    </td>
+                                    <td>
+                                    <input type="text" class="form-control" name="do_diskon_prosen" id="do_diskon_prosen" onKeyDown="discProsen(this)">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" id="do_diskon" name="do_diskon[]" onKeyDown="discRp(this)">
+                                    </td>
+                                    <td>
+                                        <select type="text" class="form-control" id="do_pajak" name="do_pajak[]" onClick="pajakPPN(this)">
+                                            <option value="">Tanpa Pajak</option>
+                                            <option value="11">PPN 11%</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="date" class="form-control" id="do_tgl_exp" name="do_tgl_exp[]">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" id="do_batch_number"
+                                            name="do_batch_number[]">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="do_sub_total form-control" id="do_sub_total" name="do_sub_total[]">
+                                    </td>
+                            <td><a href="javascript:void(0)" class="text-danger font-18 remove" title="Remove"><i class="fa fa-trash"></i></a></td>
+                        
+                        </tr>
+                        </tbody>
+                                </table>
+                                <hr>
+                                <div class="float-right col-4">
+                                    <div class="float-right col-4">
+                                        <input type="text" class="form-control float-right" name="do_hdr_total_faktur"
+                                            id="do_hdr_total_faktur" value="" readonly>
+                                    </div>
+                                    {{-- <div class="float-right">
+                                    <button class="btn btn-xs btn-info" id="addRow">Tambah Barang</button>
+                                </div> --}}
+                                </div>
+                                <br>
+                                <br>
+                                {{-- <hr> --}}
+                                <div class="modal-footer">
+                                    <button type="submit" id="buat" class="btn btn-success float-right"><i
+                                            class="fa fa-save"></i>&nbsp;Save
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>`);
+                };
+                // };
             </script>
         @endpush
     @endsection
