@@ -158,6 +158,7 @@ class poDoController extends Controller
                     'do_batch_number' => $request->do_batch_number[$key],
                     'do_sub_total' => $request->do_sub_total[$key],
                     'do_hdr_kd' => $request->do_hdr_kd,
+                    'do_diskon_prosen' => $request->do_diskon_prosen[$key],
                     // 'do_hdr_id' => $request->do_hdr_kd[$key],
                 ];
                 do_detail_item::create($detail);

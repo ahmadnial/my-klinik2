@@ -350,14 +350,14 @@
                                  value="${getHrgBeli}" readonly>
                             </td>
                             <td>
-                            <input type="text" class="form-control" name="do_diskon_prosen" id="do_diskon_prosen" onKeyDown="discProsen(this)">
+                            <input type="text" class="form-control" name="do_diskon_prosen[]" id="do_diskon_prosen" onKeyDown="discProsen(this)">
                             </td>
                             <td>
                                 <input type="text" class="form-control" id="do_diskon" name="do_diskon[]" onKeyDown="discRp(this)">
                             </td>
                             <td>
                                 <select type="text" class="form-control" id="do_pajak" name="do_pajak[]" onClick="pajakPPN(this)">
-                                    <option value="">Tanpa Pajak</option>
+                                    <option value="Tanpa Pajak">Tanpa Pajak</option>
                                     <option value="11">PPN 11%</option>
                                 </select>
                             </td>
@@ -646,11 +646,11 @@
                     placeholder: 'Lokasi Stock',
                 });
                 // Select2 call
-                $('#edo_hdr_supplier').select2({
+                $('.edo_hdr_supplier').select2({
                     placeholder: 'Supplier',
                 });
 
-                $('.#edo_hdr_lokasi_stock').select2({
+                $('.edo_hdr_lokasi_stock').select2({
                     placeholder: 'Lokasi Stock',
                 });
 
@@ -861,13 +861,14 @@
                                                     value="${toDetail[i].do_hrg_beli}" readonly>
                                                 </td>
                                                 <td>
-                                                <input type="text" class="form-control" name="do_diskon_prosen" id="do_diskon_prosen" onKeyDown="discProsen(this)" value="">
+                                                <input type="text" class="form-control" name="do_diskon_prosen" id="do_diskon_prosen" onKeyDown="discProsen(this)" value="${toDetail[i].do_diskon_prosen}">
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" id="do_diskon" name="do_diskon[]" onKeyDown="discRp(this)">
+                                                    <input type="text" class="form-control" id="do_diskon" name="do_diskon[]" onKeyDown="discRp(this)" value="${toDetail[i].do_diskon}">
                                                 </td>
                                                 <td>
                                                     <select type="text" class="form-control" id="do_pajak" name="do_pajak[]" onClick="pajakPPN(this)">
+                                                        <option value="${toDetail[i].do_pajak}">${toDetail[i].do_pajak}</option>
                                                         <option value="">Tanpa Pajak</option>
                                                         <option value="11">PPN 11%</option>
                                                     </select>
@@ -892,11 +893,11 @@
                                     <div class="modal-content document">
                                     <div class="modal-header">
                                         <h4 class="modal-title"><i class="fa fa-truck">&nbsp;</i>Penerimaan Barang</h4>
-                                        <button type="button" class="close btn btn-danger" data-dismiss="modal" aria-label="Close">
+                                        <button type="button" class="close btn btn-danger" id="EditDOClose">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <form method="POST" action="{{ url('add-delivery-order') }}" onkeydown="return event.key != 'Enter';">
+                                    <form method="POST" action="{{ url('edit-delivery-order') }}" onkeydown="return event.key != 'Enter';">
                                         @csrf
                                         <div class="modal-body">
                                             <div class="row">
@@ -912,7 +913,7 @@
                                                 </div>
                                                 <div class="form-group col-sm-2">
                                                     <label for="">Supplier</label>
-                                                    <select class="do_hdr_supplier form-control-pasien" id="edo_hdr_supplier"
+                                                    <select class="edo_hdr_supplier form-control" id="edo_hdr_supplier"
                                                         style="width: 100%;" name="edo_hdr_supplier">
                                                         <option value="${datavalue.do_hdr_supplier}">${datavalue.do_hdr_supplier}</option>
                                                         @foreach ($supplier as $sp)
@@ -927,7 +928,7 @@
                                                 </div>
                                                 <div class="form-group col-sm-2">
                                                     <label for="">Lokasi</label>
-                                                    <select class="do_hdr_lokasi_stock form-control-pasien" id="edo_hdr_lokasi_stock"
+                                                    <select class="edo_hdr_lokasi_stock form-control" id="edo_hdr_lokasi_stock"
                                                         style="width: 100%;" name="edo_hdr_lokasi_stock">
                                                         <option value="">--Select--</option>
                                                         @foreach ($lokasi as $lok)
@@ -982,8 +983,8 @@
                                             <br>
                                             {{-- <hr> --}}
                                             <div class="modal-footer">
-                                                <button type="submit" id="buat" class="btn btn-success float-right"><i
-                                                        class="fa fa-save"></i>&nbsp;Save
+                                                <button type="button" id="" class="btn btn-danger float-right"><i
+                                                        class="fa fa-save"></i>&nbsp;
                                                 </button>
                                             </div>
                                         </form>
@@ -995,6 +996,12 @@
 
                     });
                 };
+
+                $(document).ready(function() {
+                    $('#EditDOClose').on('click', function() {
+                        $('#EditDO').modal('hide');
+                    });
+                });
             </script>
         @endpush
     @endsection
