@@ -14,7 +14,6 @@
                     <table id="example1" class="table table-hover">
                         <thead class="">
                             <tr>
-                                {{-- <th>Tanggal</th> --}}
                                 <th>No Ref</th>
                                 <th>No Faktur</th>
                                 <th>Supplier</th>
@@ -34,11 +33,7 @@
                                     <td id="">{{ $tz->do_hdr_tgl_tempo }}</td>
                                     <td id="">{{ $tz->created_at }}</td>
                                     <td id="">@currency($tz->do_hdr_total_faktur)</td>
-                                    <td id="">{{ $tz->hdrToDetail[0]->do_obat }}</td>
-                                    {{-- <td id="">@currency($tz->fm_hrg_beli)</td>
-                                    <td id="">@currency($tz->fm_hrg_jual_non_resep)</td>
-                                    <td id="">@currency($tz->fm_hrg_jual_resep)</td>
-                                    <td id="">@currency($tz->fm_hrg_jual_nakes)</td> --}}
+                                    {{-- <td id="">{{ $tz->hdrToDetail[0]->do_obat }}</td> --}}
                                     <td><button class="btn btn-xs btn-success" data-toggle="modal" data-target="#EditXDo"
                                             onclick="getDetailDO(this)" data-kd_do="{{ $tz->do_hdr_kd }}"
                                             data-no_faktur="{{ $tz->do_hdr_no_faktur }}"
@@ -49,8 +44,8 @@
                                             data-target="#DeleteSupplier">Hapus</button> --}}
                                     </td>
                                 </tr>
-                            @endforeach
                         </tbody>
+                        @endforeach
                     </table>
                 </div>
             </div>
@@ -62,6 +57,13 @@
         }
 
         #TambahDO .fullmodal {
+            width: 100%;
+            max-width: none;
+            height: auto;
+            margin: 40;
+        }
+
+        #EditDO .fullmodal {
             width: 100%;
             max-width: none;
             height: auto;
@@ -137,7 +139,7 @@
 
                     {{-- <hr> --}}
 
-                    <table class="table" style="width: 100%">
+                    <table class="table table-bordered" style="width: 100%">
                         <thead>
                             <tr>
                                 {{-- <th>Kode Obat</th> --}}
@@ -808,6 +810,7 @@
                     var getTglTempo = $(tx).data('tgl_tempo');
                     var getKdObat = $(tx).data('kd_obat');
                     var getNmObat = $(tx).data('nm_obat');
+                    // for (let y = 0; y < getKdObat.length; y++) {
 
                     $("#EditDO").append(`
                      <div class="modal-dialog modal-xl fullmodal">
@@ -889,11 +892,11 @@
                                 <tbody id="doTableEdit">
                                 <tr id="R${++rowIdx}">
                                 <input type="hidden" class="searchObat" id="do_obat"
-                                        name="do_obat[]" onchange="getDataObat()" value="${getKdObat}" readonly>
+                                        name="do_obat[]" value="${getKdObat}" readonly>
                                     
                                     <td>
                                 <input class="form-control" style='width: 100%;' id="nm_obat"
-                                        name="nm_obat[]" onchange="getDataObat()" value="${getNmObat}" readonly>
+                                        name="nm_obat[]" value="${getNmObat}" readonly>
                                     </td>
                                     <td>
                                         <input type="text" class="do_satuan_pembelian form-control" id="do_satuan_pembelian[]"
@@ -962,6 +965,7 @@
                             </form>
                         </div>
                     </div>`);
+                    // }
                 };
                 // };
             </script>
