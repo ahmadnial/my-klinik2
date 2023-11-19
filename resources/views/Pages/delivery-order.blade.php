@@ -57,14 +57,14 @@
         }
 
         #TambahDO .fullmodal {
-            width: 100%;
+            width: 95%;
             max-width: none;
             height: auto;
             margin: 40;
         }
 
         #EditDO .fullmodal {
-            width: 100%;
+            width: 95%;
             max-width: none;
             height: auto;
             margin: 40;
@@ -803,171 +803,198 @@
                 // modal Edit DO
                 function getDetailDO(tx) {
                     $('#EditDO').modal('show');
+                    toastr.info('Opened!', 'Data Penerimaan Barang', {
+                        timeOut: 2000,
+                        preventDuplicates: true,
+                        positionClass: 'toast-top-right',
+                    });
                     // $(".SelectItemObat").on("click", function() {
-                    var getKdDO = $(tx).data('kd_do');
-                    var getNoFaktur = $(tx).data('no_faktur');
-                    var getSupplier = $(tx).data('supplier');
-                    var getTglTempo = $(tx).data('tgl_tempo');
-                    var getKdObat = $(tx).data('kd_obat');
-                    var getNmObat = $(tx).data('nm_obat');
+                    var kd_do = $(tx).data('kd_do');
+                    // var getKdDO = $(tx).data('kd_do');
+                    // var getNoFaktur = $(tx).data('no_faktur');
+                    // var getSupplier = $(tx).data('supplier');
+                    // var getTglTempo = $(tx).data('tgl_tempo');
+                    // var getKdObat = $(tx).data('kd_obat');
+                    // var getNmObat = $(tx).data('nm_obat');
                     // for (let y = 0; y < getKdObat.length; y++) {
+                    // var kd_do = $('#efm_kd_obat').val();
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: "{{ url('get-data-do') }}/" + kd_do,
+                        type: "GET",
+                        data: {
+                            do_hdr_kd: kd_do
+                        },
+                        success: function(isListDO) {
+                            $.each(isListDO, function(key, datavalue) {
+                                const toDetail = datavalue.hdr_to_detail;
+                                let itemObat = "";
+                                for (i in toDetail) {
+                                    itemObat += `
+                                        <tr id="R${++rowIdx}">
+                                            <input type="hidden" class="searchObat" id="do_obat"
+                                                    name="do_obat[]" value="" readonly>
 
-                    $("#EditDO").append(`
-                     <div class="modal-dialog modal-xl fullmodal">
-                        <div class="modal-content document">
-                        <div class="modal-header">
-                            <h4 class="modal-title"><i class="fa fa-truck">&nbsp;</i>Delivery Order</h4>
-                            <button type="button" class="close btn btn-danger" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <form method="POST" action="{{ url('add-delivery-order') }}" onkeydown="return event.key != 'Enter';">
-                            @csrf
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="form-group col-sm-2">
-                                        <label for="">Nomor Ref</label>
-                                        <input type="text" class="form-control" name="edo_hdr_kd" id="edo_hdr_kd"
-                                            value="${getKdDO}" readonly>
-                                    </div>
-                                    <div class="form-group col-sm-3">
-                                        <label for="">Nomor Faktur</label>
-                                        <input type="text" class="form-control" name="edo_hdr_no_faktur"
-                                            id="edo_hdr_no_faktur" value="${getNoFaktur}" placeholder="Input Nomor Faktur">
-                                    </div>
-                                    <div class="form-group col-sm-2">
-                                        <label for="">Supplier</label>
-                                        <select class="do_hdr_supplier form-control-pasien" id="edo_hdr_supplier"
-                                            style="width: 100%;" name="edo_hdr_supplier">
-                                            <option value="${getSupplier}">${getSupplier}</option>
-                                            @foreach ($supplier as $sp)
-                                                <option value="{{ $sp->fm_nm_supplier }}">{{ $sp->fm_nm_supplier }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-sm-2">
-                                        <label for="">Tanggal Jatuh Tempo</label>
-                                        <input type="date" class="form-control" name="edo_hdr_tgl_tempo"
-                                            id="edo_hdr_tgl_tempo" value="${getTglTempo}">
-                                    </div>
-                                    <div class="form-group col-sm-2">
-                                        <label for="">Lokasi</label>
-                                        <select class="do_hdr_lokasi_stock form-control-pasien" id="edo_hdr_lokasi_stock"
-                                            style="width: 100%;" name="edo_hdr_lokasi_stock">
-                                            <option value="">--Select--</option>
-                                            @foreach ($lokasi as $lok)
-                                                <option value="{{ $lok->fm_nm_lokasi_stock }}">{{ $lok->fm_nm_lokasi_stock }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <input type="hidden" id="euser" name="euser" value="tes">
-                                </div>
-                                <div class="">
-                                    <button type="button" id="searchObat" class="btn btn-info">tambah</button>
-                                </div>
-                            </div>
+                                                <td>
+                                                    <input class="form-control" style='width: 100%;' id="nm_obat"
+                                                    name="nm_obat[]" value="${toDetail[i].do_obat}" readonly>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="do_satuan_pembelian form-control" id="do_satuan_pembelian[]"
+                                                        name="do_satuan_pembelian[]" value="${toDetail[i].do_satuan_pembelian}" readonly>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="do_qty form-control" id="do_qty" onKeyUp="getQTY(this)" name="do_qty[]" value="${toDetail[i].do_qty}">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="do_isi_pembelian form-control" id="do_isi_pembelian"
+                                                        name="do_isi_pembelian[]" value="${toDetail[i].do_isi_pembelian}" readonly>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="do_satuan_jual form-control" id="do_satuan_jual" name="do_satuan_jual[]"
+                                                        value="${toDetail[i].do_satuan_jual}" readonly>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="do_hrg_beli form-control" id="do_hrg_beli" name="do_hrg_beli[]"
+                                                    value="${toDetail[i].do_hrg_beli}" readonly>
+                                                </td>
+                                                <td>
+                                                <input type="text" class="form-control" name="do_diskon_prosen" id="do_diskon_prosen" onKeyDown="discProsen(this)" value="">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" id="do_diskon" name="do_diskon[]" onKeyDown="discRp(this)">
+                                                </td>
+                                                <td>
+                                                    <select type="text" class="form-control" id="do_pajak" name="do_pajak[]" onClick="pajakPPN(this)">
+                                                        <option value="">Tanpa Pajak</option>
+                                                        <option value="11">PPN 11%</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="date" class="form-control" id="do_tgl_exp" name="do_tgl_exp[]" value="${toDetail[i].do_tgl_exp}">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" id="do_batch_number"
+                                                        name="do_batch_number[]" value="${toDetail[i].do_batch_number}">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="do_sub_total form-control" id="do_sub_total" name="do_sub_total[]" value="${toDetail[i].do_sub_total}">
+                                                </td>
+                                        <td><a href="javascript:void(0)" class="text-danger font-18 remove" title="Remove"><i class="fa fa-trash"></i></a></td>
 
-                            {{-- <hr> --}}
-
-                            <table class="table" style="width: 100%">
-                                <thead>
-                                    <tr>
-                                        {{-- <th>Kode Obat</th> --}}
-                                        <th>Obat</th>
-                                        <th>Sat.Beli</th>
-                                        <th>Qty</th>
-                                        <th>Isi</th>
-                                        <th>Sat.Jual</th>
-                                        <th>Hrg.Beli</th>
-                                        <th>Disc %</th>
-                                        <th>Discount</th>
-                                        <th>Pajak</th>
-                                        <th>Tgl.Exp</th>
-                                        <th>Batch Number</th>
-                                        <th>Sub Total</th>
                                     </tr>
-                                </thead>
-
-                                <tbody id="doTableEdit">
-                                <tr id="R${++rowIdx}">
-                                <input type="hidden" class="searchObat" id="do_obat"
-                                        name="do_obat[]" value="${getKdObat}" readonly>
-                                    
-                                    <td>
-                                <input class="form-control" style='width: 100%;' id="nm_obat"
-                                        name="nm_obat[]" value="${getNmObat}" readonly>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="do_satuan_pembelian form-control" id="do_satuan_pembelian[]"
-                                            name="do_satuan_pembelian[]" value="" readonly>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="do_qty form-control" id="do_qty" onKeyUp="getQTY(this)" name="do_qty[]">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="do_isi_pembelian form-control" id="do_isi_pembelian"
-                                            name="do_isi_pembelian[]" value="" readonly>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="do_satuan_jual form-control" id="do_satuan_jual" name="do_satuan_jual[]"
-                                            value="" readonly>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="do_hrg_beli form-control" id="do_hrg_beli" name="do_hrg_beli[]"
-                                        value="" readonly>
-                                    </td>
-                                    <td>
-                                    <input type="text" class="form-control" name="do_diskon_prosen" id="do_diskon_prosen" onKeyDown="discProsen(this)">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" id="do_diskon" name="do_diskon[]" onKeyDown="discRp(this)">
-                                    </td>
-                                    <td>
-                                        <select type="text" class="form-control" id="do_pajak" name="do_pajak[]" onClick="pajakPPN(this)">
-                                            <option value="">Tanpa Pajak</option>
-                                            <option value="11">PPN 11%</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input type="date" class="form-control" id="do_tgl_exp" name="do_tgl_exp[]">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" id="do_batch_number"
-                                            name="do_batch_number[]">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="do_sub_total form-control" id="do_sub_total" name="do_sub_total[]">
-                                    </td>
-                            <td><a href="javascript:void(0)" class="text-danger font-18 remove" title="Remove"><i class="fa fa-trash"></i></a></td>
-                        
-                        </tr>
-                        </tbody>
-                                </table>
-                                <hr>
-                                <div class="float-right col-4">
-                                    <div class="float-right col-4">
-                                        <input type="text" class="form-control float-right" name="do_hdr_total_faktur"
-                                            id="do_hdr_total_faktur" value="" readonly>
+                                    `;
+                                }
+                                $("#EditDO").append(`
+                                <div class="modal-dialog modal-xl fullmodal">
+                                    <div class="modal-content document">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title"><i class="fa fa-truck">&nbsp;</i>Penerimaan Barang</h4>
+                                        <button type="button" class="close btn btn-danger" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
                                     </div>
-                                    {{-- <div class="float-right">
-                                    <button class="btn btn-xs btn-info" id="addRow">Tambah Barang</button>
-                                </div> --}}
-                                </div>
-                                <br>
-                                <br>
-                                {{-- <hr> --}}
-                                <div class="modal-footer">
-                                    <button type="submit" id="buat" class="btn btn-success float-right"><i
-                                            class="fa fa-save"></i>&nbsp;Save
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>`);
-                    // }
+                                    <form method="POST" action="{{ url('add-delivery-order') }}" onkeydown="return event.key != 'Enter';">
+                                        @csrf
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="form-group col-sm-2">
+                                                    <label for="">Nomor Ref</label>
+                                                    <input type="text" class="form-control" name="edo_hdr_kd" id="edo_hdr_kd"
+                                                        value="${datavalue.do_hdr_kd}" readonly>
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label for="">Nomor Faktur</label>
+                                                    <input type="text" class="form-control" name="edo_hdr_no_faktur"
+                                                        id="edo_hdr_no_faktur" value="${datavalue.do_hdr_no_faktur}" placeholder="Input Nomor Faktur">
+                                                </div>
+                                                <div class="form-group col-sm-2">
+                                                    <label for="">Supplier</label>
+                                                    <select class="do_hdr_supplier form-control-pasien" id="edo_hdr_supplier"
+                                                        style="width: 100%;" name="edo_hdr_supplier">
+                                                        <option value="${datavalue.do_hdr_supplier}">${datavalue.do_hdr_supplier}</option>
+                                                        @foreach ($supplier as $sp)
+                                                            <option value="{{ $sp->fm_nm_supplier }}">{{ $sp->fm_nm_supplier }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-sm-2">
+                                                    <label for="">Tanggal Jatuh Tempo</label>
+                                                    <input type="date" class="form-control" name="edo_hdr_tgl_tempo"
+                                                        id="edo_hdr_tgl_tempo" value="${datavalue.do_hdr_tgl_tempo}">
+                                                </div>
+                                                <div class="form-group col-sm-2">
+                                                    <label for="">Lokasi</label>
+                                                    <select class="do_hdr_lokasi_stock form-control-pasien" id="edo_hdr_lokasi_stock"
+                                                        style="width: 100%;" name="edo_hdr_lokasi_stock">
+                                                        <option value="">--Select--</option>
+                                                        @foreach ($lokasi as $lok)
+                                                            <option value="{{ $lok->fm_nm_lokasi_stock }}">{{ $lok->fm_nm_lokasi_stock }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <input type="hidden" id="euser" name="euser" value="tes">
+                                            </div>
+                                            <div class="">
+                                                <button type="button" id="searchObat" class="btn btn-info">tambah</button>
+                                            </div>
+                                        </div>
+
+                                        {{-- <hr> --}}
+
+                                        <table class="table" style="width: 100%">
+                                            <thead>
+                                                <tr>
+                                                    {{-- <th>Kode Obat</th> --}}
+                                                    <th>Obat</th>
+                                                    <th>Sat.Beli</th>
+                                                    <th>Qty</th>
+                                                    <th>Isi</th>
+                                                    <th>Sat.Jual</th>
+                                                    <th>Hrg.Beli</th>
+                                                    <th>Disc %</th>
+                                                    <th>Discount</th>
+                                                    <th>Pajak</th>
+                                                    <th>Tgl.Exp</th>
+                                                    <th>Batch Number</th>
+                                                    <th>Sub Total</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody id="doTableEdit">
+                                            ${itemObat}
+                                            </tbody>
+                                            </table>
+                                            <hr>
+                                            <div class="float-right col-4">
+                                                <div class="float-right col-4">
+                                                    <input type="text" class="form-control float-right" name="do_hdr_total_faktur"
+                                                        id="do_hdr_total_faktur" value="${datavalue.do_hdr_total_faktur}" readonly>
+                                                </div>
+                                                {{-- <div class="float-right">
+                                                            <button class="btn btn-xs btn-info" id="addRow">Tambah Barang</button>
+                                                        </div> --}}
+                                            </div>
+                                            <br>
+                                            <br>
+                                            {{-- <hr> --}}
+                                            <div class="modal-footer">
+                                                <button type="submit" id="buat" class="btn btn-success float-right"><i
+                                                        class="fa fa-save"></i>&nbsp;Save
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>`);
+                            })
+                            // return window.location.href = "{{ url('mstr-obat') }}";
+                        }
+
+                    });
                 };
-                // };
             </script>
         @endpush
     @endsection

@@ -200,4 +200,13 @@ class poDoController extends Controller
             return back();
         }
     }
+
+    public function getDOList(Request $request)
+    {
+        $isListDO = do_hdr::with('hdrToDetail')
+            ->where('do_hdr_kd', $request->kd_do)
+            ->get();
+
+        return response()->json($isListDO);
+    }
 }
