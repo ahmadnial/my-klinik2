@@ -133,20 +133,19 @@
                                 <th>Koreksi</th>
                                 <th>Nilai HPP</th>
                                 <th>Sub Total HPP</th>
+                                <th></th>
                             </tr>
                         </thead>
 
                         <tbody id="doTable">
-                            <tr>
 
-                            </tr>
                         </tbody>
                     </table>
                     <hr>
                     <div class="float-right col-4">
                         <div class="float-right col-4">
-                            <input type="text" class="form-control float-right" name="do_hdr_total_faktur"
-                                id="do_hdr_total_faktur" value="" readonly>
+                            <input type="text" class="form-control float-right" name="total_adj" id="total_adj"
+                                value="" readonly>
                         </div>
                         {{-- <div class="float-right">
                         <button class="btn btn-xs btn-info" id="addRow">Tambah Barang</button>
@@ -208,8 +207,8 @@
                                             data-fm_satuan_pembelian="{{ $lo->fm_satuan_pembelian }}"
                                             data-fm_isi_satuan_pembelian="{{ $lo->fm_isi_satuan_pembelian }}"
                                             data-fm_satuan_jual="{{ $lo->fm_satuan_jual }}"
-                                            data-fm_hrg_beli="{{ $lo->fm_hrg_beli }}"
-                                            data-fm_hrg_beli="{{ $lo->qty }}">Select</button>
+                                            data-fm_hrg_beli="{{ $lo->fm_hrg_beli_detail }}"
+                                            data-qty="{{ $lo->qty }}">Select</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -241,41 +240,40 @@
                 $(".SelectItemObat").on("click", function() {
                     var getKdObat = $(this).data('fm_kd_obat');
                     var getNmObat = $(this).data('fm_nm_obat');
-                    var getSatBeli = $(this).data('fm_satuan_pembelian');
-                    var getIsiSatBeli = $(this).data('fm_isi_satuan_pembelian');
                     var getSatJual = $(this).data('fm_satuan_jual');
                     var getHrgBeli = $(this).data('fm_hrg_beli');
+                    var getQTY = $(this).data('qty');
 
                     $("#doTable").append(`
                         <tr id="">
-                          <input type="hidden" class="searchObat" id="do_obat"
-                                name="do_obat[]" onchange="getDataObat()" value="${getKdObat}" readonly>
-                            
                             <td>
-                          <input class="form-control" style='width: 100%;' id="nm_obat"
+                            <input type="text" class="form-control searchObat" id="kd_obat"
+                                name="kd_obat[]" value="${getKdObat}" readonly>
+                            </td>
+                            <td>
+                            <input class="form-control" style='width: 100%;' id="nm_obat"
                                 name="nm_obat[]" onchange="getDataObat()" value="${getNmObat}" readonly>
                             </td>
                             <td>
-                                <input type="text" class="do_satuan_pembelian form-control" id="do_satuan_pembelian[]"
-                                    name="do_satuan_pembelian[]" value="${getSatBeli}" readonly>
+                                <input type="text" class="form-control" id="satuan_jual_terkecil[]"
+                                    name="satuan_jual_terkecil[]" value="${getSatJual}" readonly>
                             </td>
                             <td>
-                                <input type="text" class="do_qty form-control" id="do_qty" onKeyUp="getQTY(this)" name="do_qty[]">
+                                <input type="text" class="qty form-control" id="qty" name="qty[]" value="${getQTY}" readonly>
                             </td>
                             <td>
-                                <input type="text" class="do_isi_pembelian form-control" id="do_isi_pembelian"
-                                    name="do_isi_pembelian[]" value="${getIsiSatBeli}" readonly>
+                                <input type="text" class="qty_adj form-control" id="qty_adj"
+                                    name="qty_adj[]" onKeyDown="getQTYAdj(this)">
                             </td>
                             <td>
-                                <input type="text" class="do_satuan_jual form-control" id="do_satuan_jual" name="do_satuan_jual[]"
-                                    value="${getSatJual}" readonly>
+                                <input type="text" class="form-control" id="qty_hasil_koreksi" name="qty_hasil_koreksi[]" readonly>
                             </td>
                             <td>
-                                <input type="text" class="do_hrg_beli form-control" id="do_hrg_beli" name="do_hrg_beli[]"
+                                <input type="text" class="form-control" id="hrg_beli_hpp" name="hrg_beli_hpp[]"
                                  value="${getHrgBeli}" readonly>
                             </td>
                             <td>
-                                <input type="text" class="do_sub_total form-control" id="do_sub_total" name="do_sub_total[]">
+                                <input type="text" class="sub_total_adj form-control" id="sub_total_adj" name="sub_total_adj[]">
                             </td>
                     <td><a href="javascript:void(0)" class="text-danger font-18 remove" title="Remove"><i class="fa fa-trash"></i></a></td>
                    
@@ -283,6 +281,42 @@
 
                     $('#obatSearch').modal('hide');
                 });
+
+                function getQTYAdj(qa) {
+                    var parentQA = qa.parentElement.parentElement;
+                    if (event.keyCode == 13) {
+                        var QtyAdj = $(parentQA).find('#qty_adj').val();
+                        var QtyStock = $(parentQA).find('#qty').val();
+                        var hpp = $(parentQA).find('#hrg_beli_hpp').val();
+                        var hasil = QtyAdj - QtyStock;
+                        $(parentQA).find('#qty_hasil_koreksi').val(hasil);
+                        var HasilKoreksi = $(parentQA).find('#qty_hasil_koreksi').val();
+                        var hppSub = HasilKoreksi * hpp;
+                        // alert(toFix);
+                        $(parentQA).find('#sub_total_adj').val(hppSub);
+
+                        // if (tdscr != 0) {
+                        //     $(parentR).find('#do_sub_total').val(toDecimal);
+                        //     $(parentR).find('#do_diskon_prosen').val(result);
+                        // } else {
+                        //     $(parentR).find('#do_sub_total').val(subttl);
+                        //     // $(parentR).find('#do_diskon_prosen').val();
+                        // }
+                        GrandTotal();
+                    }
+
+                }
+
+                function GrandTotal() {
+                    var sum = 0;
+
+                    $('.sub_total').each(function() {
+                        sum += Number($(this).val());
+                    });
+                    var result = sum.toFixed(2);
+
+                    $('#total_adj').val(result);
+                }
             </script>
         @endpush
     @endsection
