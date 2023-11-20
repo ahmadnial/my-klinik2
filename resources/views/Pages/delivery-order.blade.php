@@ -244,7 +244,7 @@
     </div>
 
     <!-- The modal Edit -->
-    <div class="modal fade" id="EditDO" data-backdrop="static">
+    <div class="modal xeditmodal fade" id="EditDO">
 
     </div>
 
@@ -893,7 +893,7 @@
                                     <div class="modal-content document">
                                     <div class="modal-header">
                                         <h4 class="modal-title"><i class="fa fa-truck">&nbsp;</i>Penerimaan Barang</h4>
-                                        <button type="button" class="close btn btn-danger" id="EditDOClose">
+                                        <button type="button" class="close btn btn-danger" id="EditDOClose" data-dismiss="xeditmodal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
@@ -983,9 +983,9 @@
                                             <br>
                                             {{-- <hr> --}}
                                             <div class="modal-footer">
-                                                <button type="button" id="" class="btn btn-danger float-right"><i
+                                               {{-- <button type="button" id="" class="btn btn-danger float-right"><i
                                                         class="fa fa-save"></i>&nbsp;
-                                                </button>
+                                                </button> --}}
                                             </div>
                                         </form>
                                     </div>

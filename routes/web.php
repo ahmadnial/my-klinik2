@@ -130,6 +130,7 @@ Route::controller(masterFarmasiController::class)->group(function () {
 Route::controller(poDoController::class)->group(function () {
     Route::get('purchase-order', 'po')->name('purchase-order');
     Route::get('delivery-order', 'do')->name('delivery-order');
+    Route::get('adjusment-stock', 'adj')->name('adjusment-stock');
     Route::get('obatSearch', 'obatSearch')->name('obatSearch');
     Route::get('getObatList/{obat}', 'getObatList')->name('getObatList');
     Route::get('get-data-do/{kd_do}', 'getDOList')->name('get-data-do');

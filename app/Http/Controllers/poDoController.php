@@ -70,6 +70,29 @@ class poDoController extends Controller
         ]);
     }
 
+    public function adj()
+    {
+        // $num = str_pad(000001, 6, 0, STR_PAD_LEFT);
+        // $Y = date("Y");
+        // $M = date("m");
+        // $cekid = do_hdr::count();
+        // if ($cekid == 0) {
+        //     $noRef =  'DO'  . '-' . substr($Y, -2) . $M . '-' . $num;
+        // } else {
+        //     $continue = do_hdr::all()->last();
+        //     $de = substr($continue->do_hdr_kd, -6);
+        //     $noRef = 'DO' . '-' . substr($Y, -2) . $M  . '-' . str_pad(($de + 1), 6, '0', STR_PAD_LEFT);
+        // };
+        $ListObat = DB::table('mstr_obat')
+            ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
+            ->select('mstr_obat.*', 'tb_stock.*')
+            ->get();
+
+        return view('pages.adjusment', [
+            'ListObat' => $ListObat
+        ]);
+    }
+
     public function obatSearch(Request $request)
     {
         $isdataObat = [];
