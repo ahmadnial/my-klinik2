@@ -89,7 +89,7 @@ grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); */
     } */
 </style>
 
-<body class="hold-transition login-page">
+<body class="gas hold-transition login-page">
     <div class="login-box">
         <!-- /.login-logo -->
         <div class="card card-outline card-purple">
