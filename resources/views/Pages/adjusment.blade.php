@@ -88,28 +88,27 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form method="POST" action="{{ url('add-delivery-order') }}" onkeydown="return event.key != 'Enter';">
+                <form method="POST" action="{{ url('CreateAdj') }}" onkeydown="return event.key != 'Enter';">
                     @csrf
                     <div class="modal-body">
                         <div class="row">
                             <div class="form-group col-sm-2">
                                 <label for="">Nomor Ref</label>
-                                <input type="text" class="form-control" name="do_hdr_kd" id="do_hdr_kd" value=""
-                                    readonly>
+                                <input type="text" class="form-control" name="kd_adj" id="kd_adj"
+                                    value="{{ $noReff }}" readonly>
                             </div>
                             <div class="form-group col-sm-2">
                                 <label for="">Tanggal Jam</label>
-                                <input type="date" class="form-control" name="do_hdr_no_faktur" id="do_hdr_no_faktur"
-                                    value="">
+                                <input type="date" class="form-control" name="tgl_trs" id="tgl_trs" value="">
                             </div>
                             <div class="form-group col-sm-2">
                                 <label for="">Periode Adjusment</label>
-                                <input type="date" class="do_hdr_supplier form-control" id="do_hdr_supplier"
-                                    name="do_hdr_supplier">
+                                <input type="date" class="periode_adjusment form-control" id="periode_adjusment"
+                                    name="periode_adjusment">
                             </div>
                             <div class="form-group col-sm-4">
                                 <label for="">Keterangan</label>
-                                <textarea class="do_hdr_supplier form-control" id="do_hdr_supplier" name="do_hdr_supplier"></textarea>
+                                <textarea class="keterangan form-control" id="keterangan" name="keterangan"></textarea>
                             </div>
 
                             <input type="hidden" id="user" name="user" value="tes">
@@ -255,8 +254,8 @@
                                 name="nm_obat[]" onchange="getDataObat()" value="${getNmObat}" readonly>
                             </td>
                             <td>
-                                <input type="text" class="form-control" id="satuan_jual_terkecil[]"
-                                    name="satuan_jual_terkecil[]" value="${getSatJual}" readonly>
+                                <input type="text" class="form-control" id="satuan[]"
+                                    name="satuan[]" value="${getSatJual}" readonly>
                             </td>
                             <td>
                                 <input type="text" class="qty form-control" id="qty" name="qty[]" value="${getQTY}" readonly>
@@ -275,6 +274,7 @@
                             <td>
                                 <input type="text" class="sub_total_adj form-control" id="sub_total_adj" name="sub_total_adj[]">
                             </td>
+                            
                     <td><a href="javascript:void(0)" class="text-danger font-18 remove" title="Remove"><i class="fa fa-trash"></i></a></td>
                    
                 </tr>`);
@@ -295,13 +295,6 @@
                         // alert(toFix);
                         $(parentQA).find('#sub_total_adj').val(hppSub);
 
-                        // if (tdscr != 0) {
-                        //     $(parentR).find('#do_sub_total').val(toDecimal);
-                        //     $(parentR).find('#do_diskon_prosen').val(result);
-                        // } else {
-                        //     $(parentR).find('#do_sub_total').val(subttl);
-                        //     // $(parentR).find('#do_diskon_prosen').val();
-                        // }
                         GrandTotal();
                     }
 
@@ -310,12 +303,12 @@
                 function GrandTotal() {
                     var sum = 0;
 
-                    $('.sub_total').each(function() {
+                    $('.sub_total_adj').each(function() {
                         sum += Number($(this).val());
                     });
                     var result = sum.toFixed(2);
 
-                    $('#total_adj').val(result);
+                    $('#total_adj').val(sum);
                 }
             </script>
         @endpush

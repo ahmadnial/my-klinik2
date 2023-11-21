@@ -136,9 +136,10 @@ Route::controller(poDoController::class)->group(function () {
     Route::get('get-data-do/{kd_do}', 'getDOList')->name('get-data-do');
 });
 
-// CREATE PO-DO
+// CREATE PO-DO + ADJ
 Route::controller(poDoController::class)->group(function () {
     Route::post('add-delivery-order', 'doCreate')->name('add-delivery-order');
+    Route::post('CreateAdj', 'createAdj')->name('CreateAdj');
 });
 
 // PENJUALAN FARMASI
