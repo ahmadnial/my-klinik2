@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\kasirPoliController;
 use App\Http\Controllers\kasirPoliklinik;
+use App\Http\Controllers\LapFarmasiController;
 use App\Http\Controllers\masterFarmasiController;
 use App\Http\Controllers\mastersatuController;
 use App\Http\Controllers\penjualanController;
@@ -176,4 +177,12 @@ Route::controller(AssesmentController::class)->group(function () {
     // Route::get('cities', 'cities')->name('cities');
     // Route::get('districts', 'districts')->name('districts');
     // Route::get('villages', 'villages')->name('villages');
+});
+
+//Laporan Farmasi
+Route::controller(LapFarmasiController::class)->group(function () {
+    Route::get('laporan-penjualan-farmasi', 'lapPenjualanFarmasi')->name('laporan-penjualan-farmasi');
+    Route::get('getLaporanPenjualan', 'getLapPenjualan')->name('getLaporanPenjualan');
+    Route::get('districts', 'districts')->name('districts');
+    Route::get('villages', 'villages')->name('villages');
 });

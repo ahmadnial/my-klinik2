@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('nilai_hpp');
             $table->string('sub_total_adjusment');
             $table->string('user');
-            $table->string('keterangan1');
-            $table->string('keterangan2');
+            $table->string('keterangan1')->nullable();
+            $table->string('keterangan2')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

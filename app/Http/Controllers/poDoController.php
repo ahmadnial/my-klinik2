@@ -82,17 +82,19 @@ class poDoController extends Controller
             $noRef =  'AJ'  . '-' . substr($Y, -2) . $M . '-' . $num;
         } else {
             $continue = tb_adjusment_hdr::all()->last();
-            $de = substr($continue->do_hdr_kd, -6);
+            $de = substr($continue->kd_adj, -6);
             $noRef = 'AJ' . '-' . substr($Y, -2) . $M  . '-' . str_pad(($de + 1), 6, '0', STR_PAD_LEFT);
         };
         $ListObat = DB::table('mstr_obat')
             ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
             ->select('mstr_obat.*', 'tb_stock.*')
             ->get();
+        $isListAdj = tb_adjusment_hdr::all();
 
         return view('pages.adjusment', [
             'ListObat' => $ListObat,
-            'noReff'    => $noRef
+            'noReff'    => $noRef,
+            'isListAdj'    => $isListAdj
         ]);
     }
 
@@ -104,56 +106,55 @@ class poDoController extends Controller
             'kd_adj' => 'required',
             'tgl_trs' => 'required',
             'periode_adjusment' => 'required',
-            'nilai_total_adjusment' => 'required',
+            // 'nilai_total_adjusment' => 'required',   
         ]);
 
         DB::beginTransaction();
-        try {
-            $HdrAdj = [
+        // try {
+        $HdrAdj = [
+            'kd_adj' => $request->kd_adj,
+            'tgl_trs' => $request->tgl_trs,
+            'periode_adjusment' => $request->periode_adjusment,
+            'nilai_total_adjusment' => $request->total_adj,
+            'keterangan' => $request->keterangan,
+        ];
+        tb_adjusment_hdr::create($HdrAdj);
+
+        foreach ($request->kd_obat as $key => $val) {
+            $detailObat = [
                 'kd_adj' => $request->kd_adj,
-                'tgl_trs' => $request->tgl_trs,
-                'periode_adjusment' => $request->periode_adjusment,
-                'nilai_total_adjusment' => $request->nilai_total_adjusment,
-                'keterangan' => $request->keterangan,
+                'kd_obat' => $request->kd_obat[$key],
+                'nm_obat' => $request->nm_obat[$key],
+                'satuan' => $request->satuan[$key],
+                'qty_awal' => $request->qty[$key],
+                'qty_sebenarnya' => $request->qty_adj[$key],
+                'koreksi_adj' => $request->qty_hasil_koreksi[$key],
+                'nilai_hpp' => $request->hrg_beli_hpp[$key],
+                'sub_total_adjusment' => $request->sub_total_adj[$key],
+                'user' => $request->user,
             ];
-            tb_adjusment_hdr::create($HdrAdj);
-
-            foreach ($request->kd_obat as $key => $val) {
-                $detailObat = [
-                    'kd_obat' => $request->kd_obat[$key],
-                    'nm_obat' => $request->nm_obat[$key],
-                    'satuan' => $request->satuan[$key],
-                    'qty_awal' => $request->qty[$key],
-                    'qty_sebenarnya' => $request->qty_adj[$key],
-                    'koreksi_adj' => $request->qty_hasil_koreksi[$key],
-                    'nilai_hpp' => $request->hrg_beli_hpp[$key],
-                    'sub_total_adjusment' => $request->sub_total_adj[$key],
-                    'user' => $request->user,
-                ];
-                tb_adjusment_detail::create($detailObat);
-            }
-
-            foreach ($request->do_obat as $keys => $val) {
-                $datax =  $request->do_obat[$keys];
-                $dataQty =  $request->do_qty[$keys];
-                $dataIsi =  $request->do_isi_pembelian[$keys];
-                $X = (int)$dataQty * (int)$dataIsi;
-                $toInt = (int)$X;
-
-                tb_stock::whereIn('kd_obat', [$datax])->increment("qty", $toInt);
-            }
-
-
-            DB::commit();
-
-            toastr()->success('Data Tersimpan!');
-            return back();
-            // return redirect()->route('/tindakan-medis');
-        } catch (\Exception $e) {
-            DB::rollback();
-            toastr()->error('Gagal Tersimpan!');
-            return back();
+            tb_adjusment_detail::create($detailObat);
         }
+
+        foreach ($request->kd_obat as $keys => $val) {
+            $datax =  $request->kd_obat[$keys];
+            $dataQty =  $request->qty_adj[$keys];
+            $toInt = (int)$dataQty;
+
+            tb_stock::whereIn('kd_obat', [$datax])->update(['qty' => $toInt]);
+        }
+
+
+        DB::commit();
+
+        toastr()->success('Data Tersimpan!');
+        return back();
+        // return redirect()->route('/tindakan-medis');
+        // } catch (\Exception $e) {
+        DB::rollback();
+        toastr()->error('Gagal Tersimpan!');
+        return back();
+        // }
     }
 
     public function obatSearch(Request $request)

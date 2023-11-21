@@ -25,25 +25,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach ($viewDO as $tz) --}}
-                            <tr>
-                                {{-- <td id="">{{ $tz->created_at }}</td> --}}
-                                <td id=""></td>
-                                <td id=""></td>
-                                <td id=""></td>
-                                <td id=""></td>
-                                <td id=""></td>
-                                {{-- <td id=""></td>
+                            @foreach ($isListAdj as $ila)
+                                <tr>
+                                    <td id="">{{ $ila->kd_adj }}</td>
+                                    <td id="">{{ $ila->tgl_trs }}</td>
+                                    <td id=""></td>
+                                    <td id="">{{ $ila->keterangan }}</td>
+                                    <td id=""></td>
+                                    {{-- <td id=""></td>
                                 <td id=""></td> --}}
-                                {{-- <td id="">{{ $tz->hdrToDetail[0]->do_obat }}</td> --}}
-                                <td><button class="btn btn-xs btn-success" data-toggle="modal"
-                                        data-target="#EditXDo">Edit</button>
-                                    {{-- <button class="btn btn-xs btn-danger" data-toggle="modal"
-                                            data-target="#DeleteSupplier">Hapus</button> --}}
-                                </td>
-                            </tr>
+                                    {{-- <td id="">{{ $tz->hdrToDetail[0]->do_obat }}</td> --}}
+                                    {{-- <td><button class="btn btn-xs btn-success" data-toggle="modal"
+                                            data-target="#EditXDo">Edit</button>
+                                    </td> --}}
+                                </tr>
                         </tbody>
-                        {{-- @endforeach --}}
+                        @endforeach
                     </table>
                 </div>
             </div>
@@ -261,7 +258,7 @@
                                 <input type="text" class="qty form-control" id="qty" name="qty[]" value="${getQTY}" readonly>
                             </td>
                             <td>
-                                <input type="text" class="qty_adj form-control" id="qty_adj"
+                                <input type="number" class="qty_adj form-control" id="qty_adj"
                                     name="qty_adj[]" onKeyDown="getQTYAdj(this)">
                             </td>
                             <td>

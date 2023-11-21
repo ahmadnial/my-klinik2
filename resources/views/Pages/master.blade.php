@@ -376,6 +376,38 @@
                                 </li>
                             </ul>
                         </li>
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                {{-- <i class="nav-icon fas fa-bed"></i> --}}
+                                <i class="nav-icon fa fa-light fa-money"></i>
+                                <p>
+                                    Laporan
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('/laporan-penjualan-farmasi') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Penjualan Farmasi</p>
+                                    </a>
+                                </li>
+                                {{-- <li class="nav-item">
+                                    <a href="{{ url('/delivery-order') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Delivery Order</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('/adjusment-stock') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Adjusment Stock</p>
+                                    </a>
+                                </li> --}}
+                            </ul>
+                        </li>
+
                         <li class="nav-header">DATA MASTER KLINIK</li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
@@ -589,6 +621,16 @@
                 "autoWidth": true,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            $('#penjualan').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": false,
+                "autoWidth": false,
+                "responsive": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#penjualan_wrapper .col-md-6:eq(0)');
             $('#exm2').DataTable({
                 "paging": true,
                 "lengthChange": false,
