@@ -30,6 +30,7 @@ use App\Http\Controllers\WilayahController;
 //     return view('welcome');
 // });
 
+Route::get('/login', [HomeController::class, 'login']);
 Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/antrian', [HomeController::class, 'antrian']);

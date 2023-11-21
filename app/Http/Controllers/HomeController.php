@@ -17,6 +17,11 @@ class HomeController extends Controller
         return view('Pages.index');
     }
 
+    public function login()
+    {
+        return view('Pages.login');
+    }
+
     public function dasos()
     {
         $num_mr = str_pad(000001, 6, 0, STR_PAD_LEFT);
