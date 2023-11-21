@@ -4,7 +4,7 @@
     <section class="content">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title"><i class="fa fa-truck">&nbsp;</i>Laporan Penjualan Apotek Periode</h3>
+                <h3 class="card-title"><i class="fa fa-truck">&nbsp;</i>Laporan Penjualan Apotek Rekap</h3>
             </div>
 
             <div class="card-body">
@@ -68,7 +68,6 @@
                                     <td id="">${datavalue.kd_trs}</td>
                                     <td id="">${datavalue.tipe_tarif}</td>
                                     <td id="">${datavalue.total_penjualan}</td>
-                                    
                                 </tr>
                             `)
                                 toastr.success('Data Load Complete!', 'Complete!', {
