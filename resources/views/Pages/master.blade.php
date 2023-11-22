@@ -623,12 +623,9 @@
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
             $('#penjualan').DataTable({
                 "paging": true,
+                "responsive": true,
                 "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": false,
-                "autoWidth": false,
-                "responsive": false,
+                "autoWidth": true,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#penjualan_wrapper .col-md-6:eq(0)');
             $('#exm2').DataTable({
