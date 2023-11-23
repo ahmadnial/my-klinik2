@@ -21,6 +21,7 @@ class LapFarmasiController extends Controller
         if ($request->ajax()) {
             $isDataLaporan = DB::table('tp_hdr')
                 ->whereBetween('created_at', [$request->date1, $request->date2])
+                ->whereNull('kd_order_resep')
                 // ->where('kd_order_resep', '=', 'null')
                 ->get();
         }

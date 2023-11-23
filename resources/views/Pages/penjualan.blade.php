@@ -110,6 +110,11 @@
                                 </select>
                             </div>
                             <div class="form-group col-sm-2">
+                                <label for="">Tgl Transaksi</label>
+                                <input type="date" class="form-control" name="tgl_trs" id="tgl_trs" value=""
+                                    readonly>
+                            </div>
+                            <div class="form-group col-sm-2">
                                 <label for="">Resep Dari</label>
                                 <input type="text" class="form-control" name="tp_layanan" id="tp_layanan" value=""
                                     readonly>

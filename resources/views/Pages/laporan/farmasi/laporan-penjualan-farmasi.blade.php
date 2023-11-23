@@ -49,7 +49,7 @@
                         positionClass: 'toast-top-right',
                     });
                 } else {
-
+                    // $('#result').empty();
                     $.ajax({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -70,11 +70,10 @@
                                 function injectDataBaru() {
                                     for (const data of dataBaru) {
                                         table.row.add([
-                                                data[0],
-                                                data[1],
-                                                data[2],
-                                            ])
-                                            .draw(false)
+                                            data[0],
+                                            data[1],
+                                            data[2],
+                                        ]).draw(false)
                                     }
                                 }
                                 injectDataBaru()
@@ -92,9 +91,9 @@
                 }
             }
 
-            var someTableDT = $("#penjualan").on("draw.dt", function() {
-                $(this).find(".dataTables_empty").parents('tbody').empty();
-            }).DataTable
+            // var someTableDT = $("#penjualan").on("draw.dt", function() {
+            //     $(this).find(".dataTables_empty").parents('tbody').empty();
+            // }).DataTable
         </script>
     @endpush
 @endsection

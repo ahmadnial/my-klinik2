@@ -27,6 +27,7 @@ class tp_hdr extends Model
         'jenis_kelamin',
         'tgl_lahir',
         'tipe_tarif',
-        'total_penjualan'
+        'total_penjualan',
+        'tgl_trs'
     ];
 }
