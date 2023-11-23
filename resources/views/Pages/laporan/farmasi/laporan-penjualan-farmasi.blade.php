@@ -62,14 +62,23 @@
                         },
                         success: function(isDataLaporan) {
                             $.each(isDataLaporan, function(key, datavalue) {
-                                // $('.do_satuan_pembelian').val(datavalue.fm_satuan_pembelian);
-                                $("#result").append(`
-                                <tr>
-                                    <td id="">${datavalue.kd_trs}</td>
-                                    <td id="">${datavalue.tipe_tarif}</td>
-                                    <td id="">${datavalue.total_penjualan}</td>
-                                </tr>
-                            `)
+                                const table = $('#penjualan').DataTable();
+                                const dataBaru = [
+                                    [datavalue.kd_trs, datavalue.tipe_tarif, datavalue.total_penjualan],
+                                ]
+
+                                function injectDataBaru() {
+                                    for (const data of dataBaru) {
+                                        table.row.add([
+                                                data[0],
+                                                data[1],
+                                                data[2],
+                                            ])
+                                            .draw(false)
+                                    }
+                                }
+                                injectDataBaru()
+
                                 toastr.success('Data Load Complete!', 'Complete!', {
                                     timeOut: 2000,
                                     preventDuplicates: true,
@@ -82,6 +91,10 @@
                     })
                 }
             }
+
+            var someTableDT = $("#penjualan").on("draw.dt", function() {
+                $(this).find(".dataTables_empty").parents('tbody').empty();
+            }).DataTable
         </script>
     @endpush
 @endsection
