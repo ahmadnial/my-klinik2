@@ -30,7 +30,15 @@
                         <tbody id="result">
 
                         </tbody>
+                        <tfoot align="">
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th id="grandTTL"></th>
+                            </tr>
+                        </tfoot>
                     </table>
+                    {{-- <input type="text" class="form-control col-4" id="grandttl"> --}}
                 </div>
             </div>
         </div>
@@ -89,8 +97,46 @@
                         }
                     })
                 }
+
+                // drawCallback: function() {
+                // var sum = $('#penjualan').DataTable().column(3).data().sum();
+                // $('#grandttl').html(sum);
+                // }
             }
 
+            new DataTable('#penjualan', {
+                footerCallback: function(row, data, start, end, display) {
+                    let api = this.api();
+
+                    // Remove the formatting to get integer data for summation
+                    let intVal = function(i) {
+                        return typeof i === 'string' ?
+                            i.replace(/[\$,]/g, '') * 1 :
+                            typeof i === 'number' ?
+                            i :
+                            0;
+                    };
+
+                    // Total over all pages
+                    total = api
+                        .column(4)
+                        .data()
+                        .reduce((a, b) => intVal(a) + intVal(b), 0);
+
+                    // Total over this page
+                    pageTotal = api
+                        .column(4, {
+                            page: 'current'
+                        })
+                        .data()
+                        .reduce((a, b) => intVal(a) + intVal(b), 0);
+
+                    // Update footer
+                    api.column(4).footer().innerHTML =
+                        '$' + pageTotal + ' ( $' + total + ' total)';
+                }
+                // "bDestroy": true;
+            });
             // var someTableDT = $("#penjualan").on("draw.dt", function() {
             //     $(this).find(".dataTables_empty").parents('tbody').empty();
             // }).DataTable

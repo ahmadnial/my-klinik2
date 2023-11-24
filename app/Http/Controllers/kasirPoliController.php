@@ -17,6 +17,18 @@ class kasirPoliController extends Controller
 
     public function kasirPoli()
     {
+        $num = str_pad(000001, 6, 0, STR_PAD_LEFT);
+        $Y = date("Y");
+        $M = date("m");
+        $cekid = ta_registrasi_keluar::count();
+        if ($cekid == 0) {
+            $noRef =  'RO'  . '-' . substr($Y, -2) . $M . '-' . $num;
+        } else {
+            $continue = ta_registrasi_keluar::all()->last();
+            $de = substr($continue->kd_trs_reg_out, -6);
+            $noRef = 'RO' . '-' . substr($Y, -2) . $M  . '-' . str_pad(($de + 1), 6, '0', STR_PAD_LEFT);
+        };
+
         $getListRegOut = DB::table('ta_registrasi_keluar')
             ->select('trs_kp_kd_reg', 'trs_kp_tgl_keluar', 'trs_kp_no_mr', 'trs_kp_nm_pasien', 'trs_kp_layanan', 'trs_kp_dokter', 'trs_kp_nilai_total')
             ->distinct()
@@ -25,6 +37,7 @@ class kasirPoliController extends Controller
         $dateNow = Carbon::now()->format("d-m-Y");
 
         return view('pages.kasir-poliklinik', [
+            'noReff' => $noRef,
             'isTrsTdk' => $getTrsTdk,
             'dateNow' => $dateNow,
             'getListRegOut' => $getListRegOut

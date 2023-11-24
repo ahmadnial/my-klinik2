@@ -98,7 +98,7 @@ class penjualanController extends Controller
 
         $request->validate([
             // 'kd_trs' => 'required',
-            // 'kd_reg' => 'required',
+            'tgl_trs' => 'required',
             'kd_obat' => 'required',
             'nm_obat' => 'required',
             // 'dosis',
@@ -124,7 +124,7 @@ class penjualanController extends Controller
                 'layanan_order' => $request->tp_layanan,
                 'dokter'        => $request->tp_dokter,
                 // 'sip_dokter' => $request->,
-                // 'jaminan' => $request->,
+                'tgl_trs' => $request->tgl_trs,
                 'lokasi_stock'  => $request->tp_lokasi_stock,
                 'kd_reg'        => $request->tp_kd_reg,
                 'no_mr'         => $request->tp_no_mr,
