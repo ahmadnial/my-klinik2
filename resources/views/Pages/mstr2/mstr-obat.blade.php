@@ -413,16 +413,16 @@
                     </div>
                     <div class="modal-body">
                         <div class="container">
-                            Hapus data Supplier : <b> {{ $tz->fm_nm_obat }} </b> ?
+                            {{-- Hapus data Supplier : <b> {{ $tz->fm_nm_obat }} </b> ? --}}
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <form class="d-inline" action="{{ url('destroy-mstr-', [$tz->fm_kd_obat]) }}" method="POST">
-                            @csrf
-                            <input type="hidden" value="DELETE" name="_method">
-                            <button type="submit" id="Delete" value="Delete" class="btn btn-danger float-right">
-                                <i class="fa fa-trash"></i>
-                            </button>
+                        {{-- <form class="d-inline" action="{{ url('destroy-mstr-', [$tz->fm_kd_obat]) }}" method="POST"> --}}
+                        @csrf
+                        <input type="hidden" value="DELETE" name="_method">
+                        <button type="submit" id="Delete" value="Delete" class="btn btn-danger float-right">
+                            <i class="fa fa-trash"></i>
+                        </button>
                         </form>
                     </div>
                 </div>
@@ -1049,7 +1049,7 @@
                                 //     positionClass: 'toast-top-right',
                                 // });
                                 // return window.location.href = "{{ url('mstr-obat') }}";
-                                return window.location.href = "{{ url('mstr-obat') }}";
+                                // return window.location.href = "{{ url('mstr-obat') }}";
                             }
                         });
                     } else {

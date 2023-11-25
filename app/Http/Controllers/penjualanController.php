@@ -39,22 +39,34 @@ class penjualanController extends Controller
 
     public function getListObatReguler()
     {
-        $isObatReguler = mstr_obat::select("fm_kd_obat", "fm_nm_obat", "fm_satuan_jual", "fm_hrg_beli", "fm_hrg_jual_non_resep")->get();
-        // dd($isdata2);
+        // $isObatReguler = mstr_obat::select("fm_kd_obat", "fm_nm_obat", "fm_satuan_jual", "fm_hrg_beli", "fm_hrg_jual_non_resep")->get();
+
+        $isObatReguler = DB::table('mstr_obat')
+            ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
+            ->select('mstr_obat.*', 'tb_stock.*')
+            ->get();
+
         return response()->json($isObatReguler);
     }
 
     public function getListObatResep()
     {
-        $isObatResep = mstr_obat::select("fm_kd_obat", "fm_nm_obat", "fm_satuan_jual", "fm_hrg_beli", "fm_hrg_jual_resep")->get();
-        // dd($isdata2);
+        // $isObatResep = mstr_obat::select("fm_kd_obat", "fm_nm_obat", "fm_satuan_jual", "fm_hrg_beli", "fm_hrg_jual_resep")->get();
+        $isObatResep = DB::table('mstr_obat')
+            ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
+            ->select('mstr_obat.*', 'tb_stock.*')
+            ->get();
         return response()->json($isObatResep);
     }
 
     public function getListObatNakes()
     {
-        $isObatNakes = mstr_obat::select("fm_kd_obat", "fm_nm_obat", "fm_satuan_jual", "fm_hrg_beli", "fm_hrg_jual_nakes")->get();
-        // dd($isdata2);
+        // $isObatNakes = mstr_obat::select("fm_kd_obat", "fm_nm_obat", "fm_satuan_jual", "fm_hrg_beli", "fm_hrg_jual_nakes")->get();
+        $isObatNakes = DB::table('mstr_obat')
+            ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
+            ->select('mstr_obat.*', 'tb_stock.*')
+            ->get();
+
         return response()->json($isObatNakes);
     }
 

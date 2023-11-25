@@ -190,6 +190,7 @@
                                 <th width="110px">Satuan</th>
                                 <th width="110px">Harga</th>
                                 <th width="100px">Qty</th>
+                                <th width="110px">Cara Pakai</th>
                                 <th width="110px">Disc(Rp.)</th>
                                 <th width="110px">Tax</th>
                                 <th width="200px">Sub Total</th>
@@ -243,6 +244,7 @@
                                 <th>Nama Obat</th>
                                 <th>Satuan Jual</th>
                                 <th>Harga Jual Reguler</th>
+                                <th>QTY Stock</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -343,6 +345,9 @@
                                         <input type="text" class="qtyr form-control" id="qtyr" name="qty[]" onClick="getQTYResep(this)" value="${getValues[getVals].ch_qty_obat}">
                                     </td>
                                     <td>
+                                        <input type="text" class="cara_pakai form-control" id="cara_pakai" name="cara_pakai[]" value="${getValues[getVals].ch_cara_pakai}">
+                                    </td>
+                                    <td>
                                         <input type="text" class="form-control" id="diskon"
                                             name="diskon[]">
                                     </td>
@@ -357,8 +362,8 @@
 
                                     <input type="hidden" name="user" id="user" value="tes user">
                                     <td>
-                                        <button class="remove btn btn-xs btn-danger " id="delRow"><i
-                                                class="fa fa-close"></i></button>
+                                        <button type="button" class="remove btn btn-xs btn-danger"><i
+                                                class="fa fa-trash" onclick="deleteRow(this)"></i></button>
                                     </td>
                                 </tr>
                     
@@ -370,6 +375,10 @@
                     })
                 }
 
+                function deleteRow(btn) {
+                    var row = btn.parentNode.parentNode.parentNode;
+                    row.parentNode.removeChild(row);
+                }
 
                 function GrandTotalResep() {
                     var sum = 0;
@@ -384,14 +393,14 @@
 
 
                 function getTipeTarif() {
-                    toastr.info('Harga Reguler Selected!', {
-                        timeOut: 600,
-                        // preventDuplicates: true,
-                        positionClass: 'toast-top-right',
-                    });
                     var tes = $('#tp_tipe_tarif').val();
 
                     if (tes == 'Reguler') {
+                        toastr.info('Harga Reguler Selected!', {
+                            timeOut: 600,
+                            // preventDuplicates: true,
+                            positionClass: 'toast-top-right',
+                        });
                         $.ajax({
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -403,34 +412,62 @@
                             // },
                             success: function(isObatReguler) {
                                 // $.each(isTimelineHistory, function(key, getVal) {
-                                $(".getListObatx").empty();
+                                $("#getListObatx").empty();
                                 var getValue = isObatReguler;
                                 for (var getVal = 0; getVal < getValue.length; getVal++) {
-                                    $(".getListObatx").append(`
-                                    <tr>
-                                        <td><input class="getItemObat col-4" style="border: none" readonly value="${getValue[getVal].fm_kd_obat}"></td>
-                                        <td id="kd_obatToadd">${getValue[getVal].fm_nm_obat}</td>
-                                        <td>${getValue[getVal].fm_satuan_jual}</td>
-                                        <td>${getValue[getVal].fm_hrg_jual_non_resep}</td>
-                                        <td><button type="button" onClick="SelectItemObat(this)" class="btn btn-info btn-xs" id="SelectItemObatxxx"
-                                                data-fm_kd_obat="${getValue[getVal].fm_kd_obat}"
-                                                data-fm_nm_obat="${getValue[getVal].fm_nm_obat}"
-                                                data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}"
-                                                data-fm_hrg_jual="${getValue[getVal].fm_hrg_jual_non_resep}">Select</button>
-                                        </td>
-                                    </tr>`)
+
+                                    const table = $('#exm2').DataTable();
+                                    var btnBtn =
+                                        `<button class="SelectItemObat btn btn-success btn-xs" id="SelectItemObat" onClick="SelectItemObat(this)" data-fm_kd_obat="${getValue[getVal].fm_kd_obat}" data-fm_nm_obat="${getValue[getVal].fm_nm_obat}" data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}" data-fm_hrg_jual="${getValue[getVal].fm_hrg_jual_resep}">Select</button>`
+                                    const dataBaru = [
+                                        [getValue[getVal].fm_kd_obat, getValue[getVal].fm_nm_obat, getValue[getVal]
+                                            .fm_satuan_jual, getValue[getVal].fm_hrg_jual_non_resep, getValue[
+                                                getVal]
+                                            .qty, btnBtn
+                                        ],
+                                    ]
+
+                                    function injectDataBaru() {
+                                        for (const data of dataBaru) {
+                                            table.row.add([
+                                                data[0],
+                                                data[1],
+                                                data[2],
+                                                data[3],
+                                                data[4],
+                                                data[5],
+                                                data[6],
+                                                data[7],
+                                            ]).draw(false)
+                                        }
+                                    }
+                                    injectDataBaru()
+                                    // $(".getListObatx").append(`
+                        // <tr>
+                        //     <td><input class="getItemObat col-6" style="border: none" readonly value="${getValue[getVal].fm_kd_obat}"></td>
+                        //     <td id="kd_obatToadd">${getValue[getVal].fm_nm_obat}</td>
+                        //     <td>${getValue[getVal].fm_satuan_jual}</td>
+                        //     <td>${getValue[getVal].fm_hrg_jual_non_resep}</td>
+                        //     <td>${getValue[getVal].qty}</td>
+                        //     <td><button type="button" onClick="SelectItemObat(this)" class="btn btn-info btn-xs" id="SelectItemObatxxx"
+                        //             data-fm_kd_obat="${getValue[getVal].fm_kd_obat}"
+                        //             data-fm_nm_obat="${getValue[getVal].fm_nm_obat}"
+                        //             data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}"
+                        //             data-fm_hrg_jual="${getValue[getVal].fm_hrg_jual_non_resep}">Select</button>
+                        //     </td>
+                        // </tr>`)
                                 }
 
                             }
                         })
 
                     } else if (tes == 'Resep') {
+                        $("#getListObatx").empty();
                         toastr.info('Harga Resep Selected!', {
                             timeOut: 600,
                             // preventDuplicates: true,
                             positionClass: 'toast-top-right',
                         });
-                        $(".getListObatx").empty();
                         $.ajax({
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -442,24 +479,49 @@
                             // },
                             success: function(isObatResep) {
                                 // $.each(isTimelineHistory, function(key, getVal) {
-                                $(".getListObatx").empty();
+                                $("#getListObatx").empty();
                                 var getValue = isObatResep;
                                 for (var getVal = 0; getVal < getValue.length; getVal++) {
-                                    $(".getListObatx").append(`
-                        <tr>
-                            <td><input class="getItemObat col-4" style="border: none" readonly value="${getValue[getVal].fm_kd_obat}"></td>
-                            <td>${getValue[getVal].fm_nm_obat}</td>
-                            <td>${getValue[getVal].fm_satuan_jual}</td>
-                            <td>${getValue[getVal].fm_hrg_jual_resep}</td>
-                            <td><button type="button" class="SelectItemObat btn btn-info btn-xs" id="SelectItemObat" onClick="SelectItemObat(this)"
-                                    data-fm_kd_obat="${getValue[getVal].fm_kd_obat}"
-                                    data-fm_nm_obat="${getValue[getVal].fm_nm_obat}"
-                                    data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}"
-                                    data-fm_hrg_jual="${getValue[getVal].fm_hrg_jual_resep}">Select</button>
-                            </td>
-                        </tr>`)
-                                }
 
+                                    const table = $('#exm2').DataTable();
+                                    var btnBtn =
+                                        `<button class="SelectItemObat btn btn-success btn-xs" id="SelectItemObat" onClick="SelectItemObat(this)" data-fm_kd_obat="${getValue[getVal].fm_kd_obat}" data-fm_nm_obat="${getValue[getVal].fm_nm_obat}" data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}" data-fm_hrg_jual="${getValue[getVal].fm_hrg_jual_resep}">Select</button>`
+                                    const dataBaru = [
+                                        [getValue[getVal].fm_kd_obat, getValue[getVal].fm_nm_obat, getValue[getVal]
+                                            .fm_satuan_jual, getValue[getVal].fm_hrg_jual_resep, getValue[getVal]
+                                            .qty, btnBtn
+                                        ],
+                                    ]
+
+                                    function injectDataBaru() {
+                                        for (const data of dataBaru) {
+                                            table.row.add([
+                                                data[0],
+                                                data[1],
+                                                data[2],
+                                                data[3],
+                                                data[4],
+                                                data[5],
+                                                data[6],
+                                                data[7],
+                                            ]).draw(false)
+                                        }
+                                    }
+                                    injectDataBaru()
+                                    // $(".getListObatx").append(`
+                        // <tr>
+                        //     <td><input class="getItemObat col-4" style="border: none" readonly value="${getValue[getVal].fm_kd_obat}"></td>
+                        //     <td>${getValue[getVal].fm_nm_obat}</td>
+                        //     <td>${getValue[getVal].fm_satuan_jual}</td>
+                        //     <td>${getValue[getVal].fm_hrg_jual_resep}</td>
+                        //     <td><button type="button" class="SelectItemObat btn btn-info btn-xs" id="SelectItemObat" onClick="SelectItemObat(this)"
+                        //             data-fm_kd_obat="${getValue[getVal].fm_kd_obat}"
+                        //             data-fm_nm_obat="${getValue[getVal].fm_nm_obat}"
+                        //             data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}"
+                        //             data-fm_hrg_jual="${getValue[getVal].fm_hrg_jual_resep}">Select</button>
+                        //     </td>
+                        // </tr>`)
+                                }
                             }
                         })
                     } else {
@@ -468,7 +530,7 @@
                             // preventDuplicates: true,
                             positionClass: 'toast-top-right',
                         });
-                        $(".getListObatx").empty();
+                        $("#getListObatx").empty();
                         $.ajax({
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -480,22 +542,48 @@
                             // },
                             success: function(isObatNakes) {
                                 // $.each(isTimelineHistory, function(key, getVal) {
-                                $(".getListObatx").empty();
+                                $("#getListObatx").empty();
                                 var getValue = isObatNakes;
                                 for (var getVal = 0; getVal < getValue.length; getVal++) {
-                                    $(".getListObatx").append(`
-                        <tr>
-                            <td><input class="getItemObat col-4" style="border: none" readonly value="${getValue[getVal].fm_kd_obat}"></td>
-                            <td>${getValue[getVal].fm_nm_obat}</td>
-                            <td>${getValue[getVal].fm_satuan_jual}</td>
-                            <td>${getValue[getVal].fm_hrg_jual_nakes}</td>
-                            <td><button type="button" class="SelectItemObat btn btn-info btn-xs" id="SelectItemObat" onClick="SelectItemObat(this)"
-                                    data-fm_kd_obat="${getValue[getVal].fm_kd_obat}"
-                                    data-fm_nm_obat="${getValue[getVal].fm_nm_obat}"
-                                    data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}"
-                                    data-fm_hrg_jual="${getValue[getVal].fm_hrg_jual_nakes}">Select</button>
-                            </td>
-                        </tr>`)
+
+                                    const table = $('#exm2').DataTable();
+                                    var btnBtn =
+                                        `<button class="SelectItemObat btn btn-success btn-xs" id="SelectItemObat" onClick="SelectItemObat(this)" data-fm_kd_obat="${getValue[getVal].fm_kd_obat}" data-fm_nm_obat="${getValue[getVal].fm_nm_obat}" data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}" data-fm_hrg_jual="${getValue[getVal].fm_hrg_jual_resep}">Select</button>`
+                                    const dataBaru = [
+                                        [getValue[getVal].fm_kd_obat, getValue[getVal].fm_nm_obat, getValue[getVal]
+                                            .fm_satuan_jual, getValue[getVal].fm_hrg_jual_nakes, getValue[getVal]
+                                            .qty, btnBtn
+                                        ],
+                                    ]
+
+                                    function injectDataBaru() {
+                                        for (const data of dataBaru) {
+                                            table.row.add([
+                                                data[0],
+                                                data[1],
+                                                data[2],
+                                                data[3],
+                                                data[4],
+                                                data[5],
+                                                data[6],
+                                                data[7],
+                                            ]).draw(false)
+                                        }
+                                    }
+                                    injectDataBaru()
+                                    //             $(".getListObatx").append(`
+                        // <tr>
+                        //     <td><input class="getItemObat col-4" style="border: none" readonly value="${getValue[getVal].fm_kd_obat}"></td>
+                        //     <td>${getValue[getVal].fm_nm_obat}</td>
+                        //     <td>${getValue[getVal].fm_satuan_jual}</td>
+                        //     <td>${getValue[getVal].fm_hrg_jual_nakes}</td>
+                        //     <td><button type="button" class="SelectItemObat btn btn-info btn-xs" id="SelectItemObat" onClick="SelectItemObat(this)"
+                        //             data-fm_kd_obat="${getValue[getVal].fm_kd_obat}"
+                        //             data-fm_nm_obat="${getValue[getVal].fm_nm_obat}"
+                        //             data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}"
+                        //             data-fm_hrg_jual="${getValue[getVal].fm_hrg_jual_nakes}">Select</button>
+                        //     </td>
+                        // </tr>`)
                                 }
                             }
                         })
@@ -508,8 +596,6 @@
 
                 function SelectItemObat(f) {
                     // $("#SelectItemObatxxx").on("click", function() {
-
-
                     var getKdObat = $(f).data('fm_kd_obat');
                     var getNmObat = $(f).data('fm_nm_obat');
                     var getSatJual = $(f).data('fm_satuan_jual');
@@ -540,6 +626,9 @@
                             <input type="text" class="qty form-control" id="qty" name="qty[]" onKeyUp="getQTY(this)">
                         </td>
                         <td>
+                            <input type="text" class="cara_pakai form-control" id="cara_pakai" name="cara_pakai[]">
+                        </td>
+                        <td>
                             <input type="text" class="form-control" id="diskon"
                                 name="diskon[]">
                         </td>
@@ -554,8 +643,7 @@
 
                         <input type="hidden" name="user" id="user" value="tes user">
                         <td>
-                            <button class="remove btn btn-xs btn-danger " id="delRow"><i
-                                    class="fa fa-close"></i></button>
+                            <button type="button" class="remove btn btn-xs btn-danger"><i class="fa fa-trash" onclick="deleteRow(this)"></i></button>
                         </td>
                     </tr>
                     
