@@ -184,6 +184,6 @@ Route::controller(AssesmentController::class)->group(function () {
 Route::controller(LapFarmasiController::class)->group(function () {
     Route::get('laporan-penjualan-farmasi', 'lapPenjualanFarmasi')->name('laporan-penjualan-farmasi');
     Route::get('getLaporanPenjualan', 'getLapPenjualan')->name('getLaporanPenjualan');
-    Route::get('districts', 'districts')->name('districts');
-    Route::get('villages', 'villages')->name('villages');
+    Route::get('buku-stok-rekap', 'bukuStok')->name('buku-stok-rekap');
+    Route::get('getBukuStok', 'getBukuStok')->name('getBukuStok');
 });

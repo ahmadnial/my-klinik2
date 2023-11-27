@@ -4,27 +4,27 @@
     <section class="content">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title"><i class="fa fa-truck">&nbsp;</i>Laporan Penjualan Apotek Rekap</h3>
+                <h3 class="card-title"><i class="fa fa-truck">&nbsp;</i>Buku Stok Barang</h3>
             </div>
 
             <div class="card-body">
                 <div class="col-4 mb-4 input-group input-daterange">
-                    <input type="date" id="date1" class="form-control">
+                    {{-- <input type="date" id="date1" class="form-control">
                     <div class="input-group-addon">&nbsp; s.d&nbsp;</div>
                     <input type="date" id="date2" class="form-control">
-                    <div class="input-group-addon">&nbsp;&nbsp;&nbsp;</div>
+                    <div class="input-group-addon">&nbsp;&nbsp;&nbsp;</div> --}}
                     <button class="btn btn-success" onclick="getDataPenjualan()" id="btnProses">Proses</button>
                 </div>
                 <div>
-                    <table id="penjualan" class="table table-hover table-striped">
+                    <table id="bukustok" class="table table-hover table-striped">
                         <thead>
                             <tr>
-                                <th>kode Transaksi</th>
-                                <th>Jenis Penjualan</th>
-                                <th>Sub Total</th>
-                                {{-- <th>Alasan</th>
-                                <th>Dibuat Oleh</th>
-                                <th></th> --}}
+                                <th>kode Barang</th>
+                                <th>Nama Barang</th>
+                                <th>Qty</th>
+                                <th>Satuan</th>
+                                <th>Harga Beli Satuan</th>
+                                <th>Nilai Persediaan</th>
                             </tr>
                         </thead>
                         <tbody id="result">
@@ -34,9 +34,9 @@
                             <tr>
                                 <th></th>
                                 <th></th>
-                                {{-- <td><b><input type="text" id="grandTTL" class="form-control" style="border: none"
-                                            readonly></b>
-                                </td> --}}
+                                <th></th>
+                                <th></th>
+                                <th></th>
                                 <th id="grandTTL"></th>
                             </tr>
                         </tfoot>
@@ -65,23 +65,29 @@
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
-                        url: "{{ url('getLaporanPenjualan') }}",
+                        url: "{{ url('getBukuStok') }}",
                         type: 'GET',
                         data: {
                             date1: date1,
                             date2: date2
                         },
-                        success: function(isDataLaporan) {
+                        success: function(isDataBukuStok) {
                             var sumall = 0;
-                            $.each(isDataLaporan, function(key, datavalue) {
-                                const table = $('#penjualan').DataTable();
-                                var total_pen = datavalue.total_penjualan;
-                                var ttlPenjualan = total_pen.toLocaleString('id-ID', {
+
+                            $.each(isDataBukuStok, function(key, datavalue) {
+                                const table = $('#bukustok').DataTable();
+                                var nilai_persediaan = datavalue.qty * datavalue.fm_hrg_beli_detail;
+
+                                var number = nilai_persediaan;
+                                var formattedNumber = number.toLocaleString('id-ID', {
                                     style: 'currency',
                                     currency: 'IDR'
                                 });
+
                                 const dataBaru = [
-                                    [datavalue.kd_trs, datavalue.tipe_tarif, ttlPenjualan],
+                                    [datavalue.kd_obat, datavalue.nm_obat, datavalue.qty, datavalue
+                                        .satuan, datavalue.fm_hrg_beli_detail, formattedNumber
+                                    ],
                                 ]
 
                                 function injectDataBaru() {
@@ -90,22 +96,24 @@
                                             data[0],
                                             data[1],
                                             data[2],
+                                            data[3],
+                                            data[4],
+                                            data[5],
                                         ]).draw(false)
                                     }
                                 }
-
                                 injectDataBaru()
 
-                                var ttlInt = parseFloat(datavalue.total_penjualan);
+                                var ttlInt = parseFloat(nilai_persediaan);
                                 sumall += ttlInt;
 
-                                var number = sumall;
-                                var formattedNumber = number.toLocaleString('id-ID', {
+                                var number2 = sumall;
+                                var formattedNumber2 = number2.toLocaleString('id-ID', {
                                     style: 'currency',
                                     currency: 'IDR'
                                 });
 
-                                document.getElementById("grandTTL").innerHTML = formattedNumber;
+                                document.getElementById("grandTTL").innerHTML = formattedNumber2;
 
                                 toastr.success('Data Load Complete!', 'Complete!', {
                                     timeOut: 2000,
@@ -125,7 +133,39 @@
                 // }
             }
 
+            new DataTable('#penjualan', {
+                footerCallback: function(row, data, start, end, display) {
+                    let api = this.api();
 
+                    // Remove the formatting to get integer data for summation
+                    let intVal = function(i) {
+                        return typeof i === 'string' ?
+                            i.replace(/[\$,]/g, '') * 1 :
+                            typeof i === 'number' ?
+                            i :
+                            0;
+                    };
+
+                    // Total over all pages
+                    total = api
+                        .column(4)
+                        .data()
+                        .reduce((a, b) => intVal(a) + intVal(b), 0);
+
+                    // Total over this page
+                    pageTotal = api
+                        .column(4, {
+                            page: 'current'
+                        })
+                        .data()
+                        .reduce((a, b) => intVal(a) + intVal(b), 0);
+
+                    // Update footer
+                    api.column(4).footer().innerHTML =
+                        '$' + pageTotal + ' ( $' + total + ' total)';
+                }
+                // "bDestroy": true;
+            });
             // var someTableDT = $("#penjualan").on("draw.dt", function() {
             //     $(this).find(".dataTables_empty").parents('tbody').empty();
             // }).DataTable

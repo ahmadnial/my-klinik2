@@ -28,43 +28,21 @@ class LapFarmasiController extends Controller
         return response()->json($isDataLaporan);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function bukuStok()
     {
-        //
+        return view('pages.laporan.farmasi.buku-stok');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function getBukuStok(Request $request)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        // $t = $request->all();
+        // dd($t);
+        if ($request->ajax()) {
+            $isDataBukuStok = DB::table('tb_stock')
+                ->leftJoin('mstr_obat', 'tb_stock.kd_obat', 'mstr_obat.fm_kd_obat')
+                ->select('mstr_obat.*', 'tb_stock.*')
+                ->get();
+        }
+        return response()->json($isDataBukuStok);
     }
 }

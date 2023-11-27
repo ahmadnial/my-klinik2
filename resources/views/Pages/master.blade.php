@@ -333,21 +333,27 @@
                                     </a>
                                 </li> --}}
                                 <li class="nav-item">
-                                    <a href="{{ url('/penjualan') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Penjualan</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
                                     <a href="{{ url('/delivery-order') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Delivery Order</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
+                                    <a href="{{ url('/penjualan') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Penjualan</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a href="{{ url('/adjusment-stock') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Adjusment Stock</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('/buku-stok-rekap') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Buku Stok</p>
                                     </a>
                                 </li>
                             </ul>

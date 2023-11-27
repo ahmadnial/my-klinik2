@@ -27,7 +27,7 @@ class penjualanController extends Controller
             $noRef = 'TP' . '-' . substr($Y, -2) . $M  . '-' . str_pad(($de + 1), 6, '0', STR_PAD_LEFT);
         };
 
-        $isListRegResep = trs_chart_resep::select("kd_trs", "chart_id", "kd_reg", "mr_pasien", "nm_pasien")->distinct()->get();
+        $isListRegResep = trs_chart_resep::select("kd_trs", "chart_id", "kd_reg", "mr_pasien", "nm_pasien")->distinct()->where('isimplementasi', '=', '0')->get();
 
         $isListPenjualan = tp_hdr::all();
         return view('Pages.penjualan', [
@@ -99,6 +99,7 @@ class penjualanController extends Controller
             ->select('trs_chart_resep.*', 'tc_mr.*')
             ->distinct()
             ->where('kd_trs', $kd_trs->kd_trs)
+            // ->where('isimplementasi', '=', '0')
             ->get();
         return response()->json($isListOrderResep);
     }
@@ -179,8 +180,11 @@ class penjualanController extends Controller
                 // $X = (int)$dataQty * (int)$dataIsi;
                 $toInt = (int)$dataQty;
 
-                tb_stock::whereIn('kd_obat', [$datax])->decrement("qty", $toInt);
+                tb_stock::where('kd_obat', [$datax])->decrement("qty", $toInt);
             }
+
+            trs_chart_resep::where('kd_trs', $request->tp_kd_trs)->update(['isImplementasi' => "1"]);
+
 
 
             DB::commit();
