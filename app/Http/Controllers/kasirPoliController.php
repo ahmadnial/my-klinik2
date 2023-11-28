@@ -30,7 +30,7 @@ class kasirPoliController extends Controller
         };
 
         $getListRegOut = DB::table('ta_registrasi_keluar')
-            ->select('trs_kp_kd_reg', 'trs_kp_tgl_keluar', 'trs_kp_no_mr', 'trs_kp_nm_pasien', 'trs_kp_layanan', 'trs_kp_dokter', 'trs_kp_nilai_total')
+            ->select('kd_trs_reg_out', 'trs_kp_kd_reg', 'trs_kp_tgl_keluar', 'trs_kp_no_mr', 'trs_kp_nm_pasien', 'trs_kp_layanan', 'trs_kp_dokter', 'trs_kp_nilai_total')
             ->distinct()
             ->get();
         $getTrsTdk = registrasiCreate::select('fr_kd_reg', 'fr_nama')->where('fr_tgl_keluar', '=', '')->get();
@@ -56,10 +56,12 @@ class kasirPoliController extends Controller
             ->select('trs_chart.*', 'mstr_tindakan.*', 'mstr_nilai_tindakan.*')
             // ->groupBy('trs_chart.kd_reg')
             ->where('trs_chart.kd_reg', $request->kd_reg)
-            ->where('nm_tarif', '!=', '')
+            // ->where('nm_tarif', '!=', '')
+            // ->whereNull('nm_tarif')
             // ->orwherenotNull('trs_chart.nm_tarif')
             // ->having('trs_chart.kd_reg', '>', 1)
             ->get();
+        // dd($isRegSearchResult);
         // , DB::raw('count(`kd_reg`) as kr')
         return response()->json($isRegSearchResult);
     }

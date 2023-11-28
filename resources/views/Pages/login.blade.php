@@ -90,6 +90,12 @@ grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); */
 </style>
 
 <body class="gas hold-transition login-page">
+    @if (session()->has('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     <div class="login-box">
         <!-- /.login-logo -->
         <div class="card card-outline card-purple">
@@ -99,22 +105,33 @@ grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); */
             <div class="card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
 
-                <form action="{{ url('/') }}" method="">
+                <form action="{{ url('/ProsesLogin') }}" method="POST">
+                    @csrf
                     <div class="input-group mb-3">
-                        <input type="email" class="form-control" placeholder="Username">
+                        <input type="email" class="form-control" placeholder="Username" name="email">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
                             </div>
                         </div>
+                        @error('email')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" class="form-control" placeholder="Password">
+                        <input type="password" class="form-control" placeholder="Password" name="password">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
                             </div>
                         </div>
+                        @error('password')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                     <div class="row">
                         <div class="col-8">

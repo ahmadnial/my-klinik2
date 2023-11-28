@@ -224,6 +224,7 @@ class TindakanController extends Controller
                     'mr_pasien' => $request->chart_mr,
                     'nm_pasien' => $request->chart_nm_pasien,
                     'nm_tarif_dasar' => $request->nm_tarif_dasar,
+                    'nm_dokter_jm' => $request->chart_dokter,
                     // 'nm_dokter_jm' => $request->chart_dokter,
                     // 'sub_total' => $request->sub_total,
                     'user' => $request->user_create,

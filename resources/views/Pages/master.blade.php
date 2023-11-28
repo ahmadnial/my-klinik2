@@ -70,106 +70,23 @@
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
-                <!-- Navbar Search -->
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-                        <i class="fas fa-search"></i>
-                    </a>
-                    <div class="navbar-search-block">
-                        <form class="form-inline">
-                            <div class="input-group input-group-sm">
-                                <input class="form-control form-control-navbar" type="search" placeholder="Search"
-                                    aria-label="Search">
-                                <div class="input-group-append">
-                                    <button class="btn btn-navbar" type="submit">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                    <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </li>
 
-                <!-- Messages Dropdown Menu -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
-                        <i class="far fa-comments"></i>
-                        <span class="badge badge-danger navbar-badge">3</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <a href="#" class="dropdown-item">
-                            <!-- Message Start -->
-                            <div class="media">
-                                <img src="dist/img/user1-128x128.jpg" alt="User Avatar"
-                                    class="img-size-50 mr-3 img-circle">
-                                <div class="media-body">
-                                    <h3 class="dropdown-item-title">
-                                        Brad Diesel
-                                        <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                                    </h3>
-                                    <p class="text-sm">Call me whenever you can...</p>
-                                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                                </div>
-                            </div>
-                            <!-- Message End -->
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <!-- Message Start -->
-                            <div class="media">
-                                <img src="dist/img/user8-128x128.jpg" alt="User Avatar"
-                                    class="img-size-50 img-circle mr-3">
-                                <div class="media-body">
-                                    <h3 class="dropdown-item-title">
-                                        John Pierce
-                                        <span class="float-right text-sm text-muted"><i
-                                                class="fas fa-star"></i></span>
-                                    </h3>
-                                    <p class="text-sm">I got your message bro</p>
-                                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                                </div>
-                            </div>
-                            <!-- Message End -->
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <!-- Message Start -->
-                            <div class="media">
-                                <img src="dist/img/user3-128x128.jpg" alt="User Avatar"
-                                    class="img-size-50 img-circle mr-3">
-                                <div class="media-body">
-                                    <h3 class="dropdown-item-title">
-                                        Nora Silvester
-                                        <span class="float-right text-sm text-warning"><i
-                                                class="fas fa-star"></i></span>
-                                    </h3>
-                                    <p class="text-sm">The subject goes here</p>
-                                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                                </div>
-                            </div>
-                            <!-- Message End -->
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-                    </div>
-                </li>
+
                 <!-- Notifications Dropdown Menu -->
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
-                        <i class="far fa-bell"></i>
-                        <span class="badge badge-warning navbar-badge">15</span>
+                        <i class="fa-solid fa-gear"></i>
+                        <span class="badge badge-warning navbar-badge"></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <span class="dropdown-item dropdown-header">15 Notifications</span>
+                        {{-- <span class="dropdown-item dropdown-header">15 Notifications</span> --}}
                         <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-envelope mr-2"></i> 4 new messages
-                            <span class="float-right text-muted text-sm">3 mins</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
+                        <form action="/logout" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-primary">Logout</button>
+                            {{-- <span class="float-right text-muted text-sm">3 mins</span> --}}
+                        </form>
+                        {{-- <div class="dropdown-divider"></div>
                         <a href="#" class="dropdown-item">
                             <i class="fas fa-users mr-2"></i> 8 friend requests
                             <span class="float-right text-muted text-sm">12 hours</span>
@@ -181,7 +98,7 @@
                         </a>
                         <div class="dropdown-divider"></div>
                         <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
-                    </div>
+                    </div> --}}
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" data-widget="fullscreen" href="#" role="button">
@@ -189,8 +106,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true"
-                        href="#" role="button">
+                    <a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#"
+                        role="button">
                         <i class="fas fa-th-large"></i>
                     </a>
                 </li>
@@ -248,30 +165,31 @@
 
                         </ul> --}}
                         {{-- </li> --}}
-
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                {{-- <i class="nav-icon fas fa-bed"></i> --}}
-                                <i class="nav-icon fa fa-light fa-notes-medical"></i>
-                                <p>
-                                    Registrasi
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
+                        @if (Auth::check())
+                            @if (auth()->user()->role_id == '1')
                                 <li class="nav-item">
-                                    <a href="{{ url('/registrasi') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Registrasi</p>
+                                    <a href="#" class="nav-link">
+                                        {{-- <i class="nav-icon fas fa-bed"></i> --}}
+                                        <i class="nav-icon fa fa-light fa-notes-medical"></i>
+                                        <p>
+                                            Registrasi
+                                            <i class="right fas fa-angle-left"></i>
+                                        </p>
                                     </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('/data-sosial') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Data Sosial</p>
-                                    </a>
-                                </li>
-                                {{-- <li class="nav-item">
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a href="{{ url('/registrasi') }}" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Registrasi</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{{ url('/data-sosial') }}" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Data Sosial</p>
+                                            </a>
+                                        </li>
+                                        {{-- <li class="nav-item">
                                     <a href="pages/charts/inline.html" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Inline</p>
@@ -283,123 +201,127 @@
                                         <p>uPlot</p>
                                     </a>
                                 </li> --}}
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('antrian') }}" class="nav-link">
-                                <i class="nav-icon far fa-calendar-alt"></i>
-                                <p>
-                                    Antrian
-                                    <span class="badge badge-info right">2</span>
-                                </p>
-                            </a>
-                        </li>
+                                    </ul>
+                                </li>
+                                @if (auth()->user()->role_id == '2' || '1')
+                                    <li class="nav-item">
+                                        <a href="{{ url('antrian') }}" class="nav-link">
+                                            <i class="nav-icon far fa-calendar-alt"></i>
+                                            <p>
+                                                Antrian
+                                                <span class="badge badge-info right">2</span>
+                                            </p>
+                                        </a>
+                                    </li>
 
-                        <li class="nav-item">
-                            <a href="{{ url('assesment-awal') }}" class="nav-link">
-                                {{-- <i class="nav-icon fa fa-syringe"></i> --}}
-                                <i class="nav-icon fa fa-regular fa-book-medical"></i>
-                                <p>
-                                    Assesment Awal
-                                    <span class="badge badge-info right"></span>
-                                </p>
-                            </a>
-                        </li>
+                                    <li class="nav-item">
+                                        <a href="{{ url('assesment-awal') }}" class="nav-link">
+                                            {{-- <i class="nav-icon fa fa-syringe"></i> --}}
+                                            <i class="nav-icon fa fa-regular fa-book-medical"></i>
+                                            <p>
+                                                Assesment Awal
+                                                <span class="badge badge-info right"></span>
+                                            </p>
+                                        </a>
+                                    </li>
 
-                        <li class="nav-item">
-                            <a href="{{ url('/tindakan-medis') }}" class="nav-link">
-                                {{-- <i class="nav-icon fa fa-syringe"></i> --}}
-                                <i class="nav-icon fa fa-stethoscope"></i>
-                                <p>
-                                    Medical Chart
-                                    <span class="badge badge-info right"></span>
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                {{-- <i class="nav-icon fas fa-bed"></i> --}}
-                                <i class="nav-icon fa fa-light fa-notes-medical"></i>
-                                <p>
-                                    Farmasi
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                {{-- <li class="nav-item">
+                                    <li class="nav-item">
+                                        <a href="{{ url('/tindakan-medis') }}" class="nav-link">
+                                            {{-- <i class="nav-icon fa fa-syringe"></i> --}}
+                                            <i class="nav-icon fa fa-stethoscope"></i>
+                                            <p>
+                                                Medical Chart
+                                                <span class="badge badge-info right"></span>
+                                            </p>
+                                        </a>
+                                    </li>
+                                @endif
+
+                                @if (auth()->user()->role_id == '4' || '1')
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">
+                                            {{-- <i class="nav-icon fas fa-bed"></i> --}}
+                                            <i class="nav-icon fa fa-light fa-notes-medical"></i>
+                                            <p>
+                                                Farmasi
+                                                <i class="right fas fa-angle-left"></i>
+                                            </p>
+                                        </a>
+                                        <ul class="nav nav-treeview">
+                                            {{-- <li class="nav-item">
                                     <a href="{{ url('/purchase-order') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Purchase Order</p>
                                     </a>
                                 </li> --}}
-                                <li class="nav-item">
-                                    <a href="{{ url('/delivery-order') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Delivery Order</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('/penjualan') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Penjualan</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('/adjusment-stock') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Adjusment Stock</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('/buku-stok-rekap') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Buku Stok</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                {{-- <i class="nav-icon fas fa-bed"></i> --}}
-                                <i class="nav-icon fa fa-light fa-truck"></i>
-                                <p>
-                                    Kassa
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ url('/kasir-poli') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Kasir Poliklinik</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('/kasir-apotek') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Kasir Apotek</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                                            <li class="nav-item">
+                                                <a href="{{ url('/delivery-order') }}" class="nav-link">
+                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <p>Delivery Order</p>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{{ url('/penjualan') }}" class="nav-link">
+                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <p>Penjualan</p>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{{ url('/adjusment-stock') }}" class="nav-link">
+                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <p>Adjusment Stock</p>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{{ url('/buku-stok-rekap') }}" class="nav-link">
+                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <p>Buku Stok</p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">
+                                            {{-- <i class="nav-icon fas fa-bed"></i> --}}
+                                            <i class="nav-icon fa fa-light fa-truck"></i>
+                                            <p>
+                                                Kassa
+                                                <i class="right fas fa-angle-left"></i>
+                                            </p>
+                                        </a>
+                                        <ul class="nav nav-treeview">
+                                            <li class="nav-item">
+                                                <a href="{{ url('/kasir-poli') }}" class="nav-link">
+                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <p>Kasir Poliklinik</p>
+                                                </a>
+                                            </li>
+                                            {{-- <li class="nav-item">
+                                            <a href="{{ url('/kasir-apotek') }}" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Kasir Apotek</p>
+                                            </a>
+                                        </li> --}}
+                                        </ul>
+                                    </li>
 
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                {{-- <i class="nav-icon fas fa-bed"></i> --}}
-                                <i class="nav-icon fa fa-light fa-money"></i>
-                                <p>
-                                    Laporan
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ url('/laporan-penjualan-farmasi') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Penjualan Farmasi</p>
-                                    </a>
-                                </li>
-                                {{-- <li class="nav-item">
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">
+                                            {{-- <i class="nav-icon fas fa-bed"></i> --}}
+                                            <i class="nav-icon fa fa-light fa-money"></i>
+                                            <p>
+                                                Laporan
+                                                <i class="right fas fa-angle-left"></i>
+                                            </p>
+                                        </a>
+                                        <ul class="nav nav-treeview">
+                                            <li class="nav-item">
+                                                <a href="{{ url('/laporan-penjualan-farmasi') }}" class="nav-link">
+                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <p>Penjualan Farmasi</p>
+                                                </a>
+                                            </li>
+                                            {{-- <li class="nav-item">
                                     <a href="{{ url('/delivery-order') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Delivery Order</p>
@@ -411,101 +333,104 @@
                                         <p>Adjusment Stock</p>
                                     </a>
                                 </li> --}}
-                            </ul>
-                        </li>
+                                        </ul>
+                                    </li>
 
-                        <li class="nav-header">DATA MASTER KLINIK</li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-bed"></i>
-                                <p>
-                                    Master
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ url('/mstr-layanan') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Layanan</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('/mstr-medis') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Medis</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('/mstr-jaminan') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Jaminan</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('/mstr-tindakan') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Tindakan</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('/mstr-nilai-tindakan') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Nilai Tindakan</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                                    <li class="nav-header">DATA MASTER APOTEK</li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">
+                                            <i class="nav-icon fas fa-bed"></i>
+                                            <p>
+                                                Master Apotek
+                                                <i class="right fas fa-angle-left"></i>
+                                            </p>
+                                        </a>
+                                        <ul class="nav nav-treeview">
+                                            <li class="nav-item">
+                                                <a href="{{ url('/mstr-kategori-produk') }}" class="nav-link">
+                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <p>Kategori Produk</p>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{{ url('/mstr-satuan') }}" class="nav-link">
+                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <p>Satuan</p>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{{ url('/mstr-lokasi-stock') }}" class="nav-link">
+                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <p>Lokasi Stok</p>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{{ url('/mstr-jenis-obat') }}" class="nav-link">
+                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <p>Jenis Obat</p>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{{ url('/mstr-obat') }}" class="nav-link">
+                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <p>Obat</p>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{{ url('/mstr-supplier') }}" class="nav-link">
+                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <p>Supplier</p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                @endif
 
-                        <li class="nav-header">DATA MASTER APOTEK</li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-bed"></i>
-                                <p>
-                                    Master Apotek
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
+                                <li class="nav-header">DATA MASTER KLINIK</li>
                                 <li class="nav-item">
-                                    <a href="{{ url('/mstr-kategori-produk') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Kategori Produk</p>
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon fas fa-bed"></i>
+                                        <p>
+                                            Master
+                                            <i class="right fas fa-angle-left"></i>
+                                        </p>
                                     </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a href="{{ url('/mstr-layanan') }}" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Layanan</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{{ url('/mstr-medis') }}" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Medis</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{{ url('/mstr-jaminan') }}" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Jaminan</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{{ url('/mstr-tindakan') }}" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Tindakan</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{{ url('/mstr-nilai-tindakan') }}" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Nilai Tindakan</p>
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('/mstr-satuan') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Satuan</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('/mstr-lokasi-stock') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Lokasi Stok</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('/mstr-jenis-obat') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Jenis Obat</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('/mstr-obat') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Obat</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('/mstr-supplier') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Supplier</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
 
+                            @endif
+                        @endif
                         {{-- <li class="nav-item">
                             <a href="pages/calendar.html" class="nav-link">
                                 <i class="nav-icon far fa-calendar-alt"></i>

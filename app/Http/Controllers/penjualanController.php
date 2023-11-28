@@ -117,6 +117,7 @@ class penjualanController extends Controller
             // 'dosis',
             'hrg_obat' => 'required',
             'qty' => 'required',
+            'tipe_tarif' => 'required',
             // // 'diskon',
             // // 'satuan',
             // // 'tax',
@@ -183,8 +184,10 @@ class penjualanController extends Controller
                 tb_stock::where('kd_obat', [$datax])->decrement("qty", $toInt);
             }
 
-            trs_chart_resep::where('kd_trs', $request->tp_kd_trs)->update(['isImplementasi' => "1"]);
-
+            // trs_chart_resep::where('kd_trs', $request->tp_kd_trs)->update(['isImplementasi' => "1"]);
+            DB::table('trs_chart_resep')
+                ->where('kd_reg', $request->tp_kd_reg)
+                ->update(['isImplementasi' => "1"]);
 
 
             DB::commit();

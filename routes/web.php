@@ -13,154 +13,175 @@ use App\Http\Controllers\poDoController;
 use App\Http\Controllers\registrasiController;
 use App\Http\Controllers\TindakanController;
 use App\Http\Controllers\WilayahController;
+use App\Http\Controllers\AuthController;
 
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-Route::get('/login', [HomeController::class, 'login']);
+// Route::group(['middleware' => 'guest'], function () {
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/ProsesLogin', [AuthController::class, 'ProsesLogin']);
 Route::get('/', [HomeController::class, 'index']);
-
-Route::get('/antrian', [HomeController::class, 'antrian']);
+Route::get('/redirect', [RedirectController::class, 'cek']);
+Route::post('/logout', [AuthController::class, 'logout']);
+// Route::get('/redirect', [RedirectController::class, 'cek']);
+// });
+// Route::get('/antrian', [HomeController::class, 'antrian']);
 
 // RM SEARCH
-Route::controller(HomeController::class)->group(function () {
-    Route::get('registrasi', 'registrasi');
-    Route::get('registrasiView', 'registrasiView')->name('registrasiView');
-    Route::get('data-sosial', 'dasos');
-    Route::get('registrasiSearch', 'registrasiSearch')->name('registrasiSearch');
-    Route::get('getDasos/{fs_mr}', 'getDasos')->name('getDasos');
-    Route::get('getLayananMedis/{id_layanan}', 'getLayananMedis')->name('getLayananMedis');
+Route::group(['middleware' => ['auth', 'checkrole:1,5']], function () {
+    // Route::get('/', [HomeController::class, 'index']);
+    // Route::get('/redirect', [RedirectController::class, 'cek']);
+    Route::get('registrasi', [HomeController::class, 'registrasi']);
+    Route::get('registrasiView', [HomeController::class, 'registrasiView'])->name('registrasiView');
+    Route::get('data-sosial', [HomeController::class, 'dasos']);
+    Route::get('registrasiSearch', [HomeController::class, 'registrasiSearch'])->name('registrasiSearch');
+    Route::get('getDasos/{fs_mr}', [HomeController::class, 'getDasos'])->name('getDasos');
+    Route::get('getLayananMedis/{id_layanan}', [HomeController::class, 'getLayananMedis'])->name('getLayananMedis');
 });
 
+
 // REG + DASOS CREATE,EDIT DELETE
-Route::controller(registrasiController::class)->group(function () {
-    Route::post('create-registrasi', 'registrasiCreate')->name('create-registrasi');
-    Route::post('edit-registrasi', 'editRegister')->name('edit-registrasi');
-    Route::post('create-dasos', 'store')->name('create-dasos');
-    Route::post('edit-dasos', 'editDasos')->name('edit-dasos');
-    Route::get('delete-dasos', 'deleteDasos')->name('delete-dasos');
+// Route::controller(registrasiController::class)->group(function () {
+Route::group(['middleware' => ['auth', 'checkrole:1,5']], function () {
+    Route::post('create-registrasi', [registrasiController::class, 'registrasiCreate'])->name('create-registrasi');
+    Route::post('edit-registrasi', [registrasiController::class, 'editRegister'])->name('edit-registrasi');
+    Route::post('create-dasos', [registrasiController::class, 'store'])->name('create-dasos');
+    Route::post('edit-dasos', [registrasiController::class, 'editDasos'])->name('edit-dasos');
+    Route::get('delete-dasos', [registrasiController::class, 'deleteDasos'])->name('delete-dasos');
 });
 
 
 // MSTR SATU GET
-Route::controller(mastersatuController::class)->group(function () {
-    Route::get('mstr-layanan', 'layanan')->name('layanan');
-    Route::get('mstr-medis', 'medis')->name('medis');
-    Route::get('mstr-jaminan', 'jaminan')->name('jaminan');
-    Route::get('mstr-tindakan', 'tindakan')->name('tindakan');
-    Route::get('mstr-nilai-tindakan', 'nilaiTindakan')->name('nilai-tindakan');
+// Route::controller(mastersatuController::class)->group(function () {
+Route::group(['middleware' => ['auth', 'checkrole:1']], function () {
+    // Route::get('/', [HomeController::class, 'index']);
+    // Route::get('/redirect', [RedirectController::class, 'cek']);
+    Route::get('mstr-layanan', [mastersatuController::class, 'layanan'])->name('layanan');
+    Route::get('mstr-medis', [mastersatuController::class, 'medis'])->name('medis');
+    Route::get('mstr-jaminan', [mastersatuController::class, 'jaminan'])->name('jaminan');
+    Route::get('mstr-tindakan', [mastersatuController::class, 'tindakan'])->name('tindakan');
+    Route::get('mstr-nilai-tindakan', [mastersatuController::class, 'nilaiTindakan'])->name('nilai-tindakan');
 });
 
 // MSTR SATU POST
-Route::controller(mastersatuController::class)->group(function () {
-    Route::post('add-mstr-layanan', 'layananCreate')->name('add-mstr-layanan');
-    Route::post('add-mstr-medis', 'DokterCreate')->name('add-mstr-medis');
-    Route::post('add-mstr-jaminan', 'jaminanCreate')->name('add-mstr-jaminan');
-    Route::post('add-mstr-tindakan', 'tindakanCreate')->name('add-mstr-tindakan');
-    Route::post('add-mstr-nilai-tindakan', 'nilaiTindakanCreate')->name('add-mstr-nilai-tindakan');
+// Route::controller(mastersatuController::class)->group(function () {
+Route::group(['middleware' => ['auth', 'checkrole:1']], function () {
+    Route::post('add-mstr-layanan', [mastersatuController::class, 'layananCreate'])->name('add-mstr-layanan');
+    Route::post('add-mstr-medis', [mastersatuController::class, 'DokterCreate'])->name('add-mstr-medis');
+    Route::post('add-mstr-jaminan', [mastersatuController::class, 'jaminanCreate'])->name('add-mstr-jaminan');
+    Route::post('add-mstr-tindakan', [mastersatuController::class, 'tindakanCreate'])->name('add-mstr-tindakan');
+    Route::post('add-mstr-nilai-tindakan', [mastersatuController::class, 'nilaiTindakanCreate'])->name('add-mstr-nilai-tindakan');
 });
 
 // VIEW AFTER POST
-Route::controller(mastersatuController::class)->group(function () {
-    Route::get('view-mstr-layanan', 'viewLayanan')->name('view-mstr-layanan');
-    Route::get('view-mstr-medis', 'medis')->name('view-mstr-medis');
-    Route::get('view-mstr-jaminan', 'jaminan')->name('view-mstr-jaminan');
-    Route::get('view-mstr-tindakan', 'tindakan')->name('view-mstr-tindakan');
+// Route::controller(mastersatuController::class)->group(function () {
+Route::group(['middleware' => ['auth', 'checkrole:1']], function () {
+    // Route::get('/', [HomeController::class, 'index']);
+    // Route::get('/redirect', [RedirectController::class, 'cek']);
+    Route::get('view-mstr-layanan', [mastersatuController::class, 'viewLayanan'])->name('view-mstr-layanan');
+    Route::get('view-mstr-medis', [mastersatuController::class, 'medis'])->name('view-mstr-medis');
+    Route::get('view-mstr-jaminan', [mastersatuController::class, 'jaminan'])->name('view-mstr-jaminan');
+    Route::get('view-mstr-tindakan', [mastersatuController::class, 'tindakan'])->name('view-mstr-tindakan');
 });
 
 
-Route::controller(TindakanController::class)->group(function () {
-    Route::get('tindakan-medis', 'tindakanMedis')->name('tindakan-medis');
-    Route::get('SearchRegister/{kdReg}', 'registerSearch')->name('SearchRegister');
-    Route::get('getTimeline/{mr}', 'getTimeline')->name('getTimeline');
-    Route::get('chartIdSearch/{chartid}', 'chartIdSearch')->name('chartIdSearch');
-    Route::get('getTimelineTdk/{mr}', 'getTimelineTdk')->name('getTimelineTdk');
-    Route::get('getLastID', 'getLastID')->name('getLastID');
-    Route::post('chartCreate', 'chartCreate')->name('chartCreate');
-    Route::get('obatSearchCH', 'obatSearchCH')->name('obatSearchCH');
-    Route::get('getObatListCH/{obat}', 'getObatListCH')->name('getObatListCH');
-    Route::get('getIcdX', 'getIcdX')->name('getIcdX');
+// Route::controller(TindakanController::class)->group(function () {
+Route::group(['middleware' => ['auth', 'checkrole:1,2']], function () {
+    // Route::get('/', [HomeController::class, 'index']);
+    // Route::get('/redirect', [RedirectController::class, 'cek']);
+    Route::get('tindakan-medis', [TindakanController::class, 'tindakanMedis'])->name('tindakan-medis');
+    Route::get('SearchRegister/{kdReg}', [TindakanController::class, 'registerSearch'])->name('SearchRegister');
+    Route::get('getTimeline/{mr}', [TindakanController::class, 'getTimeline'])->name('getTimeline');
+    Route::get('chartIdSearch/{chartid}', [TindakanController::class, 'chartIdSearch'])->name('chartIdSearch');
+    Route::get('getTimelineTdk/{mr}', [TindakanController::class, 'getTimelineTdk'])->name('getTimelineTdk');
+    Route::get('getLastID', [TindakanController::class, 'getLastID'])->name('getLastID');
+    Route::post('chartCreate', [TindakanController::class, 'chartCreate'])->name('chartCreate');
+    Route::get('obatSearchCH', [TindakanController::class, 'obatSearchCH'])->name('obatSearchCH');
+    Route::get('getObatListCH/{obat}', [TindakanController::class, 'getObatListCH'])->name('getObatListCH');
+    Route::get('getIcdX', [TindakanController::class, 'getIcdX'])->name('getIcdX');
 });
 
 
 // VIEW MSTR FARMASI
-Route::controller(masterFarmasiController::class)->group(function () {
-    Route::get('mstr-kategori-produk', 'katProd')->name('mstr-kategori-produk');
-    Route::get('mstr-satuan', 'satuan')->name('mstr-satuan');
-    Route::get('mstr-lokasi-stock', 'lokStock')->name('mstr-lokasi-stock');
-    Route::get('mstr-jenis-obat', 'jenBat')->name('mstr-jenis-obat');
-    Route::get('mstr-supplier', 'supplier')->name('mstr-supplier');
-    Route::get('mstr-obat', 'obat')->name('mstr-Obat');
+// Route::controller(masterFarmasiController::class)->group(function () {
+Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
+    // Route::get('/', [HomeController::class, 'index']);
+    // Route::get('/redirect', [RedirectController::class, 'cek']);
+    Route::get('mstr-kategori-produk', [masterFarmasiController::class, 'katProd'])->name('mstr-kategori-produk');
+    Route::get('mstr-satuan', [masterFarmasiController::class, 'satuan'])->name('mstr-satuan');
+    Route::get('mstr-lokasi-stock', [masterFarmasiController::class, 'lokStock'])->name('mstr-lokasi-stock');
+    Route::get('mstr-jenis-obat', [masterFarmasiController::class, 'jenBat'])->name('mstr-jenis-obat');
+    Route::get('mstr-supplier', [masterFarmasiController::class, 'supplier'])->name('mstr-supplier');
+    Route::get('mstr-obat', [masterFarmasiController::class, 'obat'])->name('mstr-Obat');
 });
 
 // CREATE MSTR FARMASI
-Route::controller(masterFarmasiController::class)->group(function () {
-    Route::post('add-mstr-kategori-produk', 'katProdCreate')->name('add-mstr-kategori-produk');
-    Route::post('add-mstr-satuan', 'satuanCreate')->name('add-mstr-satuan');
-    Route::post('add-mstr-lokasi-stock', 'lokstockCreate')->name('add-mstr-lokasi-stock');
-    Route::post('add-mstr-jenis-obat', 'jenBatCreate')->name('add-mstr-jenis-obat');
-    Route::post('add-mstr-supplier', 'supplierCreate')->name('add-mstr-supplier');
-    Route::post('add-mstr-obat', 'obatCreate')->name('add-mstr-obat');
-    Route::post('edit-mstr-obat/{efmkdobat}', 'obatEdit')->name('edit-mstr-obat');
+// Route::controller(masterFarmasiController::class)->group(function () {
+Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
+    Route::post('add-mstr-kategori-produk', [masterFarmasiController::class, 'katProdCreate'])->name('add-mstr-kategori-produk');
+    Route::post('add-mstr-satuan', [masterFarmasiController::class, 'satuanCreate'])->name('add-mstr-satuan');
+    Route::post('add-mstr-lokasi-stock', [masterFarmasiController::class, 'lokstockCreate'])->name('add-mstr-lokasi-stock');
+    Route::post('add-mstr-jenis-obat', [masterFarmasiController::class, 'jenBatCreate'])->name('add-mstr-jenis-obat');
+    Route::post('add-mstr-supplier', [masterFarmasiController::class, 'supplierCreate'])->name('add-mstr-supplier');
+    Route::post('add-mstr-obat', [masterFarmasiController::class, 'obatCreate'])->name('add-mstr-obat');
+    Route::post('edit-mstr-obat/{efmkdobat}', [masterFarmasiController::class, 'obatEdit'])->name('edit-mstr-obat');
 });
 
 // DELETE MSTR FARMASI
-Route::controller(masterFarmasiController::class)->group(function () {
-    Route::delete('destroy-mstr-kategori-produk/{id}', 'katProdCreate')->name('destroy-mstr-kategori-produk');
-    Route::delete('destroy-mstr-satuan/{id}', 'satuanDestroy')->name('destroy-mstr-satuan');
-    Route::delete('destroy-mstr-lokasi-stock/{id}', 'lokStockDestroy')->name('destroy-mstr-lokasi-stock');
-    Route::delete('destroy-mstr-jenis-obat/{id}', 'jenBatDestroy')->name('destroy-mstr-jenis-obat');
-    Route::delete('destroy-mstr-supplier/{id}', 'supplier')->name('destroy-mstr-supplier');
-    Route::delete('destroy-mstr-obat/{id}', 'obat')->name('destroy-mstr-Obat');
+// Route::controller(masterFarmasiController::class)->group(function () {
+Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
+    Route::delete('destroy-mstr-kategori-produk/{id}', [masterFarmasiController::class, 'katProdCreate'])->name('destroy-mstr-kategori-produk');
+    Route::delete('destroy-mstr-satuan/{id}', [masterFarmasiController::class, 'satuanDestroy'])->name('destroy-mstr-satuan');
+    Route::delete('destroy-mstr-lokasi-stock/{id}', [masterFarmasiController::class, 'lokStockDestroy'])->name('destroy-mstr-lokasi-stock');
+    Route::delete('destroy-mstr-jenis-obat/{id}', [masterFarmasiController::class, 'jenBatDestroy'])->name('destroy-mstr-jenis-obat');
+    Route::delete('destroy-mstr-supplier/{id}', [masterFarmasiController::class, 'supplier'])->name('destroy-mstr-supplier');
+    Route::delete('destroy-mstr-obat/{id}', [masterFarmasiController::class, 'obat'])->name('destroy-mstr-Obat');
     // Route::post('/create-dasos', [registrasiController::class, 'store']);
 });
 
 // VIEW PO-DO
-Route::controller(poDoController::class)->group(function () {
-    Route::get('purchase-order', 'po')->name('purchase-order');
-    Route::get('delivery-order', 'do')->name('delivery-order');
-    Route::get('adjusment-stock', 'adj')->name('adjusment-stock');
-    Route::get('obatSearch', 'obatSearch')->name('obatSearch');
-    Route::get('getObatList/{obat}', 'getObatList')->name('getObatList');
-    Route::get('get-data-do/{kd_do}', 'getDOList')->name('get-data-do');
+// Route::controller(poDoController::class)->group(function () {
+Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
+    // Route::get('/', [HomeController::class, 'index']);
+    // Route::get('/redirect', [RedirectController::class, 'cek']);
+    Route::get('purchase-order', [poDoController::class, 'po'])->name('purchase-order');
+    Route::get('delivery-order', [poDoController::class, 'do'])->name('delivery-order');
+    Route::get('adjusment-stock', [poDoController::class, 'adj'])->name('adjusment-stock');
+    Route::get('obatSearch', [poDoController::class, 'obatSearch'])->name('obatSearch');
+    Route::get('getObatList/{obat}', [poDoController::class, 'getObatList'])->name('getObatList');
+    Route::get('get-data-do/{kd_do}', [poDoController::class, 'getDOList'])->name('get-data-do');
 });
 
 // CREATE PO-DO + ADJ
-Route::controller(poDoController::class)->group(function () {
-    Route::post('add-delivery-order', 'doCreate')->name('add-delivery-order');
-    Route::post('CreateAdj', 'createAdj')->name('CreateAdj');
+// Route::controller(poDoController::class)->group(function () {
+Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
+    Route::post('add-delivery-order', [poDoController::class, 'doCreate'])->name('add-delivery-order');
+    Route::post('CreateAdj', [poDoController::class, 'createAdj'])->name('CreateAdj');
 });
 
 // PENJUALAN FARMASI
-Route::controller(penjualanController::class)->group(function () {
-    Route::get('penjualan', 'penjualan')->name('penjualan');
-    Route::get('getListObatReguler', 'getListObatReguler')->name('getListObatReguler');
-    Route::get('getListObatResep', 'getListObatResep')->name('getListObatResep');
-    Route::get('getListObatNakes', 'getListObatNakes')->name('getListObatNakes');
-    Route::post('add-penjualan', 'penjualanCreate')->name('add-penjualan');
-    Route::get('getListOrderResep/{kd_trs}', 'getListOrderResep')->name('getListOrderResep');
+// Route::controller(penjualanController::class)->group(function () {
+Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
+    // Route::get('/', [HomeController::class, 'index']);
+    // Route::get('/redirect', [RedirectController::class, 'cek']);
+    Route::get('penjualan', [penjualanController::class, 'penjualan'])->name('penjualan');
+    Route::get('getListObatReguler', [penjualanController::class, 'getListObatReguler'])->name('getListObatReguler');
+    Route::get('getListObatResep', [penjualanController::class, 'getListObatResep'])->name('getListObatResep');
+    Route::get('getListObatNakes', [penjualanController::class, 'getListObatNakes'])->name('getListObatNakes');
+    Route::post('add-penjualan', [penjualanController::class, 'penjualanCreate'])->name('add-penjualan');
+    Route::get('getListOrderResep/{kd_trs}', [penjualanController::class, 'getListOrderResep'])->name('getListOrderResep');
 });
 
 // VIEW TRS-KASIR-POLI
-Route::controller(kasirPoliController::class)->group(function () {
-    Route::get('kasir-poli', 'kasirPoli')->name('kasir-poli');
-    Route::get('SearchRegisterKsr/{kdReg}', 'xregisterSearch')->name('SearchRegisterKsr');
+// Route::controller(kasirPoliController::class)->group(function () {
+Route::group(['middleware' => ['auth', 'checkrole:1,4,3']], function () {
+    // Route::get('/', [HomeController::class, 'index']);
+    // Route::get('/redirect', [RedirectController::class, 'cek']);
+    Route::get('kasir-poli', [kasirPoliController::class, 'kasirPoli'])->name('kasir-poli');
+    Route::get('SearchRegisterKsr/{kdReg}', [kasirPoliController::class, 'xregisterSearch'])->name('SearchRegisterKsr');
 
-    Route::get('kasir-apotek', 'kasirApotek')->name('kasir-apotek');
-    Route::post('regout', 'regOut')->name('regout');
+    Route::get('kasir-apotek', [kasirPoliController::class, 'kasirApotek'])->name('kasir-apotek');
+    Route::post('regout', [kasirPoliController::class, 'regOut'])->name('regout');
 });
 
 
@@ -173,17 +194,20 @@ Route::controller(WilayahController::class)->group(function () {
 });
 
 //Assesment Awal
-Route::controller(AssesmentController::class)->group(function () {
-    Route::get('assesment-awal', 'assAwal')->name('assesment-awal');
-    // Route::get('cities', 'cities')->name('cities');
-    // Route::get('districts', 'districts')->name('districts');
-    // Route::get('villages', 'villages')->name('villages');
+// Route::controller(AssesmentController::class)->group(function () {
+Route::group(['middleware' => ['auth', 'checkrole:1,2']], function () {
+    // Route::get('/', [HomeController::class, 'index']);
+    // Route::get('/redirect', [RedirectController::class, 'cek']);
+    Route::get('assesment-awal', [AssesmentController::class, 'assAwal'])->name('assesment-awal');
 });
 
 //Laporan Farmasi
-Route::controller(LapFarmasiController::class)->group(function () {
-    Route::get('laporan-penjualan-farmasi', 'lapPenjualanFarmasi')->name('laporan-penjualan-farmasi');
-    Route::get('getLaporanPenjualan', 'getLapPenjualan')->name('getLaporanPenjualan');
-    Route::get('buku-stok-rekap', 'bukuStok')->name('buku-stok-rekap');
-    Route::get('getBukuStok', 'getBukuStok')->name('getBukuStok');
+// Route::controller(LapFarmasiController::class)->group(function () {
+Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
+    // Route::get('/', [HomeController::class, 'index']);
+    // Route::get('/redirect', [RedirectController::class, 'cek']);
+    Route::get('laporan-penjualan-farmasi', [LapFarmasiController::class, 'lapPenjualanFarmasi'])->name('laporan-penjualan-farmasi');
+    Route::get('getLaporanPenjualan', [LapFarmasiController::class, 'getLapPenjualan'])->name('getLaporanPenjualan');
+    Route::get('buku-stok-rekap', [LapFarmasiController::class, 'bukuStok'])->name('buku-stok-rekap');
+    Route::get('getBukuStok', [LapFarmasiController::class, 'getBukuStok'])->name('getBukuStok');
 });
