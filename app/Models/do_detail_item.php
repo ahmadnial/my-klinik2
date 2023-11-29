@@ -27,11 +27,12 @@ class do_detail_item extends Model
         'do_sub_total',
         'do_hdr_kd',
         'do_hdr_id',
-        'do_diskon_prosen'
+        'do_diskon_prosen',
+        'nm_obat'
     ];
 
-    // public function do_hdr()
+    // public function detailToMstr()
     // {
-    //     return $this->belongsTo('App\Models\do_hdr');
+    //     return $this->hasMany(mstr_obat::class, 'do_obat', 'fm_kd_obat');
     // }
 }

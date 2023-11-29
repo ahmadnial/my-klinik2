@@ -549,6 +549,8 @@
         $(function() {
             $("#example1").DataTable({
                 "responsive": true,
+                "paging": true,
+                "searching": true,
                 "lengthChange": false,
                 "autoWidth": true,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]

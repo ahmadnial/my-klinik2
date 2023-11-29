@@ -183,18 +183,18 @@ class poDoController extends Controller
     {
         // dd($request->all());
         // $data = $request->all();
-        $getKdObat = tb_stock::all();
 
         $request->validate([
             'do_hdr_kd' => 'required',
             'do_hdr_no_faktur' => 'required',
             'do_hdr_supplier' => 'required',
             'do_hdr_tgl_tempo' => 'required',
-            'do_hdr_lokasi_stock' => 'required',
+            // 'do_hdr_lokasi_stock' => 'required',
             // 'do_hdr_total_faktur' => 'required',
             // 'user' => 'required',
 
             'do_obat' => 'required',
+            'nm_obat' => 'required',
             'do_satuan_pembelian' => 'required',
             // 'do_diskon',
             'do_qty' => 'required',
@@ -215,21 +215,11 @@ class poDoController extends Controller
                 'do_hdr_no_faktur' => $request->do_hdr_no_faktur,
                 'do_hdr_supplier' => $request->do_hdr_supplier,
                 'do_hdr_tgl_tempo' => $request->do_hdr_tgl_tempo,
-                'do_hdr_lokasi_stock' => $request->do_hdr_lokasi_stock,
+                // 'do_hdr_lokasi_stock' => $request->do_hdr_lokasi_stock,
                 'do_hdr_total_faktur' => $request->do_hdr_total_faktur,
-                'user' => $request->user,
+                'user' => Auth::user()->name,
             ];
             do_hdr::create($newData);
-            // $newData = new do_hdr;
-            // $newData->do_hdr_kd = $request->do_hdr_kd;
-            // $newData->do_hdr_no_faktur = $request->do_hdr_no_faktur;
-            // $newData->do_hdr_supplier = $request->do_hdr_supplier;
-            // $newData->do_hdr_tgl_tempo = $request->do_hdr_tgl_tempo;
-            // $newData->do_hdr_lokasi_stock = $request->do_hdr_lokasi_stock;
-            // $newData->do_hdr_total_faktur = $request->do_hdr_total_faktur;
-            // $newData->user = $request->user;
-            // $newData->save();
-
 
             foreach ($request->do_obat as $key => $val) {
                 $detail = [
@@ -246,6 +236,7 @@ class poDoController extends Controller
                     'do_sub_total' => $request->do_sub_total[$key],
                     'do_hdr_kd' => $request->do_hdr_kd,
                     'do_diskon_prosen' => $request->do_diskon_prosen[$key],
+                    'nm_obat' => $request->nm_obat[$key],
                     // 'do_hdr_id' => $request->do_hdr_kd[$key],
                 ];
                 do_detail_item::create($detail);

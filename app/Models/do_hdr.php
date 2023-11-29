@@ -18,7 +18,7 @@ class do_hdr extends Model
         'do_hdr_no_faktur',
         'do_hdr_supplier',
         'do_hdr_tgl_tempo',
-        'do_hdr_lokasi_stock',
+        // 'do_hdr_lokasi_stock',
         'do_hdr_total_faktur',
         'user'
     ];

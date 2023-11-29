@@ -39,13 +39,13 @@
                                             data-no_faktur="{{ $tz->do_hdr_no_faktur }}"
                                             data-supplier="{{ $tz->do_hdr_supplier }}"
                                             data-tgl_tempo="{{ $tz->do_hdr_tgl_tempo }}" data-kd_obat="{{ $tz->do_obat }}"
-                                            data-nm_obat="{{ $tz->hdrToDetail[0]->do_obat }}">Edit</button>
+                                            data-nm_obat="{{ $tz->hdrToDetail[0]->do_obat }}">View</button>
                                         {{-- <button class="btn btn-xs btn-danger" data-toggle="modal"
                                             data-target="#DeleteSupplier">Hapus</button> --}}
                                     </td>
                                 </tr>
+                            @endforeach
                         </tbody>
-                        @endforeach
                     </table>
                 </div>
             </div>
@@ -119,7 +119,7 @@
                                 <input type="date" class="form-control" name="do_hdr_tgl_tempo" id="do_hdr_tgl_tempo"
                                     value="">
                             </div>
-                            <div class="form-group col-sm-2">
+                            {{-- <div class="form-group col-sm-2">
                                 <label for="">Lokasi</label>
                                 <select class="do_hdr_lokasi_stock form-control-pasien" id="do_hdr_lokasi_stock"
                                     style="width: 100%;" name="do_hdr_lokasi_stock">
@@ -129,30 +129,31 @@
                                         </option>
                                     @endforeach
                                 </select>
-                            </div>
+                            </div> --}}
                             <input type="hidden" id="user" name="user" value="tes">
                         </div>
                         <div class="">
-                            <button type="button" id="searchObat" class="btn btn-info">tambah</button>
+                            <button type="button" id="searchObat" onclick="getBarang()"
+                                class="btn btn-info">tambah</button>
                         </div>
                     </div>
 
                     {{-- <hr> --}}
 
-                    <table class="table table-bordered" style="width: 100%">
+                    <table class="table table-bordered" id="deliverOrder">
                         <thead>
                             <tr>
                                 {{-- <th>Kode Obat</th> --}}
-                                <th>Obat</th>
+                                <th width="250px">Obat</th>
                                 <th>Sat.Beli</th>
                                 <th>Qty</th>
                                 <th>Isi</th>
-                                <th>Sat.Jual</th>
+                                <th width="50px">Sat.Jual</th>
                                 <th>Hrg.Beli</th>
                                 <th>Disc %</th>
                                 <th>Discount</th>
                                 <th>Pajak</th>
-                                <th>Tgl.Exp</th>
+                                <th width="60px">Tgl.Exp</th>
                                 <th>Batch Number</th>
                                 <th>Sub Total</th>
                             </tr>
@@ -160,63 +161,7 @@
 
                         <tbody id="doTable">
                             <tr>
-                                {{-- <td>
-                                    <select class="searchObat form-control" style='width: 100%;' id="do_obat"
-                                        name="do_obat[]" onchange="getDataObat()" aria-placeholder="Search"></select>
-                                </td> --}}
-                                {{-- <td>
-                                    <input class="searchObat form-control" style='width: 100%;' id="do_obat"
-                                        name="do_obat[]" onchange="getDataObat()" placeholder="Search" readonly>
-                                </td>
-                                <td>
-                                    <input type="text" class="do_satuan_pembelian form-control" id="do_satuan_pembelian"
-                                        name="do_satuan_pembelian[]" readonly>
-                                </td>
-                                <td>
-                                    <input type="text" class="form-control">
-                                </td>
-                                <td>
-                                    <input type="text" class="form-control" id="do_diskon" name="do_diskon[]">
-                                </td>
-                                <td>
-                                    <input type="number" class="do_qty form-control" id="do_qty[]" name="do_qty[]">
-                                </td>
-                                <td>
-                                    <input type="text" class="do_isi_pembelian form-control" id="do_isi_pembelian"
-                                        name="do_isi_pembelian[]" readonly>
-                                </td>
-                                <td>
-                                    <input type="text" class="do_satuan_jual form-control" id="do_satuan_jual"
-                                        name="do_satuan_jual[]" readonly>
-                                </td>
-                                <td>
-                                    <input type="text" class="do_hrg_beli form-control" id="do_hrg_beli"
-                                        name="do_hrg_beli[]" readonly>
-                                </td>
-                                <td>
-                                    <input type="text" class="form-control" id="do_pajak" name="do_pajak[]">
-                                </td>
-                                <td>
-                                    <input type="date" class="form-control" id="do_tgl_exp" name="do_tgl_exp[]">
-                                </td>
-                                <td>
-                                    <input type="text" class="form-control" id="do_batch_number"
-                                        name="do_batch_number[]">
-                                </td>
-                                <td>
-                                    <input type="text" class="form-control" id="do_sub_total" name="do_sub_total[]">
-                                </td>
-                                <td>
-                                    <a href="javascript:void(0)" class="text-success" id="addRow" title="Remove"><i
-                                            class="fa fa-plus"></i></a>
-                                </td>
 
-                                <input type="hidden" name="user" id="user" value="tes user"> --}}
-                                {{-- <input type="hidden" name="do_hdr_kd[]" id="do_hdr_kd">  --}}
-                                {{-- <td>
-                                <button class="remove btn btn-xs btn-danger " id="delRow"><i
-                                        class="fa fa-close"></i></button>
-                            </td> --}}
                             </tr>
                         </tbody>
                     </table>
@@ -270,25 +215,9 @@
                             </tr>
                         </thead>
 
-                        @foreach ($listObat as $lo)
-                            <tbody>
-                                <tr>
-                                    <td><input class="getItemObat col-6" style="border: none" readonly
-                                            value="{{ $lo->fm_kd_obat }}">
-                                    </td>
-                                    <td>{{ $lo->fm_nm_obat }}</td>
-                                    <td>{{ $lo->fm_satuan_pembelian }}</td>
-                                    <td><button type="button" class="SelectItemObat btn btn-info btn-xs"
-                                            id="SelectItemObat" data-fm_kd_obat="{{ $lo->fm_kd_obat }}"
-                                            data-fm_nm_obat="{{ $lo->fm_nm_obat }}"
-                                            data-fm_satuan_pembelian="{{ $lo->fm_satuan_pembelian }}"
-                                            data-fm_isi_satuan_pembelian="{{ $lo->fm_isi_satuan_pembelian }}"
-                                            data-fm_satuan_jual="{{ $lo->fm_satuan_jual }}"
-                                            data-fm_hrg_beli="{{ $lo->fm_hrg_beli }}">Select</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        @endforeach
+                        <tbody id="listGetBarang">
+
+                        </tbody>
                     </table>
 
                     <input type="hidden" id="user" name="user" value="tes">
@@ -307,19 +236,73 @@
 
         @push('scripts')
             <script>
+                // $(document).ready(function() {
+                //     $('#deliverOrder').DataTable({
+                //         "scrollX": true,
+                //         "scrollY": 200,
+                //     });
+                //     $('.dataTables_length').addClass('bs-select');
+                // });
+
+                function getBarang() {
+                    var table = $('#exm2').DataTable();
+                    var rows = table
+                        .rows()
+                        .remove()
+                        .draw();
+
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: "{{ url('getListObatReguler') }}",
+                        type: 'GET',
+
+                        success: function(listObat) {
+                            var getValue = listObat;
+                            for (var getVal = 0; getVal < getValue.length; getVal++) {
+
+                                const table = $('#exm2').DataTable();
+                                var btnBtn =
+                                    `<button class="SelectItemObat btn btn-success btn-xs" id="SelectItemObat" onClick="SelectItemObat(this)" data-fm_kd_obat="${getValue[getVal].fm_kd_obat}" data-fm_nm_obat="${getValue[getVal].fm_nm_obat}" data-fm_satuan_pembelian="${getValue[getVal].fm_satuan_pembelian}" data-fm_isi_satuan_pembelian="${getValue[getVal].fm_isi_satuan_pembelian}" data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}" data-fm_hrg_beli="${getValue[getVal].fm_hrg_beli}">Select</button>`
+                                const dataBaru = [
+                                    [getValue[getVal].fm_kd_obat, getValue[getVal].fm_nm_obat, getValue[getVal]
+                                        .fm_satuan_pembelian, btnBtn
+                                    ],
+                                ]
+
+                                function injectDataBaru() {
+                                    for (const data of dataBaru) {
+                                        table.row.add([
+                                            data[0],
+                                            data[1],
+                                            data[2],
+                                            data[3],
+                                        ]).draw(false)
+                                    }
+                                }
+                                injectDataBaru()
+                            }
+
+                        }
+                    })
+                }
+
+
                 $("#searchObat").on("click", function() {
                     $('#obatSearch').modal('show');
 
                     // alert('helo');
                 });
 
-                $(".SelectItemObat").on("click", function() {
-                    var getKdObat = $(this).data('fm_kd_obat');
-                    var getNmObat = $(this).data('fm_nm_obat');
-                    var getSatBeli = $(this).data('fm_satuan_pembelian');
-                    var getIsiSatBeli = $(this).data('fm_isi_satuan_pembelian');
-                    var getSatJual = $(this).data('fm_satuan_jual');
-                    var getHrgBeli = $(this).data('fm_hrg_beli');
+                // $(".SelectItemObat").on("click", function() {
+                function SelectItemObat(x) {
+                    var getKdObat = $(x).data('fm_kd_obat');
+                    var getNmObat = $(x).data('fm_nm_obat');
+                    var getSatBeli = $(x).data('fm_satuan_pembelian');
+                    var getIsiSatBeli = $(x).data('fm_isi_satuan_pembelian');
+                    var getSatJual = $(x).data('fm_satuan_jual');
+                    var getHrgBeli = $(x).data('fm_hrg_beli');
 
                     $("#doTable").append(`
                         <tr id="R${++rowIdx}">
@@ -376,7 +359,7 @@
                 </tr>`);
 
                     $('#obatSearch').modal('hide');
-                });
+                };
 
 
                 // $(document).ready(function() {
@@ -625,12 +608,6 @@
                     // };
                 });
 
-                // $(document).on('click', '#delRow', function() {
-                //     let hapus = $(this).data('row')
-                //     $('#' + hapus).remove()
-                // });
-
-
                 $(document).on('click', '.remove', function() {
                     // var delete_row = $(this).data("row");
                     $('.addNewRow').remove();
@@ -835,11 +812,11 @@
                                     itemObat += `
                                         <tr id="R${++rowIdx}">
                                             <input type="hidden" class="searchObat" id="do_obat"
-                                                    name="do_obat[]" value="" readonly>
+                                                    name="do_obat[]" value="${toDetail[i].do_obat}" readonly>
 
                                                 <td>
                                                     <input class="form-control" style='width: 100%;' id="nm_obat"
-                                                    name="nm_obat[]" value="${toDetail[i].do_obat}" readonly>
+                                                    name="nm_obat[]" value="${toDetail[i].nm_obat}" readonly>
                                                 </td>
                                                 <td>
                                                     <input type="text" class="do_satuan_pembelian form-control" id="do_satuan_pembelian[]"
@@ -883,10 +860,8 @@
                                                 <td>
                                                     <input type="text" class="do_sub_total form-control" id="do_sub_total" name="do_sub_total[]" value="${toDetail[i].do_sub_total}">
                                                 </td>
-                                        <td><a href="javascript:void(0)" class="text-danger font-18 remove" title="Remove"><i class="fa fa-trash"></i></a></td>
-
-                                    </tr>
-                                    `;
+                                        </tr>
+                                        `;
                                 }
                                 $("#EditDO").append(`
                                 <div class="modal-dialog modal-xl fullmodal">
@@ -925,17 +900,6 @@
                                                     <label for="">Tanggal Jatuh Tempo</label>
                                                     <input type="date" class="form-control" name="edo_hdr_tgl_tempo"
                                                         id="edo_hdr_tgl_tempo" value="${datavalue.do_hdr_tgl_tempo}">
-                                                </div>
-                                                <div class="form-group col-sm-2">
-                                                    <label for="">Lokasi</label>
-                                                    <select class="edo_hdr_lokasi_stock form-control" id="edo_hdr_lokasi_stock"
-                                                        style="width: 100%;" name="edo_hdr_lokasi_stock">
-                                                        <option value="">--Select--</option>
-                                                        @foreach ($lokasi as $lok)
-                                                            <option value="{{ $lok->fm_nm_lokasi_stock }}">{{ $lok->fm_nm_lokasi_stock }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
                                                 </div>
                                                 <input type="hidden" id="euser" name="euser" value="tes">
                                             </div>
