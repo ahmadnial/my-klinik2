@@ -117,7 +117,7 @@ class penjualanController extends Controller
             // 'dosis',
             'hrg_obat' => 'required',
             'qty' => 'required',
-            'tipe_tarif' => 'required',
+            // 'tipe_tarif' => 'required',
             // // 'diskon',
             // // 'satuan',
             // // 'tax',

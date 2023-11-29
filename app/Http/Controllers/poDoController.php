@@ -12,7 +12,7 @@ use App\Models\tb_adjusment_hdr;
 use App\Models\tb_stock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Auth;
 
 class poDoController extends Controller
 {
@@ -131,7 +131,7 @@ class poDoController extends Controller
                 'koreksi_adj' => $request->qty_hasil_koreksi[$key],
                 'nilai_hpp' => $request->hrg_beli_hpp[$key],
                 'sub_total_adjusment' => $request->sub_total_adj[$key],
-                'user' => $request->user,
+                'user' => Auth::user()->name,
             ];
             tb_adjusment_detail::create($detailObat);
         }

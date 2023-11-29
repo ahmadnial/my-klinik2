@@ -102,7 +102,8 @@
                                     <input type="hidden" id="chart_nm_pasien" name="chart_nm_pasien" value="">
                                     <input type="hidden" id="chart_layanan" name="chart_layanan" value="">
                                     <input type="hidden" id="chart_dokter" name="chart_dokter" value="">
-                                    <input type="hidden" id="user" name="user" value="">
+                                    <input type="hidden" id="userActive" name="user"
+                                        value="{{ Auth::user()->name }}">
                                     {{-- Hidden value --}}
                                     <div class="form-group">
                                         <label for="inputDescription">Subjective</label>
@@ -316,15 +317,9 @@
             placeholder: 'Search Registrasi',
         });
 
-        // $('#chart_A_diagnosa').select2({
-        //     placeholder: 'Search ICD X / Diagnosa',
-        // });
         $('.nm_tarif').select2({
             placeholder: 'Search Tindakan',
         });
-        // $('.obatResep').select2({
-        //     placeholder: 'Search Obat',
-        // });
 
         $("#exitModal").click(function() {
             $("#addTindakans").modal("hide");
@@ -436,10 +431,14 @@
 
                         var ChartID = {};
                         ChartID.Text = $("#chart_id").val();
+
+                        var UserActive = {};
+                        UserActive.Text = $("#userActive").val();
                         // mr.isProcessed = false;
                         sessionStorage.setItem("dataMR", JSON.stringify(mr));
                         sessionStorage.setItem("kdReg", JSON.stringify(kdReg));
                         sessionStorage.setItem("ChartID", JSON.stringify(ChartID));
+                        sessionStorage.setItem("UserActive", JSON.stringify(UserActive));
 
 
                         getTimeline();
@@ -820,6 +819,10 @@
                             }
                         }
 
+                        // var chartIDShow = $('#isShowCahrtID').val();
+
+                        var buttonEdit =
+                            `<button type="button" class="btn btn-outline-info btn-xs" id="btneditchart" data-isChartID="${getValue[getVal].chart_id}" onClick="editChart(this)"><i class="fa fa-pen"></i></button>`;
                         // const trstdk = getValue[getVal].trstdk;
                         // let html = "";
                         // trstdk.forEach(xkx => {
@@ -851,9 +854,9 @@
                                         </a>
                                 <div id="collapse${x++}" class="collapse show" data-parent="#accordion">
                                     <div class="ml-4 mt-2">
-                                        <input type="hidden" id="showChartID" value="${getValue[getVal].chart_id}"></input>
-                                        <button type="button" class="btn btn-outline-info btn-xs" id="btneditchart" value="${getValue[getVal].chart_id}" onClick="editChart()"><i class="fa fa-pen"></i></button>
+                                        ${buttonEdit}
                                         <button type="button" class="btn btn-outline-danger btn-xs"><i class="fa fa-trash"></i></button>
+                                        <button type="" id="isShowCahrtID" class="btn btn-outline-warning btn-xs">${getValue[getVal].chart_id}</button>
                                     </div>
                                     <div class="card-body">
                                          <div class="">
@@ -877,7 +880,7 @@
                                                 </tr>
                                                  <tr>
                                                     <td>Created By :</td>
-                                                    <td>${getValue[getVal].chart_dokter}</td>
+                                                    <td>${getValue[getVal].user}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -952,13 +955,13 @@
 
 
         // Edit Chart
-        function editChart() {
+        function editChart(f) {
             toastr.info('Edit Form Opened!', {
                 timeOut: 600,
                 // preventDuplicates: true,
                 positionClass: 'toast-top-right',
             });
-            var cahrtid = $('#showChartID').val();
+            var cahrtid = $(f).data('isChartID');
             alert(cahrtid);
             $.ajax({
                 headers: {

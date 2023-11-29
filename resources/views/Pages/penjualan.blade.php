@@ -243,7 +243,7 @@
                                 <th>KD OBAT</th>
                                 <th>Nama Obat</th>
                                 <th>Satuan Jual</th>
-                                <th>Harga Jual Reguler</th>
+                                <th>Harga Jual <i id="HrgJualView"></i></th>
                                 <th>QTY Stock</th>
                                 <th></th>
                             </tr>
@@ -278,7 +278,7 @@
                 });
 
                 $('#tp_tipe_tarif').select2({
-                    placeholder: 'Search Lokasi Stock',
+                    placeholder: 'Select Tipe Tarif',
                 });
 
                 $("#obatSearch").on("click", function() {
@@ -301,19 +301,19 @@
                             kd_trs: kd_trs
                         },
                         success: function(isListOrderResep) {
-                            // $(".getListObatx").empty();
+                            $("#ListObatJual").empty();
                             var getValues = isListOrderResep;
                             for (var getVals = 0; getVals < getValues.length; getVals++) {
 
                                 $('#tp_layanan').val(getValues[getVals].layanan);
-                                $('#tp_dokter').val(getValues[getVals].layanan);
+                                $('#tp_dokter').val(getValues[getVals].dokter);
                                 $('#tp_kd_reg').val(getValues[getVals].kd_reg);
                                 $('#tp_no_mr').val(getValues[getVals].mr_pasien);
                                 $('#tp_nama').val(getValues[getVals].nm_pasien);
                                 $('#tp_alamat').val(getValues[getVals].fs_alamat);
                                 $('#tp_jenis_kelamin').val(getValues[getVals].fs_jenis_kelamin);
                                 $('#tp_tgl_lahir').val(getValues[getVals].fs_tgl_lahir);
-                                $('#tp_tipe_tarif').val('Resep Klinik');
+                                $('#tp_tipe_tarif').val();
 
                                 var hrg_resep = getValues[getVals].ch_hrg_jual;
                                 var qty_resep = getValues[getVals].ch_qty_obat;
@@ -401,6 +401,7 @@
                             // preventDuplicates: true,
                             positionClass: 'toast-top-right',
                         });
+                        $('#HrgJualView').val('Reguler');
                         $.ajax({
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

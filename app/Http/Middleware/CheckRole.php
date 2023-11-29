@@ -19,6 +19,8 @@ class CheckRole
             return $next($request);
         }
 
-        return redirect('/login');
+        // return redirect('/login');
+        toastr()->info('Anda Tidak Mempunyai Akses Masuk!', 'Invalid Hak Akses!');
+        return back();
     }
 }

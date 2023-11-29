@@ -31,7 +31,7 @@
                                     <td id="">{{ $ila->tgl_trs }}</td>
                                     <td id=""></td>
                                     <td id="">{{ $ila->keterangan }}</td>
-                                    <td id=""></td>
+                                    <td id="">{{ $ila->user }}</td>
                                     {{-- <td id=""></td>
                                 <td id=""></td> --}}
                                     {{-- <td id="">{{ $tz->hdrToDetail[0]->do_obat }}</td> --}}

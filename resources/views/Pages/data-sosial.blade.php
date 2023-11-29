@@ -251,6 +251,7 @@
                                 <input type="number" class="form-control" name="fs_no_hp"
                                     placeholder="Nomor Telephone/WA Pasien">
                             </div>
+                            <input type="hidden" name="fs_user" id="fs_user" value="{{ Auth::user()->name }}">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -468,6 +469,9 @@
                                     <label for="">Nomor Telephone</label>
                                     <input type="number" class="form-control" name="fs_no_hp"
                                         placeholder="Nomor Telephone/WA Pasien" value="{{ $d->fs_no_hp }}">
+                                </div>
+                                <div class="">
+                                    <i class="text-danger">Last Save By {{ $d->fs_user }}</i>
                                 </div>
                             </div>
                         </div>

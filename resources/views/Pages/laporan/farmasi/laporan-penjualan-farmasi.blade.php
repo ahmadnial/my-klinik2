@@ -20,6 +20,7 @@
                         <thead>
                             <tr>
                                 <th>kode Transaksi</th>
+                                <th>Tanggal Transaksi</th>
                                 <th>Jenis Penjualan</th>
                                 <th>Sub Total</th>
                                 {{-- <th>Alasan</th>
@@ -32,6 +33,7 @@
                         </tbody>
                         <tfoot align="">
                             <tr>
+                                <th></th>
                                 <th></th>
                                 <th></th>
                                 {{-- <td><b><input type="text" id="grandTTL" class="form-control" style="border: none"
@@ -81,7 +83,9 @@
                                     currency: 'IDR'
                                 });
                                 const dataBaru = [
-                                    [datavalue.kd_trs, datavalue.tipe_tarif, ttlPenjualan],
+                                    [datavalue.kd_trs, datavalue.tgl_trs, datavalue.tipe_tarif,
+                                        ttlPenjualan
+                                    ],
                                 ]
 
                                 function injectDataBaru() {
@@ -90,6 +94,7 @@
                                             data[0],
                                             data[1],
                                             data[2],
+                                            data[3],
                                         ]).draw(false)
                                     }
                                 }

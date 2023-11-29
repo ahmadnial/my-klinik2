@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 // use Illuminate\Support\Carbon;
 use Yoeunes\Toastr\Facades\Toastr;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class TindakanController extends Controller
 {
@@ -158,7 +159,7 @@ class TindakanController extends Controller
             'chart_nm_pasien' => 'required',
             'chart_layanan' => 'required',
             'chart_dokter' => 'required',
-            'user_create' => 'required',
+            // 'user_create' => 'required',
             // 'kd_trs' => 'required',
             // 'tgl_trs' => 'required',
             // 'layanan' => 'required',
@@ -188,7 +189,7 @@ class TindakanController extends Controller
             $nerChart->chart_nm_pasien = $request->chart_nm_pasien;
             $nerChart->chart_layanan = $request->chart_layanan;
             $nerChart->chart_dokter = $request->chart_dokter;
-            $nerChart->user   = $request->user_create;
+            $nerChart->user   = Auth::user()->name;
             $nerChart->chart_S = $request->chart_S;
             $nerChart->chart_O = $request->chart_O;
             $nerChart->chart_A    = $request->chart_A;
@@ -210,7 +211,7 @@ class TindakanController extends Controller
                         'nm_tarif_dasar' => $request->nm_tarif_dasar,
                         'nm_dokter_jm' => $request->chart_dokter,
                         'sub_total' => $request->sub_total,
-                        'user' => $request->user_create,
+                        'user' => Auth::user()->name,
                     ];
                     trs_chart::create($newData);
                 };
@@ -227,7 +228,7 @@ class TindakanController extends Controller
                     'nm_dokter_jm' => $request->chart_dokter,
                     // 'nm_dokter_jm' => $request->chart_dokter,
                     // 'sub_total' => $request->sub_total,
-                    'user' => $request->user_create,
+                    'user' => Auth::user()->name,
                 ];
                 trs_chart::create($newData);
             };

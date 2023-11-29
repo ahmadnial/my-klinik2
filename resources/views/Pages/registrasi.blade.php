@@ -267,11 +267,11 @@
                             <input type="text" class="form-control" name="fr_no_hp" id="fr_no_hp"
                                 placeholder="Nomor Telephone/WA Pasien" value="{{ $e->fr_no_hp }}" readonly>
                         </div>
+                        <div class="float-left">
+                            <i class="text-danger float-left">Last Save by {{ $e->fr_user }}</i>
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <div class="float-left">
-                            <i class="text-danger float-left">Last Save by userxxx timestamp</i>
-                        </div>
                         {{-- <button type="button" class="" data-dismiss="modal"></button> --}}
                         <button type="submit" id="editdatareg" class="btn btn-success float-rights"><i
                                 class="fa fa-save"></i> &nbsp;
