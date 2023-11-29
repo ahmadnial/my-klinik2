@@ -83,7 +83,7 @@
     <div class="modal fade" id="addPenjualan" data-backdrop="static">
         <div class="modal-dialog modal-xl fullmodal">
             <div class="modal-content document">
-                <div class="modal-header">
+                <div class="modal-header bg-nial">
                     <h4 class="modal-title"><i class="fa fa-truck">&nbsp;</i>Transaksi Penjualan</h4>
                     <button type="button" class="close btn btn-danger" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -229,7 +229,7 @@
     <div class="modal fade" id="obatSearchShow">
         <div class="modal-dialog modal-lg">
             <div class="modal-content document">
-                <div class="modal-header">
+                <div class="modal-header bg-">
                     <h4 class="modal-title">Tambah Barang / Obat</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -412,8 +412,12 @@
                             //     chart_mr: dataObject
                             // },
                             success: function(isObatReguler) {
-                                // $.each(isTimelineHistory, function(key, getVal) {
-                                $("#getListObatx").empty();
+                                var table = $('#exm2').DataTable();
+                                var rows = table
+                                    .rows()
+                                    .remove()
+                                    .draw();
+                                // $("#getListObatx").empty();
                                 var getValue = isObatReguler;
                                 for (var getVal = 0; getVal < getValue.length; getVal++) {
 
@@ -479,8 +483,12 @@
                             //     chart_mr: dataObject
                             // },
                             success: function(isObatResep) {
-                                // $.each(isTimelineHistory, function(key, getVal) {
-                                $("#getListObatx").empty();
+                                var table = $('#exm2').DataTable();
+                                var rows = table
+                                    .rows()
+                                    .remove()
+                                    .draw();
+                                // $("#getListObatx").empty();
                                 var getValue = isObatResep;
                                 for (var getVal = 0; getVal < getValue.length; getVal++) {
 
@@ -542,8 +550,12 @@
                             //     chart_mr: dataObject
                             // },
                             success: function(isObatNakes) {
-                                // $.each(isTimelineHistory, function(key, getVal) {
-                                $("#getListObatx").empty();
+                                var table = $('#exm2').DataTable();
+                                var rows = table
+                                    .rows()
+                                    .remove()
+                                    .draw();
+                                // $("#getListObatx").empty();
                                 var getValue = isObatNakes;
                                 for (var getVal = 0; getVal < getValue.length; getVal++) {
 

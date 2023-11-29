@@ -10,39 +10,39 @@
             </div>
 
             <div class="card-body">
-                <div id="">
-                    <table id="example1" class="table table-hover">
-                        <thead class="">
-                            <tr>
-                                <th>No Ref</th>
-                                <th>Tanggal</th>
-                                <th>Lokasi</th>
-                                <th>Alasan</th>
-                                <th>Dibuat Oleh</th>
-                                <th></th>
-                                {{-- <th>Nilai Faktur</th>
+                {{-- <div id=""> --}}
+                <table id="exm2" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>No Ref</th>
+                            <th>Tanggal</th>
+                            <th>Lokasi</th>
+                            <th>Alasan</th>
+                            <th>Dibuat Oleh</th>
+                            <th></th>
+                            {{-- <th>Nilai Faktur</th>
                                 <th></th> --}}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($isListAdj as $ila)
-                                <tr>
-                                    <td id="">{{ $ila->kd_adj }}</td>
-                                    <td id="">{{ $ila->tgl_trs }}</td>
-                                    <td id=""></td>
-                                    <td id="">{{ $ila->keterangan }}</td>
-                                    <td id="">{{ $ila->user }}</td>
-                                    {{-- <td id=""></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($isListAdj as $ila)
+                            <tr>
+                                <td id="">{{ $ila->kd_adj }}</td>
+                                <td id="">{{ $ila->tgl_trs }}</td>
+                                <td id=""></td>
+                                <td id="">{{ $ila->keterangan }}</td>
+                                <td id="">{{ $ila->user }}</td>
+                                {{-- <td id=""></td>
                                 <td id=""></td> --}}
-                                    {{-- <td id="">{{ $tz->hdrToDetail[0]->do_obat }}</td> --}}
-                                    {{-- <td><button class="btn btn-xs btn-success" data-toggle="modal"
+                                {{-- <td id="">{{ $tz->hdrToDetail[0]->do_obat }}</td> --}}
+                                {{-- <td><button class="btn btn-xs btn-success" data-toggle="modal"
                                             data-target="#EditXDo">Edit</button>
                                     </td> --}}
-                                </tr>
-                        </tbody>
+                            </tr>
                         @endforeach
-                    </table>
-                </div>
+                    </tbody>
+                </table>
+                {{-- </div> --}}
             </div>
         </div>
     </section>
@@ -79,7 +79,7 @@
     <div class="modal fade" id="TambahADJ" data-backdrop="static">
         <div class="modal-dialog modal-xl fullmodal">
             <div class="modal-content document">
-                <div class="modal-header">
+                <div class="modal-header bg-success">
                     <h4 class="modal-title"><i class="fa fa-truck">&nbsp;</i>Adjusment Stock Barang</h4>
                     <button type="button" class="close btn btn-danger" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -111,18 +111,19 @@
                             <input type="hidden" id="user" name="user" value="tes">
                         </div>
                         <div class="">
-                            <button type="button" id="searchObat" class="btn btn-info">tambah</button>
+                            <button type="button" id="searchObat" onclick="getBarang()"
+                                class="btn btn-info">tambah</button>
                         </div>
                     </div>
 
                     {{-- <hr> --}}
 
-                    <table class="table table-bordered" style="width: 100%">
+                    <table id="" class="table table-bordered" style="width: 100%">
                         <thead>
                             <tr>
                                 {{-- <th>Kode Obat</th> --}}
-                                <th>kd Obat</th>
-                                <th>Nama Obat</th>
+                                <th width="150px">kd Obat</th>
+                                <th width="250px">Nama Obat</th>
                                 <th>satuan</th>
                                 <th>Qty Stock / Tercatat</th>
                                 <th>Sebenarnya</th>
@@ -177,7 +178,7 @@
                 </div>
                 <div class="modal-body table-responsive">
                     {{-- <div class="row"> --}}
-                    <table class="table table-hover table-stripped" id="exm2" style="width: 100%">
+                    <table id="ShowListBarang" class="table table-hover table-stripped">
                         <thead>
                             <tr>
                                 <th>KD OBAT</th>
@@ -188,9 +189,9 @@
                             </tr>
                         </thead>
 
-                        @foreach ($ListObat as $lo)
-                            <tbody>
-                                <tr>
+                        {{-- @foreach ($ListObat as $lo) --}}
+                        <tbody>
+                            {{-- <tr>
                                     <td><input class="getItemObat col-6" style="border: none" readonly
                                             value="{{ $lo->fm_kd_obat }}">
                                     </td>
@@ -207,8 +208,8 @@
                                             data-qty="{{ $lo->qty }}">Select</button>
                                     </td>
                                 </tr>
-                            </tbody>
-                        @endforeach
+                        @endforeach --}}
+                        </tbody>
                     </table>
 
                     <input type="hidden" id="user" name="user" value="tes">
@@ -227,18 +228,83 @@
 
         @push('scripts')
             <script>
+                // $("#periode_adjusment").datepicker({
+                //     format: "mm-yyyy",
+                //     startView: "months",
+                //     minViewMode: "months"
+                // });
+
+                $('#periode_adjusment').datepicker({
+                    minViewMode: 2,
+                    format: 'yyyy'
+                });
+
                 $("#searchObat").on("click", function() {
                     $('#obatSearch').modal('show');
 
                     // alert('helo');
                 });
 
-                $(".SelectItemObat").on("click", function() {
-                    var getKdObat = $(this).data('fm_kd_obat');
-                    var getNmObat = $(this).data('fm_nm_obat');
-                    var getSatJual = $(this).data('fm_satuan_jual');
-                    var getHrgBeli = $(this).data('fm_hrg_beli');
-                    var getQTY = $(this).data('qty');
+                function getBarang() {
+                    var table = $('#exm2').DataTable();
+                    var rows = table
+                        .rows()
+                        .remove()
+                        .draw();
+
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: "{{ url('getListObatReguler') }}",
+                        type: 'GET',
+
+                        success: function(listObat) {
+                            var getValue = listObat;
+                            for (var getVal = 0; getVal < getValue.length; getVal++) {
+
+                                const table = $('#ShowListBarang').DataTable();
+                                var btnBtn =
+                                    `<button class="SelectItemObat btn btn-success btn-xs" id="SelectItemObat" onClick="SelectItemObat(this)" data-fm_kd_obat="${getValue[getVal].fm_kd_obat}" data-fm_nm_obat="${getValue[getVal].fm_nm_obat}" data-fm_satuan_pembelian="${getValue[getVal].fm_satuan_pembelian}" data-fm_isi_satuan_pembelian="${getValue[getVal].fm_isi_satuan_pembelian}" data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}" data-fm_hrg_beli="${getValue[getVal].fm_hrg_beli_detail}" data-qty="${getValue[getVal].qty}">Select</button>`
+                                const dataBaru = [
+                                    [getValue[getVal].fm_kd_obat, getValue[getVal].fm_nm_obat, getValue[getVal]
+                                        .fm_satuan_jual, getValue[getVal].qty,
+                                        btnBtn
+                                    ],
+                                ]
+
+
+                                function injectDataBaru() {
+                                    for (const data of dataBaru) {
+                                        table.row.add([
+                                            data[0],
+                                            data[1],
+                                            data[2],
+                                            data[3],
+                                            data[4],
+
+                                        ]).draw(false)
+                                    }
+                                }
+                                injectDataBaru()
+                            }
+
+                        }
+                    })
+                }
+
+                function SelectItemObat(si) {
+                    var table = $('#ShowListBarang').DataTable();
+                    var rows = table
+                        .rows()
+                        .remove()
+                        .draw();
+
+                    var getKdObat = $(si).data('fm_kd_obat');
+                    var getNmObat = $(si).data('fm_nm_obat');
+                    var getSatJual = $(si).data('fm_satuan_jual');
+                    var getHrgBeli = $(si).data('fm_hrg_beli');
+                    var getQTY = $(si).data('qty');
 
                     $("#doTable").append(`
                         <tr id="">
@@ -277,7 +343,7 @@
                 </tr>`);
 
                     $('#obatSearch').modal('hide');
-                });
+                };
 
                 function getQTYAdj(qa) {
                     var parentQA = qa.parentElement.parentElement;
