@@ -167,7 +167,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="container">
-                        <div class="">
+                        {{-- <div class="">
                             <label for="">Tarif Dasar</label>
                             <select class="nm_tarif_dasar form-control" style="width:100%;" name="nm_tarif_dasar"
                                 id="nm_tarif_dasar">
@@ -178,7 +178,7 @@
                                 <option value="50000">Tarif 4 - Rp.50.000</option>
                                 <option value="60000">Tarif 5 - Rp.60.000</option>
                             </select>
-                        </div>
+                        </div> --}}
                         {{-- <div class="float-right mb-1 mt-4">
                             <button type="button" class="nm_tarif_add btn btn-xs btn-primary float-right">add more
                             </button>
@@ -227,6 +227,26 @@
                 </div>
                 <div class="modal-body">
                     <div class="container">
+                        @if (Auth::user()->id == 1)
+                            <div class="">
+                                <div class="callout callout-danger bg-light">
+                                    <label for="">Tarif Dasar</label>
+                                    <input type="number" class="form-control" name="nm_tarif_dasar"
+                                        id="nm_tarif_dasar">
+                                    {{-- <select class="nm_tarif_dasar form-control" style="width:100%;" name="nm_tarif_dasar"
+                                        id="nm_tarif_dasar">
+                                        <option value="">--Select--</option>
+                                        <option value="20000">Tarif 1 - Rp.20.000</option>
+                                        <option value="30000">Tarif 2 - Rp.30.000</option>
+                                        <option value="40000">Tarif 3 - Rp.40.000</option>
+                                        <option value="50000">Tarif 4 - Rp.50.000</option>
+                                        <option value="60000">Tarif 5 - Rp.60.000</option>
+                                    </select> --}}
+                                </div>
+                            </div>
+                        @else
+                            <input type="hidden" name="nm_tarif_dasar" id="nm_tarif_dasar" value="0">
+                        @endif
                         <div class="">
                             <div class="callout callout-success bg-light">
                                 <table>
@@ -607,6 +627,14 @@
             var cara_pakai_resep = $('#cara_pakai_resep').val();
             var hrg_jual = $('.ch_hrg_jual').val();
 
+            $('#obatResep').empty();
+            $('#namaObatResep').val('');
+            $('#qty_obat').val('');
+            $('#satuan_jual_obat').val('');
+            $('#signa_resep').val('');
+            $('#cara_pakai_resep').val('');
+            $('#ch_hrg_jual').val('');
+
             $(".resepID").append(
                 `
                 <table>
@@ -631,20 +659,20 @@
                                 <input type="text" class="form-control" id="ch_hrg_jual" name="ch_hrg_jual[]" value="${hrg_jual}" readonly>
                             </td>
                             <td>
-                                <input type="text" class="form-control" id="ch_qty_obat" name="ch_qty_obat[]" value="${qty_obat}">
+                                <input type="text" class="form-control" id="ch_qty_obat" name="ch_qty_obat[]" value="${qty_obat}" readonly>
                             </td>
                             <td>
-                                <input type="text" class="form-control" id="ch_satuan_obat" name="ch_satuan_obat[]" value="${satuan_jual_obat}">
+                                <input type="text" class="form-control" id="ch_satuan_obat" name="ch_satuan_obat[]" value="${satuan_jual_obat}" readonly>
                             </td>
                             <td>
-                                <input type="text" class="form-control" id="ch_signa" name="ch_signa[]" value="${signa_resep}">
+                                <input type="text" class="form-control" id="ch_signa" name="ch_signa[]" value="${signa_resep}" readonly>
                             </td>
                             <td>
-                                <input type="text" class="form-control" id="ch_cara_pakai" name="ch_cara_pakai[]" value="${cara_pakai_resep}">
+                                <input type="text" class="form-control" id="ch_cara_pakai" name="ch_cara_pakai[]" value="${cara_pakai_resep}" readonly>
                             </td>                             
                             <td>
-                                <button class="btn btn-danger btn-sm ml-2" id="delItemObatResep"><i
-                                        class="fa fa-trash"></i></button>
+                                <button type="button" class="remove btn btn-xs btn-danger"><i
+                                class="fa fa-trash" onclick="deleteRow(this)"></i></button>
                             </td>
                         </tr>
                     </tbody>
@@ -685,9 +713,10 @@
         });
 
 
-        $(document).on('click', '.rmvItm', function() {
-            $(this).parent().remove();
-        });
+        function deleteRow(btn) {
+            var row = btn.parentNode.parentNode.parentNode.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
 
         // Create 
         $(document).ready(function() {
@@ -887,23 +916,23 @@
                                     </div>
                                     <hr>
                                         <div class="form-group ">
-                                            <label for="inputDescription" class="bg-danger">Subjective</label>
+                                             <button type="disable" id="" class="btn btn-warning btn-xs text-white mb-2">Subjective</button>
                                             <textarea id=""  class="show_chart_S form-control" style="border:none;" rows="4" readonly value="">${getValue[getVal].chart_S}</textarea>
                                         </div>
                                         <hr>
                                         <div class="show_chart_O form-group">
-                                            <label for="inputDescription" class="bg-info">Objective</label>
+                                             <button type="disable" id="" class="btn btn-primary btn-xs mb-2">Objective</button>
                                             <textarea id="" class="show_chart_O form-control" style="border:none;" rows="4" readonly>${getValue[getVal].chart_O}</textarea>
                                         </div>
                                         <hr>
                                         <div class="show_chart_A form-group">
-                                            <label for="inputDescription" class="bg-jeje">Assesment</label>
+                                             <button type="disable" id="" class="btn btn-success btn-xs mb-2">Assesment</button>
                                             <textarea id="" class="show_chart_A form-control mb-3" style="border:none;" rows="2" readonly>${getValue[getVal].chart_A_diagnosa}</textarea>
                                             <textarea id="" class="show_chart_A form-control" rows="4" style="border:none;" readonly>${getValue[getVal].chart_A}</textarea>
                                         </div>
                                         <hr>
                                         <div class="show_chart_P form-group">
-                                            <label for="inputDescription" class="bg-nial">Plan</label>
+                                             <button type="disable" id="" class="btn btn-danger btn-xs mb-2">Plan</button>
                                             <textarea id="" class="show_chart_P form-control" rows="4" style="border:none;" readonly>${getValue[getVal].chart_P}</textarea>
                                         </div>
                                         <hr>

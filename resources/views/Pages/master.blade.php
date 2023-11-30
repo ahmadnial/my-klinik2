@@ -322,6 +322,12 @@
                                         <p>Penjualan Farmasi</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('/laporan-registrasi-masuk') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Registrasi Masuk</p>
+                                    </a>
+                                </li>
                                 {{-- <li class="nav-item">
                                     <a href="{{ url('/delivery-order') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>

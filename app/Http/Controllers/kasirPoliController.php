@@ -10,6 +10,7 @@ use App\Models\trs_kasir_poliklinik;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Contracts\Service\Attribute\Required;
 
 class kasirPoliController extends Controller
@@ -96,12 +97,12 @@ class kasirPoliController extends Controller
             $newrgout->trs_kp_no_mr = $request->trs_kp_no_mr;
             $newrgout->trs_kp_layanan = $request->trs_kp_layanan;
             $newrgout->trs_kp_dokter = $request->trs_kp_dokter;
-            $newrgout->user   = $request->user_create;
+            $newrgout->user   = Auth::user()->name;
             $newrgout->nm_tarif_dasar = $request->nm_tarif_dasar;
             $newrgout->trs_kp_nilai_total = $request->trs_kp_nilai_total;
-            $newrgout->chart_A    = $request->chart_A;
-            $newrgout->chart_A_diagnosa = $request->chart_A_diagnosa;
-            $newrgout->chart_P = $request->chart_P;
+            // $newrgout->chart_A    = $request->chart_A;
+            // $newrgout->chart_A_diagnosa = $request->chart_A_diagnosa;
+            // $newrgout->chart_P = $request->chart_P;
             $newrgout->save();
         } else {
             foreach ($request->trs_kp_nm_tarif as $key => $val) {
@@ -113,7 +114,7 @@ class kasirPoliController extends Controller
                 $newrgout->trs_kp_no_mr = $request->trs_kp_no_mr;
                 $newrgout->trs_kp_layanan = $request->trs_kp_layanan;
                 $newrgout->trs_kp_dokter = $request->trs_kp_dokter;
-                $newrgout->user   = $request->user_create;
+                $newrgout->user   = Auth::user()->name;
                 $newrgout->nm_tarif_dasar = $request->nm_tarif_dasar;
                 $newrgout->trs_kp_kd_trs_chart = $request->trs_kp_kd_trs_chart[$key];
                 $newrgout->trs_kp_nm_tarif = $request->trs_kp_nm_tarif[$key];

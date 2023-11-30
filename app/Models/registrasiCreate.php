@@ -16,6 +16,7 @@ class registrasiCreate extends Model
         'fr_mr',
         'fr_nama',
         'fr_tgl_lahir',
+        'fr_tgl_reg',
         'fr_jenis_kelamin',
         'fr_alamat',
         'fr_no_hp',

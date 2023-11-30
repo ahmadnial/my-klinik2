@@ -45,4 +45,23 @@ class LapFarmasiController extends Controller
         }
         return response()->json($isDataBukuStok);
     }
+
+    // LAPORAN REG MASUK
+    public function lapRegMasuk()
+    {
+        return view('pages.laporan.registrasi.laporan-registrasi-masuk');
+    }
+
+    public function getLapRegMasuk(Request $request)
+    {
+        // $t = $request->all();
+        // dd($t);
+        if ($request->ajax()) {
+            $isDataRegMasuk = DB::table('ts_registrasi')
+                ->whereBetween('fr_tgl_trs', [$request->date1, $request->date2])
+                // ->whereNull('kd_order_resep')
+                ->get();
+        }
+        return response()->json($isDataRegMasuk);
+    }
 }

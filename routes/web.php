@@ -210,4 +210,6 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
     Route::get('getLaporanPenjualan', [LapFarmasiController::class, 'getLapPenjualan'])->name('getLaporanPenjualan');
     Route::get('buku-stok-rekap', [LapFarmasiController::class, 'bukuStok'])->name('buku-stok-rekap');
     Route::get('getBukuStok', [LapFarmasiController::class, 'getBukuStok'])->name('getBukuStok');
+    Route::get('laporan-registrasi-masuk', [LapFarmasiController::class, 'lapRegMasuk'])->name('laporan-registrasi-masuk');
+    Route::get('getLapRegMasuk', [LapFarmasiController::class, 'getLapRegMasuk'])->name('getLapRegMasuk');
 });

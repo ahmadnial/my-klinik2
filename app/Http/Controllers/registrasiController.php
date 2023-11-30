@@ -43,10 +43,12 @@ class registrasiController extends Controller
 
     public function registrasiCreate(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'fr_kd_reg' => 'required',
             'fr_mr' => 'required',
             // 'fr_nama' => 'required',
+            'fr_tgl_reg' => 'required',
             'fr_tgl_lahir' => 'required',
             'fr_jenis_kelamin' => 'required',
             'fr_alamat' => 'required',

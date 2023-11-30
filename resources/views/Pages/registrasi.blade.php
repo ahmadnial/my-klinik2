@@ -90,6 +90,10 @@
                         </div>
                         <input type="hidden" id="fr_nama" name="fr_nama">
                         <div class="form-group col-sm-6">
+                            <label for="">Tanggal Registrasi</label>
+                            <input type="date" class="form-control" name="fr_tgl_reg" id="fr_tgl_reg" value="">
+                        </div>
+                        <div class="form-group col-sm-6">
                             <label for="">Nama Pasien/No. MR</label>
                             <select class="form-control-pasien" id="fr_mr" style="width: 100%;" name="fr_mr"
                                 onchange="getData()"></select>
@@ -197,6 +201,11 @@
                                 <select class="form-control-pasien" id="fr_mr" style="width: 100%;" name="fr_mr"
                                     onchange="getData()"></select>
                             </div> --}}
+                            <div class="form-group col-sm-6">
+                                <label for="">Tanggal Registrasi</label>
+                                <input type="date" class="form-control" name="fr_tgl_reg" id="fr_tgl_reg"
+                                    value="">
+                            </div>
                             <div class="form-group col-sm-6">
                                 <label for="">Nama Pasien/No. MR</label>
                                 <input type="text" class="form-control" name="fr_mr" id="fr_mr"
@@ -399,6 +408,7 @@
                 var fr_mr = $('#fr_mr').val();
                 var fr_nama = $('#fr_nama').val();
                 var fr_tgl_lahir = $('#fr_tgl_lahir').val();
+                var fr_tgl_reg = $('#fr_tgl_reg').val();
                 var fr_jenis_kelamin = $('#fr_jenis_kelamin').val();
                 var fr_alamat = $('#fr_alamat').val();
                 var fr_no_hp = $('#fr_no_hp').val();
@@ -423,6 +433,7 @@
                             fr_mr: fr_mr,
                             fr_nama: fr_nama,
                             fr_tgl_lahir: fr_tgl_lahir,
+                            fr_tgl_reg: fr_tgl_reg,
                             fr_jenis_kelamin: fr_jenis_kelamin,
                             fr_alamat: fr_alamat,
                             fr_no_hp: fr_no_hp,

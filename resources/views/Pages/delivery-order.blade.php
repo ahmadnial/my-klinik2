@@ -436,7 +436,7 @@
 
 
                 function pajakPPN(p) {
-                    alert('hi');
+                    alert('Belum Ready');
                     var parentP = p.parentElement.parentElement;
                 }
                 // var parentR = r.parentElement.parentElement;

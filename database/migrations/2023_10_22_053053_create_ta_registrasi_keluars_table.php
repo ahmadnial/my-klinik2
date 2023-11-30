@@ -22,9 +22,9 @@ return new class extends Migration
             $table->string('trs_kp_dokter');
             $table->string('nm_tarif_dasar');
             $table->string('user')->nullable();
-            $table->string('trs_kp_kd_trs_chart');
-            $table->string('trs_kp_nm_tarif');
-            $table->string('trs_kp_nilai_tarif');
+            $table->string('trs_kp_kd_trs_chart')->default('');
+            $table->string('trs_kp_nm_tarif')->default('');
+            $table->string('trs_kp_nilai_tarif')->default('');
             $table->string('trs_kp_nilai_total');
             $table->timestamps();
             $table->softDeletes();
