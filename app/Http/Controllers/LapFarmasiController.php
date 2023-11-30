@@ -57,8 +57,8 @@ class LapFarmasiController extends Controller
         // $t = $request->all();
         // dd($t);
         if ($request->ajax()) {
-            $isDataRegMasuk = DB::table('ts_registrasi')
-                ->whereBetween('fr_tgl_trs', [$request->date1, $request->date2])
+            $isDataRegMasuk = DB::table('ta_registrasi')
+                ->whereBetween('fr_tgl_reg', [$request->date1, $request->date2])
                 // ->whereNull('kd_order_resep')
                 ->get();
         }

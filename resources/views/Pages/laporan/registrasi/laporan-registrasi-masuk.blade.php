@@ -19,13 +19,14 @@
                     <table id="exm2" class="table table-hover table-striped">
                         <thead>
                             <tr>
-                                <th>kode Transaksi</th>
-                                <th>Tanggal Transaksi</th>
-                                <th>Jenis Penjualan</th>
-                                <th>Sub Total</th>
-                                {{-- <th>Alasan</th>
-                                <th>Dibuat Oleh</th>
-                                <th></th> --}}
+                                <th>no RM</th>
+                                <th>Nama</th>
+                                <th>J/K</th>
+                                <th>Alamat</th>
+                                <th>Layanan</th>
+                                <th>Dokter</th>
+                                <th>Session Poli</th>
+                                <th>Jaminan</th>
                             </tr>
                         </thead>
                         <tbody id="result">
@@ -75,6 +76,11 @@
                         },
                         success: function(isDataRegMasuk) {
                             var sumall = 0;
+                            var table = $('#exm2').DataTable();
+                            var rows = table
+                                .rows()
+                                .remove()
+                                .draw();
                             $.each(isDataRegMasuk, function(key, datavalue) {
                                 const table = $('#exm2').DataTable();
                                 // var total_pen = datavalue.total_penjualan;
@@ -83,8 +89,10 @@
                                 //     currency: 'IDR'
                                 // });
                                 const dataBaru = [
-                                    [datavalue.kd_trs, datavalue.tgl_trs, datavalue.tipe_tarif,
-                                        ttlPenjualan
+                                    [datavalue.fr_mr, datavalue.fr_nama, datavalue.fr_jenis_kelamin,
+                                        datavalue.fr_alamat, datavalue.fr_layanan, datavalue.fr_dokter,
+                                        datavalue.fr_session_poli,
+                                        datavalue.fr_jaminan
                                     ],
                                 ]
 
@@ -95,6 +103,10 @@
                                             data[1],
                                             data[2],
                                             data[3],
+                                            data[4],
+                                            data[5],
+                                            data[6],
+                                            data[7],
                                         ]).draw(false)
                                     }
                                 }
