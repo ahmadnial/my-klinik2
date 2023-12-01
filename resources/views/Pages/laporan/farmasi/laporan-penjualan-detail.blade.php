@@ -4,7 +4,7 @@
     <section class="content">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title"><i class="fa fa-truck">&nbsp;</i>Laporan Penjualan Apotek Rekap</h3>
+                <h3 class="card-title"><i class="fa fa-truck">&nbsp;</i>Laporan Penjualan Apotek Detail Item</h3>
             </div>
 
             <div class="card-body">
@@ -17,15 +17,16 @@
                 </div>
                 <div>
                     <table id="penjualan" class="table table-hover table-striped">
-                        <thead>
+                        <thead class="bg-nial">
                             <tr>
                                 <th>kode Transaksi</th>
                                 <th>Tanggal Transaksi</th>
-                                <th>Jenis Penjualan</th>
+                                <th>Kode Barang</th>
+                                <th>Nama Barang</th>
+                                <th>QTY</th>
+                                <th>Satuan</th>
+                                <th>Harga Satuan</th>
                                 <th>Sub Total</th>
-                                {{-- <th>Alasan</th>
-                                <th>Dibuat Oleh</th>
-                                <th></th> --}}
                             </tr>
                         </thead>
                         <tbody id="result">
@@ -67,29 +68,31 @@
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
-                        url: "{{ url('getLaporanPenjualan') }}",
+                        url: "{{ url('getLaporanPenjualanDetail') }}",
                         type: 'GET',
                         data: {
                             date1: date1,
                             date2: date2
                         },
-                        success: function(isDataLaporan) {
+                        success: function(isDataLaporanDetail) {
                             var sumall = 0;
                             var table = $('#penjualan').DataTable();
                             var rows = table
                                 .rows()
                                 .remove()
                                 .draw();
-                            $.each(isDataLaporan, function(key, datavalue) {
+                            $.each(isDataLaporanDetail, function(key, datavalue) {
                                 const table = $('#penjualan').DataTable();
-                                var total_pen = datavalue.total_penjualan;
-                                var ttlPenjualan = total_pen.toLocaleString('id-ID', {
-                                    style: 'currency',
-                                    currency: 'IDR'
-                                });
+                                // var total_pen = datavalue.total_penjualan;
+                                // var ttlPenjualan = total_pen.toLocaleString('id-ID', {
+                                //     style: 'currency',
+                                //     currency: 'IDR'
+                                // });
                                 const dataBaru = [
-                                    [datavalue.kd_trs, datavalue.tgl_trs, datavalue.tipe_tarif,
-                                        ttlPenjualan
+                                    [datavalue.kd_trs, datavalue.created_at, datavalue.kd_obat,
+                                        datavalue.nm_obat, datavalue.qty, datavalue.satuan, datavalue
+                                        .hrg_obat,
+                                        datavalue.sub_total,
                                     ],
                                 ]
 
@@ -100,6 +103,10 @@
                                             data[1],
                                             data[2],
                                             data[3],
+                                            data[4],
+                                            data[5],
+                                            data[6],
+                                            data[7],
                                         ]).draw(false)
                                     }
                                 }

@@ -170,6 +170,7 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
     Route::get('getListObatNakes', [penjualanController::class, 'getListObatNakes'])->name('getListObatNakes');
     Route::post('add-penjualan', [penjualanController::class, 'penjualanCreate'])->name('add-penjualan');
     Route::get('getListOrderResep/{kd_trs}', [penjualanController::class, 'getListOrderResep'])->name('getListOrderResep');
+    Route::get('getDetailPenjualan/{kd_trs}', [penjualanController::class, 'getDetailPenjualan'])->name('getDetailPenjualan');
 });
 
 // VIEW TRS-KASIR-POLI
@@ -207,7 +208,9 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
     // Route::get('/', [HomeController::class, 'index']);
     // Route::get('/redirect', [RedirectController::class, 'cek']);
     Route::get('laporan-penjualan-farmasi', [LapFarmasiController::class, 'lapPenjualanFarmasi'])->name('laporan-penjualan-farmasi');
+    Route::get('laporan-penjualan-farmasi-detail', [LapFarmasiController::class, 'lapPenjualanFarmasiDetail'])->name('laporan-penjualan-farmasi-detail');
     Route::get('getLaporanPenjualan', [LapFarmasiController::class, 'getLapPenjualan'])->name('getLaporanPenjualan');
+    Route::get('getLaporanPenjualanDetail', [LapFarmasiController::class, 'getLapPenjualanDetail'])->name('getLaporanPenjualanDetail');
     Route::get('buku-stok-rekap', [LapFarmasiController::class, 'bukuStok'])->name('buku-stok-rekap');
     Route::get('getBukuStok', [LapFarmasiController::class, 'getBukuStok'])->name('getBukuStok');
     Route::get('laporan-registrasi-masuk', [LapFarmasiController::class, 'lapRegMasuk'])->name('laporan-registrasi-masuk');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\do_detail_item;
 use App\Models\mstr_obat;
 use App\Models\penjualanFarmasi;
 use App\Models\tb_stock;
@@ -194,11 +195,20 @@ class penjualanController extends Controller
 
             toastr()->success('Data Tersimpan!');
             return back();
-            return redirect()->route('/tindakan-medis');
+            // return redirect()->route('/tindakan-medis');
         } catch (\Exception $e) {
             DB::rollback();
             toastr()->error('Gagal Tersimpan!');
             return back();
         }
+    }
+
+    public function getDetailPenjualan(Request $request)
+    {
+        $isViewDetailPenjualan = tp_detail_item::select('*')
+            ->where('kd_trs', $request->kd_trs)
+            ->get();
+
+        return response()->json($isViewDetailPenjualan);
     }
 }

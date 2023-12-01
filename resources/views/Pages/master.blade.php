@@ -319,7 +319,13 @@
                                 <li class="nav-item">
                                     <a href="{{ url('/laporan-penjualan-farmasi') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Penjualan Farmasi</p>
+                                        <p>Penjualan Apotek Rekap</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('/laporan-penjualan-farmasi-detail') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Penjualan Apotek Detail</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">

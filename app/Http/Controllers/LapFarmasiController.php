@@ -13,6 +13,11 @@ class LapFarmasiController extends Controller
         return view('pages.laporan.farmasi.laporan-penjualan-farmasi');
     }
 
+    public function lapPenjualanFarmasiDetail()
+    {
+        return view('pages.laporan.farmasi.laporan-penjualan-detail');
+    }
+
 
     public function getLapPenjualan(Request $request)
     {
@@ -26,6 +31,22 @@ class LapFarmasiController extends Controller
                 ->get();
         }
         return response()->json($isDataLaporan);
+    }
+
+    public function getLapPenjualanDetail(Request $request)
+    {
+        // $t = $request->all();
+        // dd($t);
+        if ($request->ajax()) {
+            $isDataLaporanDetail = DB::table('tp_detail_item')
+                ->select('kd_trs', 'kd_obat', 'nm_obat', 'hrg_obat', 'qty', 'satuan', 'sub_total', 'created_at')
+                ->distinct()
+                ->whereBetween('created_at', [$request->date1, $request->date2])
+                ->whereNull('kd_reg')
+                // ->where('kd_order_resep', '=', 'null')
+                ->get();
+        }
+        return response()->json($isDataLaporanDetail);
     }
 
     public function bukuStok()
