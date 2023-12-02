@@ -14,8 +14,7 @@ use App\Http\Controllers\registrasiController;
 use App\Http\Controllers\TindakanController;
 use App\Http\Controllers\WilayahController;
 use App\Http\Controllers\AuthController;
-
-
+use App\Http\Controllers\settingController;
 
 // Route::group(['middleware' => 'guest'], function () {
 Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -215,4 +214,10 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
     Route::get('getBukuStok', [LapFarmasiController::class, 'getBukuStok'])->name('getBukuStok');
     Route::get('laporan-registrasi-masuk', [LapFarmasiController::class, 'lapRegMasuk'])->name('laporan-registrasi-masuk');
     Route::get('getLapRegMasuk', [LapFarmasiController::class, 'getLapRegMasuk'])->name('getLapRegMasuk');
+});
+
+//Setting / Tools
+Route::group(['middleware' => ['auth', 'checkrole:1,2']], function () {
+    Route::get('hak-akses', [settingController::class, 'hakAkses'])->name('hak-akses');
+    Route::post('userCreate', [settingController::class, 'userCreate'])->name('userCreate');
 });

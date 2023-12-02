@@ -19,7 +19,7 @@ class AuthController extends Controller
     {
         // validasi
         $credentials = $request->validate([
-            'email' => 'required|email',
+            'email' => 'required',
             'password' => 'required'
         ]);
         // dd($credentials);

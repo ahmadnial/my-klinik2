@@ -108,7 +108,7 @@ grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); */
                 <form action="{{ url('/ProsesLogin') }}" method="POST">
                     @csrf
                     <div class="input-group mb-3">
-                        <input type="email" class="form-control" placeholder="Username" name="email">
+                        <input type="text" class="form-control" placeholder="Username" name="email">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
