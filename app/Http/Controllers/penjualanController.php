@@ -11,6 +11,7 @@ use App\Models\tp_detail_item;
 use App\Models\trs_chart_resep;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class penjualanController extends Controller
 {
@@ -168,9 +169,9 @@ class penjualanController extends Controller
                     // // 'embalase',
                     'sub_total' => $request->sub_total[$key],
                     // // 'etiket',
-                    // // 'signa',
-                    // // 'cara_pakai',
-                    'user' => $request->user,
+                    'signa' => $request->signa[$key],
+                    'cara_pakai' => $request->cara_pakai[$key],
+                    'user' => Auth::user()->name,
                 ];
                 tp_detail_item::create($tpdetail);
             }

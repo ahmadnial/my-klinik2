@@ -791,7 +791,7 @@
                                                 <input type="text" class="qty form-control" id="qty" name="qty[]" onKeyUp="getQTY(this)" value="${datavalue.qty}" readonly>
                                             </td>
                                             <td>
-                                                <input type="text" class="cara_pakai form-control" id="cara_pakai" name="cara_pakai[]" readonly>
+                                                <input type="text" class="cara_pakai form-control" id="cara_pakai" name="cara_pakai[]" value="${datavalue.cara_pakai}" readonly>
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" id="diskon"
