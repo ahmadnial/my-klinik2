@@ -31,7 +31,7 @@ class penjualanController extends Controller
 
         $isListRegResep = trs_chart_resep::select("kd_trs", "chart_id", "kd_reg", "mr_pasien", "nm_pasien")->distinct()->where('isimplementasi', '=', '0')->get();
 
-        $isListPenjualan = tp_hdr::all();
+        $isListPenjualan = tp_hdr::latest()->get();
         return view('Pages.penjualan', [
             'noRef' => $noRef,
             'isListPenjualan' => $isListPenjualan,
@@ -169,8 +169,9 @@ class penjualanController extends Controller
                     // // 'embalase',
                     'sub_total' => $request->sub_total[$key],
                     // // 'etiket',
-                    'signa' => $request->signa[$key],
+                    // 'signa' => $request->signa[$key],
                     'cara_pakai' => $request->cara_pakai[$key],
+                    'tgl_trs' => $request->tgl_trs,
                     'user' => Auth::user()->name,
                 ];
                 tp_detail_item::create($tpdetail);
@@ -195,12 +196,13 @@ class penjualanController extends Controller
             DB::commit();
 
             toastr()->success('Data Tersimpan!');
-            return back();
+            return redirect('/penjualan');
             // return redirect()->route('/tindakan-medis');
         } catch (\Exception $e) {
             DB::rollback();
             toastr()->error('Gagal Tersimpan!');
-            return back();
+            // return back();
+            return redirect('/penjualan');
         }
     }
 

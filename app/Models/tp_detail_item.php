@@ -27,8 +27,9 @@ class tp_detail_item extends Model
         // 'embalase',
         'sub_total',
         // 'etiket',
-        // 'signa',
-        // 'cara_pakai',
+        'signa',
+        'cara_pakai',
+        'tgl_trs',
         'user',
     ];
 }
