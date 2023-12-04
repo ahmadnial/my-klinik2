@@ -11,12 +11,13 @@
             top: 0;
             overflow-x: hidden;
             padding-top: 95px;
+            padding-bottom: 45px;
         }
 
         @media (min-width: 576px) {
             #Right {
                 position: fixed;
-                width: auto;
+                width: 50%;
                 max-width: 44%;
                 top: 0;
                 bottom: 0;
@@ -26,58 +27,328 @@
         }
     </style>
 
-    <section class="splitRight col-lg-6 content" id="Right">
+    <section class="splitRight col-lg content" id="Right">
         <div class="card">
             <div class="card-body">
-                <div class="row">
-                    <div class="form-group col-sm-4">
-                        <label for="">Search Registrasi</label>
-                        <select class="form-control-pasien" id="tr_kd_reg" style="width: 100%;" name="tr_kd_reg">
-                            @foreach ($isRegActive as $reg)
-                                <option value="">--Select--</option>
-                                <option value="{{ $reg->fr_kd_reg }}">
-                                    {{ $reg->fr_kd_reg . '-' . $reg->fr_nama }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group col-sm-4">
-                        <label for="">Tanggal</label>
-                        <input type="text" class="form-control" name="tr_tgl_trs" id="tr_tgl_trs"
-                            value="{{ $dateNow }}" readonly>
-                    </div>
-                    <div class="form-group col-sm-4">
-                        <label for="">Nomor RM</label>
-                        <input type="text" class="form-control" name="tr_no_mr" id="tr_no_mr" value="" readonly>
-                    </div>
-                    <div class="form-group col-sm-4">
-                        <label for="">Nama Pasien</label>
-                        <input type="text" class="form-control" name="tr_nm_pasien" id="tr_nm_pasien" value=""
-                            readonly>
-                    </div>
-                    <div class="form-group col-sm-4">
-                        <label for="">Layanan</label>
-                        <input type="text" class="form-control" name="tr_layanan" id="tr_layanan" value=""
-                            readonly>
-                    </div>
-                    <div class="form-group col-sm-4">
-                        <label for="">Dokter</label>
-                        <input type="text" class="form-control" name="tr_dokter" id="tr_dokter" value="" readonly>
-                    </div>
-                    <div class="form-group col-sm-4">
-                        <label for="">Umur</label>
-                        <input type="text" class="form-control" name="tr_umur" id="tr_umur" value="" readonly>
-                    </div>
-                    <div class="form-group col-sm-6">
-                        <label for="">Alamat</label>
-                        <textarea type="text" class="form-control" name="tr_alamat" id="tr_alamat" value="" readonly></textarea>
-                    </div>
-                    {{-- <input type="text" id="chart_id_show" name="chart_id" value=""> --}}
 
+                <div class="col-12">
+                    {{-- <div name="headerPinPasien" class="kt-header__topbar pr-2 headerTopBar">
+                        <div class="kt-header__topbar-item kt-header__topbar-item--user mx-0">
+                            <div class="kt-header__topbar-wrapper"> --}}
+                    {{-- <div class="kt-header__topbar-user-pasien-info" style="background: transparent !important;"> --}}
+                    <div class="accordion m-1 form-inline accordion-toggle-arrow text-light" id="DetailPasien"
+                        style="position:relative; margin-right:0px; z-index:500;">
+                        <!-- min-width:300px; max-width:500px -->
+                        <div class="card" style="border:none; margin-right:0px; margin-top: 1px;">
+                            <!-- min-width:300px;  -->
+                            <div class="form-control card-header row" name="PasienHdr" style="background-color:#6c558a">
+                                <span data-toggle="tooltip" title="Clear" class="text-center">
+                                    <div class="kt-link pointer text-danger ml-2" name="clearPinnedPasienHdr"
+                                        style="margin-top: 7px; display: none;">
+                                        <i class="fa fa-times-circle clearPinPsnHdr"></i>
+                                    </div>
+                                </span>
+                                <div class="text-light collapsed pointer" id="collapseCoverPasien" data-toggle="collapse"
+                                    data-target="#DetPsn" aria-expanded="false" aria-controls="DetPsn"
+                                    style="background-color:#6c558a; border: none;">
+                                    {{-- style="justify-content: space-between; padding: 6px 13px 7px 0px"> --}}
+                                    <label style="width: 17vw;overflow: hidden;text-overflow: " name="nmPasienHdr"
+                                        id="nmPasienHdr" class="text-warning pointer">
+                                        DATA PASIEN
+                                    </label>
+                                    {{-- <input type="text" class="form-control text-light" name="" id="nmPasienHdr"
+                                        style="background-color:#6c558a; border: none; width: 17vw;"> --}}
+                                    {{-- <span id="1MonthUp" name="1MonthUp" class="badge badge-warning kt-font-bold"
+                                        style="border-radius: 3px;padding: 2px 5px;margin-right: 10px; display: none;"
+                                        title="Terakhir periksa"></span>
+                                    <strong>
+                                        <label name="noMrHdr" class="pointer mr-2">00-00-00-00</label>
+                                    </strong>
+                                    <label
+                                        style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;background: #ed2121; font-size: 0.9rem; display: none;"
+                                        name="tagAlergiProfile" class="text-white pointer mx-1 kt-font-normal px-2">
+                                        Allergy
+                                    </label>
+                                    <label
+                                        style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap; font-size: 0.9rem; display: none;"
+                                        name="tagTriageProfile" class="pointer mx-1 kt-font-normal px-2">
+                                        Triage
+                                    </label> --}}
+                                </div>
 
-                    <input type="hidden" id="tr_tgl_lahir" name="tr_tgl_lahir">
-                    <input type="hidden" id="user" name="user" value="tes">
+                                {{-- <div name="divIcare" style="display: none;">
+                                    <button type="button" class="btn btn-icare border-radius2" name="btnICare"
+                                        title="I Care JKN"></button>
+                                </div> --}}
+                            </div>
+                            <div id="DetPsn"
+                                style="position: fixed; margin-top: 40px; z-index: 9999; min-width: 324px; border: 1px solid rgb(119, 94, 151);"
+                                class="bg-light text-dark shadow collapse" aria-labelledby="headingOne"
+                                data-parent="#DetailPasien">
+                                <div class="scrollbar-dusty-grass square1 thin scroll-y scrollbox"
+                                    style="max-height: 480px;">
+                                    <div class="card-body">
+                                        <div>
+                                            <div class="d-flex flex-wrap">
+                                                <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                    style="background-color: #d2eaff" name="">
+                                                    <b>Nama :</b> <input type="text" class="form-control-xs"
+                                                        name="" id="namaHdr"
+                                                        style="background-color: #d2eaff; border:none">
+                                                </div>
+                                                <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                    style="background-color: #d2eaff" name="noMRHdr">
+                                                    <b>No. RM :</b><input type="text" class="form-control-xs"
+                                                        name="" id="noMRHdr"
+                                                        style="background-color: #d2eaff; border:none">
+                                                </div>
+                                                {{-- <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                    style="background-color: #d2eaff;" name="tglPeriksaHdr">
+                                                    01-01-3000 00:00:00
+                                                    <!-- <span name="tglPeriksaHdr"></span> -->
+                                                    <!-- <span name="jamPeriksaHdr"></span> -->
+                                                </div> --}}
+                                            </div>
+                                            <div class="d-flex flex-wrap">
+                                                <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                    style="background-color:#f8f5d6;" name="layananCoverHdr">
+                                                    <b>No. Reg :</b><input type="text" class="form-control-xs"
+                                                        name="" id="noRGHdr"
+                                                        style="background-color:#f8f5d6; border:none">
+                                                </div>
+                                                <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                    style="background-color:#f8f5d6;" name="">
+                                                    <b>Dokter :</b><input type="text" class="form-control-xs"
+                                                        name="" id="dokterHdr"
+                                                        style="background-color:#f8f5d6; border:none">
+                                                </div>
+                                            </div>
+                                            <div class="d-flex flex-wrap">
+                                                <div class="text-center px-2 py-1 m-1 rounded rounded-sm" title=""
+                                                    style="background-color:#f8d6e2;" name="">
+                                                    <b>Layanan :</b><input type="text" class="form-control-xs"
+                                                        name="" id="layananHdr"
+                                                        style="background-color: #f8d6e2; border:none">
+                                                </div>
+                                                <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                    style="background-color:#f8d6e2;" name="">
+                                                    <b>J/K :</b><input type="text" class="form-control-xs" name=""
+                                                        id="jkHdr" style="background-color:#f8d6e2; border:none">
+                                                </div>
+                                                <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                    style="background-color:#f8d6e2;">
+                                                    <span name="usiaHdr">
+                                                        <b>Umur :</b><input type="text" class="form-control-xs"
+                                                            name="" id="umurHdr"
+                                                            style="background-color:#f8d6e2; border:none">
+                                                    </span>
+
+                                                    || Tgl. Lahir : <input type="text" class="form-control-xs"
+                                                        name="" id="tglLahirHdr"
+                                                        style="background-color:#f8d6e2; border:none">
+                                                </div>
+                                            </div>
+                                            <div class="d-flex flex-wrap">
+                                                {{-- <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                    style="background-color: #9976c73d;color: #5000b9;"
+                                                    name="pendidikanHdr">EDU : -
+                                                </div>
+                                                <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                    style="background-color: #9976c73d;color: #5000b9;"
+                                                    name="pekerjaanHdr">
+                                                    WORK : -
+                                                </div> --}}
+                                            </div>
+                                            <div class="">
+                                                <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                    style="background-color:#d6f8dd;" name="addressHdr">
+                                                    <i class="fa fa-home"></i>
+                                                    <input type="text" class="form-control-xs col" name=""
+                                                        id="alamatHdr" style="background-color:#d6f8dd; border:none">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {{-- <table style="width:100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="vertical-align: top;"
+                                                        class="kt-font-danger kt-font-boldest">
+                                                        #Allergy
+                                                    </td>
+                                                    <td style="vertical-align: top;">:</td>
+                                                    <td class="pl-2">
+                                                        <div class="dropdown" name="divAddAlergiProfile">
+                                                            <button
+                                                                class="btn btn-sm btn-default border-radius3 kt-font-bolder pull-right p-1 dropdown-toggle"
+                                                                style="position: absolute; right: -10px;"
+                                                                title="Tambah Alergi" id="ddAddAlergiProfileHD"
+                                                                data-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false" type="button">
+                                                                <i class="fa fa-plus-circle icon-smass"></i>Add
+                                                            </button>
+                                                            <div class="dropdown-menu p-2"
+                                                                aria-labelledby="ddAddAlergiProfileHD"
+                                                                x-placement="bottom-start">
+                                                                <h6 class="kt-font-primary mb-3">Add Alergi
+                                                                    Pasien</h6>
+                                                                <div class="row">
+                                                                    <select class="form-control form-control-sm col mb-2"
+                                                                        id="listAlergiTypeProfileHD">
+                                                                    </select>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <input type="text" id="alergiNameProfileHD"
+                                                                        class="form-control form-control-sm col mb-2"
+                                                                        autocomplete="off" placeholder="Nama Alergi">
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-12 p-0">
+                                                                        <button
+                                                                            class="btn btn-sm btn-primary border-radius3 kt-font-bolder pull-right p-1"
+                                                                            id="addAlergiProfileHD" type="button">
+                                                                            <i class="fa fa-save icon-smass"></i>Save
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div name="listAlergiProfile"></div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="vertical-align: top;"
+                                                        class="kt-font-danger kt-font-boldest">#Vital Sign
+                                                    </td>
+                                                    <td style="vertical-align: top;">:</td>
+                                                    <td class="pl-2">
+                                                        <div class="col-12 p-0" style="max-width: 300px;">
+                                                            <div class="row" name="listVitalSignProfile">
+
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="vertical-align: top;"
+                                                        class="kt-font-danger kt-font-boldest">#Diagnosis
+                                                    </td>
+                                                    <td class="pl-2">
+                                                        <div class="col-12 p-0" style="max-width: 300px;">
+                                                            <div class="row pl-2 scroll-y scrollbar-dusty thin scrollbox"
+                                                                name="listDiagnosisProfile" style="max-height: 250px;">
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr style="display: none;">
+                                                    <td style="color:red">#allergi</td>
+                                                    <td colspan="2"><label name="alergiHdr"
+                                                            style="color: red;"></label>
+                                                    </td>
+                                                </tr>
+                                                <tr style="display: none;">
+                                                    <td>#vital-sign</td>
+                                                    <td colspan="2"><label name="vitalSignHdr"></label>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table> --}}
+                                        <div class="col-12 p-0 hide">
+                                            {{-- <div class="row pl-2 scroll-y scrollbar-dusty thin border px-3 pt-2 scrollbox"
+                                                name="listDiagnosaProfile" style="max-height: 250px;">
+                                            </div> --}}
+                                        </div>
+                                        {{-- <div class="row" id="divQR" style="display: none;">
+                                            <div class="col-12 text-center">
+                                                <div id="qrcode" style="padding-left: 27%;" class="mt-2"></div>
+                                            </div>
+                                        </div> --}}
+                                    </div>
+                                    {{-- <div class="progress" style="height: 2px;">
+                                        <div class="progress-bar kt-bg-info" id="progressLoadImageQR" role="progressbar"
+                                            style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                        </div>
+                                    </div> --}}
+                                </div>
+                                {{-- <button type="button" class="btn btn-secondary mr-0 col p-0"
+                                                    name="closeDetPsnHdr" aria-label="Close" title="collapse">
+                                                    <i class="fa fa-chevron-circle-up fa-lg text-brand mb-1 fa-sm"></i>
+                                                </button> --}}
+                            </div>
+                        </div>
+                        {{-- <div class="form-group col-sm-6">
+                            <label for="">Search Registrasi</label>
+                            <select class="form-control-pasien" id="tr_kd_reg" style="width: 100%;" name="tr_kd_reg">
+                                @foreach ($isRegActive as $reg)
+                                    <option value="">--Select--</option>
+                                    <option value="{{ $reg->fr_kd_reg }}">
+                                        {{ $reg->fr_kd_reg . '-' . $reg->fr_nama }}
+                                    </option>
+                                @endforeach
+                            </select> --}}
+                    </div>
                 </div>
+                {{-- </div> --}}
+
+                {{-- </div> --}}
+                {{-- </div> --}}
+                {{-- </div> --}}
+                {{-- </div> --}}
+                <div class="col">
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            <label for="">Search Registrasi</label>
+                            <select class="form-control-pasien" id="tr_kd_reg" style="width: 100%;" name="tr_kd_reg">
+                                @foreach ($isRegActive as $reg)
+                                    <option value="">--Select--</option>
+                                    <option value="{{ $reg->fr_kd_reg }}">
+                                        {{ $reg->fr_kd_reg . '-' . $reg->fr_nama }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="">Tanggal</label>
+                            <input type="text" class="form-control" name="tr_tgl_trs" id="tr_tgl_trs"
+                                value="{{ $dateNow }}" readonly>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            {{-- <label for="">Nomor RM</label> --}}
+                            <input type="hidden" class="form-control" name="tr_no_mr" id="tr_no_mr" value=""
+                                readonly>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            {{-- <label for="">Nama Pasien</label> --}}
+                            <input type="hidden" class="form-control" name="tr_nm_pasien" id="tr_nm_pasien"
+                                value="" readonly>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            {{-- <label for="">Layanan</label> --}}
+                            <input type="hidden" class="form-control" name="tr_layanan" id="tr_layanan" value=""
+                                readonly>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            {{-- <label for="">Dokter</label> --}}
+                            <input type="hidden" class="form-control" name="tr_dokter" id="tr_dokter" value=""
+                                readonly>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            {{-- <label for="">Umur</label> --}}
+                            <input type="hidden" class="form-control" name="tr_umur" id="tr_umur" value=""
+                                readonly>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            {{-- <label for="">Alamat</label> --}}
+                            {{-- <textarea type="hidden" class="form-control" name="tr_alamat" id="tr_alamat" value="" readonly></textarea> --}}
+                            <input type="hidden" class="form-control" name="tr_alamat" id="tr_alamat" value="">
+                        </div>
+
+                        <input type="hidden" id="tr_tgl_lahir" name="tr_tgl_lahir">
+                        <input type="hidden" id="user" name="user" value="tes">
+                    </div>
+                </div>
+                {{-- <input type="text" id="chart_id_show" name="chart_id" value=""> --}}
+
                 {{-- <div class="float-right">
                     <button class="btn btn-success" data-toggle="modal" data-target="#TambahSOAP"><i class="fa fa-plus"></i>
                         SOAP</button>
@@ -432,6 +703,15 @@
                         $('#tr_alamat').val(dataregvalue.fr_alamat);
                         $('#tr_tgl_lahir').val(dataregvalue.fr_tgl_lahir);
 
+                        $('#namaHdr').val(dataregvalue.fr_nama);
+                        $('#noMRHdr').val(dataregvalue.fr_mr);
+                        $('#noRGHdr').val(dataregvalue.fr_kd_reg);
+                        $('#dokterHdr').val(dataregvalue.fr_dokter);
+                        $('#layananHdr').val(dataregvalue.fr_layanan);
+                        $('#jkHdr').val(dataregvalue.fr_jenis_kelamin);
+                        $('#alamatHdr').val(dataregvalue.fr_alamat);
+
+
                         $('#chart_kd_reg').val(dataregvalue.fr_kd_reg);
                         $('#chart_mr').val(dataregvalue.fr_mr);
                         $('#chart_nm_pasien').val(dataregvalue.fr_nama);
@@ -441,6 +721,8 @@
                         var isDateBirthday = dataregvalue.fr_tgl_lahir;
                         var isAgeNow = getUmurDetail(isDateBirthday);
                         $('#tr_umur').val(isAgeNow);
+                        $('#umurHdr').val(isAgeNow);
+                        $('#tglLahirHdr').val(isDateBirthday);
 
                         // Get MR & save  di sessionStorage
                         var mr = {};
