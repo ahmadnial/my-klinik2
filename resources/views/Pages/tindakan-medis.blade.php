@@ -41,7 +41,7 @@
                         <!-- min-width:300px; max-width:500px -->
                         <div class="card" style="border:none; margin-right:0px; margin-top: 1px;">
                             <!-- min-width:300px;  -->
-                            <div class="form-control card-header row" name="PasienHdr" style="background-color:#6c558a">
+                            <div class="form-control card-header row" name="PasienHdr" style="background-color:#a07ccf">
                                 <span data-toggle="tooltip" title="Clear" class="text-center">
                                     <div class="kt-link pointer text-danger ml-2" name="clearPinnedPasienHdr"
                                         style="margin-top: 7px; display: none;">
@@ -50,11 +50,11 @@
                                 </span>
                                 <div class="text-light collapsed pointer" id="collapseCoverPasien" data-toggle="collapse"
                                     data-target="#DetPsn" aria-expanded="false" aria-controls="DetPsn"
-                                    style="background-color:#6c558a; border: none;">
+                                    style="background-color:#a07ccf; border: none;">
                                     {{-- style="justify-content: space-between; padding: 6px 13px 7px 0px"> --}}
-                                    <label style="width: 17vw;overflow: hidden;text-overflow: " name="nmPasienHdr"
+                                    <label style="width: 2vw;overflow: hidden;text-overflow: " name="nmPasienHdr"
                                         id="nmPasienHdr" class="text-warning pointer">
-                                        DATA PASIEN
+                                        <i class="fa fa-user mb-3"></i>
                                     </label>
                                     {{-- <input type="text" class="form-control text-light" name="" id="nmPasienHdr"
                                         style="background-color:#6c558a; border: none; width: 17vw;"> --}}
@@ -147,6 +147,13 @@
                                                         name="" id="tglLahirHdr"
                                                         style="background-color:#f8d6e2; border:none">
                                                 </div>
+                                                <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                    style="background-color:#f8d6e2; border:none" name="alergiHdr"
+                                                    id="">
+                                                    <b>Alergi :</b><input type="text" class="form-control-xs"
+                                                        name="" id="alergiHdr"
+                                                        style="background-color:#f8d6e2; border:none">
+                                                </div>
                                             </div>
                                             <div class="d-flex flex-wrap">
                                                 {{-- <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
@@ -159,14 +166,14 @@
                                                     WORK : -
                                                 </div> --}}
                                             </div>
-                                            <div class="">
-                                                <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
-                                                    style="background-color:#d6f8dd;" name="addressHdr">
-                                                    <i class="fa fa-home"></i>
-                                                    <input type="text" class="form-control-xs col" name=""
-                                                        id="alamatHdr" style="background-color:#d6f8dd; border:none">
-                                                </div>
+                                            {{-- <div class=""> --}}
+                                            <div class="px-2 py-1 m-1 rounded rounded-sm"
+                                                style="background-color:#d6f8dd;" name="alamatHdr">
+                                                <i class="fa fa-home"></i>
+                                                <input type="text" class="form-control-xs col-8" name=""
+                                                    id="alamatHdr" style="background-color:#d6f8dd; border:none">
                                             </div>
+                                            {{-- </div> --}}
                                         </div>
                                         {{-- <table style="width:100%">
                                             <tbody>
@@ -588,7 +595,7 @@
                 <a class="d-block w-100" data-toggle="" href="#">
                     <div class="card-header">
                         <h4 class="card-title w-100">
-                            History Timeline
+                            History Pemeriksaan
                         </h4>
                     </div>
                 </a>
@@ -710,6 +717,7 @@
                         $('#layananHdr').val(dataregvalue.fr_layanan);
                         $('#jkHdr').val(dataregvalue.fr_jenis_kelamin);
                         $('#alamatHdr').val(dataregvalue.fr_alamat);
+                        $('#alergiHdr').val(dataregvalue.fr_alergi);
 
 
                         $('#chart_kd_reg').val(dataregvalue.fr_kd_reg);

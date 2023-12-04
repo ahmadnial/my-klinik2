@@ -152,11 +152,11 @@
                         <input type="number" class="form-control" name="fr_bb" id="fr_bb"
                             placeholder="Berat Badan Pasien">
                     </div>
-                    {{-- <div class="form-group col-sm-12">
+                    <div class="form-group col-sm-12">
                         <label for="">Alergi</label>
                         <input type="text" class="form-control" name="fr_alergi" id="fr_alergi"
-                            placeholder="Alergi Pasien">
-                    </div> --}}
+                            placeholder="Alergi Pasien" readonly>
+                    </div>
                     <div class="form-group col-sm-12">
                         <label for="">Alamat</label>
                         <textarea type="date" class="form-control" name="fr_alamat" id="fr_alamat"></textarea>
@@ -167,6 +167,7 @@
                             placeholder="Nomor Telephone/WA Pasien">
                     </div>
                 </div>
+                <input type="hidden" name="fr_user" id="fr_user" value="{{ Auth::user()->name }}">
                 <div class="modal-footer">
                     {{-- <button type="button" class="" data-dismiss="modal"></button> --}}
                     <button type="submit" id="create" class="btn btn-success float-rights"><i
@@ -203,8 +204,8 @@
                             </div> --}}
                             <div class="form-group col-sm-6">
                                 <label for="">Tanggal Registrasi</label>
-                                <input type="date" class="form-control" name="fr_tgl_reg" id="fr_tgl_reg"
-                                    value="">
+                                <input type="date" class="form-control" name="fr_tgl_reg" id="fr_tgl_reg_e"
+                                    value="{{ $e->fr_tgl_reg }}">
                             </div>
                             <div class="form-group col-sm-6">
                                 <label for="">Nama Pasien/No. MR</label>
@@ -262,11 +263,11 @@
                             <input type="number" class="form-control" name="fr_bb" id="fr_bb_e"
                                 value="{{ $e->fr_bb }}">
                         </div>
-                        {{-- <div class="form-group col-sm-12">
-                        <label for="">Alergi</label>
-                        <input type="text" class="form-control" name="fr_alergi" id="fr_alergi"
-                            placeholder="Alergi Pasien">
-                    </div> --}}
+                        <div class="form-group col-sm-12">
+                            <label for="">Alergi</label>
+                            <input type="text" class="form-control" name="fr_alergi" id="fr_alergi"
+                                placeholder="Alergi Pasien" value="{{ $e->fr_alergi }}" readonly>
+                        </div>
                         <div class="form-group col-sm-12">
                             <label for="">Alamat</label>
                             <textarea type="date" class="form-control" name="fr_alamat" id="fr_alamat" readonly>{{ $e->fr_alamat }}</textarea>
@@ -282,8 +283,8 @@
                     </div>
                     <div class="modal-footer">
                         {{-- <button type="button" class="" data-dismiss="modal"></button> --}}
-                        <button type="submit" id="editdatareg" class="btn btn-success float-rights"><i
-                                class="fa fa-save"></i> &nbsp;
+                        <button type="button" id="editdatareg" onclick="editReg()"
+                            class="btn btn-success float-rights"><i class="fa fa-save"></i> &nbsp;
                             Update</button>
                     </div>
                 </div>
@@ -339,6 +340,7 @@
                         $('#fr_no_hp').val(datavalue.fs_no_hp);
                         $('#fr_tgl_lahir').val(datavalue.fs_tgl_lahir);
                         $('#fr_jenis_kelamin').val(datavalue.fs_jenis_kelamin);
+                        $('#fr_alergi').val(datavalue.fs_alergi);
                     })
                 }
             })
@@ -417,7 +419,7 @@
                 var fr_jaminan = $('#fr_jaminan').val();
                 var fr_session_poli = $('#fr_session_poli').val();
                 var fr_bb = $('#fr_bb').val();
-                // var fr_alergi = $('#fr_alergi').val();
+                var fr_alergi = $('#fr_alergi').val();
                 var fr_user = $('#fr_user').val();
                 // alert(fm_nm_layanan);
                 if (fr_mr != "") {
@@ -442,7 +444,7 @@
                             fr_jaminan: fr_jaminan,
                             fr_session_poli: fr_session_poli,
                             fr_bb: fr_bb,
-                            // fr_alergi: fr_alergi,
+                            fr_alergi: fr_alergi,
                             fr_user: fr_user
                         },
                         cache: false,
@@ -463,51 +465,53 @@
         });
 
         // Edits Registrasi
-        $(document).ready(function() {
+        // $(document).ready(function() {
 
-            $('#editdatareg').on('click', function() {
-                var fr_kd_reg = $('#fr_kd_reg_e').val();
-                var fr_layanan = $('#fr_layanan_e').val();
-                var fr_dokter = $('#fr_dokter_e').val();
-                var fr_jaminan = $('#fr_jaminan_e').val();
-                var fr_session_poli = $('#fr_session_poli_e').val();
-                // var fr_bb = $('#fr_bb').val();
-                // var fr_alergi = $('#fr_alergi').val();
-                // var fr_user = $('#fr_user_e').val();
-                // alert(fm_nm_layanan);
-                if (fr_kd_reg != "") {
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        url: "{{ route('edit-registrasi') }}",
-                        type: "POST",
-                        data: {
-                            type: 2,
-                            fr_kd_reg: fr_kd_reg,
-                            fr_layanan: fr_layanan,
-                            fr_dokter: fr_dokter,
-                            fr_jaminan: fr_jaminan,
-                            fr_session_poli: fr_session_poli,
-                            // fr_bb: fr_bb,
-                            // fr_alergi: fr_alergi,
-                            // fr_user: fr_user
-                        },
-                        cache: false,
-                        success: function(dataResult) {
-                            $('.close').click();
-                            // // document.getElementById("fm_nm_layanan").value = "";
-                            window.location.replace("{{ url('registrasi') }}")
-                            // // viewRegistrasi()
-                            // // toastr.success('Saved');
-                            // // view()
-                            // // url = "{{ url('mstr-layanan') }}";
-                        }
-                    });
-                } else {
-                    alert('Please fill the field !');
-                }
-            });
-        });
+        // $('#editdatareg').on('click', function() {
+        function editReg() {
+            // alert('op');
+            var fr_tgl_reg = $('#fr_tgl_reg_e').val();
+            var fr_kd_reg = $('#fr_kd_reg_e').val();
+            var fr_layanan = $('#fr_layanan_e').val();
+            var fr_dokter = $('#fr_dokter_e').val();
+            var fr_jaminan = $('#fr_jaminan_e').val();
+            var fr_session_poli = $('#fr_session_poli_e').val();
+            // var fr_bb = $('#fr_bb').val();
+            // var fr_alergi = $('#fr_alergi').val();
+            // var fr_user = $('#fr_user_e').val();
+            // alert(fm_nm_layanan);
+            if (fr_kd_reg != "") {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "{{ route('edit-registrasi') }}",
+                    type: "POST",
+                    data: {
+                        fr_tgl_reg: fr_tgl_reg,
+                        fr_kd_reg: fr_kd_reg,
+                        fr_layanan: fr_layanan,
+                        fr_dokter: fr_dokter,
+                        fr_jaminan: fr_jaminan,
+                        fr_session_poli: fr_session_poli,
+                        // fr_bb: fr_bb,
+                        // fr_alergi: fr_alergi,
+                        // fr_user: fr_user
+                    },
+                    cache: false,
+                    success: function(dataResult) {
+                        $('.close').click();
+                        // // document.getElementById("fm_nm_layanan").value = "";
+                        window.location.replace("{{ url('registrasi') }}")
+                        // // viewRegistrasi()
+                        // // toastr.success('Saved');
+                        // // view()
+                        // // url = "{{ url('mstr-layanan') }}";
+                    }
+                });
+            } else {
+                alert('Please fill the field !');
+            }
+        };
     </script>
 @endpush
