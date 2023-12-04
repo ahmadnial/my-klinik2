@@ -214,6 +214,8 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
     Route::get('getBukuStok', [LapFarmasiController::class, 'getBukuStok'])->name('getBukuStok');
     Route::get('laporan-registrasi-masuk', [LapFarmasiController::class, 'lapRegMasuk'])->name('laporan-registrasi-masuk');
     Route::get('getLapRegMasuk', [LapFarmasiController::class, 'getLapRegMasuk'])->name('getLapRegMasuk');
+    Route::get('pendapatan-klinik-rekap', [LapFarmasiController::class, 'lapKlinikRekap'])->name('pendapatan-klinik-rekap');
+    Route::get('getLapPendapatanKlinik', [LapFarmasiController::class, 'getLapPendapatanKlinik'])->name('getLapPendapatanKlinik');
 });
 
 //Setting / Tools

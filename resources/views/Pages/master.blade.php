@@ -332,6 +332,12 @@
                                         <p>Registrasi Masuk</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('/pendapatan-klinik-rekap') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Pendapatan Klinik Rekap</p>
+                                    </a>
+                                </li>
                                 {{-- <li class="nav-item">
                                     <a href="{{ url('/delivery-order') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>

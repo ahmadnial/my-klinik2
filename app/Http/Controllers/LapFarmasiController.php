@@ -19,6 +19,7 @@ class LapFarmasiController extends Controller
     }
 
 
+
     public function getLapPenjualan(Request $request)
     {
         // $t = $request->all();
@@ -84,5 +85,21 @@ class LapFarmasiController extends Controller
                 ->get();
         }
         return response()->json($isDataRegMasuk);
+    }
+
+    // LAPORAN PENDAPATAN KLINIK
+    public function lapKlinikRekap()
+    {
+        return view('pages.laporan.klinik.pendapatan-klinik-rekap');
+    }
+
+    public function getLapPendapatanKlinik(Request $request)
+    {
+        if ($request->ajax()) {
+            $isDataPendapatan = DB::table('rekening_pendapatan_poliklinik_total')
+                ->whereBetween('rk_tgl_regout', [$request->date1, $request->date2])
+                ->get();
+        }
+        return response()->json($isDataPendapatan);
     }
 }
