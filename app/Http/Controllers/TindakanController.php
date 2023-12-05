@@ -300,9 +300,9 @@ class TindakanController extends Controller
     public function chartIdSearch(Request $request)
     {
         $isChartID = ChartTindakan::with('trstdk.nm_trf')
-            ->where('chart_mr', $request->chart_mr)
+            ->where('chart_id', $request->chartid)
             // ->distinct()
-            ->orderBy('chart_tindakan.created_at', 'DESC')
+            // ->orderBy('chart_tindakan.created_at', 'DESC')
             // ->groupBy('chart_tindakan.chart_id')
             ->get();
 

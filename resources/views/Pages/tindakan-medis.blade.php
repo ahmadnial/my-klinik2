@@ -479,6 +479,9 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            <div class="">
+                                <input type="text" name="" id="nm_tarifXXXX">
+                            </div>
                         </div>
                     </div>
                     <input type="hidden" id="kd_trs" name="kd_trs" value="{{ $kd_trs }}">
@@ -1086,7 +1089,11 @@
         });
 
         function getTimeline() {
-
+            $('#chart_S').val('')
+            $('#chart_O').val('')
+            $('#chart_A').val('')
+            $('#chart_A_diagnosa').val('')
+            $('#chart_P').val('')
             $(".isTimeline").empty();
 
             var data = sessionStorage.getItem("dataMR");
@@ -1141,7 +1148,7 @@
                         // var chartIDShow = $('#isShowCahrtID').val();
 
                         var buttonEdit =
-                            `<button type="button" class="btn btn-outline-info btn-xs" id="btneditchart" data-isChartID="${getValue[getVal].chart_id}" onClick="editChart(this)"><i class="fa fa-pen"></i></button>`;
+                            `<button type="button" class="btn btn-outline-info btn-xs" id="btneditchart" data-is_chart_id="${getValue[getVal].chart_id}" onClick="editChart(this)"><i class="fa fa-pen"></i></button>`;
                         // const trstdk = getValue[getVal].trstdk;
                         // let html = "";
                         // trstdk.forEach(xkx => {
@@ -1280,8 +1287,8 @@
                 // preventDuplicates: true,
                 positionClass: 'toast-top-right',
             });
-            var cahrtid = $(f).data('isChartID');
-            alert(cahrtid);
+            var chartid = $(f).data('is_chart_id');
+            console.log(chartid);
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1292,7 +1299,25 @@
                     'chart_id': chartid
                 },
                 success: function(isChartID) {
-                    $.each(isChartID, function(key, dataregvalue) {
+                    var getValueChart = isChartID;
+                    $.each(isChartID, function(key, chartvalue) {
+                        const trstdk = chartvalue.trstdk;
+                        let tdk = "";
+                        for (i in trstdk) {
+                            if (trstdk[i].nm_trf != null) {
+                                tdk +=
+                                    `<option value="${trstdk[i].nm_tarif}">${trstdk[i].nm_trf.nm_tindakan}</option>`;
+                            } else {
+                                tdk += ``;
+                            }
+                        }
+                        console.log(chartvalue);
+                        $('#chart_S').val(chartvalue.chart_S)
+                        $('#chart_O').val(chartvalue.chart_O)
+                        $('#chart_A').val(chartvalue.chart_A)
+                        $('#chart_A_diagnosa').val(chartvalue.chart_A_diagnosa)
+                        $('#chart_P').val(chartvalue.chart_P)
+                        $('#nm_tarifXXXX').val(tdk)
 
                     })
                 }
