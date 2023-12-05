@@ -21,19 +21,19 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
         Role::create([
-            'hakakses' => 'SPRADMIN',
+            'hakakses' => 'SUPERADMIN',
         ]);
 
         Role::create([
-            'hakakses' => 'DKTR',
+            'hakakses' => 'DOKTER',
         ]);
 
         Role::create([
-            'hakakses' => 'PRWT',
+            'hakakses' => 'PERAWAT',
         ]);
 
         Role::create([
-            'hakakses' => 'APTKR',
+            'hakakses' => 'APOTEKER',
         ]);
 
         Role::create([
