@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('do_hdr_no_faktur')->unique();
             $table->string('do_hdr_supplier');
             $table->string('do_hdr_tgl_tempo');
-            $table->string('do_hdr_lokasi_stock');
+            $table->string('do_hdr_lokasi_stock')->nullable();
             $table->string('do_hdr_total_faktur');
             $table->string('user');
             $table->timestamps();
