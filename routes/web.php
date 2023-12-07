@@ -98,6 +98,8 @@ Route::group(['middleware' => ['auth', 'checkrole:1,2']], function () {
     Route::get('obatSearchCH', [TindakanController::class, 'obatSearchCH'])->name('obatSearchCH');
     Route::get('getObatListCH/{obat}', [TindakanController::class, 'getObatListCH'])->name('getObatListCH');
     Route::get('getIcdX', [TindakanController::class, 'getIcdX'])->name('getIcdX');
+    Route::post('chartUpdate', [TindakanController::class, 'chartUpdate'])->name('chartUpdate');
+    Route::post('chartDelete/{chartid}', [TindakanController::class, 'chartDelete'])->name('chartDelete');
 });
 
 

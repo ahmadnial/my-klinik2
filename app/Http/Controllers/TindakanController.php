@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Yoeunes\Toastr\Facades\Toastr;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TindakanController extends Controller
 {
@@ -75,8 +76,9 @@ class TindakanController extends Controller
         $isdataObat = [];
 
         if ($request->filled('q')) {
-            $isdataObat = mstr_obat::select("fm_kd_obat", "fm_nm_obat", "fm_satuan_pembelian", "fm_hrg_beli")
-                ->where('fm_nm_obat', 'LIKE', '%' . $request->get('q') . '%')
+            $isdataObat = mstr_obat::select("fm_kd_obat", "fm_nm_obat", "fm_satuan_pembelian", "fm_hrg_beli", "qty", "satuan")
+                ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
+                ->where('mstr_obat.fm_nm_obat', 'LIKE', '%' . $request->get('q') . '%')
                 ->get();
         }
         // dd($data);
@@ -320,5 +322,30 @@ class TindakanController extends Controller
         }
         // dd($data);
         return response()->json($isICDX);
+    }
+
+    public function chartUpdate(Request $request)
+    {
+        $c =  DB::table('chart_tindakan')->where('chart_id', $request->chart_id)->update([
+            'chart_S' => $request->chart_S,
+            'chart_O' => $request->chart_O,
+            'chart_A' => $request->chart_A,
+            'chart_A_diagnosa' => $request->chart_A_diagnosa,
+            'chart_P' => $request->chart_P,
+        ]);
+
+        // if ($c) {
+        //     toastr()->success('Edit Data Berhasil!');
+        //     return back();
+        // } else {
+        //     toastr()->error('Gagal Tersimpan!');
+        //     return back();
+        // }
+    }
+
+    public function chartDelete(Request $request)
+    {
+        $chart = DB::table('chart_tindakan')->where('chart_id', $request->chartid)->get();
+        $chart->delete();
     }
 }

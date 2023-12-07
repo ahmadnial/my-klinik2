@@ -396,10 +396,6 @@
                                         <select class="chart_A_diagnosa form-control mb-3" style="width: 100%;"
                                             name="chart_A_diagnosa" id="chart_A_diagnosa" onkeyup="getICDX()">
                                             {{-- <option value="">--Select--</option> --}}
-                                            {{-- @foreach ($icdx as $x)
-                                                <option value="{{ $x->code . '-' . $x->name_en }}">
-                                                    {{ $x->code . '-' . $x->name_en }}</option>
-                                            @endforeach --}}
                                         </select>
                                         <textarea id="chart_A" name="chart_A" class="form-control mt-3 mb-2" rows="4"></textarea>
                                     </div>
@@ -419,8 +415,9 @@
                                     <input type="hidden" id="user" name="user_create" value="tes">
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                {{-- <button type="button" class="" data-dismiss="modal"></button> --}}
+                            <div class="modal-footer" id="">
+                                <div class="" id="kumpulanButton"></div>
+                                {{-- <button type="button" class="btn btn-primary float-rights">Update</button> --}}
                                 <button id="createSOAPP" class="btn btn-success float-rights"><i class="fa fa-save"></i>
                                     &nbsp;
                                     Save</button>
@@ -607,7 +604,6 @@
             </div>
         </div>
     </div>
-
     <!-- /.content -->
 @endsection
 
@@ -688,6 +684,9 @@
 
         // Call Hasil Search Registrasi
         $("#tr_kd_reg").on("change", function() {
+            $('#kumpulanButton').empty();
+            $('#createSOAPP').show();
+
             toastr.info('Pasein Pinned!', {
                 timeOut: 600,
                 // preventDuplicates: true,
@@ -875,10 +874,11 @@
                         results: $.map(isdataObat, function(item) {
                             return {
                                 // text: item.fs_mr,
-                                text: item.fm_kd_obat + ' - ' + item.fm_nm_obat + ' - ' + item
-                                    .fs_tgl_lahir,
+                                text: item.fm_kd_obat + ' - ' + item.fm_nm_obat + ' - ' + item.qty +
+                                    ' ' +
+                                    item.satuan,
                                 id: item.fm_kd_obat,
-                                alamat: item.fm_nm_obat,
+                                // alamat: item.fm_nm_obat,
                             }
                         })
                     };
@@ -1149,6 +1149,8 @@
 
                         var buttonEdit =
                             `<button type="button" class="btn btn-outline-info btn-xs" id="btneditchart" data-is_chart_id="${getValue[getVal].chart_id}" onClick="editChart(this)"><i class="fa fa-pen"></i></button>`;
+                        var buttonDelete =
+                            `<button type="button" class="btn btn-outline-danger btn-xs" id="btneditchart" data-is_chart_id="${getValue[getVal].chart_id}" onClick="deleteChart(this)"><i class="fa fa-trash"></i></button>`;
                         // const trstdk = getValue[getVal].trstdk;
                         // let html = "";
                         // trstdk.forEach(xkx => {
@@ -1181,7 +1183,7 @@
                                 <div id="collapse${x++}" class="collapse show" data-parent="#accordion">
                                     <div class="ml-4 mt-2">
                                         ${buttonEdit}
-                                        <button type="button" class="btn btn-outline-danger btn-xs"><i class="fa fa-trash"></i></button>
+                                        ${buttonDelete}
                                         <button type="" id="isShowCahrtID" class="btn btn-outline-warning btn-xs">${getValue[getVal].chart_id}</button>
                                     </div>
                                     <div class="card-body">
@@ -1287,7 +1289,16 @@
                 // preventDuplicates: true,
                 positionClass: 'toast-top-right',
             });
+
+            $('#kumpulanButton').empty();
+            $('#createSOAPP').hide();
+
             var chartid = $(f).data('is_chart_id');
+
+            $('#kumpulanButton').append(
+                `<button type="button" id="updateChart" onClick="updateChartC(this)" data-chart_id_update="${chartid}" class="btn btn-primary float-rights">Update</button>`
+            )
+
             console.log(chartid);
             $.ajax({
                 headers: {
@@ -1311,7 +1322,7 @@
                                 tdk += ``;
                             }
                         }
-                        console.log(chartvalue);
+                        // console.log(chartvalue);
                         $('#chart_S').val(chartvalue.chart_S)
                         $('#chart_O').val(chartvalue.chart_O)
                         $('#chart_A').val(chartvalue.chart_A)
@@ -1322,6 +1333,82 @@
                     })
                 }
             })
+        }
+
+
+        function updateChartC(c) {
+            var chart_id = $(c).data('chart_id_update');
+            // alert(chart_id)
+            var chart_S = $('#chart_S').val();
+            var chart_O = $('#chart_O').val();
+            var chart_A = $('#chart_A').val();
+            var chart_A_diagnosa = $('#chart_A_diagnosa').val();
+            var chart_P = $('#chart_P').val();
+
+            // var nm_tarif = [];
+            // var sub_total = $('#sub_total').val();
+
+            // $('#nm_tarif').val(function() {
+            //     nm_tarif.push($(this).text());
+            // });
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ url('chartUpdate') }}",
+                type: "POST",
+                data: {
+                    chart_id: chart_id,
+                    chart_S: chart_S,
+                    chart_O: chart_O,
+                    chart_A: chart_A,
+                    chart_A_diagnosa: chart_A_diagnosa,
+                    chart_P: chart_P,
+                },
+                cache: false,
+                success: function(dataResult) {
+                    // $('.close').click();
+                    toastr.success('Saved!', 'Data Berhasil Diperbarui!', {
+                        timeOut: 2000,
+                        preventDuplicates: true,
+                        positionClass: 'toast-top-right',
+                    });
+                    // return window.location.href =
+                    //     "{{ url('tindakan-medis') }}";
+                    getTimeline();
+
+                }
+            });
+        }
+
+
+        // Delete Chart
+        function deleteChart(d) {
+            var chartid = $(d).data('is_chart_id');
+            console.log(chartid);
+            var result = confirm("Want to delete?");
+            if (result) {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "{{ url('chartDelete') }}/" + chartid,
+                    type: 'POST',
+                    data: {
+                        'chart_id': chartid
+                    },
+                    success: function(isChartID) {
+                        toastr.success('Deleted!', 'Chart Berhasil Dihapus!', {
+                            timeOut: 2000,
+                            preventDuplicates: true,
+                            positionClass: 'toast-top-right',
+                        });
+                        getTimeline();
+                    }
+                })
+            }
+
         }
 
         // Get Data setelah reload
