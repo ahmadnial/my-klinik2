@@ -67,32 +67,28 @@
             max-width: none;
             height: auto;
             margin: 40;
+            /* overflow-y: scroll; */
         }
 
-        .modal .modal-content {
-            height: auto;
-            border: 0;
-            border-radius: 0;
-        }
-
-        .modal .modal-body {
-            overflow-y: auto;
-        }
-
-        /* Important part */
-        /* .modal-dialog {
-                        overflow-y: initial !important
-                    } */
-
-        /* .modal-body {
-                    height: 80vh;
-                    overflow-y: auto;
+        /* .modal .modal-content {
+                    height: auto;
+                    border: 0;
+                    border-radius: 0;
                 } */
+
+        .modal-dialog {
+            overflow-y: initial !important
+        }
+
+        .modal-body {
+            /* height: 80vh; */
+            overflow-y: scroll;
+        }
     </style>
     <!-- The modal Create -->
     <div class="modal fade" id="addPenjualan" data-backdrop="static">
-        <div class="modal-dialog modal-dialog-scrollable modal-xl fullmodal">
-            <div class="modal-content document">
+        <div class="modal-dialog modal-dialog-scrollable fullmodal">
+            <div class="modal-content" role="document">
                 <div class="modal-header bg-nial">
                     <h4 class="modal-title"><i class="fa fa-truck">&nbsp;</i>Transaksi Penjualan</h4>
                     <button type="button" class="close btn btn-danger" data-dismiss="modal" aria-label="Close">
@@ -192,7 +188,7 @@
 
                     {{-- <hr> --}}
 
-                    <table class="table table-stripped table-bordered">
+                    <table class="table table-stripped table-bordered" id="">
                         <thead>
                             <tr>
                                 <th width="130px">kd obat</th>
