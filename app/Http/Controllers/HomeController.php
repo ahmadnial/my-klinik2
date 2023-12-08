@@ -9,6 +9,7 @@ use App\Models\mstr_jaminan;
 use App\Models\mstr_layanan;
 use App\Models\registrasiCreate;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class HomeController extends Controller
 {
@@ -56,11 +57,11 @@ class HomeController extends Controller
         $layanan = mstr_layanan::all();
         $jaminan = mstr_jaminan::all();
         $isviewreg = registrasiCreate::where('fr_tgl_keluar', '=', '')->get();
-        // dd($isviewreg);
+        $dateNow = Carbon::now()->format("Y-m-d");
 
         return view(
             'Pages.registrasi',
-            ['kd_reg' => $kd_reg, 'jaminan' => $jaminan, 'layanan' => $layanan, 'isviewreg' => $isviewreg]
+            ['kd_reg' => $kd_reg, 'jaminan' => $jaminan, 'layanan' => $layanan, 'isviewreg' => $isviewreg, 'dateNow' => $dateNow]
         );
     }
 

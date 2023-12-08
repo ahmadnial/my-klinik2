@@ -28,4 +28,9 @@ class registrasiCreate extends Model
         'fr_alergi',
         'fr_user'
     ];
+
+    public function tcmr()
+    {
+        return $this->hasOne(dataSosialCreate::class, 'fs_mr', 'fr_mr');
+    }
 }

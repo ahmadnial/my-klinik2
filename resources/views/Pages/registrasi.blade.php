@@ -91,7 +91,8 @@
                         <input type="hidden" id="fr_nama" name="fr_nama">
                         <div class="form-group col-sm-6">
                             <label for="">Tanggal Registrasi</label>
-                            <input type="date" class="form-control" name="fr_tgl_reg" id="fr_tgl_reg" value="">
+                            <input type="date" class="form-control" name="fr_tgl_reg" id="fr_tgl_reg"
+                                value="{{ $dateNow }}">
                         </div>
                         <div class="form-group col-sm-6">
                             <label for="">Nama Pasien/No. MR</label>
@@ -147,11 +148,43 @@
                         </div>
                     </div>
                     <hr>
+                    {{-- <div class="row"> --}}
                     <div class="form-group col-sm-12">
                         <label for="">Berat Badan</label>
                         <input type="number" class="form-control" name="fr_bb" id="fr_bb"
                             placeholder="Berat Badan Pasien">
                     </div>
+
+                    <div class="form-group col-sm-12">
+                        <label>Tekanan Darah</label>
+                        <label class="input-group">
+                            <input name="fs_td" type="text" class="form-control" />
+                            <span class="input-group-append input-group-text">mmHg</span>
+                        </label>&emsp;
+                    </div>
+                    {{-- <div class="form-group col-sm-12">
+                            <label>Nadi</label>
+                            <label class="input-group">
+                                <input name="fs_N_1" type="number" class="form-control" />
+                                <span class="input-group-append input-group-text">x/mnt</span>
+                            </label>&emsp;
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label>Respirasi</label>
+                            <label class="input-group">
+                                <input name="fs_R_1" type="number" class="form-control" />
+                                <span class="input-group-append input-group-text">x/mnt</span>
+                            </label>&emsp;
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label>Suhu</label>
+                            <label class="input-group">
+                                <input name="fs_S_1" type="number" class="form-control" />
+                                <span class="input-group-append input-group-text"><sup>o</sup>C</span>
+                            </label>
+                        </div>
+                    </div> --}}
+
                     <div class="form-group col-sm-12">
                         <label for="">Alergi</label>
                         <input type="text" class="form-control" name="fr_alergi" id="fr_alergi"
@@ -171,7 +204,8 @@
                 <div class="modal-footer">
                     {{-- <button type="button" class="" data-dismiss="modal"></button> --}}
                     <button type="submit" id="create" class="btn btn-success float-rights"><i
-                            class="fa fa-save"></i> &nbsp;
+                            class="fa fa-save"></i>
+                        &nbsp;
                         Save</button>
                 </div>
             </div>

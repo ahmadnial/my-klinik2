@@ -154,6 +154,13 @@
                                                         name="" id="alergiHdr"
                                                         style="background-color:#f8d6e2; border:none">
                                                 </div>
+                                                <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                    style="background-color:#f8d6e2; border:none" name="lastTarifDsrHdr"
+                                                    id="">
+                                                    <b>Last tarif Dasar :</b><input type="text" class="form-control-xs"
+                                                        name="" id="lastTarifDsrHdr"
+                                                        style="background-color:#f8d6e2; border:none">
+                                                </div>
                                             </div>
                                             <div class="d-flex flex-wrap">
                                                 {{-- <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
@@ -720,6 +727,7 @@
                         $('#jkHdr').val(dataregvalue.fr_jenis_kelamin);
                         $('#alamatHdr').val(dataregvalue.fr_alamat);
                         $('#alergiHdr').val(dataregvalue.fr_alergi);
+                        $('#lastTarifDsrHdr').val(dataregvalue.tcmr.fs_last_tarif_dasar);
 
 
                         $('#chart_kd_reg').val(dataregvalue.fr_kd_reg);

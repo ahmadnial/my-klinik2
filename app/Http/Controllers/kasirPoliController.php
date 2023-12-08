@@ -35,7 +35,7 @@ class kasirPoliController extends Controller
             ->distinct()
             ->get();
         $getTrsTdk = registrasiCreate::select('fr_kd_reg', 'fr_nama')->where('fr_tgl_keluar', '=', '')->get();
-        $dateNow = Carbon::now()->format("d-m-Y");
+        $dateNow = Carbon::now()->format("Y-m-d");
 
         return view('pages.kasir-poliklinik', [
             'noReff' => $noRef,
@@ -135,41 +135,12 @@ class kasirPoliController extends Controller
         DB::table('ta_registrasi')->where('fr_kd_reg', $request->trs_kp_kd_reg)->update([
             'fr_tgl_keluar' => $request->trs_kp_tgl_keluar,
         ]);
-        // if ($request->nm_tarif != null) {
-        //     foreach ($request->nm_tarif as $key => $val) {
-        //         $newData = [
-        //             'kd_trs' => $request->kd_trs,
-        //             'chart_id' => $request->chart_id,
-        //             'tgl_trs' => $request->chart_tgl_trs,
-        //             'layanan' => $request->chart_layanan,
-        //             'kd_reg' => $request->chart_kd_reg,
-        //             'mr_pasien' => $request->chart_mr,
-        //             'nm_pasien' => $request->chart_nm_pasien,
-        //             'nm_tarif' => $request->nm_tarif[$key],
-        //             'nm_tarif_dasar' => $request->nm_tarif_dasar,
-        //             'nm_dokter_jm' => $request->chart_dokter,
-        //             'sub_total' => $request->sub_total,
-        //             'user' => $request->user_create,
-        //         ];
-        //         trs_chart::create($newData);
-        //     };
-        // } else {
-        //     $newData = [
-        //         'kd_trs' => $request->kd_trs,
-        //         'chart_id' => $request->chart_id,
-        //         'tgl_trs' => $request->chart_tgl_trs,
-        //         'layanan' => $request->chart_layanan,
-        //         'kd_reg' => $request->chart_kd_reg,
-        //         'mr_pasien' => $request->chart_mr,
-        //         'nm_pasien' => $request->chart_nm_pasien,
-        //         'nm_tarif_dasar' => $request->nm_tarif_dasar,
-        //         // 'nm_dokter_jm' => $request->chart_dokter,
-        //         // 'sub_total' => $request->sub_total,
-        //         'user' => $request->user_create,
-        //     ];
-        //     trs_chart::create($newData);
-        // }
-        // dd($newData);
+
+        DB::table('tc_mr')->where('fs_mr', $request->trs_kp_no_mr)->update([
+            'fs_last_tarif_dasar' => $request->nm_tarif_dasar,
+            'fs_tgl_kunjungan_terakhir' => $request->trs_kp_tgl_keluar,
+        ]);
+
         DB::commit();
         toastr()->success('Data Tersimpan!');
         return back();
