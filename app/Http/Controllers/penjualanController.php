@@ -12,6 +12,7 @@ use App\Models\trs_chart_resep;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Carbon;
 
 class penjualanController extends Controller
 {
@@ -30,12 +31,13 @@ class penjualanController extends Controller
         };
 
         $isListRegResep = trs_chart_resep::select("kd_trs", "chart_id", "kd_reg", "mr_pasien", "nm_pasien")->distinct()->where('isimplementasi', '=', '0')->get();
-
+        $dateNow = Carbon::now()->format("Y-m-d");
         $isListPenjualan = tp_hdr::latest()->get();
         return view('Pages.penjualan', [
             'noRef' => $noRef,
             'isListPenjualan' => $isListPenjualan,
             'isListRegResep' => $isListRegResep,
+            'dateNow' => $dateNow,
         ]);
     }
 

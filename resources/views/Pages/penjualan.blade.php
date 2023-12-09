@@ -64,25 +64,23 @@
 
         #addPenjualan .fullmodal {
             width: 100%;
-            max-width: none;
+            max-width: 98%;
             height: auto;
             margin: 40;
-            /* overflow-y: scroll; */
         }
 
-        /* .modal .modal-content {
-                    height: auto;
-                    border: 0;
-                    border-radius: 0;
-                } */
-
-        .modal-dialog {
-            overflow-y: initial !important
+        .scrollable-table {
+            /* overflow-y: initial !important */
+            max-height: 300px;
+            overflow-y: auto;
         }
 
-        .modal-body {
-            /* height: 80vh; */
-            overflow-y: scroll;
+        .modal-footer {
+            position: sticky;
+            bottom: 0;
+            background-color: #f8f9fa;
+            padding: 10px;
+            padding-right: 10px;
         }
     </style>
     <!-- The modal Create -->
@@ -117,7 +115,8 @@
                             </div>
                             <div class="form-group col-sm-2">
                                 <label for="">Tgl Transaksi</label>
-                                <input type="date" class="form-control" name="tgl_trs" id="tgl_trs" value="">
+                                <input type="date" class="form-control" name="tgl_trs" id="tgl_trs"
+                                    value="{{ $dateNow }}">
                             </div>
                             <div class="form-group col-sm-2">
                                 <label for="">Resep Dari</label>
@@ -187,28 +186,29 @@
                     </div>
 
                     {{-- <hr> --}}
+                    <div class="scrollable-table">
+                        <table class="table table-scroll table-stripped table-bordered" id="">
+                            <thead>
+                                <tr>
+                                    <th width="130px">kd obat</th>
+                                    <th width="350px">Nama Obat</th>
+                                    {{-- <th>Dosis</th> --}}
+                                    <th width="110px">Satuan</th>
+                                    <th width="110px">Harga</th>
+                                    <th width="100px">Qty</th>
+                                    <th width="110px">Cara Pakai</th>
+                                    <th width="110px">Disc(Rp.)</th>
+                                    <th width="110px">Tax</th>
+                                    <th width="200px">Sub Total</th>
+                                    <th width="50px"></th>
+                                </tr>
+                            </thead>
 
-                    <table class="table table-stripped table-bordered" id="">
-                        <thead>
-                            <tr>
-                                <th width="130px">kd obat</th>
-                                <th width="350px">Nama Obat</th>
-                                {{-- <th>Dosis</th> --}}
-                                <th width="110px">Satuan</th>
-                                <th width="110px">Harga</th>
-                                <th width="100px">Qty</th>
-                                <th width="110px">Cara Pakai</th>
-                                <th width="110px">Disc(Rp.)</th>
-                                <th width="110px">Tax</th>
-                                <th width="200px">Sub Total</th>
-                                <th width="50px"></th>
-                            </tr>
-                        </thead>
+                            <tbody class="ListObatJual" id="ListObatJual">
 
-                        <tbody id="ListObatJual">
-
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                     <hr>
                     <div class="float-right col-4">
                         <div class="float-right col-4">
@@ -488,7 +488,7 @@
 
                                     const table = $('#exm2').DataTable();
                                     var btnBtn =
-                                        `<button class="SelectItemObat btn btn-success btn-xs" id="SelectItemObat" onClick="SelectItemObat(this)" data-fm_kd_obat="${getValue[getVal].fm_kd_obat}" data-fm_nm_obat="${getValue[getVal].fm_nm_obat}" data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}" data-fm_hrg_jual="${getValue[getVal].fm_hrg_jual_resep}">Select</button>`
+                                        `<button class="SelectItemObat btn btn-success btn-xs" id="SelectItemObat" onClick="SelectItemObat(this)" data-fm_kd_obat="${getValue[getVal].fm_kd_obat}" data-fm_nm_obat="${getValue[getVal].fm_nm_obat}" data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}" data-fm_hrg_jual="${getValue[getVal].fm_hrg_jual_non_resep}">Select</button>`
                                     const dataBaru = [
                                         [getValue[getVal].fm_kd_obat, getValue[getVal].fm_nm_obat, getValue[getVal]
                                             .fm_satuan_jual, getValue[getVal].fm_hrg_jual_non_resep, getValue[
@@ -626,7 +626,7 @@
 
                                     const table = $('#exm2').DataTable();
                                     var btnBtn =
-                                        `<button class="SelectItemObat btn btn-success btn-xs" id="SelectItemObat" onClick="SelectItemObat(this)" data-fm_kd_obat="${getValue[getVal].fm_kd_obat}" data-fm_nm_obat="${getValue[getVal].fm_nm_obat}" data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}" data-fm_hrg_jual="${getValue[getVal].fm_hrg_jual_resep}">Select</button>`
+                                        `<button class="SelectItemObat btn btn-success btn-xs" id="SelectItemObat" onClick="SelectItemObat(this)" data-fm_kd_obat="${getValue[getVal].fm_kd_obat}" data-fm_nm_obat="${getValue[getVal].fm_nm_obat}" data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}" data-fm_hrg_jual="${getValue[getVal].fm_hrg_jual_nakes}">Select</button>`
                                     const dataBaru = [
                                         [getValue[getVal].fm_kd_obat, getValue[getVal].fm_nm_obat, getValue[getVal]
                                             .fm_satuan_jual, getValue[getVal].fm_hrg_jual_nakes, getValue[getVal]
@@ -677,7 +677,7 @@
                     var getKdObat = $(f).data('fm_kd_obat');
                     var getNmObat = $(f).data('fm_nm_obat');
                     var getSatJual = $(f).data('fm_satuan_jual');
-                    var getHrgnonResep = $(f).data('fm_hrg_jual');
+                    var getHrg = $(f).data('fm_hrg_jual');
 
                     // console.log(getKdObat);
 
@@ -698,7 +698,7 @@
                                 value="${getSatJual}">
                         </td>
                         <td>
-                            <input type="text" class="form-control" readonly style="border: none;" id="hrg_obat" name="hrg_obat[]" value=${getHrgnonResep}>
+                            <input type="text" class="form-control" readonly style="border: none;" id="hrg_obat" name="hrg_obat[]" value=${getHrg}>
                         </td>
                         <td>
                             <input type="text" class="qty form-control" id="qty" name="qty[]" onKeyUp="getQTY(this)">
