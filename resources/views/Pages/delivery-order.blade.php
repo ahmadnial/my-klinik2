@@ -70,21 +70,25 @@
             margin: 40;
         }
 
-        .modal .modal-content {
-            height: auto;
-            border: 0;
-            border-radius: 0;
+        .scrollable-table {
+            /* overflow-y: initial !important */
+            max-height: 370px;
+            overflow-y: auto;
         }
 
-        .modal .modal-body {
-            overflow-y: auto;
+        .modal-footer {
+            position: sticky;
+            bottom: 0;
+            background-color: #f8f9fa;
+            padding: 10px;
+            padding-right: 10px;
         }
     </style>
     <!-- The modal Create -->
     <div class="modal fade" id="TambahDO" data-backdrop="static">
         <div class="modal-dialog modal-xl fullmodal">
             <div class="modal-content document">
-                <div class="modal-header">
+                <div class="modal-header bg-info">
                     <h4 class="modal-title"><i class="fa fa-truck">&nbsp;</i>Delivery Order</h4>
                     <button type="button" class="close btn btn-danger" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -139,32 +143,33 @@
                     </div>
 
                     {{-- <hr> --}}
+                    <div class="scrollable-table">
+                        <table class="table table-bordered" id="deliverOrder">
+                            <thead>
+                                <tr>
+                                    {{-- <th>Kode Obat</th> --}}
+                                    <th width="250px">Obat</th>
+                                    <th>Sat.Beli</th>
+                                    <th>Qty</th>
+                                    <th>Isi</th>
+                                    <th width="50px">Sat.Jual</th>
+                                    <th>Hrg.Beli</th>
+                                    <th>Disc %</th>
+                                    <th>Discount</th>
+                                    <th>Pajak</th>
+                                    <th width="60px">Tgl.Exp</th>
+                                    <th>Batch Number</th>
+                                    <th>Sub Total</th>
+                                </tr>
+                            </thead>
 
-                    <table class="table table-bordered" id="deliverOrder">
-                        <thead>
-                            <tr>
-                                {{-- <th>Kode Obat</th> --}}
-                                <th width="250px">Obat</th>
-                                <th>Sat.Beli</th>
-                                <th>Qty</th>
-                                <th>Isi</th>
-                                <th width="50px">Sat.Jual</th>
-                                <th>Hrg.Beli</th>
-                                <th>Disc %</th>
-                                <th>Discount</th>
-                                <th>Pajak</th>
-                                <th width="60px">Tgl.Exp</th>
-                                <th>Batch Number</th>
-                                <th>Sub Total</th>
-                            </tr>
-                        </thead>
+                            <tbody id="doTable">
+                                <tr>
 
-                        <tbody id="doTable">
-                            <tr>
-
-                            </tr>
-                        </tbody>
-                    </table>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     <hr>
                     <div class="float-right col-4">
                         <div class="float-right col-4">

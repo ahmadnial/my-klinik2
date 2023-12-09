@@ -323,7 +323,7 @@
                         </div>
                         <div class="form-group col-sm-6">
                             <label for="">Tanggal</label>
-                            <input type="text" class="form-control" name="tr_tgl_trs" id="tr_tgl_trs"
+                            <input type="date" class="form-control" name="tr_tgl_trs" id="tr_tgl_trs"
                                 value="{{ $dateNow }}" readonly>
                         </div>
                         <div class="form-group col-sm-6">

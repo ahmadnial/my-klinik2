@@ -52,27 +52,24 @@
         }
 
         #TambahADJ .fullmodal {
-            width: 85%;
+            width: 90%;
             max-width: none;
             height: auto;
             margin: 40;
         }
 
-        #EditDO .fullmodal {
-            width: 95%;
-            max-width: none;
-            height: auto;
-            margin: 40;
-        }
-
-        .modal .modal-content {
-            height: auto;
-            border: 0;
-            border-radius: 0;
-        }
-
-        .modal .modal-body {
+        .scrollable-table {
+            /* overflow-y: initial !important */
+            max-height: 300px;
             overflow-y: auto;
+        }
+
+        .modal-footer {
+            position: sticky;
+            bottom: 0;
+            background-color: #f8f9fa;
+            padding: 10px;
+            padding-right: 10px;
         }
     </style>
     <!-- The modal Create -->
@@ -117,27 +114,28 @@
                     </div>
 
                     {{-- <hr> --}}
+                    <div class="scrollable-table">
+                        <table id="" class="table table-bordered" style="width: 100%">
+                            <thead>
+                                <tr>
+                                    {{-- <th>Kode Obat</th> --}}
+                                    <th width="150px">kd Obat</th>
+                                    <th width="250px">Nama Obat</th>
+                                    <th>satuan</th>
+                                    <th>Qty Stock / Tercatat</th>
+                                    <th>Sebenarnya</th>
+                                    <th>Koreksi</th>
+                                    <th>Nilai HPP</th>
+                                    <th>Sub Total HPP</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
 
-                    <table id="" class="table table-bordered" style="width: 100%">
-                        <thead>
-                            <tr>
-                                {{-- <th>Kode Obat</th> --}}
-                                <th width="150px">kd Obat</th>
-                                <th width="250px">Nama Obat</th>
-                                <th>satuan</th>
-                                <th>Qty Stock / Tercatat</th>
-                                <th>Sebenarnya</th>
-                                <th>Koreksi</th>
-                                <th>Nilai HPP</th>
-                                <th>Sub Total HPP</th>
-                                <th></th>
-                            </tr>
-                        </thead>
+                            <tbody id="doTable">
 
-                        <tbody id="doTable">
-
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                     <hr>
                     <div class="float-right col-4">
                         <div class="float-right col-4">

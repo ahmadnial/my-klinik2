@@ -52,7 +52,7 @@ class TindakanController extends Controller
         $icdx = mstr_icdx::all();
         $isTindakanTarif = mstr_tindakan::all();
         $isHistoryTindakan = trs_chart::all();
-        $dateNow = Carbon::now()->format("d-m-Y");
+        $dateNow = Carbon::now()->format("Y-m-d");
 
         // $data = response()->json($chart_id);
         // $isLastChartID = $chart_id;

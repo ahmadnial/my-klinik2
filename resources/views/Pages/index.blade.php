@@ -9,21 +9,21 @@
                     <div class="card">
                         <div class="card-header border-0">
                             <div class="d-flex justify-content-between">
-                                <h3 class="card-title">Online Store Visitors</h3>
+                                <h3 class="card-title">Soon</h3>
                                 <a href="javascript:void(0);">View Report</a>
                             </div>
                         </div>
                         <div class="card-body">
                             <div class="d-flex">
                                 <p class="d-flex flex-column">
-                                    <span class="text-bold text-lg">820</span>
-                                    <span>Visitors Over Time</span>
+                                    <span class="text-bold text-lg">000</span>
+                                    <span>Soon</span>
                                 </p>
                                 <p class="ml-auto d-flex flex-column text-right">
                                     <span class="text-success">
                                         <i class="fas fa-arrow-up"></i> 12.5%
                                     </span>
-                                    <span class="text-muted">Since last week</span>
+                                    <span class="text-muted">Soon</span>
                                 </p>
                             </div>
                             <!-- /.d-flex -->
@@ -34,18 +34,18 @@
 
                             <div class="d-flex flex-row justify-content-end">
                                 <span class="mr-2">
-                                    <i class="fas fa-square text-primary"></i> This Week
+                                    <i class="fas fa-square text-primary"></i>Soon
                                 </span>
 
                                 <span>
-                                    <i class="fas fa-square text-gray"></i> Last Week
+                                    <i class="fas fa-square text-gray"></i>Soon
                                 </span>
                             </div>
                         </div>
                     </div>
                     <!-- /.card -->
 
-                    <div class="card">
+                    {{-- <div class="card">
                         <div class="card-header border-0">
                             <h3 class="card-title">Products</h3>
                             <div class="card-tools">
@@ -152,8 +152,7 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                    <!-- /.card -->
+                    </div> --}}
                 </div>
                 <!-- /.col-md-6 -->
                 <div class="col-lg-6">
@@ -236,7 +235,7 @@
 
                     <div class="card">
                         <div class="card-header border-0">
-                            <h3 class="card-title">Online Store Overview</h3>
+                            <h3 class="card-title">Soon</h3>
                             <div class="card-tools">
                                 <a href="#" class="btn btn-sm btn-tool">
                                     <i class="fas fa-download"></i>
@@ -255,7 +254,7 @@
                                     <span class="font-weight-bold">
                                         <i class="ion ion-android-arrow-up text-success"></i> 12%
                                     </span>
-                                    <span class="text-muted">CONVERSION RATE</span>
+                                    <span class="text-muted">SOON </span>
                                 </p>
                             </div>
                             <!-- /.d-flex -->
@@ -267,7 +266,7 @@
                                     <span class="font-weight-bold">
                                         <i class="ion ion-android-arrow-up text-warning"></i> 0.8%
                                     </span>
-                                    <span class="text-muted">SALES RATE</span>
+                                    <span class="text-muted">Soon</span>
                                 </p>
                             </div>
                             <!-- /.d-flex -->
@@ -279,7 +278,7 @@
                                     <span class="font-weight-bold">
                                         <i class="ion ion-android-arrow-down text-danger"></i> 1%
                                     </span>
-                                    <span class="text-muted">REGISTRATION RATE</span>
+                                    <span class="text-muted">Soon</span>
                                 </p>
                             </div>
                             <!-- /.d-flex -->
