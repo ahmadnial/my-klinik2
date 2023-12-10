@@ -443,7 +443,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Tindakan</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" id="CloseModalTindakan" data-dismiss="modal"
+                        aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -466,32 +467,32 @@
                             </button>
                         </div> --}}
                         <div class="mt-4">
-                            <table class="table table-bordered">
+                            {{-- <table class="table table-bordered">
                                 <tbody id="nm_tarif_plus">
                                     <tr>
-                                        <td>
-                                            <label for="">Tarif/Tindakan Tambahan</label>
-                                            <select class="nm_tarif form-control" multiple style="width:100%;"
-                                                id="nm_tarif" name="nm_tarif[]">
-                                                {{-- <option value="" selected></option> --}}
-                                                {{-- <option>--Select--</option> --}}
-                                                @foreach ($isTindakanTarif as $t)
-                                                    <option value="{{ $t->id }}">{{ $t->nm_tindakan }}</option>
-                                                @endforeach
-                                            </select>
-                                        </td>
+                                        <td> --}}
+                            <label for="">Tarif/Tindakan Tambahan</label>
+                            <select class="nm_tarif form-control" multiple style="width:100%;" id="nm_tarif"
+                                name="nm_tarif[]">
+                                {{-- <option value="" selected></option> --}}
+                                <option value=""></option>
+                                @foreach ($isTindakanTarif as $t)
+                                    <option value="{{ $t->id }}">{{ $t->nm_tindakan }}</option>
+                                @endforeach
+                            </select>
+                            {{-- </td>
                                     </tr>
                                 </tbody>
-                            </table>
-                            <div class="">
+                            </table> --}}
+                            {{-- <div class="">
                                 <input type="text" name="" id="nm_tarifXXXX">
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                     <input type="hidden" id="kd_trs" name="kd_trs" value="{{ $kd_trs }}">
                     <input type="hidden" id="sub_total" name="sub_total" value="0">
                     <div class="float-right mt-2">
-                        <a type="button" id="exitModal" class="btn btn-success">add</a>
+                        <a type="button" id="exitModal" onclick="exitModalTindakan()" class="btn btn-success">add</a>
                     </div>
                 </div>
             </div>
@@ -506,7 +507,7 @@
             <div class="modal-content">
                 <div class="modal-header bg-nial">
                     <h4 class="modal-title">Resep</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" id="CloseModalResep" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -585,7 +586,7 @@
                     {{-- <input type="hidden" id="kd_trs" name="kd_trs" value="{{ $kd_trs }}"> --}}
                     {{-- <input type="hidden" id="sub_total" name="sub_total" value="0"> --}}
                     <div class="float-right mt-2">
-                        <a type="button" id="exitModalResep" class="btn btn-success">add</a>
+                        <a type="button" id="exitModalResep" onclick="exitModalResep()" class="btn btn-success">add</a>
                     </div>
                 </div>
             </div>
@@ -625,13 +626,17 @@
             placeholder: 'Search Tindakan',
         });
 
+        function exitModalTindakan() {
+
+        }
         $("#exitModal").click(function() {
-            $("#addTindakans").modal("hide");
+            $('#CloseModalTindakan').click()
+
         });
 
-        $("#exitModalResep").click(function() {
-            $("#addResep").modal("hide");
-        });
+        function exitModalResep() {
+            $('#CloseModalResep').click()
+        }
 
         // $("#addTindakans").on('hide.bs.modal', function() {
 
@@ -770,48 +775,61 @@
             })
         });
 
-        // setInterval(getChartID, 3000);
+        function getHeaderInfo() {
+            var data = sessionStorage.getItem("kdReg");
+            var kdReg;
+            // const cekTindakan = getVal.nm_tarif;
 
-        // function getChartID() {
-        //     $.ajax({
-        //         headers: {
-        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //         },
-        //         url: "{{ url('getLastID') }}",
-        //         type: 'GET',
-        //         success: function(chart_id) {
-        //             $.each(chart_id, function(key, id) {
-        //                 $('#chart_id').val(id);
-        //             })
-        //         }
-        //     })
-        // };
-        // $(document).on("click", "#addTindakan", function() {
-        //     // $('.nm_tarif_plus').append(tubuh);
-        //     $(".showOrHideTdk").append(
-        //         `<div class="">
-    //             <label>Tindakan</label>
-    //             <div class="float-right mb-1">
-    //             <button type="button"
-    //                 class="nm_tarif_add btn btn-xs btn-primary float-right">add more
-    //             </button>
-    //             </div>
-    //             <select class="nm_tarif form-control" style="width:100%;"
-    //                 name="nm_tarif[]" id="nm_tarif[]">
-    //                 <option value="">--Select--</option>
-    //                 @foreach ($isTindakanTarif as $t)
-    //                     <option value="{{ $t->nm_tindakan }}">{{ $t->nm_tindakan }}
-    //                     </option>
-    //                 @endforeach
-    //             </select>
-    //             <input type="hidden" id="kd_trs" name="kd_trs"
-    //                 value="{{ $kd_trs }}">
-    //             <input type="hidden" id="sub_total" name="sub_total"
-    //                 value="6000">
-    //         </div>
-    //         <div class="nm_tarif_plus"></div>`
-        //     );
-        // });
+
+            if (data != null) {
+                kdReg = JSON.parse(data);
+            }
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ url('SearchRegister') }}/" + kdReg,
+                type: 'GET',
+                data: {
+                    'fr_kd_reg': kdReg
+                },
+                success: function(isRegSearch) {
+                    $.each(isRegSearch, function(key, dataregvalue) {
+                        $('#tr_no_mr').val(dataregvalue.fr_mr);
+                        $('#tr_nm_pasien').val(dataregvalue.fr_nama);
+                        $('#tr_jenis_kelamin').val(dataregvalue.fr_jenis_kelamin);
+                        $('#tr_layanan').val(dataregvalue.fr_layanan);
+                        $('#tr_dokter').val(dataregvalue.fr_dokter);
+                        $('#tr_alamat').val(dataregvalue.fr_alamat);
+                        $('#tr_tgl_lahir').val(dataregvalue.fr_tgl_lahir);
+
+                        $('#namaHdr').val(dataregvalue.fr_nama);
+                        $('#noMRHdr').val(dataregvalue.fr_mr);
+                        $('#noRGHdr').val(dataregvalue.fr_kd_reg);
+                        $('#dokterHdr').val(dataregvalue.fr_dokter);
+                        $('#layananHdr').val(dataregvalue.fr_layanan);
+                        $('#jkHdr').val(dataregvalue.fr_jenis_kelamin);
+                        $('#alamatHdr').val(dataregvalue.fr_alamat);
+                        $('#alergiHdr').val(dataregvalue.fr_alergi);
+                        $('#lastTarifDsrHdr').val(dataregvalue.tcmr.fs_last_tarif_dasar);
+
+
+                        $('#chart_kd_reg').val(dataregvalue.fr_kd_reg);
+                        $('#chart_mr').val(dataregvalue.fr_mr);
+                        $('#chart_nm_pasien').val(dataregvalue.fr_nama);
+                        $('#chart_layanan').val(dataregvalue.fr_layanan);
+                        $('#chart_dokter').val(dataregvalue.fr_dokter);
+
+                        var isDateBirthday = dataregvalue.fr_tgl_lahir;
+                        var isAgeNow = getUmurDetail(isDateBirthday);
+                        $('#tr_umur').val(isAgeNow);
+                        $('#umurHdr').val(isAgeNow);
+                        $('#tglLahirHdr').val(isDateBirthday);
+
+                    })
+                }
+            })
+        }
 
         // function getICDX() {
         var path = "{{ route('getIcdX') }}";
@@ -1153,8 +1171,6 @@
                             }
                         }
 
-                        // var chartIDShow = $('#isShowCahrtID').val();
-
                         var buttonEdit =
                             `<button type="button" class="btn btn-outline-info btn-xs" id="btneditchart" data-is_chart_id="${getValue[getVal].chart_id}" onClick="editChart(this)"><i class="fa fa-pen"></i></button>`;
                         var buttonDelete =
@@ -1254,7 +1270,6 @@
                                                         ${html}
                                                 </tbody>
                                             </table>
-                                        
                                         </div>
 
                                         <hr>
@@ -1320,23 +1335,23 @@
                 success: function(isChartID) {
                     var getValueChart = isChartID;
                     $.each(isChartID, function(key, chartvalue) {
-                        const trstdk = chartvalue.trstdk;
-                        let tdk = "";
-                        for (i in trstdk) {
-                            if (trstdk[i].nm_trf != null) {
-                                tdk +=
-                                    `<option value="${trstdk[i].nm_tarif}">${trstdk[i].nm_trf.nm_tindakan}</option>`;
-                            } else {
-                                tdk += ``;
-                            }
-                        }
+                        // const trstdk = chartvalue.trstdk;
+                        // let tdk = "";
+                        // for (i in trstdk) {
+                        //     if (trstdk[i].nm_trf != null) {
+                        //         tdk +=
+                        //             `<option value="${trstdk[i].nm_tarif}">${trstdk[i].nm_trf.nm_tindakan}</option>`;
+                        //     } else {
+                        //         tdk += ``;
+                        //     }
+                        // }
                         // console.log(chartvalue);
                         $('#chart_S').val(chartvalue.chart_S)
                         $('#chart_O').val(chartvalue.chart_O)
                         $('#chart_A').val(chartvalue.chart_A)
                         $('#chart_A_diagnosa').val(chartvalue.chart_A_diagnosa)
                         $('#chart_P').val(chartvalue.chart_P)
-                        $('#nm_tarifXXXX').val(tdk)
+                        // $('#nm_tarifXXXX').val(tdk)
 
                     })
                 }
@@ -1420,57 +1435,6 @@
         }
 
         // Get Data setelah reload
-        window.onload = getTimeline();
-
-        // function getTimelineOnSubmit() {
-        //     var data = sessionStorage.getItem("dataMR");
-        //     var dataObject;
-
-        //     if (data != null) {
-        //         dataObject = JSON.parse(data);
-        //     }
-        //     $.ajax({
-        //         headers: {
-        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //         },
-        //         url: "{{ url('getTimeline') }}/" + dataObject,
-        //         type: 'GET',
-        //         data: {
-        //             chart_mr: dataObject
-        //         },
-        //         success: function(isTimelineHistory) {
-        //             // alert($isTimelineHistory);
-        //             if (isTimelineHistory != '') {
-        //                 $.each(isTimelineHistory, function(key, timeline) {
-        //                     // header informasi
-        //                     $('#tr_tgl_trs').val(timeline.chart_tgl_trs);
-        //                     $('#tr_kd_reg').val(timeline.chart_kd_reg);
-        //                     $('#tr_no_mr').val(timeline.chart_mr);
-        //                     $('#tr_nm_pasien').val(timeline.chart_nm_pasien);
-        //                     $('#tr_layanan').val(timeline.chart_layanan);
-        //                     $('#tr_dokter').val(timeline.chart_dokter);
-        //                     // $('#tr_alamat').val(timeline.chart_alamat);
-
-        //                     $('#show_chart_S').val(timeline.chart_S);
-        //                     $('#show_chart_O').val(timeline.chart_O);
-        //                     $('#show_chart_A').val(timeline.chart_A);
-        //                     $('#show_chart_P').val(timeline.chart_P);
-        //                     // console.log(timeline.chart_S);
-        //                     $('#labelTimeline').val(timeline.chart_kd_reg + '-' + timeline
-        //                         .chart_nm_pasien + '-' + timeline
-        //                         .chart_dokter + '-' + timeline.chart_layanan + '-' +
-        //                         timeline
-        //                         .chart_tgl_trs);
-        //                 });
-        //             } else {
-        //                 $('#show_chart_S').val('');
-        //                 $('#show_chart_O').val('');
-        //                 $('#show_chart_A').val('');
-        //                 $('#show_chart_P').val('');
-        //                 $('#labelTimeline').val('');
-        //             }
-        //         }
-        //     })
-        // };
+        window.onload = getTimeline(), getHeaderInfo();
     </script>
 @endpush
