@@ -627,12 +627,8 @@
         });
 
         function exitModalTindakan() {
-
-        }
-        $("#exitModal").click(function() {
             $('#CloseModalTindakan').click()
-
-        });
+        }
 
         function exitModalResep() {
             $('#CloseModalResep').click()
