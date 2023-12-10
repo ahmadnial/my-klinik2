@@ -1018,6 +1018,7 @@
                                 <input type="hidden" class="form-control" id="ch_cara_pakai" name="ch_cara_pakai[]" value="${cara_pakai_resep}">
                             </td>
                                 <input type="hidden" class="form-control" id="ch_hrg_jual" name="ch_hrg_jual[]" value="${hrg_jual}">
+                               
                         </tr>
                     </tbody>
                 </table>
@@ -1030,6 +1031,14 @@
 
         function deleteRow(btn) {
             var row = btn.parentNode.parentNode.parentNode.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+
+            // $('#removeReal').click();
+        }
+
+        function deleteRowReal(btnr) {
+
+            var row = btnr.parentNode.parentNode.parentNode.parentNode.parentNode;
             row.parentNode.removeChild(row);
         }
 
