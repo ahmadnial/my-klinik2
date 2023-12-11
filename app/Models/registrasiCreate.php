@@ -26,7 +26,17 @@ class registrasiCreate extends Model
         'fr_session_poli',
         'fr_bb',
         'fr_alergi',
-        'fr_user'
+        'fr_user',
+        'keluhan_utama',
+        'ttv_BW',
+        'ttv_BH',
+        'ttv_BPs',
+        'ttv_BPd',
+        'ttv_BT',
+        'ttv_HR',
+        'ttv_RR',
+        'ttv_SN',
+        'ttv_SPO2'
     ];
 
     public function tcmr()

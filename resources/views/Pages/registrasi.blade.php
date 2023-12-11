@@ -75,7 +75,7 @@
     <div class="modal fade" id="TambahPasien">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header bg-info">
                     <h4 class="modal-title">Registrasi Pasien</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -148,44 +148,206 @@
                         </div>
                     </div>
                     <hr>
-                    {{-- <div class="row"> --}}
                     <div class="form-group col-sm-12">
-                        <label for="">Berat Badan</label>
-                        <input type="number" class="form-control" name="fr_bb" id="fr_bb"
-                            placeholder="Berat Badan Pasien">
+                        <label for="">Keluhan Utama</label>
+                        <textarea type="text" class="form-control" name="keluhan_utama" id="keluhan_utama"></textarea>
                     </div>
+                    {{-- VITAL SIGN --}}
+                    {{-- <div id="collapseVitalSign" class="bg-light border collapse show" aria-labelledby="headerVitalSign"
+                        data-parent="#btnVitalSign" style="">
+                        <div class="row py-2" id="inputMonitoringMC">
+                            <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                <i class="mb-1">Body Weight</i>
+                                <div class="input-group input-group-sm mb-3">
+                                    <div class="invalid-feedback" id="feedbackLoadBW" style="display: none;">load
+                                        restricted, data &gt; 2 jam yang
+                                        lalu !
+                                    </div>
+                                    <div class="invalid-feedback" id="feedbackLoadEmptyBW" style="display: none;">data
+                                        not found !</div>
+                                    <div class="valid-feedback text-info" id="feedbackLoadSuccessBW"
+                                        style="display: none;">load success</div>
+                                    <div class="input-group-append input-group-sm">
+                                        <input type="number" id="ttv_BW" name="ttv_BW" data-satuan="kg"
+                                            data-monitorname="Body Weight" class="form-control form-control-sm vital-sign"
+                                            min="0" value="">
+                                        <span class="input-group-text" style="width:7em; text-align:center">kg</span>
+                                    </div>
 
-                    <div class="form-group col-sm-12">
-                        <label>Tekanan Darah</label>
-                        <label class="input-group">
-                            <input name="fs_td" type="text" class="form-control" />
-                            <span class="input-group-append input-group-text">mmHg</span>
-                        </label>&emsp;
-                    </div>
-                    {{-- <div class="form-group col-sm-12">
-                            <label>Nadi</label>
-                            <label class="input-group">
-                                <input name="fs_N_1" type="number" class="form-control" />
-                                <span class="input-group-append input-group-text">x/mnt</span>
-                            </label>&emsp;
-                        </div>
-                        <div class="form-group col-sm-12">
-                            <label>Respirasi</label>
-                            <label class="input-group">
-                                <input name="fs_R_1" type="number" class="form-control" />
-                                <span class="input-group-append input-group-text">x/mnt</span>
-                            </label>&emsp;
-                        </div>
-                        <div class="form-group col-sm-12">
-                            <label>Suhu</label>
-                            <label class="input-group">
-                                <input name="fs_S_1" type="number" class="form-control" />
-                                <span class="input-group-append input-group-text"><sup>o</sup>C</span>
-                            </label>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                <i class="mb-1">Body Height</i>
+                                <div class="input-group input-group-sm mb-3">
+                                    <div class="invalid-feedback" id="feedbackLoadBH" style="display: none;">load
+                                        restricted, data &gt; 2 jam yang
+                                        lalu !
+                                    </div>
+                                    <div class="invalid-feedback" id="feedbackLoadEmptyBH" style="display: none;">data
+                                        not found !</div>
+                                    <div class="valid-feedback text-info" id="feedbackLoadSuccessBH"
+                                        style="display: none;">load success</div>
+                                    <div class="input-group-append input-group-sm">
+                                        <input type="number" id="ttv_BH" name="ttv_BH" data-satuan="cm"
+                                            data-monitorname="Body Height" class="form-control form-control-sm vital-sign"
+                                            min="0" value="">
+                                        <span class="input-group-text" style="width:7em; text-align:center">cm</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                <i class="mb-1">Blood Pressure Sistole</i>
+                                <div class="input-group input-group-sm mb-3">
+                                    <div class="invalid-feedback" id="feedbackLoadBP" style="display: none;">load
+                                        restricted, data &gt; 2 jam yang
+                                        lalu !
+                                    </div>
+                                    <div class="invalid-feedback" id="feedbackLoadEmptyBP" style="display: none;">data
+                                        not found !</div>
+                                    <div class="valid-feedback text-info" id="feedbackLoadSuccessBP"
+                                        style="display: none;">load success</div>
+                                    <div class="input-group-append input-group-sm">
+                                        <input type="number" id="ttv_BPs" name="ttv_BPs" data-satuan="mmHg"
+                                            data-monitorname="Blood Pressure Sistole"
+                                            class="form-control form-control-sm vital-sign" min="0"
+                                            value="">
+                                        <span class="input-group-text" style="width:7em; text-align:center">mmHg</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                <i class="mb-1">Blood Pressure Diastole</i>
+                                <div class="input-group input-group-sm mb-3">
+                                    <div class="invalid-feedback" id="feedbackLoadBPd" style="display: none;">load
+                                        restricted, data &gt; 2 jam yang
+                                        lalu !
+                                    </div>
+                                    <div class="invalid-feedback" id="feedbackLoadEmptyBPd" style="display: none;">data
+                                        not found !</div>
+                                    <div class="valid-feedback text-info" id="feedbackLoadSuccessBPd"
+                                        style="display: none;">load success</div>
+                                    <div class="input-group-append input-group-sm">
+                                        <input type="number" id="ttv_BPd" name="ttv_BPd" data-satuan="mmHg"
+                                            data-monitorname="Blood Pressure Diastole"
+                                            class="form-control form-control-sm vital-sign" min="0"
+                                            value="">
+                                        <span class="input-group-text" style="width:7em; text-align:center">mmHg</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                <i class="mb-1">Body Temperatur</i>
+                                <div class="input-group input-group-sm mb-3">
+                                    <div class="invalid-feedback" id="feedbackLoadBT" style="display: none;">load
+                                        restricted, data &gt; 2 jam yang
+                                        lalu !
+                                    </div>
+                                    <div class="invalid-feedback" id="feedbackLoadEmptyBT" style="display: none;">data
+                                        not found !</div>
+                                    <div class="valid-feedback text-info" id="feedbackLoadSuccessBT"
+                                        style="display: none;">load success</div>
+                                    <div class="input-group-append input-group-sm">
+                                        <input type="number" id="ttv_BT" name="ttv_BT" data-satuan="°C"
+                                            data-monitorname="Body Temperatur"
+                                            class="form-control form-control-sm vital-sign" min="0"
+                                            value="">
+                                        <span class="input-group-text" style="width:7em; text-align:center">°C</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                <i class="mb-1">Heart Rate</i>
+                                <div class="input-group input-group-sm mb-3">
+                                    <div class="invalid-feedback" id="feedbackLoadHR" style="display: none;">load
+                                        restricted, data &gt; 2 jam yang
+                                        lalu !
+                                    </div>
+                                    <div class="invalid-feedback" id="feedbackLoadEmptyHR" style="display: none;">data
+                                        not found !</div>
+                                    <div class="valid-feedback text-info" id="feedbackLoadSuccessHR"
+                                        style="display: none;">load success</div>
+                                    <div class="input-group-append input-group-sm">
+                                        <input type="number" id="ttv_HR" name="ttv_HR" data-satuan="x/mnt"
+                                            data-monitorname="Heart Rate" class="form-control form-control-sm vital-sign"
+                                            min="0" value="">
+                                        <span class="input-group-text" style="width:7em; text-align:center">x/mnt</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                <i class="mb-1">Respiratory Rate</i>
+                                <div class="input-group input-group-sm mb-3">
+                                    <div class="invalid-feedback" id="feedbackLoadRR" style="display: none;">load
+                                        restricted, data &gt; 2 jam yang
+                                        lalu !
+                                    </div>
+                                    <div class="invalid-feedback" id="feedbackLoadEmptyRR" style="display: none;">data
+                                        not found !</div>
+                                    <div class="valid-feedback text-info" id="feedbackLoadSuccessRR"
+                                        style="display: none;">load success</div>
+                                    <div class="input-group-append input-group-sm">
+                                        <input type="number" id="ttv_RR" name="ttv_RR" data-satuan="x/mnt"
+                                            data-monitorname="Respiratory Rate"
+                                            class="form-control form-control-sm vital-sign" min="0"
+                                            value="">
+                                        <span class="input-group-text" style="width:7em; text-align:center">x/mnt</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                <i class="mb-1">Skala Nyeri NRS</i>
+                                <div class="input-group input-group-sm mb-3">
+                                    <div class="invalid-feedback" id="feedbackLoadSN" style="display: none;">load
+                                        restricted, data &gt; 2 jam yang
+                                        lalu !
+                                    </div>
+                                    <div class="invalid-feedback" id="feedbackLoadEmptySN" style="display: none;">data
+                                        not found !</div>
+                                    <div class="valid-feedback text-info" id="feedbackLoadSuccessSN"
+                                        style="display: none;">load success</div>
+                                    <div class="input-group-append input-group-sm">
+                                        <input type="number" id="ttv_SN" name="ttv_SN" data-satuan=""
+                                            data-monitorname="Skala Nyeri NRS"
+                                            class="form-control form-control-sm vital-sign" min="0" max="10"
+                                            value="">
+                                        <span class="input-group-text" style="width:7em; text-align:center"></span>
+                                    </div>
+                                    <div class="invalid-feedback" id="invFeedbackSkalaNyeri">maksimal
+                                        skala 10 !</div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                <i class="mb-1">SpO2</i>
+                                <div class="input-group input-group-sm mb-3">
+                                    <div class="invalid-feedback" id="feedbackLoadSP" style="display: none;">load
+                                        restricted, data &gt; 2 jam yang
+                                        lalu !
+                                    </div>
+                                    <div class="invalid-feedback" id="feedbackLoadEmptySP" style="display: none;">data
+                                        not found !</div>
+                                    <div class="valid-feedback text-info" id="feedbackLoadSuccessSP"
+                                        style="display: none;">load success</div>
+                                    <div class="input-group-append input-group-sm">
+                                        <input type="number" id="ttv_SPO2" name="ttv_SPO2" data-satuan="%"
+                                            data-monitorname="SpO2" class="form-control form-control-sm vital-sign"
+                                            min="0" value="">
+                                        <span class="input-group-text" style="width:7em; text-align:center">%</span>
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
                     </div> --}}
+                    {{-- END VITAL SIGN --}}
 
-                    <div class="form-group col-sm-12">
+
+                    <div class="form-group col-sm-12 mt-2">
                         <label for="">Alergi</label>
                         <input type="text" class="form-control" name="fr_alergi" id="fr_alergi"
                             placeholder="Alergi Pasien" readonly>
@@ -455,6 +617,16 @@
                 var fr_bb = $('#fr_bb').val();
                 var fr_alergi = $('#fr_alergi').val();
                 var fr_user = $('#fr_user').val();
+                var keluhan_utama = $('#keluhan_utama').val();
+                var ttv_BW = $('#ttv_BW').val();
+                var ttv_BH = $('#ttv_BH').val();
+                var ttv_BPs = $('#ttv_BPs').val();
+                var ttv_BPd = $('#ttv_BPd').val();
+                var ttv_BT = $('#ttv_BT').val();
+                var ttv_HR = $('#ttv_HR').val();
+                var ttv_RR = $('#ttv_RR').val();
+                var ttv_SN = $('#ttv_SN').val();
+                var ttv_SPO2 = $('#ttv_SPO2').val();
                 // alert(fm_nm_layanan);
                 if (fr_mr != "") {
                     $.ajax({
@@ -479,7 +651,17 @@
                             fr_session_poli: fr_session_poli,
                             fr_bb: fr_bb,
                             fr_alergi: fr_alergi,
-                            fr_user: fr_user
+                            fr_user: fr_user,
+                            keluhan_utama: keluhan_utama,
+                            ttv_BW: ttv_BW,
+                            ttv_BH: ttv_BH,
+                            ttv_BPs: ttv_BPs,
+                            ttv_BPd: ttv_BPd,
+                            ttv_BT: ttv_BT,
+                            ttv_HR: ttv_HR,
+                            ttv_RR: ttv_RR,
+                            ttv_SN: ttv_SN,
+                            ttv_SPO2: ttv_SPO2
                         },
                         cache: false,
                         success: function(dataResult) {

@@ -102,4 +102,9 @@ class LapFarmasiController extends Controller
         }
         return response()->json($isDataPendapatan);
     }
+
+    function pembelianDetail()
+    {
+        return view('pages.laporan.farmasi.pembelian-detail');
+    }
 }

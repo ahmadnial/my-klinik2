@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('do_detail_item', function (Blueprint $table) {
             $table->id();
             $table->string('do_obat');
+            // $table->string('nm_obat');
             $table->string('do_satuan_pembelian');
             $table->string('do_diskon')->nullable();
             $table->string('do_qty');

@@ -31,8 +31,8 @@ class do_detail_item extends Model
         'nm_obat'
     ];
 
-    // public function detailToMstr()
-    // {
-    //     return $this->hasMany(mstr_obat::class, 'do_obat', 'fm_kd_obat');
-    // }
+    public function detailToMstr()
+    {
+        return $this->hasOne(mstr_obat::class, 'do_obat', 'fm_kd_obat');
+    }
 }

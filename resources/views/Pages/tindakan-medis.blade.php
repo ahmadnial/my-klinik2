@@ -392,7 +392,8 @@
                                     {{-- Hidden value --}}
                                     <div class="form-group">
                                         <label for="inputDescription">Subjective</label>
-                                        <textarea id="chart_S" name="chart_S" class="form-control" rows="4"></textarea>
+                                        {{-- <input class="form-control" style="border: none" id="keluhanutama"> --}}
+                                        <textarea id="chart_S" name="chart_S" class="ta_Chart_S form-control" rows="4"></textarea>
                                     </div>
 
                                     <div class="form-group">
@@ -975,6 +976,9 @@
                         $('#chart_layanan').val(dataregvalue.fr_layanan);
                         $('#chart_dokter').val(dataregvalue.fr_dokter);
 
+                        // $('#keluhanutama').val(dataregvalue.keluhan_utama);
+                        $('.ta_Chart_S').val(dataregvalue.keluhan_utama);
+
                         var isDateBirthday = dataregvalue.fr_tgl_lahir;
                         var isAgeNow = getUmurDetail(isDateBirthday);
                         $('#tr_umur').val(isAgeNow);
@@ -1358,7 +1362,7 @@
         });
 
         function getTimeline() {
-            $('#chart_S').val('')
+            // $('#chart_S').val('')
             $('#chart_O').val('')
             $('#chart_A').val('')
             $('#chart_A_diagnosa').val('')
@@ -1413,7 +1417,8 @@
                                 resepShow += ``;
                             }
                         }
-                        var ttv = `#VitalSign : ${getValue[getVal].ttv_BW}`;
+                        // var ttv =
+                        // `#VitalSign : <b class="text-primary">#BW:</b>${getValue[getVal].ttv_BW}(Kg) #BH:${getValue[getVal].ttv_BH}(CM) #BPs:${getValue[getVal].ttv_BPs}(mmHg)`;
                         var buttonEdit =
                             `<button type="button" class="btn btn-outline-info btn-xs" id="btneditchart" data-is_chart_id="${getValue[getVal].chart_id}" onClick="editChart(this)"><i class="fa fa-pen"></i></button>`;
                         var buttonDelete =
@@ -1488,7 +1493,27 @@
                                         <hr>
                                         <div class="show_chart_O form-group">
                                              <button type="disable" id="" class="btn btn-primary btn-xs mb-2">Objective</button>
-                                            <textarea id="" class="show_chart_O form-control" style="border:none;" rows="4" readonly>${getValue[getVal].chart_O}\n${ttv}</textarea>
+                                            <table class="table" style="border:none;">
+                                            <tbody style="background-color:#edfafa; border:none">
+                                                <tr>
+                                                    <td>BW :${getValue[getVal].ttv_BW}(Kg)</td>
+                                                    <td>BH :${getValue[getVal].ttv_BH}(CM)</td>
+                                                    <td>BT :${getValue[getVal].ttv_BT}(C)</td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td>BPs :${getValue[getVal].ttv_BPs}(mmHg)</td>
+                                                    <td>BPd :${getValue[getVal].ttv_BPd}(mmHg)</td>
+                                                    <td>HR  :${getValue[getVal].ttv_HR}(x/mnt)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>RR  :${getValue[getVal].ttv_RR}(x/mnt)</td>
+                                                    <td>SN  :${getValue[getVal].ttv_SN}</td>
+                                                    <td>SpO2:${getValue[getVal].ttv_SPO2}(%)</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                            <textarea id="" class="show_chart_O form-control" style="border:none;" rows="4" readonly>${getValue[getVal].chart_O}</textarea>
                                         </div>
                                         <hr>
                                         <div class="show_chart_A form-group">
