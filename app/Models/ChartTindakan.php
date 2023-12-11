@@ -29,8 +29,18 @@ class ChartTindakan extends Model
         'chart_A_diagnosa',
         'chart_P',
         'chart_P_resep',
-        'chart_P_tindakan'
+        'chart_P_tindakan',
+        'ttv_BW',
+        'ttv_BH',
+        'ttv_BPs',
+        'ttv_BPd',
+        'ttv_BT',
+        'ttv_HR',
+        'ttv_RR',
+        'ttv_SN',
+        'ttv_SPO2'
     ];
+
 
     public function trstdk(): HasMany
     {

@@ -1413,7 +1413,7 @@
                                 resepShow += ``;
                             }
                         }
-
+                        var ttv = `#VitalSign : ${getValue[getVal].ttv_BW}`;
                         var buttonEdit =
                             `<button type="button" class="btn btn-outline-info btn-xs" id="btneditchart" data-is_chart_id="${getValue[getVal].chart_id}" onClick="editChart(this)"><i class="fa fa-pen"></i></button>`;
                         var buttonDelete =
@@ -1488,7 +1488,7 @@
                                         <hr>
                                         <div class="show_chart_O form-group">
                                              <button type="disable" id="" class="btn btn-primary btn-xs mb-2">Objective</button>
-                                            <textarea id="" class="show_chart_O form-control" style="border:none;" rows="4" readonly>${getValue[getVal].chart_O}</textarea>
+                                            <textarea id="" class="show_chart_O form-control" style="border:none;" rows="4" readonly>${getValue[getVal].chart_O}\n${ttv}</textarea>
                                         </div>
                                         <hr>
                                         <div class="show_chart_A form-group">
