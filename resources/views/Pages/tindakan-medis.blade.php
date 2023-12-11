@@ -394,8 +394,246 @@
                                         <label for="inputDescription">Subjective</label>
                                         <textarea id="chart_S" name="chart_S" class="form-control" rows="4"></textarea>
                                     </div>
+
                                     <div class="form-group">
+                                        <div class="s_head">
+                                            <div class="btn-group float-right btn-group-xs template-hide" role="group"
+                                                aria-label="Button group with nested dropdown">
+                                                <button type="button"
+                                                    class="btn btn-xs btn-primary mb-1 show-count badge-top-right"
+                                                    data-toggle="collapse" data-target="#collapseVitalSign"
+                                                    aria-expanded="true" aria-controls="collapseVitalSign"
+                                                    data-namainput="attachment-o" data-count="0" id="btnVitalSign">
+                                                    Vital Sign
+                                                </button>
+                                                <!--span class="badge badge-pill badge-success b_pos" style="color:white;">11</span-->
+                                            </div>
+                                        </div>
                                         <label for="inputDescription">Objective</label>
+                                        {{-- VITAL SIGN --}}
+                                        <div id="collapseVitalSign" class="bg-light border collapse show"
+                                            aria-labelledby="headerVitalSign" data-parent="#btnVitalSign" style="">
+                                            <div class="row py-2" id="inputMonitoringMC">
+                                                <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                                    <i class="mb-1">Body Weight</i>
+                                                    <div class="input-group input-group-sm mb-3">
+                                                        <div class="invalid-feedback" id="feedbackLoadBW"
+                                                            style="display: none;">load restricted, data &gt; 2 jam yang
+                                                            lalu !
+                                                        </div>
+                                                        <div class="invalid-feedback" id="feedbackLoadEmptyBW"
+                                                            style="display: none;">data not found !</div>
+                                                        <div class="valid-feedback text-info" id="feedbackLoadSuccessBW"
+                                                            style="display: none;">load success</div>
+                                                        <div class="input-group-append input-group-sm">
+                                                            <input type="number" id="ttv_BW" name="ttv_BW"
+                                                                data-satuan="kg" data-monitorname="Body Weight"
+                                                                class="form-control form-control-sm vital-sign"
+                                                                min="0" value="">
+                                                            <span class="input-group-text"
+                                                                style="width:7em; text-align:center">kg</span>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                                    <i class="mb-1">Body Height</i>
+                                                    <div class="input-group input-group-sm mb-3">
+                                                        <div class="invalid-feedback" id="feedbackLoadBH"
+                                                            style="display: none;">load restricted, data &gt; 2 jam yang
+                                                            lalu !
+                                                        </div>
+                                                        <div class="invalid-feedback" id="feedbackLoadEmptyBH"
+                                                            style="display: none;">data not found !</div>
+                                                        <div class="valid-feedback text-info" id="feedbackLoadSuccessBH"
+                                                            style="display: none;">load success</div>
+                                                        <div class="input-group-append input-group-sm">
+                                                            <input type="number" id="ttv_BH" name="ttv_BH"
+                                                                data-satuan="cm" data-monitorname="Body Height"
+                                                                class="form-control form-control-sm vital-sign"
+                                                                min="0" value="">
+                                                            <span class="input-group-text"
+                                                                style="width:7em; text-align:center">cm</span>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                                    <i class="mb-1">Blood Pressure Sistole</i>
+                                                    <div class="input-group input-group-sm mb-3">
+                                                        <div class="invalid-feedback" id="feedbackLoadBP"
+                                                            style="display: none;">load restricted, data &gt; 2 jam yang
+                                                            lalu !
+                                                        </div>
+                                                        <div class="invalid-feedback" id="feedbackLoadEmptyBP"
+                                                            style="display: none;">data not found !</div>
+                                                        <div class="valid-feedback text-info" id="feedbackLoadSuccessBP"
+                                                            style="display: none;">load success</div>
+                                                        <div class="input-group-append input-group-sm">
+                                                            <input type="number" id="ttv_BPs" name="ttv_BPs"
+                                                                data-satuan="mmHg"
+                                                                data-monitorname="Blood Pressure Sistole"
+                                                                class="form-control form-control-sm vital-sign"
+                                                                min="0" value="">
+                                                            <span class="input-group-text"
+                                                                style="width:7em; text-align:center">mmHg</span>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                                    <i class="mb-1">Blood Pressure Diastole</i>
+                                                    <div class="input-group input-group-sm mb-3">
+                                                        <div class="invalid-feedback" id="feedbackLoadBPd"
+                                                            style="display: none;">load restricted, data &gt; 2 jam yang
+                                                            lalu !
+                                                        </div>
+                                                        <div class="invalid-feedback" id="feedbackLoadEmptyBPd"
+                                                            style="display: none;">data not found !</div>
+                                                        <div class="valid-feedback text-info" id="feedbackLoadSuccessBPd"
+                                                            style="display: none;">load success</div>
+                                                        <div class="input-group-append input-group-sm">
+                                                            <input type="number" id="ttv_BPd" name="ttv_BPd"
+                                                                data-satuan="mmHg"
+                                                                data-monitorname="Blood Pressure Diastole"
+                                                                class="form-control form-control-sm vital-sign"
+                                                                min="0" value="">
+                                                            <span class="input-group-text"
+                                                                style="width:7em; text-align:center">mmHg</span>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                                    <i class="mb-1">Body Temperatur</i>
+                                                    <div class="input-group input-group-sm mb-3">
+                                                        <div class="invalid-feedback" id="feedbackLoadBT"
+                                                            style="display: none;">load restricted, data &gt; 2 jam yang
+                                                            lalu !
+                                                        </div>
+                                                        <div class="invalid-feedback" id="feedbackLoadEmptyBT"
+                                                            style="display: none;">data not found !</div>
+                                                        <div class="valid-feedback text-info" id="feedbackLoadSuccessBT"
+                                                            style="display: none;">load success</div>
+                                                        <div class="input-group-append input-group-sm">
+                                                            <input type="number" id="ttv_BT" name="ttv_BT"
+                                                                data-satuan="°C" data-monitorname="Body Temperatur"
+                                                                class="form-control form-control-sm vital-sign"
+                                                                min="0" value="">
+                                                            <span class="input-group-text"
+                                                                style="width:7em; text-align:center">°C</span>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                                    <i class="mb-1">Heart Rate</i>
+                                                    <div class="input-group input-group-sm mb-3">
+                                                        <div class="invalid-feedback" id="feedbackLoadHR"
+                                                            style="display: none;">load restricted, data &gt; 2 jam yang
+                                                            lalu !
+                                                        </div>
+                                                        <div class="invalid-feedback" id="feedbackLoadEmptyHR"
+                                                            style="display: none;">data not found !</div>
+                                                        <div class="valid-feedback text-info" id="feedbackLoadSuccessHR"
+                                                            style="display: none;">load success</div>
+                                                        <div class="input-group-append input-group-sm">
+                                                            <input type="number" id="ttv_HR" name="ttv_HR"
+                                                                data-satuan="x/mnt" data-monitorname="Heart Rate"
+                                                                class="form-control form-control-sm vital-sign"
+                                                                min="0" value="">
+                                                            <span class="input-group-text"
+                                                                style="width:7em; text-align:center">x/mnt</span>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                                    <i class="mb-1">Respiratory Rate</i>
+                                                    <div class="input-group input-group-sm mb-3">
+                                                        <div class="invalid-feedback" id="feedbackLoadRR"
+                                                            style="display: none;">load restricted, data &gt; 2 jam yang
+                                                            lalu !
+                                                        </div>
+                                                        <div class="invalid-feedback" id="feedbackLoadEmptyRR"
+                                                            style="display: none;">data not found !</div>
+                                                        <div class="valid-feedback text-info" id="feedbackLoadSuccessRR"
+                                                            style="display: none;">load success</div>
+                                                        <div class="input-group-append input-group-sm">
+                                                            <input type="number" id="ttv_RR" name="ttv_RR"
+                                                                data-satuan="x/mnt" data-monitorname="Respiratory Rate"
+                                                                class="form-control form-control-sm vital-sign"
+                                                                min="0" value="">
+                                                            <span class="input-group-text"
+                                                                style="width:7em; text-align:center">x/mnt</span>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                                    <i class="mb-1">Skala Nyeri NRS</i>
+                                                    <div class="input-group input-group-sm mb-3">
+                                                        <div class="invalid-feedback" id="feedbackLoadSN"
+                                                            style="display: none;">load restricted, data &gt; 2 jam yang
+                                                            lalu !
+                                                        </div>
+                                                        <div class="invalid-feedback" id="feedbackLoadEmptySN"
+                                                            style="display: none;">data not found !</div>
+                                                        <div class="valid-feedback text-info" id="feedbackLoadSuccessSN"
+                                                            style="display: none;">load success</div>
+                                                        <div class="input-group-append input-group-sm">
+                                                            <input type="number" id="ttv_SN" name="ttv_SN"
+                                                                data-satuan="" data-monitorname="Skala Nyeri NRS"
+                                                                class="form-control form-control-sm vital-sign"
+                                                                min="0" max="10" value="">
+                                                            <span class="input-group-text"
+                                                                style="width:7em; text-align:center"></span>
+                                                        </div>
+                                                        <div class="invalid-feedback" id="invFeedbackSkalaNyeri">maksimal
+                                                            skala 10 !</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                                    <i class="mb-1">SpO2</i>
+                                                    <div class="input-group input-group-sm mb-3">
+                                                        <div class="invalid-feedback" id="feedbackLoadSP"
+                                                            style="display: none;">load restricted, data &gt; 2 jam yang
+                                                            lalu !
+                                                        </div>
+                                                        <div class="invalid-feedback" id="feedbackLoadEmptySP"
+                                                            style="display: none;">data not found !</div>
+                                                        <div class="valid-feedback text-info" id="feedbackLoadSuccessSP"
+                                                            style="display: none;">load success</div>
+                                                        <div class="input-group-append input-group-sm">
+                                                            <input type="number" id="ttv_SPO2" name="ttv_SPO2"
+                                                                data-satuan="%" data-monitorname="SpO2"
+                                                                class="form-control form-control-sm vital-sign"
+                                                                min="0" value="">
+                                                            <span class="input-group-text"
+                                                                style="width:7em; text-align:center">%</span>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {{-- <div class="modal-footer p-2">
+                                                <div class="col">
+                                                    <div class="btn-group pull-left">
+                                                        <button type="button"
+                                                            class="btn btn-sm btn-warning border-radius3"
+                                                            id="loadFromMonitoring">Load</button>
+                                                    </div>
+                                                </div>
+                                                <button class="btn btn-sm btn-icon-only" id="hidePanelVitalSign"
+                                                    title="hide vital sign">
+                                                    <i class="fa fa-chevron-circle-up"></i>
+                                                </button>
+                                                <button style="border-radius: 3px; width: 7em; display: none;"
+                                                    class="btn btn-sm btn-success" id="saveMonitor">Save</button>
+                                            </div> --}}
+                                        </div>
+                                        {{-- END VITAL SIGN --}}
+
                                         <textarea id="chart_O" name="chart_O" class="form-control" rows="4"></textarea>
                                     </div>
                                     <div class="form-group">
