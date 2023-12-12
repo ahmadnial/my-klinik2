@@ -78,6 +78,7 @@ class registrasiController extends Controller
             'fr_dokter' => $request->fr_dokter,
             'fr_jaminan' => $request->fr_jaminan,
             'fr_session_poli' => $request->fr_session_poli,
+            'keluhan_utama' => $request->keluhan_utama,
         ]);
 
         if ($d) {

@@ -38,7 +38,7 @@
                                 <th>Layanan</th>
                                 <th>Dokter</th>
                                 <th>Umur</th>
-                                <th>BB</th>
+                                <th>Kunjungan</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -56,11 +56,17 @@
                                             echo hitung_umur($item->fr_tgl_lahir);
                                         @endphp
                                     </td>
-                                    <td>{{ $item->fr_bb }}Kg</td>
+                                    <td>
+                                        @if ($item->fs_tgl_kunjungan_terakhir != '')
+                                            <button class="btn btn-xs btn-success">Pasien Lama</button>
+                                        @else
+                                            <button class="btn btn-xs btn-info">Pasien Baru</button>
+                                        @endif
+                                    </td>
                                     <td>
                                         <button class="btn btn-xs btn-success"
                                             data-toggle="modal"data-target="#Edit{{ $item->fr_kd_reg }}">Edit</button>
-                                        <button class="btn btn-xs btn-danger">Hapus</button>
+                                        <button class="btn btn-xs btn-danger">Void</button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -102,12 +108,12 @@
                         <div class="form-group col-sm-6">
                             <label for="">Tanggal Lahir</label>
                             <input type="date" class="form-control" name="fr_tgl_lahir" id="fr_tgl_lahir"
-                                placeholder="Tanggal Lahir Pasien">
+                                placeholder="Tanggal Lahir Pasien" readonly>
                         </div>
                         <div class="form-group col-sm-6">
                             <label for="">Jenis Kelamin</label>
-                            <select name="fr_jenis_kelamin" id="fr_jenis_kelamin" class="form-control">
-                                <option value="">--Select--</option>
+                            <select name="fr_jenis_kelamin" id="fr_jenis_kelamin" class="form-control" readonly>
+                                <option value=""></option>
                                 <option value="Laki-laki">Laki-Laki</option>
                                 <option value="Perempuan">Perempuan</option>
                             </select>
@@ -145,6 +151,11 @@
                                 <option value="Pagi">Pagi</option>
                                 <option value="Sore">Sore</option>
                             </select>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="">Kunjungan Terakhir</label>
+                            <input type="text" class="form-control" style="background-color:#edfafa; border:none"
+                                id="kunjungan_terakhir" readonly>
                         </div>
                     </div>
                     <hr>
@@ -354,12 +365,12 @@
                     </div>
                     <div class="form-group col-sm-12">
                         <label for="">Alamat</label>
-                        <textarea type="date" class="form-control" name="fr_alamat" id="fr_alamat"></textarea>
+                        <textarea type="date" class="form-control" name="fr_alamat" id="fr_alamat" readonly></textarea>
                     </div>
                     <div class="form-group col-sm-12">
                         <label for="">Nomor Telephone</label>
                         <input type="text" class="form-control" name="fr_no_hp" id="fr_no_hp"
-                            placeholder="Nomor Telephone/WA Pasien">
+                            placeholder="Nomor Telephone/WA Pasien" readonly>
                     </div>
                 </div>
                 <input type="hidden" name="fr_user" id="fr_user" value="{{ Auth::user()->name }}">
@@ -454,10 +465,14 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="form-group col-sm-12">
+                        {{-- <div class="form-group col-sm-12">
                             <label for="">Berat Badan</label>
                             <input type="number" class="form-control" name="fr_bb" id="fr_bb_e"
                                 value="{{ $e->fr_bb }}">
+                        </div> --}}
+                        <div class="form-group col-sm-12">
+                            <label for="">Keluhan Utama</label>
+                            <textarea type="text" class="form-control" name="keluhan_utama" id="keluhan_utama">{{ $e->keluhan_utama }}</textarea>
                         </div>
                         <div class="form-group col-sm-12">
                             <label for="">Alergi</label>
@@ -537,6 +552,7 @@
                         $('#fr_tgl_lahir').val(datavalue.fs_tgl_lahir);
                         $('#fr_jenis_kelamin').val(datavalue.fs_jenis_kelamin);
                         $('#fr_alergi').val(datavalue.fs_alergi);
+                        $('#kunjungan_terakhir').val(datavalue.fs_tgl_kunjungan_terakhir);
                     })
                 }
             })
