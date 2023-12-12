@@ -13,16 +13,18 @@
                     <div class="input-group-addon">&nbsp; s.d&nbsp;</div>
                     <input type="date" id="date2" class="form-control">
                     <div class="input-group-addon">&nbsp;&nbsp;&nbsp;</div>
-                    <button class="btn btn-success" onclick="getDataPenjualan()" id="btnProses">Proses</button>
+                    <button class="btn btn-success" onclick="getData()" id="btnProses">Proses</button>
                 </div>
                 <div>
-                    <table id="penjualan" class="table table-hover table-striped">
+                    <table id="Pembelian" class="table table-hover table-striped">
                         <thead>
                             <tr>
-                                <th>kode Transaksi</th>
-                                <th>Tanggal Transaksi</th>
-                                <th>Jenis Penjualan</th>
-                                <th>Sub Total</th>
+                                <th>Supplier</th>
+                                <th>Kd Barang</th>
+                                <th>Nama Barang</th>
+                                <th>Harga Beli</th>
+                                <th>Satuan Beli</th>
+                                <th>Tgl. Transaksi</th>
                                 {{-- <th>Alasan</th>
                                 <th>Dibuat Oleh</th>
                                 <th></th> --}}
@@ -36,10 +38,13 @@
                                 <th></th>
                                 <th></th>
                                 <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
                                 {{-- <td><b><input type="text" id="grandTTL" class="form-control" style="border: none"
                                             readonly></b>
                                 </td> --}}
-                                <th id="grandTTL"></th>
+                                {{-- <th id="grandTTL"></th> --}}
                             </tr>
                         </tfoot>
                     </table>
@@ -51,7 +56,7 @@
 
     @push('scripts')
         <script>
-            function getDataPenjualan() {
+            function getData() {
                 var date1 = $('#date1').val();
                 var date2 = $('#date2').val();
 
@@ -67,29 +72,33 @@
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
-                        url: "{{ url('getLaporanPenjualan') }}",
+                        url: "{{ url('getPembelianDetail') }}",
                         type: 'GET',
                         data: {
                             date1: date1,
                             date2: date2
                         },
-                        success: function(isDataLaporan) {
-                            var sumall = 0;
-                            var table = $('#penjualan').DataTable();
+                        success: function(isDataPenjualanDetail) {
+                            // var sumall = 0;
+                            var table = $('#Pembelian').DataTable();
                             var rows = table
                                 .rows()
                                 .remove()
                                 .draw();
-                            $.each(isDataLaporan, function(key, datavalue) {
-                                const table = $('#penjualan').DataTable();
-                                var total_pen = datavalue.total_penjualan;
-                                var ttlPenjualan = total_pen.toLocaleString('id-ID', {
+                            $.each(isDataPenjualanDetail, function(key, datavalue) {
+                                const table = $('#Pembelian').DataTable();
+                                var hrg_beliString = datavalue.do_hrg_beli;
+                                var hrg_beli = Number(hrg_beliString);
+
+                                var hrg_beli_currency = hrg_beli.toLocaleString('id-ID', {
                                     style: 'currency',
                                     currency: 'IDR'
                                 });
+
                                 const dataBaru = [
-                                    [datavalue.kd_trs, datavalue.tgl_trs, datavalue.tipe_tarif,
-                                        ttlPenjualan
+                                    [datavalue.do_hdr_supplier, datavalue.do_obat, datavalue.nm_obat,
+                                        hrg_beli_currency, datavalue.do_satuan_pembelian, datavalue
+                                        .do_satuan_pembelian
                                     ],
                                 ]
 
@@ -100,22 +109,24 @@
                                             data[1],
                                             data[2],
                                             data[3],
+                                            data[4],
+                                            data[5],
                                         ]).draw(false)
                                     }
                                 }
 
                                 injectDataBaru()
 
-                                var ttlInt = parseFloat(datavalue.total_penjualan);
-                                sumall += ttlInt;
+                                // var ttlInt = parseFloat(datavalue.total_penjualan);
+                                // sumall += ttlInt;
 
-                                var number = sumall;
-                                var formattedNumber = number.toLocaleString('id-ID', {
-                                    style: 'currency',
-                                    currency: 'IDR'
-                                });
+                                // var number = sumall;
+                                // var formattedNumber = number.toLocaleString('id-ID', {
+                                //     style: 'currency',
+                                //     currency: 'IDR'
+                                // });
 
-                                document.getElementById("grandTTL").innerHTML = formattedNumber;
+                                // document.getElementById("grandTTL").innerHTML = formattedNumber;
 
                                 toastr.success('Data Load Complete!', 'Complete!', {
                                     timeOut: 2000,

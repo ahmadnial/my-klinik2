@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\do_detail_item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -106,5 +107,16 @@ class LapFarmasiController extends Controller
     function pembelianDetail()
     {
         return view('pages.laporan.farmasi.pembelian-detail');
+    }
+
+    function getPembelianDetail(Request $request)
+    {
+        if ($request->ajax()) {
+            $isDataPenjualanDetail = do_detail_item::whereBetween(DB::raw('DATE(created_at)'), [$request->date1, $request->date2])
+                // ->leftJoin('do_hdr', 'do_hdr_kd', '=', 'do_hdr_kd')
+                // ->select('do_hdr')
+                ->get();
+        }
+        return response()->json($isDataPenjualanDetail);
     }
 }

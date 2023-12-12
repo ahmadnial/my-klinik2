@@ -31,8 +31,8 @@ class do_detail_item extends Model
         'nm_obat'
     ];
 
-    public function detailToMstr()
+    public function toHdr()
     {
-        return $this->hasOne(mstr_obat::class, 'do_obat', 'fm_kd_obat');
+        return $this->hasOne(do_hdr::class, 'do_hdr_kd', 'do_hdr_kd');
     }
 }

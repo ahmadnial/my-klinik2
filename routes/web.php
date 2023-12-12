@@ -219,6 +219,7 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
     Route::get('pendapatan-klinik-rekap', [LapFarmasiController::class, 'lapKlinikRekap'])->name('pendapatan-klinik-rekap');
     Route::get('getLapPendapatanKlinik', [LapFarmasiController::class, 'getLapPendapatanKlinik'])->name('getLapPendapatanKlinik');
     Route::get('pembelian-detail', [LapFarmasiController::class, 'pembelianDetail'])->name('pembelian-detail');
+    Route::get('getPembelianDetail', [LapFarmasiController::class, 'getPembelianDetail'])->name('getPembelianDetail');
 });
 
 //Setting / Tools
