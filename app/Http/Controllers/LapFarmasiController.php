@@ -112,11 +112,11 @@ class LapFarmasiController extends Controller
     function getPembelianDetail(Request $request)
     {
         if ($request->ajax()) {
-            $isDataPenjualanDetail = do_detail_item::whereBetween(DB::raw('DATE(created_at)'), [$request->date1, $request->date2])
-                // ->leftJoin('do_hdr', 'do_hdr_kd', '=', 'do_hdr_kd')
-                // ->select('do_hdr')
+            $isDataPenjualanDetail = do_detail_item::whereBetween(DB::raw('DATE(do_detail_item.created_at)'), [$request->date1, $request->date2])
+                ->leftJoin('do_hdr', 'do_detail_item.do_hdr_kd', 'do_hdr.do_hdr_kd')
+                ->select('do_detail_item.*', 'do_hdr.do_hdr_supplier')
                 ->get();
+            return response()->json($isDataPenjualanDetail);
         }
-        return response()->json($isDataPenjualanDetail);
     }
 }

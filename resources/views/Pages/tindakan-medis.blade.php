@@ -1390,7 +1390,12 @@
                     // $.each(isTimelineHistory, function(key, getVal) {
                     var getValue = isTimelineHistory;
                     for (var getVal = 0; getVal < getValue.length; getVal++) {
-                        // $('#tr_tgl_trs').val(getVal.chart_tgl_trs);
+                        var rmvNullS = getValue[getVal].chart_S ?? '';
+                        var rmvNullO = getValue[getVal].chart_O ?? '';
+                        var rmvNullA = getValue[getVal].chart_A ?? '';
+                        var rmvNullAD = getValue[getVal].chart_A_diagnosa ?? '';
+                        var rmvNullP = getValue[getVal].chart_P ?? '';
+
                         $('#tr_kd_reg').val(getValue[getVal].chart_kd_reg);
                         $('#tr_no_mr').val(getValue[getVal].chart_mr);
                         $('#tr_nm_pasien').val(getValue[getVal].chart_nm_pasien);
@@ -1513,18 +1518,18 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                            <textarea id="" class="show_chart_O form-control" style="border:none;" rows="4" readonly>${getValue[getVal].chart_O}</textarea>
+                                            <textarea id="" class="show_chart_O form-control" style="border:none;" rows="4" readonly>${rmvNullO}</textarea>
                                         </div>
                                         <hr>
                                         <div class="show_chart_A form-group">
                                              <button type="disable" id="" class="btn btn-success btn-xs mb-2">Assesment</button>
-                                            <textarea id="" class="show_chart_A form-control mb-3" style="border:none;" rows="2" readonly>${getValue[getVal].chart_A_diagnosa}</textarea>
-                                            <textarea id="" class="show_chart_A form-control" rows="4" style="border:none;" readonly>${getValue[getVal].chart_A}</textarea>
+                                            <textarea id="" class="show_chart_A form-control mb-3" style="border:none;" rows="2" readonly>${rmvNullAD}</textarea>
+                                            <textarea id="" class="show_chart_A form-control" rows="4" style="border:none;" readonly>${rmvNullA}</textarea>
                                         </div>
                                         <hr>
                                         <div class="show_chart_P form-group">
                                              <button type="disable" id="" class="btn btn-danger btn-xs mb-2">Plan</button>
-                                            <textarea id="" class="show_chart_P form-control" rows="4" style="border:none;" readonly>${getValue[getVal].chart_P}</textarea>
+                                            <textarea id="" class="show_chart_P form-control" rows="4" style="border:none;" readonly>${rmvNullP}</textarea>
                                         </div>
                                         <hr>
                                         <div class="tindakan callout callout-danger">

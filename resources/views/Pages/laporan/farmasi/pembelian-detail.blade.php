@@ -95,10 +95,12 @@
                                     currency: 'IDR'
                                 });
 
+                                var createdAt = new Date(datavalue.created_at);
+                                var normalDate = createdAt.toLocaleString();
+                                console.log(normalDate);
                                 const dataBaru = [
                                     [datavalue.do_hdr_supplier, datavalue.do_obat, datavalue.nm_obat,
-                                        hrg_beli_currency, datavalue.do_satuan_pembelian, datavalue
-                                        .do_satuan_pembelian
+                                        hrg_beli_currency, datavalue.do_satuan_pembelian, normalDate
                                     ],
                                 ]
 

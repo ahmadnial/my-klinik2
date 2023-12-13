@@ -32,7 +32,9 @@ class penjualanController extends Controller
 
         $isListRegResep = trs_chart_resep::select("kd_trs", "chart_id", "kd_reg", "mr_pasien", "nm_pasien")->distinct()->where('isimplementasi', '=', '0')->get();
         $dateNow = Carbon::now()->format("Y-m-d");
-        $isListPenjualan = tp_hdr::latest()->get();
+        $monthNow = Carbon::now()->format("m");
+        $yearNow = Carbon::now()->format("Y");
+        $isListPenjualan = tp_hdr::whereyear('tgl_trs', '=', $yearNow)->whereMonth('tgl_trs', '=', $monthNow)->latest()->get();
         return view('Pages.penjualan', [
             'noRef' => $noRef,
             'isListPenjualan' => $isListPenjualan,

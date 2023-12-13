@@ -17,7 +17,9 @@
                                 {{-- <th>Tanggal</th> --}}
                                 <th>Tanggal</th>
                                 <th>No Transaksi</th>
+                                <th>Layanan Penjualan</th>
                                 <th>Pasien</th>
+                                <th>No.RM</th>
                                 <th>Tipe Tarif</th>
                                 <th>Jml Penjualan</th>
                                 <th>Act</th>
@@ -30,20 +32,17 @@
                                     {{-- <td id="">{{ $tz->created_at }}</td> --}}
                                     <td id="">{{ $lp->created_at }}</td>
                                     <td id="">{{ $lp->kd_trs }}</td>
-                                    {{-- @php
-                                        $cekPasien = echo $lp->nm_pasien;
-                                    @endphp
-                                    @if ($cekPasien == '') --}}
+                                    <td id="">
+                                        @if ($lp->no_mr == null)
+                                            <span class="badge badge-danger">Apotek</span>
+                                        @else
+                                            <span class="badge badge-primary">Resep Klinik</span>
+                                        @endif
+                                    </td>
+                                    <td id="">{{ $lp->no_mr }}</td>
                                     <td id="">{{ $lp->nm_pasien }}</td>
-                                    {{-- @else
-                                        <td id="">{{ 'Penjualan A' }}</td>
-                                    @endif --}}
                                     <td id="">{{ $lp->tipe_tarif }}</td>
                                     <td id="">@currency($lp->total_penjualan)</td>
-                                    {{-- <td id="">@currency($tz->fm_hrg_beli)</td>
-                                    <td id="">@currency($tz->fm_hrg_jual_non_resep)</td>
-                                    <td id="">@currency($tz->fm_hrg_jual_resep)</td>
-                                    <td id="">@currency($tz->fm_hrg_jual_nakes)</td> --}}
                                     <td><button class="btn btn-xs btn-info" data-toggle="modal" data-target="#EditObat"
                                             onclick="getDetailPen(this)" data-kd_trs={{ $lp->kd_trs }}>Detail</button>
                                         {{-- <button class="btn btn-xs btn-danger" data-toggle="modal"

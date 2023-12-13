@@ -195,7 +195,22 @@
 
     <!-- The modal Edit -->
     <div class="modal xeditmodal fade" id="EditDO">
-
+        <div class="modal-dialog modal-xl fullmodal">
+            <div class="modal-content document">
+                <div class="modal-header">
+                    <h4 class="modal-title"><i class="fa fa-truck">&nbsp;</i>Penerimaan Barang</h4>
+                    <button type="button" class="close btn btn-danger" id="EditDOClose" data-dismiss="close"
+                        aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="POST" action="{{ url('edit-delivery-order') }}" onkeydown="return event.key != 'Enter';">
+                    @csrf
+                    <div class="modal-body" id="AppendEditDO">
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
 
@@ -785,6 +800,7 @@
                 // modal Edit DO
                 function getDetailDO(tx) {
                     $('#EditDO').modal('show');
+                    $('#AppendEditDO').empty();
                     toastr.info('Opened!', 'Data Penerimaan Barang', {
                         timeOut: 2000,
                         preventDuplicates: true,
@@ -792,14 +808,7 @@
                     });
                     // $(".SelectItemObat").on("click", function() {
                     var kd_do = $(tx).data('kd_do');
-                    // var getKdDO = $(tx).data('kd_do');
-                    // var getNoFaktur = $(tx).data('no_faktur');
-                    // var getSupplier = $(tx).data('supplier');
-                    // var getTglTempo = $(tx).data('tgl_tempo');
-                    // var getKdObat = $(tx).data('kd_obat');
-                    // var getNmObat = $(tx).data('nm_obat');
-                    // for (let y = 0; y < getKdObat.length; y++) {
-                    // var kd_do = $('#efm_kd_obat').val();
+
                     $.ajax({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -812,10 +821,16 @@
                         success: function(isListDO) {
                             $.each(isListDO, function(key, datavalue) {
                                 const toDetail = datavalue.hdr_to_detail;
+                                var totalFaktur = Number(datavalue.do_hdr_total_faktur);
+
+                                var totalFakturCurrency = totalFaktur.toLocaleString('id-ID', {
+                                    style: 'currency',
+                                    currency: 'IDR'
+                                });
                                 let itemObat = "";
                                 for (i in toDetail) {
                                     itemObat += `
-                                        <tr id="R${++rowIdx}">
+                                        <tr>
                                             <input type="hidden" class="searchObat" id="do_obat"
                                                     name="do_obat[]" value="${toDetail[i].do_obat}" readonly>
 
@@ -828,7 +843,7 @@
                                                         name="do_satuan_pembelian[]" value="${toDetail[i].do_satuan_pembelian}" readonly>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="do_qty form-control" id="do_qty" onKeyUp="getQTY(this)" name="do_qty[]" value="${toDetail[i].do_qty}">
+                                                    <input type="text" class="do_qty form-control" id="do_qty" onKeyUp="getQTY(this)" name="do_qty[]" value="${toDetail[i].do_qty}" readonly>
                                                 </td>
                                                 <td>
                                                     <input type="text" class="do_isi_pembelian form-control" id="do_isi_pembelian"
@@ -843,43 +858,32 @@
                                                     value="${toDetail[i].do_hrg_beli}" readonly>
                                                 </td>
                                                 <td>
-                                                <input type="text" class="form-control" name="do_diskon_prosen" id="do_diskon_prosen" onKeyDown="discProsen(this)" value="${toDetail[i].do_diskon_prosen}">
+                                                <input type="text" class="form-control" name="do_diskon_prosen" id="do_diskon_prosen" onKeyDown="discProsen(this)" value="${toDetail[i].do_diskon_prosen}" readonly>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" id="do_diskon" name="do_diskon[]" onKeyDown="discRp(this)" value="${toDetail[i].do_diskon}">
+                                                    <input type="text" class="form-control" id="do_diskon" name="do_diskon[]" onKeyDown="discRp(this)" value="${toDetail[i].do_diskon}" readonly>
                                                 </td>
                                                 <td>
-                                                    <select type="text" class="form-control" id="do_pajak" name="do_pajak[]" onClick="pajakPPN(this)">
+                                                    <select type="text" class="form-control" id="do_pajak" name="do_pajak[]" onClick="pajakPPN(this)" readonly>
                                                         <option value="${toDetail[i].do_pajak}">${toDetail[i].do_pajak}</option>
                                                         <option value="">Tanpa Pajak</option>
                                                         <option value="11">PPN 11%</option>
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <input type="date" class="form-control" id="do_tgl_exp" name="do_tgl_exp[]" value="${toDetail[i].do_tgl_exp}">
+                                                    <input type="date" class="form-control" id="do_tgl_exp" name="do_tgl_exp[]" value="${toDetail[i].do_tgl_exp}" readonly>
                                                 </td>
                                                 <td>
                                                     <input type="text" class="form-control" id="do_batch_number"
-                                                        name="do_batch_number[]" value="${toDetail[i].do_batch_number}">
+                                                        name="do_batch_number[]" value="${toDetail[i].do_batch_number}" readonly>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="do_sub_total form-control" id="do_sub_total" name="do_sub_total[]" value="${toDetail[i].do_sub_total}">
+                                                    <input type="text" class="do_sub_total form-control" id="do_sub_total" name="do_sub_total[]" value="${toDetail[i].do_sub_total}" readonly>
                                                 </td>
                                         </tr>
                                         `;
                                 }
-                                $("#EditDO").append(`
-                                <div class="modal-dialog modal-xl fullmodal">
-                                    <div class="modal-content document">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title"><i class="fa fa-truck">&nbsp;</i>Penerimaan Barang</h4>
-                                        <button type="button" class="close btn btn-danger" id="EditDOClose" data-dismiss="xeditmodal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <form method="POST" action="{{ url('edit-delivery-order') }}" onkeydown="return event.key != 'Enter';">
-                                        @csrf
-                                        <div class="modal-body">
+                                $("#AppendEditDO").append(`
                                             <div class="row">
                                                 <div class="form-group col-sm-2">
                                                     <label for="">Nomor Ref</label>
@@ -889,46 +893,37 @@
                                                 <div class="form-group col-sm-3">
                                                     <label for="">Nomor Faktur</label>
                                                     <input type="text" class="form-control" name="edo_hdr_no_faktur"
-                                                        id="edo_hdr_no_faktur" value="${datavalue.do_hdr_no_faktur}" placeholder="Input Nomor Faktur">
+                                                        id="edo_hdr_no_faktur" value="${datavalue.do_hdr_no_faktur}" placeholder="Input Nomor Faktur" readonly>
                                                 </div>
                                                 <div class="form-group col-sm-2">
                                                     <label for="">Supplier</label>
-                                                    <select class="edo_hdr_supplier form-control" id="edo_hdr_supplier"
-                                                        style="width: 100%;" name="edo_hdr_supplier">
-                                                        <option value="${datavalue.do_hdr_supplier}">${datavalue.do_hdr_supplier}</option>
-                                                        @foreach ($supplier as $sp)
-                                                            <option value="{{ $sp->fm_nm_supplier }}">{{ $sp->fm_nm_supplier }}</option>
-                                                        @endforeach
-                                                    </select>
+                                                    <input class="edo_hdr_supplier form-control" id="edo_hdr_supplier"
+                                                        style="width: 100%;" name="edo_hdr_supplier" value="${datavalue.do_hdr_supplier}" readonly>
                                                 </div>
                                                 <div class="form-group col-sm-2">
                                                     <label for="">Tanggal Jatuh Tempo</label>
                                                     <input type="date" class="form-control" name="edo_hdr_tgl_tempo"
-                                                        id="edo_hdr_tgl_tempo" value="${datavalue.do_hdr_tgl_tempo}">
+                                                        id="edo_hdr_tgl_tempo" value="${datavalue.do_hdr_tgl_tempo}" readonly>
                                                 </div>
                                                 <input type="hidden" id="euser" name="euser" value="tes">
                                             </div>
-                                            <div class="">
-                                                <button type="button" id="searchObat" class="btn btn-info">tambah</button>
-                                            </div>
-                                        </div>
+                                        
 
                                         {{-- <hr> --}}
 
                                         <table class="table" style="width: 100%">
                                             <thead>
                                                 <tr>
-                                                    {{-- <th>Kode Obat</th> --}}
-                                                    <th>Obat</th>
+                                                   <th width="250px">Obat</th>
                                                     <th>Sat.Beli</th>
                                                     <th>Qty</th>
                                                     <th>Isi</th>
-                                                    <th>Sat.Jual</th>
+                                                    <th width="50px">Sat.Jual</th>
                                                     <th>Hrg.Beli</th>
                                                     <th>Disc %</th>
                                                     <th>Discount</th>
                                                     <th>Pajak</th>
-                                                    <th>Tgl.Exp</th>
+                                                    <th width="60px">Tgl.Exp</th>
                                                     <th>Batch Number</th>
                                                     <th>Sub Total</th>
                                                 </tr>
@@ -942,11 +937,8 @@
                                             <div class="float-right col-4">
                                                 <div class="float-right col-4">
                                                     <input type="text" class="form-control float-right" name="do_hdr_total_faktur"
-                                                        id="do_hdr_total_faktur" value="${datavalue.do_hdr_total_faktur}" readonly>
+                                                        id="do_hdr_total_faktur" value="${totalFakturCurrency}" readonly>
                                                 </div>
-                                                {{-- <div class="float-right">
-                                                            <button class="btn btn-xs btn-info" id="addRow">Tambah Barang</button>
-                                                        </div> --}}
                                             </div>
                                             <br>
                                             <br>
@@ -956,9 +948,7 @@
                                                         class="fa fa-save"></i>&nbsp;
                                                 </button> --}}
                                             </div>
-                                        </form>
-                                    </div>
-                                </div>`);
+                                     `);
                             })
                             // return window.location.href = "{{ url('mstr-obat') }}";
                         }
