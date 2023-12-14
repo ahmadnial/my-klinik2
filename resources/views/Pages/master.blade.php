@@ -40,6 +40,9 @@
     <link rel="stylesheet" href="{{ asset('src/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('src/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('src/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+    <style>
+
+    </style>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed">
@@ -73,31 +76,18 @@
                 <!-- Notifications Dropdown Menu -->
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
-                        <i class="fa-solid fa-gear"></i>
-                        <span class="badge badge-warning navbar-badge"></span>
+                        <i class="fa fa-user">&nbsp;{{ Auth::user()->name }}</i>
+                        {{-- <span class="badge navbar-badge">{{ Auth::user()->name }}</span> --}}
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        {{-- <span class="dropdown-item dropdown-header">15 Notifications</span> --}}
-                        <div class="dropdown-divider"></div>
-                        {{ Auth::user()->name }}
-                        <form action="/logout" method="post">
-                            @csrf
-                            <button type="submit" class="btn btn-primary">Logout</button>
-                            {{-- <span class="float-right text-muted text-sm">3 mins</span> --}}
-                        </form>
-                        {{-- <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-users mr-2"></i> 8 friend requests
-                            <span class="float-right text-muted text-sm">12 hours</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-file mr-2"></i> 3 new reports
-                            <span class="float-right text-muted text-sm">2 days</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
-                    </div> --}}
+                        <div class="btn-group">
+                            <div class="dropdown-divider"></div>
+                            <form action="/logout" method="post">
+                                @csrf
+                                <button type="submit" class="btn btn-xs btn-primary">Logout</button>
+                            </form>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" data-widget="fullscreen" href="#" role="button">
@@ -203,7 +193,7 @@
                             </ul>
                         </li>
                         {{-- @if (auth()->user()->role_id == '2' || '1') --}}
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="{{ url('antrian') }}" class="nav-link">
                                 <i class="nav-icon far fa-calendar-alt"></i>
                                 <p>
@@ -211,7 +201,7 @@
                                     <span class="badge badge-info right">2</span>
                                 </p>
                             </a>
-                        </li>
+                        </li> --}}
 
                         <li class="nav-item">
                             <a href="{{ url('assesment-awal') }}" class="nav-link">
@@ -637,6 +627,11 @@
                 "responsive": false,
             });
         });
+
+        function menuToggle() {
+            const toggleMenu = document.querySelector(".menu");
+            toggleMenu.classList.toggle("active");
+        }
     </script>
     @stack('scripts')
 </body>

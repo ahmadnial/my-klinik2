@@ -84,9 +84,15 @@
                                     currency: 'IDR'
                                 });
 
+                                var hrg_beli = Number(datavalue.fm_hrg_beli_detail);
+                                var hrg_beli_currency = hrg_beli.toLocaleString('id-ID', {
+                                    style: 'currency',
+                                    currency: 'IDR'
+                                });
+
                                 const dataBaru = [
                                     [datavalue.kd_obat, datavalue.nm_obat, datavalue.qty, datavalue
-                                        .satuan, datavalue.fm_hrg_beli_detail, formattedNumber
+                                        .satuan, hrg_beli_currency, formattedNumber
                                     ],
                                 ]
 
