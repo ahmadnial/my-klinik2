@@ -65,20 +65,20 @@
                                     </div>
                                 </div>
                                 <!-- <div class="row">
-                                                                            <label class="col-3">Dokter Pemeriksa:&ensp;</label>
-                                                                            <div class="col">
-                                                                                <input class="form-control" type="text" style="width: 20em;" name="fs_dokter_assessment" />
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="row">
-                                                                            <label class="col-3">Waktu Pengkajian:</label>
-                                                                            <div class="col">
-                                                                                <label class="input-group" style="width:15em">
-                                                                                    <input type="time" name="ft_wkt_pngkjian" class="form-control" step="1">
-                                                                                    <span class="input-group-append input-group-text">WIB</span>
-                                                                                </label>
-                                                                            </div>
-                                                                        </div> -->
+                                                                                        <label class="col-3">Dokter Pemeriksa:&ensp;</label>
+                                                                                        <div class="col">
+                                                                                            <input class="form-control" type="text" style="width: 20em;" name="fs_dokter_assessment" />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <label class="col-3">Waktu Pengkajian:</label>
+                                                                                        <div class="col">
+                                                                                            <label class="input-group" style="width:15em">
+                                                                                                <input type="time" name="ft_wkt_pngkjian" class="form-control" step="1">
+                                                                                                <span class="input-group-append input-group-text">WIB</span>
+                                                                                            </label>
+                                                                                        </div>
+                                                                                    </div> -->
                             </div>
                         </div>
                     </div>
@@ -86,6 +86,7 @@
 
                     <div class="card card-default f-group">
                         <div class="card-heading">
+                            {{-- <h5 class="sub-ttl">KELUHAN UTAMA</h5> --}}
                             <h5 class="sub-ttl">KELUHAN UTAMA</h5>
                         </div>
                         <div class="card-body">
@@ -357,9 +358,9 @@
                     </div>
                     <div class="f-group">
                         <!-- <h5 class="sub-ttl">
-                                                                        RENCANA TINDAK LANJUT
-                                                                    </h5>
-                                                                    <textarea name="fs_rcn_tindak_lanjut" rows="3" class="form-control"></textarea> -->
+                                                                                    RENCANA TINDAK LANJUT
+                                                                                </h5>
+                                                                                <textarea name="fs_rcn_tindak_lanjut" rows="3" class="form-control"></textarea> -->
                         <div class="">
                             <div>
                                 <h4 class="group-ttl">RENCANA TINDAK LANJUT</h4>
@@ -440,20 +441,20 @@
                                             </tr>
 
                                             <!-- <tr>
-                                                                                            <td colspan="2">
-                                                                                                <label for="">Konsul Ke</label>
-                                                                                                <div>
-                                                                                                    <label class="kt-checkbox kt-checkbox-outline">
-                                                                                                        <input type="checkbox" name="fb_konsul1" value="1">
-                                                                                                        <span></span>Ahli Gizi
-                                                                                                    </label>
-                                                                                                    <label class="kt-checkbox kt-checkbox-outline">
-                                                                                                        <input type="checkbox" name="fb_konsul2" value="1">
-                                                                                                        <span></span>Rehab Medis
-                                                                                                    </label>
-                                                                                                </div>
-                                                                                            </td>
-                                                                                        </tr> -->
+                                                                                                        <td colspan="2">
+                                                                                                            <label for="">Konsul Ke</label>
+                                                                                                            <div>
+                                                                                                                <label class="kt-checkbox kt-checkbox-outline">
+                                                                                                                    <input type="checkbox" name="fb_konsul1" value="1">
+                                                                                                                    <span></span>Ahli Gizi
+                                                                                                                </label>
+                                                                                                                <label class="kt-checkbox kt-checkbox-outline">
+                                                                                                                    <input type="checkbox" name="fb_konsul2" value="1">
+                                                                                                                    <span></span>Rehab Medis
+                                                                                                                </label>
+                                                                                                            </div>
+                                                                                                        </td>
+                                                                                                    </tr> -->
                                         </tbody>
                                     </table>
                                 </div>
@@ -462,71 +463,71 @@
 
 
                         <!-- <div class="f-group">
-                                                                        <label for="">Rawat Inap</label>
-                                                                        <div class="row">
-                                                                            <label class="kt-radio kt-radio-outline col-lg-2 col-sm-4">
-                                                                                <input type="radio" id="fb_ri-tdk" name="fb_ri" value="0">Tidak
-                                                                                <span></span>
-                                                                            </label>
-                                                                            <div class="col-lg-4 col-sm-8 form-inline">
-                                                                                <label class="kt-radio kt-radio-outline">
-                                                                                    <input type="radio" id="fb_ri-ya" name="fb_ri" value="1">Ya,
-                                                                                    <span></span>
-                                                                                </label>
-                                                                                <div class="form-inline" id="ruang">
-                                                                                    <label for="">Ruang&nbsp;</label>
-                                                                                    <input type="text" name="fs_ruang_rwt" class="form-control">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div> -->
+                                                                                    <label for="">Rawat Inap</label>
+                                                                                    <div class="row">
+                                                                                        <label class="kt-radio kt-radio-outline col-lg-2 col-sm-4">
+                                                                                            <input type="radio" id="fb_ri-tdk" name="fb_ri" value="0">Tidak
+                                                                                            <span></span>
+                                                                                        </label>
+                                                                                        <div class="col-lg-4 col-sm-8 form-inline">
+                                                                                            <label class="kt-radio kt-radio-outline">
+                                                                                                <input type="radio" id="fb_ri-ya" name="fb_ri" value="1">Ya,
+                                                                                                <span></span>
+                                                                                            </label>
+                                                                                            <div class="form-inline" id="ruang">
+                                                                                                <label for="">Ruang&nbsp;</label>
+                                                                                                <input type="text" name="fs_ruang_rwt" class="form-control">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div> -->
                         <!-- <div class="f-group">
-                                                                        <label for="">Tindakan lanjutan di</label>
-                                                                        <div class="row">
-                                                                            <label class="kt-radio kt-radio-outline col-lg-3 col-sm-6">
-                                                                                <input type="radio" id="fb_tindakan1" name="fb_r_tindakan" value="0">Kamar Operasi
-                                                                                <span></span>
-                                                                            </label>
-                                                                            <label class="kt-radio kt-radio-outline col-lg-3 col-sm-6">
-                                                                                <input type="radio" id="fb_tindakan2" name="fb_r_tindakan" value="1">Kamar Bersalin
-                                                                                <span></span>
-                                                                            </label>
-                                                                            <label class="kt-radio kt-radio-outline col-lg-3 col-sm-6">
-                                                                                <input type="radio" id="fb_tindakan3" name="fb_r_tindakan" value="2">Kamar HD
-                                                                                <span></span>
-                                                                            </label>
-                                                                            <label class="kt-radio kt-radio-outline col-lg-3 col-sm-6">
-                                                                                <input type="radio" id="fb_tindakan4" name="fb_r_tindakan" value="3">Lainnya
-                                                                                <span></span>
-                                                                            </label>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="f-group">
-                                                                        <label for="">Rujuk Ke</label>
-                                                                        <input type="text" name="fs_rujuk_ke" class="form-control">
-                                                                    </div>
-                                                                    <div class="f-group">
-                                                                        <label for="">Dipulangkan</label>
-                                                                        <div class="row">
-                                                                            <label class="kt-radio kt-radio-outline col">
-                                                                                <input type="radio" name="fb_pulang" value="0">Diijinkan Dokter
-                                                                                <span></span>
-                                                                            </label>
-                                                                            <label class="kt-radio kt-radio-outline col">
-                                                                                <input type="radio" name="fb_pulang" value="1">Meninggal
-                                                                                <span></span>
-                                                                            </label>
-                                                                            <label class="kt-radio kt-radio-outline col">
-                                                                                <input type="radio" name="fb_pulang" value="2">Melarikan Diri
-                                                                                <span></span>
-                                                                            </label>
-                                                                            <label class="kt-radio kt-radio-outline col">
-                                                                                <input type="radio" name="fb_pulang" value="3">APS
-                                                                                <span></span>
-                                                                            </label>
-                                                                        </div>
-                                                                </div>
-                                                            </div> -->
+                                                                                    <label for="">Tindakan lanjutan di</label>
+                                                                                    <div class="row">
+                                                                                        <label class="kt-radio kt-radio-outline col-lg-3 col-sm-6">
+                                                                                            <input type="radio" id="fb_tindakan1" name="fb_r_tindakan" value="0">Kamar Operasi
+                                                                                            <span></span>
+                                                                                        </label>
+                                                                                        <label class="kt-radio kt-radio-outline col-lg-3 col-sm-6">
+                                                                                            <input type="radio" id="fb_tindakan2" name="fb_r_tindakan" value="1">Kamar Bersalin
+                                                                                            <span></span>
+                                                                                        </label>
+                                                                                        <label class="kt-radio kt-radio-outline col-lg-3 col-sm-6">
+                                                                                            <input type="radio" id="fb_tindakan3" name="fb_r_tindakan" value="2">Kamar HD
+                                                                                            <span></span>
+                                                                                        </label>
+                                                                                        <label class="kt-radio kt-radio-outline col-lg-3 col-sm-6">
+                                                                                            <input type="radio" id="fb_tindakan4" name="fb_r_tindakan" value="3">Lainnya
+                                                                                            <span></span>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="f-group">
+                                                                                    <label for="">Rujuk Ke</label>
+                                                                                    <input type="text" name="fs_rujuk_ke" class="form-control">
+                                                                                </div>
+                                                                                <div class="f-group">
+                                                                                    <label for="">Dipulangkan</label>
+                                                                                    <div class="row">
+                                                                                        <label class="kt-radio kt-radio-outline col">
+                                                                                            <input type="radio" name="fb_pulang" value="0">Diijinkan Dokter
+                                                                                            <span></span>
+                                                                                        </label>
+                                                                                        <label class="kt-radio kt-radio-outline col">
+                                                                                            <input type="radio" name="fb_pulang" value="1">Meninggal
+                                                                                            <span></span>
+                                                                                        </label>
+                                                                                        <label class="kt-radio kt-radio-outline col">
+                                                                                            <input type="radio" name="fb_pulang" value="2">Melarikan Diri
+                                                                                            <span></span>
+                                                                                        </label>
+                                                                                        <label class="kt-radio kt-radio-outline col">
+                                                                                            <input type="radio" name="fb_pulang" value="3">APS
+                                                                                            <span></span>
+                                                                                        </label>
+                                                                                    </div>
+                                                                            </div>
+                                                                        </div> -->
                     </div>
                 </div>
                 <div class="col-md">
@@ -678,9 +679,9 @@
                                 </div>
                                 <div>
                                     <!-- <div class="col-md-4 pull-left">
-                                                                                <img style="max-width:200px;height:100px;" />
-                                                                                <img src="./ttd/ttd.png" alt="contoh3" width="150" height="150" class="center" />
-                                                                            </div> -->
+                                                                                            <img style="max-width:200px;height:100px;" />
+                                                                                            <img src="./ttd/ttd.png" alt="contoh3" width="150" height="150" class="center" />
+                                                                                        </div> -->
                                     <div class="text-center">
                                         <img id="tanda_tangan_dokter" style="max-width:200px;height:100px;" />
                                     </div>

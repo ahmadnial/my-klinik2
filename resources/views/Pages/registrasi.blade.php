@@ -58,9 +58,9 @@
                                     </td>
                                     <td>
                                         @if ($item->fs_tgl_kunjungan_terakhir != '')
-                                            <button class="btn btn-xs btn-success">Pasien Lama</button>
+                                            <span class="badge badge-primary">Pasien Lama</span>
                                         @else
-                                            <button class="btn btn-xs btn-info">Pasien Baru</button>
+                                            <span class="badge badge-warning text-white">Pasien Baru</span>
                                         @endif
                                     </td>
                                     <td>
