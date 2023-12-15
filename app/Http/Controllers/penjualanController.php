@@ -218,4 +218,9 @@ class penjualanController extends Controller
 
         return response()->json($isViewDetailPenjualan);
     }
+
+    public function cetakNota()
+    {
+        return view('Pages.nota');
+    }
 }

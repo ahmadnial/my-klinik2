@@ -142,14 +142,12 @@ class registrasiController extends Controller
     }
 
 
-    public function update(Request $request, string $id)
+    public function voidRegister(Request $request)
     {
-        //
-    }
+        $delete =  DB::table('ta_registrasi')->where('fr_kd_reg', $request->regID)->get();
+        dd($delete);
+        $delete->delete();
 
-
-    public function destroy(string $id)
-    {
-        //
+        return back();
     }
 }

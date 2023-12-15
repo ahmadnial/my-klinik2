@@ -66,7 +66,9 @@
                                     <td>
                                         <button class="btn btn-xs btn-success"
                                             data-toggle="modal"data-target="#Edit{{ $item->fr_kd_reg }}">Edit</button>
-                                        <button class="btn btn-xs btn-danger">Void</button>
+                                        <button class="btn btn-xs btn-danger" onclick="voidReg(this)"
+                                            data-kodereg="{{ $item->fr_kd_reg }}"
+                                            data-namereg="{{ $item->fr_nama }}">Void</button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -501,6 +503,37 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="voidReg" role="dialog" aria-labelledby="modalLabelLarge" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modalLabelLarge">Konfirmasi Void Registrasi</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    {{-- <form action="{{ url('') }}" method="POST">
+                        @csrf --}}
+                    <div class="modal-body">
+                        <div class="row">
+                            <input type="hidden" class="form-control" style="border: none" id="getRegVoid"
+                                name="getRegVoid" readonly>
+                            <span>Void Registrasi:</span>
+                            <input type="text" class="form-control" style="border: none" id="showValueName" readonly>
+                        </div>
+                        <div class="modal-footer">
+                            {{-- <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button> --}}
+                            <button type="submit" onclick="executeVoidReg()" class="btn btn-danger"><i
+                                    class="fa fa-trash"></i> &nbsp;
+                                Void</button>
+                        </div>
+                    </div>
+                    {{-- </form> --}}
+                </div>
+            </div>
+        </div>
     @endforeach
 @endsection
 
@@ -745,5 +778,39 @@
                 alert('Please fill the field !');
             }
         };
+
+        // Void Chart
+        function voidReg(d) {
+            $('#voidReg').modal('show');
+            var kdReg = $(d).data('kodereg');
+            var nameReg = $(d).data('namereg');
+            // alert(kdReg)
+            $('#getRegVoid').val(kdReg)
+            $('#showValueName').val(nameReg)
+        }
+
+        function executeVoidReg() {
+            let regID = $('#getRegVoid').val();
+            // alert(regID)
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ url('voidRegister') }}/" + regID,
+                type: 'POST',
+                data: {
+                    'fr_kd_reg': regID
+                },
+                success: function(isChartID) {
+                    toastr.success('Deleted!', 'Chart Berhasil Dihapus!', {
+                        timeOut: 2000,
+                        preventDuplicates: true,
+                        positionClass: 'toast-top-right',
+                    });
+                    getTimeline();
+                }
+            })
+
+        }
     </script>
 @endpush

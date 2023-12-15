@@ -15,6 +15,7 @@ use App\Http\Controllers\TindakanController;
 use App\Http\Controllers\WilayahController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\settingController;
+use App\Http\Controllers\RedirectController;
 
 // Route::group(['middleware' => 'guest'], function () {
 Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -22,6 +23,7 @@ Route::post('/ProsesLogin', [AuthController::class, 'ProsesLogin']);
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/redirect', [RedirectController::class, 'cek']);
 Route::post('/logout', [AuthController::class, 'logout']);
+
 // Route::get('/redirect', [RedirectController::class, 'cek']);
 // });
 // Route::get('/antrian', [HomeController::class, 'antrian']);
@@ -47,6 +49,7 @@ Route::group(['middleware' => ['auth', 'checkrole:1,5']], function () {
     Route::post('create-dasos', [registrasiController::class, 'store'])->name('create-dasos');
     Route::post('edit-dasos', [registrasiController::class, 'editDasos'])->name('edit-dasos');
     Route::get('delete-dasos', [registrasiController::class, 'deleteDasos'])->name('delete-dasos');
+    Route::post('voidRegister/{regID}', [registrasiController::class, 'voidRegister'])->name('voidRegister');
 });
 
 
@@ -172,6 +175,7 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
     Route::post('add-penjualan', [penjualanController::class, 'penjualanCreate'])->name('add-penjualan');
     Route::get('getListOrderResep/{kd_trs}', [penjualanController::class, 'getListOrderResep'])->name('getListOrderResep');
     Route::get('getDetailPenjualan/{kd_trs}', [penjualanController::class, 'getDetailPenjualan'])->name('getDetailPenjualan');
+    Route::get('nota', [penjualanController::class, 'cetakNota'])->name('nota');
 });
 
 // VIEW TRS-KASIR-POLI

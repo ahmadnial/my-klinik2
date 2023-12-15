@@ -844,6 +844,13 @@
                         <h4 class="card-title w-100">
                             History Pemeriksaan
                         </h4>
+                        <div class="float-right" style="align-content:inherit">
+                            <!-- Default switch -->
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="showTimeline">
+                                <label class="custom-control-label" for="customSwitches">Timeline</label>
+                            </div>
+                        </div>
                     </div>
                 </a>
                 <div id="" class="isTimeline collapse show bg-light" data-parent="#accordion">
