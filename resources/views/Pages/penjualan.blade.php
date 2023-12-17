@@ -15,7 +15,7 @@
                         <thead class="">
                             <tr>
                                 {{-- <th>Tanggal</th> --}}
-                                <th>Tanggal</th>
+                                <th>Tanggal Transaksi</th>
                                 <th>No Transaksi</th>
                                 <th>Layanan Penjualan</th>
                                 <th>Pasien</th>
@@ -29,8 +29,8 @@
                         <tbody>
                             @foreach ($isListPenjualan as $lp)
                                 <tr>
-                                    {{-- <td id="">{{ $tz->created_at }}</td> --}}
-                                    <td id="">{{ $lp->created_at }}</td>
+                                    <td id="">{{ $lp->created_at->format('D, d M Y h:i A') }}</td>
+                                    {{-- <td id="">{{ $lp->created_at }}</td> --}}
                                     <td id="">{{ $lp->kd_trs }}</td>
                                     <td id="">
                                         @if ($lp->no_mr == null)

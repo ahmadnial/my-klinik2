@@ -25,7 +25,71 @@
                 left: unset;
             }
         }
+
+        /* The switch - the box around the slider */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        /* Hide default HTML checkbox */
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        /* The slider */
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked+.slider {
+            background-color: #2196F3;
+        }
+
+        input:focus+.slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked+.slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
     </style>
+
 
     <section class="splitRight col-lg content" id="Right">
         <div class="card">
@@ -844,12 +908,22 @@
                         <h4 class="card-title w-100">
                             History Pemeriksaan
                         </h4>
-                        <div class="float-right" style="align-content:inherit">
-                            <!-- Default switch -->
-                            <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" id="showTimeline">
-                                <label class="custom-control-label" for="customSwitches">Timeline</label>
-                            </div>
+                        <div class="float-right">
+                            {{-- <div class="p-2" id="panelSwitchTimeline">
+                                <span class="kt-switch kt-switch--sm kt-switch--icon kt-switch--outline kt-switch--info">
+                                    <label>
+                                        <input type="checkbox" class="scope" id="tLine" onclick="Timeline()"
+                                            value="340302100192967">
+                                        <span></span>
+                                        <label style="padding: 5px 0px 0 8px;">Timeline</label>
+                                    </label>
+                                </span>
+                            </div> --}}
+                            <label class="switch">
+                                <input type="checkbox" id="ShohTimeline">
+                                <span class="slider round"></span>
+                            </label>
+                            <b for="">Timeline</b>
                         </div>
                     </div>
                 </a>
@@ -863,6 +937,15 @@
 
 @push('scripts')
     <script>
+        $('input:checkbox').change(
+            function() {
+                if ($(this).is(':checked')) {
+                    $(".isTimeline").hide();
+
+                } else {
+                    $(".isTimeline").show();
+                }
+            });
         // Ajax Search Registrasi
         $('#tr_kd_reg').select2({
             placeholder: 'Search Registrasi',
@@ -1453,7 +1536,6 @@
                     <div class="left card-body">
                         <div class="row">
                             <div class="col">
-                            
                                 <div class="col" id="accordion">
                                     <div class="card card-purple card-outline">
                                         <a class="d-block w-100" data-toggle="collapse" href="#collapse${x++}">
