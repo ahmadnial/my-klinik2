@@ -9,139 +9,12 @@
 
         .side-panel {
             /* position: inherit; */
-            background: #f3f1f5;
+            background: #ffffff;
             overflow-x: hidden;
             padding: 8px 0;
         }
     </style>
-    <div class="col-3 card search-px">
-        <div class="card-body">
-            <div class="form-inline">
-                <select name="ts_kd_reg" id="ts_kd_reg" class="form-control col-8 mr-3" style="width: 100%;">
-                    <option value=""></option>
-                    @foreach ($isRegActive as $reg)
-                        <option value="{{ $reg->fr_kd_reg }}">{{ $reg->fr_kd_reg . '-' . $reg->fr_nama }} </option>
-                    @endforeach
-                </select>
-                {{-- <div class=""> --}}
-                <div class="accordion m-1 form-inline accordion-toggle-arrow text-light" id="DetailPasien"
-                    style="position:relative; margin-right:0px; z-index:500;">
-                    <!-- min-width:300px; max-width:500px -->
-                    <div class="card" style="border:none; margin-right:0px;">
-                        <!-- min-width:300px;  -->
-                        <div class="form-control card-header row" name="PasienHdr" style="background-color:#a07ccf">
-                            <span data-toggle="tooltip" title="Clear" class="text-center">
-                                <div class="kt-link pointer text-danger ml-2" name="clearPinnedPasienHdr"
-                                    style="margin-top: 7px; display: none;">
-                                    <i class="fa fa-times-circle clearPinPsnHdr"></i>
-                                </div>
-                            </span>
-                            <div class="text-light collapsed pointer" id="collapseCoverPasien" data-toggle="collapse"
-                                data-target="#DetPsn" aria-expanded="false" aria-controls="DetPsn"
-                                style="background-color:#a07ccf; border: none;">
-                                {{-- style="justify-content: space-between; padding: 6px 13px 7px 0px"> --}}
-                                <label style="width: 2vw;overflow: hidden;text-overflow: " name="nmPasienHdr"
-                                    id="nmPasienHdr" class="text-warning pointer">
-                                    <i class="fa fa-user mb-3"></i>
-                                </label>
-                            </div>
-                        </div>
-                        <div id="DetPsn"
-                            style="position: fixed; margin-top: 40px; z-index: 9999; min-width: 324px; border: 1px solid rgb(119, 94, 151);"
-                            class="bg-light text-dark shadow collapse" aria-labelledby="headingOne"
-                            data-parent="#DetailPasien">
-                            <div class="scrollbar-dusty-grass square1 thin scroll-y scrollbox" style="max-height: 480px;">
-                                <div class="card-body">
-                                    <div>
-                                        <div class="d-flex flex-wrap">
-                                            <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
-                                                style="background-color: #d2eaff" name="">
-                                                <b>Nama :</b> <input type="text" class="form-control-xs" name=""
-                                                    id="namaHdr" style="background-color: #d2eaff; border:none">
-                                            </div>
-                                            <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
-                                                style="background-color: #d2eaff" name="noMRHdr">
-                                                <b>No. RM :</b><input type="text" class="form-control-xs" name=""
-                                                    id="noMRHdr" style="background-color: #d2eaff; border:none">
-                                            </div>
-                                            {{-- <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
-                                                    style="background-color: #d2eaff;" name="tglPeriksaHdr">
-                                                    01-01-3000 00:00:00
-                                                    <!-- <span name="tglPeriksaHdr"></span> -->
-                                                    <!-- <span name="jamPeriksaHdr"></span> -->
-                                                </div> --}}
-                                        </div>
-                                        <div class="d-flex flex-wrap">
-                                            <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
-                                                style="background-color:#f8f5d6;" name="layananCoverHdr">
-                                                <b>No. Reg :</b><input type="text" class="form-control-xs" name=""
-                                                    id="noRGHdr" style="background-color:#f8f5d6; border:none">
-                                            </div>
-                                            <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
-                                                style="background-color:#f8f5d6;" name="">
-                                                <b>Dokter :</b><input type="text" class="form-control-xs" name=""
-                                                    id="dokterHdr" style="background-color:#f8f5d6; border:none">
-                                            </div>
-                                        </div>
-                                        <div class="d-flex flex-wrap">
-                                            <div class="text-center px-2 py-1 m-1 rounded rounded-sm" title=""
-                                                style="background-color:#f8d6e2;" name="">
-                                                <b>Layanan :</b><input type="text" class="form-control-xs" name=""
-                                                    id="layananHdr" style="background-color: #f8d6e2; border:none">
-                                            </div>
-                                            <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
-                                                style="background-color:#f8d6e2;" name="">
-                                                <b>J/K :</b><input type="text" class="form-control-xs" name=""
-                                                    id="jkHdr" style="background-color:#f8d6e2; border:none">
-                                            </div>
-                                            <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
-                                                style="background-color:#f8d6e2;">
-                                                <span name="usiaHdr">
-                                                    <b>Umur :</b><input type="text" class="form-control-xs"
-                                                        name="" id="umurHdr"
-                                                        style="background-color:#f8d6e2; border:none">
-                                                </span>
 
-                                                || Tgl. Lahir : <input type="text" class="form-control-xs"
-                                                    name="" id="tglLahirHdr"
-                                                    style="background-color:#f8d6e2; border:none">
-                                            </div>
-                                            <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
-                                                style="background-color:#f8d6e2; border:none" name="alergiHdr"
-                                                id="">
-                                                <b>Alergi :</b><input type="text" class="form-control-xs"
-                                                    name="" id="alergiHdr"
-                                                    style="background-color:#f8d6e2; border:none">
-                                            </div>
-                                            <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
-                                                style="background-color:#f8d6e2; border:none" name="lastTarifDsrHdr"
-                                                id="">
-                                                <b>Last tarif Dasar :</b><input type="text" class="form-control-xs"
-                                                    name="" id="lastTarifDsrHdr"
-                                                    style="background-color:#f8d6e2; border:none">
-                                            </div>
-                                        </div>
-                                        <div class="d-flex flex-wrap">
-                                        </div>
-                                        {{-- <div class=""> --}}
-                                        <div class="px-2 py-1 m-1 rounded rounded-sm" style="background-color:#d6f8dd;"
-                                            name="alamatHdr">
-                                            <i class="fa fa-home"></i>
-                                            <input type="text" class="form-control-xs col-8" name=""
-                                                id="alamatHdr" style="background-color:#d6f8dd; border:none">
-                                        </div>
-                                    </div>
-                                    <div class="col-12 p-0 hide">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
 
 
     <div class="form-box bg-light p-2" style="min-height: 594vh;">
@@ -209,8 +82,7 @@
                                 <div class="col p-0 componen-view" style="top: -2px; right: 0px; display: none;"
                                     id="actionViewAssesment">
                                     <button class="btn btn-success border-radius3 pull-right" id="printView"
-                                        data-toggle="modal" style="display: none;" data-target="#modalPrint"
-                                        value="">
+                                        data-toggle="modal" style="display: none;" data-target="#modalPrint" value="">
                                         <i class="flaticon2-fax"></i> Print
                                     </button>
                                 </div>
@@ -234,8 +106,7 @@
                                                     <button
                                                         class="btn btn-sm btn-icon-only-blue mr-3 mt-2 kt-font-bold pull-right"
                                                         id="collapseAllSection" style="display: none;">
-                                                        <i class="flaticon-interface-5 fa-lg"
-                                                            id="iconCollapseSection"></i>
+                                                        <i class="flaticon-interface-5 fa-lg" id="iconCollapseSection"></i>
                                                         Collapse All
                                                     </button>
                                                 </div>

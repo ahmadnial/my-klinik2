@@ -219,8 +219,10 @@ class penjualanController extends Controller
         return response()->json($isViewDetailPenjualan);
     }
 
-    public function cetakNota()
+    public function cetakNota(Request $request)
     {
-        return view('Pages.nota');
+        $isListPenjualan = tp_hdr::where('kd_trs', '=', $request->kd_trs)->get();
+
+        return view('Pages.nota', ['isListPenjualan' => $isListPenjualan]);
     }
 }

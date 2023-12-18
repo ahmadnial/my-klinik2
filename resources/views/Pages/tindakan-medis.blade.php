@@ -14,6 +14,19 @@
             padding-bottom: 45px;
         }
 
+        .splitLeft {
+            left: auto;
+            right: auto;
+            /* height: 100%; */
+            width: auto;
+            /* position: absolute; */
+            z-index: 0;
+            top: 0;
+            overflow-x: hidden;
+            padding-top: 0px;
+            padding-bottom: 45px;
+        }
+
         @media (min-width: 576px) {
             #Right {
                 position: fixed;
@@ -900,30 +913,19 @@
     {{-- ========================END MODAL ADD RESEP============================= --}}
 
 
-    <div class="splitLeft col-sm-12 col-lg-6 row">
+    <div class="splitLeft col-sm-7 col-lg-6 col-xs-sm-6 row">
         <div class="col" id="accordion">
             <div class="card card-primary">
-                <a class="d-block w-100" data-toggle="" href="#">
+                <a class="" data-toggle="" href="#">
                     <div class="card-header">
-                        <h4 class="card-title w-100">
+                        <h4 class="card-title">
                             History Pemeriksaan
                         </h4>
-                        <div class="float-right">
-                            {{-- <div class="p-2" id="panelSwitchTimeline">
-                                <span class="kt-switch kt-switch--sm kt-switch--icon kt-switch--outline kt-switch--info">
-                                    <label>
-                                        <input type="checkbox" class="scope" id="tLine" onclick="Timeline()"
-                                            value="340302100192967">
-                                        <span></span>
-                                        <label style="padding: 5px 0px 0 8px;">Timeline</label>
-                                    </label>
-                                </span>
-                            </div> --}}
-                            <label class="switch">
-                                <input type="checkbox" id="ShohTimeline">
-                                <span class="slider round"></span>
-                            </label>
-                            <b for="">Timeline</b>
+                        <div class="form-group float-right">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                                <label class="custom-control-label" for="customSwitch1">Timeline</label>
+                            </div>
                         </div>
                     </div>
                 </a>
