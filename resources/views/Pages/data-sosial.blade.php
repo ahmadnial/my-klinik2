@@ -25,14 +25,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($isdatasosial as $item)
+                            {{-- @foreach ($isdatasosial as $item)
                                 <tr>
                                     <td>{{ $item->fs_mr }}</td>
                                     <td>{{ $item->fs_nama }}</td>
                                     <td>{{ $item->fs_tgl_lahir }}</td>
                                     <td>{{ $item->fs_jenis_kelamin }}</td>
                                     <td>{{ $item->fs_alamat }}</td>
-                                    {{-- <td>{{ $item->fs_no_hp }}</td> --}}
                                     <td>
                                         <button class="btn btn-xs btn-info"
                                             data-toggle="modal"data-target="#Detail">Detail</button>
@@ -42,7 +41,7 @@
                                             data-toggle="modal"data-target="#Delete{{ $item->fs_mr }}">Delete</button>
                                     </td>
                                 </tr>
-                            @endforeach
+                            @endforeach --}}
                         </tbody>
                     </table>
                 </div>
