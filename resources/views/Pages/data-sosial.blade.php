@@ -4,9 +4,9 @@
     <section class="content">
         <div class="card">
             <div class="card-header">
-                <button type="submit" class="btn btn-success float-right" data-toggle="modal"
-                    data-target="#TambahPasien">Tambah
-                    Pasien</button>
+                <button type="submit" class="btn btn-success btn-sm float-right" data-toggle="modal"
+                    data-target="#TambahPasien"><i class="fa fa-plus"></i>&nbsp;
+                    Pasien Baru</button>
                 <h3 class="card-title">Data Sosial Pasien</h3>
             </div>
             <!-- /.card-header -->
