@@ -10,6 +10,8 @@ use App\Models\mstr_layanan;
 use App\Models\registrasiCreate;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
+use Yajra\DataTables\Contracts\DataTable;
+use Yajra\DataTables\Facades\DataTables;
 
 class HomeController extends Controller
 {
@@ -35,10 +37,30 @@ class HomeController extends Controller
             $mr = '2022' . str_pad(($de + 1), 6, '0', STR_PAD_LEFT);
             // dd($kd_reg);
         };
+        // if (request()->ajax()) {
+        //     $dasos = dataSosialCreate::query();
+        //     return DataTables::of($dasos)
+        //         ->make();
+        // }
+        // $isdatasosial = DB::table('tc_mr')->get();
 
-        $isdatasosial = dataSosialCreate::all();
+        // return view('Pages.data-sosial', ['mr' => $mr, 'isdatasosial' => $isdatasosial]);
+        return view('Pages.data-sosial', ['mr' => $mr]);
+    }
 
-        return view('Pages.data-sosial', ['mr' => $mr, 'isdatasosial' => $isdatasosial]);
+    public function getAllDasos()
+    {
+        if (request()->ajax()) {
+            $dasos = dataSosialCreate::select('*');
+            return DataTables::of($dasos)
+                ->addColumn('action', function ($row) {
+                    $actionBtn = '<a href="javascript:void(0)" id="' . $row->fs_mr . '" onClick="getDasosEdit(this)" data-kdmr="' . $row->fs_mr . '" class="edit btn btn-xs btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-xs btn-danger btn-sm">Delete</a>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('Pages.data-sosial');
     }
 
     public function registrasi()

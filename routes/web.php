@@ -34,10 +34,11 @@ Route::group(['middleware' => ['auth', 'checkrole:1,5']], function () {
     // Route::get('/redirect', [RedirectController::class, 'cek']);
     Route::get('registrasi', [HomeController::class, 'registrasi']);
     Route::get('registrasiView', [HomeController::class, 'registrasiView'])->name('registrasiView');
-    Route::get('data-sosial', [HomeController::class, 'dasos']);
+    Route::get('data-sosial', [HomeController::class, 'dasos'])->name('data-sosial');
     Route::get('registrasiSearch', [HomeController::class, 'registrasiSearch'])->name('registrasiSearch');
     Route::get('getDasos/{fs_mr}', [HomeController::class, 'getDasos'])->name('getDasos');
     Route::get('getLayananMedis/{id_layanan}', [HomeController::class, 'getLayananMedis'])->name('getLayananMedis');
+    Route::get('getAllDasos', [HomeController::class, 'getAllDasos'])->name('getAllDasos');
 });
 
 

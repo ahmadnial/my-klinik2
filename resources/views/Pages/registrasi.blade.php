@@ -372,7 +372,7 @@
                     <div class="form-group col-sm-12">
                         <label for="">Nomor Telephone</label>
                         <input type="text" class="form-control" name="fr_no_hp" id="fr_no_hp"
-                            placeholder="Nomor Telephone/WA Pasien" readonly>
+                            placeholder="Nomor Telephone/WA Pasien">
                     </div>
                 </div>
                 <input type="hidden" name="fr_user" id="fr_user" value="{{ Auth::user()->name }}">
