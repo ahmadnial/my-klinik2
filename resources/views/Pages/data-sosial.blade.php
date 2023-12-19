@@ -12,8 +12,8 @@
             <!-- /.card-header -->
             <div class="card-body">
                 <div>
-                    <table id="alldss" class="serverSideTable table table-hover">
-                        <thead class="">
+                    <table id="alldss" class="serverSideTable table table-hover table-striped">
+                        <thead class="" style="background-color:rgb(242, 231, 255)">
                             <tr>
                                 <th>No MR</th>
                                 <th>Nama</th>

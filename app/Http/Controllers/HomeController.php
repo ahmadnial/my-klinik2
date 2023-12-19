@@ -54,7 +54,8 @@ class HomeController extends Controller
             $dasos = dataSosialCreate::select('*');
             return DataTables::of($dasos)
                 ->addColumn('action', function ($row) {
-                    $actionBtn = '<a href="javascript:void(0)" id="' . $row->fs_mr . '" onClick="getDasosEdit(this)" data-kdmr="' . $row->fs_mr . '" class="edit btn btn-xs btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-xs btn-danger btn-sm">Delete</a>';
+                    $actionBtn = '<a href="javascript:void(0)" id="' . $row->fs_mr . '" onClick="getDasosEdit(this)" data-kdmr="' . $row->fs_mr . '" class="edit btn btn-xs btn-sm" style="background-color:#10F3A4; color:#ffffff;">Edit</a>
+                    <a href="javascript:void(0)" class="delete btn btn-xs btn-sm" style="background-color:#F7686B; color:#ffffff;">Delete</a>';
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])
