@@ -95,8 +95,11 @@
             </div>
             <div class="right">
                 <ul>
-                    <li> </li>
-                    <li></li>
+                    @foreach ($isListPenjualanHdr as $item)
+                        <li>{{ $item->kd_trs }}</li>
+                        <li>Apotek</li>
+                        <li>{{ date('Y-m-d : H:i:s', strtotime($item->created_at)) }}</li>
+                    @endforeach
                     {{-- <li> {{ date('Y-m-d : H:i:s', strtotime($order->created_at)) }} </li> --}}
                 </ul>
             </div>
@@ -107,29 +110,30 @@
             <div>Harga/Qty</div>
             <div>Total</div>
         </div>
-        {{-- @foreach ($order->productOrder as $item) --}}
-        <div class="flex-container" style="text-align: right;">
-
-            <div style="text-align: left;">x</div>
-            {{-- <div>Rp {{ number_format() }} </div>
-            <div>Rp {{ number_format() }} </div> --}}
-        </div>
-        {{-- @endforeach --}}
+        @foreach ($isListPenjualan as $item)
+            <div class="flex-container" style="text-align: right;">
+                <div style="text-align: left;">{{ $item->nm_obat }}</div>
+                <div>@currency($item->hrg_obat) / {{ $item->qty }}{{ $item->satuan }} </div>
+                <div>@currency($item->sub_total)</div>
+            </div>
+            <br>
+        @endforeach
         <hr>
         <div class="flex-container" style="text-align: right; margin-top: 10px;">
             <div></div>
             <div>
                 <ul>
-                    <li>Sub Total</li>
+                    {{-- <li>Sub Total</li> --}}
                     <li>Diskon</li>
                     <li>Grand Total</li>
                 </ul>
             </div>
             <div style="text-align: right;">
                 <ul>
-                    {{-- <li>Rp {{ number_format() }} </li>
-                    <li>Rp {{ number_format() }}</li>
-                    <li>Rp {{ number_format() }}</li> --}}
+                    @foreach ($isListPenjualanHdr as $item)
+                        <li>-</li>
+                        <li>@currency($item->total_penjualan)</li>
+                    @endforeach
                 </ul>
             </div>
         </div>

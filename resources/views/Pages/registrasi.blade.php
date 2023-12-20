@@ -553,7 +553,7 @@
                         results: $.map(isdata, function(item) {
                             return {
                                 // text: item.fs_mr,
-                                text: item.fs_mr + ' - ' + item.fs_nama + ' - ' + item.fs_tgl_lahir,
+                                text: item.fs_mr + ' - ' + item.fs_nama + ' - ' + item.fs_alamat,
                                 id: item.fs_mr,
                                 alamat: item.fs_alamat,
                             }

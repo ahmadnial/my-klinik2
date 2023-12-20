@@ -556,9 +556,8 @@
     <!-- Bootstrap 4 -->
     <script src="{{ asset('src/plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('src/dist/js/ajax.min.js') }}"></script>
-    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js') }}"></script> --}}
-    <script src="{{ asset('src/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('src/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    {{-- <script src="{{ asset('src/plugins/jquery-ui/jquery-ui.min.js') }}"></script> --}}
     <script src="{{ asset('src/dist/js/select2.min.js') }}"></script>
     <script src="{{ asset('src/plugins/jsgrid/jsgrid.min.js') }}"></script>
     {{-- <script src="{{ asset('srcplugins/jsgrid/demos/db.js') }}"></script> --}}
@@ -567,20 +566,18 @@
     <!-- Sparkline -->
     <script src="{{ asset('src/plugins/sparklines/sparkline.js') }}"></script>
     <!-- JQVMap -->
-    <script src="{{ asset('src/plugins/jqvmap/jquery.vmap.min.js') }}"></script>
-    <script src="{{ asset('src/plugins/jqvmap/maps/jquery.vmap.usa.js') }}"></script>
+    {{-- <script src="{{ asset('src/plugins/jqvmap/jquery.vmap.min.js') }}"></script> --}}
+    {{-- <script src="{{ asset('src/plugins/jqvmap/maps/jquery.vmap.usa.js') }}"></script> --}}
     <!-- jQuery Knob Chart -->
-    <script src="{{ asset('src/plugins/jquery-knob/jquery.knob.min.js') }}"></script>
+    {{-- <script src="{{ asset('src/plugins/jquery-knob/jquery.knob.min.js') }}"></script> --}}
     <!-- daterangepicker -->
     <script src="{{ asset('src/plugins/moment/moment.min.js') }}"></script>
     <script src="{{ asset('src/plugins/daterangepicker/daterangepicker.js') }}"></script>
     <!-- Tempusdominus Bootstrap 4 -->
-    <script src="{{ asset('src/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
-    <!-- Summernote -->
+    {{-- <script src="{{ asset('src/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script> --}}
+
     <script src="{{ asset('src/plugins/summernote/summernote-bs4.min.js') }}"></script>
-    <!-- overlayScrollbars -->
     <script src="{{ asset('src/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
-    <!-- AdminLTE App -->
     <script src="{{ asset('src/dist/js/adminlte.js') }}"></script>
     <script src="{{ asset('src/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('src/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
@@ -588,17 +585,16 @@
     <script src="{{ asset('src/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('src/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
     <script src="{{ asset('src/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('src/plugins/jszip/jszip.min.js') }}"></script>
-    <script src="{{ asset('src/plugins/pdfmake/pdfmake.min.js') }}"></script>
-    <script src="{{ asset('src/plugins/pdfmake/vfs_fonts.js') }}"></script>
+    {{-- <script src="{{ asset('src/plugins/jszip/jszip.min.js') }}"></script> --}}
+    {{-- <script src="{{ asset('src/plugins/pdfmake/pdfmake.min.js') }}"></script> --}}
+    {{-- <script src="{{ asset('src/plugins/pdfmake/vfs_fonts.js') }}"></script> --}}
     <script src="{{ asset('src/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('src/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('src/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
     <script src="{{ asset('src/plugins/toastr/toastr.min.js') }}"></script>
     <script src="{{ asset('src/plugins/Assesment/signature_pad.min.js') }}"></script>
     <script src="{{ asset('src/plugins/Assesment/pencoretan.v3.min.js') }}"></script>
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js') }}"></script> --}}
-    {{-- <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js') }}"></script> --}}
+    @stack('scripts')
 
     <script>
         $(function() {
@@ -633,7 +629,6 @@
             toggleMenu.classList.toggle("active");
         }
     </script>
-    @stack('scripts')
 </body>
 
 </html>

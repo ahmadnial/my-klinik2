@@ -179,8 +179,8 @@
                             <input type="hidden" id="user" name="user" value="tes">
                         </div>
                         <div class="">
-                            <button type="button" id="obatSearch" class="btn btn-info"><i
-                                    class="fa fa-plus">Item</i></button>
+                            <button type="button" id="obatSearch" onClick="searchObatShow()" class="btn btn-info"><i
+                                    class="fa fa-plus">&nbsp;Item</i></button>
                         </div>
                     </div>
 
@@ -345,11 +345,14 @@
                     placeholder: 'Select Tipe Tarif',
                 });
 
-                $("#obatSearch").on("click", function() {
-                    $('#obatSearchShow').modal('show');
+                // $("#obatSearch").on("click", function() {
+                //     $('#obatSearchShow').modal('show');
 
-                    // alert('helo');
-                });
+                // });
+
+                function searchObatShow() {
+                    $('#obatSearchShow').modal('show');
+                }
 
 
                 function acMapResep() {
