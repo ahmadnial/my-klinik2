@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use Yoeunes\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Session;
+use Barryvdh\DomPDF\Facade\Pdf;
+// use PDF;
 
 class penjualanController extends Controller
 {
@@ -236,6 +238,9 @@ class penjualanController extends Controller
         $isListPenjualanHdr = tp_hdr::where('tp_hdr.kd_trs', '=', $request->kd_trs)
             ->get();
 
+        // $pdf = PDF::loadView('pages.nota', ['isListPenjualan' => $isListPenjualan, 'isListPenjualanHdr' => $isListPenjualanHdr]);
+        // return $pdf->stream();
         return view('Pages.nota', ['isListPenjualan' => $isListPenjualan, 'isListPenjualanHdr' => $isListPenjualanHdr]);
+        // return redirect()->to('/nota');
     }
 }

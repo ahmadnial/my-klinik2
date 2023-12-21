@@ -42,6 +42,8 @@ $app->singleton(
 );
 
 // $app->register(Laravolt\Indonesia\ServiceProvider::class);
+// $app->register(\Barryvdh\DomPDF\ServiceProvider::class);
+// $app->configure('dompdf');
 
 
 // class aliases

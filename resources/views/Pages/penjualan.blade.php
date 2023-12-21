@@ -45,8 +45,10 @@
                                     <td id="">@currency($lp->total_penjualan)</td>
                                     <td><button class="btn btn-xs btn-info" data-toggle="modal" data-target="#EditObat"
                                             onclick="getDetailPen(this)" data-kd_trs={{ $lp->kd_trs }}>Detail</button>
+                                        {{-- <a class="btn btn-default" href="{{ url('nota') }}" target="_blank"><i
+                                                class="fa fa-print"></i> Cetak PDF</a> --}}
                                         <button class="btn btn-xs btn-primary" data-toggle="modal" data-target="#EditObat"
-                                            onclick="cetakNota(this)" data-kd_trsc={{ $lp->kd_trs }}> <i
+                                            onclick="cetakNota(this)" data-kd_trsc={{ $lp->kd_trs }} target="_blank"> <i
                                                 class="fa fa-print"></i>Print </button>
                                         {{-- <button class="btn btn-xs btn-danger" data-toggle="modal"
                                             data-target="#DeleteSupplier">Hapus</button> --}}
@@ -95,8 +97,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form method="POST" action="{{ url('add-penjualan') }}" onkeydown="return event.key != 'Enter';"
-                    onsubmit="cetakNota()">
+                <form method="POST" action="{{ url('add-penjualan') }}" onkeydown="return event.key != 'Enter';">
                     @csrf
                     <div class="modal-body">
                         <div class="row">
@@ -888,13 +889,17 @@
                         data: {
                             kd_trs: kodetrs
                         },
-                        success: function() {
+                        success: function(html) {
                             toastr.success('Deleted!', 'Chart Berhasil Dihapus!', {
                                 timeOut: 2000,
                                 preventDuplicates: true,
                                 positionClass: 'toast-top-right',
                             });
-                            window.location.href = '/nota/' + kodetrs;
+                            w = window.open(window.location.href, "_blank");
+                            w.document.open();
+                            w.document.write(html);
+                            w.document.close();
+                            w.window.print();
 
                         }
                     })
