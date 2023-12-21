@@ -45,6 +45,9 @@
                                     <td id="">@currency($lp->total_penjualan)</td>
                                     <td><button class="btn btn-xs btn-info" data-toggle="modal" data-target="#EditObat"
                                             onclick="getDetailPen(this)" data-kd_trs={{ $lp->kd_trs }}>Detail</button>
+                                        <button class="btn btn-xs btn-primary" data-toggle="modal" data-target="#EditObat"
+                                            onclick="cetakNota(this)" data-kd_trsc={{ $lp->kd_trs }}> <i
+                                                class="fa fa-print"></i>Print </button>
                                         {{-- <button class="btn btn-xs btn-danger" data-toggle="modal"
                                             data-target="#DeleteSupplier">Hapus</button> --}}
                                     </td>
@@ -92,7 +95,8 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form method="POST" action="{{ url('add-penjualan') }}" onkeydown="return event.key != 'Enter';">
+                <form method="POST" action="{{ url('add-penjualan') }}" onkeydown="return event.key != 'Enter';"
+                    onsubmit="cetakNota()">
                     @csrf
                     <div class="modal-body">
                         <div class="row">
@@ -330,6 +334,50 @@
             </div>
         </div>
         {{-- End Modal --}}
+
+        {{-- modal cetak --}}
+        <!-- Modal -->
+        <div class="modal fade" id="printNota">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content document">
+                    <div class="modal-header bg-">
+                        <h4 class="modal-title">Tambah Barang / Obat</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body table-responsive">
+                        {{-- <div class="row"> --}}
+                        <table class="table table-hover table-stripped" id="exm2" style="width: 100%">
+                            <thead>
+                                <tr>
+                                    <th>KD OBAT</th>
+                                    <th>Nama Obat</th>
+                                    <th>Satuan Jual</th>
+                                    <th>Harga Jual <i id="HrgJualView"></i></th>
+                                    <th>QTY Stock</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody class="getListObatx" id="getListObatx">
+
+                            </tbody>
+                        </table>
+
+                        <input type="hidden" id="user" name="user" value="tes">
+                        {{-- </div> --}}
+                        <div class="modal-footer">
+                            {{-- <button type="" class=""></button> --}}
+                            {{-- <button type="button" id="buat" class="btn btn-success float-right"><i
+                                class="fa fa-save"></i>
+                            &nbsp;
+                            Save</button> --}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- end modal cetak --}}
 
         @push('scripts')
             <script>
@@ -827,6 +875,30 @@
 
                     });
                 };
+
+                function cetakNota(cn) {
+                    var kodetrs = $(cn).data('kd_trsc');
+                    // alert(kodetrs);
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: "{{ url('nota') }}",
+                        type: 'get',
+                        data: {
+                            kd_trs: kodetrs
+                        },
+                        success: function() {
+                            toastr.success('Deleted!', 'Chart Berhasil Dihapus!', {
+                                timeOut: 2000,
+                                preventDuplicates: true,
+                                positionClass: 'toast-top-right',
+                            });
+                            window.location.href = '/nota/' + kodetrs;
+
+                        }
+                    })
+                }
             </script>
         @endpush
     @endsection

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use Yoeunes\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Session;
 
 class penjualanController extends Controller
 {
@@ -201,8 +202,13 @@ class penjualanController extends Controller
             DB::commit();
 
             toastr()->success('Data Tersimpan!');
-            return redirect()->route('penjualan');
-            // return redirect()->route('/tindakan-medis');
+            // return redirect()->action(
+            //     [penjualanController::class, 'cetakNota'],
+            //     ['kd_trs' => $request->tp_kd_trs]
+            // );
+            // return response()->json($tpdetail);
+            return back();
+            // return redirect('/penjualan');
         } catch (\Exception $e) {
             DB::rollback();
             // return back();
@@ -222,12 +228,12 @@ class penjualanController extends Controller
 
     public function cetakNota(Request $request)
     {
-        $isListPenjualan = tp_hdr::where('tp_hdr.kd_trs', '=', 'TP-2311-000008')
+        $isListPenjualan = tp_hdr::where('tp_hdr.kd_trs', '=', $request->kd_trs)
             ->leftJoin('tp_detail_item', 'tp_hdr.kd_trs', 'tp_detail_item.kd_trs')
             // ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
             ->get();
 
-        $isListPenjualanHdr = tp_hdr::where('tp_hdr.kd_trs', '=', 'TP-2311-000008')
+        $isListPenjualanHdr = tp_hdr::where('tp_hdr.kd_trs', '=', $request->kd_trs)
             ->get();
 
         return view('Pages.nota', ['isListPenjualan' => $isListPenjualan, 'isListPenjualanHdr' => $isListPenjualanHdr]);
