@@ -828,6 +828,7 @@
                             $.each(isViewDetailPenjualan, function(key, datavalue) {
                                 $('#kd_trs_viewDetailItem').val(datavalue.kd_trs);
                                 $('#view_kd_reg').val(datavalue.kd_reg);
+                                var caraPakai = datavalue.cara_pakai ?? '';
 
                                 $("#viewDetailJual").append(`
                                          <tr>
@@ -852,7 +853,7 @@
                                                 <input type="text" class="qty form-control" id="qty" name="qty[]" onKeyUp="getQTY(this)" value="${datavalue.qty}" readonly>
                                             </td>
                                             <td>
-                                                <input type="text" class="cara_pakai form-control" id="cara_pakai" name="cara_pakai[]" value="${datavalue.cara_pakai}" readonly>
+                                                <input type="text" class="cara_pakai form-control" id="cara_pakai" name="cara_pakai[]" value="${caraPakai}" readonly>
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" id="diskon"
@@ -889,18 +890,25 @@
                         data: {
                             kd_trs: kodetrs
                         },
-                        success: function(html) {
-                            toastr.success('Deleted!', 'Chart Berhasil Dihapus!', {
+                        success: function(response) {
+                            toastr.success('success!', 'PrintOut', {
                                 timeOut: 2000,
                                 preventDuplicates: true,
                                 positionClass: 'toast-top-right',
                             });
                             w = window.open(window.location.href, "_blank");
                             w.document.open();
-                            w.document.write(html);
-                            w.document.close();
+                            w.document.write(response);
+                            // // w.document.close();
                             w.window.print();
 
+                        },
+                        error: function(xhr, status, error) {
+                            toastr.error(status, error, {
+                                timeOut: 2000,
+                                preventDuplicates: true,
+                                positionClass: 'toast-top-right',
+                            });
                         }
                     })
                 }

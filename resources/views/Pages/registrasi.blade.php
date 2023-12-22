@@ -807,7 +807,6 @@
                         preventDuplicates: true,
                         positionClass: 'toast-top-right',
                     });
-                    getTimeline();
                 }
             })
 

@@ -71,10 +71,28 @@
             color: white;
             font-weight: bold;
         }
+
+        /* @page {
+            size: 58mm 100mm
+        }
+
+
+        body.receipt .sheet {
+            width: 58mm;
+            height: 100mm
+        }
+
+        @media print {
+            body.receipt {
+                width: 58mm
+            }
+        } */
+
+        /* fix for Chrome */
     </style>
 </head>
 
-<body>
+<body class="receipt">
     <div class="container">
         <div class="header" style="margin-bottom: 30px;">
             <div class="">
@@ -97,7 +115,7 @@
                 <ul>
                     @foreach ($isListPenjualanHdr as $item)
                         <li>{{ $item->kd_trs }}</li>
-                        <li>Apotek</li>
+                        <li>{{ Auth::user()->name }}</li>
                         <li>{{ date('Y-m-d : H:i:s', strtotime($item->created_at)) }}</li>
                     @endforeach
                     {{-- <li> {{ date('Y-m-d : H:i:s', strtotime($order->created_at)) }} </li> --}}
@@ -145,7 +163,7 @@
     </div>
 </body>
 <script>
-    window.print();
+    // window.print();
 </script>
 
 </html>

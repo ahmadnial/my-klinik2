@@ -16,7 +16,6 @@ use Illuminate\Support\Carbon;
 use Yoeunes\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Session;
 use Barryvdh\DomPDF\Facade\Pdf;
-// use PDF;
 
 class penjualanController extends Controller
 {
@@ -54,8 +53,8 @@ class penjualanController extends Controller
         $isObatReguler = DB::table('mstr_obat')
             ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
             ->select('mstr_obat.*', 'tb_stock.*')
+            // ->paginate(10)
             ->get();
-
         return response()->json($isObatReguler);
     }
 
@@ -139,7 +138,25 @@ class penjualanController extends Controller
             // 'cara_pakai',
             // 'user',
         ]);
+        // foreach ($request->kd_obat as $keys => $val) {
+        //     $datax =  $request->kd_obat[$keys];
+        //     $dataQty =  $request->qty[$keys];
+        //     // $dataIsi =  $request->do_isi_pembelian[$keys];
+        //     // $X = (int)$dataQty * (int)$dataIsi;
+        //     $toInt = (int)$dataQty;
 
+        //     $cekStock = tb_stock::where('kd_obat', [$datax])->get();
+        // }
+
+        // foreach ($cekStock as $qty => $x) {
+        //     $ObatCurrent = ['kd_obat'][$qty];
+        //     $QtyCurrent = $cekStock[$qty];
+        //     // $QtyCurrentInt = (int)$QtyCurrent;
+        // }
+
+        // if ($QtyCurrent == '0') {
+        //     print_r($QtyCurrent);
+        // }
         DB::beginTransaction();
         try {
             $newData = [
@@ -214,7 +231,7 @@ class penjualanController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
             // return back();
-            toastr()->error('Gagal Tersimpan!');
+            toastr()->error($e);
             return redirect('/penjualan');
         }
     }
@@ -238,8 +255,9 @@ class penjualanController extends Controller
         $isListPenjualanHdr = tp_hdr::where('tp_hdr.kd_trs', '=', $request->kd_trs)
             ->get();
 
-        // $pdf = PDF::loadView('pages.nota', ['isListPenjualan' => $isListPenjualan, 'isListPenjualanHdr' => $isListPenjualanHdr]);
+        // return Pdf::loadView('pages.nota', ['isListPenjualan' => $isListPenjualan, 'isListPenjualanHdr' => $isListPenjualanHdr])->stream();
         // return $pdf->stream();
+        // return Pdf::loadFile(public_path() . '/myfile.html')->save('/path-to/my_stored_file.pdf')->stream('download.pdf');
         return view('Pages.nota', ['isListPenjualan' => $isListPenjualan, 'isListPenjualanHdr' => $isListPenjualanHdr]);
         // return redirect()->to('/nota');
     }

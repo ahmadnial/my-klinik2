@@ -360,7 +360,10 @@ class TindakanController extends Controller
 
     public function chartDelete(Request $request)
     {
-        $chart = DB::table('chart_tindakan')->where('chart_id', $request->chartid)->get();
-        $chart->delete();
+        DB::table('chart_tindakan')->where('chart_id', $request->chartid)->delete();
+        DB::table('trs_chart_resep')->where('chart_id', $request->chartid)->delete();
+        DB::table('trs_chart')->where('chart_id', $request->chartid)->delete();
+
+        return back();
     }
 }
