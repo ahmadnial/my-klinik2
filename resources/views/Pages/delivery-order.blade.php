@@ -961,6 +961,53 @@
                         $('#EditDO').modal('hide');
                     });
                 });
+
+
+                $(document).ready(function() {
+                    var selectedItem = null;
+
+                    $('#itemList li').on('click', function() {
+                        selectItem($(this));
+                    });
+
+                    $(document).keydown(function(e) {
+                        if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+                            e.preventDefault();
+                            navigateItems(e.key);
+                        } else if (e.key === 'Enter') {
+                            e.preventDefault();
+                            if (selectedItem !== null) {
+                                selectItem(selectedItem);
+                            }
+                        }
+                    });
+
+                    function navigateItems(key) {
+                        var items = $('#itemList li');
+                        var currentIndex = items.index(selectedItem);
+
+                        if (currentIndex === -1) {
+                            currentIndex = 0;
+                        } else {
+                            selectedItem.removeClass('selected');
+                        }
+
+                        if (key === 'ArrowUp' && currentIndex > 0) {
+                            currentIndex--;
+                        } else if (key === 'ArrowDown' && currentIndex < items.length - 1) {
+                            currentIndex++;
+                        }
+
+                        selectedItem = items.eq(currentIndex);
+                        selectedItem.addClass('selected');
+                    }
+
+                    function selectItem(item) {
+                        // Implement the logic for handling the selected item
+                        var itemId = item.data('id');
+                        console.log('Selected Item ID:', itemId);
+                    }
+                });
             </script>
         @endpush
     @endsection

@@ -53,7 +53,7 @@ class penjualanController extends Controller
 
         $isObatReguler = DB::table('mstr_obat')
             ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
-            ->select('fm_kd_obat', 'fm_nm_obat', 'fm_hrg_jual_non_resep', 'fm_satuan_jual', 'qty')
+            ->select('mstr_obat.*', 'tb_stock.*')
             // ->paginate(10)
             ->get();
         return response()->json($isObatReguler);
