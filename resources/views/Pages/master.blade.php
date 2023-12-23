@@ -601,7 +601,40 @@
     <script src="{{ asset('src/plugins/Assesment/signature_pad.min.js') }}"></script>
     <script src="{{ asset('src/plugins/Assesment/pencoretan.v3.min.js') }}"></script>
     @stack('scripts')
+    @if (Session::has('message'))
+        <script>
+            var type = "{{ Session::get('alert-type', 'info') }}";
+            switch (type) {
+                case 'info':
+                    toastr.info("{{ Session::get('message') }}", {
+                        timeOut: 600,
+                        positionClass: 'toast-top-right',
+                    });
+                    break;
 
+                case 'warning':
+                    toastr.warning("{{ Session::get('message') }}", {
+                        timeOut: 600,
+                        positionClass: 'toast-top-right',
+                    });
+                    break;
+
+                case 'success':
+                    toastr.success("{{ Session::get('message') }}", {
+                        timeOut: 600,
+                        positionClass: 'toast-top-right',
+                    });
+                    break;
+
+                case 'error':
+                    toastr.error("{{ Session::get('message') }}", {
+                        timeOut: 600,
+                        positionClass: 'toast-top-right',
+                    });
+                    break;
+            }
+        </script>
+    @endif
     <script>
         $(function() {
             $("#example1").DataTable({

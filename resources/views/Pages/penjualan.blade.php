@@ -12,7 +12,7 @@
             <div class="card-body">
                 <div id="">
                     <table id="example1" class="table table-hover">
-                        <thead class="">
+                        <thead class="" style="background-color:rgb(242, 231, 255)">
                             <tr>
                                 {{-- <th>Tanggal</th> --}}
                                 <th>Tanggal Transaksi</th>
@@ -21,7 +21,7 @@
                                 <th>Pasien</th>
                                 <th>No.RM</th>
                                 <th>Tipe Tarif</th>
-                                <th>Jml Penjualan</th>
+                                <th>Total Penjualan</th>
                                 <th>Act</th>
                                 {{-- <th></th> --}}
                             </tr>
@@ -184,8 +184,8 @@
                             <input type="hidden" id="user" name="user" value="tes">
                         </div>
                         <div class="">
-                            <button type="button" id="obatSearch" onClick="searchObatShow()" class="btn btn-info"><i
-                                    class="fa fa-plus">&nbsp;Item</i></button>
+                            <button type="button" id="obatSearch" onClick="searchObatShow()"
+                                class="btn btn-info float-right"><i class="fa fa-plus">&nbsp;Item</i></button>
                         </div>
                     </div>
 
@@ -215,9 +215,11 @@
                     </div>
                     <hr>
                     <div class="float-right col-4">
+                        <input type="hidden" class="form-control float-right" name="total_penjualan"
+                            id="total_penjualan">
                         <div class="float-right col-4">
-                            <input type="text" class="form-control float-right" name="total_penjualan"
-                                id="total_penjualan" value="" readonly>
+                            <input type="text" class="form-control float-right" name="total_penjualan_show_only"
+                                id="total_penjualan_show_only" value="" readonly>
                         </div>
                         {{-- <div class="float-right">
                         <button class="btn btn-xs btn-info" id="addRow">Tambah Barang</button>
@@ -804,6 +806,15 @@
                     var result = sum.toFixed(2);
 
                     $('#total_penjualan').val(result);
+
+                    var ttlInt = parseFloat(result);
+
+                    var formattedNumber = ttlInt.toLocaleString('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR'
+                    });
+
+                    $('#total_penjualan_show_only').val(formattedNumber);
                 }
                 // shortcut.add("F12", function() {
                 //     alert("F12 pressed");

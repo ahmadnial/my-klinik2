@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Redirect;
 use Yoeunes\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Session;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -52,7 +53,7 @@ class penjualanController extends Controller
 
         $isObatReguler = DB::table('mstr_obat')
             ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
-            ->select('mstr_obat.*', 'tb_stock.*')
+            ->select('fm_kd_obat', 'fm_nm_obat', 'fm_hrg_jual_non_resep', 'fm_satuan_jual', 'qty')
             // ->paginate(10)
             ->get();
         return response()->json($isObatReguler);
@@ -63,7 +64,7 @@ class penjualanController extends Controller
         // $isObatResep = mstr_obat::select("fm_kd_obat", "fm_nm_obat", "fm_satuan_jual", "fm_hrg_beli", "fm_hrg_jual_resep")->get();
         $isObatResep = DB::table('mstr_obat')
             ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
-            ->select('mstr_obat.*', 'tb_stock.*')
+            ->select('fm_kd_obat', 'fm_nm_obat', 'fm_hrg_jual_resep', 'fm_satuan_jual', 'qty')
             ->get();
         return response()->json($isObatResep);
     }
@@ -73,7 +74,7 @@ class penjualanController extends Controller
         // $isObatNakes = mstr_obat::select("fm_kd_obat", "fm_nm_obat", "fm_satuan_jual", "fm_hrg_beli", "fm_hrg_jual_nakes")->get();
         $isObatNakes = DB::table('mstr_obat')
             ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
-            ->select('mstr_obat.*', 'tb_stock.*')
+            ->select('fm_kd_obat', 'fm_nm_obat', 'fm_hrg_jual_nakes', 'fm_satuan_jual', 'qty')
             ->get();
 
         return response()->json($isObatNakes);
@@ -220,19 +221,20 @@ class penjualanController extends Controller
 
             DB::commit();
 
-            toastr()->success('Data Tersimpan!');
-            // return redirect()->action(
-            //     [penjualanController::class, 'cetakNota'],
-            //     ['kd_trs' => $request->tp_kd_trs]
-            // );
-            // return response()->json($tpdetail);
-            return back();
-            // return redirect('/penjualan');
+            $sessionFlash = [
+                'message' => 'Saved!',
+                'alert-type' => 'success'
+            ];
+
+            return Redirect::to('/penjualan')->with($sessionFlash);
         } catch (\Exception $e) {
             DB::rollback();
-            // return back();
-            toastr()->error($e);
-            return redirect('/penjualan');
+
+            $sessionFlashErr = [
+                'message' => 'Error!',
+                'alert-type' => 'error'
+            ];
+            return Redirect::to('/penjualan')->with($sessionFlashErr);
         }
     }
 
