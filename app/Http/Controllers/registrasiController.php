@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\dataSosialCreate;
 use App\Models\registrasiCreate;
+use App\Models\trs_chart;
+use App\Models\trs_chart_resep;
 use RealRashid\SweetAlert\Toaster;
 use Yoeunes\Toastr\Toastr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 
 class registrasiController extends Controller
@@ -138,10 +141,15 @@ class registrasiController extends Controller
 
     public function voidRegister(Request $request)
     {
-        $delete =  DB::table('ta_registrasi')->where('fr_kd_reg', $request->regID)->get();
-        dd($delete);
-        $delete->delete();
+        // $reg = registrasiCreate::where('fr_kd_reg', '=', $request->regID)->first();
+        $cekTrs = trs_chart::where('kd_reg', $request->regID)->pluck('kd_reg');
+        $cekResep = trs_chart_resep::where('kd_reg', $request->regID)->pluck('kd_reg');
 
+        dd($cekTrs);
+        if ($cekTrs != $request->regID && $cekResep != $request->regID) {
+            DB::table('ta_registrasi')->where('fr_kd_reg', $request->regID)->update(['deleted_at' => Carbon::now()]);
+        }
+        // $reg->delete();
         return back();
     }
 }

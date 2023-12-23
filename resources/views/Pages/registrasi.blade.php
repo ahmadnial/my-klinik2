@@ -799,14 +799,16 @@
                 url: "{{ url('voidRegister') }}/" + regID,
                 type: 'POST',
                 data: {
-                    'fr_kd_reg': regID
+                    fr_kd_reg: regID
                 },
                 success: function(isChartID) {
-                    toastr.success('Deleted!', 'Chart Berhasil Dihapus!', {
+                    toastr.success('Void Success!', {
                         timeOut: 2000,
                         preventDuplicates: true,
                         positionClass: 'toast-top-right',
                     });
+                    window.location.replace("{{ url('registrasi') }}")
+
                 }
             })
 

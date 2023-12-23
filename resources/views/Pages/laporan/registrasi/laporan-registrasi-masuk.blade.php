@@ -4,14 +4,26 @@
     <section class="content">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title"><i class="fa fa-truck">&nbsp;</i>Info Registrasi Masuk</h3>
+                <h3 class="card-title"><i class="fa fa-user">&nbsp;</i>Info Registrasi Masuk</h3>
             </div>
 
             <div class="card-body">
-                <div class="col-4 mb-4 input-group input-daterange">
+                <div class="col-8 mb-3 input-group input-daterange">
                     <input type="date" id="date1" class="form-control">
                     <div class="input-group-addon">&nbsp; s.d&nbsp;</div>
                     <input type="date" id="date2" class="form-control">
+                    <div class="input-group-addon">&nbsp;&nbsp;&nbsp;</div>
+                    <select id="medis" class="form-control">
+                        <option value="">Select Dokter</option>
+                        <option value="dr.Aji Pangki I,Sp.B">dr.Aji Pangki I,Sp.B</option>
+                        <option value="dr.Adjmaja Prayogi">dr.Adjmaja Prayogi</option>
+                    </select>
+                    <div class="input-group-addon">&nbsp;&nbsp;&nbsp;</div>
+                    <select id="session" class="form-control">
+                        <option value="">Session Poli</option>
+                        <option value="Pagi">Pagi</option>
+                        <option value="Sore">Sore</option>
+                    </select>
                     <div class="input-group-addon">&nbsp;&nbsp;&nbsp;</div>
                     <button class="btn btn-success" onclick="getDataRegMasuk()" id="btnProses">Proses</button>
                 </div>
@@ -19,6 +31,7 @@
                     <table id="exm2" class="table table-hover table-striped">
                         <thead>
                             <tr>
+                                <th>Tanggal</th>
                                 <th>no RM</th>
                                 <th>Nama</th>
                                 <th>J/K</th>
@@ -40,7 +53,7 @@
                                 {{-- <td><b><input type="text" id="grandTTL" class="form-control" style="border: none"
                                             readonly></b>
                                 </td> --}}
-                                <th id="grandTTL"></th>
+                                {{-- <th id="grandTTL"></th> --}}
                             </tr>
                         </tfoot>
                     </table>
@@ -55,6 +68,8 @@
             function getDataRegMasuk() {
                 var date1 = $('#date1').val();
                 var date2 = $('#date2').val();
+                var medis = $('#medis').val();
+                var session = $('#session').val();
 
                 if (date1 == '') {
                     toastr.info('Pilih Range Tanggal', 'Info!', {
@@ -72,7 +87,9 @@
                         type: 'GET',
                         data: {
                             date1: date1,
-                            date2: date2
+                            date2: date2,
+                            medis: medis,
+                            session: session
                         },
                         success: function(isDataRegMasuk) {
                             var sumall = 0;
@@ -83,13 +100,17 @@
                                 .draw();
                             $.each(isDataRegMasuk, function(key, datavalue) {
                                 const table = $('#exm2').DataTable();
-                                // var total_pen = datavalue.total_penjualan;
-                                // var ttlPenjualan = total_pen.toLocaleString('id-ID', {
-                                //     style: 'currency',
-                                //     currency: 'IDR'
-                                // });
+
+                                const dateString = datavalue.fr_tgl_reg;
+                                const date = new Date(dateString);
+                                const day = date.getDate();
+                                const month = date.getMonth() + 1;
+                                const year = date.getFullYear();
+                                const formattedDate = `${day}-${month}-${year}`;
+
                                 const dataBaru = [
-                                    [datavalue.fr_mr, datavalue.fr_nama, datavalue.fr_jenis_kelamin,
+                                    [formattedDate, datavalue.fr_mr, datavalue.fr_nama, datavalue
+                                        .fr_jenis_kelamin,
                                         datavalue.fr_alamat, datavalue.fr_layanan, datavalue.fr_dokter,
                                         datavalue.fr_session_poli,
                                         datavalue.fr_jaminan
@@ -107,22 +128,12 @@
                                             data[5],
                                             data[6],
                                             data[7],
+                                            data[8]
                                         ]).draw(false)
                                     }
                                 }
 
-                                injectDataBaru()
-
-                                var ttlInt = parseFloat(datavalue.total_penjualan);
-                                sumall += ttlInt;
-
-                                var number = sumall;
-                                var formattedNumber = number.toLocaleString('id-ID', {
-                                    style: 'currency',
-                                    currency: 'IDR'
-                                });
-
-                                document.getElementById("grandTTL").innerHTML = formattedNumber;
+                                injectDataBaru();
 
                                 toastr.success('Data Load Complete!', 'Complete!', {
                                     timeOut: 2000,
@@ -131,6 +142,7 @@
                                 });
                                 $('#date1').val('');
                                 $('#date2').val('');
+
                             })
                         }
                     })

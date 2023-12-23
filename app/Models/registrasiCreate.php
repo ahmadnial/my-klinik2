@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class registrasiCreate extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'ta_registrasi';
 
@@ -36,7 +37,8 @@ class registrasiCreate extends Model
         'ttv_HR',
         'ttv_RR',
         'ttv_SN',
-        'ttv_SPO2'
+        'ttv_SPO2',
+        'deleted_at'
     ];
 
     public function tcmr()

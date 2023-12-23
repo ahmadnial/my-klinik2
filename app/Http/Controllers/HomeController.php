@@ -71,7 +71,8 @@ class HomeController extends Controller
         if ($cekid == 0) {
             $kd_reg =  'RG'  . $num;
         } else {
-            $continue = registrasiCreate::all()->last();
+            // $continue = registrasiCreate::all()->last();
+            $continue = DB::table('ta_registrasi')->latest('created_at')->first();
             $de = substr($continue->fr_kd_reg, -3);
             $kd_reg = 'RG' . str_pad(($de + 1), 8, '0', STR_PAD_LEFT);
             // dd($kd_reg);

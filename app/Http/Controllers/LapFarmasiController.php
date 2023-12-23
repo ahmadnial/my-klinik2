@@ -6,6 +6,8 @@ use App\Models\do_detail_item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use function PHPUnit\Framework\isNull;
+
 class LapFarmasiController extends Controller
 {
 
@@ -77,13 +79,43 @@ class LapFarmasiController extends Controller
 
     public function getLapRegMasuk(Request $request)
     {
-        // $t = $request->all();
-        // dd($t);
+        $start = $request->date1;
+        $end = $request->date2;
+        $medis = $request->medis;
+        $session = $request->session;
         if ($request->ajax()) {
-            $isDataRegMasuk = DB::table('ta_registrasi')
-                ->whereBetween('fr_tgl_reg', [$request->date1, $request->date2])
-                // ->whereNull('kd_order_resep')
-                ->get();
+            if ($medis && !$session) {
+                $isDataRegMasuk = DB::table('ta_registrasi')
+                    ->whereBetween('fr_tgl_reg', [$start, $end])
+                    ->where([
+                        ['fr_dokter', '=', $medis],
+                        ['deleted_at', '=', null],
+                    ])
+                    ->latest()
+                    ->get();
+            } elseif ($session && !$medis) {
+                $isDataRegMasuk = DB::table('ta_registrasi')
+                    ->whereBetween('fr_tgl_reg', [$start, $end])
+                    ->where([
+                        ['fr_session_poli', '=', $session],
+                        ['deleted_at', '=', null],
+                    ])
+                    ->latest()
+                    ->get();
+            } elseif ($medis && $session) {
+                $isDataRegMasuk = DB::table('ta_registrasi')
+                    ->whereBetween('fr_tgl_reg', [$start, $end])
+                    ->where([
+                        ['fr_dokter', '=', $medis],
+                        ['fr_session_poli', '=', $session],
+                        ['deleted_at', '=', null],
+                    ])
+                    ->latest()
+                    ->get();
+            } else {
+                $isDataRegMasuk = DB::table('ta_registrasi')
+                    ->whereBetween('fr_tgl_reg', [$start, $end])->where('deleted_at', '=', null)->latest()->get();
+            }
         }
         return response()->json($isDataRegMasuk);
     }
