@@ -113,6 +113,7 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
     // Route::get('/', [HomeController::class, 'index']);
     // Route::get('/redirect', [RedirectController::class, 'cek']);
     Route::get('mstr-kategori-produk', [masterFarmasiController::class, 'katProd'])->name('mstr-kategori-produk');
+    Route::get('mstr-golongan-obat', [masterFarmasiController::class, 'golonganObat'])->name('mstr-golongan-obat');
     Route::get('mstr-satuan', [masterFarmasiController::class, 'satuan'])->name('mstr-satuan');
     Route::get('mstr-lokasi-stock', [masterFarmasiController::class, 'lokStock'])->name('mstr-lokasi-stock');
     Route::get('mstr-jenis-obat', [masterFarmasiController::class, 'jenBat'])->name('mstr-jenis-obat');

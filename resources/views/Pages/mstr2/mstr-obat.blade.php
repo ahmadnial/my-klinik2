@@ -4,7 +4,8 @@
     <section class="content">
         <div class="card">
             <div class="card-header">
-                <button type="submit" class="btn btn-success float-right" data-toggle="modal" data-target="#TambahObat">Tambah
+                <button type="submit" class="btn btn-success btn-sm float-right" data-toggle="modal"
+                    data-target="#TambahObat"><i class="fa fa-plus"></i>&nbsp;Tambah
                     Obat</button>
                 <h3 class="card-title">MSTR BARANG / OBAT</h3>
             </div>
@@ -16,6 +17,7 @@
                             <th>Kode Barang</th>
                             <th>Nama Obat</th>
                             <th>Kategori</th>
+                            <th>Golongan</th>
                             <th>Supplier</th>
                             <th>Sat. Beli</th>
                             <th>Sat. Jual</th>
@@ -32,6 +34,7 @@
                                 <td id="">{{ $tz->fm_kd_obat }}</td>
                                 <td id="">{{ $tz->fm_nm_obat }}</td>
                                 <td id="">{{ $tz->fm_kategori }}</td>
+                                <td id="">{{ $tz->fm_golongan_obat }}</td>
                                 <td id="">{{ $tz->fm_supplier }}</td>
                                 <td id="">{{ $tz->fm_satuan_pembelian }}</td>
                                 <td id="">{{ $tz->fm_satuan_jual }}</td>
@@ -56,9 +59,9 @@
                                         data-hrg_jual_reg_persen="{{ $tz->fm_hrg_jual_non_resep_persen }}"
                                         data-hrg_jual_resep_persen="{{ $tz->fm_hrg_jual_resep_persen }}"
                                         data-hrg_jual_nakes_persen="{{ $tz->fm_hrg_jual_nakes_persen }}" id="editObat"
-                                        onClick="getIDObat(this)">Edit</button>
-                                    <button class="btn btn-xs btn-danger" data-toggle="modal"
-                                        data-target="#DeleteSupplier{{ $tz->fm_kd_supplier }}">Hapus</button>
+                                        onClick="getIDObat(this)"><i class="fa fa-edit"></i>Edit</button>
+                                    {{-- <button class="btn btn-xs btn-danger" data-toggle="modal"
+                                        data-target="#DeleteSupplier{{ $tz->fm_kd_supplier }}">Hapus</button> --}}
                                 </td>
                             </tr>
                         @endforeach
@@ -102,6 +105,18 @@
                             </select>
                         </div>
                         <div class="form-group col-sm-6">
+                            <label for="">Golongan</label>
+                            <select class="efm_golongan_obat form-control" id="efm_golongan_obat" style="width: 100%;"
+                                name="efm_golongan_obat">
+                                <option value=""></option>
+                                @foreach ($golongan as $gol)
+                                    <option value="{{ $gol->fm_nm_jenis_obat }}">
+                                        {{ $gol->fm_nm_jenis_obat }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-6">
                             <label for="">Supplier</label>
                             <select class="efm_supplier form-control" id="efm_supplier" style="width: 100%;"
                                 name="efm_supplier">
@@ -113,8 +128,8 @@
                         </div>
                         <div class="form-group col-sm-6">
                             <label for="">Satuan Pembelian</label>
-                            <select class="efm_satuan_pembelian form-control" id="efm_satuan_pembelian" style="width: 100%;"
-                                name="efm_satuan_pembelian">
+                            <select class="efm_satuan_pembelian form-control" id="efm_satuan_pembelian"
+                                style="width: 100%;" name="efm_satuan_pembelian">
                                 <option value="">
                                 </option>
                                 @foreach ($satuanBeli as $sb)
@@ -124,8 +139,9 @@
                             </select>
                         </div>
                         <div class="form-group col-sm-6">
-                            <label for="">Isi Satuan Pembelian | Satuan: <input style="border:none" type="text"
-                                    id="eisiSatuanBeli" class="eisiSatuanBeli text-danger text-bold col-4" readonly>
+                            <label for="">Isi Satuan Pembelian | Satuan: <input style="border:none"
+                                    type="text" id="eisiSatuanBeli" class="eisiSatuanBeli text-danger text-bold col-4"
+                                    readonly>
                             </label>
                             <input type="text" class="efm_isi_satuan_pembelian form-control"
                                 name="efm_isi_satuan_pembelian" id="efm_isi_satuan_pembelian" value=""
@@ -264,6 +280,18 @@
                                 <option value="">--Select--</option>
                                 @foreach ($kategori as $kt)
                                     <option value="{{ $kt->fm_nm_kategori_produk }}">{{ $kt->fm_nm_kategori_produk }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="">Golongan</label>
+                            <select class="fm_golongan_obat form-control" id="fm_golongan_obat" style="width: 100%;"
+                                name="fm_golongan_obat">
+                                <option value=""></option>
+                                @foreach ($golongan as $gol)
+                                    <option value="{{ $gol->fm_nm_jenis_obat }}">
+                                        {{ $gol->fm_nm_jenis_obat }}
                                     </option>
                                 @endforeach
                             </select>
@@ -439,6 +467,14 @@
 
             $('#fm_kategori').select2({
                 placeholder: 'Kategori Produk',
+            });
+
+            $('#fm_golongan_obat').select2({
+                placeholder: 'Golongan Obat',
+            });
+
+            $('#efm_golongan_obat').select2({
+                placeholder: 'Golongan Obat',
             });
 
             $('#fm_satuan_pembelian').select2({
@@ -709,6 +745,7 @@
                 var ids = $(tx).data('id');
                 var nmobat = $(tx).data('nmobat');
                 var kategori = $(tx).data('kategori');
+                var golongan = $(tx).data('golongan');
                 var supplier = $(tx).data('supplier');
                 var satBeli = $(tx).data('satuan_pembelian');
                 var satJual = $(tx).data('satuan_penjualan');
@@ -731,6 +768,7 @@
                 $('#efm_kd_obat').val(ids);
                 $('#efm_nm_obat').val(nmobat);
                 $('#efm_kategori').append(`<option value="${kategori}" selected>${kategori}</option>`);
+                $('#efm_kategori').append(`<option value="${golongan}" selected>${golongan}</option>`);
                 $('#efm_supplier').append(`<option value="${supplier}" selected>${supplier}</option>`);
                 $('#efm_satuan_pembelian').append(`<option value="${satBeli}" selected>${satBeli}</option>`);
                 $('#efm_satuan_jual').append(`<option value="${satJual}" selected>${satJual}</option>`);
@@ -888,6 +926,7 @@
                     var fm_kd_obat = $('#fm_kd_obat').val();
                     var fm_nm_obat = $('#fm_nm_obat').val();
                     var fm_kategori = $('#fm_kategori').val();
+                    var fm_golongan_obat = $('#fm_golongan_obat').val();
                     var fm_supplier = $('#fm_supplier').val();
                     var fm_satuan_pembelian = $('#fm_satuan_pembelian').val();
                     var fm_isi_satuan_pembelian = $('#fm_isi_satuan_pembelian').val();
@@ -931,6 +970,7 @@
                                 fm_nm_obat: fm_nm_obat,
                                 fm_kategori: fm_kategori,
                                 fm_supplier: fm_supplier,
+                                fm_golongan_obat: fm_golongan_obat,
                                 fm_satuan_pembelian: fm_satuan_pembelian,
                                 fm_isi_satuan_pembelian: fm_isi_satuan_pembelian,
                                 fm_hrg_beli: sfm_hrg_beli,
@@ -958,7 +998,7 @@
                                 //     preventDuplicates: true,
                                 //     positionClass: 'toast-top-right',
                                 // });
-                                // return window.location.href = "{{ url('mstr-obat') }}";
+                                return window.location.href = "{{ url('mstr-obat') }}";
                                 // return window.location.href = "{{ url('mstr-obat') }}";
                             }
                         });
@@ -978,6 +1018,7 @@
                     var efm_kd_obat = $('#efm_kd_obat').val();
                     var efm_nm_obat = $('#efm_nm_obat').val();
                     var efm_kategori = $('#efm_kategori').val();
+                    var efm_golongan_obat = $('#efm_golongan_obat').val();
                     var efm_supplier = $('#efm_supplier').val();
                     var efm_satuan_pembelian = $('#efm_satuan_pembelian').val();
                     var efm_isi_satuan_pembelian = $('#efm_isi_satuan_pembelian').val();
@@ -995,7 +1036,7 @@
                     var efm_hrg_jual_nakes_persen = $('#efm_hrg_jual_nakes_persen').val();
                     var eisActive = $('#eisActive').val();
                     var eisOpenPrice = $('#eisOpenPrice').val();
-                    var euser = $('#euser').val();
+                    // var euser = $('#euser').val();
 
                     // ubah currency ke int
                     var esfm_hrg_beli = parseInt(efm_hrg_beli.replace(/,.*|[^0-9]/g, ''), 10);
@@ -1008,57 +1049,64 @@
                     var esfm_hrg_jual_nakes = parseInt(efm_hrg_jual_nakes.replace(/,.*|[^0-9]/g, ''),
                         10);
 
-                    if (fm_nm_obat != "") {
-                        var efmkdobat = $('#efm_kd_obat').val();
-                        $.ajax({
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            url: "{{ url('edit-mstr-obat') }}/" + efmkdobat,
-                            type: "POST",
-                            data: {
-                                fm_kd_obat: efm_kd_obat,
-                                fm_nm_obat: efm_nm_obat,
-                                fm_kategori: efm_kategori,
-                                fm_supplier: efm_supplier,
-                                fm_satuan_pembelian: efm_satuan_pembelian,
-                                fm_isi_satuan_pembelian: efm_isi_satuan_pembelian,
-                                fm_hrg_beli: esfm_hrg_beli,
-                                fm_hrg_beli_detail: efm_hrg_beli_detail,
-                                fm_satuan_jual: efm_satuan_jual,
-                                fm_hrg_jual_non_resep: esfm_hrg_jual_non_resep,
-                                fm_hrg_jual_resep: esfm_hrg_jual_resep,
-                                fm_hrg_jual_nakes: esfm_hrg_jual_nakes,
-                                st_isi_pembelian: est_isi_pembelian,
-                                st_hrg_beli_per1: est_hrg_beli_per1,
-                                st_hrg_beli_per2: est_hrg_beli_per2,
-                                fm_hrg_jual_non_resep_persen: efm_hrg_jual_non_resep_persen,
-                                fm_hrg_jual_resep_persen: efm_hrg_jual_resep_persen,
-                                fm_hrg_jual_nakes_persen: efm_hrg_jual_nakes_persen,
-                                isActive: eisActive,
-                                isOpenPrice: eisOpenPrice,
-                                user: euser
-                            },
-                            cache: false,
-                            success: function(dataResult) {
-                                // $('.close').click();
-                                // document.getElementById("fm_nm_kategori_produk").value = "";
-                                // toastr.success('Saved!', 'Your fun', {
-                                //     timeOut: 2000,
-                                //     preventDuplicates: true,
-                                //     positionClass: 'toast-top-right',
-                                // });
-                                // return window.location.href = "{{ url('mstr-obat') }}";
-                                // return window.location.href = "{{ url('mstr-obat') }}";
+
+                    var efmkdobat = $('#efm_kd_obat').val();
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: "{{ url('edit-mstr-obat') }}/" + efmkdobat,
+                        type: "POST",
+                        data: {
+                            fm_kd_obat: efm_kd_obat,
+                            fm_nm_obat: efm_nm_obat,
+                            fm_kategori: efm_kategori,
+                            fm_golongan_obat: efm_golongan_obat,
+                            fm_supplier: efm_supplier,
+                            fm_satuan_pembelian: efm_satuan_pembelian,
+                            fm_isi_satuan_pembelian: efm_isi_satuan_pembelian,
+                            fm_hrg_beli: esfm_hrg_beli,
+                            fm_hrg_beli_detail: efm_hrg_beli_detail,
+                            fm_satuan_jual: efm_satuan_jual,
+                            fm_hrg_jual_non_resep: esfm_hrg_jual_non_resep,
+                            fm_hrg_jual_resep: esfm_hrg_jual_resep,
+                            fm_hrg_jual_nakes: esfm_hrg_jual_nakes,
+                            st_isi_pembelian: est_isi_pembelian,
+                            st_hrg_beli_per1: est_hrg_beli_per1,
+                            st_hrg_beli_per2: est_hrg_beli_per2,
+                            fm_hrg_jual_non_resep_persen: efm_hrg_jual_non_resep_persen,
+                            fm_hrg_jual_resep_persen: efm_hrg_jual_resep_persen,
+                            fm_hrg_jual_nakes_persen: efm_hrg_jual_nakes_persen,
+                            isActive: eisActive,
+                            isOpenPrice: eisOpenPrice,
+                            // user: euser
+                        },
+
+                        success: function(response) {
+                            if (response.success) {
+                                toastr.success('Saved!', `${response.message}`, {
+                                    timeOut: 2000,
+                                    preventDuplicates: true,
+                                    positionClass: 'toast-top-right',
+                                });
+                                return window.location.href = "{{ url('mstr-obat') }}";
+                            } else {
+                                toastr.error('Saved!', 'Error!', {
+                                    timeOut: 2000,
+                                    preventDuplicates: true,
+                                    positionClass: 'toast-top-right',
+                                });
                             }
-                        });
-                    } else {
-                        toastr.info('Data Belum Lengkap', {
-                            timeOut: 2000,
-                            preventDuplicates: true,
-                            positionClass: 'toast-top-right',
-                        });
-                    }
+                            // error: function(xhr, status, error) {
+                            //     toastr.success('Saved!', status, {
+                            //         timeOut: 2000,
+                            //         preventDuplicates: true,
+                            //         positionClass: 'toast-top-right',
+                            //     });
+                            // },
+                        }
+
+                    });
                 });
             });
         </script>

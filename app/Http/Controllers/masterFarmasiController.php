@@ -10,6 +10,7 @@ use App\Models\mstr_satuan;
 use App\Models\mstr_supplier;
 use App\Models\tb_stock;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class masterFarmasiController extends Controller
@@ -203,9 +204,17 @@ class masterFarmasiController extends Controller
         $supplier = mstr_supplier::all();
         $kategori = mstr_kategori_produk::all();
         $satuanBeli = mstr_satuan::all();
+        $golongan = mstr_jenis_obat::all();
         $obatview = mstr_obat::all();
 
-        return view('pages.mstr2.mstr-obat', ['supplier' => $supplier, 'kategori' => $kategori, 'kd_obat' => $kd_obat, 'satuanBeli' => $satuanBeli, 'obatView' => $obatview]);
+        return view('pages.mstr2.mstr-obat', [
+            'supplier' => $supplier,
+            'kategori' => $kategori,
+            'kd_obat' => $kd_obat,
+            'satuanBeli' => $satuanBeli,
+            'obatView' => $obatview,
+            'golongan' => $golongan
+        ]);
     }
 
     public function obatCreate(Request $request)
@@ -217,6 +226,7 @@ class masterFarmasiController extends Controller
             'fm_kd_obat' => 'required',
             'fm_nm_obat' => 'required',
             'fm_kategori' => 'required',
+            // 'fm_golongan_obat' => 'required',
             'fm_supplier' => 'required',
             'fm_satuan_pembelian' => 'required',
             'fm_isi_satuan_pembelian' => 'required',
@@ -248,7 +258,7 @@ class masterFarmasiController extends Controller
             DB::commit();
 
             toastr()->success('Data Tersimpan!');
-            return back();
+            // return back();
             // return redirect()->route('/tindakan-medis');
         } catch (\Exception $e) {
             DB::rollback();
@@ -259,73 +269,57 @@ class masterFarmasiController extends Controller
 
     public function obatEdit(Request $request)
     {
-        $d = $request->all();
-        dd($d);
+        // $d = $request->all();
+        // dd($d);
 
-        $request->validate([
-            'fm_kd_obat' => 'required',
-            'fm_nm_obat' => 'required',
-            'fm_kategori' => 'required',
-            'fm_supplier' => 'required',
-            'fm_satuan_pembelian' => 'required',
-            'fm_isi_satuan_pembelian' => 'required',
-            'fm_hrg_beli' => 'required',
-            'fm_hrg_beli_detail' => 'required',
-            'fm_satuan_jual' => 'required',
-            'fm_hrg_jual_non_resep' => 'required',
-            'fm_hrg_jual_resep' => 'required',
-            'fm_hrg_jual_nakes' => 'required',
-            'st_isi_pembelian'  => 'required',
-            'st_hrg_beli_per1'  => 'required',
-            'st_hrg_beli_per2'  => 'required',
-            // 'isActive' => 'required',
-            // 'isOpenPrice' => 'required',
-            // 'user'
+        // $request->validate([
+        //     'fm_kd_obat' => 'required',
+        //     'fm_nm_obat' => 'required',
+        //     'fm_kategori' => 'required',
+        //     'fm_supplier' => 'required',
+        //     'fm_satuan_pembelian' => 'required',
+        //     'fm_isi_satuan_pembelian' => 'required',
+        //     'fm_hrg_beli' => 'required',
+        //     'fm_hrg_beli_detail' => 'required',
+        //     'fm_satuan_jual' => 'required',
+        //     'fm_hrg_jual_non_resep' => 'required',
+        //     'fm_hrg_jual_resep' => 'required',
+        //     'fm_hrg_jual_nakes' => 'required',
+        //     'st_isi_pembelian'  => 'required',
+        //     'st_hrg_beli_per1'  => 'required',
+        //     'st_hrg_beli_per2'  => 'required',
+        // ]);
+
+        DB::table('mstr_obat')->where('fm_kd_obat', $request->fm_kd_obat)->update([
+            // 'fm_kd_obat' => $request->efm_kd_obat,
+            'fm_nm_obat' => $request->fm_nm_obat,
+            'fm_kategori' => $request->fm_kategori,
+            'fm_supplier' => $request->fm_supplier,
+            'fm_golongan_obat' => $request->fm_golongan_obat,
+            'fm_satuan_pembelian' => $request->fm_satuan_pembelian,
+            'fm_isi_satuan_pembelian' => $request->fm_isi_satuan_pembelian,
+            'fm_hrg_beli' => $request->fm_hrg_beli,
+            'fm_hrg_beli_detail' => $request->fm_hrg_beli_detail,
+            'fm_satuan_jual' => $request->fm_satuan_jual,
+            'fm_hrg_jual_non_resep' => $request->fm_hrg_jual_non_resep,
+            'fm_hrg_jual_resep' => $request->fm_hrg_jual_resep,
+            'fm_hrg_jual_nakes' => $request->fm_hrg_jual_nakes,
+            'isActive' => $request->isActive,
+            'isOpenPrice' => $request->isOpenPrice,
+            'user' => Auth::user()->name,
+            'st_isi_pembelian'  => $request->st_isi_pembelian,
+            'st_hrg_beli_per1'  => $request->st_hrg_beli_per1,
+            'st_hrg_beli_per2'  => $request->st_hrg_beli_per2,
+            'fm_hrg_jual_non_resep_persen' => $request->fm_hrg_jual_non_resep_persen,
+            'fm_hrg_jual_resep_persen' => $request->fm_hrg_jual_resep_persen,
+            'fm_hrg_jual_nakes_persen' => $request->fm_hrg_jual_nakes_persen,
         ]);
 
-        // DB::beginTransaction();
-        // try {
+        $dataSuccess = [
+            'success' => true,
+            'message' => 'Data Berhasil Diudapte!',
+        ];
 
-        $y =  DB::table('mstr_obat')->where('fm_kd_obat', $request->efm_kd_obat)->update([
-            'fm_kd_obat' => $request->efm_kd_obat,
-            'fm_nm_obat' => $request->efm_nm_obat,
-            'fm_kategori' => $request->efm_kategori,
-            'fm_supplier' => $request->efm_supplier,
-            'fm_satuan_pembelian' => $request->efm_satuan_pembelian,
-            'fm_isi_satuan_pembelian' => $request->efm_isi_satuan_pembelian,
-            'fm_hrg_beli' => $request->esfm_hrg_beli,
-            'fm_hrg_beli_detail' => $request->efm_hrg_beli_detail,
-            'fm_satuan_jual' => $request->efm_satuan_jual,
-            'fm_hrg_jual_non_resep' => $request->esfm_hrg_jual_non_resep,
-            'fm_hrg_jual_resep' => $request->esfm_hrg_jual_resep,
-            'fm_hrg_jual_nakes' => $request->esfm_hrg_jual_nakes,
-            'isActive' => $request->eisActive,
-            'isOpenPrice' => $request->eisOpenPrice,
-            'user' => $request->euser,
-            'st_isi_pembelian'  => $request->est_isi_pembelian,
-            'st_hrg_beli_per1'  => $request->est_hrg_beli_per1,
-            'st_hrg_beli_per2'  => $request->est_hrg_beli_per2,
-            'fm_hrg_jual_non_resep_persen' => $request->efm_hrg_jual_non_resep_persen,
-            'fm_hrg_jual_resep_persen' => $request->efm_hrg_jual_resep_persen,
-            'fm_hrg_jual_nakes_persen' => $request->efm_hrg_jual_nakes_persen,
-        ]);
-
-        if ($y) {
-            toastr()->success('Edit Data Berhasil!');
-            return back();
-        } else {
-            toastr()->error('Gagal Tersimpan!');
-            return back();
-        }
-        //         DB::commit();
-
-        //         toastr()->success('Data Tersimpan!');
-        //         return back();
-        //         // return redirect()->route('/tindakan-medis');
-        //     } catch (\Exception $e) {
-        //         DB::rollback();
-        //         toastr()->error('Gagal Tersimpan!');
-        //         return back();
-        //     }
+        return response()->json($dataSuccess);
     }
 }

@@ -17,6 +17,7 @@ class mstr_obat extends Model
         'fm_kd_obat',
         'fm_nm_obat',
         'fm_kategori',
+        'fm_golongan_obat',
         'fm_supplier',
         'fm_satuan_pembelian',
         'fm_isi_satuan_pembelian',

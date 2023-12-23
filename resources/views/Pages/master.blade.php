@@ -366,6 +366,12 @@
                                             <p>Kategori Produk</p>
                                         </a>
                                     </li>
+                                    {{-- <li class="nav-item">
+                                        <a href="{{ url('/mstr-golongan-obat') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Golongan Obat</p>
+                                        </a>
+                                    </li> --}}
                                     <li class="nav-item">
                                         <a href="{{ url('/mstr-satuan') }}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
@@ -381,7 +387,7 @@
                                     <li class="nav-item">
                                         <a href="{{ url('/mstr-jenis-obat') }}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
-                                            <p>Jenis Obat</p>
+                                            <p>Golongan Obat</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
