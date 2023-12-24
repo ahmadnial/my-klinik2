@@ -38,7 +38,7 @@ class penjualanController extends Controller
         $dateNow = Carbon::now()->format("Y-m-d");
         $monthNow = Carbon::now()->format("m");
         $yearNow = Carbon::now()->format("Y");
-        $isListPenjualan = tp_hdr::whereyear('tgl_trs', '=', $yearNow)->whereMonth('tgl_trs', '=', $monthNow)->latest()->get();
+        $isListPenjualan = tp_hdr::whereyear('tgl_trs', '=', $yearNow)->whereMonth('tgl_trs', '=', $monthNow)->orderBy('created_at', 'desc')->get();
         return view('Pages.penjualan', [
             'noRef' => $noRef,
             'isListPenjualan' => $isListPenjualan,

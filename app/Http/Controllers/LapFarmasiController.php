@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\do_detail_item;
+use App\Models\mstr_dokter;
+use App\Models\mstr_tindakan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -150,5 +152,59 @@ class LapFarmasiController extends Controller
                 ->get();
             return response()->json($isDataPenjualanDetail);
         }
+    }
+
+    function infoTindakan()
+    {
+        $isMstrMedis =  mstr_dokter::all();
+        $isMstrTdk =  mstr_tindakan::all();
+        return view('pages.laporan.klinik.info-tindakan', [
+            'isMstrMedis' => $isMstrMedis,
+            'isMstrTdk' => $isMstrTdk
+        ]);
+    }
+
+    function getinfoTindakan(Request $request)
+    {
+        $start = $request->date1;
+        $end = $request->date2;
+        $medis = $request->medis;
+        $tindakan = $request->tindakan;
+        if ($request->ajax()) {
+            if ($medis && !$tindakan) {
+                $isDataTindakan = DB::table('trs_chart')
+                    ->leftJoin('mstr_tindakan', 'trs_chart.nm_tarif', 'mstr_tindakan.id')
+                    ->whereBetween('trs_chart.tgl_trs', [$start, $end])
+                    ->where([
+                        ['nm_dokter_jm', '=', $medis],
+                        ['trs_chart.deleted_at', '=', null],
+                    ])
+                    ->get();
+            } elseif ($tindakan && !$medis) {
+                $isDataTindakan = DB::table('trs_chart')
+                    ->leftJoin('mstr_tindakan', 'trs_chart.nm_tarif', 'mstr_tindakan.id')
+                    ->whereBetween('trs_chart.tgl_trs', [$start, $end])
+                    ->where([
+                        ['nm_tarif', '=', $tindakan],
+                        ['trs_chart.deleted_at', '=', null],
+                    ])
+                    ->get();
+            } elseif ($medis && $tindakan) {
+                $isDataTindakan = DB::table('trs_chart')
+                    ->leftJoin('mstr_tindakan', 'trs_chart.nm_tarif', 'mstr_tindakan.id')
+                    ->whereBetween('trs_chart.tgl_trs', [$start, $end])
+                    ->where([
+                        ['nm_dokter_jm', '=', $medis],
+                        ['nm_tarif', '=', $tindakan],
+                        ['trs_chart.deleted_at', '=', null],
+                    ])
+                    ->get();
+            } else {
+                $isDataTindakan = DB::table('trs_chart')
+                    ->leftJoin('mstr_tindakan', 'trs_chart.nm_tarif', 'mstr_tindakan.id')
+                    ->whereBetween('trs_chart.tgl_trs', [$start, $end])->where('trs_chart.deleted_at', '=', null)->get();
+            }
+        }
+        return response()->json($isDataTindakan);
     }
 }

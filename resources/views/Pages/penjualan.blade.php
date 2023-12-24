@@ -4,8 +4,8 @@
     <section class="content">
         <div class="card">
             <div class="card-header">
-                <button type="submit" class="btn btn-success float-right" data-toggle="modal"
-                    data-target="#addPenjualan">Tambah</button>
+                <button type="submit" class="btn btn-success btn-sm float-right" data-toggle="modal"
+                    data-target="#addPenjualan"><i class="fa fa-plus"></i>&nbsp;Tambah</button>
                 <h3 class="card-title"><i class="fa fa-money">&nbsp;</i>Transaksi Penjualan</h3>
             </div>
 
@@ -29,7 +29,7 @@
                         <tbody>
                             @foreach ($isListPenjualan as $lp)
                                 <tr>
-                                    <td id="">{{ $lp->created_at->format('D, d M Y h:i A') }}</td>
+                                    <td id="">{{ $lp->created_at->format('d M Y h:i A') }}</td>
                                     {{-- <td id="">{{ $lp->created_at }}</td> --}}
                                     <td id="">{{ $lp->kd_trs }}</td>
                                     <td id="">
@@ -47,7 +47,7 @@
                                             onclick="getDetailPen(this)" data-kd_trs={{ $lp->kd_trs }}>Detail</button>
                                         {{-- <a class="btn btn-default" href="{{ url('nota') }}" target="_blank"><i
                                                 class="fa fa-print"></i> Cetak PDF</a> --}}
-                                        <button class="btn btn-xs btn-primary" data-toggle="modal" data-target="#EditObat"
+                                        <button class="btn btn-xs btn-warning" data-toggle="modal" data-target="#EditObat"
                                             onclick="cetakNota(this)" data-kd_trsc={{ $lp->kd_trs }} target="_blank"> <i
                                                 class="fa fa-print"></i>Print </button>
                                         {{-- <button class="btn btn-xs btn-danger" data-toggle="modal"
@@ -149,8 +149,8 @@
                             </div>
                             <div class="form-group col-sm-2">
                                 <label for="">No.RM</label>
-                                <input type="text" class="form-control" name="tp_no_mr" id="tp_no_mr" value=""
-                                    readonly>
+                                <input type="text" class="form-control" name="tp_no_mr" id="tp_no_mr"
+                                    value="" readonly>
                             </div>
                             <div class="form-group col-sm-2">
                                 <label for="">Nama</label>
@@ -202,7 +202,8 @@
                                     <th width="100px">Qty</th>
                                     <th width="110px">Cara Pakai</th>
                                     <th width="110px">Disc(Rp.)</th>
-                                    <th width="110px">Tax</th>
+                                    <th width="90px">Tuslah</th>
+                                    <th width="90px">Embalase</th>
                                     <th width="200px">Sub Total</th>
                                     <th width="50px"></th>
                                 </tr>
@@ -264,7 +265,8 @@
                                     <th width="100px">Qty</th>
                                     <th width="110px">Cara Pakai</th>
                                     <th width="110px">Disc(Rp.)</th>
-                                    <th width="110px">Tax</th>
+                                    <th width="90px">Tuslah</th>
+                                    <th width="90px">Embalase</th>
                                     <th width="200px">Sub Total</th>
                                     {{-- <th width="50px"></th> --}}
                                 </tr>
@@ -470,8 +472,12 @@
                                             name="diskon[]">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" id="tax"
-                                            name="tax[]">
+                                        <input type="text" class="form-control" id="tuslah"
+                                            name="tuslah[]">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" id="embalase"
+                                            name="embalase[]">
                                     </td>
                                     <td>
                                         <input type="text" class="sub_totalr form-control" id="sub_totalr"
@@ -764,14 +770,21 @@
                                 name="diskon[]">
                         </td>
                         <td>
-                            <input type="text" class="form-control" id="tax"
-                                name="tax[]">
+                            <input type="text" class="form-control" id="tuslah"
+                                name="tuslah[]" onKeyUp="getTuslah(this)">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" id="embalase"
+                                name="embalase[]" onKeyUp="getEmbalase(this)">
                         </td>
                         <td>
                             <input type="text" class="sub_total form-control" id="sub_total"
                                 name="sub_total[]" readonly style="border: none;">
                         </td>
-
+                        <input type="hidden" class="sub_total_hidden form-control" id="sub_total_hidden"
+                        name="sub_total_hidden[]">
+                        <input type="hidden" class="sub_total_hidden_after_tuslah form-control" id="sub_total_hidden_after_tuslah"
+                        name="sub_total_hidden_after_tuslah[]">
                         <input type="hidden" name="user" id="user" value="tes user">
                         <td>
                             <button type="button" class="remove btn btn-xs btn-danger"><i class="fa fa-trash" onclick="deleteRow(this)"></i></button>
@@ -792,9 +805,46 @@
                     var x = quant * price;
                     var result = x.toFixed(2);
                     $(parent).find('#sub_total').val(result);
+                    $(parent).find('#sub_total_hidden').val(result);
                     GrandTotal();
                     // });
 
+                };
+
+                function getTuslah(q) {
+                    // alert('0');
+                    let parentT = q.parentElement.parentElement;
+                    let tuslah = $(parentT).find('#tuslah').val();
+                    // console.log(tuslah);
+                    let subtotalsementara = $(parentT).find('#sub_total_hidden').val();
+                    let hsl = parseFloat(tuslah) + parseFloat(subtotalsementara);
+                    let resultT = hsl.toFixed(2);
+                    console.log(hsl);
+                    $(parentT).find('#sub_total').val(resultT);
+                    $(parentT).find('#sub_total_hidden_after_tuslah').val(resultT);
+
+                    GrandTotal();
+                };
+
+                function getEmbalase(q) {
+                    // alert('0');
+                    let parentE = q.parentElement.parentElement;
+                    let embalase = $(parentE).find('#embalase').val();
+                    // console.log(tuslah);
+                    let subtotalsementaratuslah = $(parentE).find('#sub_total_hidden_after_tuslah').val();
+                    let subtotalsementara = $(parentE).find('#sub_total_hidden').val();
+                    if (subtotalsementaratuslah) {
+                        let hsl = parseFloat(embalase) + parseFloat(subtotalsementaratuslah);
+                        let resultE = hsl.toFixed(2);
+                        // console.log(hsl);
+                        $(parentE).find('#sub_total').val(resultE);
+                    } else {
+                        let hsl = parseFloat(embalase) + parseFloat(subtotalsementara);
+                        let resultE = hsl.toFixed(2);
+                        // console.log(hsl);
+                        $(parentE).find('#sub_total').val(resultE);
+                    }
+                    GrandTotal();
                 };
 
                 function GrandTotal() {

@@ -89,6 +89,15 @@
         } */
 
         /* fix for Chrome */
+        body {
+            /* font-family: Calibri, Helvetica, Arial, sans-serif; */
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+        }
+
+        h2 {
+            font-family: Arial, Helvetica, sans-serif;
+        }
     </style>
 </head>
 
