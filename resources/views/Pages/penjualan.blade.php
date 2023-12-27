@@ -75,7 +75,7 @@
 
         .scrollable-table {
             /* overflow-y: initial !important */
-            max-height: 200px;
+            max-height: 250px;
             overflow-y: auto;
         }
 
@@ -214,23 +214,16 @@
                             </tbody>
                         </table>
                     </div>
-                    <hr>
+                    {{-- <hr>
                     <div class="float-right col-4">
-                        <input type="hidden" class="form-control float-right" name="total_penjualan"
-                            id="total_penjualan">
-                        {{-- <div class="float-right col-4">
-                            <input type="text" class="form-control float-right" name="total_penjualan_show_only"
-                                id="total_penjualan_show_only" value="" readonly>
-                        </div> --}}
-                        {{-- <div class="float-right">
-                        <button class="btn btn-xs btn-info" id="addRow">Tambah Barang</button>
-                    </div> --}}
                     </div>
                     <br>
-                    <br>
+                    <br> --}}
                     {{-- <hr> --}}
                     <div class="modal-footer">
                         <div class="float-right col-2">
+                            <input type="hidden" class="form-control float-right" name="total_penjualan"
+                                id="total_penjualan">
                             <input type="text" class="form-control float-right" name="total_penjualan_show_only"
                                 id="total_penjualan_show_only" value="" readonly>
                         </div>
