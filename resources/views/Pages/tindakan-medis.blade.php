@@ -1514,12 +1514,18 @@
                                 resepShow += ``;
                             }
                         }
+                        var getSessionName = '{{ Auth::user()->name }}';
                         // var ttv =
                         // `#VitalSign : <b class="text-primary">#BW:</b>${getValue[getVal].ttv_BW}(Kg) #BH:${getValue[getVal].ttv_BH}(CM) #BPs:${getValue[getVal].ttv_BPs}(mmHg)`;
-                        var buttonEdit =
-                            `<button type="button" class="btn btn-outline-info btn-xs" id="btneditchart" data-is_chart_id="${getValue[getVal].chart_id}" onClick="editChart(this)"><i class="fa fa-pen"></i></button>`;
-                        var buttonDelete =
-                            `<button type="button" class="btn btn-outline-danger btn-xs" id="btneditchart" data-is_chart_id="${getValue[getVal].chart_id}" onClick="deleteChart(this)"><i class="fa fa-trash"></i></button>`;
+                        if (getValue[getVal].user == getSessionName) {
+                            var buttonEdit =
+                                `<button type="button" class="btn btn-outline-info btn-xs" id="btneditchart" data-is_chart_id="${getValue[getVal].chart_id}" onClick="editChart(this)"><i class="fa fa-pen"></i></button>`;
+                            var buttonDelete =
+                                `<button type="button" class="btn btn-outline-danger btn-xs" id="btneditchart" data-is_chart_id="${getValue[getVal].chart_id}" onClick="deleteChart(this)"><i class="fa fa-trash"></i></button>`;
+                        } else {
+                            var buttonEdit = '';
+                            var buttonDelete = '';
+                        }
                         // const trstdk = getValue[getVal].trstdk;
                         // let html = "";
                         // trstdk.forEach(xkx => {
