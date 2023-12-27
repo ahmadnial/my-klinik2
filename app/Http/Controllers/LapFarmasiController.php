@@ -180,6 +180,7 @@ class LapFarmasiController extends Controller
                     ->where([
                         ['nm_dokter_jm', '=', $medis],
                         ['trs_chart.deleted_at', '=', null],
+                        ['trs_chart.nm_tarif', '!=', null || ''],
                     ])
                     ->get();
             } elseif ($tindakan && !$medis) {
@@ -189,6 +190,7 @@ class LapFarmasiController extends Controller
                     ->where([
                         ['nm_tarif', '=', $tindakan],
                         ['trs_chart.deleted_at', '=', null],
+                        ['trs_chart.nm_tarif', '!=', null || ''],
                     ])
                     ->get();
             } elseif ($medis && $tindakan) {
@@ -199,12 +201,16 @@ class LapFarmasiController extends Controller
                         ['nm_dokter_jm', '=', $medis],
                         ['nm_tarif', '=', $tindakan],
                         ['trs_chart.deleted_at', '=', null],
+                        ['trs_chart.nm_tarif', '!=', null || ''],
                     ])
                     ->get();
             } else {
                 $isDataTindakan = DB::table('trs_chart')
                     ->leftJoin('mstr_tindakan', 'trs_chart.nm_tarif', 'mstr_tindakan.id')
-                    ->whereBetween('trs_chart.tgl_trs', [$start, $end])->where('trs_chart.deleted_at', '=', null)->get();
+                    ->whereBetween('trs_chart.tgl_trs', [$start, $end])->where([
+                        ['trs_chart.deleted_at', '=', null],
+                        ['trs_chart.nm_tarif', '!=', null || ''],
+                    ])->get();
             }
         }
         return response()->json($isDataTindakan);

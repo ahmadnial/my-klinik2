@@ -9,6 +9,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/keytable/2.11.0/css/keyTable.bootstrap.css" rel="stylesheet">
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -79,14 +80,30 @@
                         <i class="fa fa-user">&nbsp;{{ Auth::user()->name }}</i>
                         {{-- <span class="badge navbar-badge">{{ Auth::user()->name }}</span> --}}
                     </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <div class="btn-group">
-                            <div class="dropdown-divider"></div>
-                            <form action="/logout" method="post">
-                                @csrf
-                                <button type="submit" class="btn btn-xs btn-primary">Logout</button>
-                            </form>
-                        </div>
+                    <div class="dropdown">
+                        {{-- <a data-mdb-dropdown-init class="dropdown-toggle d-flex align-items-center hidden-arrow"
+                            href="#" id="navbarDropdownMenuAvatar" role="button" aria-expanded="false">
+                            <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
+                                height="25" alt="Black and White Portrait of a Man" loading="lazy" />
+                        </a> --}}
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
+                            <li>
+                                <a class="dropdown-item" href="#">My profile</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Settings</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ url('logout') }}"
+                                    onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
+                                    Logout
+                                </a>
+                                <form id="frm-logout" action="{{ url('logout') }}" method="POST"
+                                    style="display: none;">
+                                    {{ csrf_field() }}
+                                </form>
+                            </li>
+                        </ul>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -110,25 +127,19 @@
             <a href="" class="brand-link bg-purple">
                 <img src="" alt="" class="brand-image img-circle elevation-3" style="opacity: .8">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="brand-text font-weight-light"><i
-                        class="fa fa-hospital"></i>&nbsp; Klinik
-                    Asla</span>
+                        class="fa fa-hospital"></i>&nbsp; AslaMed</span>
             </a>
             <!-- Sidebar -->
             <div class="sidebar">
-                <!-- Sidebar user panel (optional) -->
-                <!-- SidebarSearch Form -->
-                {{-- <div class="form-inline">
-                    <div class="input-group" data-widget="sidebar-search">
-                        <input class="form-control form-control-sidebar">
-                        <div class="input-group-append">
-                            <button class="btn btn-sidebar">
-                                <i class="fas fa-search fa-fw"></i>
-                            </button>
-                            <br><br><br>
-                        </div>
-                    </div>
-                </div> --}}
-                <br>
+                {{-- <div class="user-panel mt-3 pb-3 mb-3"> --}}
+                {{-- <div class="image">
+                        <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                    </div> --}}
+                <div class="user-panel mt-2 pb-1 mb-1 ml-3">
+                    <h5 class="d-block">Klinik Aulia</h5>
+                </div>
+                {{-- </div> --}}
+                {{-- <br> --}}
 
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
@@ -571,6 +582,7 @@
     <script src="{{ asset('src/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     {{-- <script src="{{ asset('src/plugins/jquery-ui/jquery-ui.min.js') }}"></script> --}}
     <script src="{{ asset('src/dist/js/select2.min.js') }}"></script>
+    <script src="https://cdn.datatables.net/keytable/2.11.0/js/dataTables.keyTable.js"></script>
     <script src="{{ asset('src/plugins/jsgrid/jsgrid.min.js') }}"></script>
     {{-- <script src="{{ asset('srcplugins/jsgrid/demos/db.js') }}"></script> --}}
     <!-- ChartJS -->
@@ -642,6 +654,19 @@
         </script>
     @endif
     <script>
+        /** add active class and stay opened when selected */
+        var url = window.location;
+
+        // for sidebar menu entirely but not cover treeview
+        $('ul.nav-sidebar a').filter(function() {
+            return this.href == url;
+        }).addClass('active');
+
+        // for treeview
+        $('ul.nav-treeview a').filter(function() {
+            return this.href == url;
+        }).parentsUntil(".nav-sidebar > .nav-treeview").addClass('menu-open').prev('a').addClass('active');
+
         $(function() {
             $("#example1").DataTable({
                 "responsive": true,
@@ -659,6 +684,7 @@
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#penjualan_wrapper .col-md-6:eq(0)');
             $('#exm2').DataTable({
+                "keys": true,
                 "paging": true,
                 "lengthChange": false,
                 "searching": true,

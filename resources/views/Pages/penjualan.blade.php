@@ -980,6 +980,39 @@
                         }
                     })
                 }
+
+                // $(document).ready(function() {
+                //     var table = $('#exm2').DataTable({
+                //         // ajax: 'https://gyrocode.github.io/files/jquery-datatables/arrays.json',
+                //         keys: {
+                //             keys: [13 /* ENTER */ , 38 /* UP */ , 40 /* DOWN */ ]
+                //         }
+                //     });
+
+                //     // Handle event when cell gains focus
+                //     $('#exm2').on('key-focus.dt', function(e, datatable, cell) {
+                //         // Select highlighted row
+                //         $(table.row(cell.index().row).node()).addClass('selected');
+                //     });
+
+                //     // Handle event when cell looses focus
+                //     $('#exm2').on('key-blur.dt', function(e, datatable, cell) {
+                //         // Deselect highlighted row
+                //         $(table.row(cell.index().row).node()).removeClass('selected');
+                //     });
+
+                //     // Handle key event that hasn't been handled by KeyTable
+                //     $('#exm2').on('key.dt', function(e, datatable, key, cell, originalEvent) {
+                //         // If ENTER key is pressed
+                //         if (key === 13) {
+                //             // Get highlighted row data
+                //             var data = table.row(cell.index().row).data();
+
+                //             // FOR DEMONSTRATION ONLY
+                //             $("#example-console").html(data.join(', '));
+                //         }
+                //     });
+                // });
             </script>
         @endpush
     @endsection
