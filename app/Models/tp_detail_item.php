@@ -31,5 +31,7 @@ class tp_detail_item extends Model
         'cara_pakai',
         'tgl_trs',
         'user',
+        'tuslah',
+        'embalase'
     ];
 }

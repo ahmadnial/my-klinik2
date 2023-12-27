@@ -190,15 +190,15 @@ class penjualanController extends Controller
                     'qty'       => $request->qty[$key],
                     'diskon'    => $request->diskon[$key],
                     'satuan'    => $request->satuan[$key],
-                    'tax'       => $request->tax[$key],
-                    // // 'tulsah',
-                    // // 'embalase',
+                    // 'tax'       => $request->tax[$key],
                     'sub_total' => $request->sub_total[$key],
                     // // 'etiket',
                     // 'signa' => $request->signa[$key],
                     'cara_pakai' => $request->cara_pakai[$key],
                     'tgl_trs' => $request->tgl_trs,
                     'user' => Auth::user()->name,
+                    'tuslah' => $request->tuslah[$key],
+                    'embalase' => $request->embalase[$key],
                 ];
                 tp_detail_item::create($tpdetail);
             }

@@ -75,7 +75,7 @@
 
         .scrollable-table {
             /* overflow-y: initial !important */
-            max-height: 300px;
+            max-height: 200px;
             overflow-y: auto;
         }
 
@@ -201,9 +201,9 @@
                                     <th width="110px">Harga</th>
                                     <th width="100px">Qty</th>
                                     <th width="110px">Cara Pakai</th>
-                                    <th width="110px">Disc(Rp.)</th>
                                     <th width="90px">Tuslah</th>
                                     <th width="90px">Embalase</th>
+                                    <th width="110px">Disc(Rp.)</th>
                                     <th width="200px">Sub Total</th>
                                     <th width="50px"></th>
                                 </tr>
@@ -218,10 +218,10 @@
                     <div class="float-right col-4">
                         <input type="hidden" class="form-control float-right" name="total_penjualan"
                             id="total_penjualan">
-                        <div class="float-right col-4">
+                        {{-- <div class="float-right col-4">
                             <input type="text" class="form-control float-right" name="total_penjualan_show_only"
                                 id="total_penjualan_show_only" value="" readonly>
-                        </div>
+                        </div> --}}
                         {{-- <div class="float-right">
                         <button class="btn btn-xs btn-info" id="addRow">Tambah Barang</button>
                     </div> --}}
@@ -230,6 +230,10 @@
                     <br>
                     {{-- <hr> --}}
                     <div class="modal-footer">
+                        <div class="float-right col-2">
+                            <input type="text" class="form-control float-right" name="total_penjualan_show_only"
+                                id="total_penjualan_show_only" value="" readonly>
+                        </div>
                         <button type="submit" id="buat" class="btn btn-success float-right"><i
                                 class="fa fa-save"></i>&nbsp;Save
                         </button>
@@ -264,9 +268,9 @@
                                     <th width="110px">Harga</th>
                                     <th width="100px">Qty</th>
                                     <th width="110px">Cara Pakai</th>
-                                    <th width="110px">Disc(Rp.)</th>
                                     <th width="90px">Tuslah</th>
                                     <th width="90px">Embalase</th>
+                                    <th width="110px">Disc(Rp.)</th>
                                     <th width="200px">Sub Total</th>
                                     {{-- <th width="50px"></th> --}}
                                 </tr>
@@ -467,10 +471,7 @@
                                     <td>
                                         <input type="text" class="cara_pakai form-control" id="cara_pakai" name="cara_pakai[]" value="${getValues[getVals].ch_cara_pakai}">
                                     </td>
-                                    <td>
-                                        <input type="text" class="form-control" id="diskon"
-                                            name="diskon[]">
-                                    </td>
+                                    
                                     <td>
                                         <input type="text" class="form-control" id="tuslah"
                                             name="tuslah[]">
@@ -478,6 +479,10 @@
                                     <td>
                                         <input type="text" class="form-control" id="embalase"
                                             name="embalase[]">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" id="diskon"
+                                            name="diskon[]">
                                     </td>
                                     <td>
                                         <input type="text" class="sub_totalr form-control" id="sub_totalr"
@@ -765,17 +770,18 @@
                         <td>
                             <input type="text" class="cara_pakai form-control" id="cara_pakai" name="cara_pakai[]">
                         </td>
-                        <td>
-                            <input type="text" class="form-control" id="diskon"
-                                name="diskon[]">
-                        </td>
+                        
                         <td>
                             <input type="text" class="form-control" id="tuslah"
-                                name="tuslah[]" onKeyUp="getTuslah(this)">
+                                name="tuslah[]" onKeyUp="getTuslah(this)" value="0">
                         </td>
                         <td>
                             <input type="text" class="form-control" id="embalase"
-                                name="embalase[]" onKeyUp="getEmbalase(this)">
+                                name="embalase[]" onKeyUp="getEmbalase(this)" value="0">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" id="diskon"
+                                name="diskon[]">
                         </td>
                         <td>
                             <input type="text" class="sub_total form-control" id="sub_total"
@@ -819,7 +825,10 @@
                     let subtotalsementara = $(parentT).find('#sub_total_hidden').val();
                     let hsl = parseFloat(tuslah) + parseFloat(subtotalsementara);
                     let resultT = hsl.toFixed(2);
-                    console.log(hsl);
+                    // console.log(hsl);
+                    // if (tuslah == '') {
+                    //     let tuslah = $(parentT).find('#tuslah').val('0');
+                    // }
                     $(parentT).find('#sub_total').val(resultT);
                     $(parentT).find('#sub_total_hidden_after_tuslah').val(resultT);
 
@@ -916,13 +925,18 @@
                                             <td>
                                                 <input type="text" class="cara_pakai form-control" id="cara_pakai" name="cara_pakai[]" value="${caraPakai}" readonly>
                                             </td>
+                                          
                                             <td>
-                                                <input type="text" class="form-control" id="diskon"
-                                                    name="diskon[]" readonly>
+                                                <input type="text" class="form-control" id="tuslah"
+                                                    name="tuslah[]" readonly value="${datavalue.tuslah}">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="tax"
-                                                    name="tax[]" readonly>
+                                                <input type="text" class="form-control" id="embalase"
+                                                    name="embalase[]" readonly value="${datavalue.embalase}">
+                                            </td>
+                                              <td>
+                                                <input type="text" class="form-control" id="diskon"
+                                                    name="diskon[]" readonly>
                                             </td>
                                             <td>
                                                 <input type="text" class="sub_total form-control" id="sub_total"
