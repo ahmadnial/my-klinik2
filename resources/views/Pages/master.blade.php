@@ -136,7 +136,7 @@
                         <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                     </div> --}}
                 <div class="user-panel mt-2 pb-1 mb-1 ml-3">
-                    <h5 class="d-block">Klinik Aulia</h5>
+                    <h5 class="d-block"><i class="fas fa-hospital"></i>&nbsp;Klinik Aulia</h5>
                 </div>
                 {{-- </div> --}}
                 {{-- <br> --}}
@@ -241,7 +241,7 @@
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 {{-- <i class="nav-icon fas fa-bed"></i> --}}
-                                <i class="nav-icon fa fa-light fa-notes-medical"></i>
+                                <i class="nav-icon fa fa-light fa-pills"></i>
                                 <p>
                                     Farmasi
                                     <i class="right fas fa-angle-left"></i>
@@ -289,7 +289,7 @@
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 {{-- <i class="nav-icon fas fa-bed"></i> --}}
-                                <i class="nav-icon fa fa-light fa-truck"></i>
+                                <i class="nav-icon fa fa-money"></i>
                                 <p>
                                     Kassa
                                     <i class="right fas fa-angle-left"></i>
@@ -314,7 +314,7 @@
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 {{-- <i class="nav-icon fas fa-bed"></i> --}}
-                                <i class="nav-icon fa fa-light fa-money"></i>
+                                <i class="nav-icon fas fa-chart-line"></i>
                                 <p>
                                     Laporan
                                     <i class="right fas fa-angle-left"></i>
@@ -370,7 +370,7 @@
                             <li class="nav-header">DATA MASTER APOTEK</li>
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-bed"></i>
+                                    <i class="nav-icon fas fa-pills"></i>
                                     <p>
                                         Master Apotek
                                         <i class="right fas fa-angle-left"></i>
@@ -426,7 +426,7 @@
                             <li class="nav-header">DATA MASTER KLINIK</li>
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-bed"></i>
+                                    <i class="nav-icon fas fa-wheelchair"></i>
                                     <p>
                                         Master
                                         <i class="right fas fa-angle-left"></i>
