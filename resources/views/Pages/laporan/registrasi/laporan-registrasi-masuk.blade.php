@@ -15,8 +15,9 @@
                     <div class="input-group-addon">&nbsp;&nbsp;&nbsp;</div>
                     <select id="medis" class="form-control">
                         <option value="">Select Dokter</option>
-                        <option value="dr.Aji Pangki I,Sp.B">dr.Aji Pangki I,Sp.B</option>
-                        <option value="dr.Adjmaja Prayogi">dr.Adjmaja Prayogi</option>
+                        @foreach ($isMstrMedis as $md)
+                            <option value="{{ $md->fm_nm_medis }}">{{ $md->fm_nm_medis }}</option>
+                        @endforeach
                     </select>
                     <div class="input-group-addon">&nbsp;&nbsp;&nbsp;</div>
                     <select id="session" class="form-control">

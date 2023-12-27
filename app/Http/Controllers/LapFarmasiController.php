@@ -76,7 +76,9 @@ class LapFarmasiController extends Controller
     // LAPORAN REG MASUK
     public function lapRegMasuk()
     {
-        return view('pages.laporan.registrasi.laporan-registrasi-masuk');
+        $isMstrMedis =  mstr_dokter::all();
+
+        return view('pages.laporan.registrasi.laporan-registrasi-masuk', ['isMstrMedis' => $isMstrMedis]);
     }
 
     public function getLapRegMasuk(Request $request)

@@ -92,6 +92,13 @@
         body {
             /* font-family: Calibri, Helvetica, Arial, sans-serif; */
             font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            width: 55mm;
+            height: 100%;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+            left: 10px;
+            -webkit-font-smoothing: antialiased;
 
         }
 
@@ -103,7 +110,7 @@
 
 <body class="receipt">
     <div class="container">
-        <div class="header" style="margin-bottom: 30px;">
+        <div class="header" style="margin-bottom: 10px;">
             <div class="">
                 <img src="{{ asset('src/img/AMnw.jpg') }}" alt="" height="40px" width="40px">
             </div>
