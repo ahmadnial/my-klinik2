@@ -14,13 +14,14 @@ use App\Http\Controllers\registrasiController;
 use App\Http\Controllers\TindakanController;
 use App\Http\Controllers\WilayahController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\settingController;
 use App\Http\Controllers\RedirectController;
 
 // Route::group(['middleware' => 'guest'], function () {
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/ProsesLogin', [AuthController::class, 'ProsesLogin']);
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [DashboardController::class, 'index']);
 Route::get('/redirect', [RedirectController::class, 'cek']);
 Route::post('/logout', [AuthController::class, 'logout']);
 

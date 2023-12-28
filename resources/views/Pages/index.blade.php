@@ -178,45 +178,26 @@
                             </div> --}}
                             <!-- /.d-flex -->
 
-                            <table id="" class="table table-stripped table-bordered">
+                            <table id="" class="table table-striped table-bordered">
                                 <thead class="bg-nial">
                                     <tr>
-                                        <th>Item</th>
-                                        <th>Item</th>
-                                        <th>Item</th>
-                                        <th>Item</th>
-                                        <th>Item</th>
+                                        <th>Kode DO</th>
+                                        <th>No.Faktur</th>
+                                        <th>Supplier/Distributor</th>
+                                        <th>Tgl tempo</th>
+                                        <th>Nilai Faktur</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>x</td>
-                                        <td>y</td>
-                                        <td>z</td>
-                                        <td>z</td>
-                                        <td>z</td>
-                                    </tr>
-                                    <tr>
-                                        <td>x</td>
-                                        <td>y</td>
-                                        <td>z</td>
-                                        <td>z</td>
-                                        <td>z</td>
-                                    </tr>
-                                    <tr>
-                                        <td>x</td>
-                                        <td>y</td>
-                                        <td>z</td>
-                                        <td>z</td>
-                                        <td>z</td>
-                                    </tr>
-                                    <tr>
-                                        <td>x</td>
-                                        <td>y</td>
-                                        <td>z</td>
-                                        <td>z</td>
-                                        <td>z</td>
-                                    </tr>
+                                    @foreach ($isFakturTempo as $isft)
+                                        <tr>
+                                            <td>{{ $isft->do_hdr_kd }}</td>
+                                            <td>{{ $isft->do_hdr_no_faktur }}</td>
+                                            <td>{{ $isft->do_hdr_supplier }}</td>
+                                            <td>{{ date('D,d-M-Y', strtotime($isft->do_hdr_tgl_tempo)) }}</td>
+                                            <td>@currency($isft->do_hdr_total_faktur)</td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
 
