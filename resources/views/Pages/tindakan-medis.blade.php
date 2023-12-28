@@ -1728,6 +1728,16 @@
                         $('#chart_A').val(chartvalue.chart_A)
                         $('#chart_A_diagnosa').val(chartvalue.chart_A_diagnosa)
                         $('#chart_P').val(chartvalue.chart_P)
+
+                        $('#ttv_BW').val(chartvalue.ttv_BW)
+                        $('#ttv_BH').val(chartvalue.ttv_BH)
+                        $('#ttv_BPs').val(chartvalue.ttv_BPs)
+                        $('#ttv_BPd').val(chartvalue.ttv_BPd)
+                        $('#ttv_BT').val(chartvalue.ttv_BT)
+                        $('#ttv_HR').val(chartvalue.ttv_HR)
+                        $('#ttv_RR').val(chartvalue.ttv_RR)
+                        $('#ttv_SN').val(chartvalue.ttv_SN)
+                        $('#ttv_SPO2').val(chartvalue.ttv_SPO2)
                         // $('#nm_tarifXXXX').val(tdk)
 
                     })
@@ -1744,6 +1754,16 @@
             var chart_A = $('#chart_A').val();
             var chart_A_diagnosa = $('#chart_A_diagnosa').val();
             var chart_P = $('#chart_P').val();
+
+            var ttv_BW = $('#ttv_BW').val();
+            var ttv_BH = $('#ttv_BH').val();
+            var ttv_BPs = $('#ttv_BPs').val();
+            var ttv_BPd = $('#ttv_BPd').val();
+            var ttv_BT = $('#ttv_BT').val();
+            var ttv_HR = $('#ttv_HR').val();
+            var ttv_RR = $('#ttv_RR').val();
+            var ttv_SN = $('#ttv_SN').val();
+            var ttv_SPO2 = $('#ttv_SPO2').val();
 
             // var nm_tarif = [];
             // var sub_total = $('#sub_total').val();
@@ -1765,6 +1785,15 @@
                     chart_A: chart_A,
                     chart_A_diagnosa: chart_A_diagnosa,
                     chart_P: chart_P,
+                    ttv_BW: ttv_BW,
+                    ttv_BH: ttv_BH,
+                    ttv_BPs: ttv_BPs,
+                    ttv_BPd: ttv_BPd,
+                    ttv_BT: ttv_BT,
+                    ttv_HR: ttv_HR,
+                    ttv_RR: ttv_RR,
+                    ttv_SN: ttv_SN,
+                    ttv_SPO2: ttv_SPO2,
                 },
                 cache: false,
                 success: function(dataResult) {
