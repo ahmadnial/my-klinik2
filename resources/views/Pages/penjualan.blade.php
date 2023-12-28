@@ -181,7 +181,10 @@
                                     <option value="Nakes">Nakes</option>
                                 </select>
                             </div>
-                            <input type="hidden" id="user" name="user" value="tes">
+                            <div class="isResepActive form-inline col-sm-9 mb-2">
+
+                                <input type="hidden" id="user" name="user" value="tes">
+                            </div>
                         </div>
                         <div class="">
                             <button type="button" id="obatSearch" onClick="searchObatShow()"
@@ -536,6 +539,7 @@
                         });
                         $('#showTipeTarif').val('');
                         $('#showTipeTarif').val('Reguler');
+                        $('.isResepActive').empty();
                         $.ajax({
                             // headers: {
                             //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -624,6 +628,18 @@
                         });
                         $('#showTipeTarif').val('');
                         $('#showTipeTarif').val('Resep');
+                        $('.isResepActive').append(
+                            `
+                             <div class="col-sm-2">
+                                    <input type="text" class="form-control" name="resep_dari"
+                                        id="resep_dari" value="" readonly placeholder="Resep Dari">
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" name="no_resep"
+                                        id="no_resep" value="" readonly placeholder="No.Resep">
+                                </div>
+                            `
+                        )
                         $.ajax({
                             // headers: {
                             //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -711,6 +727,7 @@
                         });
                         $('#showTipeTarif').val('');
                         $('#showTipeTarif').val('Nakes');
+                        $('.isResepActive').empty();
                         $.ajax({
                             // headers: {
                             //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
