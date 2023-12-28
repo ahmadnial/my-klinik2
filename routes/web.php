@@ -156,6 +156,7 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
     Route::get('obatSearch', [poDoController::class, 'obatSearch'])->name('obatSearch');
     Route::get('getObatList/{obat}', [poDoController::class, 'getObatList'])->name('getObatList');
     Route::get('get-data-do/{kd_do}', [poDoController::class, 'getDOList'])->name('get-data-do');
+    Route::get('getListObatDO', [poDoController::class, 'getListObatDO'])->name('getListObatDO');
 });
 
 // CREATE PO-DO + ADJ

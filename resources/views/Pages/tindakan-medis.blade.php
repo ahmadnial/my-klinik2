@@ -1282,7 +1282,8 @@
             $('#satuan_jual_obat').val('');
             $('#signa_resep').val('');
             $('#cara_pakai_resep').val('');
-            $('#ch_hrg_jual').val('');
+            // $('#ch_hrg_jual').val('');
+            // $('.ch_hrg_jual').val('');
 
             $(".resepID").append(
                 `
@@ -1335,23 +1336,31 @@
                     <tbody>
                         <tr>
                             <td>
-                                <input type="hidden" class="obatResep form-control" id="ch_kd_obat"
+                                <input type="text" class="obatResep form-control" id="ch_kd_obat"
                                     name="ch_kd_obat[]" style="width: 100%" value="${obatResep}" readonly>
                             </td>
-                            <input type="hidden" id="ch_nm_obat" name="ch_nm_obat[]" value="${namaobatResep}">
                             <td>
-                                <input type="hidden" class="form-control" id="ch_qty_obat" name="ch_qty_obat[]" value="${qty_obat}">
+                            <input type="text" id="ch_nm_obat" name="ch_nm_obat[]" value="${namaobatResep}">
                             </td>
                             <td>
-                                <input type="hidden" class="form-control" id="ch_satuan_obat" name="ch_satuan_obat[]" value="${satuan_jual_obat}">
+                                <input type="text" class="form-control" id="ch_qty_obat" name="ch_qty_obat[]" value="${qty_obat}">
                             </td>
                             <td>
-                                <input type="hidden" class="form-control" id="ch_signa" name="ch_signa[]" value="${signa_resep}">
+                                <input type="text" class="form-control" id="ch_satuan_obat" name="ch_satuan_obat[]" value="${satuan_jual_obat}">
                             </td>
                             <td>
-                                <input type="hidden" class="form-control" id="ch_cara_pakai" name="ch_cara_pakai[]" value="${cara_pakai_resep}">
+                                <input type="text" class="form-control" id="ch_signa" name="ch_signa[]" value="${signa_resep}">
                             </td>
-                                <input type="hidden" class="form-control" id="ch_hrg_jual" name="ch_hrg_jual[]" value="${hrg_jual}">
+                            <td>
+                                <input type="text" class="form-control" id="ch_cara_pakai" name="ch_cara_pakai[]" value="${cara_pakai_resep}">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="ch_hrg_jual" name="ch_hrg_jual[]" value="${hrg_jual}">
+                            </td>
+                            <td>
+                                <button type="button" class="remove btn btn-xs btn-danger"><i
+                                class="fa fa-trash" onclick="deleteRowReal(this)"></i></button>
+                            </td>
                                
                         </tr>
                     </tbody>
@@ -1366,13 +1375,11 @@
         function deleteRow(btn) {
             var row = btn.parentNode.parentNode.parentNode.parentNode.parentNode;
             row.parentNode.removeChild(row);
-
-            // $('#removeReal').click();
+            deleteRowReal();
         }
 
-        function deleteRowReal(btnr) {
-
-            var row = btnr.parentNode.parentNode.parentNode.parentNode.parentNode;
+        function deleteRowReal(btn) {
+            var row = btn.parentNode.parentNode.parentNode.parentNode.parentNode;
             row.parentNode.removeChild(row);
         }
 
@@ -1692,7 +1699,7 @@
                 `<button type="button" id="updateChart" onClick="updateChartC(this)" data-chart_id_update="${chartid}" class="btn btn-primary float-rights">Update</button>`
             )
 
-            console.log(chartid);
+            // console.log(chartid);
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

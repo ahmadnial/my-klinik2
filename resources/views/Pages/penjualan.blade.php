@@ -172,7 +172,7 @@
                                     value="" readonly>
                             </div>
                             <div class="form-group col-sm-2">
-                                <label for="">Tipe Tarif</label>
+                                <label for="">Tipe Tarif <span class="text-danger">*</span></label>
                                 <select class="form-control-pasien" onchange="getTipeTarif()" id="tp_tipe_tarif"
                                     style="width: 100%;" name="tp_tipe_tarif">
                                     <option value="">--Select--</option>
@@ -186,6 +186,10 @@
                         <div class="">
                             <button type="button" id="obatSearch" onClick="searchObatShow()"
                                 class="btn btn-info float-right"><i class="fa fa-plus">&nbsp;Item</i></button>
+                            <i class="text-danger text-sm">
+                                *Tipe Tarif Wajib DIpilih <br>
+                                *Tekan F9 untuk membuka List Obat/Klik Tombol +Item
+                            </i>
                         </div>
                     </div>
 
@@ -305,6 +309,9 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+                <input type="text" name="" id="showTipeTarif"
+                    class="col-4 col-md-4 form-control float-right mt-2 ml-1 text-danger" style="border: none">
+
                 <div class="modal-body table-responsive">
                     {{-- <div class="row"> --}}
                     <table class="table table-hover table-stripped" id="exm2" style="width: 100%">
@@ -315,11 +322,11 @@
                                 <th>Satuan Jual</th>
                                 <th>Harga Jual <i id="HrgJualView"></i></th>
                                 <th>QTY Stock</th>
-                                <th></th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody class="getListObatx" id="getListObatx">
-
+                            {{-- <tr></tr> --}}
                         </tbody>
                     </table>
 
@@ -339,7 +346,7 @@
 
         {{-- modal cetak --}}
         <!-- Modal -->
-        <div class="modal fade" id="printNota">
+        {{-- <div class="modal fade" id="printNota">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content document">
                     <div class="modal-header bg-">
@@ -349,7 +356,6 @@
                         </button>
                     </div>
                     <div class="modal-body table-responsive">
-                        {{-- <div class="row"> --}}
                         <table class="table table-hover table-stripped" id="exm2" style="width: 100%">
                             <thead>
                                 <tr>
@@ -362,23 +368,17 @@
                                 </tr>
                             </thead>
                             <tbody class="getListObatx" id="getListObatx">
-
+                                <tr></tr>
                             </tbody>
                         </table>
 
                         <input type="hidden" id="user" name="user" value="tes">
-                        {{-- </div> --}}
                         <div class="modal-footer">
-                            {{-- <button type="" class=""></button> --}}
-                            {{-- <button type="button" id="buat" class="btn btn-success float-right"><i
-                                class="fa fa-save"></i>
-                            &nbsp;
-                            Save</button> --}}
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         {{-- end modal cetak --}}
 
         @push('scripts')
@@ -500,6 +500,8 @@
                 function deleteRow(btn) {
                     var row = btn.parentNode.parentNode.parentNode;
                     row.parentNode.removeChild(row);
+                    GrandTotal();
+                    GrandTotalResep();
                 }
 
                 function GrandTotalResep() {
@@ -511,6 +513,15 @@
                     var result = sum.toFixed(2);
 
                     $('#total_penjualan').val(result);
+
+                    var ttlInt = parseFloat(result);
+
+                    var formattedNumber = ttlInt.toLocaleString('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR'
+                    });
+
+                    $('#total_penjualan_show_only').val(formattedNumber);
                 }
 
 
@@ -523,67 +534,83 @@
                             // preventDuplicates: true,
                             positionClass: 'toast-top-right',
                         });
-                        $('#HrgJualView').val('Reguler');
+                        $('#showTipeTarif').val('');
+                        $('#showTipeTarif').val('Reguler');
                         $.ajax({
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            url: "{{ url('getListObatReguler') }}",
-                            type: 'GET',
-                            // data: {
-                            //     chart_mr: dataObject
+                            // headers: {
+                            //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             // },
+                            // url: "{{ url('getListObatReguler') }}",
+                            // type: 'GET',
                             success: function(isObatReguler) {
-                                var table = $('#exm2').DataTable();
-                                var rows = table
-                                    .rows()
-                                    .remove()
-                                    .draw();
-                                // $("#getListObatx").empty();
-                                var getValue = isObatReguler;
-                                for (var getVal = 0; getVal < getValue.length; getVal++) {
-
-                                    const table = $('#exm2').DataTable();
-                                    var btnBtn =
-                                        `<button class="SelectItemObat btn btn-success btn-xs" id="SelectItemObat" onClick="SelectItemObat(this)" data-fm_kd_obat="${getValue[getVal].fm_kd_obat}" data-fm_nm_obat="${getValue[getVal].fm_nm_obat}" data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}" data-fm_hrg_jual="${getValue[getVal].fm_hrg_jual_non_resep}">Select</button>`
-                                    const dataBaru = [
-                                        [getValue[getVal].fm_kd_obat, getValue[getVal].fm_nm_obat, getValue[getVal]
-                                            .fm_satuan_jual, getValue[getVal].fm_hrg_jual_non_resep, getValue[
-                                                getVal]
-                                            .qty, btnBtn
-                                        ],
+                                // var table = $('#exm2').DataTable();
+                                // var rows = table
+                                //     .rows()
+                                //     .remove()
+                                //     .draw();
+                                $('#exm2').DataTable({
+                                    processing: true,
+                                    serverSide: true,
+                                    responsive: true,
+                                    "bDestroy": true,
+                                    ajax: "{{ url('getListObatReguler') }}",
+                                    columns: [{
+                                            data: 'fm_kd_obat',
+                                            name: 'fm_kd_obat'
+                                        },
+                                        {
+                                            data: 'fm_nm_obat',
+                                            name: 'fm_nm_obat'
+                                        },
+                                        {
+                                            data: 'fm_satuan_jual',
+                                            name: 'fm_satuan_jual'
+                                        },
+                                        {
+                                            data: 'fm_hrg_jual_non_resep',
+                                            name: 'fm_hrg_jual_non_resep'
+                                        },
+                                        {
+                                            data: 'qty',
+                                            name: 'qty'
+                                        },
+                                        {
+                                            data: 'action',
+                                            name: 'action'
+                                        },
                                     ]
+                                });
+                                // $("#getListObatx").empty();
+                                // var getValue = isObatReguler;
+                                // for (var getVal = 0; getVal < getValue.length; getVal++) {
 
-                                    function injectDataBaru() {
-                                        for (const data of dataBaru) {
-                                            table.row.add([
-                                                data[0],
-                                                data[1],
-                                                data[2],
-                                                data[3],
-                                                data[4],
-                                                data[5],
-                                                data[6],
-                                                data[7],
-                                            ]).draw(false)
-                                        }
-                                    }
-                                    injectDataBaru()
-                                    // $(".getListObatx").append(`
-                        // <tr>
-                        //     <td><input class="getItemObat col-6" style="border: none" readonly value="${getValue[getVal].fm_kd_obat}"></td>
-                        //     <td id="kd_obatToadd">${getValue[getVal].fm_nm_obat}</td>
-                        //     <td>${getValue[getVal].fm_satuan_jual}</td>
-                        //     <td>${getValue[getVal].fm_hrg_jual_non_resep}</td>
-                        //     <td>${getValue[getVal].qty}</td>
-                        //     <td><button type="button" onClick="SelectItemObat(this)" class="btn btn-info btn-xs" id="SelectItemObatxxx"
-                        //             data-fm_kd_obat="${getValue[getVal].fm_kd_obat}"
-                        //             data-fm_nm_obat="${getValue[getVal].fm_nm_obat}"
-                        //             data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}"
-                        //             data-fm_hrg_jual="${getValue[getVal].fm_hrg_jual_non_resep}">Select</button>
-                        //     </td>
-                        // </tr>`)
-                                }
+                                //     const table = $('#exm2').DataTable();
+                                //     var btnBtn =
+                                //         `<button class="SelectItemObat btn btn-success btn-xs" id="SelectItemObat" onClick="SelectItemObat(this)" data-fm_kd_obat="${getValue[getVal].fm_kd_obat}" data-fm_nm_obat="${getValue[getVal].fm_nm_obat}" data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}" data-fm_hrg_jual="${getValue[getVal].fm_hrg_jual_non_resep}">Select</button>`
+                                //     const dataBaru = [
+                                //         [getValue[getVal].fm_kd_obat, getValue[getVal].fm_nm_obat, getValue[getVal]
+                                //             .fm_satuan_jual, getValue[getVal].fm_hrg_jual_non_resep, getValue[
+                                //                 getVal]
+                                //             .qty, btnBtn
+                                //         ],
+                                //     ]
+
+                                //     function injectDataBaru() {
+                                //         for (const data of dataBaru) {
+                                //             table.row.add([
+                                //                 data[0],
+                                //                 data[1],
+                                //                 data[2],
+                                //                 data[3],
+                                //                 data[4],
+                                //                 data[5],
+                                //                 data[6],
+                                //                 data[7],
+                                //             ]).draw(false)
+                                //         }
+                                //     }
+                                //     injectDataBaru()
+                                // }
 
                             }
                         })
@@ -595,64 +622,85 @@
                             // preventDuplicates: true,
                             positionClass: 'toast-top-right',
                         });
+                        $('#showTipeTarif').val('');
+                        $('#showTipeTarif').val('Resep');
                         $.ajax({
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            url: "{{ url('getListObatResep') }}",
-                            type: 'GET',
+                            // headers: {
+                            //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            // },
+                            // url: "{{ url('getListObatResep') }}",
+                            // type: 'GET',
                             // data: {
                             //     chart_mr: dataObject
                             // },
                             success: function(isObatResep) {
-                                var table = $('#exm2').DataTable();
-                                var rows = table
-                                    .rows()
-                                    .remove()
-                                    .draw();
-                                // $("#getListObatx").empty();
-                                var getValue = isObatResep;
-                                for (var getVal = 0; getVal < getValue.length; getVal++) {
-
-                                    const table = $('#exm2').DataTable();
-                                    var btnBtn =
-                                        `<button class="SelectItemObat btn btn-success btn-xs" id="SelectItemObat" onClick="SelectItemObat(this)" data-fm_kd_obat="${getValue[getVal].fm_kd_obat}" data-fm_nm_obat="${getValue[getVal].fm_nm_obat}" data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}" data-fm_hrg_jual="${getValue[getVal].fm_hrg_jual_resep}">Select</button>`
-                                    const dataBaru = [
-                                        [getValue[getVal].fm_kd_obat, getValue[getVal].fm_nm_obat, getValue[getVal]
-                                            .fm_satuan_jual, getValue[getVal].fm_hrg_jual_resep, getValue[getVal]
-                                            .qty, btnBtn
-                                        ],
+                                // var table = $('#exm2').DataTable();
+                                // var rows = table
+                                //     .rows()
+                                //     .remove()
+                                //     .draw();
+                                $('#exm2').DataTable({
+                                    processing: true,
+                                    serverSide: true,
+                                    responsive: true,
+                                    "bDestroy": true,
+                                    ajax: "{{ url('getListObatResep') }}",
+                                    columns: [{
+                                            data: 'fm_kd_obat',
+                                            name: 'fm_kd_obat'
+                                        },
+                                        {
+                                            data: 'fm_nm_obat',
+                                            name: 'fm_nm_obat'
+                                        },
+                                        {
+                                            data: 'fm_satuan_jual',
+                                            name: 'fm_satuan_jual'
+                                        },
+                                        {
+                                            data: 'fm_hrg_jual_resep',
+                                            name: 'fm_hrg_jual_resep'
+                                        },
+                                        {
+                                            data: 'qty',
+                                            name: 'qty'
+                                        },
+                                        {
+                                            data: 'action',
+                                            name: 'action'
+                                        },
                                     ]
+                                });
+                                // $("#getListObatx").empty();
+                                // var getValue = isObatResep;
+                                // for (var getVal = 0; getVal < getValue.length; getVal++) {
 
-                                    function injectDataBaru() {
-                                        for (const data of dataBaru) {
-                                            table.row.add([
-                                                data[0],
-                                                data[1],
-                                                data[2],
-                                                data[3],
-                                                data[4],
-                                                data[5],
-                                                data[6],
-                                                data[7],
-                                            ]).draw(false)
-                                        }
-                                    }
-                                    injectDataBaru()
-                                    // $(".getListObatx").append(`
-                        // <tr>
-                        //     <td><input class="getItemObat col-4" style="border: none" readonly value="${getValue[getVal].fm_kd_obat}"></td>
-                        //     <td>${getValue[getVal].fm_nm_obat}</td>
-                        //     <td>${getValue[getVal].fm_satuan_jual}</td>
-                        //     <td>${getValue[getVal].fm_hrg_jual_resep}</td>
-                        //     <td><button type="button" class="SelectItemObat btn btn-info btn-xs" id="SelectItemObat" onClick="SelectItemObat(this)"
-                        //             data-fm_kd_obat="${getValue[getVal].fm_kd_obat}"
-                        //             data-fm_nm_obat="${getValue[getVal].fm_nm_obat}"
-                        //             data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}"
-                        //             data-fm_hrg_jual="${getValue[getVal].fm_hrg_jual_resep}">Select</button>
-                        //     </td>
-                        // </tr>`)
-                                }
+                                //     const table = $('#exm2').DataTable();
+                                //     var btnBtn =
+                                //         `<button class="SelectItemObat btn btn-success btn-xs" id="SelectItemObat" onClick="SelectItemObat(this)" data-fm_kd_obat="${getValue[getVal].fm_kd_obat}" data-fm_nm_obat="${getValue[getVal].fm_nm_obat}" data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}" data-fm_hrg_jual="${getValue[getVal].fm_hrg_jual_resep}">Select</button>`
+                                //     const dataBaru = [
+                                //         [getValue[getVal].fm_kd_obat, getValue[getVal].fm_nm_obat, getValue[getVal]
+                                //             .fm_satuan_jual, getValue[getVal].fm_hrg_jual_resep, getValue[getVal]
+                                //             .qty, btnBtn
+                                //         ],
+                                //     ]
+
+                                //     function injectDataBaru() {
+                                //         for (const data of dataBaru) {
+                                //             table.row.add([
+                                //                 data[0],
+                                //                 data[1],
+                                //                 data[2],
+                                //                 data[3],
+                                //                 data[4],
+                                //                 data[5],
+                                //                 data[6],
+                                //                 data[7],
+                                //             ]).draw(false)
+                                //         }
+                                //     }
+                                //     injectDataBaru()
+                                // }
                             }
                         })
                     } else {
@@ -661,65 +709,85 @@
                             // preventDuplicates: true,
                             positionClass: 'toast-top-right',
                         });
-                        $("#getListObatx").empty();
+                        $('#showTipeTarif').val('');
+                        $('#showTipeTarif').val('Nakes');
                         $.ajax({
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            url: "{{ url('getListObatNakes') }}",
-                            type: 'GET',
+                            // headers: {
+                            //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            // },
+                            // url: "{{ url('getListObatNakes') }}",
+                            // type: 'GET',
                             // data: {
                             //     chart_mr: dataObject
                             // },
                             success: function(isObatNakes) {
-                                var table = $('#exm2').DataTable();
-                                var rows = table
-                                    .rows()
-                                    .remove()
-                                    .draw();
-                                // $("#getListObatx").empty();
-                                var getValue = isObatNakes;
-                                for (var getVal = 0; getVal < getValue.length; getVal++) {
-
-                                    const table = $('#exm2').DataTable();
-                                    var btnBtn =
-                                        `<button class="SelectItemObat btn btn-success btn-xs" id="SelectItemObat" onClick="SelectItemObat(this)" data-fm_kd_obat="${getValue[getVal].fm_kd_obat}" data-fm_nm_obat="${getValue[getVal].fm_nm_obat}" data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}" data-fm_hrg_jual="${getValue[getVal].fm_hrg_jual_nakes}">Select</button>`
-                                    const dataBaru = [
-                                        [getValue[getVal].fm_kd_obat, getValue[getVal].fm_nm_obat, getValue[getVal]
-                                            .fm_satuan_jual, getValue[getVal].fm_hrg_jual_nakes, getValue[getVal]
-                                            .qty, btnBtn
-                                        ],
+                                // var table = $('#exm2').DataTable();
+                                // var rows = table
+                                //     .rows()
+                                //     .remove()
+                                //     .draw();
+                                $('#exm2').DataTable({
+                                    processing: true,
+                                    serverSide: true,
+                                    responsive: true,
+                                    "bDestroy": true,
+                                    ajax: "{{ url('getListObatNakes') }}",
+                                    columns: [{
+                                            data: 'fm_kd_obat',
+                                            name: 'fm_kd_obat'
+                                        },
+                                        {
+                                            data: 'fm_nm_obat',
+                                            name: 'fm_nm_obat'
+                                        },
+                                        {
+                                            data: 'fm_satuan_jual',
+                                            name: 'fm_satuan_jual'
+                                        },
+                                        {
+                                            data: 'fm_hrg_jual_nakes',
+                                            name: 'fm_hrg_jual_nakes'
+                                        },
+                                        {
+                                            data: 'qty',
+                                            name: 'qty'
+                                        },
+                                        {
+                                            data: 'action',
+                                            name: 'action'
+                                        },
                                     ]
+                                });
+                                // $("#getListObatx").empty();
+                                // var getValue = isObatNakes;
+                                // for (var getVal = 0; getVal < getValue.length; getVal++) {
 
-                                    function injectDataBaru() {
-                                        for (const data of dataBaru) {
-                                            table.row.add([
-                                                data[0],
-                                                data[1],
-                                                data[2],
-                                                data[3],
-                                                data[4],
-                                                data[5],
-                                                data[6],
-                                                data[7],
-                                            ]).draw(false)
-                                        }
-                                    }
-                                    injectDataBaru()
-                                    //             $(".getListObatx").append(`
-                        // <tr>
-                        //     <td><input class="getItemObat col-4" style="border: none" readonly value="${getValue[getVal].fm_kd_obat}"></td>
-                        //     <td>${getValue[getVal].fm_nm_obat}</td>
-                        //     <td>${getValue[getVal].fm_satuan_jual}</td>
-                        //     <td>${getValue[getVal].fm_hrg_jual_nakes}</td>
-                        //     <td><button type="button" class="SelectItemObat btn btn-info btn-xs" id="SelectItemObat" onClick="SelectItemObat(this)"
-                        //             data-fm_kd_obat="${getValue[getVal].fm_kd_obat}"
-                        //             data-fm_nm_obat="${getValue[getVal].fm_nm_obat}"
-                        //             data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}"
-                        //             data-fm_hrg_jual="${getValue[getVal].fm_hrg_jual_nakes}">Select</button>
-                        //     </td>
-                        // </tr>`)
-                                }
+                                //     const table = $('#exm2').DataTable();
+                                //     var btnBtn =
+                                //         `<button class="SelectItemObat btn btn-success btn-xs" id="SelectItemObat" onClick="SelectItemObat(this)" data-fm_kd_obat="${getValue[getVal].fm_kd_obat}" data-fm_nm_obat="${getValue[getVal].fm_nm_obat}" data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}" data-fm_hrg_jual="${getValue[getVal].fm_hrg_jual_nakes}">Select</button>`
+                                //     const dataBaru = [
+                                //         [getValue[getVal].fm_kd_obat, getValue[getVal].fm_nm_obat, getValue[getVal]
+                                //             .fm_satuan_jual, getValue[getVal].fm_hrg_jual_nakes, getValue[getVal]
+                                //             .qty, btnBtn
+                                //         ],
+                                //     ]
+
+                                //     function injectDataBaru() {
+                                //         for (const data of dataBaru) {
+                                //             table.row.add([
+                                //                 data[0],
+                                //                 data[1],
+                                //                 data[2],
+                                //                 data[3],
+                                //                 data[4],
+                                //                 data[5],
+                                //                 data[6],
+                                //                 data[7],
+                                //             ]).draw(false)
+                                //         }
+                                //     }
+                                //     injectDataBaru()
+                                // }
                             }
                         })
                     }
@@ -980,6 +1048,17 @@
                         }
                     })
                 }
+
+                $(document).keydown(function(event) {
+                    if (event.keyCode == 120) {
+                        return searchObatShow();
+                    }
+                    // } else if (event.ctrlKey && event.shiftKey && event.keyCode == 73) { // Prevent Ctrl+Shift+I        
+                    //     return false;
+                    // }
+                });
+
+                // window.onload = getTipeTarif();
 
                 // $(document).ready(function() {
                 //     var table = $('#exm2').DataTable({

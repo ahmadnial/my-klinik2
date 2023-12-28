@@ -137,8 +137,11 @@
                             <input type="hidden" id="user" name="user" value="tes">
                         </div>
                         <div class="">
-                            <button type="button" id="searchObat" onclick="getBarang()"
-                                class="btn btn-info">tambah</button>
+                            <button type="button" id="searchObat" onclick="getBarang()" class="btn btn-info"><i
+                                    class="fa fa-plus">&nbsp;Item</i></button>
+                            <i class="text-danger text-sm float-right">
+                                *Tekan F9 untuk membuka List Obat/Klik Tombol +Item
+                            </i>
                         </div>
                     </div>
 
@@ -173,7 +176,9 @@
                     <hr>
                     <div class="float-right col-4">
                         <div class="float-right col-4">
-                            <input type="text" class="form-control float-right" name="do_hdr_total_faktur"
+                            <input type="text" class="form-control float-right" name=""
+                                id="do_hdr_total_faktur_show_only" value="" readonly>
+                            <input type="hidden" class="form-control float-right" name="do_hdr_total_faktur"
                                 id="do_hdr_total_faktur" value="" readonly>
                         </div>
                         {{-- <div class="float-right">
@@ -265,58 +270,85 @@
                 // });
 
                 function getBarang() {
-                    var table = $('#exm2').DataTable();
-                    var rows = table
-                        .rows()
-                        .remove()
-                        .draw();
+                    $('#obatSearch').modal('show');
+
+                    // var table = $('#exm2').DataTable();
+                    // var rows = table
+                    //     .rows()
+                    //     .remove()
+                    //     .draw();
 
                     $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        url: "{{ url('getListObatReguler') }}",
-                        type: 'GET',
+                        // headers: {
+                        //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        // },
+                        // url: "{{ url('getListObatDO') }}",
+                        // type: 'GET',
 
                         success: function(listObat) {
-                            var getValue = listObat;
-                            for (var getVal = 0; getVal < getValue.length; getVal++) {
-
-                                const table = $('#exm2').DataTable();
-                                var btnBtn =
-                                    `<button class="SelectItemObat btn btn-success btn-xs" id="SelectItemObat" onClick="SelectItemObat(this)" data-fm_kd_obat="${getValue[getVal].fm_kd_obat}" data-fm_nm_obat="${getValue[getVal].fm_nm_obat}" data-fm_satuan_pembelian="${getValue[getVal].fm_satuan_pembelian}" data-fm_isi_satuan_pembelian="${getValue[getVal].fm_isi_satuan_pembelian}" data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}" data-fm_hrg_beli="${getValue[getVal].fm_hrg_beli}">Select</button>`
-                                const dataBaru = [
-                                    [getValue[getVal].fm_kd_obat, getValue[getVal].fm_nm_obat, getValue[getVal]
-                                        .fm_satuan_pembelian, btnBtn
-                                    ],
+                            $('#exm2').DataTable({
+                                processing: true,
+                                serverSide: true,
+                                responsive: true,
+                                "bDestroy": true,
+                                ajax: "{{ url('getListObatDO') }}",
+                                columns: [{
+                                        data: 'fm_kd_obat',
+                                        name: 'fm_kd_obat'
+                                    },
+                                    {
+                                        data: 'fm_nm_obat',
+                                        name: 'fm_nm_obat'
+                                    },
+                                    {
+                                        data: 'fm_satuan_pembelian',
+                                        name: 'fm_satuan_pembelian'
+                                    },
+                                    // {
+                                    //     data: 'fm_hrg_jual_non_resep',
+                                    //     name: 'fm_hrg_jual_non_resep'
+                                    // },
+                                    // {
+                                    //     data: 'qty',
+                                    //     name: 'qty'
+                                    // },
+                                    {
+                                        data: 'action',
+                                        name: 'action'
+                                    },
                                 ]
+                            });
+                            // var getValue = listObat;
+                            // for (var getVal = 0; getVal < getValue.length; getVal++) {
 
-                                function injectDataBaru() {
-                                    for (const data of dataBaru) {
-                                        table.row.add([
-                                            data[0],
-                                            data[1],
-                                            data[2],
-                                            data[3],
-                                        ]).draw(false)
-                                    }
-                                }
-                                injectDataBaru()
-                            }
+                            //     const table = $('#exm2').DataTable();
+                            //     var btnBtn =
+                            //         `<button class="SelectItemObat btn btn-success btn-xs" id="SelectItemObat" onClick="SelectItemObat(this)" data-fm_kd_obat="${getValue[getVal].fm_kd_obat}" data-fm_nm_obat="${getValue[getVal].fm_nm_obat}" data-fm_satuan_pembelian="${getValue[getVal].fm_satuan_pembelian}" data-fm_isi_satuan_pembelian="${getValue[getVal].fm_isi_satuan_pembelian}" data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}" data-fm_hrg_beli="${getValue[getVal].fm_hrg_beli}">Select</button>`
+                            //     const dataBaru = [
+                            //         [getValue[getVal].fm_kd_obat, getValue[getVal].fm_nm_obat, getValue[getVal]
+                            //             .fm_satuan_pembelian, btnBtn
+                            //         ],
+                            //     ]
+
+                            //     function injectDataBaru() {
+                            //         for (const data of dataBaru) {
+                            //             table.row.add([
+                            //                 data[0],
+                            //                 data[1],
+                            //                 data[2],
+                            //                 data[3],
+                            //             ]).draw(false)
+                            //         }
+                            //     }
+                            //     injectDataBaru()
+                            // }
 
                         }
                     })
                 }
 
-
-                $("#searchObat").on("click", function() {
-                    $('#obatSearch').modal('show');
-
-                    // alert('helo');
-                });
-
                 // $(".SelectItemObat").on("click", function() {
-                function SelectItemObat(x) {
+                function SelectItemObatDO(x) {
                     var getKdObat = $(x).data('fm_kd_obat');
                     var getNmObat = $(x).data('fm_nm_obat');
                     var getSatBeli = $(x).data('fm_satuan_pembelian');
@@ -374,13 +406,20 @@
                             <td>
                                 <input type="text" class="do_sub_total form-control" id="do_sub_total" name="do_sub_total[]">
                             </td>
-                    <td><a href="javascript:void(0)" class="text-danger font-18 remove" title="Remove"><i class="fa fa-trash"></i></a></td>
+                            <td>
+                                 <button type="button" class="remove btn btn-xs btn-danger"><i class="fa fa-trash" onclick="deleteRow(this)"></i></button>
+                            </td>
                    
                 </tr>`);
 
                     $('#obatSearch').modal('hide');
                 };
 
+                function deleteRow(btn) {
+                    var row = btn.parentNode.parentNode.parentNode;
+                    row.parentNode.removeChild(row);
+                    GrandTotal();
+                }
 
                 // $(document).ready(function() {
                 function getQTY(q) {
@@ -452,6 +491,15 @@
                     var result = sum.toFixed(2);
 
                     $('#do_hdr_total_faktur').val(result);
+
+                    var ttlInt = parseFloat(result);
+
+                    var formattedNumber = ttlInt.toLocaleString('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR'
+                    });
+
+                    $('#do_hdr_total_faktur_show_only').val(formattedNumber);
                 }
 
 
@@ -1006,6 +1054,12 @@
                         // Implement the logic for handling the selected item
                         var itemId = item.data('id');
                         console.log('Selected Item ID:', itemId);
+                    }
+                });
+
+                $(document).keydown(function(event) {
+                    if (event.keyCode == 120) {
+                        return getBarang();
                     }
                 });
             </script>

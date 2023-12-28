@@ -684,7 +684,7 @@
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#penjualan_wrapper .col-md-6:eq(0)');
             $('#exm2').DataTable({
-                "keys": true,
+                // "keys": true,
                 "paging": true,
                 "lengthChange": false,
                 "searching": true,
