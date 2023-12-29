@@ -1803,9 +1803,28 @@
                         preventDuplicates: true,
                         positionClass: 'toast-top-right',
                     });
-                    // return window.location.href =
-                    //     "{{ url('tindakan-medis') }}";
+                    $('#chart_S').val('');
+                    $('#chart_O').val('');
+                    $('#chart_A').val('');
+                    $('#chart_A_diagnosa').val('');
+                    $('#chart_P').val('');
+
+                    $('#ttv_BW').val('');
+                    $('#ttv_BH').val('');
+                    $('#ttv_BPs').val('');
+                    $('#ttv_BPd').val('');
+                    $('#ttv_BT').val('');
+                    $('#ttv_HR').val('');
+                    $('#ttv_RR').val('');
+                    $('#ttv_SN').val('');
+                    $('#ttv_SPO2').val('');
+
                     getTimeline();
+
+                    $('#kumpulanButton').empty();
+                    $('#createSOAPP').show();
+                    $('#updateChart').show();
+
 
                 }
             });

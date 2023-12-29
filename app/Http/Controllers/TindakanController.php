@@ -347,6 +347,15 @@ class TindakanController extends Controller
             'chart_A' => $request->chart_A,
             'chart_A_diagnosa' => $request->chart_A_diagnosa,
             'chart_P' => $request->chart_P,
+            'ttv_BW' => $request->ttv_BW,
+            'ttv_BH' => $request->ttv_BH,
+            'ttv_BPs' => $request->ttv_BPs,
+            'ttv_BPd' => $request->ttv_BPd,
+            'ttv_BT' => $request->ttv_BT,
+            'ttv_HR' => $request->ttv_HR,
+            'ttv_RR' => $request->ttv_RR,
+            'ttv_SN' => $request->ttv_SN,
+            'ttv_SPO2' => $request->ttv_SPO2,
         ]);
 
         // if ($c) {
