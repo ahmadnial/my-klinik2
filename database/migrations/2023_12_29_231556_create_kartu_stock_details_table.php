@@ -13,16 +13,18 @@ return new class extends Migration
     {
         Schema::create('kartu_stock_detail', function (Blueprint $table) {
             $table->id();
-            $table->string('tanggal_trs');
-            $table->string('kd_trs');
-            $table->string('supplier');
-            $table->string('no_batch');
-            $table->string('expired_date');
-            $table->string('qty_awal');
-            $table->string('qty_masuk');
-            $table->string('qty_keluar');
-            $table->string('qty_akhir');
-            $table->string('hpp_satuan');
+            $table->string('tanggal_trs', 50);
+            $table->string('kd_obat', 50);
+            $table->string('nm_obat', 150);
+            $table->string('kd_trs', 50);
+            $table->string('supplier', 50);
+            $table->string('no_batch', 50);
+            $table->string('expired_date', 50);
+            $table->string('qty_awal', 50);
+            $table->string('qty_masuk', 50);
+            $table->string('qty_keluar', 50);
+            $table->string('qty_akhir', 50);
+            $table->string('hpp_satuan', 50);
             $table->timestamps();
         });
     }

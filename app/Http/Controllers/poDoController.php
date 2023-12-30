@@ -281,6 +281,12 @@ class poDoController extends Controller
         // }
         // }
         // }
+        foreach ($request->do_obat as $yek => $val) {
+            $dataK =  $request->do_obat[$yek];
+            $currentStock = DB::table('tb_stock')->whereIn('kd_obat', [$dataK])->pluck('qty');
+            print_r($currentStock);
+        }
+        die();
 
         foreach ($request->do_obat as $keys => $val) {
             $datax =  $request->do_obat[$keys];
@@ -294,26 +300,31 @@ class poDoController extends Controller
 
         foreach ($request->do_obat as $key => $val) {
             $datax =  $request->do_obat[$keys];
-            $currentStock = DB::table('tb_stock')->whereIn('kd_obat', [$datax])->pluck('qty');
-            $currentStockF = implode(',', $currentStock);
-            $dataQtyS =  $request->do_qty[$keys];
-            $dataIsiS =  $request->do_isi_pembelian[$keys];
-            $Y = (int)$dataQtyS * (int)$dataIsiS;
-            $detailKartuStock = [
-                'tanggal_trs' => '3000-01-01',
-                'kd_trs' => $request->do_hdr_kd,
-                'supplier' => $request->do_hdr_supplier,
-                'no_batch' => $request->do_batch_number[$key],
-                'expired_date' => $request->do_tgl_exp[$key],
-                'qty_awal' => $currentStock,
-                'qty_masuk' => $Y,
-                'qty_keluar' => 'noll',
-                'qty_akhir'  => 'noll',
-                'do_obat' => $request->do_obat[$key],
-                'hpp_satuan' => $request->do_hrg_beli[$key],
-                // 'nm_obat' => $request->nm_obat[$key],
-            ];
-            kartuStockDetail::create($detailKartuStock);
+            foreach ($currentStock as $cs => $r) {
+                $currentStockF = $currentStock[$cs];
+                // $currentStockF = preg_replace("/[^0-9]/", "", $currentStock);
+                $dataQtyS =  $request->do_qty[$keys];
+                $dataIsiS =  $request->do_isi_pembelian[$keys];
+                $Y = (int)$dataQtyS * (int)$dataIsiS;
+                $detailKartuStock = [
+                    'tanggal_trs' => '3000-01-01',
+                    'kd_trs' => $request->do_hdr_kd,
+                    'kd_obat' => $request->do_obat[$key],
+                    'nm_obat' => $request->nm_obat[$key],
+                    'supplier' => $request->do_hdr_supplier,
+                    'no_batch' => $request->do_batch_number[$key],
+                    'expired_date' => $request->do_tgl_exp[$key],
+                    'qty_awal' => $currentStockF[$cs],
+                    'qty_masuk' => $Y,
+                    'qty_keluar' => 'noll',
+                    'qty_akhir'  => 'noll',
+                    'do_obat' => $request->do_obat[$key],
+                    'hpp_satuan' => $request->do_hrg_beli[$key],
+                    // 'nm_obat' => $request->nm_obat[$key],
+                ];
+
+                kartuStockDetail::create($detailKartuStock);
+            }
         }
 
         DB::commit();

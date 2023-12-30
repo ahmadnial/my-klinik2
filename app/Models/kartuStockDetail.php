@@ -12,6 +12,8 @@ class kartuStockDetail extends Model
     protected $table = 'kartu_stock_detail';
     protected $fillable = [
         'tanggal_trs',
+        'kd_obat',
+        'nm_obat',
         'kd_trs',
         'supplier',
         'no_batch',
