@@ -275,7 +275,7 @@
                                 <li class="nav-item">
                                     <a href="{{ url('/buku-stok-rekap') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Buku Stok</p>
+                                        <p>Info Stok</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">

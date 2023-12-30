@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\do_detail_item;
 use App\Models\do_hdr;
+use App\Models\kartuStockDetail;
 use App\Models\mstr_lokasi_stock;
 use App\Models\mstr_obat;
 use App\Models\mstr_supplier;
@@ -291,6 +292,29 @@ class poDoController extends Controller
             tb_stock::whereIn('kd_obat', [$datax])->increment("qty", $toInt);
         }
 
+        foreach ($request->do_obat as $key => $val) {
+            $datax =  $request->do_obat[$keys];
+            $currentStock = DB::table('tb_stock')->whereIn('kd_obat', [$datax])->pluck('qty');
+            $currentStockF = implode(',', $currentStock);
+            $dataQtyS =  $request->do_qty[$keys];
+            $dataIsiS =  $request->do_isi_pembelian[$keys];
+            $Y = (int)$dataQtyS * (int)$dataIsiS;
+            $detailKartuStock = [
+                'tanggal_trs' => '3000-01-01',
+                'kd_trs' => $request->do_hdr_kd,
+                'supplier' => $request->do_hdr_supplier,
+                'no_batch' => $request->do_batch_number[$key],
+                'expired_date' => $request->do_tgl_exp[$key],
+                'qty_awal' => $currentStock,
+                'qty_masuk' => $Y,
+                'qty_keluar' => 'noll',
+                'qty_akhir'  => 'noll',
+                'do_obat' => $request->do_obat[$key],
+                'hpp_satuan' => $request->do_hrg_beli[$key],
+                // 'nm_obat' => $request->nm_obat[$key],
+            ];
+            kartuStockDetail::create($detailKartuStock);
+        }
 
         DB::commit();
 

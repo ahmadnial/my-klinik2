@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\kartuStockHdr;
 use App\Models\mstr_jenis_obat;
 use App\Models\mstr_kategori_produk;
 use App\Models\mstr_lokasi_stock;
@@ -254,6 +255,13 @@ class masterFarmasiController extends Controller
                 'satuan' => $request->fm_satuan_jual,
             ];
             tb_stock::create($newData);
+
+            $kartuStock = [
+                'ksh_kd_obat' => $request->fm_kd_obat,
+                'ksh_nm_obat' => $request->fm_nm_obat,
+                'ksh_satuan' => $request->fm_satuan_jual,
+            ];
+            kartuStockHdr::create($kartuStock);
 
             DB::commit();
 
