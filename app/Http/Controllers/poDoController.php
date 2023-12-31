@@ -15,6 +15,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Redirect;
 
 class poDoController extends Controller
 {
@@ -57,8 +59,10 @@ class poDoController extends Controller
         $lokasi = mstr_lokasi_stock::all();
         $viewDO = do_hdr::with('hdrToDetail')
             // ->where('chart_mr', $request->chart_mr)
-            ->orderBy('created_at', 'DESC')
+            ->latest()
             ->get();
+        $dateNow = Carbon::now()->format("Y-m-d");
+
         // $viewDO = DB::table('do_hdr')
         //     ->select('do_hdr.*', 'do_detail_item.*')
         //     ->distinct()
@@ -70,7 +74,8 @@ class poDoController extends Controller
             'lokasi' => $lokasi,
             'viewDO' => $viewDO,
             'noRef' => $noRef,
-            'listObat' => $listObat
+            'listObat' => $listObat,
+            'dateNow' => $dateNow,
         ]);
     }
 
@@ -234,109 +239,110 @@ class poDoController extends Controller
         ]);
 
         DB::beginTransaction();
-        // try {
-        $newData = [
-            'do_hdr_kd' => $request->do_hdr_kd,
-            'do_hdr_no_faktur' => $request->do_hdr_no_faktur,
-            'do_hdr_supplier' => $request->do_hdr_supplier,
-            'do_hdr_tgl_tempo' => $request->do_hdr_tgl_tempo,
-            // 'do_hdr_lokasi_stock' => $request->do_hdr_lokasi_stock,
-            'do_hdr_total_faktur' => $request->do_hdr_total_faktur,
-            'user' => Auth::user()->name,
-        ];
-        do_hdr::create($newData);
-
-        foreach ($request->do_obat as $key => $val) {
-            $detail = [
-                'do_obat' => $request->do_obat[$key],
-                'do_satuan_pembelian' => $request->do_satuan_pembelian[$key],
-                'do_diskon' => $request->do_diskon[$key],
-                'do_qty' => $request->do_qty[$key],
-                'do_isi_pembelian' => $request->do_isi_pembelian[$key],
-                'do_satuan_jual' => $request->do_satuan_jual[$key],
-                'do_hrg_beli' => $request->do_hrg_beli[$key],
-                'do_pajak' => $request->do_pajak[$key],
-                'do_tgl_exp' => $request->do_tgl_exp[$key],
-                'do_batch_number' => $request->do_batch_number[$key],
-                'do_sub_total' => $request->do_sub_total[$key],
+        try {
+            $newData = [
+                'tanggal_trs' => $request->tanggal_trs,
                 'do_hdr_kd' => $request->do_hdr_kd,
-                'do_diskon_prosen' => $request->do_diskon_prosen[$key],
-                'nm_obat' => $request->nm_obat[$key],
-                // 'do_hdr_id' => $request->do_hdr_kd[$key],
+                'do_hdr_no_faktur' => $request->do_hdr_no_faktur,
+                'do_hdr_supplier' => $request->do_hdr_supplier,
+                'do_hdr_tgl_tempo' => $request->do_hdr_tgl_tempo,
+                // 'do_hdr_lokasi_stock' => $request->do_hdr_lokasi_stock,
+                'do_hdr_total_faktur' => $request->do_hdr_total_faktur,
+                'user' => Auth::user()->name,
             ];
-            do_detail_item::create($detail);
-        }
-        // foreach ($request->do_obat as $keys => $val) {
-        //     $cvToNum = $request->do_qty[$keys];
-        //     $int = (int)$cvToNum;
-        //     //     DB::table('tb_stock')->increment('qty', 20)->where('kd_obat' ,'=', $request->do_obat[$keys]);
-        //     // foreach ($getKdObat as $ko) {
-        //     // if ($ko->kd_obat == $request->do_obat) {
-        //     DB::table('tb_stock')->where('kd_obat', $request->do_obat[$keys])->increment([
-        //         // 'kd_obat' => $request->do_obat[$keys],
-        //         // 'qty' => DB::raw('qty' + $int),
-        //         'qty', $int,
-        //         // 'qty' => $request->do_qty,
-        //     ]);
-        // }
-        // }
-        // }
-        foreach ($request->do_obat as $yek => $val) {
-            $dataK =  $request->do_obat[$yek];
-            $currentStock = DB::table('tb_stock')->whereIn('kd_obat', [$dataK])->pluck('qty');
-            print_r($currentStock);
-        }
-        die();
+            do_hdr::create($newData);
 
-        foreach ($request->do_obat as $keys => $val) {
-            $datax =  $request->do_obat[$keys];
-            $dataQty =  $request->do_qty[$keys];
-            $dataIsi =  $request->do_isi_pembelian[$keys];
-            $X = (int)$dataQty * (int)$dataIsi;
-            $toInt = (int)$X;
-
-            tb_stock::whereIn('kd_obat', [$datax])->increment("qty", $toInt);
-        }
-
-        foreach ($request->do_obat as $key => $val) {
-            $datax =  $request->do_obat[$keys];
-            foreach ($currentStock as $cs => $r) {
-                $currentStockF = $currentStock[$cs];
-                // $currentStockF = preg_replace("/[^0-9]/", "", $currentStock);
-                $dataQtyS =  $request->do_qty[$keys];
-                $dataIsiS =  $request->do_isi_pembelian[$keys];
-                $Y = (int)$dataQtyS * (int)$dataIsiS;
-                $detailKartuStock = [
-                    'tanggal_trs' => '3000-01-01',
-                    'kd_trs' => $request->do_hdr_kd,
-                    'kd_obat' => $request->do_obat[$key],
-                    'nm_obat' => $request->nm_obat[$key],
-                    'supplier' => $request->do_hdr_supplier,
-                    'no_batch' => $request->do_batch_number[$key],
-                    'expired_date' => $request->do_tgl_exp[$key],
-                    'qty_awal' => $currentStockF[$cs],
-                    'qty_masuk' => $Y,
-                    'qty_keluar' => 'noll',
-                    'qty_akhir'  => 'noll',
+            foreach ($request->do_obat as $key => $val) {
+                $detail = [
                     'do_obat' => $request->do_obat[$key],
-                    'hpp_satuan' => $request->do_hrg_beli[$key],
-                    // 'nm_obat' => $request->nm_obat[$key],
+                    'do_satuan_pembelian' => $request->do_satuan_pembelian[$key],
+                    'do_diskon' => $request->do_diskon[$key],
+                    'do_qty' => $request->do_qty[$key],
+                    'do_isi_pembelian' => $request->do_isi_pembelian[$key],
+                    'do_satuan_jual' => $request->do_satuan_jual[$key],
+                    'do_hrg_beli' => $request->do_hrg_beli[$key],
+                    'do_pajak' => $request->do_pajak[$key],
+                    'do_tgl_exp' => $request->do_tgl_exp[$key],
+                    'do_batch_number' => $request->do_batch_number[$key],
+                    'do_sub_total' => $request->do_sub_total[$key],
+                    'do_hdr_kd' => $request->do_hdr_kd,
+                    'do_diskon_prosen' => $request->do_diskon_prosen[$key],
+                    'nm_obat' => $request->nm_obat[$key],
+                    'tanggal_trs' => $request->tanggal_trs,
+                    // 'do_hdr_id' => $request->do_hdr_kd[$key],
                 ];
-
+                do_detail_item::create($detail);
+            }
+            // foreach ($request->do_obat as $keys => $val) {
+            //     $cvToNum = $request->do_qty[$keys];
+            //     $int = (int)$cvToNum;
+            //     //     DB::table('tb_stock')->increment('qty', 20)->where('kd_obat' ,'=', $request->do_obat[$keys]);
+            //     // foreach ($getKdObat as $ko) {
+            //     // if ($ko->kd_obat == $request->do_obat) {
+            //     DB::table('tb_stock')->where('kd_obat', $request->do_obat[$keys])->increment([
+            //         // 'kd_obat' => $request->do_obat[$keys],
+            //         // 'qty' => DB::raw('qty' + $int),
+            //         'qty', $int,
+            //         // 'qty' => $request->do_qty,
+            //     ]);
+            // }
+            // }
+            // }
+            foreach ($request->do_obat as $keyx => $val) {
+                $currentStock = DB::table('tb_stock')->whereIn('kd_obat', [$request->do_obat[$keyx]])->value('qty');
+                $datax =  $request->do_obat[$keyx];
+                // $currentStockF = preg_replace("/[^0-9]/", "", $currentStock);
+                $dataQtyS =  $request->do_qty[$keyx];
+                $dataIsiS =  $request->do_isi_pembelian[$keyx];
+                $Y = (int)$dataQtyS * (int)$dataIsiS;
+                $qtyAkhir = $currentStock + $Y;
+                $detailKartuStock = [
+                    'tanggal_trs' => $request->tanggal_trs,
+                    'kd_trs' => $request->do_hdr_kd,
+                    'kd_obat' => $request->do_obat[$keyx],
+                    'nm_obat' => $request->nm_obat[$keyx],
+                    'supplier' => $request->do_hdr_supplier,
+                    'no_batch' => $request->do_batch_number[$keyx],
+                    'expired_date' => $request->do_tgl_exp[$keyx],
+                    'qty_awal' => $currentStock,
+                    'qty_masuk' => $Y,
+                    'qty_keluar' => '0',
+                    'qty_akhir'  => $qtyAkhir,
+                    // 'do_obat' => $request->do_obat[$keyx],
+                    'hpp_satuan' => $request->do_hrg_beli[$keyx],
+                ];
+                // print_r($currentStock);
                 kartuStockDetail::create($detailKartuStock);
             }
+            // die();
+
+            foreach ($request->do_obat as $keys => $val) {
+                $datax =  $request->do_obat[$keys];
+                $dataQty =  $request->do_qty[$keys];
+                $dataIsi =  $request->do_isi_pembelian[$keys];
+                $X = (int)$dataQty * (int)$dataIsi;
+                $toInt = (int)$X;
+
+                tb_stock::whereIn('kd_obat', [$datax])->increment("qty", $toInt);
+            }
+
+            DB::commit();
+
+            $sessionFlash = [
+                'message' => 'Saved!',
+                'alert-type' => 'success'
+            ];
+
+            return Redirect::to('/delivery-order')->with($sessionFlash);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            $sessionFlashErr = [
+                'message' => 'Error!',
+                'alert-type' => 'error'
+            ];
+            return Redirect::to('/delivery-order')->with($sessionFlashErr);
         }
-
-        DB::commit();
-
-        toastr()->success('Data Tersimpan!');
-        return back();
-        // return redirect()->route('/tindakan-medis');
-        // } catch (\Exception $e) {
-        DB::rollback();
-        toastr()->error('Gagal Tersimpan!');
-        return back();
-        // }
     }
 
     public function getDOList(Request $request)

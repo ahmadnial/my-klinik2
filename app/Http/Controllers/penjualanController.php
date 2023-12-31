@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\do_detail_item;
+use App\Models\kartuStockDetail;
 use App\Models\mstr_obat;
 use App\Models\penjualanFarmasi;
 use App\Models\tb_stock;
@@ -242,6 +243,30 @@ class penjualanController extends Controller
                 ];
                 tp_detail_item::create($tpdetail);
             }
+
+            foreach ($request->kd_obat as $keyx => $val) {
+                $currentStock = DB::table('tb_stock')->whereIn('kd_obat', [$request->kd_obat[$keyx]])->value('qty');
+                // $currentStockF = preg_replace("/[^0-9]/", "", $currentStock);
+                $Y = (int)$request->qty[$keyx];
+                $qtyAkhir = $currentStock - $Y;
+                $detailKartuStock = [
+                    'tanggal_trs' => $request->tgl_trs,
+                    'kd_trs' => $request->tp_kd_trs,
+                    'kd_obat' => $request->kd_obat[$keyx],
+                    'nm_obat' => $request->nm_obat[$keyx],
+                    'supplier' => 'Penjualan Apotek',
+                    'no_batch' => '-',
+                    'expired_date' => '3000-01-01',
+                    'qty_awal' => $currentStock,
+                    'qty_masuk' => '0',
+                    'qty_keluar' => $request->qty[$keyx],
+                    'qty_akhir'  => $qtyAkhir,
+                    'hpp_satuan' => '0',
+                ];
+                // print_r($currentStock);
+                kartuStockDetail::create($detailKartuStock);
+            }
+            // die();
 
             foreach ($request->kd_obat as $keys => $val) {
                 $datax =  $request->kd_obat[$keys];

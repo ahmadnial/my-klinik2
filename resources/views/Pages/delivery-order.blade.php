@@ -14,11 +14,11 @@
                     <table id="example1" class="table table-hover">
                         <thead class="">
                             <tr>
+                                <th>Tanggal Trs</th>
                                 <th>No Ref</th>
                                 <th>No Faktur</th>
                                 <th>Supplier</th>
                                 <th>Tgl Jatuh Tempo</th>
-                                <th>Dibuat</th>
                                 <th>Nilai Faktur</th>
                                 <th></th>
                             </tr>
@@ -27,11 +27,11 @@
                             @foreach ($viewDO as $tz)
                                 <tr>
                                     {{-- <td id="">{{ $tz->created_at }}</td> --}}
+                                    <td id="">{{ $tz->created_at->format('d M Y h:i A') }}</td>
                                     <td id="">{{ $tz->do_hdr_kd }}</td>
                                     <td id="">{{ $tz->do_hdr_no_faktur }}</td>
                                     <td id="">{{ $tz->do_hdr_supplier }}</td>
                                     <td id="">{{ $tz->do_hdr_tgl_tempo }}</td>
-                                    <td id="">{{ $tz->created_at }}</td>
                                     <td id="">@currency($tz->do_hdr_total_faktur)</td>
                                     {{-- <td id="">{{ $tz->hdrToDetail[0]->do_obat }}</td> --}}
                                     <td><button class="btn btn-xs btn-success" data-toggle="modal" data-target="#EditXDo"
@@ -103,15 +103,20 @@
                                 <input type="text" class="form-control" name="do_hdr_kd" id="do_hdr_kd"
                                     value="{{ $noRef }}" readonly>
                             </div>
+                            <div class="form-group col-sm-2">
+                                <label for="">Tanggal Transaksi</label>
+                                <input type="date" class="form-control" name="tanggal_trs" id="tanggal_trs"
+                                    value="{{ $dateNow }}" required>
+                            </div>
                             <div class="form-group col-sm-3">
                                 <label for="">Nomor Faktur</label>
                                 <input type="text" class="form-control" name="do_hdr_no_faktur" id="do_hdr_no_faktur"
-                                    value="" placeholder="Input Nomor Faktur">
+                                    value="" placeholder="Input Nomor Faktur" required>
                             </div>
                             <div class="form-group col-sm-2">
                                 <label for="">Supplier</label>
                                 <select class="do_hdr_supplier form-control-pasien" id="do_hdr_supplier"
-                                    style="width: 100%;" name="do_hdr_supplier">
+                                    style="width: 100%;" name="do_hdr_supplier" required>
                                     <option value="">--Select--</option>
                                     @foreach ($supplier as $sp)
                                         <option value="{{ $sp->fm_nm_supplier }}">{{ $sp->fm_nm_supplier }}</option>
@@ -121,7 +126,7 @@
                             <div class="form-group col-sm-2">
                                 <label for="">Tanggal Jatuh Tempo</label>
                                 <input type="date" class="form-control" name="do_hdr_tgl_tempo" id="do_hdr_tgl_tempo"
-                                    value="">
+                                    value="" required>
                             </div>
                             {{-- <div class="form-group col-sm-2">
                                 <label for="">Lokasi</label>
@@ -937,6 +942,11 @@
                                                     <label for="">Nomor Ref</label>
                                                     <input type="text" class="form-control" name="edo_hdr_kd" id="edo_hdr_kd"
                                                         value="${datavalue.do_hdr_kd}" readonly>
+                                                </div>
+                                                 <div class="form-group col-sm-2">
+                                                    <label for="">Tanggal Transaksi</label>
+                                                    <input type="date" class="form-control" name="tanggal_trs" id="tanggal_trs"
+                                                        value="${datavalue.tanggal_trs}" readonly>
                                                 </div>
                                                 <div class="form-group col-sm-3">
                                                     <label for="">Nomor Faktur</label>

@@ -14,6 +14,7 @@ class do_hdr extends Model
 
     protected $table = 'do_hdr';
     protected $fillable = [
+        'tanggal_trs',
         'do_hdr_kd',
         'do_hdr_no_faktur',
         'do_hdr_supplier',

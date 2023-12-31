@@ -14,6 +14,7 @@ class do_detail_item extends Model
 
     protected $table = 'do_detail_item';
     protected $fillable = [
+        'tanggal_trs',
         'do_obat',
         'do_satuan_pembelian',
         'do_diskon',
