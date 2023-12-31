@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\do_detail_item;
+use App\Models\kartuStockHdr;
 use App\Models\mstr_dokter;
 use App\Models\mstr_tindakan;
 use Illuminate\Http\Request;
@@ -214,5 +215,25 @@ class LapFarmasiController extends Controller
             }
         }
         return response()->json($isDataTindakan);
+    }
+
+    public function karatuStok()
+    {
+        return view('pages.laporan.farmasi.kartu-stok');
+    }
+
+    public function getKartuStok(Request $request)
+    {
+        $start = $request->date1;
+        $end = $request->date2;
+
+        if ($request->ajax()) {
+            $isKartuStock = DB::table('kartu_stock_hdr')->whereBetween('kartu_stock_detail.tanggal_trs', [$start, $end])
+                ->leftJoin('kartu_stock_detail', 'kartu_stock_detail.kd_obat', 'kartu_stock_hdr.ksh_kd_obat')
+
+                ->select('kartu_stock_hdr.*', 'kartu_stock_detail.*')
+                ->get();
+            return response()->json($isKartuStock);
+        }
     }
 }

@@ -279,6 +279,12 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
+                                    <a href="{{ url('/kartu-stok') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Kartu Stok</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a href="{{ url('/pembelian-detail') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Info Pembelian Detail</p>

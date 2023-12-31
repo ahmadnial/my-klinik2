@@ -222,6 +222,8 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
     Route::get('getLaporanPenjualanDetail', [LapFarmasiController::class, 'getLapPenjualanDetail'])->name('getLaporanPenjualanDetail');
     Route::get('buku-stok-rekap', [LapFarmasiController::class, 'bukuStok'])->name('buku-stok-rekap');
     Route::get('getBukuStok', [LapFarmasiController::class, 'getBukuStok'])->name('getBukuStok');
+    Route::get('kartu-stok', [LapFarmasiController::class, 'karatuStok'])->name('kartu-stok');
+    Route::get('getKartuStok', [LapFarmasiController::class, 'getKartuStok'])->name('getKartuStok');
     Route::get('laporan-registrasi-masuk', [LapFarmasiController::class, 'lapRegMasuk'])->name('laporan-registrasi-masuk');
     Route::get('getLapRegMasuk', [LapFarmasiController::class, 'getLapRegMasuk'])->name('getLapRegMasuk');
     Route::get('pendapatan-klinik-rekap', [LapFarmasiController::class, 'lapKlinikRekap'])->name('pendapatan-klinik-rekap');

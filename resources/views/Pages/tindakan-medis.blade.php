@@ -552,7 +552,7 @@
                                                                 data-satuan="mmHg"
                                                                 data-monitorname="Blood Pressure Sistole"
                                                                 class="form-control form-control-sm vital-sign"
-                                                                min="0" value="">
+                                                                min="0" value="" required>
                                                             <span class="input-group-text"
                                                                 style="width:7em; text-align:center">mmHg</span>
                                                         </div>
@@ -575,7 +575,7 @@
                                                                 data-satuan="mmHg"
                                                                 data-monitorname="Blood Pressure Diastole"
                                                                 class="form-control form-control-sm vital-sign"
-                                                                min="0" value="">
+                                                                min="0" value="" required>
                                                             <span class="input-group-text"
                                                                 style="width:7em; text-align:center">mmHg</span>
                                                         </div>
