@@ -16,8 +16,8 @@
                     <button class="btn btn-success" onclick="getDataPenjualan()" id="btnProses">Proses</button>
                 </div>
 
-                <div id="accordion">
-                    <div class="card-outline card-danger">
+                <div id="accordion" class="cardItems">
+                    {{-- <div class="card-outline card-danger">
                         <div class="card-header">
                             <h4 class="card-title w-100">
                                 <a class="d-block w-100" data-toggle="collapse" href="#collapseOne" aria-expanded="true">
@@ -51,15 +51,20 @@
                                                 <th></th>
                                                 <th></th>
                                                 <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
                                                 <th id="grandTTL"></th>
                                             </tr>
                                         </tfoot>
                                     </table>
-                                    {{-- <input type="text" class="form-control col-4" id="grandttl"> --}}
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
     </section>
@@ -89,6 +94,59 @@
                             date2: date2
                         },
                         success: function(isKartuStock) {
+                            $.each(isKartuStock, function(key, datavalueHdr) {
+                                var itemHdr = datavalueHdr.ksh_kd_obat;
+                                $('.cardItems').append(
+                                    ` <div class="card-outline card-danger">
+                                        <div class="card-header">
+                                            <h4 class="card-title w-100">
+                                                <a class="d-block w-100" data-toggle="collapse" href="#collapseOne" aria-expanded="true">
+                                                    ${datavalueHdr.ksh_nm_obat}
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseOne" class="collapse show" data-parent="#accordion" style="">
+                                            <div class="card-body">
+                                                <div>
+                                                    <table id="penjualan" class="kartustok table table-hover table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Tanggal</th>
+                                                                <th>Kode Ref</th>
+                                                                <th>Supplier/Pelanggan</th>
+                                                                <th>Batch No.</th>
+                                                                <th>Exp. Date</th>
+                                                                <th>Qty Awal</th>
+                                                                <th>Qty Masuk</th>
+                                                                <th>Qty Keluar</th>
+                                                                <th>Qty Akhir</th>
+                                                                <th>HPP</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="result">
+
+                                                        </tbody>
+                                                        <tfoot align="">
+                                                            <tr>
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th id="grandTTL"></th>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>`
+                                )
+                            });
                             var sumall = 0;
                             var table = $('#penjualan').DataTable();
                             var rows = table
@@ -97,37 +155,41 @@
                                 .draw();
                             $.each(isKartuStock, function(key, datavalue) {
                                 const table = $('#penjualan').DataTable();
-                                // var total_pen = datavalue.total_penjualan;
-                                // var ttlPenjualan = total_pen.toLocaleString('id-ID', {
-                                //     style: 'currency',
-                                //     currency: 'IDR'
-                                // });
-                                const dataBaru = [
-                                    [datavalue.tanggal_trs, datavalue.kd_trs, datavalue.supplier,
-                                        datavalue.no_batch, datavalue.expired_date, datavalue.qty_awal,
-                                        datavalue.qty_masuk, datavalue.qty_keluar, datavalue.qty_akhir,
-                                        datavalue.hpp_satuan,
-                                    ],
-                                ]
+                                // const itemHdr = datavalue.ksh_kd_obat;
+                                const itemDetail = datavalue.kd_obat;
+                                if (itemHdr == itemDetail) {
+                                    const dataBaru = [
+                                        [datavalue.tanggal_trs, datavalue.kd_trs, datavalue.supplier,
+                                            datavalue.no_batch, datavalue.expired_date, datavalue
+                                            .qty_awal,
+                                            datavalue.qty_masuk, datavalue.qty_keluar, datavalue
+                                            .qty_akhir,
+                                            datavalue.hpp_satuan,
+                                        ],
+                                    ]
 
-                                function injectDataBaru() {
-                                    for (const data of dataBaru) {
-                                        table.row.add([
-                                            data[0],
-                                            data[1],
-                                            data[2],
-                                            data[3],
-                                            data[4],
-                                            data[5],
-                                            data[6],
-                                            data[7],
-                                            data[8],
-                                            data[9],
-                                        ]).draw(false)
+                                    function injectDataBaru() {
+                                        for (const data of dataBaru) {
+                                            table.row.add([
+                                                data[0],
+                                                data[1],
+                                                data[2],
+                                                data[3],
+                                                data[4],
+                                                data[5],
+                                                data[6],
+                                                data[7],
+                                                data[8],
+                                                data[9],
+                                            ]).draw(false)
+                                        }
                                     }
+
+                                    injectDataBaru()
+                                } else {
+                                    // const dataBaru = '';
                                 }
 
-                                injectDataBaru()
 
                                 // var ttlInt = parseFloat(datavalue.total_penjualan);
                                 // sumall += ttlInt;

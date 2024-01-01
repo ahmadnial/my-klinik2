@@ -229,8 +229,8 @@ class LapFarmasiController extends Controller
 
         if ($request->ajax()) {
             $isKartuStock = DB::table('kartu_stock_hdr')->whereBetween('kartu_stock_detail.tanggal_trs', [$start, $end])
-                ->leftJoin('kartu_stock_detail', 'kartu_stock_detail.kd_obat', 'kartu_stock_hdr.ksh_kd_obat')
 
+                ->leftJoin('kartu_stock_detail', 'kartu_stock_detail.kd_obat', 'kartu_stock_hdr.ksh_kd_obat')
                 ->select('kartu_stock_hdr.*', 'kartu_stock_detail.*')
                 ->get();
             return response()->json($isKartuStock);

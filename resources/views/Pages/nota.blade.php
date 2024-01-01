@@ -112,7 +112,7 @@
     <div class="container">
         <div class="header" style="margin-bottom: 10px;">
             <div class="">
-                <img src="{{ asset('src/img/AMnw.jpg') }}" alt="" height="40px" width="40px">
+                <img src="{{ asset('src/img/AMnw.png') }}" alt="" height="60px" width="60px">
             </div>
             <h2>ABHIPRAYA MEDIC</h2>
             <small>Susukan 1, Genjahan, Ponjong, Gunungkidul <br> Hp.085727042405
