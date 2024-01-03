@@ -258,34 +258,67 @@
                         type: 'GET',
 
                         success: function(listObat) {
-                            var getValue = listObat;
-                            for (var getVal = 0; getVal < getValue.length; getVal++) {
 
-                                const table = $('#ShowListBarang').DataTable();
-                                var btnBtn =
-                                    `<button class="SelectItemObat btn btn-success btn-xs" id="SelectItemObat" onClick="SelectItemObat(this)" data-fm_kd_obat="${getValue[getVal].fm_kd_obat}" data-fm_nm_obat="${getValue[getVal].fm_nm_obat}" data-fm_satuan_pembelian="${getValue[getVal].fm_satuan_pembelian}" data-fm_isi_satuan_pembelian="${getValue[getVal].fm_isi_satuan_pembelian}" data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}" data-fm_hrg_beli="${getValue[getVal].fm_hrg_beli_detail}" data-qty="${getValue[getVal].qty}">Select</button>`
-                                const dataBaru = [
-                                    [getValue[getVal].fm_kd_obat, getValue[getVal].fm_nm_obat, getValue[getVal]
-                                        .fm_satuan_jual, getValue[getVal].qty,
-                                        btnBtn
-                                    ],
+                            $('#ShowListBarang').DataTable({
+                                processing: true,
+                                serverSide: true,
+                                responsive: true,
+                                "bDestroy": true,
+                                ajax: "{{ url('getListObatDO') }}",
+                                columns: [{
+                                        data: 'fm_kd_obat',
+                                        name: 'fm_kd_obat'
+                                    },
+                                    {
+                                        data: 'fm_nm_obat',
+                                        name: 'fm_nm_obat'
+                                    },
+                                    {
+                                        data: 'fm_satuan_pembelian',
+                                        name: 'fm_satuan_pembelian'
+                                    },
+                                    // {
+                                    //     data: 'fm_hrg_jual_non_resep',
+                                    //     name: 'fm_hrg_jual_non_resep'
+                                    // },
+                                    {
+                                        data: 'qty',
+                                        name: 'qty'
+                                    },
+                                    {
+                                        data: 'action',
+                                        name: 'action'
+                                    },
                                 ]
+                            });
+                            // var getValue = listObat;
+                            // for (var getVal = 0; getVal < getValue.length; getVal++) {
+
+                            //     const table = $('#ShowListBarang').DataTable();
+                            //     var btnBtn =
+                            //         `<button class="SelectItemObat btn btn-success btn-xs" id="SelectItemObat" onClick="SelectItemObat(this)" data-fm_kd_obat="${getValue[getVal].fm_kd_obat}" data-fm_nm_obat="${getValue[getVal].fm_nm_obat}" data-fm_satuan_pembelian="${getValue[getVal].fm_satuan_pembelian}" data-fm_isi_satuan_pembelian="${getValue[getVal].fm_isi_satuan_pembelian}" data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}" data-fm_hrg_beli="${getValue[getVal].fm_hrg_beli_detail}" data-qty="${getValue[getVal].qty}">Select</button>`
+                            //     const dataBaru = [
+                            //         [getValue[getVal].fm_kd_obat, getValue[getVal].fm_nm_obat, getValue[getVal]
+                            //             .fm_satuan_jual, getValue[getVal].qty,
+                            //             btnBtn
+                            //         ],
+                            //     ]
 
 
-                                function injectDataBaru() {
-                                    for (const data of dataBaru) {
-                                        table.row.add([
-                                            data[0],
-                                            data[1],
-                                            data[2],
-                                            data[3],
-                                            data[4],
+                            //     function injectDataBaru() {
+                            //         for (const data of dataBaru) {
+                            //             table.row.add([
+                            //                 data[0],
+                            //                 data[1],
+                            //                 data[2],
+                            //                 data[3],
+                            //                 data[4],
 
-                                        ]).draw(false)
-                                    }
-                                }
-                                injectDataBaru()
-                            }
+                            //             ]).draw(false)
+                            //         }
+                            //     }
+                            //     injectDataBaru()
+                            // }
 
                         }
                     })
