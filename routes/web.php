@@ -232,6 +232,7 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
     Route::get('getPembelianDetail', [LapFarmasiController::class, 'getPembelianDetail'])->name('getPembelianDetail');
     Route::get('info-tindakan', [LapFarmasiController::class, 'infoTindakan'])->name('info-tindakan');
     Route::get('getInfoTindakan', [LapFarmasiController::class, 'getinfoTindakan'])->name('getInfoTindakan');
+    Route::get('itemObatSearch', [LapFarmasiController::class, 'itemObatSearch'])->name('itemObatSearch');
 });
 
 //Setting / Tools

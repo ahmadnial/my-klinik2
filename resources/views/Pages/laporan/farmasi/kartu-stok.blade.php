@@ -8,12 +8,17 @@
             </div>
 
             <div class="card-body">
-                <div class="col-4 mb-4 input-group input-daterange">
+                <div class="col-6 mb-4 input-group input-daterange">
                     <input type="date" id="date1" class="form-control">
                     <div class="input-group-addon">&nbsp; s.d&nbsp;</div>
                     <input type="date" id="date2" class="form-control">
                     <div class="input-group-addon">&nbsp;&nbsp;&nbsp;</div>
-                    <button class="btn btn-success" onclick="getDataPenjualan()" id="btnProses">Proses</button>
+                    <select name="kd_obat" id="kd_obat" class="kd_obat form-control">
+                        <option value=""></option>
+                    </select>
+                    <div class="input-group-addon">&nbsp;&nbsp;&nbsp;</div>
+                    <button class="btn btn-success" onclick="getKartuStok()" id="btnProses"><i
+                            class="fa fa-search"></i></button>
                 </div>
 
                 <div id="accordion" class="cardItems">
@@ -71,9 +76,35 @@
 
     @push('scripts')
         <script>
-            function getDataPenjualan() {
+            $('#kd_obat').select2({
+                placeholder: 'Search Item',
+                ajax: {
+                    url: "{{ route('itemObatSearch') }}",
+                    dataType: 'json',
+                    delay: 100,
+                    processResults: function(isdataKS) {
+                        return {
+                            results: $.map(isdataKS, function(item) {
+                                return {
+                                    text: item.ksh_kd_obat + ' - ' + item.ksh_nm_obat,
+                                    id: item.ksh_kd_obat,
+                                    alamat: item.fs_alamat,
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                }
+            });
+
+            // function getData() {
+            //     $('#fr_mr').val();
+            // };
+
+            function getKartuStok() {
                 var date1 = $('#date1').val();
                 var date2 = $('#date2').val();
+                var kdObat = $('#kd_obat').val();
 
                 if (date1 == '') {
                     toastr.info('Pilih Range Tanggal', 'Info!', {
@@ -91,17 +122,23 @@
                         type: 'GET',
                         data: {
                             date1: date1,
-                            date2: date2
+                            date2: date2,
+                            kdObat: kdObat
                         },
                         success: function(isKartuStock) {
-                            $.each(isKartuStock, function(key, datavalueHdr) {
-                                var itemHdr = datavalueHdr.ksh_kd_obat;
-                                $('.cardItems').append(
-                                    ` <div class="card-outline card-danger">
+                            var sumall = 0;
+                            var table = $('#penjualan').DataTable();
+                            var rows = table
+                                .rows()
+                                .remove()
+                                .draw();
+                            $('.cardItems').empty();
+                            $('.cardItems').append(
+                                ` <div class="card-outline card-danger">
                                         <div class="card-header">
                                             <h4 class="card-title w-100">
-                                                <a class="d-block w-100" data-toggle="collapse" href="#collapseOne" aria-expanded="true">
-                                                    ${datavalueHdr.ksh_nm_obat}
+                                                <a class="d-block w-100" id="" data-toggle="collapse" href="#collapseOne" aria-expanded="true">
+                                                    <input type="text" class="form-control" style="border: none;" id="nmObatHdr">
                                                 </a>
                                             </h4>
                                         </div>
@@ -145,51 +182,41 @@
                                             </div>
                                         </div>
                                     </div>`
-                                )
-                            });
-                            var sumall = 0;
-                            var table = $('#penjualan').DataTable();
-                            var rows = table
-                                .rows()
-                                .remove()
-                                .draw();
+                            )
+
                             $.each(isKartuStock, function(key, datavalue) {
                                 const table = $('#penjualan').DataTable();
                                 // const itemHdr = datavalue.ksh_kd_obat;
                                 const itemDetail = datavalue.kd_obat;
-                                if (itemHdr == itemDetail) {
-                                    const dataBaru = [
-                                        [datavalue.tanggal_trs, datavalue.kd_trs, datavalue.supplier,
-                                            datavalue.no_batch, datavalue.expired_date, datavalue
-                                            .qty_awal,
-                                            datavalue.qty_masuk, datavalue.qty_keluar, datavalue
-                                            .qty_akhir,
-                                            datavalue.hpp_satuan,
-                                        ],
-                                    ]
+                                $('#nmObatHdr').val(datavalue.ksh_nm_obat)
+                                const dataBaru = [
+                                    [datavalue.tanggal_trs, datavalue.kd_trs, datavalue.supplier,
+                                        datavalue.no_batch, datavalue.expired_date, datavalue
+                                        .qty_awal,
+                                        datavalue.qty_masuk, datavalue.qty_keluar, datavalue
+                                        .qty_akhir,
+                                        datavalue.hpp_satuan,
+                                    ],
+                                ]
 
-                                    function injectDataBaru() {
-                                        for (const data of dataBaru) {
-                                            table.row.add([
-                                                data[0],
-                                                data[1],
-                                                data[2],
-                                                data[3],
-                                                data[4],
-                                                data[5],
-                                                data[6],
-                                                data[7],
-                                                data[8],
-                                                data[9],
-                                            ]).draw(false)
-                                        }
+                                function injectDataBaru() {
+                                    for (const data of dataBaru) {
+                                        table.row.add([
+                                            data[0],
+                                            data[1],
+                                            data[2],
+                                            data[3],
+                                            data[4],
+                                            data[5],
+                                            data[6],
+                                            data[7],
+                                            data[8],
+                                            data[9],
+                                        ]).draw(false)
                                     }
-
-                                    injectDataBaru()
-                                } else {
-                                    // const dataBaru = '';
                                 }
 
+                                injectDataBaru()
 
                                 // var ttlInt = parseFloat(datavalue.total_penjualan);
                                 // sumall += ttlInt;
@@ -207,8 +234,8 @@
                                     preventDuplicates: true,
                                     positionClass: 'toast-top-right',
                                 });
-                                $('#date1').val('');
-                                $('#date2').val('');
+                                // $('#date1').val('');
+                                // $('#date2').val('');
                             })
                         }
                     })

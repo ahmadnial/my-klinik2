@@ -222,14 +222,27 @@ class LapFarmasiController extends Controller
         return view('pages.laporan.farmasi.kartu-stok');
     }
 
+    public function itemObatSearch(Request $request)
+    {
+        $isdataKS = [];
+
+        if ($request->filled('q')) {
+            $isdataKS = kartuStockHdr::select("ksh_kd_obat", "ksh_nm_obat", "ksh_satuan")
+                ->where('ksh_nm_obat', 'LIKE', '%' . $request->get('q') . '%')
+                ->get();
+        }
+        return response()->json($isdataKS);
+    }
+
     public function getKartuStok(Request $request)
     {
         $start = $request->date1;
         $end = $request->date2;
+        $kdobat = $request->kdObat;
 
         if ($request->ajax()) {
             $isKartuStock = DB::table('kartu_stock_hdr')->whereBetween('kartu_stock_detail.tanggal_trs', [$start, $end])
-
+                ->where('ksh_kd_obat', $kdobat)
                 ->leftJoin('kartu_stock_detail', 'kartu_stock_detail.kd_obat', 'kartu_stock_hdr.ksh_kd_obat')
                 ->select('kartu_stock_hdr.*', 'kartu_stock_detail.*')
                 ->get();
