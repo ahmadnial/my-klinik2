@@ -305,8 +305,8 @@ class penjualanController extends Controller
 
     public function getDetailPenjualan(Request $request)
     {
-        $isViewDetailPenjualan = tp_detail_item::select('*')
-            ->where('kd_trs', $request->kd_trs)
+        $isViewDetailPenjualan = tp_hdr::where('tp_hdr.kd_trs', '=', $request->kd_trs)
+            ->leftJoin('tp_detail_item', 'tp_hdr.kd_trs', 'tp_detail_item.kd_trs')
             ->get();
 
         return response()->json($isViewDetailPenjualan);

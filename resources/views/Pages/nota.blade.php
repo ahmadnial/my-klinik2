@@ -123,6 +123,8 @@
             <div class="left">
                 <ul>
                     <li>No Order</li>
+                    <li>Pelanggan</li>
+                    <li>Alamat</li>
                     <li>Kasir</li>
                     <li>Tanggal</li>
                 </ul>
@@ -130,7 +132,13 @@
             <div class="right">
                 <ul>
                     @foreach ($isListPenjualanHdr as $item)
+                        @php
+                            $nama = $item->nm_pasien ?? '-';
+                            $alamat = $item->alamat ?? '-';
+                        @endphp
                         <li>{{ $item->kd_trs }}</li>
+                        <li> {{ $nama }} </li>
+                        <li>{{ $alamat }} </li>
                         <li>{{ Auth::user()->name }}</li>
                         <li>{{ date('Y-m-d : H:i:s', strtotime($item->created_at)) }}</li>
                     @endforeach
