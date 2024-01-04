@@ -8,7 +8,7 @@
             </div>
 
             <div class="card-body">
-                <div class="col-4 mb-4 input-group input-daterange">
+                <div class="col-4 mb-4 input-group input-daterange" id="buttonGetStok">
                     {{-- <input type="date" id="date1" class="form-control">
                     <div class="input-group-addon">&nbsp; s.d&nbsp;</div>
                     <input type="date" id="date2" class="form-control">
@@ -73,6 +73,7 @@
                         },
                         success: function(isDataBukuStok) {
                             var sumall = 0;
+                            $('#buttonGetStok').hide();
 
                             $.each(isDataBukuStok, function(key, datavalue) {
                                 const table = $('#bukustok').DataTable();
