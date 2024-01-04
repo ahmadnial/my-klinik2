@@ -119,12 +119,18 @@ class poDoController extends Controller
             ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
             ->select('mstr_obat.*', 'tb_stock.*')
             ->get();
-        $isListAdj = tb_adjusment_hdr::all();
+        $isListAdj = DB::table('tb_adjusment_hdr')
+            ->leftJoin('tb_adjusment_detail', 'tb_adjusment_hdr.kd_adj', 'tb_adjusment_detail.kd_adj')
+            ->select('tb_adjusment_hdr.*', 'tb_adjusment_detail.*')
+            ->latest('tb_adjusment_hdr.created_at')
+            ->get();
+        $dateNow = Carbon::now()->format("Y-m-d");
 
         return view('pages.adjusment', [
             'ListObat' => $ListObat,
             'noReff'    => $noRef,
-            'isListAdj'    => $isListAdj
+            'isListAdj'    => $isListAdj,
+            'dateNow'   => $dateNow
         ]);
     }
 
