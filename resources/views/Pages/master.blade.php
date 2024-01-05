@@ -5,14 +5,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Klinik Asla | Dev</title>
+    <title>Asla Med | @yield('mytitle')</title>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <link href="https://cdn.datatables.net/keytable/2.11.0/css/keyTable.bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('src/css/font-awesome.min.css') }}">
+    <link href="{{ asset('src/css/select2.min.css') }}" rel="stylesheet" />
+    {{-- <link href="https://cdn.datatables.net/keytable/2.11.0/css/keyTable.bootstrap.css" rel="stylesheet"> --}}
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="{{ asset('src/css/font.css') }}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('src/plugins/fontawesome-free/css/all.min.css') }}">
     <!-- Ionicons -->
@@ -126,8 +125,8 @@
             <!-- Brand Logo -->
             <a href="" class="brand-link bg-purple">
                 <img src="" alt="" class="brand-image img-circle elevation-3" style="opacity: .8">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="brand-text font-weight-light"><i
-                        class="fa fa-hospital"></i>&nbsp; AslaMed</span>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="brand-text font-weight-light"><i class=""></i>&nbsp;
+                    AslaMed</span>
             </a>
             <!-- Sidebar -->
             <div class="sidebar">
@@ -145,28 +144,19 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
-                        <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-                        {{-- <li class="nav-item menu-open">
-                            <a href="#" class="nav-link active">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Dashboard
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a> --}}
-                        {{-- <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="./index.html" class="nav-link active">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Dashboard v1</p>
-                                </a>
-                            </li>
 
-                        </ul> --}}
-                        {{-- </li> --}}
                         {{-- @if (Auth::check()) --}}
                         {{-- @if (auth()->user()->role_id == '1') --}}
+                        <li class="nav-item">
+                            <a href="{{ url('/') }}" class="nav-link">
+                                {{-- <i class="nav-icon fa fa-syringe"></i> --}}
+                                <i class="nav-icon fa fa-regular fa-home"></i>
+                                <p>
+                                    Home
+                                    <span class="badge badge-info right"></span>
+                                </p>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 {{-- <i class="nav-icon fas fa-bed"></i> --}}
@@ -568,10 +558,10 @@
     </div>
     <!-- /.content-wrapper -->
     <footer class="main-footer">
-        <strong>Copyright &copy; 2023 <a href="">Klinik Asla</a>.</strong>
+        <strong>Copyright &copy; 2024 <a href="">Asla Med</a>.</strong>
         All rights reserved.
         <div class="float-right d-none d-sm-inline-block">
-            <b>Version</b> 1.0.0
+            {{-- <b>Version</b> 1.0.0 --}}
         </div>
     </footer>
 
