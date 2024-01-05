@@ -138,7 +138,7 @@
                                         <div class="card-header">
                                             <h4 class="card-title w-100">
                                                 <a class="d-block w-100" id="" data-toggle="collapse" href="#collapseOne" aria-expanded="true">
-                                                    <input type="text" class="form-control" style="border: none;" id="nmObatHdr">
+                                                    <input type="text" class="form-control text-danger" style="border: none;" id="nmObatHdr" readonly>
                                                 </a>
                                             </h4>
                                         </div>
@@ -188,14 +188,31 @@
                                 const table = $('#penjualan').DataTable();
                                 // const itemHdr = datavalue.ksh_kd_obat;
                                 const itemDetail = datavalue.kd_obat;
-                                $('#nmObatHdr').val(datavalue.ksh_nm_obat)
+                                $('#nmObatHdr').val(datavalue.ksh_kd_obat + ' - ' + datavalue.ksh_nm_obat +
+                                    ' - ' + datavalue.ksh_satuan)
+
+                                const originalDate = new Date(datavalue.tanggal_trs);
+
+                                const newDate = originalDate.toLocaleDateString('id-ID', {
+                                    year: 'numeric',
+                                    day: 'numeric',
+                                    month: 'long'
+                                });
+
+                                const ttlInt = parseFloat(datavalue.hpp_satuan);
+
+                                const formattedNumber = ttlInt.toLocaleString('id-ID', {
+                                    style: 'currency',
+                                    currency: 'IDR'
+                                });
+
                                 const dataBaru = [
-                                    [datavalue.tanggal_trs, datavalue.kd_trs, datavalue.supplier,
+                                    [newDate, datavalue.kd_trs, datavalue.supplier,
                                         datavalue.no_batch, datavalue.expired_date, datavalue
                                         .qty_awal,
                                         datavalue.qty_masuk, datavalue.qty_keluar, datavalue
                                         .qty_akhir,
-                                        datavalue.hpp_satuan,
+                                        formattedNumber,
                                     ],
                                 ]
 

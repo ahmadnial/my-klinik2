@@ -92,6 +92,7 @@ class poDoController extends Controller
                     $actionBtn = '<a href="javascript:void(0)" id="' . $row->fm_kd_obat . '" onClick="SelectItemObatDO(this)"
                     data-fm_kd_obat="' . $row->fm_kd_obat . '" data-fm_nm_obat="' . $row->fm_nm_obat . '" data-fm_satuan_pembelian="' . $row->fm_satuan_pembelian .
                         '"data-fm_isi_satuan_pembelian="' . $row->fm_isi_satuan_pembelian . '" data-fm_satuan_jual="' . $row->fm_satuan_jual . '" data-fm_hrg_beli="' . $row->fm_hrg_beli . '"
+                    data-fm_hrg_beli_detail="' . $row->fm_hrg_beli_detail . '"
                     class="edit btn btn-xs btn-sm" style="background-color:#06D981; color:#ffffff;">Select</a>';
                     return $actionBtn;
                 })
@@ -172,6 +173,44 @@ class poDoController extends Controller
             tb_adjusment_detail::create($detailObat);
         }
 
+        foreach ($request->kd_obat as $keyz => $val) {
+            // $currentStock = DB::table('tb_stock')->whereIn('kd_obat', [$request->do_obat[$keyz]])->value('qty');
+            if ($request->qty_hasil_koreksi[$keyz] < 0) {
+                $qtyKeluar = preg_replace("/[^0-9]/", "", $request->qty_hasil_koreksi[$keyz]);
+                $dataZ = [
+                    'tanggal_trs' => $request->tgl_trs,
+                    'kd_trs' => $request->kd_adj,
+                    'kd_obat' => $request->kd_obat[$keyz],
+                    'nm_obat' => $request->nm_obat[$keyz],
+                    'supplier' => 'Adjusment/SO',
+                    'no_batch' => '-',
+                    'expired_date' => '-',
+                    'qty_awal' => $request->qty[$keyz],
+                    'qty_masuk' => '0',
+                    'qty_keluar' => $qtyKeluar,
+                    'qty_akhir'  => $request->qty_adj[$keyz],
+                    'hpp_satuan' => $request->hrg_beli_hpp[$keyz],
+                ];
+            } else {
+                $dataZ = [
+                    'tanggal_trs' => $request->tgl_trs,
+                    'kd_trs' => $request->kd_adj,
+                    'kd_obat' => $request->kd_obat[$keyz],
+                    'nm_obat' => $request->nm_obat[$keyz],
+                    'supplier' => 'Adjusment/SO',
+                    'no_batch' => '-',
+                    'expired_date' => '-',
+                    'qty_awal' => $request->qty[$keyz],
+                    'qty_masuk' => $request->qty_hasil_koreksi[$keyz],
+                    'qty_keluar' => '0',
+                    'qty_akhir'  => $request->qty_adj[$keyz],
+                    'hpp_satuan' => $request->hrg_beli_hpp[$keyz],
+                ];
+            }
+
+            kartuStockDetail::create($dataZ);
+        }
+
         foreach ($request->kd_obat as $keys => $val) {
             $datax =  $request->kd_obat[$keys];
             $dataQty =  $request->qty_adj[$keys];
@@ -179,7 +218,6 @@ class poDoController extends Controller
 
             tb_stock::whereIn('kd_obat', [$datax])->update(['qty' => $toInt]);
         }
-
 
         DB::commit();
 
@@ -237,6 +275,7 @@ class poDoController extends Controller
             'do_isi_pembelian' => 'required',
             'do_satuan_jual' => 'required',
             'do_hrg_beli' => 'required',
+            'do_hrg_beli_detail' => 'required',
             // 'do_pajak',
             'do_tgl_exp' => 'required',
             // 'do_batch_number',
@@ -315,7 +354,7 @@ class poDoController extends Controller
                     'qty_keluar' => '0',
                     'qty_akhir'  => $qtyAkhir,
                     // 'do_obat' => $request->do_obat[$keyx],
-                    'hpp_satuan' => $request->do_hrg_beli[$keyx],
+                    'hpp_satuan' => $request->do_hrg_beli_detail[$keyx],
                 ];
                 // print_r($currentStock);
                 kartuStockDetail::create($detailKartuStock);

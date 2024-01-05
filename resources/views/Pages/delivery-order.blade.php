@@ -262,106 +262,108 @@
                 </div>
             </div>
         </div>
-        {{-- End Modal --}}
+    </div>
+    {{-- End Modal --}}
 
-        @push('scripts')
-            <script>
-                // $(document).ready(function() {
-                //     $('#deliverOrder').DataTable({
-                //         "scrollX": true,
-                //         "scrollY": 200,
-                //     });
-                //     $('.dataTables_length').addClass('bs-select');
-                // });
+    @push('scripts')
+        <script>
+            // $(document).ready(function() {
+            //     $('#deliverOrder').DataTable({
+            //         "scrollX": true,
+            //         "scrollY": 200,
+            //     });
+            //     $('.dataTables_length').addClass('bs-select');
+            // });
 
-                function getBarang() {
-                    $('#obatSearch').modal('show');
+            function getBarang() {
+                $('#obatSearch').modal('show');
 
-                    // var table = $('#exm2').DataTable();
-                    // var rows = table
-                    //     .rows()
-                    //     .remove()
-                    //     .draw();
+                // var table = $('#exm2').DataTable();
+                // var rows = table
+                //     .rows()
+                //     .remove()
+                //     .draw();
 
-                    $.ajax({
-                        // headers: {
-                        //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        // },
-                        // url: "{{ url('getListObatDO') }}",
-                        // type: 'GET',
+                $.ajax({
+                    // headers: {
+                    //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    // },
+                    // url: "{{ url('getListObatDO') }}",
+                    // type: 'GET',
 
-                        success: function(listObat) {
-                            $('#exm2').DataTable({
-                                processing: true,
-                                serverSide: true,
-                                responsive: true,
-                                "bDestroy": true,
-                                ajax: "{{ url('getListObatDO') }}",
-                                columns: [{
-                                        data: 'fm_kd_obat',
-                                        name: 'fm_kd_obat'
-                                    },
-                                    {
-                                        data: 'fm_nm_obat',
-                                        name: 'fm_nm_obat'
-                                    },
-                                    {
-                                        data: 'fm_satuan_pembelian',
-                                        name: 'fm_satuan_pembelian'
-                                    },
-                                    // {
-                                    //     data: 'fm_hrg_jual_non_resep',
-                                    //     name: 'fm_hrg_jual_non_resep'
-                                    // },
-                                    // {
-                                    //     data: 'qty',
-                                    //     name: 'qty'
-                                    // },
-                                    {
-                                        data: 'action',
-                                        name: 'action'
-                                    },
-                                ]
-                            });
-                            // var getValue = listObat;
-                            // for (var getVal = 0; getVal < getValue.length; getVal++) {
+                    success: function(listObat) {
+                        $('#exm2').DataTable({
+                            processing: true,
+                            serverSide: true,
+                            responsive: true,
+                            "bDestroy": true,
+                            ajax: "{{ url('getListObatDO') }}",
+                            columns: [{
+                                    data: 'fm_kd_obat',
+                                    name: 'fm_kd_obat'
+                                },
+                                {
+                                    data: 'fm_nm_obat',
+                                    name: 'fm_nm_obat'
+                                },
+                                {
+                                    data: 'fm_satuan_pembelian',
+                                    name: 'fm_satuan_pembelian'
+                                },
+                                // {
+                                //     data: 'fm_hrg_jual_non_resep',
+                                //     name: 'fm_hrg_jual_non_resep'
+                                // },
+                                // {
+                                //     data: 'qty',
+                                //     name: 'qty'
+                                // },
+                                {
+                                    data: 'action',
+                                    name: 'action'
+                                },
+                            ]
+                        });
+                        // var getValue = listObat;
+                        // for (var getVal = 0; getVal < getValue.length; getVal++) {
 
-                            //     const table = $('#exm2').DataTable();
-                            //     var btnBtn =
-                            //         `<button class="SelectItemObat btn btn-success btn-xs" id="SelectItemObat" onClick="SelectItemObat(this)" data-fm_kd_obat="${getValue[getVal].fm_kd_obat}" data-fm_nm_obat="${getValue[getVal].fm_nm_obat}" data-fm_satuan_pembelian="${getValue[getVal].fm_satuan_pembelian}" data-fm_isi_satuan_pembelian="${getValue[getVal].fm_isi_satuan_pembelian}" data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}" data-fm_hrg_beli="${getValue[getVal].fm_hrg_beli}">Select</button>`
-                            //     const dataBaru = [
-                            //         [getValue[getVal].fm_kd_obat, getValue[getVal].fm_nm_obat, getValue[getVal]
-                            //             .fm_satuan_pembelian, btnBtn
-                            //         ],
-                            //     ]
+                        //     const table = $('#exm2').DataTable();
+                        //     var btnBtn =
+                        //         `<button class="SelectItemObat btn btn-success btn-xs" id="SelectItemObat" onClick="SelectItemObat(this)" data-fm_kd_obat="${getValue[getVal].fm_kd_obat}" data-fm_nm_obat="${getValue[getVal].fm_nm_obat}" data-fm_satuan_pembelian="${getValue[getVal].fm_satuan_pembelian}" data-fm_isi_satuan_pembelian="${getValue[getVal].fm_isi_satuan_pembelian}" data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}" data-fm_hrg_beli="${getValue[getVal].fm_hrg_beli}">Select</button>`
+                        //     const dataBaru = [
+                        //         [getValue[getVal].fm_kd_obat, getValue[getVal].fm_nm_obat, getValue[getVal]
+                        //             .fm_satuan_pembelian, btnBtn
+                        //         ],
+                        //     ]
 
-                            //     function injectDataBaru() {
-                            //         for (const data of dataBaru) {
-                            //             table.row.add([
-                            //                 data[0],
-                            //                 data[1],
-                            //                 data[2],
-                            //                 data[3],
-                            //             ]).draw(false)
-                            //         }
-                            //     }
-                            //     injectDataBaru()
-                            // }
+                        //     function injectDataBaru() {
+                        //         for (const data of dataBaru) {
+                        //             table.row.add([
+                        //                 data[0],
+                        //                 data[1],
+                        //                 data[2],
+                        //                 data[3],
+                        //             ]).draw(false)
+                        //         }
+                        //     }
+                        //     injectDataBaru()
+                        // }
 
-                        }
-                    })
-                }
+                    }
+                })
+            }
 
-                // $(".SelectItemObat").on("click", function() {
-                function SelectItemObatDO(x) {
-                    var getKdObat = $(x).data('fm_kd_obat');
-                    var getNmObat = $(x).data('fm_nm_obat');
-                    var getSatBeli = $(x).data('fm_satuan_pembelian');
-                    var getIsiSatBeli = $(x).data('fm_isi_satuan_pembelian');
-                    var getSatJual = $(x).data('fm_satuan_jual');
-                    var getHrgBeli = $(x).data('fm_hrg_beli');
+            // $(".SelectItemObat").on("click", function() {
+            function SelectItemObatDO(x) {
+                var getKdObat = $(x).data('fm_kd_obat');
+                var getNmObat = $(x).data('fm_nm_obat');
+                var getSatBeli = $(x).data('fm_satuan_pembelian');
+                var getIsiSatBeli = $(x).data('fm_isi_satuan_pembelian');
+                var getSatJual = $(x).data('fm_satuan_jual');
+                var getHrgBeli = $(x).data('fm_hrg_beli');
+                var getHrgBeliDetail = $(x).data('fm_hrg_beli_detail');
 
-                    $("#doTable").append(`
+                $("#doTable").append(`
                         <tr id="R${++rowIdx}">
                           <input type="hidden" class="searchObat" id="do_obat"
                                 name="do_obat[]" onchange="getDataObat()" value="${getKdObat}" readonly>
@@ -414,172 +416,173 @@
                             <td>
                                  <button type="button" class="remove btn btn-xs btn-danger"><i class="fa fa-trash" onclick="deleteRow(this)"></i></button>
                             </td>
+                                <input type="hidden" class="do_hrg_beli_detail form-control" id="do_hrg_beli_detail" name="do_hrg_beli_detail[]" value="${getHrgBeliDetail}">
                    
                 </tr>`);
 
-                    $('#obatSearch').modal('hide');
-                };
+                $('#obatSearch').modal('hide');
+            };
 
-                function deleteRow(btn) {
-                    var row = btn.parentNode.parentNode.parentNode;
-                    row.parentNode.removeChild(row);
+            function deleteRow(btn) {
+                var row = btn.parentNode.parentNode.parentNode;
+                row.parentNode.removeChild(row);
+                GrandTotal();
+            }
+
+            // $(document).ready(function() {
+            function getQTY(q) {
+                // $('#calculation').on("keyup", ".do_hrg_beli", function() {
+                var parent = q.parentElement.parentElement;
+                var quant = $(parent).find('#do_qty').val();
+                var price = $(parent).find('#do_hrg_beli').val();
+                // console.log(quant);
+                var x = quant * price;
+                var result = x.toFixed(2);
+                $(parent).find('#do_sub_total').val(result);
+                GrandTotal();
+                // });
+
+            };
+
+            function discProsen(x) {
+                if (event.keyCode == 13) {
+                    var parentx = x.parentElement.parentElement;
+                    var tdsc = $(parentx).find('#do_diskon_prosen').val();
+                    // var price = $(parentx).find('#do_sub_total').val();
+                    var subttl = $(parentx).find('#do_sub_total').val();
+                    var calc = (tdsc / 100) * subttl;
+
+                    var result = calc.toFixed(2);
+                    // console.log(result);
+                    $(parentx).find('#do_diskon').val(result);
+                    var dsc = $(parentx).find('#do_diskon').val();
+
+                    var hasil = parseInt(subttl) - parseInt(dsc);
+
+                    $(parentx).find('#do_sub_total').val(hasil);
                     GrandTotal();
-                }
 
-                // $(document).ready(function() {
-                function getQTY(q) {
-                    // $('#calculation').on("keyup", ".do_hrg_beli", function() {
-                    var parent = q.parentElement.parentElement;
-                    var quant = $(parent).find('#do_qty').val();
-                    var price = $(parent).find('#do_hrg_beli').val();
-                    // console.log(quant);
-                    var x = quant * price;
-                    var result = x.toFixed(2);
-                    $(parent).find('#do_sub_total').val(result);
+                    // console.log(result);
+                }
+            }
+
+            function discRp(r) {
+                var parentR = r.parentElement.parentElement;
+                if (event.keyCode == 13) {
+                    var tdscr = $(parentR).find('#do_diskon').val();
+                    var subttl = $(parentR).find('#do_sub_total').val();
+                    var calc = (tdscr / subttl) * 100;
+                    var toFix = subttl - tdscr;
+                    var toDecimal = toFix.toFixed(2);
+                    var result = calc.toFixed(2);
+
+                    if (tdscr != 0) {
+                        $(parentR).find('#do_sub_total').val(toDecimal);
+                        $(parentR).find('#do_diskon_prosen').val(result);
+                    } else {
+                        $(parentR).find('#do_sub_total').val(subttl);
+                        // $(parentR).find('#do_diskon_prosen').val();
+                    }
                     GrandTotal();
-                    // });
 
-                };
-
-                function discProsen(x) {
-                    if (event.keyCode == 13) {
-                        var parentx = x.parentElement.parentElement;
-                        var tdsc = $(parentx).find('#do_diskon_prosen').val();
-                        // var price = $(parentx).find('#do_sub_total').val();
-                        var subttl = $(parentx).find('#do_sub_total').val();
-                        var calc = (tdsc / 100) * subttl;
-
-                        var result = calc.toFixed(2);
-                        // console.log(result);
-                        $(parentx).find('#do_diskon').val(result);
-                        var dsc = $(parentx).find('#do_diskon').val();
-
-                        var hasil = parseInt(subttl) - parseInt(dsc);
-
-                        $(parentx).find('#do_sub_total').val(hasil);
-                        GrandTotal();
-
-                        // console.log(result);
-                    }
+                    // console.log(tdscr);
                 }
 
-                function discRp(r) {
-                    var parentR = r.parentElement.parentElement;
-                    if (event.keyCode == 13) {
-                        var tdscr = $(parentR).find('#do_diskon').val();
-                        var subttl = $(parentR).find('#do_sub_total').val();
-                        var calc = (tdscr / subttl) * 100;
-                        var toFix = subttl - tdscr;
-                        var toDecimal = toFix.toFixed(2);
-                        var result = calc.toFixed(2);
+            }
 
-                        if (tdscr != 0) {
-                            $(parentR).find('#do_sub_total').val(toDecimal);
-                            $(parentR).find('#do_diskon_prosen').val(result);
-                        } else {
-                            $(parentR).find('#do_sub_total').val(subttl);
-                            // $(parentR).find('#do_diskon_prosen').val();
-                        }
-                        GrandTotal();
+            function GrandTotal() {
+                var sum = 0;
 
-                        // console.log(tdscr);
-                    }
+                $('.do_sub_total').each(function() {
+                    sum += Number($(this).val());
+                });
+                var result = sum.toFixed(2);
 
-                }
+                $('#do_hdr_total_faktur').val(result);
 
-                function GrandTotal() {
-                    var sum = 0;
+                var ttlInt = parseFloat(result);
 
-                    $('.do_sub_total').each(function() {
-                        sum += Number($(this).val());
-                    });
-                    var result = sum.toFixed(2);
-
-                    $('#do_hdr_total_faktur').val(result);
-
-                    var ttlInt = parseFloat(result);
-
-                    var formattedNumber = ttlInt.toLocaleString('id-ID', {
-                        style: 'currency',
-                        currency: 'IDR'
-                    });
-
-                    $('#do_hdr_total_faktur_show_only').val(formattedNumber);
-                }
-
-
-                function pajakPPN(p) {
-                    alert('Belum Ready');
-                    var parentP = p.parentElement.parentElement;
-                }
-                // var parentR = r.parentElement.parentElement;
-                // var price = $(parentR).find('#do_sub_total').val();
-                // var subttl = $(parentR).find('#do_sub_total').val();
-                // var calc = (tdscr / price) * 100;
-                // var result = calc.toFixed(2);
-                // var discNow = $(this).val();
-                // console.log(subttl - tdscr);
-
-                // $(parentR).find('#do_diskon_prosen').val(result);
-                // $(parentR).find('#do_sub_total').val(subttl - tdscr);
-
-                // console.log(result);
-                // Ajax Search Obat
-                var path = "{{ route('obatSearch') }}";
-
-                $('#do_obatt').select2({
-                    placeholder: 'Obat / Barang',
-                    ajax: {
-                        url: path,
-                        dataType: 'json',
-                        delay: 150,
-                        processResults: function(isdataObat) {
-                            return {
-                                results: $.map(isdataObat, function(item) {
-                                    return {
-                                        // text: item.fs_mr,
-                                        text: item.fm_nm_obat,
-                                        id: item.fm_kd_obat,
-                                        // alamat: item.fs_alamat,
-                                    }
-                                })
-                            };
-                        },
-                        cache: true
-                    }
+                var formattedNumber = ttlInt.toLocaleString('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR'
                 });
 
-                // Call Hasil Search Obat
-                function getDataObat() {
-                    var obat = $('#do_obat').val();
-                    // alert(obat);
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        url: "{{ url('getObatList') }}/" + obat,
-                        type: 'GET',
-                        data: {
-                            'fm_kd_obat': obat
-                        },
-                        success: function(isdataObat) {
-                            // var json = isdata2;
-                            $.each(isdataObat, function(key, datavalue) {
-                                $('.do_satuan_pembelian').val(datavalue.fm_satuan_pembelian);
-                                $('.do_hrg_beli').val(datavalue.fm_hrg_beli);
-                                $('.do_satuan_jual').val(datavalue.fm_satuan_jual);
-                                $('.do_isi_pembelian').val(datavalue.fm_isi_satuan_pembelian);
-                                // $('#fr_tgl_lahir').val(datavalue.fs_tgl_lahir);
-                                // $('#fr_jenis_kelamin').val(datavalue.fs_jenis_kelamin);
-                            })
-                        }
-                    })
-                };
+                $('#do_hdr_total_faktur_show_only').val(formattedNumber);
+            }
 
-                var rowIdx = 1;
-                $("#addRow").on("click", function() {
-                    // Adding a row inside the tbody.
-                    $("#doTable tbody").append(`
+
+            function pajakPPN(p) {
+                alert('Belum Ready');
+                var parentP = p.parentElement.parentElement;
+            }
+            // var parentR = r.parentElement.parentElement;
+            // var price = $(parentR).find('#do_sub_total').val();
+            // var subttl = $(parentR).find('#do_sub_total').val();
+            // var calc = (tdscr / price) * 100;
+            // var result = calc.toFixed(2);
+            // var discNow = $(this).val();
+            // console.log(subttl - tdscr);
+
+            // $(parentR).find('#do_diskon_prosen').val(result);
+            // $(parentR).find('#do_sub_total').val(subttl - tdscr);
+
+            // console.log(result);
+            // Ajax Search Obat
+            var path = "{{ route('obatSearch') }}";
+
+            $('#do_obatt').select2({
+                placeholder: 'Obat / Barang',
+                ajax: {
+                    url: path,
+                    dataType: 'json',
+                    delay: 150,
+                    processResults: function(isdataObat) {
+                        return {
+                            results: $.map(isdataObat, function(item) {
+                                return {
+                                    // text: item.fs_mr,
+                                    text: item.fm_nm_obat,
+                                    id: item.fm_kd_obat,
+                                    // alamat: item.fs_alamat,
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                }
+            });
+
+            // Call Hasil Search Obat
+            function getDataObat() {
+                var obat = $('#do_obat').val();
+                // alert(obat);
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "{{ url('getObatList') }}/" + obat,
+                    type: 'GET',
+                    data: {
+                        'fm_kd_obat': obat
+                    },
+                    success: function(isdataObat) {
+                        // var json = isdata2;
+                        $.each(isdataObat, function(key, datavalue) {
+                            $('.do_satuan_pembelian').val(datavalue.fm_satuan_pembelian);
+                            $('.do_hrg_beli').val(datavalue.fm_hrg_beli);
+                            $('.do_satuan_jual').val(datavalue.fm_satuan_jual);
+                            $('.do_isi_pembelian').val(datavalue.fm_isi_satuan_pembelian);
+                            // $('#fr_tgl_lahir').val(datavalue.fs_tgl_lahir);
+                            // $('#fr_jenis_kelamin').val(datavalue.fs_jenis_kelamin);
+                        })
+                    }
+                })
+            };
+
+            var rowIdx = 1;
+            $("#addRow").on("click", function() {
+                // Adding a row inside the tbody.
+                $("#doTable tbody").append(`
                 <tr id="R${++rowIdx}">
                     <td>
                          <select class="do_obat form-control" style='width: 100%;' id="do_obat[]" name="do_obat[]"
@@ -628,261 +631,261 @@
                    
                 </tr>`);
 
-                    // Ajax Search Obat
-                    var path = "{{ route('obatSearch') }}";
+                // Ajax Search Obat
+                var path = "{{ route('obatSearch') }}";
 
-                    $('.do_obatt').select2({
-                        placeholder: 'Obat / Barang',
-                        ajax: {
-                            url: path,
-                            dataType: 'json',
-                            delay: 150,
-                            processResults: function(isdataObat) {
-                                return {
-                                    results: $.map(isdataObat, function(item2) {
-                                        return {
-                                            // text: item.fs_mr,
-                                            text: item2.fm_nm_obat,
-                                            id: item2.fm_kd_obat,
-                                            // alamat: item.fs_alamat,
-                                        }
-                                    })
-                                };
-                            },
-                            cache: true
-                        }
-                    });
-
-                    // Call Hasil Search Obat
-                    // function getDataObat() {
-                    //     var obat = $('.do_obat').val();
-                    //     // alert(obat);
-                    //     $.ajax({
-                    //         headers: {
-                    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    //         },
-                    //         url: "{{ url('getObatList') }}/" + obat,
-                    //         type: 'GET',
-                    //         data: {
-                    //             'fm_kd_obat': obat
-                    //         },
-                    //         success: function(isdataObat) {
-                    //             // var json = isdata2;
-                    //             $.each(isdataObat, function(key, datavalue2) {
-                    //                 $('#do_satuan_pembelian').val(datavalue2.fm_satuan_pembelian);
-                    //                 $('.do_hrg_beli').val(datavalue2.fm_hrg_beli);
-                    //                 $('.do_satuan_jual').val(datavalue2.fm_satuan_jual);
-                    //                 $('.do_isi_pembelian').val(datavalue2.fm_isi_satuan_pembelian);
-                    //                 // $('#fr_tgl_lahir').val(datavalue.fs_tgl_lahir);
-                    //                 // $('#fr_jenis_kelamin').val(datavalue.fs_jenis_kelamin);
-                    //             })
-                    //         }
-                    //     })
-                    // };
+                $('.do_obatt').select2({
+                    placeholder: 'Obat / Barang',
+                    ajax: {
+                        url: path,
+                        dataType: 'json',
+                        delay: 150,
+                        processResults: function(isdataObat) {
+                            return {
+                                results: $.map(isdataObat, function(item2) {
+                                    return {
+                                        // text: item.fs_mr,
+                                        text: item2.fm_nm_obat,
+                                        id: item2.fm_kd_obat,
+                                        // alamat: item.fs_alamat,
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
+                    }
                 });
 
-                $(document).on('click', '.remove', function() {
-                    // var delete_row = $(this).data("row");
-                    $('.addNewRow').remove();
-                });
-
-
-                // Select2 call
-                $('.do_hdr_supplier').select2({
-                    placeholder: 'Supplier',
-                });
-
-                $('.do_hdr_lokasi_stock').select2({
-                    placeholder: 'Lokasi Stock',
-                });
-                // Select2 call
-                $('.edo_hdr_supplier').select2({
-                    placeholder: 'Supplier',
-                });
-
-                $('.edo_hdr_lokasi_stock').select2({
-                    placeholder: 'Lokasi Stock',
-                });
-
-
-
-                // Auto Currency
-                // var rupiah1 = document.getElementById("fm_hrg_beli");
-
-                // rupiah1.addEventListener('keyup', function(e) {
-
-                //     rupiah1.value = formatRupiah(this.value, 'Rp. ');
-                // });
-
-
-                // function formatRupiah(angka, prefix) {
-                //     var number_string = angka.replace(/[^,\d]/g, '').toString(),
-                //         split = number_string.split(','),
-                //         sisa = split[0].length % 3,
-                //         rupiah1 = split[0].substr(0, sisa),
-                //         ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-                //     if (ribuan) {
-                //         separator = sisa ? '.' : '';
-                //         rupiah1 += separator + ribuan.join('.');
-                //     }
-
-                //     rupiah1 = split[1] != undefined ? rupiah1 + ',' + split[1] : rupiah1;
-                //     return prefix == undefined ? rupiah1 : (rupiah1 ? 'Rp. ' + rupiah1 : '');
-                // };
-
-
-
-                // $(document).ready(function() {
-                //     $('#buat').on('click', function() {
-                //         var fm_hrg_beli = $('#fm_hrg_beli').val();
-                //         var show = parseInt(fm_hrg_beli.replace(/,.*|[^0-9]/g, ''), 10);
-                //         alert(show);
+                // Call Hasil Search Obat
+                // function getDataObat() {
+                //     var obat = $('.do_obat').val();
+                //     // alert(obat);
+                //     $.ajax({
+                //         headers: {
+                //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                //         },
+                //         url: "{{ url('getObatList') }}/" + obat,
+                //         type: 'GET',
+                //         data: {
+                //             'fm_kd_obat': obat
+                //         },
+                //         success: function(isdataObat) {
+                //             // var json = isdata2;
+                //             $.each(isdataObat, function(key, datavalue2) {
+                //                 $('#do_satuan_pembelian').val(datavalue2.fm_satuan_pembelian);
+                //                 $('.do_hrg_beli').val(datavalue2.fm_hrg_beli);
+                //                 $('.do_satuan_jual').val(datavalue2.fm_satuan_jual);
+                //                 $('.do_isi_pembelian').val(datavalue2.fm_isi_satuan_pembelian);
+                //                 // $('#fr_tgl_lahir').val(datavalue.fs_tgl_lahir);
+                //                 // $('#fr_jenis_kelamin').val(datavalue.fs_jenis_kelamin);
+                //             })
+                //         }
                 //     })
-                // });
+                // };
+            });
 
-                // Create 
-                $(document).ready(function() {
-                    $('#buatt').on('click', function() {
-                        var do_hdr_kd = $('#do_hdr_kd').val();
-                        var do_hdr_no_faktur = $('#do_hdr_no_faktur').val();
-                        var do_hdr_supplier = $('#do_hdr_supplier').val();
-                        var do_hdr_tgl_tempo = $('#do_hdr_tgl_tempo').val();
-                        var do_hdr_lokasi_stock = $('#do_hdr_lokasi_stock').val();
-                        var do_hdr_total_faktur = $('#do_hdr_total_faktur').val();
-                        var user = $('#user').val();
+            $(document).on('click', '.remove', function() {
+                // var delete_row = $(this).data("row");
+                $('.addNewRow').remove();
+            });
 
-                        // Detail Do
-                        var do_obat = $('#do_obat').val();
-                        var do_satuan_pembelian = $('#do_satuan_pembelian').val();
-                        var do_diskon = $('#do_diskon').val();
-                        var do_qty = $('#do_qty').val();
-                        var do_isi_pembelian = $('#do_isi_pembelian').val();
-                        var do_satuan_jual = $('#do_satuan_jual').val();
-                        var do_hrg_beli = $('#do_hrg_beli').val();
-                        var do_pajak = $('#do_pajak').val();
-                        var do_tgl_exp = $('#do_tgl_exp').val();
-                        var do_batch_number = $('#do_batch_number').val();
-                        var do_sub_total = $('#do_sub_total').val();
-                        // var do_hdr_kd = $('#do_hdr_kd').val();
 
-                        // ubah currency ke string biasa
-                        // var sfm_hrg_beli = parseInt(fm_hrg_beli.replace(/,.*|[^0-9]/g, ''), 10);
-                        // var sfm_hrg_jual_non_resep = parseInt(fm_hrg_jual_non_resep.replace(/,.*|[^0-9]/g, ''), 10);
-                        // var sfm_hrg_jual_resep = parseInt(fm_hrg_jual_resep.replace(/,.*|[^0-9]/g, ''), 10);
-                        // var sfm_hrg_jual_nakes = parseInt(fm_hrg_jual_nakes.replace(/,.*|[^0-9]/g, ''), 10);
+            // Select2 call
+            $('.do_hdr_supplier').select2({
+                placeholder: 'Supplier',
+            });
 
-                        if (do_hdr_no_faktur != "") {
-                            var selWeight = [];
-                            $('input[name="do_obat"]').each(function() {
-                                if ($(this).val() != '') {
-                                    selWeight.push($(this).val());
-                                }
-                            });
-                            alert(selWeight);
-                            $.ajax({
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                },
-                                url: "{{ url('add-delivery-order') }}",
-                                type: "POST",
-                                data: {
-                                    type: 2,
-                                    do_hdr_kd: do_hdr_kd,
-                                    do_hdr_no_faktur: do_hdr_no_faktur,
-                                    do_hdr_supplier: do_hdr_supplier,
-                                    do_hdr_tgl_tempo: do_hdr_tgl_tempo,
-                                    do_hdr_lokasi_stock: do_hdr_lokasi_stock,
-                                    do_hdr_total_faktur: do_hdr_total_faktur,
-                                    user: user,
+            $('.do_hdr_lokasi_stock').select2({
+                placeholder: 'Lokasi Stock',
+            });
+            // Select2 call
+            $('.edo_hdr_supplier').select2({
+                placeholder: 'Supplier',
+            });
 
-                                    // Detail Do
-                                    do_obat: do_obat,
-                                    do_satuan_pembelian: do_satuan_pembelian,
-                                    do_diskon: do_diskon,
-                                    do_qty: do_qty,
-                                    do_isi_pembelian: do_isi_pembelian,
-                                    do_satuan_jual: do_satuan_jual,
-                                    do_hrg_beli: do_hrg_beli,
-                                    do_pajak: do_pajak,
-                                    do_tgl_exp: do_tgl_exp,
-                                    do_batch_number: do_batch_number,
-                                    do_sub_total: do_sub_total,
-                                    // do_hdr_id: do_hdr_kd
-                                },
-                                cache: false,
-                                success: function(dataResult) {
-                                    // $('.close').click();
-                                    // document.getElementById("fm_nm_kategori_produk").value = "";
-                                    toastr.success('Saved!', 'Your fun', {
-                                        timeOut: 2000,
-                                        preventDuplicates: true,
-                                        positionClass: 'toast-top-right',
-                                    });
-                                    return window.location.href = "{{ url('delivery-order') }}";
-                                }
-                            });
-                        } else {
-                            alert('Please fill all the field !');
-                        }
-                    });
-                });
+            $('.edo_hdr_lokasi_stock').select2({
+                placeholder: 'Lokasi Stock',
+            });
 
-                // Custom Harga Beli Perxxx
-                $(document).ready(function() {
-                    $('#fm_satuan_pembelian').on('change', function() {
-                        var sat_beli = $(this).val();
-                        // alert(sat_beli);
-                        if (sat_beli) {
-                            $('#hrgBeliPer').val(sat_beli);
-                        }
-                    });
 
-                });
 
-                // Custom Isi Satuan Pembelian
-                $(document).ready(function() {
-                    $('#fm_satuan_jual').on('change', function() {
-                        var sat_jual = $(this).val();
-                        // alert(sat_jual);
-                        if (sat_jual) {
-                            $('#isiSatuanBeli').val(sat_jual);
-                        }
-                    });
-                });
+            // Auto Currency
+            // var rupiah1 = document.getElementById("fm_hrg_beli");
 
-                // modal Edit DO
-                function getDetailDO(tx) {
-                    $('#EditDO').modal('show');
-                    $('#AppendEditDO').empty();
-                    toastr.info('Opened!', 'Data Penerimaan Barang', {
-                        timeOut: 2000,
-                        preventDuplicates: true,
-                        positionClass: 'toast-top-right',
-                    });
-                    // $(".SelectItemObat").on("click", function() {
-                    var kd_do = $(tx).data('kd_do');
+            // rupiah1.addEventListener('keyup', function(e) {
 
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        url: "{{ url('get-data-do') }}/" + kd_do,
-                        type: "GET",
-                        data: {
-                            do_hdr_kd: kd_do
-                        },
-                        success: function(isListDO) {
-                            $.each(isListDO, function(key, datavalue) {
-                                const toDetail = datavalue.hdr_to_detail;
-                                var totalFaktur = Number(datavalue.do_hdr_total_faktur);
+            //     rupiah1.value = formatRupiah(this.value, 'Rp. ');
+            // });
 
-                                var totalFakturCurrency = totalFaktur.toLocaleString('id-ID', {
-                                    style: 'currency',
-                                    currency: 'IDR'
+
+            // function formatRupiah(angka, prefix) {
+            //     var number_string = angka.replace(/[^,\d]/g, '').toString(),
+            //         split = number_string.split(','),
+            //         sisa = split[0].length % 3,
+            //         rupiah1 = split[0].substr(0, sisa),
+            //         ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+            //     if (ribuan) {
+            //         separator = sisa ? '.' : '';
+            //         rupiah1 += separator + ribuan.join('.');
+            //     }
+
+            //     rupiah1 = split[1] != undefined ? rupiah1 + ',' + split[1] : rupiah1;
+            //     return prefix == undefined ? rupiah1 : (rupiah1 ? 'Rp. ' + rupiah1 : '');
+            // };
+
+
+
+            // $(document).ready(function() {
+            //     $('#buat').on('click', function() {
+            //         var fm_hrg_beli = $('#fm_hrg_beli').val();
+            //         var show = parseInt(fm_hrg_beli.replace(/,.*|[^0-9]/g, ''), 10);
+            //         alert(show);
+            //     })
+            // });
+
+            // Create 
+            $(document).ready(function() {
+                $('#buatt').on('click', function() {
+                    var do_hdr_kd = $('#do_hdr_kd').val();
+                    var do_hdr_no_faktur = $('#do_hdr_no_faktur').val();
+                    var do_hdr_supplier = $('#do_hdr_supplier').val();
+                    var do_hdr_tgl_tempo = $('#do_hdr_tgl_tempo').val();
+                    var do_hdr_lokasi_stock = $('#do_hdr_lokasi_stock').val();
+                    var do_hdr_total_faktur = $('#do_hdr_total_faktur').val();
+                    var user = $('#user').val();
+
+                    // Detail Do
+                    var do_obat = $('#do_obat').val();
+                    var do_satuan_pembelian = $('#do_satuan_pembelian').val();
+                    var do_diskon = $('#do_diskon').val();
+                    var do_qty = $('#do_qty').val();
+                    var do_isi_pembelian = $('#do_isi_pembelian').val();
+                    var do_satuan_jual = $('#do_satuan_jual').val();
+                    var do_hrg_beli = $('#do_hrg_beli').val();
+                    var do_pajak = $('#do_pajak').val();
+                    var do_tgl_exp = $('#do_tgl_exp').val();
+                    var do_batch_number = $('#do_batch_number').val();
+                    var do_sub_total = $('#do_sub_total').val();
+                    // var do_hdr_kd = $('#do_hdr_kd').val();
+
+                    // ubah currency ke string biasa
+                    // var sfm_hrg_beli = parseInt(fm_hrg_beli.replace(/,.*|[^0-9]/g, ''), 10);
+                    // var sfm_hrg_jual_non_resep = parseInt(fm_hrg_jual_non_resep.replace(/,.*|[^0-9]/g, ''), 10);
+                    // var sfm_hrg_jual_resep = parseInt(fm_hrg_jual_resep.replace(/,.*|[^0-9]/g, ''), 10);
+                    // var sfm_hrg_jual_nakes = parseInt(fm_hrg_jual_nakes.replace(/,.*|[^0-9]/g, ''), 10);
+
+                    if (do_hdr_no_faktur != "") {
+                        var selWeight = [];
+                        $('input[name="do_obat"]').each(function() {
+                            if ($(this).val() != '') {
+                                selWeight.push($(this).val());
+                            }
+                        });
+                        alert(selWeight);
+                        $.ajax({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            url: "{{ url('add-delivery-order') }}",
+                            type: "POST",
+                            data: {
+                                type: 2,
+                                do_hdr_kd: do_hdr_kd,
+                                do_hdr_no_faktur: do_hdr_no_faktur,
+                                do_hdr_supplier: do_hdr_supplier,
+                                do_hdr_tgl_tempo: do_hdr_tgl_tempo,
+                                do_hdr_lokasi_stock: do_hdr_lokasi_stock,
+                                do_hdr_total_faktur: do_hdr_total_faktur,
+                                user: user,
+
+                                // Detail Do
+                                do_obat: do_obat,
+                                do_satuan_pembelian: do_satuan_pembelian,
+                                do_diskon: do_diskon,
+                                do_qty: do_qty,
+                                do_isi_pembelian: do_isi_pembelian,
+                                do_satuan_jual: do_satuan_jual,
+                                do_hrg_beli: do_hrg_beli,
+                                do_pajak: do_pajak,
+                                do_tgl_exp: do_tgl_exp,
+                                do_batch_number: do_batch_number,
+                                do_sub_total: do_sub_total,
+                                // do_hdr_id: do_hdr_kd
+                            },
+                            cache: false,
+                            success: function(dataResult) {
+                                // $('.close').click();
+                                // document.getElementById("fm_nm_kategori_produk").value = "";
+                                toastr.success('Saved!', 'Your fun', {
+                                    timeOut: 2000,
+                                    preventDuplicates: true,
+                                    positionClass: 'toast-top-right',
                                 });
-                                let itemObat = "";
-                                for (i in toDetail) {
-                                    itemObat += `
+                                return window.location.href = "{{ url('delivery-order') }}";
+                            }
+                        });
+                    } else {
+                        alert('Please fill all the field !');
+                    }
+                });
+            });
+
+            // Custom Harga Beli Perxxx
+            $(document).ready(function() {
+                $('#fm_satuan_pembelian').on('change', function() {
+                    var sat_beli = $(this).val();
+                    // alert(sat_beli);
+                    if (sat_beli) {
+                        $('#hrgBeliPer').val(sat_beli);
+                    }
+                });
+
+            });
+
+            // Custom Isi Satuan Pembelian
+            $(document).ready(function() {
+                $('#fm_satuan_jual').on('change', function() {
+                    var sat_jual = $(this).val();
+                    // alert(sat_jual);
+                    if (sat_jual) {
+                        $('#isiSatuanBeli').val(sat_jual);
+                    }
+                });
+            });
+
+            // modal Edit DO
+            function getDetailDO(tx) {
+                $('#EditDO').modal('show');
+                $('#AppendEditDO').empty();
+                toastr.info('Opened!', 'Data Penerimaan Barang', {
+                    timeOut: 2000,
+                    preventDuplicates: true,
+                    positionClass: 'toast-top-right',
+                });
+                // $(".SelectItemObat").on("click", function() {
+                var kd_do = $(tx).data('kd_do');
+
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "{{ url('get-data-do') }}/" + kd_do,
+                    type: "GET",
+                    data: {
+                        do_hdr_kd: kd_do
+                    },
+                    success: function(isListDO) {
+                        $.each(isListDO, function(key, datavalue) {
+                            const toDetail = datavalue.hdr_to_detail;
+                            var totalFaktur = Number(datavalue.do_hdr_total_faktur);
+
+                            var totalFakturCurrency = totalFaktur.toLocaleString('id-ID', {
+                                style: 'currency',
+                                currency: 'IDR'
+                            });
+                            let itemObat = "";
+                            for (i in toDetail) {
+                                itemObat += `
                                         <tr>
                                             <input type="hidden" class="searchObat" id="do_obat"
                                                     name="do_obat[]" value="${toDetail[i].do_obat}" readonly>
@@ -935,8 +938,8 @@
                                                 </td>
                                         </tr>
                                         `;
-                                }
-                                $("#AppendEditDO").append(`
+                            }
+                            $("#AppendEditDO").append(`
                                             <div class="row">
                                                 <div class="form-group col-sm-2">
                                                     <label for="">Nomor Ref</label>
@@ -1007,71 +1010,71 @@
                                                 </button> --}}
                                             </div>
                                      `);
-                            })
-                            // return window.location.href = "{{ url('mstr-obat') }}";
-                        }
-
-                    });
-                };
-
-                $(document).ready(function() {
-                    $('#EditDOClose').on('click', function() {
-                        $('#EditDO').modal('hide');
-                    });
-                });
-
-
-                $(document).ready(function() {
-                    var selectedItem = null;
-
-                    $('#itemList li').on('click', function() {
-                        selectItem($(this));
-                    });
-
-                    $(document).keydown(function(e) {
-                        if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
-                            e.preventDefault();
-                            navigateItems(e.key);
-                        } else if (e.key === 'Enter') {
-                            e.preventDefault();
-                            if (selectedItem !== null) {
-                                selectItem(selectedItem);
-                            }
-                        }
-                    });
-
-                    function navigateItems(key) {
-                        var items = $('#itemList li');
-                        var currentIndex = items.index(selectedItem);
-
-                        if (currentIndex === -1) {
-                            currentIndex = 0;
-                        } else {
-                            selectedItem.removeClass('selected');
-                        }
-
-                        if (key === 'ArrowUp' && currentIndex > 0) {
-                            currentIndex--;
-                        } else if (key === 'ArrowDown' && currentIndex < items.length - 1) {
-                            currentIndex++;
-                        }
-
-                        selectedItem = items.eq(currentIndex);
-                        selectedItem.addClass('selected');
+                        })
+                        // return window.location.href = "{{ url('mstr-obat') }}";
                     }
 
-                    function selectItem(item) {
-                        // Implement the logic for handling the selected item
-                        var itemId = item.data('id');
-                        console.log('Selected Item ID:', itemId);
+                });
+            };
+
+            $(document).ready(function() {
+                $('#EditDOClose').on('click', function() {
+                    $('#EditDO').modal('hide');
+                });
+            });
+
+
+            $(document).ready(function() {
+                var selectedItem = null;
+
+                $('#itemList li').on('click', function() {
+                    selectItem($(this));
+                });
+
+                $(document).keydown(function(e) {
+                    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        navigateItems(e.key);
+                    } else if (e.key === 'Enter') {
+                        e.preventDefault();
+                        if (selectedItem !== null) {
+                            selectItem(selectedItem);
+                        }
                     }
                 });
 
-                $(document).keydown(function(event) {
-                    if (event.keyCode == 120) {
-                        return getBarang();
+                function navigateItems(key) {
+                    var items = $('#itemList li');
+                    var currentIndex = items.index(selectedItem);
+
+                    if (currentIndex === -1) {
+                        currentIndex = 0;
+                    } else {
+                        selectedItem.removeClass('selected');
                     }
-                });
-            </script>
-        @endpush
-    @endsection
+
+                    if (key === 'ArrowUp' && currentIndex > 0) {
+                        currentIndex--;
+                    } else if (key === 'ArrowDown' && currentIndex < items.length - 1) {
+                        currentIndex++;
+                    }
+
+                    selectedItem = items.eq(currentIndex);
+                    selectedItem.addClass('selected');
+                }
+
+                function selectItem(item) {
+                    // Implement the logic for handling the selected item
+                    var itemId = item.data('id');
+                    console.log('Selected Item ID:', itemId);
+                }
+            });
+
+            $(document).keydown(function(event) {
+                if (event.keyCode == 120) {
+                    return getBarang();
+                }
+            });
+        </script>
+    @endpush
+@endsection

@@ -256,12 +256,12 @@ class penjualanController extends Controller
                     'nm_obat' => $request->nm_obat[$keyx],
                     'supplier' => 'Penjualan Apotek',
                     'no_batch' => '-',
-                    'expired_date' => '3000-01-01',
+                    'expired_date' => '-',
                     'qty_awal' => $currentStock,
                     'qty_masuk' => '0',
                     'qty_keluar' => $request->qty[$keyx],
                     'qty_akhir'  => $qtyAkhir,
-                    'hpp_satuan' => '0',
+                    'hpp_satuan' => $request->hrg_obat[$keyx],
                 ];
                 // print_r($currentStock);
                 kartuStockDetail::create($detailKartuStock);
