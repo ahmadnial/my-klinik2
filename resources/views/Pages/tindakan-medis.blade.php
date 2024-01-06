@@ -1,5 +1,5 @@
 @extends('Pages.master')
-
+@section('mytitle', 'Medical Chart')
 @section('konten')
     <style>
         .splitRight {

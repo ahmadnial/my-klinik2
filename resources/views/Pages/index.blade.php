@@ -1,5 +1,6 @@
 @extends('pages.master')
 
+@section('mytitle', 'Home')
 @section('konten')
     <!-- Main content -->
     <div class="content">

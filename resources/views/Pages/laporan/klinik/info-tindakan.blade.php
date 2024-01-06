@@ -1,4 +1,5 @@
 @extends('pages.master')
+@section('mytitle', 'Info Tindakan')
 
 @section('konten')
     <section class="content">

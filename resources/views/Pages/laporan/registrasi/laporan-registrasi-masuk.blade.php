@@ -1,4 +1,5 @@
 @extends('pages.master')
+@section('mytitle', 'Laporan Klinik')
 
 @section('konten')
     <section class="content">

@@ -16,6 +16,7 @@
     // echo hitung_umur('1980-12-01');
 
 @endphp
+@section('mytitle', 'Registrasi')
 @section('konten')
     <section class="content">
         <div class="card">

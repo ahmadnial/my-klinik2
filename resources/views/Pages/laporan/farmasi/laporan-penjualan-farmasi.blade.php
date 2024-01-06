@@ -1,5 +1,5 @@
 @extends('pages.master')
-
+@section('mytitle', 'Laporan Apotek')
 @section('konten')
     <section class="content">
         <div class="card">
