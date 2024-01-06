@@ -12,6 +12,13 @@
 
             <div class="card-body">
                 <div id="">
+                    <div class="mb-3">
+                        {{-- <select name="" id="" class="form-control form-control-sm col-2">
+                            <option value=""></option>
+                        </select> --}}
+                        <input type="month" name="monthSales" id="monthSales" onchange="getMonthSale()"
+                            class="form-control form-control-sm col-2">
+                    </div>
                     <table id="example1" class="table table-hover">
                         <thead class="" style="background-color:rgb(242, 231, 255)">
                             <tr>
@@ -28,10 +35,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($isListPenjualan as $lp)
+                            {{-- @foreach ($isListPenjualan as $lp)
                                 <tr>
                                     <td id="">{{ $lp->created_at->format('d M Y h:i A') }}</td>
-                                    {{-- <td id="">{{ $lp->created_at }}</td> --}}
                                     <td id="">{{ $lp->kd_trs }}</td>
                                     <td id="">
                                         @if ($lp->no_mr == null)
@@ -48,16 +54,12 @@
                                             onclick="getDetailPen(this)" data-kd_trs={{ $lp->kd_trs }}>Detail</button>
                                         <button class="btn btn-xs btn-primary" data-toggle="modal" data-target=""
                                             onclick="EditTrs(this)" data-kd_trsu={{ $lp->kd_trs }}>Edit</button>
-                                        {{-- <a class="btn btn-default" href="{{ url('nota') }}" target="_blank"><i
-                                                class="fa fa-print"></i> Cetak PDF</a> --}}
                                         <button class="btn btn-xs btn-warning" data-toggle="modal" data-target="#EditObat"
                                             onclick="cetakNota(this)" data-kd_trsc={{ $lp->kd_trs }} target="_blank"> <i
                                                 class="fa fa-print"></i>&nbsp;Nota </button>
-                                        {{-- <button class="btn btn-xs btn-danger" data-toggle="modal"
-                                            data-target="#DeleteSupplier">Hapus</button> --}}
                                     </td>
                                 </tr>
-                            @endforeach
+                            @endforeach --}}
                         </tbody>
                     </table>
                 </div>
@@ -159,13 +161,12 @@
                             </div>
                             <div class="form-group col-sm-2">
                                 <label for="">No.RM</label>
-                                <input type="text" class="form-control" name="tp_no_mr" id="tp_no_mr"
-                                    value="" readonly>
+                                <input type="text" class="form-control" name="tp_no_mr" id="tp_no_mr" value=""
+                                    readonly>
                             </div>
                             <div class="form-group col-sm-2">
                                 <label for="">Nama</label>
-                                <input type="text" class="form-control" name="tp_nama" id="tp_nama"
-                                    value="">
+                                <input type="text" class="form-control" name="tp_nama" id="tp_nama" value="">
                             </div>
                             <div class="form-group col-sm-2">
                                 <label for="">Alamat</label>
@@ -550,6 +551,8 @@
 
     @push('scripts')
         <script>
+            getMonthSale()
+
             $('#tp_kd_order').select2({
                 placeholder: 'Search E-Resep',
             });
@@ -575,6 +578,73 @@
                 $('#obatSearchShow').modal('show');
             }
 
+            function getMonthSale() {
+                const dataBulan = $('#monthSales').val();
+                $.ajax({
+                    success: function() {
+                        $('#example1').DataTable({
+                            processing: true,
+                            serverSide: true,
+                            responsive: true,
+                            "bDestroy": true,
+                            ajax: {
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                url: "{{ url('getMonthSales') }}",
+                                type: 'GET',
+                                data: {
+                                    dataBulan: dataBulan
+                                }
+                            },
+                            columns: [{
+                                    data: 'tgl_trs',
+                                    name: 'tgl_trs',
+                                    render: function(data, type, row) {
+                                        return moment(data).format('D MMMM YYYY');
+                                    }
+                                },
+                                {
+                                    data: 'kd_trs',
+                                    name: 'kd_trs'
+                                },
+                                {
+                                    data: 'layanan_order',
+                                    name: 'layanan_order',
+                                    render: function(data, type, row) {
+                                        if (data == 'Poliklinik Umum') {
+                                            return '<span class="badge badge-success">Resep Klinik</span>';
+                                        } else {
+                                            return '<span class="badge badge-danger">Apotek</span>';
+                                        }
+                                    }
+                                },
+                                {
+                                    data: 'no_mr',
+                                    name: 'no_mr'
+                                },
+                                {
+                                    data: 'nm_pasien',
+                                    name: 'nm_pasien'
+                                },
+                                {
+                                    data: 'tipe_tarif',
+                                    name: 'tipe_tarif'
+                                },
+                                {
+                                    data: 'total_penjualan',
+                                    name: 'total_penjualan',
+                                    render: $.fn.dataTable.render.number(',', '.', 2, 'Rp ')
+                                },
+                                {
+                                    data: 'action',
+                                    name: 'action'
+                                },
+                            ]
+                        });
+                    }
+                })
+            };
 
             function acMapResep() {
                 var kd_trs = $('#tp_kd_order').val();

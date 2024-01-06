@@ -180,6 +180,7 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
     Route::get('getListOrderResep/{kd_trs}', [penjualanController::class, 'getListOrderResep'])->name('getListOrderResep');
     Route::get('getDetailPenjualan/{kd_trs}', [penjualanController::class, 'getDetailPenjualan'])->name('getDetailPenjualan');
     Route::get('nota', [penjualanController::class, 'cetakNota'])->name('nota');
+    Route::get('getMonthSales', [penjualanController::class, 'getMonthSales'])->name('getMonthSales');
 });
 
 // VIEW TRS-KASIR-POLI
