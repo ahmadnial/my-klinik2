@@ -743,6 +743,7 @@
                 row.parentNode.removeChild(row);
                 GrandTotal();
                 GrandTotalResep();
+                GrandTotalEdit();
             }
 
             function GrandTotalResep() {
@@ -1284,6 +1285,7 @@
                 $(parent).find('#sub_total').val(result);
                 $(parent).find('#sub_total_hidden').val(result);
                 GrandTotal();
+                GrandTotalEdit();
                 // });
 
             };
@@ -1304,6 +1306,8 @@
                 $(parentT).find('#sub_total_hidden_after_tuslah').val(resultT);
 
                 GrandTotal();
+                GrandTotalEdit();
+
             };
 
             function getEmbalase(q) {
@@ -1325,6 +1329,8 @@
                     $(parentE).find('#sub_total').val(resultE);
                 }
                 GrandTotal();
+                GrandTotalEdit();
+
             };
 
             function GrandTotal() {
@@ -1457,7 +1463,7 @@
                             $('#tp_alamate').val(datavalue.alamat);
                             $('#tp_jenis_kelamine').val(datavalue.jenis_kelamin);
                             $('#tp_tgl_lahire').val(datavalue.tgl_lahir);
-                            $('#tp_tipe_tarife').val(datavalue.tipe_tarif);
+                            // $('#tp_tipe_tarife').val(datavalue.tipe_tarif);
 
                             var ttlInte = parseFloat(datavalue.total_penjualan);
 
@@ -1507,7 +1513,7 @@
                                                     name="diskon[]" readonly>
                                             </td>
                                             <td>
-                                                <input type="text" class="sub_total form-control" id="sub_total"
+                                                <input type="text" class="sub_totalEdit form-control" id="sub_total"
                                                     name="sub_total[]" readonly style="border: none;" value="${datavalue.sub_total}">
                                             </td>
                                             <td>
@@ -1519,11 +1525,96 @@
                                         </tr>
                                         `);
                         })
-                        // return window.location.href = "{{ url('mstr-obat') }}";
                     }
 
                 });
             };
+
+            function SelectItemObatEdit(f) {
+                // $("#SelectItemObatxxx").on("click", function() {
+                var getKdObat = $(f).data('fm_kd_obat');
+                var getNmObat = $(f).data('fm_nm_obat');
+                var getSatJual = $(f).data('fm_satuan_jual');
+                var getHrg = $(f).data('fm_hrg_jual');
+
+                // console.log(getKdObat);
+
+                $("#EditPenjualanList").append(`
+                    <tr>
+                        <td>
+                            <input class="searchObat form-control" style="border: none"
+                                id="kd_obat" name="kd_obat[]" placeholder="kode obat" readonly
+                                style="border: none;" value="${getKdObat}">
+                        </td>
+                        <td>
+                            <input class="searchObat form-control" id="nm_obat"
+                                name="nm_obat[]" ondblclick="getListObat()" aria-placeholder="Search" value="${getNmObat}" readonly>
+                        </td>
+                        <td>
+                            <input type="text" class="do_satuan_pembelian form-control"
+                                id="satuan" name="satuan[]" readonly
+                                value="${getSatJual}">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" readonly style="border: none;" id="hrg_obat" name="hrg_obat[]" value=${getHrg}>
+                        </td>
+                        <td>
+                            <input type="text" class="qty form-control" id="qty" name="qty[]" onKeyUp="getQTY(this)">
+                        </td>
+                        <td>
+                            <input type="text" class="cara_pakai form-control" id="cara_pakai" name="cara_pakai[]">
+                        </td>
+                        
+                        <td>
+                            <input type="text" class="form-control" id="tuslah"
+                                name="tuslah[]" onKeyUp="getTuslah(this)" value="0">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" id="embalase"
+                                name="embalase[]" onKeyUp="getEmbalase(this)" value="0">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" id="diskon"
+                                name="diskon[]">
+                        </td>
+                        <td>
+                            <input type="text" class="sub_totalEdit form-control" id="sub_total"
+                                name="sub_total[]" readonly style="border: none;">
+                        </td>
+                        <input type="hidden" class="sub_total_hidden form-control" id="sub_total_hidden"
+                        name="sub_total_hidden[]">
+                        <input type="hidden" class="sub_total_hidden_after_tuslah form-control" id="sub_total_hidden_after_tuslah"
+                        name="sub_total_hidden_after_tuslah[]">
+                        <input type="hidden" name="user" id="user" value="tes user">
+                        <td>
+                            <button type="button" class="remove btn btn-xs btn-danger"><i class="fa fa-trash" onclick="deleteRow(this)"></i></button>
+                        </td>
+                    </tr>
+                    
+                    `);
+                $('#obatSearchShow').modal('hide');
+
+            };
+
+            function GrandTotalEdit() {
+                var sum = 0;
+
+                $('.sub_totalEdit').each(function() {
+                    sum += Number($(this).val());
+                });
+                var result = sum.toFixed(2);
+
+                $('#total_penjualanE').val(result);
+
+                var ttlInt = parseFloat(result);
+
+                var formattedNumber = ttlInt.toLocaleString('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR'
+                });
+
+                $('#total_penjualan_show_onlyE').val(formattedNumber);
+            }
 
             function cetakNota(cn) {
                 var kodetrs = $(cn).data('kd_trsc');
