@@ -331,6 +331,78 @@ class penjualanController extends Controller
         }
     }
 
+    public function updateTrsPenjualan(Request $request)
+    {
+        // $k = $request->all();
+        // dd($k);
+
+        // $request->validate([
+        //     'kd_trse' => 'required',
+        //     'tgl_trse' => 'required',
+        //     'kd_obate' => 'required',
+        //     'nm_obate' => 'required',
+        //     'hrg_obate' => 'required',
+        //     'qty' => 'required',
+        // ]);
+
+        DB::beginTransaction();
+        try {
+            // $newData = [
+            //     'kd_trs'        => $request->tp_kd_trs,
+            //     'kd_order_resep' => $request->tp_kd_order,
+            //     'layanan_order' => $request->tp_layanan,
+            //     'dokter'        => $request->tp_dokter,
+            //     // 'sip_dokter' => $request->,
+            //     'tgl_trs' => $request->tgl_trs,
+            //     'lokasi_stock'  => $request->tp_lokasi_stock,
+            //     'kd_reg'        => $request->tp_kd_reg,
+            //     'no_mr'         => $request->tp_no_mr,
+            //     'nm_pasien'  => $request->tp_nama,
+            //     'alamat'        => $request->tp_alamat,
+            //     'jenis_kelamin' => $request->tp_jenis_kelamin,
+            //     'tgl_lahir'     => $request->tp_tgl_lahir,
+            //     'tipe_tarif'    => $request->tp_tipe_tarif,
+            //     'total_penjualan' => $request->total_penjualan,
+            // ];
+            // tp_hdr::create($newData);
+            $updatetStock = DB::table('tp_detail_item')->where('kd_trs', $request->tp_kd_trse)->value('qty');
+
+            $updateStockF = preg_replace("/[^0-9]/", "", $updatetStock);
+            // print_r($updateStockF);
+            // die();
+
+            foreach ($request->kd_obat as $keys => $val) {
+                $currenttStock = DB::table('tb_stock')->whereIn('kd_obat', [$request->kd_obat[$keys]])->value('qty');
+                // $calculate = $updateStockF + $currenttStock;
+                $datax =  $request->kd_obat[$keys];
+                $dataQty =  $updateStockF;
+                $toInt = (int)$dataQty;
+                // print_r($calculate);
+                tb_stock::where('kd_obat', [$datax])->increment("qty", $toInt);
+            }
+            // die();
+
+
+
+            DB::commit();
+
+            $sessionFlash = [
+                'message' => 'Saved!',
+                'alert-type' => 'success'
+            ];
+
+            return Redirect::to('/penjualan')->with($sessionFlash);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            $sessionFlashErr = [
+                'message' => 'Error!',
+                'alert-type' => 'error'
+            ];
+            return Redirect::to('/penjualan')->with($sessionFlashErr);
+        }
+    }
+
     public function getDetailPenjualan(Request $request)
     {
         $isViewDetailPenjualan = tp_hdr::where('tp_hdr.kd_trs', '=', $request->kd_trs)

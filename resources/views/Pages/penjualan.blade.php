@@ -494,8 +494,8 @@
                             <input type="text" class="form-control float-right" name="total_penjualan_show_onlyE"
                                 id="total_penjualan_show_onlyE" value="" readonly>
                         </div>
-                        <button type="submit" id="update" class="btn btn-success float-right"><i
-                                class="fa fa-save"></i>&nbsp;Update
+                        <button type="submit" id="updateTrs" onclick="updateTrs()"
+                            class="btn btn-success float-right"><i class="fa fa-save"></i>&nbsp;Update
                         </button>
                     </div>
                 </form>
