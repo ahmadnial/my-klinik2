@@ -369,17 +369,19 @@ class penjualanController extends Controller
         // $updateStockF = preg_replace("/[^0-9]/", "", $updateStock);
         // print_r($updateStockF);
         // die();
-        foreach ($request->kd_obat as $keyx => $val) {
+        $monthNow = Carbon::now()->format('Y-m-d h:i:s');
+        foreach ($request->kd_obat as $keyy => $val) {
             $delTrsTP = DB::table('tp_hdr')->where('kd_trs', $request->tp_kd_trse)->get();
-            $delTrsKS = DB::table('kartu_stock_detail')->where([
-                ['kd_obat', '=', [$request->kd_obat[$keyx]]],
-                ['kd_trs', '!=', $request->tp_kd_trse]
-            ])
-                // ->whereDate('tanggal_trs', '>=', $request->tgl_trse)
+            $delTrsKS = DB::table('kartu_stock_detail')
+                ->where([
+                    ['tanggal_trs', '>=', $request->tgl_trse],
+                    ['kd_trs', '!=', $request->tp_kd_trse]
+                ])
+                ->whereIn('kd_obat', [$request->kd_obat[$keyy]])
                 ->get();
-            dd($delTrsKS);
+            print_r($delTrsKS);
         }
-
+        die();
         if ($delTrsKS > 1) {
             $sessionFlashErr = [
                 'message' => 'Gagal! Sudah Ada Item Moving!',
