@@ -68,7 +68,7 @@ class penjualanController extends Controller
                 <button class="btn btn-xs btn-info" data-toggle="modal" data-target="#EditObat"
                 onclick="getDetailPen(this)" data-kd_trs="' . $row->kd_trs . '">Detail</button>
                 <button class="btn btn-xs btn-primary" data-toggle="modal" data-target=""
-                onclick="EditTrs(this)" data-kd_trsu="' . $row->kd_trs . '">Edit</button>
+                onclick="EditTrs(this);validasiTrs(this);" data-kd_trsu="' . $row->kd_trs . '">Edit</button>
                 <button class="btn btn-xs btn-warning" data-toggle="modal" data-target="#EditObat"
                 onclick="cetakNota(this)" data-kd_trsc="' . $row->kd_trs . '" target="_blank"> <i class="fa fa-print"></i>&nbsp;Nota </button>
                 ';
@@ -331,6 +331,7 @@ class penjualanController extends Controller
         }
     }
 
+
     public function updateTrsPenjualan(Request $request)
     {
         // $k = $request->all();
@@ -345,8 +346,7 @@ class penjualanController extends Controller
         //     'qty' => 'required',
         // ]);
 
-        DB::beginTransaction();
-        // try {
+
         // $newData = [
         //     'kd_trs'        => $request->tp_kd_trs,
         //     'kd_order_resep' => $request->tp_kd_order,
@@ -369,66 +369,60 @@ class penjualanController extends Controller
         // $updateStockF = preg_replace("/[^0-9]/", "", $updateStock);
         // print_r($updateStockF);
         // die();
-        $monthNow = Carbon::now()->format('Y-m-d h:i:s');
         foreach ($request->kd_obat as $keyy => $val) {
             $delTrsTP = DB::table('tp_hdr')->where('kd_trs', $request->tp_kd_trse)->get();
             $delTrsKS = DB::table('kartu_stock_detail')
                 ->where([
-                    ['tanggal_trs', '>=', $request->tgl_trse],
-                    ['kd_trs', '!=', $request->tp_kd_trse]
+                    ['kd_trs', '>=', $request->tp_kd_trse],
+                    // ['tanggal_trs', '!>', 1],
+                    ['kd_trs', '!=', $request->tp_kd_trse],
                 ])
                 ->whereIn('kd_obat', [$request->kd_obat[$keyy]])
-                ->get();
-            print_r($delTrsKS);
+                ->count();
+            // print_r($delTrsKS);
         }
-        die();
-        if ($delTrsKS > 1) {
+        // die();
+        if ($delTrsKS > 0) {
             $sessionFlashErr = [
                 'message' => 'Gagal! Sudah Ada Item Moving!',
                 'alert-type' => 'error'
             ];
-            return Redirect::to('/penjualan')->with($sessionFlashErr);
+            // return Redirect::to('/penjualan')->with($sessionFlashErr);
+            return response()->json($sessionFlashErr);
         } else {
-            $sessionFlashErr = [
-                'message' => 'Bias Lanjut!',
-                'alert-type' => 'info'
-            ];
-            return Redirect::to('/penjualan')->with($sessionFlashErr);
+            DB::beginTransaction();
+            try {
+
+                foreach ($request->kd_obat as $keys => $val) {
+                    $updateStock = DB::table('tp_detail_item')->whereIn('kd_obat', [$request->kd_obat[$keys]])->where('kd_trs', $request->tp_kd_trse)->value('qty');
+                    $currenttStock = DB::table('tb_stock')->whereIn('kd_obat', [$request->kd_obat[$keys]])->value('qty');
+                    // $calculate = $updateStockF + $currenttStock;
+                    $datax =  $request->kd_obat[$keys];
+                    $dataQty =  $updateStock;
+                    $toInt = (int)$dataQty;
+                    // print_r($updateStock);
+                    tb_stock::where('kd_obat', [$datax])->increment("qty", $toInt);
+                }
+                // die();
+
+                DB::commit();
+
+                $sessionFlash = [
+                    'message' => 'Saved!',
+                    'alert-type' => 'success'
+                ];
+
+                return Redirect::to('/penjualan')->with($sessionFlash);
+            } catch (\Exception $e) {
+                DB::rollback();
+
+                $sessionFlashErr = [
+                    'message' => 'Error!',
+                    'alert-type' => 'error'
+                ];
+                return Redirect::to('/penjualan')->with($sessionFlashErr);
+            }
         }
-
-        foreach ($request->kd_obat as $keys => $val) {
-            $updateStock = DB::table('tp_detail_item')->whereIn('kd_obat', [$request->kd_obat[$keys]])->where('kd_trs', $request->tp_kd_trse)->value('qty');
-            $currenttStock = DB::table('tb_stock')->whereIn('kd_obat', [$request->kd_obat[$keys]])->value('qty');
-            // $calculate = $updateStockF + $currenttStock;
-            $datax =  $request->kd_obat[$keys];
-            $dataQty =  $updateStock;
-            $toInt = (int)$dataQty;
-            // print_r($updateStock);
-            tb_stock::where('kd_obat', [$datax])->increment("qty", $toInt);
-        }
-        // die();
-
-
-
-
-
-        DB::commit();
-
-        $sessionFlash = [
-            'message' => 'Saved!',
-            'alert-type' => 'success'
-        ];
-
-        return Redirect::to('/penjualan')->with($sessionFlash);
-        // } catch (\Exception $e) {
-        DB::rollback();
-
-        $sessionFlashErr = [
-            'message' => 'Error!',
-            'alert-type' => 'error'
-        ];
-        return Redirect::to('/penjualan')->with($sessionFlashErr);
-        // }
     }
 
     public function getDetailPenjualan(Request $request)

@@ -1430,10 +1430,26 @@
                 });
             };
 
+            function validasiTrs(tx) {
+                var kd_trs = $(tx).data('kd_trsu');
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "{{ url('update-penjualanG') }}",
+                    type: "GET",
+                    data: {
+                        kd_trs: kd_trs
+                    },
+                    success: function(sessionFlashErr) {
+                        alert(sessionFlashErr);
+                    }
+                });
+            }
 
             function EditTrs(te) {
                 $('#EditPenjualan').modal('show');
-
+                validasiTrs();
                 var kd_trs = $(te).data('kd_trsu');
                 // alert(kd_trs);
                 // $('#EditPenjualanHdr').empty();
