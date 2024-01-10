@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Login | Klinik Asla</title>
+    <title>Login | AslaMed</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -100,7 +100,7 @@ grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); */
         <!-- /.login-logo -->
         <div class="card card-outline card-purple">
             <div class="card-header text-center">
-                <a href="../../index2.html" class="h1"><b>Klinik</b>ASLA</a>
+                <a href="../../index2.html" class="h1"><b>ASLA</b>Med</a>
             </div>
             <div class="card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
@@ -137,9 +137,9 @@ grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); */
                         <div class="col-8">
                             <div class="icheck-primary">
                                 <input type="checkbox" id="remember">
-                                <label for="remember">
+                                {{-- <label for="remember">
                                     Remember Me
-                                </label>
+                                </label> --}}
                             </div>
                         </div>
                         <!-- /.col -->

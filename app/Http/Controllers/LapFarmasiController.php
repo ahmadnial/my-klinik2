@@ -8,6 +8,8 @@ use App\Models\mstr_dokter;
 use App\Models\mstr_tindakan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Facades\DataTables;
+
 
 use function PHPUnit\Framework\isNull;
 
@@ -247,6 +249,97 @@ class LapFarmasiController extends Controller
                 ->select('kartu_stock_hdr.*', 'kartu_stock_detail.*')
                 ->get();
             return response()->json($isKartuStock);
+        }
+    }
+
+    public function pricelist()
+    {
+        return view('Pages.laporan.farmasi.pricelist');
+    }
+
+    public function pricelistHrgReguler()
+    {
+        if (request()->ajax()) {
+            $isObatReguler = DB::table('mstr_obat')
+                ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
+                ->select('mstr_obat.*', 'tb_stock.*')
+                ->get();
+            return DataTables::of($isObatReguler)
+                ->addColumn('action', function ($row) {
+                    $actionBtn = '<a href="javascript:void(0)" id="' . $row->fm_kd_obat . '" onClick="SelectItemObat(this);SelectItemObatEdit(this)" data-kdmr="' . $row->fm_kd_obat . '"
+                    data-fm_kd_obat="' . $row->fm_kd_obat . '" data-fm_nm_obat="' . $row->fm_nm_obat . '" data-fm_satuan_jual="' . $row->fm_satuan_jual . '" data-fm_satuan_pembelian="' . $row->fm_satuan_pembelian . '"
+                    data-fm_hrg_jual="' . $row->fm_hrg_jual_non_resep . '" data-fm_hrg_beli_detail="' . $row->fm_hrg_beli_detail . '" data-fm_isi_satuan_pembelian="' . $row->fm_isi_satuan_pembelian . '"
+                    class="edit btn btn-xs btn-sm" style="background-color:#10F3A4; color:#ffffff;">Select</a>';
+                    return $actionBtn;
+                })
+                ->addColumn('HrgJualGlobal', function ($row) {
+                    $HrgJualGlobald = '' . $row->fm_hrg_jual_non_resep * $row->fm_isi_satuan_pembelian . '';
+                    return $HrgJualGlobald;
+                })
+                ->rawColumns(['action'])
+                ->rawColumns(['HrgJualGlobal'])
+                ->make(true);
+            return response()->json($isObatReguler);
+        }
+
+        // $isObatReguler = DB::table('mstr_obat')
+        // ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
+        // ->select('mstr_obat.*', 'tb_stock.*')
+        // ->paginate(15);
+        // // ->get();
+        // return response()->json($isObatReguler);
+    }
+
+    public function pricelistHrgResep()
+    {
+        if (request()->ajax()) {
+            $isObatResep = DB::table('mstr_obat')
+                ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
+                ->select('fm_kd_obat', 'fm_nm_obat', 'fm_hrg_jual_resep', 'fm_satuan_jual', 'qty', 'fm_isi_satuan_pembelian', 'fm_satuan_pembelian')
+                ->get();
+            return DataTables::of($isObatResep)
+                ->addColumn('action', function ($row) {
+                    $actionBtn = '<a href="javascript:void(0)" id="' . $row->fm_kd_obat . '" onClick="SelectItemObat(this)" data-kdmr="' . $row->fm_kd_obat . '"
+                    data-fm_kd_obat="' . $row->fm_kd_obat . '" data-fm_nm_obat="' . $row->fm_nm_obat . '" data-fm_satuan_jual="' . $row->fm_satuan_jual . '"
+                    data-fm_hrg_jual="' . $row->fm_hrg_jual_resep . '" data-fm_satuan_pembelian="' . $row->fm_satuan_pembelian . '"
+                    class="edit btn btn-xs btn-sm" style="background-color:#10F3A4; color:#ffffff;">Select</a>';
+                    return $actionBtn;
+                })
+                ->addColumn('HrgJualGlobalResep', function ($row) {
+                    $HrgJualGlobalR = '' . $row->fm_hrg_jual_resep * $row->fm_isi_satuan_pembelian . '';
+                    return $HrgJualGlobalR;
+                })
+                ->rawColumns(['action'])
+                ->rawColumns(['HrgJualGlobalResep'])
+                ->make(true);
+            return response()->json($isObatResep);
+        }
+    }
+
+    public function pricelistHrgNakes()
+    {
+        // $isObatNakes = mstr_obat::select("fm_kd_obat", "fm_nm_obat", "fm_satuan_jual", "fm_hrg_beli", "fm_hrg_jual_nakes")->get();
+        if (request()->ajax()) {
+            $isObatNakes = DB::table('mstr_obat')
+                ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
+                ->select('fm_kd_obat', 'fm_nm_obat', 'fm_hrg_jual_nakes', 'fm_satuan_jual', 'qty', 'fm_isi_satuan_pembelian', 'fm_satuan_pembelian')
+                ->get();
+            return DataTables::of($isObatNakes)
+                ->addColumn('action', function ($row) {
+                    $actionBtn = '<a href="javascript:void(0)" id="' . $row->fm_kd_obat . '" onClick="SelectItemObat(this)" data-kdmr="' . $row->fm_kd_obat . '"
+                    data-fm_kd_obat="' . $row->fm_kd_obat . '" data-fm_nm_obat="' . $row->fm_nm_obat . '" data-fm_satuan_jual="' . $row->fm_satuan_jual . '"
+                    data-fm_hrg_jual="' . $row->fm_hrg_jual_nakes . '" data-fm_satuan_pembelian="' . $row->fm_satuan_pembelian . '"
+                    class="edit btn btn-xs btn-sm" style="background-color:#10F3A4; color:#ffffff;">Select</a>';
+                    return $actionBtn;
+                })
+                ->addColumn('HrgJualGlobalNakes', function ($row) {
+                    $HrgJualGlobalN = '' . $row->fm_hrg_jual_nakes * $row->fm_isi_satuan_pembelian . '';
+                    return $HrgJualGlobalN;
+                })
+                ->rawColumns(['action'])
+                ->rawColumns(['HrgJualGlobalNakes'])
+                ->make(true);
+            return response()->json($isObatNakes);
         }
     }
 }

@@ -72,7 +72,7 @@ class penjualanController extends Controller
                 <button class="btn btn-xs btn-warning" data-toggle="modal" data-target="#EditObat"
                 onclick="cetakNota(this)" data-kd_trsc="' . $row->kd_trs . '" target="_blank"> <i class="fa fa-print"></i> </button>
                  <button class="btn btn-xs btn-danger" data-toggle="modal" data-target=""
-                onclick="DeleteTrs(this);validasiTrs(this);" data-kd_trsu="' . $row->kd_trs . '"><i class="fa fa-trash"></i></button>
+                onclick="DeleteTrs(this);" data-kd_trsu="' . $row->kd_trs . '"><i class="fa fa-trash"></i></button>
                 ';
                 return $actionBtn;
             })
@@ -91,7 +91,7 @@ class penjualanController extends Controller
                 ->addColumn('action', function ($row) {
                     $actionBtn = '<a href="javascript:void(0)" id="' . $row->fm_kd_obat . '" onClick="SelectItemObat(this);SelectItemObatEdit(this)" data-kdmr="' . $row->fm_kd_obat . '"
                     data-fm_kd_obat="' . $row->fm_kd_obat . '" data-fm_nm_obat="' . $row->fm_nm_obat . '" data-fm_satuan_jual="' . $row->fm_satuan_jual . '"
-                    data-fm_hrg_jual="' . $row->fm_hrg_jual_non_resep . '" data-qty="' . $row->qty . '" data-fm_hrg_beli_detail="' . $row->fm_hrg_beli_detail . '"
+                    data-fm_hrg_jual="' . $row->fm_hrg_jual_non_resep . '" data-qty="' . $row->qty . '" data-fm_hrg_beli_detail="' . $row->fm_hrg_beli_detail . '" data-fm_isi_satuan_pembelian="' . $row->fm_isi_satuan_pembelian . '"
                     class="edit btn btn-xs btn-sm" style="background-color:#10F3A4; color:#ffffff;">Select</a>';
                     return $actionBtn;
                 })

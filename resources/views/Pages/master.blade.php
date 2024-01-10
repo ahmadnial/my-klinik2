@@ -478,6 +478,12 @@
                                             <p>Hak Akses</p>
                                         </a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a href="{{ url('/pricelist') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Pricelist</p>
+                                        </a>
+                                    </li>
                                     {{-- <li class="nav-item">
                                     <a href="{{ url('/mstr-medis') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
@@ -673,10 +679,11 @@
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
             $('#penjualan').DataTable({
-                "paging": true,
                 "responsive": true,
+                "paging": true,
+                "searching": true,
                 "lengthChange": false,
-                "autoWidth": true,
+                "autoWidth": false,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#penjualan_wrapper .col-md-6:eq(0)');
             $('#exm2').DataTable({

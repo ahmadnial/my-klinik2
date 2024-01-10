@@ -236,6 +236,10 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
     Route::get('info-tindakan', [LapFarmasiController::class, 'infoTindakan'])->name('info-tindakan');
     Route::get('getInfoTindakan', [LapFarmasiController::class, 'getinfoTindakan'])->name('getInfoTindakan');
     Route::get('itemObatSearch', [LapFarmasiController::class, 'itemObatSearch'])->name('itemObatSearch');
+    Route::get('pricelist', [LapFarmasiController::class, 'pricelist'])->name('pricelist');
+    Route::get('pricelistHrgReguler', [LapFarmasiController::class, 'pricelistHrgReguler'])->name('pricelistHrgReguler');
+    Route::get('pricelistHrgResep', [LapFarmasiController::class, 'pricelistHrgResep'])->name('pricelistHrgResep');
+    Route::get('pricelistHrgNakes', [LapFarmasiController::class, 'pricelistHrgNakes'])->name('pricelistHrgNakes');
 });
 
 //Setting / Tools
