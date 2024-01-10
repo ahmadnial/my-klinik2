@@ -1449,7 +1449,6 @@
 
             function EditTrs(te) {
                 $('#EditPenjualan').modal('show');
-                validasiTrs();
                 var kd_trs = $(te).data('kd_trsu');
                 // alert(kd_trs);
                 // $('#EditPenjualanHdr').empty();
