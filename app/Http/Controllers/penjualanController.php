@@ -510,6 +510,77 @@ class penjualanController extends Controller
         }
     }
 
+    public function DelTrsPenjualan(Request $request)
+    {
+        // dd($request->all());
+        foreach ($request->kd_obat as $keyx => $val) {
+            $delTrsKS = DB::table('kartu_stock_detail')
+                ->where([
+                    ['kd_trs', '>=', $request->nomorTrs],
+                    // ['tanggal_trs', '!>', 1],
+                    ['kd_trs', '!=', $request->nomorTrs],
+                ])
+                ->whereIn('kd_obat', [$request->kd_obat[$keyx]])
+                ->count();
+            // print_r($delTrsKS);
+        }
+        // die();
+        if ($delTrsKS > 0) {
+            $sessionFlashErr = [
+                'message' => 'Gagal! Sudah Ada Item Moving!',
+                'alert-type' => 'error'
+            ];
+            return Redirect::to('/penjualan')->with($sessionFlashErr);
+            // return response()->with($sessionFlashErr);
+        } else {
+
+            DB::beginTransaction();
+            // try {
+            foreach ($request->kd_obat as $keys => $val) {
+                $updateStock = DB::table('tp_detail_item')->whereIn('kd_obat', [$request->kd_obat[$keys]])->where('kd_trs', $request->nomorTrs)->value('qty');
+                $currenttStock = DB::table('tb_stock')->whereIn('kd_obat', [$request->kd_obat[$keys]])->value('qty');
+                // $calculate = $updateStockF + $currenttStock;
+                $datax =  $request->kd_obat[$keys];
+                $dataQty =  $updateStock;
+                $toInt = (int)$dataQty;
+                // print_r($updateStock);
+                tb_stock::where('kd_obat', [$datax])->increment("qty", $toInt);
+            }
+            // die();
+            DB::table('tp_hdr')->where('kd_trs', $request->nomorTrs)->delete();
+            DB::table('tp_detail_item')->where('kd_trs', $request->nomorTrs)->delete();
+            DB::table('kartu_stock_detail')->where('kd_trs', $request->nomorTrs)->delete();
+
+            foreach ($request->kd_obat as $keys => $val) {
+                $datax =  $request->kd_obat[$keys];
+                $dataQty =  $request->qty[$keys];
+                // $dataIsi =  $request->do_isi_pembelian[$keys];
+                // $X = (int)$dataQty * (int)$dataIsi;
+                $toInt = (int)$dataQty;
+
+                tb_stock::where('kd_obat', [$datax])->increment("qty", $toInt);
+            }
+
+            DB::commit();
+
+            $sessionFlash = [
+                'message' => 'Transaksi Berhasil Dihapus!',
+                'alert-type' => 'success'
+            ];
+
+            return Redirect::to('/penjualan')->with($sessionFlash);
+            // } catch (\Exception $e) {
+            DB::rollback();
+
+            $sessionFlashErr = [
+                'message' => 'Some Error Occured!',
+                'alert-type' => 'error'
+            ];
+            return Redirect::to('/penjualan')->with($sessionFlashErr);
+        }
+    }
+
+
     public function getDetailPenjualan(Request $request)
     {
         $isViewDetailPenjualan = tp_hdr::where('tp_hdr.kd_trs', '=', $request->kd_trs)

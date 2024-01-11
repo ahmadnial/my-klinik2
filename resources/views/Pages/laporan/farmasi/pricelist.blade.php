@@ -23,8 +23,8 @@
                         <thead>
                             <tr>
                                 <th>Nama Obat</th>
-                                <th>Harga Jual</th>
                                 <th>Satuan</th>
+                                <th>Harga</th>
                                 {{-- <th>Harga Jual <i id="HrgJualView"></i></th> --}}
                                 {{-- <th>Isi</th> --}}
                             </tr>
@@ -68,6 +68,7 @@
                                 processing: true,
                                 serverSide: true,
                                 responsive: true,
+                                dom: 'lBfrtip',
                                 "bDestroy": true,
                                 ajax: "{{ url('pricelistHrgReguler') }}",
                                 columns: [{
@@ -79,20 +80,26 @@
                                     //     name: 'fm_hrg_jual_non_resep'
                                     // },
                                     {
+                                        data: 'fm_satuan_pembelian',
+                                        name: 'fm_satuan_pembelian'
+                                    },
+                                    {
                                         data: 'HrgJualGlobal',
                                         name: 'HrgJualGlobal',
                                         render: $.fn.dataTable.render.number(',', '.', 2, 'Rp ')
-                                    },
-                                    {
-                                        data: 'fm_satuan_pembelian',
-                                        name: 'fm_satuan_pembelian'
                                     },
                                     // {
                                     //     data: 'fm_isi_satuan_pembelian',
                                     //     name: 'fm_isi_satuan_pembelian'
                                     // },
-                                ]
-                            });
+                                ],
+                                "responsive": true,
+                                "paging": false,
+                                "searching": true,
+                                "lengthChange": false,
+                                "autoWidth": false,
+                                "buttons": ["copy", "excel", "pdf", "print", "colvis"]
+                            }).buttons().container().appendTo('#penjualan_wrapper .col-md-6:eq(0)');
                         }
                     })
 
@@ -109,6 +116,7 @@
                             $('#penjualan').DataTable({
                                 processing: true,
                                 serverSide: true,
+                                dom: 'lBfrtip',
                                 responsive: true,
                                 "bDestroy": true,
                                 ajax: "{{ url('pricelistHrgResep') }}",
@@ -121,20 +129,26 @@
                                     //     name: 'fm_hrg_jual_resep'
                                     // },
                                     {
+                                        data: 'fm_satuan_pembelian',
+                                        name: 'fm_satuan_pembelian'
+                                    },
+                                    {
                                         data: 'HrgJualGlobalResep',
                                         name: 'HrgJualGlobalResep',
                                         render: $.fn.dataTable.render.number(',', '.', 2, 'Rp ')
-                                    },
-                                    {
-                                        data: 'fm_satuan_pembelian',
-                                        name: 'fm_satuan_pembelian'
                                     },
                                     // {
                                     //     data: 'fm_isi_satuan_pembelian',
                                     //     name: 'fm_isi_satuan_pembelian'
                                     // },
-                                ]
-                            });
+                                ],
+                                "responsive": true,
+                                "paging": false,
+                                "searching": true,
+                                "lengthChange": false,
+                                "autoWidth": false,
+                                "buttons": ["copy", "excel", "pdf", "print", "colvis"]
+                            }).buttons().container().appendTo('#penjualan_wrapper .col-md-6:eq(0)');
                         }
                     })
                 } else {
@@ -149,6 +163,7 @@
                             $('#penjualan').DataTable({
                                 processing: true,
                                 serverSide: true,
+                                dom: 'lBfrtip',
                                 responsive: true,
                                 "bDestroy": true,
                                 ajax: "{{ url('pricelistHrgNakes') }}",
@@ -161,21 +176,27 @@
                                     //     name: 'fm_hrg_jual_nakes'
                                     // },
                                     {
+                                        data: 'fm_satuan_pembelian',
+                                        name: 'fm_satuan_pembelian'
+                                    },
+                                    {
                                         data: 'HrgJualGlobalNakes',
                                         name: 'HrgJualGlobalNakes',
                                         render: $.fn.dataTable.render.number(',', '.', 0, 'Rp ')
 
                                     },
-                                    {
-                                        data: 'fm_satuan_pembelian',
-                                        name: 'fm_satuan_pembelian'
-                                    },
                                     // {
                                     //     data: 'fm_isi_satuan_pembelian',
                                     //     name: 'fm_isi_satuan_pembelian'
                                     // },
-                                ]
-                            });
+                                ],
+                                "responsive": true,
+                                "paging": false,
+                                "searching": true,
+                                "lengthChange": false,
+                                "autoWidth": false,
+                                "buttons": ["copy", "excel", "pdf", "print", "colvis"]
+                            }).buttons().container().appendTo('#penjualan_wrapper .col-md-6:eq(0)');
                         }
                     })
                 }

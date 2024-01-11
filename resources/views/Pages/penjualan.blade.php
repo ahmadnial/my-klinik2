@@ -548,6 +548,34 @@
     </div>
     {{-- End Modal --}}
 
+    {{-- modal popup delete --}}
+    <div class="modal fade" id="confirmDelete" aria-hidden="true" aria-labelledby="exampleModalToggleLabel">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalToggleLabel">Konfirmasi Delete</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="POST" action="{{ url('delete-trs-penjualan') }}" onkeydown="return event.key != 'Enter';">
+                    @csrf
+                    <div class="modal-body">
+                        Delete Transaksi Penjualan <input type="text" class="text-danger" name="nomorTrs"
+                            id="nomorTrs" style="border: none;">
+                    </div>
+                    <input type="hidden" name="tgl_trsD" id="tgl_trsD">
+                    <div class="" id="ListDeleteItem">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{-- end --}}
+
 
     @push('scripts')
         <script>
@@ -585,6 +613,7 @@
                         $('#example1').DataTable({
                             processing: true,
                             serverSide: true,
+                            dom: 'lBfrtip',
                             responsive: true,
                             "bDestroy": true,
                             ajax: {
@@ -640,8 +669,14 @@
                                     data: 'action',
                                     name: 'action'
                                 },
-                            ]
-                        });
+                            ],
+                            "responsive": true,
+                            "paging": true,
+                            "searching": true,
+                            "lengthChange": true,
+                            "autoWidth": true,
+                            "buttons": ["copy", "excel", "pdf", "print", "colvis"]
+                        }).buttons().container().appendTo('#penjualan_wrapper .col-md-6:eq(0)');
                     }
                 })
             };
@@ -1545,6 +1580,36 @@
                 });
             };
 
+            function DeleteTrs(del) {
+                var kd_trs = $(del).data('kd_trsu');
+                $('#confirmDelete').modal('show');
+                $('#nomorTrs').val(kd_trs);
+
+                $('#ListDeleteItem').empty();
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "{{ url('getDetailPenjualan') }}/" + kd_trs,
+                    type: "GET",
+                    data: {
+                        kd_trs: kd_trs
+                    },
+                    success: function(isViewDetailPenjualan) {
+                        $.each(isViewDetailPenjualan, function(key, datavalue) {
+                            $('#tgl_trsD').val(datavalue.tgl_trs);
+                            // $('#tgl_trsD').val(datavalue.kd_trs);
+
+                            $("#ListDeleteItem").append(`
+                                <input type="hidden" name="kd_obat[]" id="kd_obatD" value="${datavalue.kd_obat}">
+                                <input type="hidden" name="qty[]" id="qtyD" value="${datavalue.qty}">
+                            `);
+                        })
+                    }
+
+                });
+            }
+
             function SelectItemObatEdit(f) {
                 // $("#SelectItemObatxxx").on("click", function() {
                 var getKdObat = $(f).data('fm_kd_obat');
@@ -1665,6 +1730,7 @@
                     }
                 })
             }
+
 
             $(document).keydown(function(event) {
                 if (event.keyCode == 120) {

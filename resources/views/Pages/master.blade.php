@@ -9,7 +9,6 @@
 
     <link rel="stylesheet" href="{{ asset('src/css/font-awesome.min.css') }}">
     <link href="{{ asset('src/css/select2.min.css') }}" rel="stylesheet" />
-    {{-- <link href="https://cdn.datatables.net/keytable/2.11.0/css/keyTable.bootstrap.css" rel="stylesheet"> --}}
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="{{ asset('src/css/font.css') }}">
     <!-- Font Awesome -->
@@ -23,7 +22,7 @@
     <link rel="stylesheet" href="{{ asset('src/plugins/jsgrid/jsgrid.min.css') }}">
     <link rel="stylesheet" href="{{ asset('src/plugins/jsgrid/jsgrid-theme.min.css') }}">
     <link rel="stylesheet" href="{{ asset('src/plugins/toastr/toastr.min.css') }}">
-
+    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css"> --}}
     <!-- iCheck -->
     <link rel="stylesheet" href="{{ asset('src/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <!-- JQVMap -->
@@ -584,7 +583,7 @@
     <script src="{{ asset('src/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     {{-- <script src="{{ asset('src/plugins/jquery-ui/jquery-ui.min.js') }}"></script> --}}
     <script src="{{ asset('src/dist/js/select2.min.js') }}"></script>
-    <script src="https://cdn.datatables.net/keytable/2.11.0/js/dataTables.keyTable.js"></script>
+    {{-- <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script> --}}
     <script src="{{ asset('src/plugins/jsgrid/jsgrid.min.js') }}"></script>
     {{-- <script src="{{ asset('srcplugins/jsgrid/demos/db.js') }}"></script> --}}
     <!-- ChartJS -->
@@ -611,9 +610,9 @@
     <script src="{{ asset('src/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('src/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
     <script src="{{ asset('src/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
-    {{-- <script src="{{ asset('src/plugins/jszip/jszip.min.js') }}"></script> --}}
-    {{-- <script src="{{ asset('src/plugins/pdfmake/pdfmake.min.js') }}"></script> --}}
-    {{-- <script src="{{ asset('src/plugins/pdfmake/vfs_fonts.js') }}"></script> --}}
+    <script src="{{ asset('src/plugins/jszip/jszip.min.js') }}"></script>
+    <script src="{{ asset('src/plugins/pdfmake/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('src/plugins/pdfmake/vfs_fonts.js') }}"></script>
     <script src="{{ asset('src/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('src/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('src/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
@@ -697,6 +696,15 @@
                 "responsive": false,
             });
         });
+
+        // $('#penjualanX').DataTable({
+        //     dom: 'Bfrtip',
+        //     buttons: [
+        //         'colvis',
+        //         'excel',
+        //         'print'
+        //     ]
+        // });
 
         function menuToggle() {
             const toggleMenu = document.querySelector(".menu");

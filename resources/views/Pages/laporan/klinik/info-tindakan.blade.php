@@ -31,7 +31,7 @@
                     <button class="btn btn-success" onclick="getInfoTdk()" id="btnProses">Proses</button>
                 </div>
                 <div>
-                    <table id="exm2" class="table table-hover table-striped table-bordered">
+                    <table id="penjualan" class="table table-hover table-striped table-bordered">
                         <thead>
                             <tr>
                                 <th>Tanggal</th>
@@ -94,13 +94,13 @@
                         },
                         success: function(isDataTindakan) {
                             var sumall = 0;
-                            var table = $('#exm2').DataTable();
+                            var table = $('#penjualan').DataTable();
                             var rows = table
                                 .rows()
                                 .remove()
                                 .draw();
                             $.each(isDataTindakan, function(key, datavalue) {
-                                const table = $('#exm2').DataTable();
+                                const table = $('#penjualan').DataTable();
 
                                 const dateString = datavalue.tgl_trs;
                                 const date = new Date(dateString);

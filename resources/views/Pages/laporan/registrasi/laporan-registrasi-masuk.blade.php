@@ -1,5 +1,5 @@
 @extends('pages.master')
-@section('mytitle', 'Laporan Klinik')
+@section('mytitle', 'Laporan Registrasi Klinik')
 
 @section('konten')
     <section class="content">
@@ -30,7 +30,7 @@
                     <button class="btn btn-success" onclick="getDataRegMasuk()" id="btnProses">Proses</button>
                 </div>
                 <div>
-                    <table id="exm2" class="table table-hover table-striped">
+                    <table id="penjualan" class="table table-hover table-striped">
                         <thead>
                             <tr>
                                 <th>Tanggal</th>
@@ -95,13 +95,13 @@
                         },
                         success: function(isDataRegMasuk) {
                             var sumall = 0;
-                            var table = $('#exm2').DataTable();
+                            var table = $('#penjualan').DataTable();
                             var rows = table
                                 .rows()
                                 .remove()
                                 .draw();
                             $.each(isDataRegMasuk, function(key, datavalue) {
-                                const table = $('#exm2').DataTable();
+                                const table = $('#penjualan').DataTable();
 
                                 const dateString = datavalue.fr_tgl_reg;
                                 const date = new Date(dateString);
