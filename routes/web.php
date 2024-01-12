@@ -176,6 +176,9 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
     Route::get('getListObatReguler', [penjualanController::class, 'getListObatReguler'])->name('getListObatReguler');
     Route::get('getListObatResep', [penjualanController::class, 'getListObatResep'])->name('getListObatResep');
     Route::get('getListObatNakes', [penjualanController::class, 'getListObatNakes'])->name('getListObatNakes');
+    Route::get('getListObatRegulerEdit', [penjualanController::class, 'getListObatRegulerEdit'])->name('getListObatRegulerEdit');
+    Route::get('getListObatResepEdit', [penjualanController::class, 'getListObatResepEdit'])->name('getListObatResepEdit');
+    Route::get('getListObatNakesEdit', [penjualanController::class, 'getListObatNakesEdit'])->name('getListObatNakesEdit');
     Route::post('add-penjualan', [penjualanController::class, 'penjualanCreate'])->name('add-penjualan');
     Route::post('update-penjualan', [penjualanController::class, 'updateTrsPenjualan'])->name('update-penjualan');
     Route::get('update-penjualanG', [penjualanController::class, 'updateTrsPenjualan'])->name('update-penjualanG');

@@ -1103,7 +1103,7 @@
                                 serverSide: true,
                                 responsive: true,
                                 "bDestroy": true,
-                                ajax: "{{ url('getListObatReguler') }}",
+                                ajax: "{{ url('getListObatRegulerEdit') }}",
                                 columns: [{
                                         data: 'fm_kd_obat',
                                         name: 'fm_kd_obat'
@@ -1162,7 +1162,7 @@
                                 serverSide: true,
                                 responsive: true,
                                 "bDestroy": true,
-                                ajax: "{{ url('getListObatResep') }}",
+                                ajax: "{{ url('getListObatResepEdit') }}",
                                 columns: [{
                                         data: 'fm_kd_obat',
                                         name: 'fm_kd_obat'
@@ -1207,7 +1207,7 @@
                                 serverSide: true,
                                 responsive: true,
                                 "bDestroy": true,
-                                ajax: "{{ url('getListObatNakes') }}",
+                                ajax: "{{ url('getListObatNakesEdit') }}",
                                 columns: [{
                                         data: 'fm_kd_obat',
                                         name: 'fm_kd_obat'
@@ -1617,7 +1617,6 @@
                 var getSatJual = $(f).data('fm_satuan_jual');
                 var getHrg = $(f).data('fm_hrg_jual');
 
-                // console.log(getKdObat);
 
                 $("#EditPenjualanList").append(`
                     <tr>

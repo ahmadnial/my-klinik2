@@ -89,7 +89,7 @@ class penjualanController extends Controller
                 ->get();
             return DataTables::of($isObatReguler)
                 ->addColumn('action', function ($row) {
-                    $actionBtn = '<a href="javascript:void(0)" id="' . $row->fm_kd_obat . '" onClick="SelectItemObat(this);SelectItemObatEdit(this)" data-kdmr="' . $row->fm_kd_obat . '"
+                    $actionBtn = '<a href="javascript:void(0)" id="' . $row->fm_kd_obat . '" onClick="SelectItemObat(this)" data-kdmr="' . $row->fm_kd_obat . '"
                     data-fm_kd_obat="' . $row->fm_kd_obat . '" data-fm_nm_obat="' . $row->fm_nm_obat . '" data-fm_satuan_jual="' . $row->fm_satuan_jual . '"
                     data-fm_hrg_jual="' . $row->fm_hrg_jual_non_resep . '" data-qty="' . $row->qty . '" data-fm_hrg_beli_detail="' . $row->fm_hrg_beli_detail . '" data-fm_isi_satuan_pembelian="' . $row->fm_isi_satuan_pembelian . '"
                     class="edit btn btn-xs btn-sm" style="background-color:#10F3A4; color:#ffffff;">Select</a>';
@@ -99,13 +99,6 @@ class penjualanController extends Controller
                 ->make(true);
             return response()->json($isObatReguler);
         }
-
-        // $isObatReguler = DB::table('mstr_obat')
-        // ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
-        // ->select('mstr_obat.*', 'tb_stock.*')
-        // ->paginate(15);
-        // // ->get();
-        // return response()->json($isObatReguler);
     }
 
     public function getListObatResep()
@@ -151,6 +144,70 @@ class penjualanController extends Controller
         }
     }
 
+
+    public function getListObatRegulerEdit()
+    {
+        if (request()->ajax()) {
+            $isObatReguler = DB::table('mstr_obat')
+                ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
+                ->select('mstr_obat.*', 'tb_stock.*')
+                ->get();
+            return DataTables::of($isObatReguler)
+                ->addColumn('action', function ($row) {
+                    $actionBtn = '<a href="javascript:void(0)" id="' . $row->fm_kd_obat . '" onClick="SelectItemObatEdit(this)" data-kdmr="' . $row->fm_kd_obat . '"
+                    data-fm_kd_obat="' . $row->fm_kd_obat . '" data-fm_nm_obat="' . $row->fm_nm_obat . '" data-fm_satuan_jual="' . $row->fm_satuan_jual . '"
+                    data-fm_hrg_jual="' . $row->fm_hrg_jual_non_resep . '" data-qty="' . $row->qty . '" data-fm_hrg_beli_detail="' . $row->fm_hrg_beli_detail . '" data-fm_isi_satuan_pembelian="' . $row->fm_isi_satuan_pembelian . '"
+                    class="edit btn btn-xs btn-sm" style="background-color:#10F3A4; color:#ffffff;">Select</a>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+            return response()->json($isObatReguler);
+        }
+    }
+
+    public function getListObatResepEdit()
+    {
+        if (request()->ajax()) {
+            $isObatResep = DB::table('mstr_obat')
+                ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
+                ->select('fm_kd_obat', 'fm_nm_obat', 'fm_hrg_jual_resep', 'fm_satuan_jual', 'qty')
+                ->get();
+            return DataTables::of($isObatResep)
+                ->addColumn('action', function ($row) {
+                    $actionBtn = '<a href="javascript:void(0)" id="' . $row->fm_kd_obat . '" onClick="SelectItemObatEdit(this)" data-kdmr="' . $row->fm_kd_obat . '"
+                    data-fm_kd_obat="' . $row->fm_kd_obat . '" data-fm_nm_obat="' . $row->fm_nm_obat . '" data-fm_satuan_jual="' . $row->fm_satuan_jual . '"
+                    data-fm_hrg_jual="' . $row->fm_hrg_jual_resep . '"
+                    class="edit btn btn-xs btn-sm" style="background-color:#10F3A4; color:#ffffff;">Select</a>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+            return response()->json($isObatResep);
+        }
+    }
+
+    public function getListObatNakesEdit()
+    {
+        // $isObatNakes = mstr_obat::select("fm_kd_obat", "fm_nm_obat", "fm_satuan_jual", "fm_hrg_beli", "fm_hrg_jual_nakes")->get();
+        if (request()->ajax()) {
+            $isObatNakes = DB::table('mstr_obat')
+                ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
+                ->select('fm_kd_obat', 'fm_nm_obat', 'fm_hrg_jual_nakes', 'fm_satuan_jual', 'qty')
+                ->get();
+            return DataTables::of($isObatNakes)
+                ->addColumn('action', function ($row) {
+                    $actionBtn = '<a href="javascript:void(0)" id="' . $row->fm_kd_obat . '" onClick="SelectItemObatEdit(this)" data-kdmr="' . $row->fm_kd_obat . '"
+                    data-fm_kd_obat="' . $row->fm_kd_obat . '" data-fm_nm_obat="' . $row->fm_nm_obat . '" data-fm_satuan_jual="' . $row->fm_satuan_jual . '"
+                    data-fm_hrg_jual="' . $row->fm_hrg_jual_nakes . '"
+                    class="edit btn btn-xs btn-sm" style="background-color:#10F3A4; color:#ffffff;">Select</a>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+            return response()->json($isObatNakes);
+        }
+    }
 
     public function getListOrderResep(Request $kd_trs)
     {
@@ -373,24 +430,19 @@ class penjualanController extends Controller
         // die();
         foreach ($request->kd_obat as $keyy => $val) {
             $delTrsKS = DB::table('kartu_stock_detail')
-                ->whereIn('kd_obat', [$request->kd_obat[$keyy]])
                 ->where([
                     ['kd_trs', '>=', $request->tp_kd_trse],
                     // ['tanggal_trs', '!>', 1],
                     ['kd_trs', '!=', $request->tp_kd_trse],
                 ])
-                ->get();
-            if ($delTrsKS > 0) {
-                $r = 'lanjut';
-            } else {
-                $r = 'Stop';
-            }
+                ->whereIn('kd_obat', [$request->kd_obat[$keyy]])
+                ->count();
+            // print_r($delTrsKS);
         }
-        print_r($r);
-        die();
+        // die();
         // $toInt = (int)$delTrsKS;
         // dd($delTrsKS);
-        if ($delTrsKS > ["0"]) {
+        if ($delTrsKS > 0) {
             $sessionFlashErr = [
                 'message' => 'Gagal! Sudah Ada Item Moving!',
                 'alert-type' => 'error'
