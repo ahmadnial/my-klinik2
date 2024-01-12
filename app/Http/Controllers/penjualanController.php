@@ -373,17 +373,24 @@ class penjualanController extends Controller
         // die();
         foreach ($request->kd_obat as $keyy => $val) {
             $delTrsKS = DB::table('kartu_stock_detail')
+                ->whereIn('kd_obat', [$request->kd_obat[$keyy]])
                 ->where([
                     ['kd_trs', '>=', $request->tp_kd_trse],
                     // ['tanggal_trs', '!>', 1],
                     ['kd_trs', '!=', $request->tp_kd_trse],
                 ])
-                ->whereIn('kd_obat', [$request->kd_obat[$keyy]])
-                ->count();
-            // print_r($delTrsKS);
+                ->get();
+            if ($delTrsKS > 0) {
+                $r = 'lanjut';
+            } else {
+                $r = 'Stop';
+            }
         }
-        // die();
-        if ($delTrsKS > 0) {
+        print_r($r);
+        die();
+        // $toInt = (int)$delTrsKS;
+        // dd($delTrsKS);
+        if ($delTrsKS > ["0"]) {
             $sessionFlashErr = [
                 'message' => 'Gagal! Sudah Ada Item Moving!',
                 'alert-type' => 'error'
