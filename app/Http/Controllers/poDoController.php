@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\do_detail_item;
 use App\Models\do_hdr;
+use App\Models\HutangSupplier;
 use App\Models\kartuStockDetail;
 use App\Models\mstr_lokasi_stock;
 use App\Models\mstr_obat;
@@ -262,7 +263,7 @@ class poDoController extends Controller
             'do_hdr_kd' => 'required',
             'do_hdr_no_faktur' => 'required',
             'do_hdr_supplier' => 'required',
-            'do_hdr_tgl_tempo' => 'required',
+            // 'do_hdr_tgl_tempo' => 'required',
             // 'do_hdr_lokasi_stock' => 'required',
             // 'do_hdr_total_faktur' => 'required',
             // 'user' => 'required',
@@ -318,21 +319,7 @@ class poDoController extends Controller
                 ];
                 do_detail_item::create($detail);
             }
-            // foreach ($request->do_obat as $keys => $val) {
-            //     $cvToNum = $request->do_qty[$keys];
-            //     $int = (int)$cvToNum;
-            //     //     DB::table('tb_stock')->increment('qty', 20)->where('kd_obat' ,'=', $request->do_obat[$keys]);
-            //     // foreach ($getKdObat as $ko) {
-            //     // if ($ko->kd_obat == $request->do_obat) {
-            //     DB::table('tb_stock')->where('kd_obat', $request->do_obat[$keys])->increment([
-            //         // 'kd_obat' => $request->do_obat[$keys],
-            //         // 'qty' => DB::raw('qty' + $int),
-            //         'qty', $int,
-            //         // 'qty' => $request->do_qty,
-            //     ]);
-            // }
-            // }
-            // }
+
             foreach ($request->do_obat as $keyx => $val) {
                 $currentStock = DB::table('tb_stock')->whereIn('kd_obat', [$request->do_obat[$keyx]])->value('qty');
                 $datax =  $request->do_obat[$keyx];
@@ -371,6 +358,26 @@ class poDoController extends Controller
                 tb_stock::whereIn('kd_obat', [$datax])->increment("qty", $toInt);
             }
 
+            if ($request->do_hdr_tgl_tempo) {
+                $HutangCreate = [
+                    'hs_kd_hutang' => '00xx',
+                    'hs_kd_hutang_buat' => $request->do_hdr_kd,
+                    'hs_no_faktur' => $request->do_hdr_no_faktur,
+                    'hs_supplier' => $request->do_hdr_supplier,
+                    'hs_kd_rekening' => '1.1.1.1',
+                    'hs_nilai_hutang' => $request->do_hdr_total_faktur,
+                    'hs_pembayaran' => '',
+                    'hs_potongan' => '',
+                    'hs_hutang_akhir' => '',
+                    'hs_tanggal_trs' => $request->tanggal_trs,
+                    'hs_tanggal_hutang' => $request->tanggal_trs,
+                    'hs_tanggal_tempo' => $request->do_hdr_tgl_tempo,
+                    'hs_tanggal_pelunasan' => 'Open',
+                    'user' => Auth::user()->name,
+                ];
+                HutangSupplier::create($HutangCreate);
+            }
+
             DB::commit();
 
             $sessionFlash = [
@@ -383,7 +390,7 @@ class poDoController extends Controller
             DB::rollback();
 
             $sessionFlashErr = [
-                'message' => 'Error!',
+                'message' => 'Some Error Occured!',
                 'alert-type' => 'error'
             ];
             return Redirect::to('/delivery-order')->with($sessionFlashErr);

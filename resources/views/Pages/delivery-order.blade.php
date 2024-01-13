@@ -125,10 +125,15 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="form-group col-sm-2">
-                                <label for="">Tanggal Jatuh Tempo</label>
-                                <input type="date" class="form-control" name="do_hdr_tgl_tempo" id="do_hdr_tgl_tempo"
-                                    value="" required>
+                            <div class="form-group">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    <input class="checkbox form-check-input" type="checkbox" value=""
+                                        id="flexCheckDefault" onchange="getTglTempo();">
+                                    Kredit
+                                </label>
+                            </div>
+                            <div class="tglJatuhtempo form-group col-sm-2">
+
                             </div>
                             {{-- <div class="form-group col-sm-2">
                                 <label for="">Lokasi</label>
@@ -276,6 +281,30 @@
             //     });
             //     $('.dataTables_length').addClass('bs-select');
             // });
+            // $(".checkbox").change(function() {
+            //     if (this.checked) {
+            //         $('.tglJatuhtempo').append(
+            //             `
+    //             <label for="">Tanggal Jatuh Tempo</label>
+    //             <input type="date" class="form-control" name="do_hdr_tgl_tempo" id="do_hdr_tgl_tempo"
+    //             value="" required>
+    //             `
+            //         )
+            //     }
+            // });
+
+            function getTglTempo() {
+                if ($('.checkbox').is(":checked"))
+                    $('.tglJatuhtempo').append(
+                        `
+                        <label for="">Tanggal Jatuh Tempo</label>
+                        <input type="date" class="form-control" name="do_hdr_tgl_tempo" id="do_hdr_tgl_tempo"
+                        value="" required>
+                        `
+                    )
+                else
+                    $('.tglJatuhtempo').empty();
+            }
 
             function getBarang() {
                 $('#obatSearch').modal('show');

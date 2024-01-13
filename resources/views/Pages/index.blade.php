@@ -186,17 +186,21 @@
                                         <th>No.Faktur</th>
                                         <th>Supplier/Distributor</th>
                                         <th>Tgl tempo</th>
-                                        <th>Nilai Faktur</th>
+                                        <th>Nilai Hutang</th>
+                                        <th>Pembayaran</th>
+                                        <th>Hutang Akhir</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($isFakturTempo as $isft)
                                         <tr>
-                                            <td>{{ $isft->do_hdr_kd }}</td>
-                                            <td>{{ $isft->do_hdr_no_faktur }}</td>
-                                            <td>{{ $isft->do_hdr_supplier }}</td>
-                                            <td>{{ date('D,d-M-Y', strtotime($isft->do_hdr_tgl_tempo)) }}</td>
-                                            <td>@currency($isft->do_hdr_total_faktur)</td>
+                                            <td>{{ $isft->hs_kd_hutang_buat }}</td>
+                                            <td>{{ $isft->hs_no_faktur }}</td>
+                                            <td>{{ $isft->hs_supplier }}</td>
+                                            <td>{{ date('D,d-M-Y', strtotime($isft->hs_tanggal_tempo)) }}</td>
+                                            <td>@currency($isft->hs_nilai_hutang)</td>
+                                            <td>@currency($isft->hs_pembayaran)</td>
+                                            <td>@currency($isft->hs_hutang_akhir)</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
