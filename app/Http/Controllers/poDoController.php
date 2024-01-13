@@ -43,6 +43,7 @@ class poDoController extends Controller
 
     public function do()
     {
+        // kd DO
         $num = str_pad(000001, 6, 0, STR_PAD_LEFT);
         $Y = date("Y");
         $M = date("m");
@@ -53,6 +54,19 @@ class poDoController extends Controller
             $continue = do_hdr::all()->last();
             $de = substr($continue->do_hdr_kd, -6);
             $noRef = 'DO' . '-' . substr($Y, -2) . $M  . '-' . str_pad(($de + 1), 6, '0', STR_PAD_LEFT);
+        };
+
+        // KD HUTANG
+        $numb = str_pad(000001, 6, 0, STR_PAD_LEFT);
+        $Yr = date("Y");
+        $Mh = date("m");
+        $cekids = HutangSupplier::count();
+        if ($cekids == 0) {
+            $noRefHT =  'HT'  . '-' . substr($Yr, -2) . $Mh . '-' . $numb;
+        } else {
+            $continues = HutangSupplier::all()->last();
+            $getKd = substr($continues->hs_kd_hutang, -6);
+            $noRefHT = 'HT' . '-' . substr($Yr, -2) . $Mh  . '-' . str_pad(($getKd + 1), 6, '0', STR_PAD_LEFT);
         };
 
         $supplier = mstr_supplier::all();
@@ -75,6 +89,7 @@ class poDoController extends Controller
             'lokasi' => $lokasi,
             'viewDO' => $viewDO,
             'noRef' => $noRef,
+            'noRefHT' => $noRefHT,
             'listObat' => $listObat,
             'dateNow' => $dateNow,
         ]);
@@ -256,8 +271,8 @@ class poDoController extends Controller
 
     public function doCreate(Request $request)
     {
-        // dd($request->all());
-        // $data = $request->all();
+        dd($request->all());
+        $data = $request->all();
 
         $request->validate([
             'do_hdr_kd' => 'required',
@@ -360,15 +375,15 @@ class poDoController extends Controller
 
             if ($request->do_hdr_tgl_tempo) {
                 $HutangCreate = [
-                    'hs_kd_hutang' => '00xx',
+                    'hs_kd_hutang' => $request->hs_kd_hutang,
                     'hs_kd_hutang_buat' => $request->do_hdr_kd,
                     'hs_no_faktur' => $request->do_hdr_no_faktur,
                     'hs_supplier' => $request->do_hdr_supplier,
                     'hs_kd_rekening' => '1.1.1.1',
                     'hs_nilai_hutang' => $request->do_hdr_total_faktur,
-                    'hs_pembayaran' => '',
-                    'hs_potongan' => '',
-                    'hs_hutang_akhir' => '',
+                    'hs_pembayaran' => '0',
+                    'hs_potongan' => '0',
+                    'hs_hutang_akhir' => $request->do_hdr_total_faktur,
                     'hs_tanggal_trs' => $request->tanggal_trs,
                     'hs_tanggal_hutang' => $request->tanggal_trs,
                     'hs_tanggal_tempo' => $request->do_hdr_tgl_tempo,

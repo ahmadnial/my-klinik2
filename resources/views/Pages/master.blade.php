@@ -309,6 +309,37 @@
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 {{-- <i class="nav-icon fas fa-bed"></i> --}}
+                                <i class="nav-icon fa fa-money"></i>
+                                <p>
+                                    Accounting
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('/pelunasan-hutang') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Pelunasan Hutang</p>
+                                    </a>
+                                </li>
+                                {{-- <li class="nav-item">
+                                    <a href="" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Rekap Hutang</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Rekap Pelunasan Hutang</p>
+                                    </a>
+                                </li> --}}
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                {{-- <i class="nav-icon fas fa-bed"></i> --}}
                                 <i class="nav-icon fas fa-chart-line"></i>
                                 <p>
                                     Laporan

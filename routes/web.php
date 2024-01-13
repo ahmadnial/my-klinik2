@@ -15,6 +15,7 @@ use App\Http\Controllers\TindakanController;
 use App\Http\Controllers\WilayahController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HutangSupplierController;
 use App\Http\Controllers\settingController;
 use App\Http\Controllers\RedirectController;
 
@@ -244,6 +245,12 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
     Route::get('pricelistHrgReguler', [LapFarmasiController::class, 'pricelistHrgReguler'])->name('pricelistHrgReguler');
     Route::get('pricelistHrgResep', [LapFarmasiController::class, 'pricelistHrgResep'])->name('pricelistHrgResep');
     Route::get('pricelistHrgNakes', [LapFarmasiController::class, 'pricelistHrgNakes'])->name('pricelistHrgNakes');
+});
+
+//Accounting / KEU
+Route::group(['middleware' => ['auth', 'checkrole:1,4,6']], function () {
+    Route::get('pelunasan-hutang', [HutangSupplierController::class, 'pelunasanHutang'])->name('pelunasan-hutang');
+    Route::get('list-hutang', [HutangSupplierController::class, 'getListHutang'])->name('list-hutang');
 });
 
 //Setting / Tools

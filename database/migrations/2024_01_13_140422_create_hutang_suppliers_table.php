@@ -27,6 +27,9 @@ return new class extends Migration
             $table->string('hs_tanggal_hutang');
             $table->string('hs_tanggal_tempo');
             $table->string('hs_tanggal_pelunasan');
+            $table->string('hs_keterangan')->default('');
+            $table->string('isLunas')->default('0');
+            $table->string('user');
             $table->timestamps();
             $table->softDeletes();
         });

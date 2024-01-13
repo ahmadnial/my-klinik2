@@ -24,6 +24,8 @@ class HutangSupplier extends Model
         'hs_tanggal_trs',
         'hs_tanggal_hutang',
         'hs_tanggal_tempo',
-        'hs_tanggal_pelunasan'
+        'hs_tanggal_pelunasan',
+        'isLunas',
+        'user'
     ];
 }

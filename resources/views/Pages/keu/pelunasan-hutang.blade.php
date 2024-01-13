@@ -6,9 +6,10 @@
     <section class="content">
         <div class="card">
             <div class="card-header">
-                <button type="submit" class="btn btn-success float-right" data-toggle="modal" data-target="#TambahDO">Tambah
-                    DO</button>
-                <h3 class="card-title"><i class="fa fa-truck">&nbsp;</i>PENERIMAAN BARANG</h3>
+                <button type="submit" class="btn btn-success btn-sm float-right" data-toggle="modal"
+                    data-target="#TambahDO">Tambah
+                </button>
+                <h3 class="card-title"><i class="fa fa-money">&nbsp;</i>TRANSAKSI PELUNASAN HUTANG</h3>
             </div>
 
             <div class="card-body">
@@ -26,27 +27,23 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($viewDO as $tz)
+                            {{-- @foreach ($viewDO as $tz)
                                 <tr>
-                                    {{-- <td id="">{{ $tz->created_at }}</td> --}}
                                     <td id="">{{ $tz->created_at->format('d M Y h:i A') }}</td>
                                     <td id="">{{ $tz->do_hdr_kd }}</td>
                                     <td id="">{{ $tz->do_hdr_no_faktur }}</td>
                                     <td id="">{{ $tz->do_hdr_supplier }}</td>
                                     <td id="">{{ $tz->do_hdr_tgl_tempo }}</td>
-                                    <td id="">@currency($tz->do_hdr_total_faktur)</td>
-                                    {{-- <td id="">{{ $tz->hdrToDetail[0]->do_obat }}</td> --}}
                                     <td><button class="btn btn-xs btn-success" data-toggle="modal" data-target="#EditXDo"
                                             onclick="getDetailDO(this)" data-kd_do="{{ $tz->do_hdr_kd }}"
                                             data-no_faktur="{{ $tz->do_hdr_no_faktur }}"
                                             data-supplier="{{ $tz->do_hdr_supplier }}"
                                             data-tgl_tempo="{{ $tz->do_hdr_tgl_tempo }}" data-kd_obat="{{ $tz->do_obat }}"
                                             data-nm_obat="{{ $tz->hdrToDetail[0]->do_obat }}">View</button>
-                                        {{-- <button class="btn btn-xs btn-danger" data-toggle="modal"
-                                            data-target="#DeleteSupplier">Hapus</button> --}}
+                                     
                                     </td>
                                 </tr>
-                            @endforeach
+                            @endforeach --}}
                         </tbody>
                     </table>
                 </div>
@@ -91,7 +88,7 @@
         <div class="modal-dialog modal-xl fullmodal">
             <div class="modal-content document">
                 <div class="modal-header bg-info">
-                    <h4 class="modal-title"><i class="fa fa-truck">&nbsp;</i>Delivery Order</h4>
+                    <h4 class="modal-title"><i class="fa fa-truck">&nbsp;</i>Pelunasan Hutang</h4>
                     <button type="button" class="close btn btn-danger" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -100,56 +97,35 @@
                     @csrf
                     <div class="modal-body">
                         <div class="row">
-                            <div class="form-group col-sm-2">
+                            <div class="form-group col-sm-4">
                                 <label for="">Nomor Ref</label>
                                 <input type="text" class="form-control" name="do_hdr_kd" id="do_hdr_kd"
-                                    value="{{ $noRef }}" readonly>
+                                    value="{{ $noRefTL }}" readonly>
                             </div>
-                            <div class="form-group col-sm-2">
+                            <div class="form-group col-sm-4">
                                 <label for="">Tanggal Transaksi</label>
                                 <input type="date" class="form-control" name="tanggal_trs" id="tanggal_trs"
                                     value="{{ $dateNow }}" required>
                             </div>
-                            <div class="form-group col-sm-3">
-                                <label for="">Nomor Faktur</label>
+                            <div class="form-group col-sm-4">
+                                <label for="">Nomor Kuitansi</label>
                                 <input type="text" class="form-control" name="do_hdr_no_faktur" id="do_hdr_no_faktur"
                                     value="" placeholder="Input Nomor Faktur" required>
                             </div>
-                            <div class="form-group col-sm-2">
+                            {{-- <div class="form-group col-sm-2">
                                 <label for="">Supplier</label>
                                 <select class="do_hdr_supplier form-control-pasien" id="do_hdr_supplier"
                                     style="width: 100%;" name="do_hdr_supplier" required>
                                     <option value="">--Select--</option>
-                                    @foreach ($supplier as $sp)
-                                        <option value="{{ $sp->fm_nm_supplier }}">{{ $sp->fm_nm_supplier }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-check-label" for="flexCheckDefault">
-                                    <input class="checkbox form-check-input" type="checkbox" value=""
-                                        id="flexCheckDefault" onchange="getTglTempo();">
-                                    Kredit
-                                </label>
-                            </div>
-                            <div class="tglJatuhtempo form-group col-sm-2">
-
-                            </div>
-                            {{-- <div class="form-group col-sm-2">
-                                <label for="">Lokasi</label>
-                                <select class="do_hdr_lokasi_stock form-control-pasien" id="do_hdr_lokasi_stock"
-                                    style="width: 100%;" name="do_hdr_lokasi_stock">
-                                    <option value="">--Select--</option>
-                                    @foreach ($lokasi as $lok)
-                                        <option value="{{ $lok->fm_nm_lokasi_stock }}">{{ $lok->fm_nm_lokasi_stock }}
-                                        </option>
+                                    @foreach ($listHutangSupplier as $lhs)
+                                        <option value="{{ $lhs->hs_supplier }}">{{ $lhs->hs_supplier }}</option>
                                     @endforeach
                                 </select>
                             </div> --}}
-                            <input type="hidden" id="hs_kd_hutang" name="hs_kd_hutang" value="{{ $noRefHT }}">
+                            <input type="hidden" id="hs_kd_hutang" name="hs_kd_hutang" value="">
                         </div>
                         <div class="">
-                            <button type="button" id="searchObat" onclick="getBarang()" class="btn btn-info"><i
+                            <button type="button" id="searchObat" onclick="getHutang()" class="btn btn-info"><i
                                     class="fa fa-plus">&nbsp;Item</i></button>
                             <i class="text-danger text-sm float-right">
                                 *Tekan F9 untuk membuka List Obat/Klik Tombol +Item
@@ -162,19 +138,14 @@
                         <table class="table table-bordered" id="deliverOrder">
                             <thead>
                                 <tr>
-                                    {{-- <th>Kode Obat</th> --}}
-                                    <th width="250px">Obat</th>
-                                    <th>Sat.Beli</th>
-                                    <th>Qty</th>
-                                    <th>Isi</th>
-                                    <th width="50px">Sat.Jual</th>
-                                    <th>Hrg.Beli</th>
-                                    <th>Disc %</th>
-                                    <th>Discount</th>
-                                    <th>Pajak</th>
-                                    <th width="60px">Tgl.Exp</th>
-                                    <th>Batch Number</th>
-                                    <th>Sub Total</th>
+                                    {{-- <th width="250px">Obat</th> --}}
+                                    <th>Kode Transaksi</th>
+                                    <th>No.Faktur</th>
+                                    <th>Tanggal</th>
+                                    <th>Hutang Awal</th>
+                                    <th>Pembayaran</th>
+                                    <th>Potongan</th>
+                                    <th>Hutang Akhir</th>
                                 </tr>
                             </thead>
 
@@ -231,11 +202,11 @@
     </div>
 
 
-    <div class="modal fade" id="obatSearch">
+    <div class="modal fade" id="getDataHutang">
         <div class="modal-dialog modal-lg">
             <div class="modal-content document">
                 <div class="modal-header">
-                    <h4 class="modal-title">Tambah Barang / Obat</h4>
+                    <h4 class="modal-title">Search Hutang</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -245,19 +216,20 @@
                     <table class="table table-hover table-stripped" id="exm2" style="width: 100%">
                         <thead>
                             <tr>
-                                <th>KD OBAT</th>
-                                <th>Nama Obat</th>
-                                <th>Satuan beli</th>
-                                <th></th>
+                                <th>Kode Transaksi</th>
+                                <th>No.Faktur</th>
+                                <th>Tanggal</th>
+                                <th>Hutang Awal</th>
+                                <th>Pembayaran</th>
+                                <th>Potongan</th>
+                                <th>Hutang Akhir</th>
                             </tr>
                         </thead>
 
-                        <tbody id="listGetBarang">
+                        <tbody id="ListHutang">
 
                         </tbody>
                     </table>
-
-                    <input type="hidden" id="user" name="user" value="tes">
                     {{-- </div> --}}
                     <div class="modal-footer">
                         {{-- <button type="" class=""></button> --}}
@@ -274,46 +246,8 @@
 
     @push('scripts')
         <script>
-            // $(document).ready(function() {
-            //     $('#deliverOrder').DataTable({
-            //         "scrollX": true,
-            //         "scrollY": 200,
-            //     });
-            //     $('.dataTables_length').addClass('bs-select');
-            // });
-            // $(".checkbox").change(function() {
-            //     if (this.checked) {
-            //         $('.tglJatuhtempo').append(
-            //             `
-    //             <label for="">Tanggal Jatuh Tempo</label>
-    //             <input type="date" class="form-control" name="do_hdr_tgl_tempo" id="do_hdr_tgl_tempo"
-    //             value="" required>
-    //             `
-            //         )
-            //     }
-            // });
-
-            function getTglTempo() {
-                if ($('.checkbox').is(":checked"))
-                    $('.tglJatuhtempo').append(
-                        `
-                        <label for="">Tanggal Jatuh Tempo</label>
-                        <input type="date" class="form-control" name="do_hdr_tgl_tempo" id="do_hdr_tgl_tempo"
-                        value="" required>
-                        `
-                    )
-                else
-                    $('.tglJatuhtempo').empty();
-            }
-
-            function getBarang() {
-                $('#obatSearch').modal('show');
-
-                // var table = $('#exm2').DataTable();
-                // var rows = table
-                //     .rows()
-                //     .remove()
-                //     .draw();
+            function getHutang() {
+                $('#getDataHutang').modal('show');
 
                 $.ajax({
                     // headers: {
@@ -328,58 +262,50 @@
                             serverSide: true,
                             responsive: true,
                             "bDestroy": true,
-                            ajax: "{{ url('getListObatDO') }}",
+                            ajax: {
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                url: "{{ url('list-hutang') }}",
+                                type: 'GET',
+                                // data: {
+                                //     dataBulan: dataBulan
+                                // }
+                            },
                             columns: [{
-                                    data: 'fm_kd_obat',
-                                    name: 'fm_kd_obat'
+                                    data: 'hs_kd_hutang',
+                                    name: 'hs_kd_hutang'
                                 },
                                 {
-                                    data: 'fm_nm_obat',
-                                    name: 'fm_nm_obat'
+                                    data: 'hs_no_faktur',
+                                    name: 'hs_no_faktur'
                                 },
                                 {
-                                    data: 'fm_satuan_pembelian',
-                                    name: 'fm_satuan_pembelian'
+                                    data: 'hs_tanggal_hutang',
+                                    name: 'hs_tanggal_hutang'
                                 },
-                                // {
-                                //     data: 'fm_hrg_jual_non_resep',
-                                //     name: 'fm_hrg_jual_non_resep'
-                                // },
-                                // {
-                                //     data: 'qty',
-                                //     name: 'qty'
-                                // },
+                                {
+                                    data: 'hs_nilai_hutang',
+                                    name: 'hs_nilai_hutang'
+                                },
+                                {
+                                    data: 'hs_pembayaran',
+                                    name: 'hs_pembayaran'
+                                },
+                                {
+                                    data: 'hs_potongan',
+                                    name: 'hs_potongan'
+                                },
+                                {
+                                    data: 'hs_hutang_akhir',
+                                    name: 'hs_hutang_akhir'
+                                },
                                 {
                                     data: 'action',
                                     name: 'action'
                                 },
                             ]
                         });
-                        // var getValue = listObat;
-                        // for (var getVal = 0; getVal < getValue.length; getVal++) {
-
-                        //     const table = $('#exm2').DataTable();
-                        //     var btnBtn =
-                        //         `<button class="SelectItemObat btn btn-success btn-xs" id="SelectItemObat" onClick="SelectItemObat(this)" data-fm_kd_obat="${getValue[getVal].fm_kd_obat}" data-fm_nm_obat="${getValue[getVal].fm_nm_obat}" data-fm_satuan_pembelian="${getValue[getVal].fm_satuan_pembelian}" data-fm_isi_satuan_pembelian="${getValue[getVal].fm_isi_satuan_pembelian}" data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}" data-fm_hrg_beli="${getValue[getVal].fm_hrg_beli}">Select</button>`
-                        //     const dataBaru = [
-                        //         [getValue[getVal].fm_kd_obat, getValue[getVal].fm_nm_obat, getValue[getVal]
-                        //             .fm_satuan_pembelian, btnBtn
-                        //         ],
-                        //     ]
-
-                        //     function injectDataBaru() {
-                        //         for (const data of dataBaru) {
-                        //             table.row.add([
-                        //                 data[0],
-                        //                 data[1],
-                        //                 data[2],
-                        //                 data[3],
-                        //             ]).draw(false)
-                        //         }
-                        //     }
-                        //     injectDataBaru()
-                        // }
-
                     }
                 })
             }
@@ -451,7 +377,7 @@
                    
                 </tr>`);
 
-                $('#obatSearch').modal('hide');
+                $('#getDataHutang').modal('hide');
             };
 
             function deleteRow(btn) {
@@ -1103,7 +1029,7 @@
 
             $(document).keydown(function(event) {
                 if (event.keyCode == 120) {
-                    return getBarang();
+                    return getHutang();
                 }
             });
         </script>
