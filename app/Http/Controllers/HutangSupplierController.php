@@ -44,19 +44,18 @@ class HutangSupplierController extends Controller
     {
 
         if (request()->ajax()) {
-            $listHutangSupplier = DB::table('hutang_supplier')->where('isLunas', '=', '0')->get();
-
-            return DataTables::of($listHutangSupplier)
+            $listHutangSuppliers = DB::table('hutang_supplier')->where('isLunas', '=', '0')->get();
+            // dd($listHutangSupplier);
+            return DataTables::of($listHutangSuppliers)
                 ->addColumn('action', function ($row) {
-                    $actionBtn = '<a href="javascript:void(0)" id="' . $row->fm_kd_obat . '" onClick="SelectItemObatEdit(this)" data-kdmr="' . $row->fm_kd_obat . '"
-                    data-fm_kd_obat="' . $row->fm_kd_obat . '" data-fm_nm_obat="' . $row->fm_nm_obat . '" data-fm_satuan_jual="' . $row->fm_satuan_jual . '"
-                    data-fm_hrg_jual="' . $row->fm_hrg_jual_non_resep . '" data-qty="' . $row->qty . '" data-fm_hrg_beli_detail="' . $row->fm_hrg_beli_detail . '" data-fm_isi_satuan_pembelian="' . $row->fm_isi_satuan_pembelian . '"
+                    $actionBtn = '<a href="javascript:void(0)" id="' . $row->hs_kd_hutang . '" onClick="SelectItemHutang(this)" data-kdtrs="' . $row->hs_kd_hutang_buat . '"
+                    data-no_faktur="' . $row->hs_no_faktur . '" data-tgl_hutang="' . $row->hs_tanggal_hutang . '" data-hutang_awal="' . $row->hs_nilai_hutang . '"
                     class="edit btn btn-xs btn-sm" style="background-color:#10F3A4; color:#ffffff;">Select</a>';
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
-            return response()->json($listHutangSupplier);
+            return response()->json($listHutangSuppliers);
         }
     }
 }
