@@ -252,6 +252,9 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4,6']], function () {
     Route::get('pelunasan-hutang', [HutangSupplierController::class, 'pelunasanHutang'])->name('pelunasan-hutang');
     Route::get('list-hutang', [HutangSupplierController::class, 'getListHutang'])->name('list-hutang');
     Route::post('add-pelunasan-hutang', [HutangSupplierController::class, 'pelunasanCreate'])->name('add-pelunasan-hutang');
+    Route::get('getMonthPelunasan', [HutangSupplierController::class, 'getMonthPelunasan'])->name('getMonthPelunasan');
+    Route::get('info-hutang', [HutangSupplierController::class, 'infoHutang'])->name('info-hutang');
+    Route::get('getinfohutang', [HutangSupplierController::class, 'getInfoHutang'])->name('getinfohutang');
 });
 
 //Setting / Tools

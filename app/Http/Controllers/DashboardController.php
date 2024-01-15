@@ -16,7 +16,7 @@ class DashboardController extends Controller
         $monthNow = Carbon::now()->format("m");
         $yearNow = Carbon::now()->format("Y");
         // $isListPenjualan = tp_hdr::whereyear('tgl_trs', '=', $yearNow)->whereMonth('tgl_trs', '=', $monthNow)->orderBy('created_at', 'desc')->get();
-        $isFakturTempo = HutangSupplier::whereyear('hs_tanggal_tempo', '=', $yearNow)->whereMonth('hs_tanggal_tempo', '=', $monthNow)->orderBy('hs_tanggal_tempo', 'desc')->get();
+        $isFakturTempo = HutangSupplier::whereyear('hs_tanggal_tempo', '=', $yearNow)->whereMonth('hs_tanggal_tempo', '=', $monthNow)->where('isLunas', '=', '0')->orderBy('hs_tanggal_tempo', 'desc')->get();
 
         return view('Pages.index', [
             'isFakturTempo' => $isFakturTempo

@@ -35,31 +35,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach ($isListPenjualan as $lp)
-                                <tr>
-                                    <td id="">{{ $lp->created_at->format('d M Y h:i A') }}</td>
-                                    <td id="">{{ $lp->kd_trs }}</td>
-                                    <td id="">
-                                        @if ($lp->no_mr == null)
-                                            <span class="badge badge-danger">Apotek</span>
-                                        @else
-                                            <span class="badge badge-primary">Resep Klinik</span>
-                                        @endif
-                                    </td>
-                                    <td id="">{{ $lp->no_mr }}</td>
-                                    <td id="">{{ $lp->nm_pasien }}</td>
-                                    <td id="">{{ $lp->tipe_tarif }}</td>
-                                    <td id="">@currency($lp->total_penjualan)</td>
-                                    <td><button class="btn btn-xs btn-info" data-toggle="modal" data-target="#EditObat"
-                                            onclick="getDetailPen(this)" data-kd_trs={{ $lp->kd_trs }}>Detail</button>
-                                        <button class="btn btn-xs btn-primary" data-toggle="modal" data-target=""
-                                            onclick="EditTrs(this)" data-kd_trsu={{ $lp->kd_trs }}>Edit</button>
-                                        <button class="btn btn-xs btn-warning" data-toggle="modal" data-target="#EditObat"
-                                            onclick="cetakNota(this)" data-kd_trsc={{ $lp->kd_trs }} target="_blank"> <i
-                                                class="fa fa-print"></i>&nbsp;Nota </button>
-                                    </td>
-                                </tr>
-                            @endforeach --}}
+
                         </tbody>
                     </table>
                 </div>

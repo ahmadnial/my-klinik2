@@ -1,6 +1,6 @@
 @extends('pages.master')
 
-@section('mytitle', 'Penerimaan Barang')
+@section('mytitle', 'Pelunasan Hutang')
 
 @section('konten')
     <section class="content">
@@ -14,37 +14,44 @@
 
             <div class="card-body">
                 <div id="">
+                    <div class="mb-3">
+                        {{-- <select name="" id="" class="form-control form-control-sm col-2">
+                            <option value=""></option>
+                        </select> --}}
+                        <input type="month" name="monthPelunasan" id="monthPelunasan" onchange="getMonthPelunasan()"
+                            class="form-control form-control-sm col-2">
+                    </div>
                     <table id="example1" class="table table-hover">
                         <thead class="">
                             <tr>
                                 <th>Tanggal Trs</th>
-                                <th>No Ref</th>
+                                <th>Kode Trs</th>
+                                <th>No Kuitansi</th>
                                 <th>No Faktur</th>
                                 <th>Supplier</th>
-                                <th>Tgl Jatuh Tempo</th>
-                                <th>Nilai Faktur</th>
-                                <th></th>
+                                <th>Jumlah Hutang</th>
+                                <th>Potongan</th>
+                                <th>Jumlah Bayar</th>
+                                {{-- <th>Jumlah Pelunasan</th> --}}
+                                <th>Created By</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach ($viewDO as $tz)
-                                <tr>
-                                    <td id="">{{ $tz->created_at->format('d M Y h:i A') }}</td>
-                                    <td id="">{{ $tz->do_hdr_kd }}</td>
-                                    <td id="">{{ $tz->do_hdr_no_faktur }}</td>
-                                    <td id="">{{ $tz->do_hdr_supplier }}</td>
-                                    <td id="">{{ $tz->do_hdr_tgl_tempo }}</td>
-                                    <td><button class="btn btn-xs btn-success" data-toggle="modal" data-target="#EditXDo"
-                                            onclick="getDetailDO(this)" data-kd_do="{{ $tz->do_hdr_kd }}"
-                                            data-no_faktur="{{ $tz->do_hdr_no_faktur }}"
-                                            data-supplier="{{ $tz->do_hdr_supplier }}"
-                                            data-tgl_tempo="{{ $tz->do_hdr_tgl_tempo }}" data-kd_obat="{{ $tz->do_obat }}"
-                                            data-nm_obat="{{ $tz->hdrToDetail[0]->do_obat }}">View</button>
-                                     
-                                    </td>
-                                </tr>
-                            @endforeach --}}
+
                         </tbody>
+                        <tfoot align="">
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>
@@ -308,36 +315,36 @@
                 $("#DetailHutang").append(`
                         <tr>
                                 <input type="hidden" class="form-control" id="pl_kd_hutang"
-                                name="pl_kd_hutang[]" value="${getKdHutang}" readonly>
+                                name="pl_kd_hutang" value="${getKdHutang}" readonly>
                             <td>
                                 <input class="form-control" id="pl_kd_hutang_buat"
-                                name="pl_kd_hutang_buat[]" value="${getKdtrs}" readonly>
+                                name="pl_kd_hutang_buat" value="${getKdtrs}" readonly>
                             </td>
                             <td>
                                 <input type="text" class="do_satuan_pembelian form-control" id="pl_no_faktur"
-                                    name="pl_no_faktur[]" value="${getNoFaktur}" readonly>
+                                    name="pl_no_faktur" value="${getNoFaktur}" readonly>
                             </td>
                             <td>
                                 <input type="text" class="do_satuan_pembelian form-control" id="pl_supplier"
-                                    name="pl_supplier[]" value="${getSupplier}" readonly>
+                                    name="pl_supplier" value="${getSupplier}" readonly>
                             </td>
                             <td>
                                 <input type="text" class="do_isi_pembelian form-control" id="pl_tanggal_hutang"
-                                    name="pl_tanggal_hutang[]" value="${getTglHutang}" readonly>
+                                    name="pl_tanggal_hutang" value="${getTglHutang}" readonly>
                             </td>
                             <td>
-                                <input type="text" class="do_satuan_jual form-control" id="pl_hutang_awal" name="pl_hutang_awal[]"
+                                <input type="text" class="do_satuan_jual form-control" id="pl_hutang_awal" name="pl_hutang_awal"
                                     value="${getHutangAwal}" readonly>
                             </td>
                             <td>
-                                <input type="text" class="pl_pembayaran form-control" id="pl_pembayaran" name="pl_pembayaran[]"
+                                <input type="text" class="pl_pembayaran form-control" id="pl_pembayaran" name="pl_pembayaran"
                                  onKeyup="getPembayaran(this)">
                             </td>
                             <td>
-                            <input type="text" class="form-control" name="pl_potongan[]" id="pl_potongan" onKeyDown="PotonganHutang(this)">
+                            <input type="text" class="form-control" name="pl_potongan" id="pl_potongan" onKeyDown="PotonganHutang(this)">
                             </td>
                             <td>
-                                <input type="text" class="form-control" id="pl_hutang_akhir" name="pl_hutang_akhir[]" readonly value="${getHutangAwal}">
+                                <input type="text" class="form-control" id="pl_hutang_akhir" name="pl_hutang_akhir" readonly value="${getHutangAwal}">
                             </td>
                             
                             <td>
@@ -415,6 +422,125 @@
                 // var delete_row = $(this).data("row");
                 $('.addNewRow').remove();
             });
+
+            getMonthPelunasan();
+
+            function getMonthPelunasan() {
+                const dataBulan = $('#monthPelunasan').val();
+                $.ajax({
+                    success: function() {
+                        $('#example1').DataTable({
+                            processing: true,
+                            serverSide: true,
+                            dom: 'lBfrtip',
+                            responsive: true,
+                            "bDestroy": true,
+                            ajax: {
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                url: "{{ url('getMonthPelunasan') }}",
+                                type: 'GET',
+                                data: {
+                                    dataBulan: dataBulan
+                                }
+                            },
+
+                            columns: [{
+                                    data: 'pl_tanggal_trs',
+                                    name: 'pl_tanggal_trs',
+                                    render: function(data, type, row) {
+                                        return moment(data).format('D-MM-YYYY');
+                                    }
+                                },
+                                {
+                                    data: 'pl_kd_pelunasan',
+                                    name: 'pl_kd_pelunasan'
+                                },
+                                {
+                                    data: 'pl_no_kuitansi',
+                                    name: 'pl_no_kuitansi',
+                                    // render: function(data, type, row) {
+                                    //     if (data == 'Poliklinik Umum') {
+                                    //         return '<span class="badge badge-success">Resep Klinik</span>';
+                                    //     } else {
+                                    //         return '<span class="badge badge-danger">Apotek</span>';
+                                    //     }
+                                    // }
+                                },
+                                {
+                                    data: 'pl_no_faktur',
+                                    name: 'pl_no_faktur'
+                                },
+                                {
+                                    data: 'pl_supplier',
+                                    name: 'pl_supplier'
+                                },
+                                {
+                                    data: 'pl_nilai_hutang',
+                                    name: 'pl_nilai_hutang',
+                                    render: $.fn.dataTable.render.number(',', '.', 2, 'Rp ')
+                                },
+                                {
+                                    data: 'pl_potongan',
+                                    name: 'pl_potongan',
+                                    render: $.fn.dataTable.render.number(',', '.', 2, 'Rp ')
+                                },
+                                {
+                                    data: 'pl_pembayaran',
+                                    name: 'pl_pembayaran',
+                                    render: $.fn.dataTable.render.number(',', '.', 2, 'Rp ')
+                                },
+                                {
+                                    data: 'user',
+                                    name: 'user'
+                                },
+                                // {
+                                //     data: 'action',
+                                //     name: 'action'
+                                // },
+                            ],
+                            "footerCallback": function(row, data, start, end, display) {
+                                var api = this.api(),
+                                    isListPelunasan;
+
+                                var intVal = function(i) {
+                                    return typeof i === 'string' ?
+                                        i.replace(/[\$,]/g, '') * 1 :
+                                        typeof i === 'number' ?
+                                        i : 0;
+                                };
+
+                                total = api
+                                    .column(7)
+                                    .data()
+                                    .reduce(function(a, b) {
+                                        return intVal(a) + intVal(b);
+                                    }, 0);
+
+                                pageTotal = api
+                                    .column(7, {
+                                        page: 'current'
+                                    })
+                                    .data()
+                                    .reduce(function(a, b) {
+                                        return intVal(a) + intVal(b);
+                                    }, 0);
+
+                                $(api.column(7).footer()).html(
+                                    'Total Pembayaran : Rp.' + pageTotal
+                                );
+                            },
+                            "responsive": true,
+                            "paging": true,
+                            "searching": true,
+                            "lengthChange": true,
+                            "autoWidth": true,
+                            "buttons": ["copy", "excel", "pdf", "print", "colvis"]
+                        }).buttons().container().appendTo('#penjualan_wrapper .col-md-6:eq(0)');
+                    }
+                })
+            };
 
 
             $(document).keydown(function(event) {

@@ -77,33 +77,60 @@ class HutangSupplierController extends Controller
 
         DB::beginTransaction();
         // try {
-        foreach ($request->pl_kd_hutang as $key => $xf) {
-            $tpdetail = [
-                'pl_kd_pelunasan' => $request->pl_kd_pelunasan,
-                'pl_tanggal_trs' => $request->pl_tanggal_trs,
-                'pl_no_kuitansi' => $request->pl_no_kuitansi,
-                'pl_kd_hutang' => $request->pl_kd_hutang[$key],
-                'pl_kd_hutang_buat' => $request->pl_kd_hutang_buat[$key],
-                'pl_no_faktur' => $request->pl_no_faktur[$key],
-                'pl_supplier' => $request->pl_supplier[$key],
-                'pl_kd_rekening' => '',
-                'pl_nilai_hutang' => $request->pl_hutang_awal[$key],
-                'pl_pembayaran' => $request->pl_pembayaran[$key],
-                'pl_potongan' => $request->pl_potongan[$key],
-                'pl_hutang_akhir' => $request->pl_hutang_akhir[$key],
-                'pl_tanggal_hutang' => $request->pl_tanggal_hutang[$key],
-                'pl_tanggal_pelunasan' => $request->pl_tanggal_trs,
-                'pl_tanggal_tempo' => '',
-                'pl_cara_bayar' => '',
-                'tgl_trs' => $request->pl_tanggal_trs,
-                'user' => Auth::user()->name,
-            ];
-            pelunasanHutangSupplier::create($tpdetail);
-        }
+        // foreach ($request->pl_kd_hutang as $key => $xf) {
+        //     $tpdetail = [
+        //         'pl_kd_pelunasan' => $request->pl_kd_pelunasan,
+        //         'pl_tanggal_trs' => $request->pl_tanggal_trs,
+        //         'pl_no_kuitansi' => $request->pl_no_kuitansi,
+        //         'pl_kd_hutang' => $request->pl_kd_hutang[$key],
+        //         'pl_kd_hutang_buat' => $request->pl_kd_hutang_buat[$key],
+        //         'pl_no_faktur' => $request->pl_no_faktur[$key],
+        //         'pl_supplier' => $request->pl_supplier[$key],
+        //         'pl_kd_rekening' => '',
+        //         'pl_nilai_hutang' => $request->pl_hutang_awal[$key],
+        //         'pl_pembayaran' => $request->pl_pembayaran[$key],
+        //         'pl_potongan' => $request->pl_potongan[$key],
+        //         'pl_hutang_akhir' => $request->pl_hutang_akhir[$key],
+        //         'pl_tanggal_hutang' => $request->pl_tanggal_hutang[$key],
+        //         'pl_tanggal_pelunasan' => $request->pl_tanggal_trs,
+        //         'pl_tanggal_tempo' => '',
+        //         'pl_cara_bayar' => '',
+        //         'tgl_trs' => $request->pl_tanggal_trs,
+        //         'user' => Auth::user()->name,
+        //     ];
+        //     pelunasanHutangSupplier::create($tpdetail);
+        // }
+
+        $tpdetail = [
+            'pl_kd_pelunasan' => $request->pl_kd_pelunasan,
+            'pl_tanggal_trs' => $request->pl_tanggal_trs,
+            'pl_no_kuitansi' => $request->pl_no_kuitansi,
+            'pl_kd_hutang' => $request->pl_kd_hutang,
+            'pl_kd_hutang_buat' => $request->pl_kd_hutang_buat,
+            'pl_no_faktur' => $request->pl_no_faktur,
+            'pl_supplier' => $request->pl_supplier,
+            'pl_kd_rekening' => '',
+            'pl_nilai_hutang' => $request->pl_hutang_awal,
+            'pl_pembayaran' => $request->pl_pembayaran,
+            'pl_potongan' => $request->pl_potongan,
+            'pl_hutang_akhir' => $request->pl_hutang_akhir,
+            'pl_tanggal_hutang' => $request->pl_tanggal_hutang,
+            'pl_tanggal_pelunasan' => $request->pl_tanggal_trs,
+            'pl_tanggal_tempo' => '',
+            'pl_cara_bayar' => '',
+            'tgl_trs' => $request->pl_tanggal_trs,
+            'user' => Auth::user()->name,
+        ];
+        pelunasanHutangSupplier::create($tpdetail);
 
         DB::table('hutang_supplier')
             ->where('hs_kd_hutang', $request->pl_kd_hutang)
-            ->update(['isLunas' => "1"]);
+            ->update([
+                'isLunas' => "1",
+                'hs_pembayaran' => $request->pl_pembayaran,
+                'hs_potongan' => $request->pl_potongan,
+                'hs_hutang_akhir' => $request->pl_hutang_akhir,
+            ]);
 
 
         DB::commit();
@@ -123,5 +150,68 @@ class HutangSupplierController extends Controller
         ];
         return Redirect::to('/pelunasan-hutang')->with($sessionFlashErr);
         // }
+    }
+
+    public function getMonthPelunasan(Request $request)
+    {
+        $selectMonth = $request->dataBulan;
+        // dd($selectMonth);
+        if (!$selectMonth) {
+            $monthNow = Carbon::now()->format("m");
+            $yearNow = Carbon::now()->format("Y");
+            $isListPelunasan = pelunasanHutangSupplier::whereyear('pl_tanggal_trs', '=', $yearNow)->whereMonth('pl_tanggal_trs', '=', $monthNow)->latest('pl_tanggal_trs')->get();
+        } else {
+            $isListPelunasan = pelunasanHutangSupplier::where('pl_tanggal_trs', 'LIKE', '%' . $selectMonth . '%')->latest('pl_tanggal_trs')->get();
+        }
+
+        return DataTables::of($isListPelunasan)
+            ->addColumn('action', function ($row) {
+                $actionBtn =
+                    //  '
+                    // <button class="btn btn-xs btn-info" data-toggle="modal" data-target="#EditObat"
+                    // onclick="getDetailPen(this)" data-kd_trs="' . $row->kd_trs . '">&nbsp;&nbsp;<i class="fa fa-info">&nbsp;&nbsp;</i></button>
+                    // <button class="btn btn-xs btn-primary" data-toggle="modal" data-target=""
+                    // onclick="EditTrs(this);validasiTrs(this);" data-kd_trsu="' . $row->kd_trs . '"><i class="fa fa-edit"></i></button>
+                    // <button class="btn btn-xs btn-warning" data-toggle="modal" data-target="#EditObat"
+                    // onclick="cetakNota(this)" data-kd_trsc="' . $row->kd_trs . '" target="_blank"> <i class="fa fa-print"></i> </button>
+                    //  <button class="btn btn-xs btn-danger" data-toggle="modal" data-target=""
+                    // onclick="DeleteTrs(this);" data-kd_trsu="' . $row->kd_trs . '"><i class="fa fa-trash"></i></button>
+                    // ';
+                    '';
+                return $actionBtn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+    }
+
+    function infoHutang()
+    {
+        $isSupplier = DB::table('hutang_supplier')->select('hs_supplier')->distinct()->get();
+        return view('Pages.keu.info-hutang', ['isSupplier' => $isSupplier]);
+    }
+
+    function getInfoHutang(Request $request)
+    {
+        $start = $request->date1;
+        $end = $request->date2;
+        $supplier = $request->supplier;
+        if ($request->ajax()) {
+            if ($supplier) {
+                $isDataHutang = DB::table('hutang_supplier')
+                    // ->leftJoin('pelunasan_hutang_supplier', 'hutang_supplier.hs_kd_hutang', 'pelunasan_hutang_supplier.pl_kd_hutang')
+                    ->whereBetween('hs_tanggal_trs', [$start, $end])
+                    ->where([
+                        ['hs_supplier', '=', $supplier],
+                        // ['trs_chart.deleted_at', '=', null],
+                    ])
+                    ->get();
+            } else {
+                $isDataHutang = DB::table('hutang_supplier')
+                    // ->leftJoin('pelunasan_hutang_supplier', 'hutang_supplier.hs_kd_hutang', 'pelunasan_hutang_supplier.pl_kd_hutang')
+                    ->whereBetween('hs_tanggal_trs', [$start, $end])
+                    ->get();
+            }
+        }
+        return response()->json($isDataHutang);
     }
 }
