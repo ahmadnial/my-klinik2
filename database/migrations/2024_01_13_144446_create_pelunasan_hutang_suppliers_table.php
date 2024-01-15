@@ -13,19 +13,21 @@ return new class extends Migration
     {
         Schema::create('pelunasan_hutang_supplier', function (Blueprint $table) {
             $table->id();
-            $table->string('hs_kd_hutang');
-            $table->string('hs_kd_hutang_buat');
-            $table->string('hs_no_faktur');
-            $table->string('hs_supplier');
-            $table->string('hs_kd_rekening')->default('');
-            $table->string('hs_nilai_hutang');
-            $table->string('hs_pembayaran');
-            $table->string('hs_potongan');
-            $table->string('hs_hutang_akhir');
-            $table->string('hs_tanggal_trs');
-            $table->string('hs_tanggal_hutang');
-            $table->string('hs_tanggal_tempo');
-            $table->string('hs_tanggal_pelunasan');
+            $table->string('pl_kd_hutang');
+            $table->string('pl_kd_hutang_buat');
+            $table->string('pl_no_kuitansi')->default('');
+            $table->string('pl_no_faktur');
+            $table->string('pl_supplier');
+            $table->string('pl_kd_rekening')->default('');
+            $table->string('pl_nilai_hutang');
+            $table->string('pl_pembayaran');
+            $table->string('pl_potongan')->default('');
+            $table->string('pl_hutang_akhir');
+            $table->string('pl_tanggal_trs');
+            $table->string('pl_tanggal_hutang');
+            $table->string('pl_tanggal_tempo');
+            $table->string('pl_tanggal_pelunasan');
+            $table->string('pl_cara_bayar')->default('');
             $table->timestamps();
             $table->softDeletes();
         });

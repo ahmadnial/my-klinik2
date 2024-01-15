@@ -271,8 +271,8 @@ class poDoController extends Controller
 
     public function doCreate(Request $request)
     {
-        dd($request->all());
-        $data = $request->all();
+        // dd($request->all());
+        // $data = $request->all();
 
         $request->validate([
             'do_hdr_kd' => 'required',

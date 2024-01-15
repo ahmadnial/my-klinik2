@@ -335,10 +335,10 @@
                                  onKeyup="getPembayaran(this)">
                             </td>
                             <td>
-                            <input type="text" class="form-control" name="do_diskon_prosen[]" id="do_diskon_prosen" onKeyDown="discProsen(this)">
+                            <input type="text" class="form-control" name="pl_potongan[]" id="pl_potongan" onKeyDown="PotonganHutang(this)">
                             </td>
                             <td>
-                                <input type="text" class="form-control" id="pl_hutang_akhir" name="pl_hutang_akhir[]" readonly>
+                                <input type="text" class="form-control" id="pl_hutang_akhir" name="pl_hutang_akhir[]" readonly value="${getHutangAwal}">
                             </td>
                             
                             <td>
@@ -366,26 +366,24 @@
                 GrandTotal();
             };
 
-            function discRp(r) {
+            function PotonganHutang(r) {
                 var parentR = r.parentElement.parentElement;
-                if (event.keyCode == 13) {
-                    var tdscr = $(parentR).find('#do_diskon').val();
-                    var subttl = $(parentR).find('#do_sub_total').val();
-                    var calc = (tdscr / subttl) * 100;
-                    var toFix = subttl - tdscr;
-                    var toDecimal = toFix.toFixed(2);
-                    var result = calc.toFixed(2);
+                var htawal = $(parentR).find('#pl_hutang_awal').val();
+                var tdscr = $(parentR).find('#pl_hutang_akhir').val();
+                var subttl = $(parentR).find('#pl_potongan').val();
+                var pem = $(parentR).find('#pl_pembayaran').val();
+                if (event.keyCode == 13 && subttl != '') {
+                    var toFix = tdscr - subttl;
+                    var result = toFix.toFixed(2);
+                    // console.log(result);
+                    $(parentR).find('#pl_hutang_akhir').val(result);
+                    $(parentR).find('#pl_pembayaran').val(result);
 
-                    if (tdscr != 0) {
-                        $(parentR).find('#do_sub_total').val(toDecimal);
-                        $(parentR).find('#do_diskon_prosen').val(result);
-                    } else {
-                        $(parentR).find('#do_sub_total').val(subttl);
-                        // $(parentR).find('#do_diskon_prosen').val();
-                    }
+                    var nilaiAkhir = pem
                     GrandTotal();
-
-                    // console.log(tdscr);
+                } else {
+                    $(parentR).find('#pl_hutang_akhir').val(htawal);
+                    GrandTotal();
                 }
 
             }
