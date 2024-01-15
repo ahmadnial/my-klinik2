@@ -99,36 +99,25 @@
                         <div class="row">
                             <div class="form-group col-sm-4">
                                 <label for="">Nomor Ref</label>
-                                <input type="text" class="form-control" name="do_hdr_kd" id="do_hdr_kd"
+                                <input type="text" class="form-control" name="pl_kd_pelunasan" id="pl_kd_pelunasan"
                                     value="{{ $noRefTL }}" readonly>
                             </div>
                             <div class="form-group col-sm-4">
                                 <label for="">Tanggal Transaksi</label>
-                                <input type="date" class="form-control" name="tanggal_trs" id="tanggal_trs"
+                                <input type="date" class="form-control" name="pl_tanggal_trs" id="pl_tanggal_trs"
                                     value="{{ $dateNow }}" required>
                             </div>
                             <div class="form-group col-sm-4">
                                 <label for="">Nomor Kuitansi</label>
-                                <input type="text" class="form-control" name="do_hdr_no_faktur" id="do_hdr_no_faktur"
+                                <input type="text" class="form-control" name="pl_no_kuitansi" id="pl_no_kuitansi"
                                     value="" placeholder="Input Nomor Faktur" required>
                             </div>
-                            {{-- <div class="form-group col-sm-2">
-                                <label for="">Supplier</label>
-                                <select class="do_hdr_supplier form-control-pasien" id="do_hdr_supplier"
-                                    style="width: 100%;" name="do_hdr_supplier" required>
-                                    <option value="">--Select--</option>
-                                    @foreach ($listHutangSupplier as $lhs)
-                                        <option value="{{ $lhs->hs_supplier }}">{{ $lhs->hs_supplier }}</option>
-                                    @endforeach
-                                </select>
-                            </div> --}}
-                            <input type="hidden" id="hs_kd_hutang" name="hs_kd_hutang" value="">
                         </div>
                         <div class="">
                             <button type="button" id="" onclick="getHutang()" class="btn btn-info"><i
                                     class="fa fa-plus">&nbsp;Item</i></button>
                             <i class="text-danger text-sm float-right">
-                                *Tekan F9 untuk membuka List Obat/Klik Tombol +Item
+                                *[F9] Search Hutang
                             </i>
                         </div>
                     </div>
@@ -141,11 +130,13 @@
                                     {{-- <th width="250px">Obat</th> --}}
                                     <th>Kode Trs Pembelian</th>
                                     <th>No.Faktur</th>
+                                    <th>Supplier</th>
                                     <th>Tanggal</th>
                                     <th>Hutang Awal</th>
                                     <th>Pembayaran</th>
                                     <th>Potongan</th>
                                     <th>Hutang Akhir</th>
+                                    <th></th>
                                 </tr>
                             </thead>
 
@@ -160,9 +151,9 @@
                     <div class="float-right col-4">
                         <div class="float-right col-4">
                             <input type="text" class="form-control float-right" name=""
-                                id="do_hdr_total_faktur_show_only" value="" readonly>
-                            <input type="hidden" class="form-control float-right" name="do_hdr_total_faktur"
-                                id="do_hdr_total_faktur" value="" readonly>
+                                id="pl_total_bayar_show_only" value="" readonly>
+                            <input type="hidden" class="form-control float-right" name="pl_total_bayar" id="pl_total_bayar"
+                                value="" readonly>
                         </div>
                         {{-- <div class="float-right">
                         <button class="btn btn-xs btn-info" id="addRow">Tambah Barang</button>
@@ -310,21 +301,29 @@
                 var getKdtrs = $(x).data('kdtrs');
                 var getNoFaktur = $(x).data('no_faktur');
                 var getTglHutang = $(x).data('tgl_hutang');
+                var getSupplier = $(x).data('supplier');
+                var getKdHutang = $(x).data('kd_hutang');
                 var getHutangAwal = $(x).data('hutang_awal');
 
                 $("#DetailHutang").append(`
                         <tr>
+                                <input type="hidden" class="form-control" id="pl_kd_hutang"
+                                name="pl_kd_hutang[]" value="${getKdHutang}" readonly>
                             <td>
-                                <input class="form-control" id="nm_obat"
-                                name="nm_obat[]" onchange="getDataObat()" value="${getKdtrs}" readonly>
+                                <input class="form-control" id="pl_kd_hutang_buat"
+                                name="pl_kd_hutang_buat[]" value="${getKdtrs}" readonly>
                             </td>
                             <td>
-                                <input type="text" class="do_satuan_pembelian form-control" id="do_satuan_pembelian[]"
-                                    name="do_satuan_pembelian[]" value="${getNoFaktur}" readonly>
+                                <input type="text" class="do_satuan_pembelian form-control" id="pl_no_faktur"
+                                    name="pl_no_faktur[]" value="${getNoFaktur}" readonly>
                             </td>
                             <td>
-                                <input type="text" class="do_isi_pembelian form-control" id="do_isi_pembelian"
-                                    name="do_isi_pembelian[]" value="${getTglHutang}" readonly>
+                                <input type="text" class="do_satuan_pembelian form-control" id="pl_supplier"
+                                    name="pl_supplier[]" value="${getSupplier}" readonly>
+                            </td>
+                            <td>
+                                <input type="text" class="do_isi_pembelian form-control" id="pl_tanggal_hutang"
+                                    name="pl_tanggal_hutang[]" value="${getTglHutang}" readonly>
                             </td>
                             <td>
                                 <input type="text" class="do_satuan_jual form-control" id="pl_hutang_awal" name="pl_hutang_awal[]"
@@ -376,10 +375,13 @@
                     var toFix = tdscr - subttl;
                     var result = toFix.toFixed(2);
                     // console.log(result);
-                    $(parentR).find('#pl_hutang_akhir').val(result);
+                    // $(parentR).find('#pl_hutang_akhir').val(result);
                     $(parentR).find('#pl_pembayaran').val(result);
 
-                    var nilaiAkhir = pem
+                    // var plus = subttl + pem;
+                    // var nilaiAkhir = htawal - plus;
+                    $(parentR).find('#pl_hutang_akhir').val('0.00');
+
                     GrandTotal();
                 } else {
                     $(parentR).find('#pl_hutang_akhir').val(htawal);
@@ -396,7 +398,7 @@
                 });
                 var result = sum.toFixed(2);
 
-                $('#do_hdr_total_faktur').val(result);
+                $('#pl_total_bayar').val(result);
 
                 var ttlInt = parseFloat(result);
 
@@ -405,7 +407,7 @@
                     currency: 'IDR'
                 });
 
-                $('#do_hdr_total_faktur_show_only').val(formattedNumber);
+                $('#pl_total_bayar_show_only').val(formattedNumber);
             }
 
 

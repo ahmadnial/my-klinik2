@@ -13,18 +13,22 @@ class pelunasanHutangSupplier extends Model
     protected $table = 'pelunasan_hutang_supplier';
 
     protected $fillable = [
-        'hs_kd_hutang',
-        'hs_kd_hutang_buat',
-        'hs_no_faktur',
-        'hs_supplier',
-        'hs_kd_rekening',
-        'hs_nilai_hutang',
-        'hs_pembayaran',
-        'hs_potongan',
-        'hs_hutang_akhir',
-        'hs_tanggal_trs',
-        'hs_tanggal_hutang',
-        'hs_tanggal_tempo',
-        'hs_tanggal_pelunasan'
+        'pl_kd_hutang',
+        'pl_kd_hutang_buat',
+        'pl_no_kuitansi',
+        'pl_no_faktur',
+        'pl_supplier',
+        'pl_kd_rekening',
+        'pl_nilai_hutang',
+        'pl_pembayaran',
+        'pl_potongan',
+        'pl_hutang_akhir',
+        'pl_tanggal_trs',
+        'pl_tanggal_hutang',
+        'pl_tanggal_tempo',
+        'pl_tanggal_pelunasan',
+        'pl_cara_bayar',
+        'pl_kd_pelunasan',
+        'user'
     ];
 }
