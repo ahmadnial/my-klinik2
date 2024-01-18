@@ -685,6 +685,7 @@
 
                             var sub_total = hrg_resep * qty_resep;
                             // console.log(sub_total);
+                            var cara_pakai = getValues[getVals].ch_cara_pakai ?? '';
 
 
                             $("#ListObatJual").append(`
@@ -710,7 +711,7 @@
                                         <input type="text" class="qtyr form-control" id="qty" name="qty[]" onKeyUp="getQTY(this)" value="${getValues[getVals].ch_qty_obat}">
                                     </td>
                                     <td>
-                                        <input type="text" class="cara_pakai form-control" id="cara_pakai" name="cara_pakai[]" value="${getValues[getVals].ch_cara_pakai}">
+                                        <input type="text" class="cara_pakai form-control" id="cara_pakai" name="cara_pakai[]" value="${cara_pakai}">
                                     </td>
                                     
                                      <td>
@@ -733,7 +734,7 @@
                                         name="sub_total_hidden[]" value="${sub_total}">
                                         <input type="hidden" class="sub_total_hidden_after_tuslah form-control" id="sub_total_hidden_after_tuslah"
                                         name="sub_total_hidden_after_tuslah[]">
-                                    <input type="hidden" name="user" id="user" value="tes user">
+                                    <input type="hidden" name="hrgHPP[]" id="hrgHPP" value="-">
                                     <td>
                                         <button type="button" class="remove btn btn-xs btn-danger"><i
                                                 class="fa fa-trash" onclick="deleteRow(this)"></i></button>
@@ -1077,6 +1078,7 @@
                 var getNmObat = $(f).data('fm_nm_obat');
                 var getSatJual = $(f).data('fm_satuan_jual');
                 var getHrg = $(f).data('fm_hrg_jual');
+                var getHrgBeliHPP = $(f).data('fm_hrg_beli_detail');
 
                 // console.log(getKdObat);
 
@@ -1126,7 +1128,7 @@
                                 name="sub_total_hidden[]">
                             <input type="hidden" class="sub_total_hidden_after_tuslah form-control" id="sub_total_hidden_after_tuslah"
                                 name="sub_total_hidden_after_tuslah[]">
-                            <input type="hidden" name="user" id="user" value="tes user">
+                            <input type="hidden" name="hrgHPP[]" id="hrgHPP" value="${getHrgBeliHPP}">
                         <td>
                             <button type="button" class="remove btn btn-xs btn-danger"><i class="fa fa-trash" onclick="deleteRow(this)"></i></button>
                         </td>

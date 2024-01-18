@@ -106,13 +106,13 @@ class penjualanController extends Controller
         if (request()->ajax()) {
             $isObatResep = DB::table('mstr_obat')
                 ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
-                ->select('fm_kd_obat', 'fm_nm_obat', 'fm_hrg_jual_resep', 'fm_satuan_jual', 'qty')
+                ->select('fm_kd_obat', 'fm_nm_obat', 'fm_hrg_jual_resep', 'fm_hrg_beli_detail', 'fm_satuan_jual', 'qty')
                 ->get();
             return DataTables::of($isObatResep)
                 ->addColumn('action', function ($row) {
                     $actionBtn = '<a href="javascript:void(0)" id="' . $row->fm_kd_obat . '" onClick="SelectItemObat(this)" data-kdmr="' . $row->fm_kd_obat . '"
                     data-fm_kd_obat="' . $row->fm_kd_obat . '" data-fm_nm_obat="' . $row->fm_nm_obat . '" data-fm_satuan_jual="' . $row->fm_satuan_jual . '"
-                    data-fm_hrg_jual="' . $row->fm_hrg_jual_resep . '"
+                    data-fm_hrg_jual="' . $row->fm_hrg_jual_resep . '" data-fm_hrg_beli_detail="' . $row->fm_hrg_beli_detail . '"
                     class="edit btn btn-xs btn-sm" style="background-color:#10F3A4; color:#ffffff;">Select</a>';
                     return $actionBtn;
                 })
@@ -128,13 +128,13 @@ class penjualanController extends Controller
         if (request()->ajax()) {
             $isObatNakes = DB::table('mstr_obat')
                 ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
-                ->select('fm_kd_obat', 'fm_nm_obat', 'fm_hrg_jual_nakes', 'fm_satuan_jual', 'qty')
+                ->select('fm_kd_obat', 'fm_nm_obat', 'fm_hrg_jual_nakes', 'fm_hrg_beli_detail', 'fm_satuan_jual', 'qty')
                 ->get();
             return DataTables::of($isObatNakes)
                 ->addColumn('action', function ($row) {
                     $actionBtn = '<a href="javascript:void(0)" id="' . $row->fm_kd_obat . '" onClick="SelectItemObat(this)" data-kdmr="' . $row->fm_kd_obat . '"
                     data-fm_kd_obat="' . $row->fm_kd_obat . '" data-fm_nm_obat="' . $row->fm_nm_obat . '" data-fm_satuan_jual="' . $row->fm_satuan_jual . '"
-                    data-fm_hrg_jual="' . $row->fm_hrg_jual_nakes . '"
+                    data-fm_hrg_jual="' . $row->fm_hrg_jual_nakes . '" data-fm_hrg_beli_detail="' . $row->fm_hrg_beli_detail . '"
                     class="edit btn btn-xs btn-sm" style="background-color:#10F3A4; color:#ffffff;">Select</a>';
                     return $actionBtn;
                 })
@@ -211,27 +211,6 @@ class penjualanController extends Controller
 
     public function getListOrderResep(Request $kd_trs)
     {
-        // $isListOrderResep = trs_chart_resep::select(
-        //     "kd_trs",
-        //     "chart_id",
-        //     "tgl_trs",
-        //     "layanan",
-        //     "kd_reg",
-        //     "mr_pasien",
-        //     "nm_pasien",
-        //     "kd_reg",
-        //     "ch_kd_obat",
-        //     "ch_nm_obat",
-        //     "ch_qty_obat",
-        //     "ch_satuan_obat",
-        //     "ch_signa",
-        //     "ch_cara_pakai",
-        //     "ch_hrg_jual",
-        // )
-        //     ->leftJoin('do_detail_item', 'do_hdr.do_hdr_kd', 'do_detail_item.do_hdr_kd')
-        //     ->select('do_hdr.*', 'do_detail_item.*')
-        //     ->where('kd_trs', $kd_trs->kd_trs)->get();
-
         $isListOrderResep = DB::table('trs_chart_resep')
             ->leftJoin('tc_mr', 'trs_chart_resep.mr_pasien', 'tc_mr.fs_mr')
             ->leftJoin('trs_chart', 'trs_chart_resep.kd_trs', 'trs_chart.kd_trs')
@@ -349,7 +328,7 @@ class penjualanController extends Controller
                     'qty_masuk' => '0',
                     'qty_keluar' => $request->qty[$keyx],
                     'qty_akhir'  => $qtyAkhir,
-                    'hpp_satuan' => $request->hrg_obat[$keyx],
+                    'hpp_satuan' => $request->hrgHPP[$keyx],
                 ];
                 // print_r($currentStock);
                 kartuStockDetail::create($detailKartuStock);
