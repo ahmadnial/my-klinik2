@@ -234,9 +234,10 @@ class penjualanController extends Controller
 
         $isListOrderResep = DB::table('trs_chart_resep')
             ->leftJoin('tc_mr', 'trs_chart_resep.mr_pasien', 'tc_mr.fs_mr')
-            ->select('trs_chart_resep.*', 'tc_mr.*')
+            ->leftJoin('trs_chart', 'trs_chart_resep.kd_trs', 'trs_chart.kd_trs')
+            ->select('trs_chart_resep.*', 'tc_mr.*', 'trs_chart.nm_dokter_jm')
             ->distinct()
-            ->where('kd_trs', $kd_trs->kd_trs)
+            ->where('trs_chart_resep.kd_trs', $kd_trs->kd_trs)
             // ->where('isimplementasi', '=', '0')
             ->get();
         return response()->json($isListOrderResep);

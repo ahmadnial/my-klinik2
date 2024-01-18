@@ -573,10 +573,6 @@
                 placeholder: 'Select Tipe Tarif',
             });
 
-            // $("#obatSearch").on("click", function() {
-            //     $('#obatSearchShow').modal('show');
-
-            // });
 
             function searchObatShow() {
                 $('#obatSearchShow').modal('show');
@@ -675,7 +671,7 @@
                         for (var getVals = 0; getVals < getValues.length; getVals++) {
 
                             $('#tp_layanan').val(getValues[getVals].layanan);
-                            $('#tp_dokter').val(getValues[getVals].dokter);
+                            $('#tp_dokter').val(getValues[getVals].nm_dokter_jm);
                             $('#tp_kd_reg').val(getValues[getVals].kd_reg);
                             $('#tp_no_mr').val(getValues[getVals].mr_pasien);
                             $('#tp_nama').val(getValues[getVals].nm_pasien);
@@ -708,32 +704,35 @@
                                             value="${getValues[getVals].ch_satuan_obat}">
                                     </td>
                                     <td>
-                                        <input type="text" class="hrg_obatr form-control" readonly style="border: none;" id="hrg_obatr" name="hrg_obat[]" value="${getValues[getVals].ch_hrg_jual}">
+                                        <input type="text" class="hrg_obat form-control" readonly style="border: none;" id="hrg_obat" name="hrg_obat[]" value="${getValues[getVals].ch_hrg_jual}">
                                     </td>
                                     <td>
-                                        <input type="text" class="qtyr form-control" id="qtyr" name="qty[]" onClick="getQTYResep(this)" value="${getValues[getVals].ch_qty_obat}">
+                                        <input type="text" class="qtyr form-control" id="qty" name="qty[]" onKeyUp="getQTY(this)" value="${getValues[getVals].ch_qty_obat}">
                                     </td>
                                     <td>
                                         <input type="text" class="cara_pakai form-control" id="cara_pakai" name="cara_pakai[]" value="${getValues[getVals].ch_cara_pakai}">
                                     </td>
                                     
-                                    <td>
+                                     <td>
                                         <input type="text" class="form-control" id="tuslah"
-                                            name="tuslah[]">
+                                            name="tuslah[]" onKeyUp="getTuslah(this)" value="0">
                                     </td>
                                     <td>
                                         <input type="text" class="form-control" id="embalase"
-                                            name="embalase[]">
+                                            name="embalase[]" onKeyUp="getEmbalase(this)" value="0">
                                     </td>
                                     <td>
                                         <input type="text" class="form-control" id="diskon"
                                             name="diskon[]">
                                     </td>
                                     <td>
-                                        <input type="text" class="sub_totalr form-control" id="sub_totalr"
+                                        <input type="text" class="sub_total form-control" id="sub_total"
                                             name="sub_total[]" readonly style="border: none;" value="${sub_total}">
                                     </td>
-
+                                    <input type="hidden" class="sub_total_hidden form-control" id="sub_total_hidden"
+                                        name="sub_total_hidden[]" value="${sub_total}">
+                                        <input type="hidden" class="sub_total_hidden_after_tuslah form-control" id="sub_total_hidden_after_tuslah"
+                                        name="sub_total_hidden_after_tuslah[]">
                                     <input type="hidden" name="user" id="user" value="tes user">
                                     <td>
                                         <button type="button" class="remove btn btn-xs btn-danger"><i
@@ -743,7 +742,7 @@
                     
                                 `);
                         }
-                        GrandTotalResep();
+                        GrandTotal();
 
                     }
                 })
@@ -753,29 +752,10 @@
                 var row = btn.parentNode.parentNode.parentNode;
                 row.parentNode.removeChild(row);
                 GrandTotal();
-                GrandTotalResep();
                 GrandTotalEdit();
             }
 
-            function GrandTotalResep() {
-                var sum = 0;
 
-                $('.sub_totalr').each(function() {
-                    sum += Number($(this).val());
-                });
-                var result = sum.toFixed(2);
-
-                $('#total_penjualan').val(result);
-
-                var ttlInt = parseFloat(result);
-
-                var formattedNumber = ttlInt.toLocaleString('id-ID', {
-                    style: 'currency',
-                    currency: 'IDR'
-                });
-
-                $('#total_penjualan_show_only').val(formattedNumber);
-            }
 
 
             function getTipeTarif() {
@@ -791,17 +771,7 @@
                     $('#showTipeTarif').val('Reguler');
                     $('.isResepActive').empty();
                     $.ajax({
-                        // headers: {
-                        //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        // },
-                        // url: "{{ url('getListObatReguler') }}",
-                        // type: 'GET',
                         success: function(isObatReguler) {
-                            // var table = $('#exm2').DataTable();
-                            // var rows = table
-                            //     .rows()
-                            //     .remove()
-                            //     .draw();
                             $('#exm2').DataTable({
                                 processing: true,
                                 serverSide: true,
@@ -834,38 +804,6 @@
                                     },
                                 ]
                             });
-                            // $("#getListObatx").empty();
-                            // var getValue = isObatReguler;
-                            // for (var getVal = 0; getVal < getValue.length; getVal++) {
-
-                            //     const table = $('#exm2').DataTable();
-                            //     var btnBtn =
-                            //         `<button class="SelectItemObat btn btn-success btn-xs" id="SelectItemObat" onClick="SelectItemObat(this)" data-fm_kd_obat="${getValue[getVal].fm_kd_obat}" data-fm_nm_obat="${getValue[getVal].fm_nm_obat}" data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}" data-fm_hrg_jual="${getValue[getVal].fm_hrg_jual_non_resep}">Select</button>`
-                            //     const dataBaru = [
-                            //         [getValue[getVal].fm_kd_obat, getValue[getVal].fm_nm_obat, getValue[getVal]
-                            //             .fm_satuan_jual, getValue[getVal].fm_hrg_jual_non_resep, getValue[
-                            //                 getVal]
-                            //             .qty, btnBtn
-                            //         ],
-                            //     ]
-
-                            //     function injectDataBaru() {
-                            //         for (const data of dataBaru) {
-                            //             table.row.add([
-                            //                 data[0],
-                            //                 data[1],
-                            //                 data[2],
-                            //                 data[3],
-                            //                 data[4],
-                            //                 data[5],
-                            //                 data[6],
-                            //                 data[7],
-                            //             ]).draw(false)
-                            //         }
-                            //     }
-                            //     injectDataBaru()
-                            // }
-
                         }
                     })
 
@@ -891,20 +829,7 @@
                             `
                     )
                     $.ajax({
-                        // headers: {
-                        //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        // },
-                        // url: "{{ url('getListObatResep') }}",
-                        // type: 'GET',
-                        // data: {
-                        //     chart_mr: dataObject
-                        // },
                         success: function(isObatResep) {
-                            // var table = $('#exm2').DataTable();
-                            // var rows = table
-                            //     .rows()
-                            //     .remove()
-                            //     .draw();
                             $('#exm2').DataTable({
                                 processing: true,
                                 serverSide: true,
@@ -937,36 +862,6 @@
                                     },
                                 ]
                             });
-                            // $("#getListObatx").empty();
-                            // var getValue = isObatResep;
-                            // for (var getVal = 0; getVal < getValue.length; getVal++) {
-
-                            //     const table = $('#exm2').DataTable();
-                            //     var btnBtn =
-                            //         `<button class="SelectItemObat btn btn-success btn-xs" id="SelectItemObat" onClick="SelectItemObat(this)" data-fm_kd_obat="${getValue[getVal].fm_kd_obat}" data-fm_nm_obat="${getValue[getVal].fm_nm_obat}" data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}" data-fm_hrg_jual="${getValue[getVal].fm_hrg_jual_resep}">Select</button>`
-                            //     const dataBaru = [
-                            //         [getValue[getVal].fm_kd_obat, getValue[getVal].fm_nm_obat, getValue[getVal]
-                            //             .fm_satuan_jual, getValue[getVal].fm_hrg_jual_resep, getValue[getVal]
-                            //             .qty, btnBtn
-                            //         ],
-                            //     ]
-
-                            //     function injectDataBaru() {
-                            //         for (const data of dataBaru) {
-                            //             table.row.add([
-                            //                 data[0],
-                            //                 data[1],
-                            //                 data[2],
-                            //                 data[3],
-                            //                 data[4],
-                            //                 data[5],
-                            //                 data[6],
-                            //                 data[7],
-                            //             ]).draw(false)
-                            //         }
-                            //     }
-                            //     injectDataBaru()
-                            // }
                         }
                     })
                 } else {
@@ -979,20 +874,7 @@
                     $('#showTipeTarif').val('Nakes');
                     $('.isResepActive').empty();
                     $.ajax({
-                        // headers: {
-                        //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        // },
-                        // url: "{{ url('getListObatNakes') }}",
-                        // type: 'GET',
-                        // data: {
-                        //     chart_mr: dataObject
-                        // },
                         success: function(isObatNakes) {
-                            // var table = $('#exm2').DataTable();
-                            // var rows = table
-                            //     .rows()
-                            //     .remove()
-                            //     .draw();
                             $('#exm2').DataTable({
                                 processing: true,
                                 serverSide: true,
@@ -1025,36 +907,6 @@
                                     },
                                 ]
                             });
-                            // $("#getListObatx").empty();
-                            // var getValue = isObatNakes;
-                            // for (var getVal = 0; getVal < getValue.length; getVal++) {
-
-                            //     const table = $('#exm2').DataTable();
-                            //     var btnBtn =
-                            //         `<button class="SelectItemObat btn btn-success btn-xs" id="SelectItemObat" onClick="SelectItemObat(this)" data-fm_kd_obat="${getValue[getVal].fm_kd_obat}" data-fm_nm_obat="${getValue[getVal].fm_nm_obat}" data-fm_satuan_jual="${getValue[getVal].fm_satuan_jual}" data-fm_hrg_jual="${getValue[getVal].fm_hrg_jual_nakes}">Select</button>`
-                            //     const dataBaru = [
-                            //         [getValue[getVal].fm_kd_obat, getValue[getVal].fm_nm_obat, getValue[getVal]
-                            //             .fm_satuan_jual, getValue[getVal].fm_hrg_jual_nakes, getValue[getVal]
-                            //             .qty, btnBtn
-                            //         ],
-                            //     ]
-
-                            //     function injectDataBaru() {
-                            //         for (const data of dataBaru) {
-                            //             table.row.add([
-                            //                 data[0],
-                            //                 data[1],
-                            //                 data[2],
-                            //                 data[3],
-                            //                 data[4],
-                            //                 data[5],
-                            //                 data[6],
-                            //                 data[7],
-                            //             ]).draw(false)
-                            //         }
-                            //     }
-                            //     injectDataBaru()
-                            // }
                         }
                     })
                 }
@@ -1270,11 +1122,11 @@
                             <input type="text" class="sub_total form-control" id="sub_total"
                                 name="sub_total[]" readonly style="border: none;">
                         </td>
-                        <input type="hidden" class="sub_total_hidden form-control" id="sub_total_hidden"
-                        name="sub_total_hidden[]">
-                        <input type="hidden" class="sub_total_hidden_after_tuslah form-control" id="sub_total_hidden_after_tuslah"
-                        name="sub_total_hidden_after_tuslah[]">
-                        <input type="hidden" name="user" id="user" value="tes user">
+                            <input type="hidden" class="sub_total_hidden form-control" id="sub_total_hidden"
+                                name="sub_total_hidden[]">
+                            <input type="hidden" class="sub_total_hidden_after_tuslah form-control" id="sub_total_hidden_after_tuslah"
+                                name="sub_total_hidden_after_tuslah[]">
+                            <input type="hidden" name="user" id="user" value="tes user">
                         <td>
                             <button type="button" class="remove btn btn-xs btn-danger"><i class="fa fa-trash" onclick="deleteRow(this)"></i></button>
                         </td>
@@ -1286,7 +1138,6 @@
             };
 
             function getQTY(q) {
-                // $('#calculation').on("keyup", ".do_hrg_beli", function() {
                 var parent = q.parentElement.parentElement;
                 var quant = $(parent).find('#qty').val();
                 var price = $(parent).find('#hrg_obat').val();
@@ -1297,22 +1148,29 @@
                 $(parent).find('#sub_total_hidden').val(result);
                 GrandTotal();
                 GrandTotalEdit();
-                // });
-
             };
 
+            // function getQTYResep(rs) {
+            //     var parentr = rs.parentElement.parentElement;
+            //     var quanti = $(parentr).find('#qtyr').val();
+            //     var prices = $(parentr).find('#hrg_obatr').val();
+            //     // console.log(quanti);
+            //     var xr = quanti * prices;
+            //     var resultR = xr.toFixed(2);
+            //     $(parentr).find('#sub_totalr').val(resultR);
+            //     $(parentr).find('#sub_total_hiddenr').val(resultR);
+
+            //     GrandTotalResep();
+            // };
+
             function getTuslah(q) {
-                // alert('0');
                 let parentT = q.parentElement.parentElement;
                 let tuslah = $(parentT).find('#tuslah').val();
                 // console.log(tuslah);
                 let subtotalsementara = $(parentT).find('#sub_total_hidden').val();
                 let hsl = parseFloat(tuslah) + parseFloat(subtotalsementara);
                 let resultT = hsl.toFixed(2);
-                // console.log(hsl);
-                // if (tuslah == '') {
-                //     let tuslah = $(parentT).find('#tuslah').val('0');
-                // }
+
                 $(parentT).find('#sub_total').val(resultT);
                 $(parentT).find('#sub_total_hidden_after_tuslah').val(resultT);
 
@@ -1322,7 +1180,6 @@
             };
 
             function getEmbalase(q) {
-                // alert('0');
                 let parentE = q.parentElement.parentElement;
                 let embalase = $(parentE).find('#embalase').val();
                 // console.log(tuslah);
@@ -1344,6 +1201,26 @@
 
             };
 
+            // function GrandTotalResep() {
+            //     var sum = 0;
+
+            //     $('.sub_totalr').each(function() {
+            //         sum += Number($(this).val());
+            //     });
+            //     var result = sum.toFixed(2);
+
+            //     $('#total_penjualan').val(result);
+
+            //     var ttlInt = parseFloat(result);
+
+            //     var formattedNumber = ttlInt.toLocaleString('id-ID', {
+            //         style: 'currency',
+            //         currency: 'IDR'
+            //     });
+
+            //     $('#total_penjualan_show_only').val(formattedNumber);
+            // }
+
             function GrandTotal() {
                 var sum = 0;
 
@@ -1363,15 +1240,12 @@
 
                 $('#total_penjualan_show_only').val(formattedNumber);
             }
-            // shortcut.add("F12", function() {
-            //     alert("F12 pressed");
-            // });
+
 
             function getDetailPen(tx) {
                 $('#viewPenjualan').modal('show');
 
                 var kd_trs = $(tx).data('kd_trs');
-                // alert(kd_trs);
                 $('#viewDetailJual').empty();
                 $.ajax({
                     headers: {
@@ -1435,7 +1309,6 @@
                                         </tr>
                                         `);
                         })
-                        // return window.location.href = "{{ url('mstr-obat') }}";
                     }
 
                 });
@@ -1461,8 +1334,7 @@
             function EditTrs(te) {
                 $('#EditPenjualan').modal('show');
                 var kd_trs = $(te).data('kd_trsu');
-                // alert(kd_trs);
-                // $('#EditPenjualanHdr').empty();
+
                 $('#EditPenjualanList').empty();
                 $.ajax({
                     headers: {

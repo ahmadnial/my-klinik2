@@ -22,54 +22,7 @@
                 </div>
 
                 <div id="accordion" class="cardItems">
-                    {{-- <div class="card-outline card-danger">
-                        <div class="card-header">
-                            <h4 class="card-title w-100">
-                                <a class="d-block w-100" data-toggle="collapse" href="#collapseOne" aria-expanded="true">
-                                    Nama Obat
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="collapseOne" class="collapse show" data-parent="#accordion" style="">
-                            <div class="card-body">
-                                <div>
-                                    <table id="penjualan" class="table table-hover table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Tanggal</th>
-                                                <th>Kode Ref</th>
-                                                <th>Supplier/Pelanggan</th>
-                                                <th>Batch No.</th>
-                                                <th>Exp. Date</th>
-                                                <th>Qty Awal</th>
-                                                <th>Qty Masuk</th>
-                                                <th>Qty Keluar</th>
-                                                <th>Qty Akhir</th>
-                                                <th>HPP</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="result">
 
-                                        </tbody>
-                                        <tfoot align="">
-                                            <tr>
-                                                <th></th>
-                                                <th></th>
-                                                <th></th>
-                                                <th></th>
-                                                <th></th>
-                                                <th></th>
-                                                <th></th>
-                                                <th></th>
-                                                <th></th>
-                                                <th id="grandTTL"></th>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
                 </div>
             </div>
     </section>
@@ -97,9 +50,7 @@
                 }
             });
 
-            // function getData() {
-            //     $('#fr_mr').val();
-            // };
+
 
             function getKartuStok() {
                 var date1 = $('#date1').val();
@@ -194,9 +145,9 @@
                                 const originalDate = new Date(datavalue.tanggal_trs);
 
                                 const newDate = originalDate.toLocaleDateString('id-ID', {
-                                    year: 'numeric',
                                     day: 'numeric',
-                                    month: 'long'
+                                    month: 'long',
+                                    year: 'numeric'
                                 });
 
                                 const ttlInt = parseFloat(datavalue.hpp_satuan);
@@ -207,7 +158,7 @@
                                 });
 
                                 const dataBaru = [
-                                    [newDate, datavalue.kd_trs, datavalue.supplier,
+                                    [datavalue.tanggal_trs, datavalue.kd_trs, datavalue.supplier,
                                         datavalue.no_batch, datavalue.expired_date, datavalue
                                         .qty_awal,
                                         datavalue.qty_masuk, datavalue.qty_keluar, datavalue

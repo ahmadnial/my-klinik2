@@ -247,6 +247,7 @@ class LapFarmasiController extends Controller
                 ->where('ksh_kd_obat', $kdobat)
                 ->leftJoin('kartu_stock_detail', 'kartu_stock_detail.kd_obat', 'kartu_stock_hdr.ksh_kd_obat')
                 ->select('kartu_stock_hdr.*', 'kartu_stock_detail.*')
+                ->latest('kartu_stock_detail.tanggal_trs')
                 ->get();
             return response()->json($isKartuStock);
         }
