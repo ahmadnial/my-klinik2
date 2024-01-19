@@ -51,7 +51,6 @@
             });
 
 
-
             function getKartuStok() {
                 var date1 = $('#date1').val();
                 var date2 = $('#date2').val();

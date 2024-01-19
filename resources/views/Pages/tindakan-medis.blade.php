@@ -912,7 +912,6 @@
 
     {{-- ========================END MODAL ADD RESEP============================= --}}
 
-
     <div class="splitLeft col-sm-7 col-lg-6 col-xs-sm-6 row">
         <div class="col" id="accordion">
             <div class="card card-primary">
@@ -931,6 +930,8 @@
                 </a>
                 <div id="" class="isTimeline collapse show bg-light" data-parent="#accordion">
                 </div>
+                <div id="" class="isTimelineListAll collapse show bg-light" data-parent="#accordion">
+                </div>
             </div>
         </div>
     </div>
@@ -943,11 +944,112 @@
             function() {
                 if ($(this).is(':checked')) {
                     $(".isTimeline").hide();
+                    $(".isTimelineListAll").show();
+                    var data = sessionStorage.getItem("dataMR");
+                    var dataObject;
+                    // const cekTindakan = getVal.nm_tarif;
+
+                    if (data != null) {
+                        dataObject = JSON.parse(data);
+                    }
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: "{{ url('getTimeline') }}/" + dataObject,
+                        type: 'GET',
+                        data: {
+                            chart_mr: dataObject
+                        },
+                        success: function(isTimelineHistory) {
+                            // $.each(isTimelineHistory, function(key, getVal) {
+                            var getValue = isTimelineHistory;
+                            for (var getVal = 0; getVal < getValue.length; getVal++) {
+                                var rmvNullS = getValue[getVal].chart_S ?? '';
+                                var rmvNullO = getValue[getVal].chart_O ?? '';
+                                var rmvNullA = getValue[getVal].chart_A ?? '';
+                                var rmvNullAD = getValue[getVal].chart_A_diagnosa ?? '';
+                                var rmvNullP = getValue[getVal].chart_P ?? '';
+
+                                $('#tr_kd_reg').val(getValue[getVal].chart_kd_reg);
+                                $('#tr_no_mr').val(getValue[getVal].chart_mr);
+                                $('#tr_nm_pasien').val(getValue[getVal].chart_nm_pasien);
+                                $('#tr_layanan').val(getValue[getVal].chart_layanan);
+                                $('#tr_dokter').val(getValue[getVal].chart_dokter);
+
+                                const trstdk = getValue[getVal].trstdk;
+                                let html = "";
+                                for (i in trstdk) {
+                                    if (trstdk[i].nm_trf != null) {
+                                        html += `<tr><td>${trstdk[i].nm_trf.nm_tindakan}</td></tr>`;
+                                    } else {
+                                        html += ``;
+                                    }
+                                }
+
+                                const resep = getValue[getVal].resep;
+                                let resepShow = "";
+                                for (i in resep) {
+                                    if (resep[i] != null) {
+                                        resepShow +=
+                                            `<tr><td>${resep[i].ch_nm_obat} - <i class="text-danger">${resep[i].ch_cara_pakai}</i></td></tr>`;
+                                    } else {
+                                        resepShow += ``;
+                                    }
+                                }
+                                var x = 1;
+                                var dateFormat = getValue[getVal].created_at;
+
+                                var dateView = moment(dateFormat).format(
+                                    "dddd, D MMMM YYYY, h:mm:ss a");
+                                $(".isTimelineListAll").append(
+                                    `<div class="left card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="timeline">
+                                                <div class="time-label">
+                                                <span class="bg-red">${dateView}</span>
+                                                </div>
+                                                <div>
+                                                    <i class="fas fa-user bg-nial"></i>
+                                                    <div class="timeline-item">
+                                                        <span class="time"><i class="fas fa-clock">&nbsp;</i>${dateView}</span>
+                                                        <h3 class="timeline-header"><a href="#">Prescription</a>&nbsp; <i>(Resep)</i></h3>
+                                                        <div class="timeline-body">
+                                                            <table class="col table table-striped table-bordered">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>${resepShow}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <i class="fas fa-comments bg-yellow"></i>
+                                                    <div class="timeline-item">
+                                                        <span class="time"><i class="fas fa-clock"></i> 27 mins ago</span>
+                                                        <h3 class="timeline-header"><a href="#">Soon</a>Soon</h3>
+                                                        <div class="timeline-body">
+                                                           
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>`
+                                )
+                            }
+                        }
+                    })
+
 
                 } else {
                     $(".isTimeline").show();
+                    $(".isTimelineListAll").hide();
                 }
             });
+
         // Ajax Search Registrasi
         $('#tr_kd_reg').select2({
             placeholder: 'Search Registrasi',
@@ -973,7 +1075,8 @@
         function getUmurDetail(dateString) {
             var today = new Date();
             var DOB = new Date(dateString);
-            var totalMonths = (today.getFullYear() - DOB.getFullYear()) * 12 + today.getMonth() - DOB.getMonth();
+            var totalMonths = (today.getFullYear() - DOB.getFullYear()) * 12 + today.getMonth() -
+                DOB.getMonth();
             totalMonths += today.getDay() < DOB.getDay() ? -1 : 0;
             var years = today.getFullYear() - DOB.getFullYear();
             if (DOB.getMonth() > today.getMonth())
@@ -1045,7 +1148,8 @@
                     $.each(isRegSearch, function(key, dataregvalue) {
                         $('#tr_no_mr').val(dataregvalue.fr_mr);
                         $('#tr_nm_pasien').val(dataregvalue.fr_nama);
-                        $('#tr_jenis_kelamin').val(dataregvalue.fr_jenis_kelamin);
+                        $('#tr_jenis_kelamin').val(dataregvalue
+                            .fr_jenis_kelamin);
                         $('#tr_layanan').val(dataregvalue.fr_layanan);
                         $('#tr_dokter').val(dataregvalue.fr_dokter);
                         $('#tr_alamat').val(dataregvalue.fr_alamat);
@@ -1059,7 +1163,8 @@
                         $('#jkHdr').val(dataregvalue.fr_jenis_kelamin);
                         $('#alamatHdr').val(dataregvalue.fr_alamat);
                         $('#alergiHdr').val(dataregvalue.fr_alergi);
-                        $('#lastTarifDsrHdr').val(dataregvalue.tcmr.fs_last_tarif_dasar);
+                        $('#lastTarifDsrHdr').val(dataregvalue.tcmr
+                            .fs_last_tarif_dasar);
 
 
                         $('#chart_kd_reg').val(dataregvalue.fr_kd_reg);
@@ -1090,10 +1195,14 @@
                         var UserActive = {};
                         UserActive.Text = $("#userActive").val();
                         // mr.isProcessed = false;
-                        sessionStorage.setItem("dataMR", JSON.stringify(mr));
-                        sessionStorage.setItem("kdReg", JSON.stringify(kdReg));
-                        sessionStorage.setItem("ChartID", JSON.stringify(ChartID));
-                        sessionStorage.setItem("UserActive", JSON.stringify(UserActive));
+                        sessionStorage.setItem("dataMR", JSON.stringify(
+                            mr));
+                        sessionStorage.setItem("kdReg", JSON.stringify(
+                            kdReg));
+                        sessionStorage.setItem("ChartID", JSON.stringify(
+                            ChartID));
+                        sessionStorage.setItem("UserActive", JSON.stringify(
+                            UserActive));
 
 
                         getTimeline();
@@ -1127,7 +1236,8 @@
                     $.each(isRegSearch, function(key, dataregvalue) {
                         $('#tr_no_mr').val(dataregvalue.fr_mr);
                         $('#tr_nm_pasien').val(dataregvalue.fr_nama);
-                        $('#tr_jenis_kelamin').val(dataregvalue.fr_jenis_kelamin);
+                        $('#tr_jenis_kelamin').val(dataregvalue
+                            .fr_jenis_kelamin);
                         $('#tr_layanan').val(dataregvalue.fr_layanan);
                         $('#tr_dokter').val(dataregvalue.fr_dokter);
                         $('#tr_alamat').val(dataregvalue.fr_alamat);
@@ -1141,7 +1251,8 @@
                         $('#jkHdr').val(dataregvalue.fr_jenis_kelamin);
                         $('#alamatHdr').val(dataregvalue.fr_alamat);
                         $('#alergiHdr').val(dataregvalue.fr_alergi);
-                        $('#lastTarifDsrHdr').val(dataregvalue.tcmr.fs_last_tarif_dasar);
+                        $('#lastTarifDsrHdr').val(dataregvalue.tcmr
+                            .fs_last_tarif_dasar);
 
 
                         $('#chart_kd_reg').val(dataregvalue.fr_kd_reg);
@@ -1230,7 +1341,8 @@
                         results: $.map(isdataObat, function(item) {
                             return {
                                 // text: item.fs_mr,
-                                text: item.fm_kd_obat + ' - ' + item.fm_nm_obat + ' - ' + item.qty +
+                                text: item.fm_kd_obat + ' - ' + item.fm_nm_obat +
+                                    ' - ' + item.qty +
                                     ' ' +
                                     item.satuan,
                                 id: item.fm_kd_obat,
@@ -1412,7 +1524,8 @@
                 if (chart_kd_reg != "") {
                     $.ajax({
                         headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                'content')
                         },
                         url: "{{ url('chartCreate') }}",
                         type: "POST",
@@ -1472,7 +1585,6 @@
             var dataObject;
             // const cekTindakan = getVal.nm_tarif;
 
-
             if (data != null) {
                 dataObject = JSON.parse(data);
             }
@@ -1505,7 +1617,8 @@
                         let html = "";
                         for (i in trstdk) {
                             if (trstdk[i].nm_trf != null) {
-                                html += `<tr><td>${trstdk[i].nm_trf.nm_tindakan}</td></tr>`;
+                                html +=
+                                    `<tr><td>${trstdk[i].nm_trf.nm_tindakan}</td></tr>`;
                             } else {
                                 html += ``;
                             }
@@ -1667,16 +1780,7 @@
                             </div>
                         </div>
                     </div>`)
-                        // }
-
                     }
-                    // } else {
-                    // $('#show_chart_S').val('');
-                    // $('#show_chart_O').val('');
-                    // $('#show_chart_A').val('');
-                    // $('#show_chart_P').val('');
-                    // $('#labelTimeline').val('');
-                    // };
                 }
             })
         };
