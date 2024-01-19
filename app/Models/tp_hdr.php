@@ -30,4 +30,9 @@ class tp_hdr extends Model
         'total_penjualan',
         'tgl_trs'
     ];
+
+    public function tpdetail()
+    {
+        return $this->hasMany(tp_detail_item::class, 'kd_reg', 'kd_reg');
+    }
 }

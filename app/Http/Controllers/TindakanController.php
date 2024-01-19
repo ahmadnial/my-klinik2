@@ -295,9 +295,7 @@ class TindakanController extends Controller
     {
         $isTimelineHistory = ChartTindakan::with('trstdk.nm_trf', 'resep')
             ->where('chart_mr', $request->chart_mr)
-            // ->distinct()
             ->orderBy('chart_tindakan.created_at', 'DESC')
-            // ->groupBy('chart_tindakan.chart_id')
             ->get();
 
         // $isTimelineHistory = DB::table('chart_tindakan')
@@ -311,6 +309,16 @@ class TindakanController extends Controller
         //     ->get();
 
         return response()->json($isTimelineHistory);
+    }
+
+    public function getTimelineAll(Request $request)
+    {
+        $isTimelineHistoryAll = ChartTindakan::with('trstdk.nm_trf', 'resep', 'obatpulang.tpdetail')
+            ->where('chart_mr', $request->chart_mr)
+            ->orderBy('chart_tindakan.created_at', 'DESC')
+            ->get();
+
+        return response()->json($isTimelineHistoryAll);
     }
 
     // Get ChartID utk Edit

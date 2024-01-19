@@ -51,4 +51,9 @@ class ChartTindakan extends Model
     {
         return $this->hasMany(trs_chart_resep::class, 'chart_id', 'chart_id');
     }
+
+    public function obatpulang()
+    {
+        return $this->hasMany(tp_hdr::class, 'no_mr', 'chart_mr');
+    }
 }

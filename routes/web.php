@@ -97,6 +97,7 @@ Route::group(['middleware' => ['auth', 'checkrole:1,2']], function () {
     Route::get('tindakan-medis', [TindakanController::class, 'tindakanMedis'])->name('tindakan-medis');
     Route::get('SearchRegister/{kdReg}', [TindakanController::class, 'registerSearch'])->name('SearchRegister');
     Route::get('getTimeline/{mr}', [TindakanController::class, 'getTimeline'])->name('getTimeline');
+    Route::get('getTimelineAll/{mr}', [TindakanController::class, 'getTimelineAll'])->name('getTimelineAll');
     Route::get('chartIdSearch/{chartid}', [TindakanController::class, 'chartIdSearch'])->name('chartIdSearch');
     Route::get('getTimelineTdk/{mr}', [TindakanController::class, 'getTimelineTdk'])->name('getTimelineTdk');
     Route::get('getLastID', [TindakanController::class, 'getLastID'])->name('getLastID');
