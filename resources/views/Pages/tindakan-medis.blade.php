@@ -948,7 +948,6 @@
                     $(".isTimelineListAll").empty();
                     var data = sessionStorage.getItem("dataMR");
                     var dataObject;
-                    // const cekTindakan = getVal.nm_tarif;
 
                     if (data != null) {
                         dataObject = JSON.parse(data);
@@ -957,25 +956,14 @@
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
-                        url: "{{ url('getTimelineAll') }}/" + dataObject,
+                        url: "{{ url('getLabel') }}/" + dataObject,
                         type: 'GET',
                         data: {
-                            chart_mr: dataObject
+                            pasienID: dataObject
                         },
-                        success: function(isTimelineHistoryAll) {
-                            var getValue = isTimelineHistoryAll;
+                        success: function(isLabel) {
+                            var getValue = isLabel;
                             for (var getVal = 0; getVal < getValue.length; getVal++) {
-                                // var rmvNullS = getValue[getVal].chart_S ?? '';
-                                // var rmvNullO = getValue[getVal].chart_O ?? '';
-                                // var rmvNullA = getValue[getVal].chart_A ?? '';
-                                // var rmvNullAD = getValue[getVal].chart_A_diagnosa ?? '';
-                                // var rmvNullP = getValue[getVal].chart_P ?? '';
-
-                                // $('#tr_kd_reg').val(getValue[getVal].chart_kd_reg);
-                                // $('#tr_no_mr').val(getValue[getVal].chart_mr);
-                                // $('#tr_nm_pasien').val(getValue[getVal].chart_nm_pasien);
-                                // $('#tr_layanan').val(getValue[getVal].chart_layanan);
-                                // $('#tr_dokter').val(getValue[getVal].chart_dokter);
 
                                 // const trstdk = getValue[getVal].trstdk;
                                 // let html = "";
@@ -992,7 +980,7 @@
                                 for (i in resep) {
                                     if (resep[i] != null) {
                                         resepShow +=
-                                            `<tr><td>${resep[i].ch_nm_obat} - <i class="text-danger">${resep[i].ch_cara_pakai}</i></td></tr>`;
+                                            `<tr><td>${resep[i].nm_obat}  - ${resep[i].qty_obat} - <i class="text-danger">${resep[i].cara_pakai}</i></td></tr>`;
                                     } else {
                                         resepShow += ``;
                                     }
@@ -1012,13 +1000,13 @@
                                     }
                                 }
                                 var x = 1;
-                                var dateFormat = getValue[getVal].created_at;
+                                var dateFormat = getValue[getVal].Tgl;
                                 var dateView = moment(dateFormat).format(
                                     "dddd, D MMMM YYYY, h:mm:ss a");
 
-                                var dateObatPlg = getValue[getVal].obatpulang.created_at;
-                                var dateObtPlg = moment(dateObatPlg).format(
-                                    "dddd, D MMMM YYYY, h:mm:ss a");
+                                // var dateObatPlg = getValue[getVal].obatpulang.created_at;
+                                // var dateObtPlg = moment(dateObatPlg).format(
+                                //     "dddd, D MMMM YYYY, h:mm:ss a");
 
                                 $(".isTimelineListAll").append(
                                     `<div class="left card-body">
@@ -1046,12 +1034,12 @@
                                                 <div>
                                                     <i class="fas fa-comments bg-yellow"></i>
                                                     <div class="timeline-item">
-                                                        <span class="time"><i class="fas fa-clock"></i> ${dateObtPlg}</span>
+                                                        <span class="time"><i class="fas fa-clock"></i></span>
                                                         <h3 class="timeline-header"><a href="#">Medication</a>&nbsp;  <i>(Obat Pulang)</i></h3>
                                                         <div class="timeline-body">
                                                            <table class="col table table-hover table-bordered">
                                                                 <tbody>
-                                                                    ${obtPlg}
+                                                                    
                                                                 </tbody>
                                                             </table>
                                                         </div>

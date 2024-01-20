@@ -8,6 +8,8 @@ use App\Models\mstr_icdx;
 use App\Models\mstr_obat;
 use App\Models\mstr_tindakan;
 use App\Models\registrasiCreate;
+use App\Models\t_label_detail;
+use App\Models\t_label_hdr;
 use App\Models\trs_chart;
 use App\Models\trs_chart_resep;
 use Illuminate\Http\Request;
@@ -272,7 +274,35 @@ class TindakanController extends Controller
                     trs_chart_resep::create($newDataResep);
                 };
             }
-            // dd($newData);
+
+            $newDataLabelHdr = [
+                'reffID' => $request->kd_trs,
+                'Tgl' => Carbon::now(),
+                'labelType' => '',
+                'pasienID' => $request->chart_mr,
+                'layananID' => $request->chart_layanan,
+                'kdReg' => $request->chart_kd_reg,
+                'pasienName' => $request->chart_nm_pasien,
+            ];
+            t_label_hdr::create($newDataLabelHdr);
+
+            foreach ($request->ch_kd_obat as $label => $val) {
+                $newDataLabelDetail = [
+                    'reffID' => $request->kd_trs,
+                    'Tgl' => Carbon::now(),
+                    'labelType' => '',
+                    'pasienID' => $request->chart_mr,
+
+                    'kd_obat' => $request->ch_kd_obat[$label],
+                    'nm_obat' => $request->ch_nm_obat[$label],
+                    'qty_obat' => $request->ch_qty_obat[$label],
+                    'satuan_obat' => $request->ch_satuan_obat[$label],
+                    'cara_pakai' => $request->ch_cara_pakai[$label],
+                    'tindakan' => $request->nm_tarif[$label],
+                ];
+                t_label_detail::create($newDataLabelDetail);
+            };
+
             DB::commit();
 
             toastr()->success('Data Tersimpan!');
@@ -282,10 +312,6 @@ class TindakanController extends Controller
             DB::rollback();
             toastr()->error('Gagal Tersimpan! Hubungi Admin');
             return back();
-            // Toastr::error('Add Estimates fail :)', 'Error');
-            // return redirect()->back();
-            // return redirect()->route('tindakan-mediss')
-            //     ->with('warning', 'Something Went Wrong!');
         }
     }
 
@@ -310,14 +336,20 @@ class TindakanController extends Controller
         return response()->json($isTimelineHistory);
     }
 
-    public function getTimelineAll(Request $request)
+    public function getLabel(Request $request)
     {
-        $isTimelineHistoryAll = ChartTindakan::with('trstdk.nm_trf', 'resep', 'obatpulang.tpdetail')
-            ->where('chart_mr', $request->chart_mr)
-            ->orderBy('chart_tindakan.created_at', 'DESC')
+        // $isLabel = DB::table('t_label_hdr')
+        //     ->leftJoin('t_label_detail', 't_label_hdr.pasienID', 't_label_detail.pasienID')
+        //     ->where('t_label_hdr.pasienID', $request->pasienID)
+        //     ->select('t_label_hdr.*', 'kd_obat', 'nm_obat', 'qty_obat', 'satuan_obat', 'cara_pakai', 'tindakan')
+        //     ->orderBy('t_label_hdr.Tgl', 'DESC')
+        //     ->get();
+        $isLabel = t_label_hdr::with('resep')
+            ->where('pasienID', $request->pasienID)
+            ->orderBy('t_label_hdr.Tgl', 'DESC')
             ->get();
 
-        return response()->json($isTimelineHistoryAll);
+        return response()->json($isLabel);
     }
 
     // Get ChartID utk Edit

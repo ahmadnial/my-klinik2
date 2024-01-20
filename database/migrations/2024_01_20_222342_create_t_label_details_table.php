@@ -11,23 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('t_label_timelines', function (Blueprint $table) {
+        Schema::create('t_label_detail', function (Blueprint $table) {
             $table->id();
             $table->string('reffID');
             $table->string('Tgl');
-            $table->string('labelType')->default('');
             $table->string('pasienID');
-            $table->string('layananID');
-            $table->string('kdReg');
-            $table->string('pasienName');
             $table->string('kd_obat');
             $table->string('nm_obat');
             $table->string('qty_obat');
             $table->string('satuan_obat');
             $table->string('cara_pakai')->default('');
-            $table->string('tindakan');
+            $table->string('tindakan')->default('');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -36,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('t_label_timelines');
+        Schema::dropIfExists('t_label_detail');
     }
 };
