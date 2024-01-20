@@ -963,7 +963,6 @@
                             chart_mr: dataObject
                         },
                         success: function(isTimelineHistoryAll) {
-                            // $.each(isTimelineHistory, function(key, getVal) {
                             var getValue = isTimelineHistoryAll;
                             for (var getVal = 0; getVal < getValue.length; getVal++) {
                                 // var rmvNullS = getValue[getVal].chart_S ?? '';

@@ -271,7 +271,6 @@ class TindakanController extends Controller
                     ];
                     trs_chart_resep::create($newDataResep);
                 };
-            } else {
             }
             // dd($newData);
             DB::commit();
@@ -326,9 +325,6 @@ class TindakanController extends Controller
     {
         $isChartID = ChartTindakan::with('trstdk.nm_trf')
             ->where('chart_id', $request->chartid)
-            // ->distinct()
-            // ->orderBy('chart_tindakan.created_at', 'DESC')
-            // ->groupBy('chart_tindakan.chart_id')
             ->get();
 
         return response()->json($isChartID);
