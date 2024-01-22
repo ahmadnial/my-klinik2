@@ -21,5 +21,6 @@ class t_label_detail extends Model
         'satuan_obat',
         'cara_pakai',
         'tindakan',
+        'keteranganHTML'
     ];
 }

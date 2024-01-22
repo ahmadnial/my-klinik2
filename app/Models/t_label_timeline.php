@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class t_label_hdr extends Model
+class t_label_timeline extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 't_label_hdr';
+    protected $table = 't_label_timeline';
     protected $fillable = [
         'reffID',
         'Tgl',
@@ -19,10 +19,8 @@ class t_label_hdr extends Model
         'layananID',
         'kdReg',
         'pasienName',
+        'userID',
+        'ketFile',
+        'ketHTML'
     ];
-
-    public function resep()
-    {
-        return $this->hasMany(t_label_detail::class, 'pasienID', 'pasienID');
-    }
 }

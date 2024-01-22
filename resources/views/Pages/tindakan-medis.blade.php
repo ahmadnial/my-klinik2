@@ -964,88 +964,68 @@
                         success: function(isLabel) {
                             var getValue = isLabel;
                             for (var getVal = 0; getVal < getValue.length; getVal++) {
-
-                                // const trstdk = getValue[getVal].trstdk;
-                                // let html = "";
-                                // for (i in trstdk) {
-                                //     if (trstdk[i].nm_trf != null) {
-                                //         html += `<tr><td>${trstdk[i].nm_trf.nm_tindakan}</td></tr>`;
+                                // const tesresep = getValue[getVal].resep;
+                                // let resepShowPlg = "";
+                                // for (i in tesresep) {
+                                //     if (tesresep[i] != null) {
+                                //         resepShowPlg += tesresep[i].ketHTML;
                                 //     } else {
-                                //         html += ``;
+                                //         resepShowPlg += ``;
                                 //     }
                                 // }
 
-                                const resep = getValue[getVal].resep;
-                                let resepShow = "";
-                                for (i in resep) {
-                                    if (resep[i] != null) {
-                                        resepShow +=
-                                            `<tr><td>${resep[i].nm_obat}  - ${resep[i].qty_obat} - <i class="text-danger">${resep[i].cara_pakai}</i></td></tr>`;
-                                    } else {
-                                        resepShow += ``;
-                                    }
-                                }
 
-                                const obatpulang = getValue[getVal].obatpulang;
-                                let obtPlg = "";
-                                for (i in obatpulang) {
-                                    var detail = obatpulang[i].tpdetail;
-                                    for (f in detail) {
-                                        if (detail[f] != null) {
-                                            obtPlg +=
-                                                `<tr><td>${detail[f].nm_obat} - <i class="text-danger">${detail[f].cara_pakai}</i></td></tr>`;
-                                        } else {
-                                            obtPlg += ``;
-                                        }
-                                    }
-                                }
-                                var x = 1;
                                 var dateFormat = getValue[getVal].Tgl;
                                 var dateView = moment(dateFormat).format(
                                     "dddd, D MMMM YYYY, h:mm:ss a");
-
-                                // var dateObatPlg = getValue[getVal].obatpulang.created_at;
-                                // var dateObtPlg = moment(dateObatPlg).format(
-                                //     "dddd, D MMMM YYYY, h:mm:ss a");
+                                let showResepOff = getValue[getVal].ketHTML;
 
                                 $(".isTimelineListAll").append(
                                     `<div class="left card-body">
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="timeline">
-                                                <div class="time-label">
-                                                <span class="bg-red">${dateView}</span>
-                                                </div>
-                                                <div>
-                                                    <i class="fas fa-user bg-nial"></i>
-                                                    <div class="timeline-item">
-                                                        <span class="time"><i class="fas fa-clock">&nbsp;</i>${dateView}</span>
-                                                        <h3 class="timeline-header"><a href="#">Prescription</a>&nbsp; <i>(Resep)</i></h3>
-                                                        <div class="timeline-body">
-                                                            <table class="col table table-hover table-bordered">
-                                                                <tbody>
-                                                                    ${resepShow}
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                        
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="timeline">
+                                                    <div class="time-label">
+                                                    <span class="bg-red">${dateView}</span>
                                                     </div>
-                                                </div>
-                                                <div>
-                                                    <i class="fas fa-comments bg-yellow"></i>
-                                                    <div class="timeline-item">
-                                                        <span class="time"><i class="fas fa-clock"></i></span>
-                                                        <h3 class="timeline-header"><a href="#">Medication</a>&nbsp;  <i>(Obat Pulang)</i></h3>
-                                                        <div class="timeline-body">
-                                                           <table class="col table table-hover table-bordered">
-                                                                <tbody>
-                                                                    
-                                                                </tbody>
-                                                            </table>
+                                                    <div>
+                                                        <i class="fas fa-user bg-nial"></i>
+                                                        <div class="timeline-item">
+                                                            <span class="time"><i class="fas fa-clock">&nbsp;</i>${dateView}</span>
+                                                            <h3 class="timeline-header"><a href="#">Prescription</a>&nbsp; <i>(Resep)</i></h3>
+                                                            <div class="timeline-body">
+                                                                <table class="col table table-hover table-bordered">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Obat</th>
+                                                                            <th>Qty</th>
+                                                                            <th>Satuan</th>
+                                                                            <th>Cara Pakai</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                       ${$('<div/>').html(showResepOff).text()} 
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            
                                                         </div>
-                                                        
                                                     </div>
-                                                </div>`
+                                                    <div>
+                                                        <i class="fas fa-comments bg-yellow"></i>
+                                                        <div class="timeline-item">
+                                                            <span class="time"><i class="fas fa-clock"></i></span>
+                                                            <h3 class="timeline-header"><a href="#">Medication</a>&nbsp;  <i>(Obat Pulang)</i></h3>
+                                                            <div class="timeline-body">
+                                                               <table class="col table table-hover table-bordered">
+                                                                    <tbody>
+                                                                       
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>`
                                 )
                             }
                         }
