@@ -351,33 +351,33 @@ class penjualanController extends Controller
             ->where('kd_reg', $request->tp_kd_reg)
             ->update(['isImplementasi' => "1"]);
 
-        $newDataLabelHdr = [
-            'reffID' => $request->tp_kd_trs,
-            'Tgl' => Carbon::now(),
-            'labelType' => '',
-            'pasienID' => $request->tp_no_mr,
-            'layananID' => $request->tp_layanan,
-            'kdReg' => $request->tp_kd_reg,
-            'pasienName' => $request->tp_nama,
-        ];
-        t_label_hdr::create($newDataLabelHdr);
+        // $newDataLabelHdr = [
+        //     'reffID' => $request->tp_kd_trs,
+        //     'Tgl' => Carbon::now(),
+        //     'labelType' => '',
+        //     'pasienID' => $request->tp_no_mr,
+        //     'layananID' => $request->tp_layanan,
+        //     'kdReg' => $request->tp_kd_reg,
+        //     'pasienName' => $request->tp_nama,
+        // ];
+        // t_label_hdr::create($newDataLabelHdr);
 
-        foreach ($request->kd_obat as $label => $val) {
-            $newDataLabelDetail = [
-                'reffID' => $request->tp_kd_trs,
-                'Tgl' => Carbon::now(),
-                'labelType' => '',
-                'pasienID' => $request->tp_no_mr,
+        // foreach ($request->kd_obat as $label => $val) {
+        //     $newDataLabelDetail = [
+        //         'reffID' => $request->tp_kd_trs,
+        //         'Tgl' => Carbon::now(),
+        //         'labelType' => '',
+        //         'pasienID' => $request->tp_no_mr,
 
-                'kd_obat' => $request->kd_obat[$label],
-                'nm_obat' => $request->nm_obat[$label],
-                'qty_obat' => $request->qty[$label],
-                'satuan_obat' => $request->satuan[$label],
-                'cara_pakai' => $request->cara_pakai[$label],
-                'tindakan' => '',
-            ];
-            t_label_detail::create($newDataLabelDetail);
-        };
+        //         'kd_obat' => $request->kd_obat[$label],
+        //         'nm_obat' => $request->nm_obat[$label],
+        //         'qty_obat' => $request->qty[$label],
+        //         'satuan_obat' => $request->satuan[$label],
+        //         'cara_pakai' => $request->cara_pakai[$label],
+        //         'tindakan' => '',
+        //     ];
+        //     t_label_detail::create($newDataLabelDetail);
+        // };
 
 
         DB::commit();

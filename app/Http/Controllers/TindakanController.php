@@ -20,6 +20,7 @@ use Yoeunes\Toastr\Facades\Toastr;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Arr;
 
 class TindakanController extends Controller
 {
@@ -276,6 +277,24 @@ class TindakanController extends Controller
             };
         }
 
+        // $insertLabel = [];
+        // foreach ($request->ch_kd_obat as $label => $val) {
+        //     $newDataLabel = [
+        //         'reffID' => $request->kd_trs,
+        //         'Tgl' => Carbon::now(),
+        //         'labelType' => 'Prescription (Resep)',
+        //         'pasienID' => $request->chart_mr,
+        //         'layananID' => $request->chart_layanan,
+        //         'kdReg' => $request->chart_kd_reg,
+        //         'pasienName' => $request->chart_nm_pasien,
+        //         'userID' => Auth::user()->name,
+        //         'ketFile' => '',
+        //         'ketHTML' => htmlentities('<tr><td>' . $request->ch_nm_obat[$label] . '</td><td>' . $request->ch_qty_obat[$label] . '</td><td>' . $request->ch_satuan_obat[$label] . '</td><td>' . $request->ch_cara_pakai[$label] . '</td></tr>')
+        //     ];
+        //     $insertLabel[] = $newDataLabel;
+        // };
+        // t_label_timeline::insert($insertLabel);
+
         $newDataLabel = [
             'reffID' => $request->kd_trs,
             'Tgl' => Carbon::now(),
@@ -286,15 +305,18 @@ class TindakanController extends Controller
             'pasienName' => $request->chart_nm_pasien,
             'userID' => Auth::user()->name,
             'ketFile' => '',
-            'ketHTML' => ''
         ];
-        t_label_timeline::create($newDataLabel);
-
+        $ketHTML = [];
         foreach ($request->ch_kd_obat as $label => $val) {
-            DB::table('t_label_timeline')
-                ->where('reffID', $request->kd_trs)
-                ->update(['ketHTML' => htmlentities('<tr><td>' . $request->ch_nm_obat[$label] . '</td><td>' . $request->ch_qty_obat[$label] . '</td><td>' . $request->ch_satuan_obat[$label] . '</td><td>' . $request->ch_cara_pakai[$label] . '</td></tr>')]);
+            $ketHTML[] = htmlentities('<tr><td>' . $request->ch_nm_obat[$label] . '</td><td>' . $request->ch_qty_obat[$label] . '</td><td>' . $request->ch_satuan_obat[$label] . '</td><td>' . $request->ch_cara_pakai[$label] . '</td></tr>');
         };
+        // array_push($newDataLabel, ['ketHTML' => json_encode($ketHTML)]);
+        // $newDataLabel['ketHTML'][] = json_encode($ketHTML);
+        $newDataLabel['ketHTML'] = json_encode($ketHTML);
+        // dd($ketHTML);
+        // dd($newDataLabel);
+        // $newDataLabel[] = ['ketHTML' => $ketHTML];
+        t_label_timeline::create($newDataLabel);
 
         DB::commit();
 
@@ -307,6 +329,8 @@ class TindakanController extends Controller
         return back();
         // }
     }
+
+
 
     // get timeline pemeriksaan
     public function getTimeline(Request $request)

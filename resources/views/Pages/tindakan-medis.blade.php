@@ -973,12 +973,19 @@
                                 //         resepShowPlg += ``;
                                 //     }
                                 // }
+                                // let str = "Hello, world!";
+                                // let newStr = str.replace(/[,,]/g, ""); // remove all commas from the string
+                                // console.log(newStr); // output: "Hello world!"
 
+                                // let str = "Hello, world!";
+                                // let newStr = str.replace(/,/g, ""); // remove the comma from the string
+                                // console.log(newStr); // output: "Hello world!"
 
                                 var dateFormat = getValue[getVal].Tgl;
                                 var dateView = moment(dateFormat).format(
                                     "dddd, D MMMM YYYY, h:mm:ss a");
                                 let showResepOff = getValue[getVal].ketHTML;
+                                let final = showResepOff.replace(/[",/'']/g, "");
 
                                 $(".isTimelineListAll").append(
                                     `<div class="left card-body">
@@ -1004,7 +1011,7 @@
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                       ${$('<div/>').html(showResepOff).text()} 
+                                                                       ${$('<div/>').html(final).text()} 
                                                                     </tbody>
                                                                 </table>
                                                             </div>
