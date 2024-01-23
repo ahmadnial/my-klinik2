@@ -985,8 +985,11 @@
                                 var dateView = moment(dateFormat).format(
                                     "dddd, D MMMM YYYY, h:mm:ss a");
                                 let showResepOff = getValue[getVal].ketHTML;
+                                let decode = $('<div>').html(showResepOff).text()
                                 let headerCard = getValue[getVal].labelType;
-                                let final = showResepOff.replace(/[",/'']/g, "");
+                                // let ShowTimelineResep = decode.replace(/[",/'']/g, "");
+                                const parser = new DOMParser();
+                                let ShowTimelineResep = parser.parseFromString(decode, "text/html");
 
                                 $(".isTimelineListAll").append(
                                     `<div class="left card-body">
@@ -1012,7 +1015,7 @@
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                       ${$('<div/>').html(final).text()} 
+                                                                       ${showResepOff} 
                                                                     </tbody>
                                                                 </table>
                                                             </div>

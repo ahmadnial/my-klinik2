@@ -363,13 +363,14 @@ class penjualanController extends Controller
             ];
             $ketHTML = [];
             foreach ($request->kd_obat as $label => $val) {
-                $ketHTML[] = htmlentities('<tr><td>' . $request->nm_obat[$label] . '</td><td>' . $request->qty[$label] . '</td><td>' . $request->satuan[$label] . '</td><td>' . $request->cara_pakai[$label] . '</td></tr>');
+                $ketHTML[] = ('<tr><td>' . $request->nm_obat[$label] . '</td><td>' . $request->qty[$label] . '</td><td>' . $request->satuan[$label] . '</td><td>' . $request->cara_pakai[$label] . '</td></tr>');
             };
             $newDataLabel['ketHTML'] = json_encode($ketHTML);
+            dd($newDataLabel);
             t_label_timeline::create($newDataLabel);
 
 
-            DB::commit();
+            // DB::commit();
 
             $sessionFlash = [
                 'message' => 'Saved!',
