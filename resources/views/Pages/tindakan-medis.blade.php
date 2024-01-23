@@ -985,6 +985,7 @@
                                 var dateView = moment(dateFormat).format(
                                     "dddd, D MMMM YYYY, h:mm:ss a");
                                 let showResepOff = getValue[getVal].ketHTML;
+                                let headerCard = getValue[getVal].labelType;
                                 let final = showResepOff.replace(/[",/'']/g, "");
 
                                 $(".isTimelineListAll").append(
@@ -999,10 +1000,10 @@
                                                         <i class="fas fa-user bg-nial"></i>
                                                         <div class="timeline-item">
                                                             <span class="time"><i class="fas fa-clock">&nbsp;</i>${dateView}</span>
-                                                            <h3 class="timeline-header"><a href="#">Prescription</a>&nbsp; <i>(Resep)</i></h3>
+                                                            <h3 class="timeline-header"><a href="#">${headerCard}</a></h3>
                                                             <div class="timeline-body">
                                                                 <table class="col table table-hover table-bordered">
-                                                                    <thead>
+                                                                    <thead class="bg-nial">
                                                                         <tr>
                                                                             <th>Obat</th>
                                                                             <th>Qty</th>
@@ -1018,21 +1019,7 @@
                                                             
                                                         </div>
                                                     </div>
-                                                    <div>
-                                                        <i class="fas fa-comments bg-yellow"></i>
-                                                        <div class="timeline-item">
-                                                            <span class="time"><i class="fas fa-clock"></i></span>
-                                                            <h3 class="timeline-header"><a href="#">Medication</a>&nbsp;  <i>(Obat Pulang)</i></h3>
-                                                            <div class="timeline-body">
-                                                               <table class="col table table-hover table-bordered">
-                                                                    <tbody>
-                                                                       
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                            
-                                                        </div>
-                                                    </div>`
+                                                    `
                                 )
                             }
                         }

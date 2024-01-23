@@ -19,8 +19,7 @@ use Yoeunes\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Session;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Yajra\DataTables\Facades\DataTables;
-use App\Models\t_label_hdr;
-use App\Models\t_label_detail;
+use App\Models\t_label_timeline;
 
 class penjualanController extends Controller
 {
@@ -268,135 +267,125 @@ class penjualanController extends Controller
         //     print_r($QtyCurrent);
         // }
         DB::beginTransaction();
-        // try {
-        $newData = [
-            'kd_trs'        => $request->tp_kd_trs,
-            'kd_order_resep' => $request->tp_kd_order,
-            'layanan_order' => $request->tp_layanan,
-            'dokter'        => $request->tp_dokter,
-            // 'sip_dokter' => $request->,
-            'tgl_trs' => $request->tgl_trs,
-            'lokasi_stock'  => $request->tp_lokasi_stock,
-            'kd_reg'        => $request->tp_kd_reg,
-            'no_mr'         => $request->tp_no_mr,
-            'nm_pasien'  => $request->tp_nama,
-            'alamat'        => $request->tp_alamat,
-            'jenis_kelamin' => $request->tp_jenis_kelamin,
-            'tgl_lahir'     => $request->tp_tgl_lahir,
-            'tipe_tarif'    => $request->tp_tipe_tarif,
-            'total_penjualan' => $request->total_penjualan,
-        ];
-        tp_hdr::create($newData);
-
-        foreach ($request->kd_obat as $key => $xf) {
-            $tpdetail = [
-                'kd_trs'    => $request->tp_kd_trs,
-                'kd_reg'    => $request->tp_kd_reg,
-                'kd_obat'   => $request->kd_obat[$key],
-                'nm_obat'   => $request->nm_obat[$key],
-                // 'dosis'     => $request->kd_obat[$key],
-                'hrg_obat'  => $request->hrg_obat[$key],
-                'qty'       => $request->qty[$key],
-                'diskon'    => $request->diskon[$key],
-                'satuan'    => $request->satuan[$key],
-                // 'tax'       => $request->tax[$key],
-                'sub_total' => $request->sub_total[$key],
-                // // 'etiket',
-                // 'signa' => $request->signa[$key],
-                'cara_pakai' => $request->cara_pakai[$key],
+        try {
+            $newData = [
+                'kd_trs'        => $request->tp_kd_trs,
+                'kd_order_resep' => $request->tp_kd_order,
+                'layanan_order' => $request->tp_layanan,
+                'dokter'        => $request->tp_dokter,
+                // 'sip_dokter' => $request->,
                 'tgl_trs' => $request->tgl_trs,
-                'user' => Auth::user()->name,
-                'tuslah' => $request->tuslah[$key],
-                'embalase' => $request->embalase[$key],
+                'lokasi_stock'  => $request->tp_lokasi_stock,
+                'kd_reg'        => $request->tp_kd_reg,
+                'no_mr'         => $request->tp_no_mr,
+                'nm_pasien'  => $request->tp_nama,
+                'alamat'        => $request->tp_alamat,
+                'jenis_kelamin' => $request->tp_jenis_kelamin,
+                'tgl_lahir'     => $request->tp_tgl_lahir,
+                'tipe_tarif'    => $request->tp_tipe_tarif,
+                'total_penjualan' => $request->total_penjualan,
             ];
-            tp_detail_item::create($tpdetail);
-        }
+            tp_hdr::create($newData);
 
-        foreach ($request->kd_obat as $keyx => $val) {
-            $currentStock = DB::table('tb_stock')->whereIn('kd_obat', [$request->kd_obat[$keyx]])->value('qty');
-            // $currentStockF = preg_replace("/[^0-9]/", "", $currentStock);
-            $Y = (int)$request->qty[$keyx];
-            $qtyAkhir = $currentStock - $Y;
-            $detailKartuStock = [
-                'tanggal_trs' => $request->tgl_trs,
-                'kd_trs' => $request->tp_kd_trs,
-                'kd_obat' => $request->kd_obat[$keyx],
-                'nm_obat' => $request->nm_obat[$keyx],
-                'supplier' => 'Penjualan Apotek',
-                'no_batch' => '-',
-                'expired_date' => '-',
-                'qty_awal' => $currentStock,
-                'qty_masuk' => '0',
-                'qty_keluar' => $request->qty[$keyx],
-                'qty_akhir'  => $qtyAkhir,
-                'hpp_satuan' => $request->hrgHPP[$keyx],
+            foreach ($request->kd_obat as $key => $xf) {
+                $tpdetail = [
+                    'kd_trs'    => $request->tp_kd_trs,
+                    'kd_reg'    => $request->tp_kd_reg,
+                    'kd_obat'   => $request->kd_obat[$key],
+                    'nm_obat'   => $request->nm_obat[$key],
+                    // 'dosis'     => $request->kd_obat[$key],
+                    'hrg_obat'  => $request->hrg_obat[$key],
+                    'qty'       => $request->qty[$key],
+                    'diskon'    => $request->diskon[$key],
+                    'satuan'    => $request->satuan[$key],
+                    // 'tax'       => $request->tax[$key],
+                    'sub_total' => $request->sub_total[$key],
+                    // // 'etiket',
+                    // 'signa' => $request->signa[$key],
+                    'cara_pakai' => $request->cara_pakai[$key],
+                    'tgl_trs' => $request->tgl_trs,
+                    'user' => Auth::user()->name,
+                    'tuslah' => $request->tuslah[$key],
+                    'embalase' => $request->embalase[$key],
+                ];
+                tp_detail_item::create($tpdetail);
+            }
+
+            foreach ($request->kd_obat as $keyx => $val) {
+                $currentStock = DB::table('tb_stock')->whereIn('kd_obat', [$request->kd_obat[$keyx]])->value('qty');
+                // $currentStockF = preg_replace("/[^0-9]/", "", $currentStock);
+                $Y = (int)$request->qty[$keyx];
+                $qtyAkhir = $currentStock - $Y;
+                $detailKartuStock = [
+                    'tanggal_trs' => $request->tgl_trs,
+                    'kd_trs' => $request->tp_kd_trs,
+                    'kd_obat' => $request->kd_obat[$keyx],
+                    'nm_obat' => $request->nm_obat[$keyx],
+                    'supplier' => 'Penjualan Apotek',
+                    'no_batch' => '-',
+                    'expired_date' => '-',
+                    'qty_awal' => $currentStock,
+                    'qty_masuk' => '0',
+                    'qty_keluar' => $request->qty[$keyx],
+                    'qty_akhir'  => $qtyAkhir,
+                    'hpp_satuan' => $request->hrgHPP[$keyx],
+                ];
+                // print_r($currentStock);
+                kartuStockDetail::create($detailKartuStock);
+            }
+            // die();
+
+            foreach ($request->kd_obat as $keys => $val) {
+                $datax =  $request->kd_obat[$keys];
+                $dataQty =  $request->qty[$keys];
+                // $dataIsi =  $request->do_isi_pembelian[$keys];
+                // $X = (int)$dataQty * (int)$dataIsi;
+                $toInt = (int)$dataQty;
+
+                tb_stock::where('kd_obat', [$datax])->decrement("qty", $toInt);
+            }
+
+            // trs_chart_resep::where('kd_trs', $request->tp_kd_trs)->update(['isImplementasi' => "1"]);
+            DB::table('trs_chart_resep')
+                ->where('kd_reg', $request->tp_kd_reg)
+                ->update(['isImplementasi' => "1"]);
+
+            $newDataLabel = [
+                'reffID' => $request->tp_kd_trs,
+                'Tgl' => Carbon::now(),
+                'labelType' => 'medication (Obat Pulang)',
+                'pasienID' => $request->tp_no_mr,
+                'layananID' => $request->tp_layanan,
+                'kdReg' => $request->tp_kd_reg,
+                'pasienName' => $request->tp_nama,
+                'userID' => Auth::user()->name,
+                'ketFile' => '',
             ];
-            // print_r($currentStock);
-            kartuStockDetail::create($detailKartuStock);
+            $ketHTML = [];
+            foreach ($request->kd_obat as $label => $val) {
+                $ketHTML[] = htmlentities('<tr><td>' . $request->nm_obat[$label] . '</td><td>' . $request->qty[$label] . '</td><td>' . $request->satuan[$label] . '</td><td>' . $request->cara_pakai[$label] . '</td></tr>');
+            };
+            $newDataLabel['ketHTML'] = json_encode($ketHTML);
+            t_label_timeline::create($newDataLabel);
+
+
+            DB::commit();
+
+            $sessionFlash = [
+                'message' => 'Saved!',
+                'alert-type' => 'success'
+            ];
+
+            return Redirect::to('/penjualan')->with($sessionFlash);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            $sessionFlashErr = [
+                'message' => 'Error!',
+                'alert-type' => 'error'
+            ];
+            return Redirect::to('/penjualan')->with($sessionFlashErr);
         }
-        // die();
-
-        foreach ($request->kd_obat as $keys => $val) {
-            $datax =  $request->kd_obat[$keys];
-            $dataQty =  $request->qty[$keys];
-            // $dataIsi =  $request->do_isi_pembelian[$keys];
-            // $X = (int)$dataQty * (int)$dataIsi;
-            $toInt = (int)$dataQty;
-
-            tb_stock::where('kd_obat', [$datax])->decrement("qty", $toInt);
-        }
-
-        // trs_chart_resep::where('kd_trs', $request->tp_kd_trs)->update(['isImplementasi' => "1"]);
-        DB::table('trs_chart_resep')
-            ->where('kd_reg', $request->tp_kd_reg)
-            ->update(['isImplementasi' => "1"]);
-
-        // $newDataLabelHdr = [
-        //     'reffID' => $request->tp_kd_trs,
-        //     'Tgl' => Carbon::now(),
-        //     'labelType' => '',
-        //     'pasienID' => $request->tp_no_mr,
-        //     'layananID' => $request->tp_layanan,
-        //     'kdReg' => $request->tp_kd_reg,
-        //     'pasienName' => $request->tp_nama,
-        // ];
-        // t_label_hdr::create($newDataLabelHdr);
-
-        // foreach ($request->kd_obat as $label => $val) {
-        //     $newDataLabelDetail = [
-        //         'reffID' => $request->tp_kd_trs,
-        //         'Tgl' => Carbon::now(),
-        //         'labelType' => '',
-        //         'pasienID' => $request->tp_no_mr,
-
-        //         'kd_obat' => $request->kd_obat[$label],
-        //         'nm_obat' => $request->nm_obat[$label],
-        //         'qty_obat' => $request->qty[$label],
-        //         'satuan_obat' => $request->satuan[$label],
-        //         'cara_pakai' => $request->cara_pakai[$label],
-        //         'tindakan' => '',
-        //     ];
-        //     t_label_detail::create($newDataLabelDetail);
-        // };
-
-
-        DB::commit();
-
-        $sessionFlash = [
-            'message' => 'Saved!',
-            'alert-type' => 'success'
-        ];
-
-        return Redirect::to('/penjualan')->with($sessionFlash);
-        // } catch (\Exception $e) {
-        DB::rollback();
-
-        $sessionFlashErr = [
-            'message' => 'Error!',
-            'alert-type' => 'error'
-        ];
-        return Redirect::to('/penjualan')->with($sessionFlashErr);
-        // }
     }
 
 

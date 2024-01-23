@@ -22,10 +22,13 @@ use App\Http\Controllers\RedirectController;
 // Route::group(['middleware' => 'guest'], function () {
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/ProsesLogin', [AuthController::class, 'ProsesLogin']);
-Route::get('/', [DashboardController::class, 'index']);
 Route::get('/redirect', [RedirectController::class, 'cek']);
 Route::post('/logout', [AuthController::class, 'logout']);
 
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/', [DashboardController::class, 'index']);
+    // your routes
+});
 // Route::get('/redirect', [RedirectController::class, 'cek']);
 // });
 // Route::get('/antrian', [HomeController::class, 'antrian']);

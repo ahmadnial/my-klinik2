@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('t_label_timeline', function (Blueprint $table) {
             $table->id();
             $table->string('reffID', 80);
-            $table->string('Tgl', 15);
+            $table->string('Tgl', 30);
             $table->string('labelType', 100);
             $table->string('pasienID', 50);
             $table->string('layananID', 30);
