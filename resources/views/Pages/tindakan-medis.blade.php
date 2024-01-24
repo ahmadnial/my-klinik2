@@ -964,32 +964,17 @@
                         success: function(isLabel) {
                             var getValue = isLabel;
                             for (var getVal = 0; getVal < getValue.length; getVal++) {
-                                // const tesresep = getValue[getVal].resep;
-                                // let resepShowPlg = "";
-                                // for (i in tesresep) {
-                                //     if (tesresep[i] != null) {
-                                //         resepShowPlg += tesresep[i].ketHTML;
-                                //     } else {
-                                //         resepShowPlg += ``;
-                                //     }
-                                // }
-                                // let str = "Hello, world!";
-                                // let newStr = str.replace(/[,,]/g, ""); // remove all commas from the string
-                                // console.log(newStr); // output: "Hello world!"
-
-                                // let str = "Hello, world!";
-                                // let newStr = str.replace(/,/g, ""); // remove the comma from the string
-                                // console.log(newStr); // output: "Hello world!"
-
                                 var dateFormat = getValue[getVal].Tgl;
-                                var dateView = moment(dateFormat).format(
-                                    "dddd, D MMMM YYYY, h:mm:ss a");
+                                var dateViewHdr = moment(dateFormat).format(
+                                    "dddd, D MMMM YYYY");
+                                var dateViewItem = moment(dateFormat).format(
+                                    "h:mm:ss a");
                                 let showResepOff = getValue[getVal].ketHTML;
                                 let decode = $('<div>').html(showResepOff).text()
                                 let headerCard = getValue[getVal].labelType;
-                                // let ShowTimelineResep = decode.replace(/[",/'']/g, "");
-                                const parser = new DOMParser();
-                                let ShowTimelineResep = parser.parseFromString(decode, "text/html");
+                                let ShowTimelineResep = decode.replace(/[["","",""]/g, "");
+                                // const parser = new DOMParser();
+                                // let ShowTimelineResep = parser.parseFromString(decode, "text/html");
 
                                 $(".isTimelineListAll").append(
                                     `<div class="left card-body">
@@ -997,16 +982,16 @@
                                             <div class="col">
                                                 <div class="timeline">
                                                     <div class="time-label">
-                                                    <span class="bg-red">${dateView}</span>
+                                                    <span class="bg-red">${dateViewHdr}</span>
                                                     </div>
                                                     <div>
                                                         <i class="fas fa-user bg-nial"></i>
                                                         <div class="timeline-item">
-                                                            <span class="time"><i class="fas fa-clock">&nbsp;</i>${dateView}</span>
+                                                            <span class="time"><i class="fas fa-clock">&nbsp;</i>${dateViewItem}</span>
                                                             <h3 class="timeline-header"><a href="#">${headerCard}</a></h3>
                                                             <div class="timeline-body">
                                                                 <table class="col table table-hover table-bordered">
-                                                                    <thead class="bg-nial">
+                                                                    <thead class="" style="background-color: #D9C9FC">
                                                                         <tr>
                                                                             <th>Obat</th>
                                                                             <th>Qty</th>
@@ -1015,14 +1000,16 @@
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                       ${showResepOff} 
+                                                                       ${ShowTimelineResep} 
                                                                     </tbody>
                                                                 </table>
                                                             </div>
-                                                            
                                                         </div>
                                                     </div>
-                                                    `
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>`
                                 )
                             }
                         }

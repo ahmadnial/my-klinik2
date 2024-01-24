@@ -312,7 +312,7 @@ class TindakanController extends Controller
         };
         // array_push($newDataLabel, ['ketHTML' => json_encode($ketHTML)]);
         // $newDataLabel['ketHTML'][] = json_encode($ketHTML);
-        $newDataLabel['ketHTML'] = json_encode($ketHTML);
+        $newDataLabel['ketHTML'] = json_encode($ketHTML, JSON_UNESCAPED_SLASHES);
         // dd($ketHTML);
         // dd($newDataLabel);
         // $newDataLabel[] = ['ketHTML' => $ketHTML];

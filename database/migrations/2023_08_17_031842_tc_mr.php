@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tc_mr', function (Blueprint $table) {
-            $table->bigInteger('fs_mr')->unique();
+            $table->string('fs_mr')->unique();
             $table->string('fs_nama');
             $table->string('fs_tempat_lahir');
             $table->string('fs_tgl_lahir');
