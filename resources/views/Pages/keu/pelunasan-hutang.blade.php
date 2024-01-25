@@ -117,7 +117,7 @@
                             <div class="form-group col-sm-4">
                                 <label for="">Nomor Kuitansi</label>
                                 <input type="text" class="form-control" name="pl_no_kuitansi" id="pl_no_kuitansi"
-                                    value="" placeholder="Input Nomor Faktur" required>
+                                    value="" placeholder="Input Nomor Kuitansi" required>
                             </div>
                         </div>
                         <div class="">

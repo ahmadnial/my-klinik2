@@ -1459,7 +1459,7 @@
         function deleteRow(btn) {
             var row = btn.parentNode.parentNode.parentNode.parentNode.parentNode;
             row.parentNode.removeChild(row);
-            deleteRowReal();
+            deleteRowReal(btn);
         }
 
         function deleteRowReal(btn) {

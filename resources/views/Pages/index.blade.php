@@ -179,7 +179,7 @@
                             </div> --}}
                             <!-- /.d-flex -->
 
-                            <table id="" class="table table-striped table-bordered">
+                            <table id="" class="table table-striped table-bordered table-responsive">
                                 <thead class="bg-nial">
                                     <tr>
                                         <th>Kode DO</th>
@@ -219,7 +219,7 @@
                     </div>
                     <!-- /.card -->
 
-                    <div class="card">
+                    {{-- <div class="card">
                         <div class="card-header border-0">
                             <h3 class="card-title">Soon</h3>
                             <div class="card-tools">
@@ -267,9 +267,8 @@
                                     <span class="text-muted">Soon</span>
                                 </p>
                             </div>
-                            <!-- /.d-flex -->
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 <!-- /.col-md-6 -->
             </div>
