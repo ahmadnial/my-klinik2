@@ -733,6 +733,9 @@
                                         </div>
                                         <textarea id="chart_P" name="chart_P" class="form-control" rows="4"></textarea>
                                     </div>
+                                    <div class="card-resep form-group">
+
+                                    </div>
                                     <div class="showOrHideTdk"></div>
 
                                     <input type="hidden" id="user" name="user_create" value="tes">
@@ -1033,10 +1036,18 @@
 
         function exitModalTindakan() {
             $('#CloseModalTindakan').click()
+            toastr.info('Tindakan Ditambahkan', {
+                timeOut: 200,
+                positionClass: 'toast-top-right',
+            });
         }
 
         function exitModalResep() {
             $('#CloseModalResep').click()
+            toastr.info('Resep Ditambahkan', {
+                timeOut: 200,
+                positionClass: 'toast-top-right',
+            });
         }
 
         // $("#addTindakans").on('hide.bs.modal', function() {
@@ -1368,6 +1379,77 @@
             $('#cara_pakai_resep').val('');
             // $('#ch_hrg_jual').val('');
             // $('.ch_hrg_jual').val('');
+            let prescription = "";
+            // document.getElementById('exitModalResep').onclick = function() {
+            // $('#CloseModalResep').hide();
+            if (obatResep != null) {
+                prescription +=
+                    `<div class="card col-xl col-lg col-md col-sm p-2 card-order-resep">
+                                            <div class="text-left kt-font-md kt-label-font-color-3 card-option card-option-header p-1 px-2"
+                                                data-toggle="modal" data-target="#modalResep" data-orderid="1"
+                                                title="Click to View" style="border-left: 3px solid #ffb822;">
+                                                <i class="fa fa-prescription mr-1"></i> <b>Resep</b>
+                                                <span class="kt-font-sm font-weight-normal kt-font-success"></span>
+                                                <br>
+                                                <span class="kt-font-sm kt-label-font-color-1"></span>
+                                                <div class="collapse show" id="collapseDetailOrderResep1"
+                                                    aria-labelledby="headerOrderResep" data-parent="#btnDetailOrderResep1"
+                                                    style="">
+                                                    <table class="">
+                                                        <tbody class="mt-2">
+                                                            <tr class="mt-2">
+                                                                <td class="mt-2">
+                                                                    <input type="hidden" class="form-control"
+                                                                        id="ch_kd_obat" name="ch_kd_obat[]"
+                                                                        style="border: none;" value="${obatResep}" readonly>
+                                                                </td>
+                                                                <td>
+                                                                <input type="text" id="ch_nm_obat" class="form-control" name="ch_nm_obat[]"
+                                                                    value="${namaobatResep}" style="border: none;">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="hidden" class="form-control"
+                                                                        id="ch_hrg_jual" name="ch_hrg_jual[]"
+                                                                        value="${hrg_jual}" readonly>
+                                                                </td>
+                                                                <td width="70px">
+                                                                    <input type="text" class="form-control"
+                                                                        id="ch_qty_obat" name="ch_qty_obat[]"
+                                                                        value="${qty_obat}" style="border: none;">
+                                                                </td>
+                                                                <td width="80px">
+                                                                    <input type="text" class="form-control"
+                                                                        id="ch_satuan_obat" name="ch_satuan_obat[]"
+                                                                        value="${satuan_jual_obat}"
+                                                                        style="border: none;">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="hidden" class="form-control"
+                                                                        id="ch_signa" name="ch_signa[]"
+                                                                        value="${signa_resep}" readonly>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="hidden" class="form-control"
+                                                                        id="ch_cara_pakai" name="ch_cara_pakai[]"
+                                                                        value="${cara_pakai_resep}" readonly>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="kt-font-sm font-italic font-weight-normal card-option-footer text-right px-2"
+                                                style="border-left: 3px solid #ffb822;" id="btnDetailOrderResep1"
+                                                data-toggle="collapse" data-target="#collapseDetailOrderResep1"
+                                                title="click to show item" aria-expanded="true"
+                                                aria-controls="collapseDetailOrderResep1">
+                                                <span class="kt-label-font-color-1">detail</span>
+                                            </div>
+                                        </div>`;
+            } else {
+                prescription += ``;
+            }
+            // };
 
             $(".resepID").append(
                 `
@@ -1414,42 +1496,8 @@
                `
             );
 
-            $("#CHCreate").append(
-                `
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <input type="text" class="obatResep form-control" id="ch_kd_obat"
-                                    name="ch_kd_obat[]" style="width: 100%" value="${obatResep}" readonly>
-                            </td>
-                            <td>
-                            <input type="text" id="ch_nm_obat" name="ch_nm_obat[]" value="${namaobatResep}">
-                            </td>
-                            <td>
-                                <input type="text" class="form-control" id="ch_qty_obat" name="ch_qty_obat[]" value="${qty_obat}">
-                            </td>
-                            <td>
-                                <input type="text" class="form-control" id="ch_satuan_obat" name="ch_satuan_obat[]" value="${satuan_jual_obat}">
-                            </td>
-                            <td>
-                                <input type="text" class="form-control" id="ch_signa" name="ch_signa[]" value="${signa_resep}">
-                            </td>
-                            <td>
-                                <input type="text" class="form-control" id="ch_cara_pakai" name="ch_cara_pakai[]" value="${cara_pakai_resep}">
-                            </td>
-                            <td>
-                                <input type="text" class="form-control" id="ch_hrg_jual" name="ch_hrg_jual[]" value="${hrg_jual}">
-                            </td>
-                            <td>
-                                <button type="button" class="remove btn btn-xs btn-danger"><i
-                                class="fa fa-trash" onclick="deleteRowReal(this)"></i></button>
-                            </td>
-                               
-                        </tr>
-                    </tbody>
-                </table>
-               `
+            $(".card-resep").append(
+                `${prescription}`
             );
 
             // $("#TESCHCreate").empty();
@@ -1586,13 +1634,25 @@
                         $('#tr_dokter').val(getValue[getVal].chart_dokter);
 
                         const trstdk = getValue[getVal].trstdk;
-                        let html = "";
+                        let tindakan = "";
                         for (i in trstdk) {
                             if (trstdk[i].nm_trf != null) {
-                                html +=
-                                    `<tr><td>${trstdk[i].nm_trf.nm_tindakan}</td></tr>`;
+                                tindakan +=
+                                    `<hr>
+                                        <div class="tindakan callout callout-danger">
+                                            <table class="table-hover">
+                                                <thead class="">
+                                                    <tr>
+                                                        <th>Tindakan</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="TimelineTdk">
+                                                    <tr><td>${trstdk[i].nm_trf.nm_tindakan}</td></tr>
+                                                </tbody>
+                                            </table>
+                                        </div>`;
                             } else {
-                                html += ``;
+                                tindakan += ``;
                             }
                         }
 
@@ -1720,19 +1780,7 @@
                                              <button type="disable" id="" class="btn btn-danger btn-xs mb-2">Plan</button>
                                             <textarea id="" class="show_chart_P form-control" rows="4" style="border:none;" readonly>${rmvNullP}</textarea>
                                         </div>
-                                        <hr>
-                                        <div class="tindakan callout callout-danger">
-                                            <table class="table-hover">
-                                                <thead class="">
-                                                    <tr>
-                                                        <th>Tindakan</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="TimelineTdk">
-                                                        ${html}
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                        ${tindakan}
 
                                         <hr>
                                         <div class="resep callout callout-success">
