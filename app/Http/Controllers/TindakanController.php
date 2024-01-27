@@ -294,29 +294,30 @@ class TindakanController extends Controller
             //     $insertLabel[] = $newDataLabel;
             // };
             // t_label_timeline::insert($insertLabel);
-
-            $newDataLabel = [
-                'reffID' => $request->kd_trs,
-                'Tgl' => Carbon::now(),
-                'labelType' => 'Prescription (Resep)',
-                'pasienID' => $request->chart_mr,
-                'layananID' => $request->chart_layanan,
-                'kdReg' => $request->chart_kd_reg,
-                'pasienName' => $request->chart_nm_pasien,
-                'userID' => Auth::user()->name,
-                'ketFile' => '',
-            ];
-            $ketHTML = [];
-            foreach ($request->ch_kd_obat as $label => $val) {
-                $ketHTML[] = htmlentities('<tr><td>' . $request->ch_nm_obat[$label] . '</td><td>' . $request->ch_qty_obat[$label] . '</td><td>' . $request->ch_satuan_obat[$label] . '</td><td>' . $request->ch_cara_pakai[$label] . '</td></tr>');
-            };
-            // array_push($newDataLabel, ['ketHTML' => json_encode($ketHTML)]);
-            // $newDataLabel['ketHTML'][] = json_encode($ketHTML);
-            $newDataLabel['ketHTML'] = json_encode($ketHTML, JSON_UNESCAPED_SLASHES);
-            // dd($ketHTML);
-            // dd($newDataLabel);
-            // $newDataLabel[] = ['ketHTML' => $ketHTML];
-            t_label_timeline::create($newDataLabel);
+            if ($request->ch_kd_obat != '') {
+                $newDataLabel = [
+                    'reffID' => $request->kd_trs,
+                    'Tgl' => Carbon::now(),
+                    'labelType' => 'Prescription (Resep)',
+                    'pasienID' => $request->chart_mr,
+                    'layananID' => $request->chart_layanan,
+                    'kdReg' => $request->chart_kd_reg,
+                    'pasienName' => $request->chart_nm_pasien,
+                    'userID' => Auth::user()->name,
+                    'ketFile' => '',
+                ];
+                $ketHTML = [];
+                foreach ($request->ch_kd_obat as $label => $val) {
+                    $ketHTML[] = htmlentities('<tr><td>' . $request->ch_nm_obat[$label] . '</td><td>' . $request->ch_qty_obat[$label] . '</td><td>' . $request->ch_satuan_obat[$label] . '</td><td>' . $request->ch_cara_pakai[$label] . '</td></tr>');
+                };
+                // array_push($newDataLabel, ['ketHTML' => json_encode($ketHTML)]);
+                // $newDataLabel['ketHTML'][] = json_encode($ketHTML);
+                $newDataLabel['ketHTML'] = json_encode($ketHTML, JSON_UNESCAPED_SLASHES);
+                // dd($ketHTML);
+                // dd($newDataLabel);
+                // $newDataLabel[] = ['ketHTML' => $ketHTML];
+                t_label_timeline::create($newDataLabel);
+            }
 
             DB::commit();
 
@@ -325,7 +326,7 @@ class TindakanController extends Controller
             // return redirect()->route('/tindakan-medis');
         } catch (\Exception $e) {
             DB::rollback();
-            toastr()->error('Gagal Tersimpan! Hubungi Admin');
+            toastr()->error('Gagal Tersimpan!');
             return back();
         }
     }
