@@ -804,14 +804,22 @@
                 data: {
                     fr_kd_reg: regID
                 },
-                success: function(isChartID) {
-                    toastr.success('Void Success!', {
-                        timeOut: 2000,
-                        preventDuplicates: true,
-                        positionClass: 'toast-top-right',
-                    });
-                    window.location.replace("{{ url('registrasi') }}")
-
+                success: function(sessionFlash) {
+                    if (sessionFlash == 'Error') {
+                        toastr.error('Register Locked! Sudah Ada Transaksi Lain', {
+                            timeOut: 2000,
+                            preventDuplicates: true,
+                            positionClass: 'toast-top-right',
+                        });
+                        $('#voidReg').modal('hide');
+                    } else {
+                        toastr.success('Register Void!', {
+                            timeOut: 2000,
+                            preventDuplicates: true,
+                            positionClass: 'toast-top-right',
+                        });
+                        window.location.reload()
+                    }
                 }
             })
 

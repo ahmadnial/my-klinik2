@@ -153,14 +153,23 @@ class registrasiController extends Controller
     public function voidRegister(Request $request)
     {
         // $reg = registrasiCreate::where('fr_kd_reg', '=', $request->regID)->first();
-        $cekTrs = trs_chart::where('kd_reg', $request->regID)->pluck('kd_reg');
+        $cekTrs = trs_chart::where('kd_reg', $request->regID)->value('kd_reg');
         $cekResep = trs_chart_resep::where('kd_reg', $request->regID)->pluck('kd_reg');
 
-        dd($cekTrs);
-        if ($cekTrs != $request->regID && $cekResep != $request->regID) {
+        // dd($cekTrs);
+        if ($cekTrs == $request->regID) {
+            $sessionFlash = [
+                'Error'
+            ];
+            // return response()->json($sessionFlash);
+        } else {
             DB::table('ta_registrasi')->where('fr_kd_reg', $request->regID)->update(['deleted_at' => Carbon::now()]);
+            $sessionFlash = [
+                'Success'
+            ];
+            // $reg->delete();
+            // return back();
         }
-        // $reg->delete();
-        return back();
+        return response()->json($sessionFlash);
     }
 }
