@@ -76,6 +76,7 @@ class registrasiController extends Controller
 
     public function editRegister(Request $request)
     {
+        // dd($request->all());
         $d =  DB::table('ta_registrasi')->where('fr_kd_reg', $request->fr_kd_reg)->update([
             'fr_tgl_reg' => $request->fr_tgl_reg,
             'fr_layanan' => $request->fr_layanan,

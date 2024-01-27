@@ -475,7 +475,7 @@
                         </div> --}}
                         <div class="form-group col-sm-12">
                             <label for="">Keluhan Utama</label>
-                            <textarea type="text" class="form-control" name="keluhan_utama" id="keluhan_utama">{{ $e->keluhan_utama }}</textarea>
+                            <textarea type="text" class="form-control" name="keluhan_utama" id="keluhan_utama_e">{{ $e->keluhan_utama }}</textarea>
                         </div>
                         <div class="form-group col-sm-12">
                             <label for="">Alergi</label>
@@ -742,6 +742,7 @@
             var fr_dokter = $('#fr_dokter_e').val();
             var fr_jaminan = $('#fr_jaminan_e').val();
             var fr_session_poli = $('#fr_session_poli_e').val();
+            var keluhan_utama = $('#keluhan_utama_e').val();
             // var fr_bb = $('#fr_bb').val();
             // var fr_alergi = $('#fr_alergi').val();
             // var fr_user = $('#fr_user_e').val();
@@ -760,6 +761,7 @@
                         fr_dokter: fr_dokter,
                         fr_jaminan: fr_jaminan,
                         fr_session_poli: fr_session_poli,
+                        keluhan_utama: keluhan_utama
                         // fr_bb: fr_bb,
                         // fr_alergi: fr_alergi,
                         // fr_user: fr_user
