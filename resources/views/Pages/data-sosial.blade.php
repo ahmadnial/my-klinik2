@@ -374,7 +374,7 @@
                             <div class="form-group col-sm-6">
                                 <label class="col-form-label" for="kota">Kabupaten / Kota</label>
                                 <div class="col">
-                                    <select class="form-control" name="kota" id="kota" required>
+                                    <select class="form-control" name="kota" id="kota">
                                         <option value=""></option>
                                     </select>
                                 </div>
@@ -382,7 +382,7 @@
                             <div class="form-group col-sm-6">
                                 <label class="col-form-label" for="kecamatan">Kecamatan</label>
                                 <div class="col">
-                                    <select class="form-control" name="kecamatan" id="kecamatan" required>
+                                    <select class="form-control" name="kecamatan" id="kecamatan">
                                         <option value=""></option>
                                     </select>
                                 </div>
@@ -390,7 +390,7 @@
                             <div class="form-group col-sm-6">
                                 <label class="col-form-label" for="desa">Kelurahan</label>
                                 <div class="col">
-                                    <select class="form-control" name="desa" id="desa" required>
+                                    <select class="form-control" name="desa" id="desa">
                                         <option value=""></option>
                                     </select>
                                 </div>
@@ -592,7 +592,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: "{{ route('edit-dasos') }}",
+                url: "{{ url('edit-dasos') }}",
                 type: "POST",
                 data: {
                     fs_mr: efs_mr,
@@ -610,13 +610,14 @@
                     fs_pendidikan: efs_pendidikan,
                     fs_status_kawin: efs_status_kawin,
                     fs_alergi: efs_alergi,
-                    fs_no_hp: efs_no_hp,
+                    fs_no_hp: efs_no_hp
                 },
-                success: function(y) {
+                success: function(sessionFlash) {
+                    // alert(sessionFlashErr);
                     $('#EditDasos').modal('hide');
                     // window.location.replace("{{ url('data-sosial') }}")
                     // getAllDss();
-                    toastr.success('Saved');
+                    toastr.success(sessionFlash);
                 }
             });
         }

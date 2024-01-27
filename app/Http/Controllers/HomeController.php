@@ -27,14 +27,14 @@ class HomeController extends Controller
 
     public function dasos()
     {
-        $num_mr = str_pad(000001, 6, 0, STR_PAD_LEFT);
+        $num_mr = str_pad(0000001, 7, 0, STR_PAD_LEFT);
         $cekid = dataSosialCreate::count();
         if ($cekid == 0) {
-            $mr =  '2022'  . $num_mr;
+            $mr =  $num_mr;
         } else {
             $continue = dataSosialCreate::all()->last();
-            $de = substr($continue->fs_mr, -3);
-            $mr = '2022' . str_pad(($de + 1), 6, '0', STR_PAD_LEFT);
+            $de = $continue->fs_mr;
+            $mr =  str_pad(($de + 1), 7, '0', STR_PAD_LEFT);
             // dd($kd_reg);
         };
         // if (request()->ajax()) {

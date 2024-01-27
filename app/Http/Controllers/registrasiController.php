@@ -11,6 +11,7 @@ use RealRashid\SweetAlert\Toaster;
 use Yoeunes\Toastr\Toastr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Redirect;
 
 
 class registrasiController extends Controller
@@ -98,7 +99,9 @@ class registrasiController extends Controller
      */
     public function editDasos(Request $request)
     {
-        $y =  DB::table('tc_mr')->where('fs_mr', $request->efs_mr)->update([
+        // dd($request->all());
+
+        DB::table('tc_mr')->where('fs_mr', $request->efs_mr)->update([
             // 'fs_mr' => $request->efs_mr,
             'fs_nama' => $request->efs_nama,
             'fs_tempat_lahir' => $request->efs_tempat_lahir,
@@ -117,14 +120,21 @@ class registrasiController extends Controller
             'fs_no_hp' => $request->efs_no_hp,
             // 'fs_user' => $request->efs_user,
         ]);
-        // dd($request->all());
-        return response()->json($y);
+        // dd($y);
+        // return response()->json($y);
         // if ($y) {
-        //     toastr()->success('Edit Data Berhasil!');
-        //     return back();
+        $sessionFlash = [
+            'message' => 'Saved!',
+            'alert-type' => 'success'
+        ];
+
+        return response()->json($sessionFlash);
         // } else {
-        //     toastr()->error('Gagal Tersimpan!');
-        //     return back();
+        //     $sessionFlashErr = [
+        //         'message' => 'Error!',
+        //         'alert-type' => 'error'
+        //     ];
+        //     return response()->json($sessionFlashErr);
         // }
     }
 
