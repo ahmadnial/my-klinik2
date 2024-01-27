@@ -1379,15 +1379,10 @@
             $('#cara_pakai_resep').val('');
             // $('#ch_hrg_jual').val('');
             // $('.ch_hrg_jual').val('');
-            let prescription = "";
-            // document.getElementById('exitModalResep').onclick = function() {
-            // $('#CloseModalResep').hide();
-            if (obatResep != null) {
-                prescription +=
-                    `<div class="card col-xl col-lg col-md col-sm p-2 card-order-resep">
-                                            <div class="text-left kt-font-md kt-label-font-color-3 card-option card-option-header p-1 px-2"
-                                                data-toggle="modal" data-target="#modalResep" data-orderid="1"
-                                                title="Click to View" style="border-left: 3px solid #ffb822;">
+            let prescription = `<div class="card col-xl col-lg col-md col-sm p-2 card-order-resep">
+                                    <div class="text-left font-md label-font-color-3 card-option card-option-header p-1 px-2"
+                                        data-toggle="modal" data-target="#modalResep" data-orderid="1"
+                                            title="Click to View" style="border-left: 3px solid #ffb822;">
                                                 <i class="fa fa-prescription mr-1"></i> <b>Resep</b>
                                                 <span class="kt-font-sm font-weight-normal kt-font-success"></span>
                                                 <br>
@@ -1396,47 +1391,57 @@
                                                     aria-labelledby="headerOrderResep" data-parent="#btnDetailOrderResep1"
                                                     style="">
                                                     <table class="">
-                                                        <tbody class="mt-2">
-                                                            <tr class="mt-2">
-                                                                <td class="mt-2">
-                                                                    <input type="hidden" class="form-control"
-                                                                        id="ch_kd_obat" name="ch_kd_obat[]"
-                                                                        style="border: none;" value="${obatResep}" readonly>
-                                                                </td>
-                                                                <td>
-                                                                <input type="text" id="ch_nm_obat" class="form-control" name="ch_nm_obat[]"
-                                                                    value="${namaobatResep}" style="border: none;">
-                                                                </td>
-                                                                <td>
-                                                                    <input type="hidden" class="form-control"
-                                                                        id="ch_hrg_jual" name="ch_hrg_jual[]"
-                                                                        value="${hrg_jual}" readonly>
-                                                                </td>
-                                                                <td width="70px">
-                                                                    <input type="text" class="form-control"
-                                                                        id="ch_qty_obat" name="ch_qty_obat[]"
-                                                                        value="${qty_obat}" style="border: none;">
-                                                                </td>
-                                                                <td width="80px">
-                                                                    <input type="text" class="form-control"
-                                                                        id="ch_satuan_obat" name="ch_satuan_obat[]"
-                                                                        value="${satuan_jual_obat}"
-                                                                        style="border: none;">
-                                                                </td>
-                                                                <td>
-                                                                    <input type="hidden" class="form-control"
-                                                                        id="ch_signa" name="ch_signa[]"
-                                                                        value="${signa_resep}" readonly>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="hidden" class="form-control"
-                                                                        id="ch_cara_pakai" name="ch_cara_pakai[]"
-                                                                        value="${cara_pakai_resep}" readonly>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+                                                        <tbody class="mt-2">`;
+            // document.getElementById('exitModalResep').onclick = function() {
+            // $('#CloseModalResep').hide();
+            if (obatResep != null) {
+                prescription +=
+                    `
+                       <tr class="mt-2">
+                           <td class="mt-2">
+                               <input type="hidden" class="form-control"
+                                   id="ch_kd_obat" name="ch_kd_obat[]"
+                                   style="border: none;" value="${obatResep}" readonly>
+                           </td>
+                           <td>
+                           <input type="text" id="ch_nm_obat" class="form-control" name="ch_nm_obat[]"
+                               value="${namaobatResep}" style="border: none;" readonly>
+                           </td>
+                           <td>
+                               <input type="hidden" class="form-control"
+                                   id="ch_hrg_jual" name="ch_hrg_jual[]"
+                                   value="${hrg_jual}" readonly>
+                           </td>
+                           <td width="70px">
+                               <input type="text" class="form-control"
+                                   id="ch_qty_obat" name="ch_qty_obat[]"
+                                   value="${qty_obat}" style="border: none;" readonly>
+                           </td>
+                           <td width="80px">
+                               <input type="text" class="form-control"
+                                   id="ch_satuan_obat" name="ch_satuan_obat[]"
+                                   value="${satuan_jual_obat}"
+                                   style="border: none;" readonly>
+                           </td>
+                           <td>
+                               <input type="hidden" class="form-control"
+                                   id="ch_signa" name="ch_signa[]"
+                                   value="${signa_resep}" readonly>
+                           </td>
+                           <td>
+                               <input type="text" class="form-control"
+                                   id="ch_cara_pakai" name="ch_cara_pakai[]"
+                                   value="${cara_pakai_resep}" readonly  style="border: none;">
+                           </td>
+                           <td>
+                                <button type="button" class="remove btn btn-xs btn-danger"><i
+                                class="fa fa-trash" onclick="deleteRow(this)"></i></button>
+                            </td>
+                       </tr>
+                   `;
+                prescription += `</tbody>
+                                    </table>
+                                        </div>
                                             </div>
                                             <div class="kt-font-sm font-italic font-weight-normal card-option-footer text-right px-2"
                                                 style="border-left: 3px solid #ffb822;" id="btnDetailOrderResep1"
@@ -1635,25 +1640,18 @@
 
                         const trstdk = getValue[getVal].trstdk;
                         let tindakan = "";
+
                         for (i in trstdk) {
                             if (trstdk[i].nm_trf != null) {
                                 tindakan +=
-                                    `<hr>
-                                        <div class="tindakan callout callout-danger">
-                                            <table class="table-hover">
-                                                <thead class="">
-                                                    <tr>
-                                                        <th>Tindakan</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="TimelineTdk">
-                                                    <tr><td>${trstdk[i].nm_trf.nm_tindakan}</td></tr>
-                                                </tbody>
-                                            </table>
-                                        </div>`;
+                                    `<tr><td>${trstdk[i].nm_trf.nm_tindakan}</td></tr>`;
                             } else {
                                 tindakan += ``;
                             }
+
+                            // if (trstdk[i].nm_trf == null) {
+                            //     $('#TimelineTdk').hide();
+                            // }
                         }
 
                         const resep = getValue[getVal].resep;
@@ -1750,20 +1748,20 @@
                                             <table class="table" style="border:none;">
                                             <tbody style="background-color:#edfafa; border:none">
                                                 <tr>
-                                                    <td>BW :${getValue[getVal].ttv_BW}(Kg)</td>
-                                                    <td>BH :${getValue[getVal].ttv_BH}(CM)</td>
-                                                    <td>BT :${getValue[getVal].ttv_BT}(C)</td>
+                                                    <td>BW :${getValue[getVal].ttv_BW ?? ''}(Kg)</td>
+                                                    <td>BH :${getValue[getVal].ttv_BH ?? ''}(CM)</td>
+                                                    <td>BT :${getValue[getVal].ttv_BT ?? ''}(C)</td>
                                                     
                                                 </tr>
                                                 <tr>
-                                                    <td>BPs :${getValue[getVal].ttv_BPs}(mmHg)</td>
-                                                    <td>BPd :${getValue[getVal].ttv_BPd}(mmHg)</td>
-                                                    <td>HR  :${getValue[getVal].ttv_HR}(x/mnt)</td>
+                                                    <td>BPs :${getValue[getVal].ttv_BPs ?? ''}(mmHg)</td>
+                                                    <td>BPd :${getValue[getVal].ttv_BPd ?? ''}(mmHg)</td>
+                                                    <td>HR  :${getValue[getVal].ttv_HR ?? ''}(x/mnt)</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>RR  :${getValue[getVal].ttv_RR}(x/mnt)</td>
-                                                    <td>SN  :${getValue[getVal].ttv_SN}</td>
-                                                    <td>SpO2:${getValue[getVal].ttv_SPO2}(%)</td>
+                                                    <td>RR  :${getValue[getVal].ttv_RR ?? ''}(x/mnt)</td>
+                                                    <td>SN  :${getValue[getVal].ttv_SN ?? ''}</td>
+                                                    <td>SpO2:${getValue[getVal].ttv_SPO2 ?? ''}(%)</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -1780,14 +1778,25 @@
                                              <button type="disable" id="" class="btn btn-danger btn-xs mb-2">Plan</button>
                                             <textarea id="" class="show_chart_P form-control" rows="4" style="border:none;" readonly>${rmvNullP}</textarea>
                                         </div>
-                                        ${tindakan}
-
+                                        <hr>
+                                        <div class="tindakan callout callout-danger" id="TimelineTdk">
+                                            <table class="table-hover">
+                                                <thead class="">
+                                                    <tr>
+                                                        <th>Tindakan</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="TimelineTdk">
+                                                    ${tindakan}
+                                                </tbody>
+                                            </table>
+                                        </div>
                                         <hr>
                                         <div class="resep callout callout-success">
                                             <table class="table-hover">
                                                 <thead class="">
                                                     <tr>
-                                                        <th>Resep</th>
+                                                        <th><i class="fa fa-prescription"></i>&nbsp;Resep</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="TimelineResep">
@@ -1836,16 +1845,16 @@
                 success: function(isChartID) {
                     var getValueChart = isChartID;
                     $.each(isChartID, function(key, chartvalue) {
-                        // const trstdk = chartvalue.trstdk;
-                        // let tdk = "";
-                        // for (i in trstdk) {
-                        //     if (trstdk[i].nm_trf != null) {
-                        //         tdk +=
-                        //             `<option value="${trstdk[i].nm_tarif}">${trstdk[i].nm_trf.nm_tindakan}</option>`;
-                        //     } else {
-                        //         tdk += ``;
-                        //     }
-                        // }
+                        const trstdk = chartvalue.trstdk;
+                        let tdk = "";
+                        for (i in trstdk) {
+                            if (trstdk[i].nm_trf != null) {
+                                tdk +=
+                                    `<option value="${trstdk[i].nm_tarif}" selected>${trstdk[i].nm_trf.nm_tindakan}</option>`;
+                            } else {
+                                tdk += ``;
+                            }
+                        }
                         // console.log(chartvalue);
                         $('#chart_S').val(chartvalue.chart_S)
                         $('#chart_O').val(chartvalue.chart_O)
@@ -1862,7 +1871,8 @@
                         $('#ttv_RR').val(chartvalue.ttv_RR)
                         $('#ttv_SN').val(chartvalue.ttv_SN)
                         $('#ttv_SPO2').val(chartvalue.ttv_SPO2)
-                        // $('#nm_tarifXXXX').val(tdk)
+                        $('#nm_tarif').empty()
+                        $('#nm_tarif').append(`${tdk}`)
 
                     })
                 }
@@ -1888,6 +1898,11 @@
             var ttv_RR = $('#ttv_RR').val();
             var ttv_SN = $('#ttv_SN').val();
             var ttv_SPO2 = $('#ttv_SPO2').val();
+            var getTarif = $('#nm_tarif').val();
+            var nm_tariff = [];
+            for (i = 0; i < getTarif.length; i++) {
+                nm_tariff.push([getTarif[i].nm_tarif]);
+            }
 
             // var nm_tarif = [];
             // var sub_total = $('#sub_total').val();
@@ -1918,6 +1933,7 @@
                     ttv_RR: ttv_RR,
                     ttv_SN: ttv_SN,
                     ttv_SPO2: ttv_SPO2,
+                    nm_tarif: nm_tariff
                 },
                 cache: false,
                 success: function(dataResult) {
