@@ -832,7 +832,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="container">
-                        @if (Auth::user()->id == 1)
+                        @if (Auth::user()->id == 4 || Auth::user()->id == 13 || Auth::user()->id == 14)
                             <div class="">
                                 <div class="callout callout-danger bg-light">
                                     <label for="">Tarif Dasar</label>
