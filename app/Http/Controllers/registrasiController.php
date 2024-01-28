@@ -12,6 +12,7 @@ use Yoeunes\Toastr\Toastr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
 
 
 class registrasiController extends Controller
@@ -102,7 +103,7 @@ class registrasiController extends Controller
     {
         // dd($request->all());
 
-        DB::table('tc_mr')->where('fs_mr', $request->efs_mr)->update([
+        $y = DB::table('tc_mr')->where('fs_mr', $request->efs_mr)->update([
             // 'fs_mr' => $request->efs_mr,
             'fs_nama' => $request->efs_nama,
             'fs_tempat_lahir' => $request->efs_tempat_lahir,
@@ -119,24 +120,19 @@ class registrasiController extends Controller
             'fs_pendidikan' => $request->efs_pendidikan,
             'fs_status_kawin' => $request->efs_status_kawin,
             'fs_no_hp' => $request->efs_no_hp,
-            // 'fs_user' => $request->efs_user,
+            'fs_user' => Auth::user()->name,
         ]);
         // dd($y);
-        // return response()->json($y);
-        // if ($y) {
-        $sessionFlash = [
-            'message' => 'Saved!',
-            'alert-type' => 'success'
-        ];
-
+        if ($y) {
+            $sessionFlash = [
+                'Success'
+            ];
+        } else {
+            $sessionFlash = [
+                'Error'
+            ];
+        }
         return response()->json($sessionFlash);
-        // } else {
-        //     $sessionFlashErr = [
-        //         'message' => 'Error!',
-        //         'alert-type' => 'error'
-        //     ];
-        //     return response()->json($sessionFlashErr);
-        // }
     }
 
 

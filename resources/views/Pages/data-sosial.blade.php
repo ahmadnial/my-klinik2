@@ -613,11 +613,21 @@
                     fs_no_hp: efs_no_hp
                 },
                 success: function(sessionFlash) {
-                    // alert(sessionFlashErr);
-                    $('#EditDasos').modal('hide');
-                    // window.location.replace("{{ url('data-sosial') }}")
-                    // getAllDss();
-                    toastr.success(sessionFlash);
+                    if (sessionFlash == 'Error') {
+                        toastr.error('Some Error Occured!', {
+                            timeOut: 2000,
+                            preventDuplicates: true,
+                            positionClass: 'toast-top-right',
+                        });
+                        $('#EditDasos').modal('hide');
+                    } else {
+                        toastr.success('Saved!', {
+                            timeOut: 2000,
+                            preventDuplicates: true,
+                            positionClass: 'toast-top-right',
+                        });
+                        // window.location.reload()
+                    }
                 }
             });
         }

@@ -785,14 +785,14 @@
                             <button type="button" class="nm_tarif_add btn btn-xs btn-primary float-right">add more
                             </button>
                         </div> --}}
-                        <div class="mt-4">
+                        <div class="">
                             {{-- <table class="table table-bordered">
                                 <tbody id="nm_tarif_plus">
                                     <tr>
                                         <td> --}}
                             <label for="">Tarif/Tindakan Tambahan</label>
-                            <select class="nm_tarif form-control" multiple style="width:100%;" id="nm_tarif"
-                                name="nm_tarif[]">
+                            <select class="nm_tarif form-control-multiple" style="width:100%;" id="nm_tarif"
+                                name="nm_tarif[]" multiple>
                                 {{-- <option value="" selected></option> --}}
                                 <option value=""></option>
                                 @foreach ($isTindakanTarif as $t)
