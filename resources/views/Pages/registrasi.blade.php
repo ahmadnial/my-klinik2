@@ -58,11 +58,11 @@
                                         @endphp
                                     </td>
                                     <td>
-                                        @if ($item->fs_tgl_kunjungan_terakhir != '')
+                                        {{-- @if ($item->fs_tgl_kunjungan_terakhir != '')
                                             <span class="badge badge-primary">Pasien Lama</span>
                                         @else
                                             <span class="badge badge-warning text-white">Pasien Baru</span>
-                                        @endif
+                                        @endif --}}
                                     </td>
                                     <td>
                                         <button class="btn btn-xs btn-success"
@@ -104,7 +104,7 @@
                                 value="{{ $dateNow }}">
                         </div>
                         <div class="form-group col-sm-6">
-                            <label for="">Nama Pasien/No. MR</label>
+                            <label for="">Nama Pasien</label>
                             <select class="form-control-pasien" id="fr_mr" style="width: 100%;" name="fr_mr"
                                 onchange="getData()"></select>
                         </div>
@@ -544,7 +544,7 @@
         var path = "{{ route('registrasiSearch') }}";
 
         $('#fr_mr').select2({
-            placeholder: 'Nama Pasien / no.MR',
+            placeholder: 'Nama Pasien',
             ajax: {
                 url: path,
                 dataType: 'json',

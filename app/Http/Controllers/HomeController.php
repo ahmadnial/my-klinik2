@@ -67,15 +67,14 @@ class HomeController extends Controller
     public function registrasi()
     {
         $num = str_pad(00000001, 8, 0, STR_PAD_LEFT);
-        $cekid = registrasiCreate::count();
-        if ($cekid == 0) {
+        $cekid = registrasiCreate::withTrashed()->get();
+        if ($cekid == '') {
             $kd_reg =  'RG'  . $num;
         } else {
-            // $continue = registrasiCreate::all()->last();
-            $continue = DB::table('ta_registrasi')->latest('created_at')->first();
+            $continue = registrasiCreate::withTrashed()->latest('created_at')->first();
+            // $continue = DB::table('ta_registrasi')->withTrashed()->latest('created_at')->first();
             $de = substr($continue->fr_kd_reg, -3);
             $kd_reg = 'RG' . str_pad(($de + 1), 8, '0', STR_PAD_LEFT);
-            // dd($kd_reg);
         };
 
         $layanan = mstr_layanan::all();
