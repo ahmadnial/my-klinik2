@@ -567,8 +567,12 @@
                         $('#efs_alergi').val(dasos.fs_alergi);
                         $('#efs_no_hp').val(dasos.fs_no_hp);
                         const timeStampLastSave = dasos.updated_at;
-                        var dateView = moment(timeStampLastSave).format(
-                            "D MMMM YYYY, h:mm:ss a");
+                        if (timeStampLastSave == null) {
+                            var dateView = '';
+                        } else {
+                            var dateView = moment(timeStampLastSave).format(
+                                "D MMMM YYYY, h:mm:ss a");
+                        }
                         const lastSave = dasos.fs_user + '   ' + dateView;
                         $('#last_save_by').val(lastSave);
                     })
