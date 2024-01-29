@@ -102,24 +102,25 @@ class registrasiController extends Controller
     public function editDasos(Request $request)
     {
         // dd($request->all());
-
-        $y = DB::table('tc_mr')->where('fs_mr', $request->efs_mr)->update([
+        // $xc = DB::table('tc_mr')->where('fs_mr', $request->fs_mr)->get();
+        // dd($xc);
+        $y = DB::table('tc_mr')->where('fs_mr', $request->fs_mr)->update([
             // 'fs_mr' => $request->efs_mr,
-            'fs_nama' => $request->efs_nama,
-            'fs_tempat_lahir' => $request->efs_tempat_lahir,
-            'fs_tgl_lahir' => $request->efs_tgl_lahir,
-            'fs_jenis_kelamin' => $request->efs_jenis_kelamin,
-            'fs_jenis_identitas' => $request->efs_jenis_identitas,
-            'fs_no_identitas' => $request->efs_no_identitas,
-            'fs_nm_ibu_kandung' => $request->efs_nm_ibu_kandung,
-            'fs_alamat' => $request->efs_alamat,
-            'fs_agama' => $request->efs_agama,
-            'fs_suku' => $request->efs_suku,
-            'fs_bahasa' => $request->efs_bahasa,
-            'fs_pekerjaan' => $request->efs_pekerjaan,
-            'fs_pendidikan' => $request->efs_pendidikan,
-            'fs_status_kawin' => $request->efs_status_kawin,
-            'fs_no_hp' => $request->efs_no_hp,
+            'fs_nama' => $request->fs_nama,
+            'fs_tempat_lahir' => $request->fs_tempat_lahir,
+            'fs_tgl_lahir' => $request->fs_tgl_lahir,
+            'fs_jenis_kelamin' => $request->fs_jenis_kelamin,
+            'fs_jenis_identitas' => $request->fs_jenis_identitas,
+            'fs_no_identitas' => $request->fs_no_identitas,
+            'fs_nm_ibu_kandung' => $request->fs_nm_ibu_kandung,
+            'fs_alamat' => $request->fs_alamat,
+            'fs_agama' => $request->fs_agama,
+            'fs_suku' => $request->fs_suku,
+            'fs_bahasa' => $request->fs_bahasa,
+            'fs_pekerjaan' => $request->fs_pekerjaan,
+            'fs_pendidikan' => $request->fs_pendidikan,
+            'fs_status_kawin' => $request->fs_status_kawin,
+            'fs_no_hp' => $request->fs_no_hp,
             'fs_user' => Auth::user()->name,
         ]);
         // dd($y);

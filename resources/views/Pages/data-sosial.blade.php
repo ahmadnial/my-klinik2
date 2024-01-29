@@ -297,8 +297,7 @@
                         <div class="row">
                             <div class="form-group col-sm-6">
                                 <label for="">No. Rekam Medis</label>
-                                <input type="text" class="form-control" name="fs_mr" id="efs_mr" value=""
-                                    readonly>
+                                <input type="text" class="form-control" name="fs_mr" id="efs_mr" readonly>
                             </div>
                             <div class="form-group col-sm-6">
                                 <label for="">Nama</label>
@@ -483,10 +482,13 @@
                                 <input type="number" class="form-control" name="fs_no_hp" id="efs_no_hp"
                                     placeholder="Nomor Telephone/WA Pasien" value="">
                             </div>
-                            <div class="">
-                                <i class="text-danger">Last Save By </i>
-                            </div>
+                            <hr><br>
                         </div>
+                    </div>
+                    <div class=" col-12 ml-3 mb-3">
+                        <i class="fa fa-user text-danger"></i>&nbsp;&nbsp;<i class="text-danger">Last Save by
+                            :</i> <input type="text" class="text-danger col-8" id="last_save_by" style="border: none"
+                            readonly>
                     </div>
                     <div class="modal-footer">
                         {{-- <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button> --}}
@@ -564,6 +566,11 @@
                         $('#efs_status_kawin').val(dasos.fs_status_kawin);
                         $('#efs_alergi').val(dasos.fs_alergi);
                         $('#efs_no_hp').val(dasos.fs_no_hp);
+                        const timeStampLastSave = dasos.updated_at;
+                        var dateView = moment(timeStampLastSave).format(
+                            "D MMMM YYYY, h:mm:ss a");
+                        const lastSave = dasos.fs_user + '   ' + dateView;
+                        $('#last_save_by').val(lastSave);
                     })
                 }
 
@@ -627,6 +634,8 @@
                             positionClass: 'toast-top-right',
                         });
                         // window.location.reload()
+                        $('#EditDasos').modal('hide');
+                        getAllDss()
                     }
                 }
             });
@@ -638,7 +647,7 @@
                 processing: true,
                 serverSide: true,
                 responsive: true,
-                // "bDestroy": true,
+                "bDestroy": true,
                 ajax: "{{ url('getAllDasos') }}",
                 columns: [{
                         data: 'fs_mr',
