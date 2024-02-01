@@ -513,6 +513,12 @@
                                             <p>Nilai Tindakan</p>
                                         </a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a href="{{ url('/template-order-resep') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Template Resep</p>
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
 

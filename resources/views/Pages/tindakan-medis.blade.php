@@ -897,16 +897,30 @@
                         <div class="resepID callout callout-warning mt-5">
 
                         </div>
-                        {{-- <div class="float-right mb-1 mt-4">
-                            <button type="button" class="nm_tarif_add btn btn-xs btn-primary float-right">add more
-                            </button>
-                        </div> --}}
+
+                        <tfoot>
+                            <hr>
+                            <div class="float-left mt-2">
+                                <button type="button" class="btn btn-sm btn-warning float-right dropdown-toggle"
+                                    role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">Load
+                                    Template
+                                </button>
+
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                </div>
+                            </div>
                     </div>
                     {{-- <input type="hidden" id="kd_trs" name="kd_trs" value="{{ $kd_trs }}"> --}}
                     {{-- <input type="hidden" id="sub_total" name="sub_total" value="0"> --}}
                     <div class="float-right mt-2">
-                        <a type="button" id="exitModalResep" onclick="exitModalResep()" class="btn btn-success">add</a>
+                        <a type="button" id="exitModalResep" onclick="exitModalResep()"
+                            class="btn btn-sm btn-success">add</a>
                     </div>
+                    </tfoot>
                 </div>
             </div>
         </div>

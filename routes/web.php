@@ -71,6 +71,7 @@ Route::group(['middleware' => ['auth', 'checkrole:1']], function () {
     Route::get('mstr-nilai-tindakan', [mastersatuController::class, 'nilaiTindakan'])->name('nilai-tindakan');
 });
 
+
 // MSTR SATU POST
 // Route::controller(mastersatuController::class)->group(function () {
 Route::group(['middleware' => ['auth', 'checkrole:1']], function () {
@@ -79,6 +80,12 @@ Route::group(['middleware' => ['auth', 'checkrole:1']], function () {
     Route::post('add-mstr-jaminan', [mastersatuController::class, 'jaminanCreate'])->name('add-mstr-jaminan');
     Route::post('add-mstr-tindakan', [mastersatuController::class, 'tindakanCreate'])->name('add-mstr-tindakan');
     Route::post('add-mstr-nilai-tindakan', [mastersatuController::class, 'nilaiTindakanCreate'])->name('add-mstr-nilai-tindakan');
+});
+
+// MSTR SATU GET DOKTER
+Route::group(['middleware' => ['auth', 'checkrole:1,2']], function () {
+    Route::get('template-order-resep', [mastersatuController::class, 'templateResep'])->name('template-order-resep');
+    Route::post('add-template-resep', [mastersatuController::class, 'addTemplateResep'])->name('add-template-resep');
 });
 
 // VIEW AFTER POST
