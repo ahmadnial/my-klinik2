@@ -125,7 +125,7 @@
             <a href="" class="brand-link bg-purple">
                 <img src="" alt="" class="brand-image img-circle elevation-3" style="opacity: .8">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="brand-text font-weight-light"><i class=""></i>&nbsp;
-                    AslaMed</span>
+                    <b>Asla</b>Med</span>
             </a>
             <!-- Sidebar -->
             <div class="sidebar">
@@ -133,7 +133,7 @@
                 {{-- <div class="image">
                         <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                     </div> --}}
-                <div class="user-panel mt-2 pb-1 mb-1 ml-3">
+                <div class="user-panel mt-4 pb-1 mb-1 ml-3">
                     <h5 class="d-block"><i class="fas fa-hospital"></i>&nbsp;Klinik Aulia</h5>
                 </div>
                 {{-- </div> --}}
