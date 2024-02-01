@@ -8,6 +8,7 @@ use App\Models\mstr_tindakan;
 use Illuminate\Http\Request;
 use App\Models\mstr_layanan;
 use App\Models\mstr_nilai_tindakan;
+use App\Models\t_template_order_hdr;
 use Yoeunes\Toastr\Toastr;
 use Illuminate\Support\Facades\DB;
 use Dflydev\DotAccessData\Data;
@@ -177,11 +178,50 @@ class mastersatuController extends Controller
 
     public function templateResep()
     {
-        return view('pages.mstr1.template-resep');
+        $num = str_pad(001, 3, 0, STR_PAD_LEFT);
+
+        $cekid = t_template_order_hdr::count();
+        if ($cekid == 0) {
+            $kdTo =  'TO'  . $num;
+        } else {
+            $continue = t_template_order_hdr::all()->last();
+            $de = substr($continue->kd_to, -3);
+            $kdTo = 'TO' . str_pad(($de + 1), 3, '0', STR_PAD_LEFT);
+        }
+        return view('pages.mstr1.template-resep', ['kdTo' => $kdTo]);
     }
 
     public function addTemplateResep(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
+        $request->validate([
+            'kd_to' => 'required',
+            'nm_to' => 'required',
+            'kd_obat_to' => 'required',
+            'nm_obat_to' => 'required',
+            'hrg_obat_to' => 'required',
+            'qty_to' => 'required',
+        ]);
+
+        DB::beginTransaction();
+        try {
+
+            $toHdr = new t_template_order_hdr();
+            $toHdr->chart_id = $request->chart_id;
+
+            $toHdr->user   = Auth::user()->name;
+
+            $toHdr->save();
+
+            DB::commit();
+
+            toastr()->success('Data Tersimpan!');
+            return back();
+            // return redirect()->route('/tindakan-medis');
+        } catch (\Exception $e) {
+            DB::rollback();
+            toastr()->error('Gagal Tersimpan!');
+            return back();
+        }
     }
 }

@@ -101,6 +101,7 @@
                                     <div class="row" id="resepList" style="padding: 5px;">
                                     </div>
                                 </div>
+                                <input type="hidden" name="kd_to" value="{{ $kdTo }}">
                                 {{-- <div class="resep-content">
                                     <div class="row" id="resepList" style="padding: 5px;">
                                         <div class="col-md-6 kt-callout-etiket">
@@ -253,72 +254,70 @@
 
                 $("#resepList").append(
                     `
-                                        <div class="col-md-6 kt-callout-etiket mb-4">
-                                            <div class="border-radius3"
-                                                style="background-color: rgb(244, 240, 255); padding: 5px; box-shadow: 0px 0px 0px 0px !important;border: 0.5px solid lightgrey;; min-height: 196px;">
-                                                <div class="kt-portlet__head"
-                                                    style="min-height: 10px !important;padding: 0px;z-index: 10; border: 0px;">
-                                                    <div style="top: 0;position: absolute;left: -2; width: 30%;"
-                                                        class="kt-portlet__head kt-portlet__head--noborder kt-ribbon kt-ribbon--left">
-                                                        <div class="kt-ribbon__target bg-warning"
-                                                            style="top: 3px; left: -2px;padding: 1px 8px 1px 10px;background-color: #b3c0eb;color: rgb(163, 0, 101);font-size: 0.96em;">
-                                                            <label style="margin: 0px;" class="e_brgID">${obatResep}</label>
-                                                            <span id="infoGEN000000209" data-toggle="popover"
-                                                                data-placement="bottom" data-content=""
-                                                                data-original-title="" title=""></span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="head-label">
-                                                    </div>
-                                                    <div class="head-toolbar">
-                                                        <span class="mr-3 bg-lightgreen text-dark px-2"
-                                                            id="iterGEN000000209"></span>
-                                                        <div class="kt-portlet__head-actions">
-                                                            <span data-toggle="tooltip" title="Info">
-                                                                <a href="javascript:;"
-                                                                    class="btn btn-clean btn-sm btn-icon btn-icon-md pointer infoObat"
-                                                                    data-infoid="infoGEN000000209">
-                                                                    <i class="fa fa-info-circle"></i>
-                                                                </a>
-                                                            </span>
-                                                            <span data-toggle="tooltip" title="Edit">
-                                                                <a href="javascript:;"
-                                                                    class="btn btn-clean btn-sm btn-icon btn-icon-md pointer"
-                                                                    data-toggle="modal" data-target="#modalAddObat"
-                                                                    data-isracik="0" data-brgid="GEN000000209">
-                                                                    <i class="fa fa-edit"></i>
-                                                                </a>
-                                                            </span>
-                                                            <span data-toggle="tooltip" title="Delete">
-                                                                <a href="javascript:;"
-                                                                    class="btn btn-clean btn-sm btn-icon btn-icon-md pointer"
-                                                                   onclick="deleteRow(this)">
-                                                                    <i class="fa fa-trash"></i>
-                                                                </a>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="kt-portlet__body" style="padding: 0 10px 0 10px;">
-                                                    <div class="kt-callout__body">
-                                                        <div class="kt-callout__content">
-                                                            <h3 class="kt-callout__title-mod e_brgName ">${namaobatResep}
-                                                            </h3>
-                                                            <div class="etiket-body">
-                                                                <p class="kt-callout__desc e_qty mb-0"
-                                                                    style="margin-bottom: 0.5rem;">${qty_obat} ${satuan_jual_obat}</p>
-                                                                <h6 class="e_signa">${signa_resep}</h6>
-                                                                <h6 class="e_carapakai mb-0">${cara_pakai_resep}</h6>
-                                                            </div>
-                                                            <h6 class="pull-right e_harga mb-0 "> Rp. ${hrg_jual}</h6>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                   
-                
-               `
+                     <div class="col-md-6 kt-callout-etiket mb-4">
+                         <div class="border-radius3"
+                             style="background-color: rgb(244, 240, 255); padding: 5px; box-shadow: 0px 0px 0px 0px !important;border: 0.5px solid lightgrey;; min-height: 196px;">
+                             <div class="kt-portlet__head"
+                                 style="min-height: 10px !important;padding: 0px;z-index: 10; border: 0px;">
+                                 <div style="top: 0;position: absolute;left: -2; width: 30%;"
+                                     class="kt-portlet__head kt-portlet__head--noborder kt-ribbon kt-ribbon--left">
+                                     <div class="kt-ribbon__target bg-warning"
+                                         style="top: 3px; left: -2px;padding: 1px 8px 1px 10px;background-color: #b3c0eb;color: rgb(163, 0, 101);font-size: 0.96em;">
+                                         <label style="margin: 0px;" class="e_brgID">${obatResep}</label>
+                                         <span id="infoGEN000000209" data-toggle="popover"
+                                             data-placement="bottom" data-content=""
+                                             data-original-title="" title=""></span>
+                                     </div>
+                                 </div>
+                                 <div class="head-label">
+                                 </div>
+                                 <div class="head-toolbar">
+                                     <span class="mr-3 bg-lightgreen text-dark px-2"
+                                         id="iterGEN000000209"></span>
+                                     <div class="kt-portlet__head-actions">
+                                         <span data-toggle="tooltip" title="Info">
+                                             <a href="javascript:;"
+                                                 class="btn btn-clean btn-sm btn-icon btn-icon-md pointer infoObat"
+                                                 data-infoid="infoGEN000000209">
+                                                 <i class="fa fa-info-circle"></i>
+                                             </a>
+                                         </span>
+                                         <span data-toggle="tooltip" title="Edit">
+                                             <a href="javascript:;"
+                                                 class="btn btn-clean btn-sm btn-icon btn-icon-md pointer"
+                                                 data-toggle="modal" data-target="#modalAddObat"
+                                                 data-isracik="0" data-brgid="GEN000000209">
+                                                 <i class="fa fa-edit"></i>
+                                             </a>
+                                         </span>
+                                         <span data-toggle="tooltip" title="Delete">
+                                             <a href="javascript:;"
+                                                 class="btn btn-clean btn-sm btn-icon btn-icon-md pointer"
+                                                onclick="deleteRow(this)">
+                                                 <i class="fa fa-trash"></i>
+                                             </a>
+                                         </span>
+                                     </div>
+                                 </div>
+                             </div>
+                             <div class="kt-portlet__body" style="padding: 0 10px 0 10px;">
+                                 <div class="kt-callout__body">
+                                     <div class="kt-callout__content">
+                                         <h3 class="kt-callout__title-mod e_brgName ">${namaobatResep}
+                                         </h3>
+                                         <div class="etiket-body">
+                                             <p class="kt-callout__desc e_qty mb-0"
+                                                 style="margin-bottom: 0.5rem;">${qty_obat} ${satuan_jual_obat}</p>
+                                             <h6 class="e_signa">${signa_resep}</h6>
+                                             <h6 class="e_carapakai mb-0">${cara_pakai_resep}</h6>
+                                         </div>
+                                         <h6 class="pull-right e_harga mb-0 "> Rp. ${hrg_jual}</h6>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                        `
                 );
 
 
@@ -329,24 +328,24 @@
                         <tbody class="mt-2">
                             <tr class="mt-2">
                                 <td class="mt-2">
-                                    <input type="hidden" class="obatResep form-control" id="ch_kd_obat"
-                                        name="ch_kd_obat[]" style="width: 100%" value="${namaobatResep}" readonly>
+                                    <input type="hidden" class="obatResep form-control" id="kd_obat_to"
+                                        name="kd_obat_to[]" style="width: 100%" value="${obatResep}" readonly>
                                 </td>
-                                <input type="hidden" id="ch_nm_obat" name="ch_nm_obat[]" value="${obatResep}">
+                                <input type="hidden" id="nm_obat_to" name="nm_obat_to[]" value="${namaobatResep}">
                                 <td>
-                                    <input type="hidden" class="form-control" id="ch_hrg_jual" name="ch_hrg_jual[]" value="${hrg_jual}" readonly>
-                                </td>
-                                <td>
-                                    <input type="hidden" class="form-control" id="ch_qty_obat" name="ch_qty_obat[]" value="${qty_obat}" readonly>
+                                    <input type="hidden" class="form-control" id="hrg_obat_to" name="hrg_obat_to[]" value="${hrg_jual}" readonly>
                                 </td>
                                 <td>
-                                    <input type="hidden" class="form-control" id="ch_satuan_obat" name="ch_satuan_obat[]" value="${satuan_jual_obat}" readonly>
+                                    <input type="hidden" class="form-control" id="qty_to" name="qty_to[]" value="${qty_obat}" readonly>
                                 </td>
                                 <td>
-                                    <input type="hidden" class="form-control" id="ch_signa" name="ch_signa[]" value="${signa_resep}" readonly>
+                                    <input type="hidden" class="form-control" id="satuan_to" name="satuan_to[]" value="${satuan_jual_obat}" readonly>
                                 </td>
                                 <td>
-                                    <input type="hidden" class="form-control" id="ch_cara_pakai" name="ch_cara_pakai[]" value="${cara_pakai_resep}" readonly>
+                                    <input type="hidden" class="form-control" id="signa_to" name="signa_to[]" value="${signa_resep}" readonly>
+                                </td>
+                                <td>
+                                    <input type="hidden" class="form-control" id="cara_pakai_to" name="cara_pakai_to[]" value="${cara_pakai_resep}" readonly>
                                 </td>                             
                                
                             </tr>
