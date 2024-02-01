@@ -12,6 +12,7 @@ use Yoeunes\Toastr\Toastr;
 use Illuminate\Support\Facades\DB;
 use Dflydev\DotAccessData\Data;
 use DataTables;
+use GuzzleHttp\Psr7\FnStream;
 
 class mastersatuController extends Controller
 {
@@ -172,5 +173,15 @@ class mastersatuController extends Controller
             toast('Gagal Tersimpan!', 'error')->autoClose(5000);
             return back();
         }
+    }
+
+    public function templateResep()
+    {
+        return view('pages.mstr1.template-resep');
+    }
+
+    public function addTemplateResep(Request $request)
+    {
+        dd($request->all());
     }
 }
