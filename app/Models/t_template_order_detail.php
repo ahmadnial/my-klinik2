@@ -14,6 +14,7 @@ class t_template_order_detail extends Model
         'kd_to',
         'kd_obat_to',
         'nm_obat_to',
+        'hrg_obat_to',
         'qty_to',
         'satuan_to',
         'signa_to',

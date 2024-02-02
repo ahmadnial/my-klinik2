@@ -431,4 +431,20 @@ class TindakanController extends Controller
 
         return back();
     }
+
+    public function getTemplateOrder()
+    {
+        $isTemplateOrder = DB::table('t_template_order_hdr')->get();
+        // $isTemplateOrder = DB::table('t_template_order_hdr')->leftJoin('t_template_order_detail', 't_template_order_detail.kd_to', 't_template_order_hdr.kd_to')->get();
+
+        return response()->json($isTemplateOrder);
+    }
+
+    public function selectTemplateOrder(Request $request)
+    {
+        $isDataTemplate = DB::table('t_template_order_detail')->where('kd_to', $request->kd_to)->get();
+        // $isTemplateOrder = DB::table('t_template_order_hdr')->leftJoin('t_template_order_detail', 't_template_order_detail.kd_to', 't_template_order_hdr.kd_to')->get();
+
+        return response()->json($isDataTemplate);
+    }
 }

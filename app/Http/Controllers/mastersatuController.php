@@ -8,12 +8,11 @@ use App\Models\mstr_tindakan;
 use Illuminate\Http\Request;
 use App\Models\mstr_layanan;
 use App\Models\mstr_nilai_tindakan;
+use App\Models\t_template_order_detail;
 use App\Models\t_template_order_hdr;
 use Yoeunes\Toastr\Toastr;
 use Illuminate\Support\Facades\DB;
-use Dflydev\DotAccessData\Data;
-use DataTables;
-use GuzzleHttp\Psr7\FnStream;
+use Illuminate\Support\Facades\Auth;
 
 class mastersatuController extends Controller
 {
@@ -188,7 +187,11 @@ class mastersatuController extends Controller
             $de = substr($continue->kd_to, -3);
             $kdTo = 'TO' . str_pad(($de + 1), 3, '0', STR_PAD_LEFT);
         }
-        return view('pages.mstr1.template-resep', ['kdTo' => $kdTo]);
+        $getAllTemplate = DB::table('t_template_order_hdr')->leftJoin('t_template_order_detail', 't_template_order_detail.kd_to', 't_template_order_hdr.kd_to')->get();
+        return view('pages.mstr1.template-resep', [
+            'kdTo' => $kdTo,
+            'getAllTemplate' => $getAllTemplate
+        ]);
     }
 
     public function addTemplateResep(Request $request)
@@ -207,11 +210,24 @@ class mastersatuController extends Controller
         try {
 
             $toHdr = new t_template_order_hdr();
-            $toHdr->chart_id = $request->chart_id;
-
-            $toHdr->user   = Auth::user()->name;
-
+            $toHdr->kd_to = $request->kd_to;
+            $toHdr->nm_to = $request->nm_to;
+            $toHdr->to_user   = Auth::user()->name;
             $toHdr->save();
+
+            foreach ($request->kd_obat_to as $key => $xf) {
+                $todetail = [
+                    'kd_to'         => $request->kd_to,
+                    'kd_obat_to'    => $request->kd_obat_to[$key],
+                    'nm_obat_to'    => $request->nm_obat_to[$key],
+                    'hrg_obat_to'   => $request->hrg_obat_to[$key],
+                    'qty_to'        => $request->qty_to[$key],
+                    'satuan_to'     => $request->satuan_to[$key],
+                    'signa_to'      => $request->signa_to[$key],
+                    'cara_pakai_to' => $request->cara_pakai_to[$key],
+                ];
+                t_template_order_detail::create($todetail);
+            }
 
             DB::commit();
 

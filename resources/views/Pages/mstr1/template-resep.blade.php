@@ -16,24 +16,21 @@
                         <thead class="">
                             <tr>
                                 <th>Nama Template</th>
-                                <th>Nama Obat</th>
-                                <th>Default Qty</th>
-                                <th>Satuan</th>
-                                <th>Signa</th>
-                                <th>Cara Pakai</th>
+                                <th>Created By</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        {{-- <tbody>
-                            @foreach ($satuan as $tz)
-                                <td id="">{{ $tz->fm_nm_satuan }}</td>
+                        <tbody>
+                            @foreach ($getAllTemplate as $tz)
+                                <td>{{ $tz->nm_to }}</td>
+                                <td>{{ $tz->to_user }}</td>
                                 <td><button class="btn btn-xs btn-success"
                                         data-toggle="modal"data-target="#EditSatuan{{ $tz->id }}">Edit</button>
                                     <button class="btn btn-xs btn-danger"
                                         data-toggle="modal"data-target="#Delete{{ $tz->id }}">Hapus</button>
                                 </td>
                         </tbody>
-                        @endforeach --}}
+                        @endforeach
                     </table>
                 </div>
             </div>
@@ -45,7 +42,7 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header bg-nial">
-                    <h4 class="modal-title">Resep</h4>
+                    <h4 class="modal-title">Template Order Resep</h4>
                     <button type="button" class="close" id="CloseModalResep" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -54,6 +51,10 @@
                     @csrf
                     <div class="modal-body">
                         <div class="container">
+                            <div class="nm_to">
+                                <input type="text" class="form-control mb-3" id="nm_to" name="nm_to"
+                                    placeholder="Nama Template Order..." required>
+                            </div>
                             <div class="">
                                 <div class="callout callout-success bg-light">
                                     <table>

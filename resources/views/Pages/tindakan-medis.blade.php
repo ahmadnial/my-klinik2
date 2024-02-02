@@ -895,7 +895,10 @@
                             </div>
                         </div>
                         <div class="resepID callout callout-warning mt-5">
-
+                            <div class="resep-content">
+                                <div class="row" id="resepList" style="padding: 5px;">
+                                </div>
+                            </div>
                         </div>
 
                         <tfoot>
@@ -903,14 +906,12 @@
                             <div class="float-left mt-2">
                                 <button type="button" class="btn btn-sm btn-warning float-right dropdown-toggle"
                                     role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">Load
+                                    aria-expanded="false" onclick="getTemplateOrder()">Load
                                     Template
                                 </button>
 
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
+                                <div class="dropdown-menu" id="showTemplateOrder" aria-labelledby="dropdownMenuLink">
+                                    {{-- <a class="dropdown-item" href="#">Action</a> --}}
                                 </div>
                             </div>
                     </div>
@@ -957,6 +958,126 @@
 
 @push('scripts')
     <script>
+        function getTemplateOrder() {
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ url('getTemplateOrder') }}",
+                type: 'GET',
+
+                success: function(isTemplateOrder) {
+                    $("#showTemplateOrder").empty();
+                    var getValue = isTemplateOrder;
+                    for (var getVal = 0; getVal < getValue.length; getVal++) {
+                        var templateName = getValue[getVal].nm_to;
+                        var kd_to = getValue[getVal].kd_to;
+
+                        $("#showTemplateOrder").append(
+                            `<a class="dropdown-item" onClick="selectDataTemplate(this)" data-kd_to="${kd_to}" href="#">${templateName}</a>`
+                        )
+                    }
+                }
+            })
+        }
+
+        function selectDataTemplate(x) {
+            var getKdTo = $(x).data('kd_to');
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ url('selectTemplateOrder') }}",
+                type: 'GET',
+                data: {
+                    kd_to: getKdTo
+                },
+                success: function(isDataTemplate) {
+                    $("#resepList").empty();
+                    var getValue = isDataTemplate;
+                    for (var getVal = 0; getVal < getValue.length; getVal++) {
+                        var kd_obat_to = getValue[getVal].kd_obat_to;
+                        var nm_obat_to = getValue[getVal].nm_obat_to;
+                        var hrg_obat_to = getValue[getVal].hrg_obat_to;
+                        var qty_to = getValue[getVal].qty_to;
+                        var satuan_to = getValue[getVal].satuan_to;
+                        var signa_to = getValue[getVal].signa_to ?? '';
+                        var cara_pakai_to = getValue[getVal].cara_pakai_to ?? '';
+
+                        $("#resepList").append(
+                            `
+                     <div class="col-md-6 kt-callout-etiket mb-4">
+                         <div class="border-radius3"
+                             style="background-color: rgb(244, 240, 255); padding: 5px; box-shadow: 0px 0px 0px 0px !important;border: 0.5px solid lightgrey;; min-height: 196px;">
+                             <div class="kt-portlet__head"
+                                 style="min-height: 10px !important;padding: 0px;z-index: 10; border: 0px;">
+                                 <div style="top: 0;position: absolute;left: -2; width: 30%;"
+                                     class="kt-portlet__head kt-portlet__head--noborder kt-ribbon kt-ribbon--left">
+                                     <div class="kt-ribbon__target bg-warning"
+                                         style="top: 3px; left: -2px;padding: 1px 8px 1px 10px;background-color: #b3c0eb;color: rgb(163, 0, 101);font-size: 0.96em;">
+                                         <label style="margin: 0px;" class="e_brgID">${kd_obat_to}</label>
+                                         <span id="infoGEN000000209" data-toggle="popover"
+                                             data-placement="bottom" data-content=""
+                                             data-original-title="" title=""></span>
+                                     </div>
+                                 </div>
+                                 <div class="head-label">
+                                 </div>
+                                 <div class="head-toolbar">
+                                     <span class="mr-3 bg-lightgreen text-dark px-2"
+                                         id="iterGEN000000209"></span>
+                                     <div class="kt-portlet__head-actions">
+                                         <span data-toggle="tooltip" title="Info">
+                                             <a href="javascript:;"
+                                                 class="btn btn-clean btn-sm btn-icon btn-icon-md pointer infoObat"
+                                                 data-infoid="infoGEN000000209">
+                                                 <i class="fa fa-info-circle"></i>
+                                             </a>
+                                         </span>
+                                         <span data-toggle="tooltip" title="Edit">
+                                             <a href="javascript:;"
+                                                 class="btn btn-clean btn-sm btn-icon btn-icon-md pointer"
+                                                 data-toggle="modal" data-target="#modalAddObat"
+                                                 data-isracik="0" data-brgid="GEN000000209">
+                                                 <i class="fa fa-edit"></i>
+                                             </a>
+                                         </span>
+                                         <span data-toggle="tooltip" title="Delete">
+                                             <a href="javascript:;"
+                                                 class="btn btn-clean btn-sm btn-icon btn-icon-md pointer"
+                                                onclick="deleteRow(this)">
+                                                 <i class="fa fa-trash"></i>
+                                             </a>
+                                         </span>
+                                     </div>
+                                 </div>
+                             </div>
+                             <div class="kt-portlet__body" style="padding: 0 10px 0 10px;">
+                                 <div class="kt-callout__body">
+                                     <div class="kt-callout__content">
+                                         <h3 class="kt-callout__title-mod e_brgName text-danger">${nm_obat_to}
+                                         </h3>
+                                         <div class="etiket-body">
+                                             <p class="kt-callout__desc e_qty mb-0"
+                                                 style="margin-bottom: 0.5rem;">${qty_to} ${satuan_to}</p>
+                                             <h6 class="e_signa">${signa_to}</h6>
+                                             <h6 class="e_carapakai mb-0">${cara_pakai_to}</h6>
+                                         </div>
+                                         <h6 class="pull-right e_harga mb-0 "> Rp. ${hrg_obat_to}</h6>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                        `
+                        );
+                    }
+                }
+            })
+        }
+
+
+
         $('input:checkbox').change(
             function() {
                 if ($(this).is(':checked')) {
@@ -1470,49 +1591,114 @@
             }
             // };
 
-            $(".resepID").append(
+            $("#resepList").append(
                 `
-                <table>
-                    <thead>
-                        <tr class="mt-2">
-                            <th width="370px">Obat</th>
-                            <th width="90px">Hrg</th>
-                            <th width="90px">Qty</th>
-                            <th width="150px">Satuan</th>
-                            <th width="200px">Signa</th>
-                            <th width="230px">Cara Pakai</th>
-                        </tr>
-                    </thead>
-                    <tbody class="mt-2">
-                        <tr class="mt-2">
-                            <td class="mt-2">
-                                <input type="text" class="obatResep form-control" id="ch_kd_obat"
-                                    name="ch_kd_obat[]" style="width: 100%" value="${namaobatResep}" readonly>
-                            </td>
-                            <input type="hidden" id="ch_nm_obat" name="ch_nm_obat[]" value="${obatResep}">
-                            <td>
-                                <input type="text" class="form-control" id="ch_hrg_jual" name="ch_hrg_jual[]" value="${hrg_jual}" readonly>
-                            </td>
-                            <td>
-                                <input type="text" class="form-control" id="ch_qty_obat" name="ch_qty_obat[]" value="${qty_obat}" readonly>
-                            </td>
-                            <td>
-                                <input type="text" class="form-control" id="ch_satuan_obat" name="ch_satuan_obat[]" value="${satuan_jual_obat}" readonly>
-                            </td>
-                            <td>
-                                <input type="text" class="form-control" id="ch_signa" name="ch_signa[]" value="${signa_resep}" readonly>
-                            </td>
-                            <td>
-                                <input type="text" class="form-control" id="ch_cara_pakai" name="ch_cara_pakai[]" value="${cara_pakai_resep}" readonly>
-                            </td>                             
-                            <td>
-                                <button type="button" class="remove btn btn-xs btn-danger"><i
-                                class="fa fa-trash" onclick="deleteRow(this)"></i></button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-               `
+                     <div class="col-md-6 kt-callout-etiket mb-4">
+                         <div class="border-radius3"
+                             style="background-color: rgb(244, 240, 255); padding: 5px; box-shadow: 0px 0px 0px 0px !important;border: 0.5px solid lightgrey;; min-height: 196px;">
+                             <div class="kt-portlet__head"
+                                 style="min-height: 10px !important;padding: 0px;z-index: 10; border: 0px;">
+                                 <div style="top: 0;position: absolute;left: -2; width: 30%;"
+                                     class="kt-portlet__head kt-portlet__head--noborder kt-ribbon kt-ribbon--left">
+                                     <div class="kt-ribbon__target bg-warning"
+                                         style="top: 3px; left: -2px;padding: 1px 8px 1px 10px;background-color: #b3c0eb;color: rgb(163, 0, 101);font-size: 0.96em;">
+                                         <label style="margin: 0px;" class="e_brgID">${obatResep}</label>
+                                         <span id="infoGEN000000209" data-toggle="popover"
+                                             data-placement="bottom" data-content=""
+                                             data-original-title="" title=""></span>
+                                     </div>
+                                 </div>
+                                 <div class="head-label">
+                                 </div>
+                                 <div class="head-toolbar">
+                                     <span class="mr-3 bg-lightgreen text-dark px-2"
+                                         id="iterGEN000000209"></span>
+                                     <div class="kt-portlet__head-actions">
+                                         <span data-toggle="tooltip" title="Info">
+                                             <a href="javascript:;"
+                                                 class="btn btn-clean btn-sm btn-icon btn-icon-md pointer infoObat"
+                                                 data-infoid="infoGEN000000209">
+                                                 <i class="fa fa-info-circle"></i>
+                                             </a>
+                                         </span>
+                                         <span data-toggle="tooltip" title="Edit">
+                                             <a href="javascript:;"
+                                                 class="btn btn-clean btn-sm btn-icon btn-icon-md pointer"
+                                                 data-toggle="modal" data-target="#modalAddObat"
+                                                 data-isracik="0" data-brgid="GEN000000209">
+                                                 <i class="fa fa-edit"></i>
+                                             </a>
+                                         </span>
+                                         <span data-toggle="tooltip" title="Delete">
+                                             <a href="javascript:;"
+                                                 class="btn btn-clean btn-sm btn-icon btn-icon-md pointer"
+                                                onclick="deleteRow(this)">
+                                                 <i class="fa fa-trash"></i>
+                                             </a>
+                                         </span>
+                                     </div>
+                                 </div>
+                             </div>
+                             <div class="kt-portlet__body" style="padding: 0 10px 0 10px;">
+                                 <div class="kt-callout__body">
+                                     <div class="kt-callout__content">
+                                         <h3 class="kt-callout__title-mod e_brgName text-danger">${namaobatResep}
+                                         </h3>
+                                         <div class="etiket-body">
+                                             <p class="kt-callout__desc e_qty mb-0"
+                                                 style="margin-bottom: 0.5rem;">${qty_obat} ${satuan_jual_obat}</p>
+                                             <h6 class="e_signa">${signa_resep}</h6>
+                                             <h6 class="e_carapakai mb-0">${cara_pakai_resep}</h6>
+                                         </div>
+                                         <h6 class="pull-right e_harga mb-0 "> Rp. ${hrg_jual} / ${satuan_jual_obat}</h6>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                        `
+                //     `
+            //     <table>
+            //         <thead>
+            //             <tr class="mt-2">
+            //                 <th width="370px">Obat</th>
+            //                 <th width="90px">Hrg</th>
+            //                 <th width="90px">Qty</th>
+            //                 <th width="150px">Satuan</th>
+            //                 <th width="200px">Signa</th>
+            //                 <th width="230px">Cara Pakai</th>
+            //             </tr>
+            //         </thead>
+            //         <tbody class="mt-2">
+            //             <tr class="mt-2">
+            //                 <td class="mt-2">
+            //                     <input type="text" class="obatResep form-control" id="ch_kd_obat"
+            //                         name="ch_kd_obat[]" style="width: 100%" value="${namaobatResep}" readonly>
+            //                 </td>
+            //                 <input type="hidden" id="ch_nm_obat" name="ch_nm_obat[]" value="${obatResep}">
+            //                 <td>
+            //                     <input type="text" class="form-control" id="ch_hrg_jual" name="ch_hrg_jual[]" value="${hrg_jual}" readonly>
+            //                 </td>
+            //                 <td>
+            //                     <input type="text" class="form-control" id="ch_qty_obat" name="ch_qty_obat[]" value="${qty_obat}" readonly>
+            //                 </td>
+            //                 <td>
+            //                     <input type="text" class="form-control" id="ch_satuan_obat" name="ch_satuan_obat[]" value="${satuan_jual_obat}" readonly>
+            //                 </td>
+            //                 <td>
+            //                     <input type="text" class="form-control" id="ch_signa" name="ch_signa[]" value="${signa_resep}" readonly>
+            //                 </td>
+            //                 <td>
+            //                     <input type="text" class="form-control" id="ch_cara_pakai" name="ch_cara_pakai[]" value="${cara_pakai_resep}" readonly>
+            //                 </td>                             
+            //                 <td>
+            //                     <button type="button" class="remove btn btn-xs btn-danger"><i
+            //                     class="fa fa-trash" onclick="deleteRow(this)"></i></button>
+            //                 </td>
+            //             </tr>
+            //         </tbody>
+            //     </table>
+            //    `
             );
 
             $(".card-resep").append(

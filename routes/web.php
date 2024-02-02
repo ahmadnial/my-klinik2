@@ -117,6 +117,8 @@ Route::group(['middleware' => ['auth', 'checkrole:1,2']], function () {
     Route::get('getIcdX', [TindakanController::class, 'getIcdX'])->name('getIcdX');
     Route::post('chartUpdate', [TindakanController::class, 'chartUpdate'])->name('chartUpdate');
     Route::post('chartDelete/{chartid}', [TindakanController::class, 'chartDelete'])->name('chartDelete');
+    Route::get('getTemplateOrder', [TindakanController::class, 'getTemplateOrder'])->name('getTemplateOrder');
+    Route::get('selectTemplateOrder', [TindakanController::class, 'selectTemplateOrder'])->name('selectTemplateOrder');
 });
 
 

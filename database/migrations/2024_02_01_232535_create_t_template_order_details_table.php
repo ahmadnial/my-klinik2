@@ -17,10 +17,10 @@ return new class extends Migration
             $table->string('kd_obat_to', 30);
             $table->string('nm_obat_to', 30);
             $table->string('hrg_obat_to', 30);
-            $table->string('qty_to', 100);
+            $table->string('qty_to', 100)->default('1');
             $table->string('satuan_to', 30);
-            $table->string('signa_to', 30);
-            $table->string('cara_pakai_to', 100);
+            $table->string('signa_to', 30)->default('');
+            $table->string('cara_pakai_to', 100)->default('');
             $table->timestamps();
         });
     }
