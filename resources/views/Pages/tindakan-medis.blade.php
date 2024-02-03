@@ -1183,11 +1183,78 @@
                 timeOut: 200,
                 positionClass: 'toast-top-right',
             });
+            let prescription = `<div class="card col-xl col-lg col-md col-sm p-2 card-order-resep">
+                                    <div class="text-left font-md label-font-color-3 card-option card-option-header p-1 px-2"
+                                        data-toggle="modal" data-target="#modalResep" data-orderid="1"
+                                            title="Click to View" style="border-left: 3px solid #ffb822;">
+                                                <i class="fa fa-prescription mr-1"></i> <b>Resep</b>
+                                                <span class="kt-font-sm font-weight-normal kt-font-success"></span>
+                                                <br>
+                                                <span class="kt-font-sm kt-label-font-color-1"></span>
+                                                <div class="collapse show" id="collapseDetailOrderResep1"
+                                                    aria-labelledby="headerOrderResep" data-parent="#btnDetailOrderResep1"
+                                                    style="">
+                                                    <table class="">
+                                                        <tbody class="mt-2">
+                                                            <tr class="mt-2">
+                                                                <td class="mt-2">
+                                                                    <input type="hidden" class="form-control"
+                                                                        id="ch_kd_obat" name="ch_kd_obat[]"
+                                                                        style="border: none;" value="" readonly>
+                                                                </td>
+                                                                <td>
+                                                                <input type="text" id="ch_nm_obat" class="form-control" name="ch_nm_obat[]"
+                                                                    value="" style="border: none;" readonly>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="hidden" class="form-control"
+                                                                        id="ch_hrg_jual" name="ch_hrg_jual[]"
+                                                                        value="" readonly>
+                                                                </td>
+                                                                <td width="70px">
+                                                                    <input type="text" class="form-control"
+                                                                        id="ch_qty_obat" name="ch_qty_obat[]"
+                                                                        value="" style="border: none;" readonly>
+                                                                </td>
+                                                                <td width="80px">
+                                                                    <input type="text" class="form-control"
+                                                                        id="ch_satuan_obat" name="ch_satuan_obat[]"
+                                                                        value=""
+                                                                        style="border: none;" readonly>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="hidden" class="form-control"
+                                                                        id="ch_signa" name="ch_signa[]"
+                                                                        value="" readonly>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" class="form-control"
+                                                                        id="ch_cara_pakai" name="ch_cara_pakai[]"
+                                                                        value="" readonly  style="border: none;">
+                                                                </td>
+                                                                <td>
+                                                                        <button type="button" class="remove btn btn-xs btn-danger"><i
+                                                                        class="fa fa-trash" onclick="deleteRow(this)"></i></button>
+                                                                    </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        <div class="kt-font-sm font-italic font-weight-normal card-option-footer text-right px-2"
+                                            style="border-left: 3px solid #ffb822;" id="btnDetailOrderResep1"
+                                            data-toggle="collapse" data-target="#collapseDetailOrderResep1"
+                                            title="click to show item" aria-expanded="true"
+                                            aria-controls="collapseDetailOrderResep1">
+                                            <span class="kt-label-font-color-1">detail</span>
+                                    </div>
+                                </div>`;
+
+            // $(".card-resep").append(
+            //     `${prescription}`
+            // );
         }
 
-        // $("#addTindakans").on('hide.bs.modal', function() {
-
-        // });
 
         // Hitung Umur
         function getUmurDetail(dateString) {
@@ -1335,8 +1402,6 @@
         function getHeaderInfo() {
             var data = sessionStorage.getItem("kdReg");
             var kdReg;
-            // const cekTindakan = getVal.nm_tarif;
-
 
             if (data != null) {
                 kdReg = JSON.parse(data);
@@ -1390,7 +1455,7 @@
             })
         }
 
-        // function getICDX() {
+        //getICDX
         var path = "{{ route('getIcdX') }}";
 
         $('#chart_A_diagnosa').select2({
@@ -1403,7 +1468,6 @@
                     return {
                         results: $.map(isICDX, function(xicd) {
                             return {
-                                // text: item.fs_mr,
                                 text: xicd.code + ' - ' + xicd.name_id,
                                 id: xicd.code + '-' + xicd.name_id,
                             }
@@ -1413,7 +1477,6 @@
                 cache: true
             }
         });
-        // }
 
         $(".nm_tarif_add").on("click", function() {
 
@@ -1514,86 +1577,86 @@
             $('#cara_pakai_resep').val('');
             // $('#ch_hrg_jual').val('');
             // $('.ch_hrg_jual').val('');
-            let prescription = `<div class="card col-xl col-lg col-md col-sm p-2 card-order-resep">
-                                    <div class="text-left font-md label-font-color-3 card-option card-option-header p-1 px-2"
-                                        data-toggle="modal" data-target="#modalResep" data-orderid="1"
-                                            title="Click to View" style="border-left: 3px solid #ffb822;">
-                                                <i class="fa fa-prescription mr-1"></i> <b>Resep</b>
-                                                <span class="kt-font-sm font-weight-normal kt-font-success"></span>
-                                                <br>
-                                                <span class="kt-font-sm kt-label-font-color-1"></span>
-                                                <div class="collapse show" id="collapseDetailOrderResep1"
-                                                    aria-labelledby="headerOrderResep" data-parent="#btnDetailOrderResep1"
-                                                    style="">
-                                                    <table class="">
-                                                        <tbody class="mt-2">`;
-            // document.getElementById('exitModalResep').onclick = function() {
-            // $('#CloseModalResep').hide();
-            if (obatResep != null) {
-                prescription +=
-                    `
-                       <tr class="mt-2">
-                           <td class="mt-2">
-                               <input type="hidden" class="form-control"
-                                   id="ch_kd_obat" name="ch_kd_obat[]"
-                                   style="border: none;" value="${obatResep}" readonly>
-                           </td>
-                           <td>
-                           <input type="text" id="ch_nm_obat" class="form-control" name="ch_nm_obat[]"
-                               value="${namaobatResep}" style="border: none;" readonly>
-                           </td>
-                           <td>
-                               <input type="hidden" class="form-control"
-                                   id="ch_hrg_jual" name="ch_hrg_jual[]"
-                                   value="${hrg_jual}" readonly>
-                           </td>
-                           <td width="70px">
-                               <input type="text" class="form-control"
-                                   id="ch_qty_obat" name="ch_qty_obat[]"
-                                   value="${qty_obat}" style="border: none;" readonly>
-                           </td>
-                           <td width="80px">
-                               <input type="text" class="form-control"
-                                   id="ch_satuan_obat" name="ch_satuan_obat[]"
-                                   value="${satuan_jual_obat}"
-                                   style="border: none;" readonly>
-                           </td>
-                           <td>
-                               <input type="hidden" class="form-control"
-                                   id="ch_signa" name="ch_signa[]"
-                                   value="${signa_resep}" readonly>
-                           </td>
-                           <td>
-                               <input type="text" class="form-control"
-                                   id="ch_cara_pakai" name="ch_cara_pakai[]"
-                                   value="${cara_pakai_resep}" readonly  style="border: none;">
-                           </td>
-                           <td>
-                                <button type="button" class="remove btn btn-xs btn-danger"><i
-                                class="fa fa-trash" onclick="deleteRow(this)"></i></button>
-                            </td>
-                       </tr>
-                   `;
-                prescription += `</tbody>
-                                    </table>
-                                        </div>
-                                            </div>
-                                            <div class="kt-font-sm font-italic font-weight-normal card-option-footer text-right px-2"
-                                                style="border-left: 3px solid #ffb822;" id="btnDetailOrderResep1"
-                                                data-toggle="collapse" data-target="#collapseDetailOrderResep1"
-                                                title="click to show item" aria-expanded="true"
-                                                aria-controls="collapseDetailOrderResep1">
-                                                <span class="kt-label-font-color-1">detail</span>
-                                            </div>
-                                        </div>`;
-            } else {
-                prescription += ``;
-            }
+            // let prescription = `<div class="card col-xl col-lg col-md col-sm p-2 card-order-resep">
+        //                         <div class="text-left font-md label-font-color-3 card-option card-option-header p-1 px-2"
+        //                             data-toggle="modal" data-target="#modalResep" data-orderid="1"
+        //                                 title="Click to View" style="border-left: 3px solid #ffb822;">
+        //                                     <i class="fa fa-prescription mr-1"></i> <b>Resep</b>
+        //                                     <span class="kt-font-sm font-weight-normal kt-font-success"></span>
+        //                                     <br>
+        //                                     <span class="kt-font-sm kt-label-font-color-1"></span>
+        //                                     <div class="collapse show" id="collapseDetailOrderResep1"
+        //                                         aria-labelledby="headerOrderResep" data-parent="#btnDetailOrderResep1"
+        //                                         style="">
+        //                                         <table class="">
+        //                                             <tbody class="mt-2">`;
+            // // document.getElementById('exitModalResep').onclick = function() {
+            // // $('#CloseModalResep').hide();
+            // if (obatResep != null) {
+            //     prescription +=
+            //         `
+        //            <tr class="mt-2">
+        //                <td class="mt-2">
+        //                    <input type="hidden" class="form-control"
+        //                        id="ch_kd_obat" name="ch_kd_obat[]"
+        //                        style="border: none;" value="${obatResep}" readonly>
+        //                </td>
+        //                <td>
+        //                <input type="text" id="ch_nm_obat" class="form-control" name="ch_nm_obat[]"
+        //                    value="${namaobatResep}" style="border: none;" readonly>
+        //                </td>
+        //                <td>
+        //                    <input type="hidden" class="form-control"
+        //                        id="ch_hrg_jual" name="ch_hrg_jual[]"
+        //                        value="${hrg_jual}" readonly>
+        //                </td>
+        //                <td width="70px">
+        //                    <input type="text" class="form-control"
+        //                        id="ch_qty_obat" name="ch_qty_obat[]"
+        //                        value="${qty_obat}" style="border: none;" readonly>
+        //                </td>
+        //                <td width="80px">
+        //                    <input type="text" class="form-control"
+        //                        id="ch_satuan_obat" name="ch_satuan_obat[]"
+        //                        value="${satuan_jual_obat}"
+        //                        style="border: none;" readonly>
+        //                </td>
+        //                <td>
+        //                    <input type="hidden" class="form-control"
+        //                        id="ch_signa" name="ch_signa[]"
+        //                        value="${signa_resep}" readonly>
+        //                </td>
+        //                <td>
+        //                    <input type="text" class="form-control"
+        //                        id="ch_cara_pakai" name="ch_cara_pakai[]"
+        //                        value="${cara_pakai_resep}" readonly  style="border: none;">
+        //                </td>
+        //                <td>
+        //                     <button type="button" class="remove btn btn-xs btn-danger"><i
+        //                     class="fa fa-trash" onclick="deleteRow(this)"></i></button>
+        //                 </td>
+        //            </tr>
+        //        `;
+            //     prescription += `</tbody>
+        //                         </table>
+        //                             </div>
+        //                                 </div>
+        //                                 <div class="kt-font-sm font-italic font-weight-normal card-option-footer text-right px-2"
+        //                                     style="border-left: 3px solid #ffb822;" id="btnDetailOrderResep1"
+        //                                     data-toggle="collapse" data-target="#collapseDetailOrderResep1"
+        //                                     title="click to show item" aria-expanded="true"
+        //                                     aria-controls="collapseDetailOrderResep1">
+        //                                     <span class="kt-label-font-color-1">detail</span>
+        //                                 </div>
+        //                             </div>`;
+            // } else {
+            //     prescription += ``;
+            // }
             // };
 
             $("#resepList").append(
                 `
-                     <div class="col-md-6 kt-callout-etiket mb-4">
+                     <div class="col-md-6 kt-callout-etiket mb-4" id="cardObatList${obatResep}">
                          <div class="border-radius3"
                              style="background-color: rgb(244, 240, 255); padding: 5px; box-shadow: 0px 0px 0px 0px !important;border: 0.5px solid lightgrey;; min-height: 196px;">
                              <div class="kt-portlet__head"
@@ -1632,6 +1695,7 @@
                                          <span data-toggle="tooltip" title="Delete">
                                              <a href="javascript:;"
                                                  class="btn btn-clean btn-sm btn-icon btn-icon-md pointer"
+                                                data-idobat="${obatResep}"
                                                 onclick="deleteRow(this)">
                                                  <i class="fa fa-trash"></i>
                                              </a>
@@ -1657,62 +1721,43 @@
                          </div>
                      </div>
                         `
-                //     `
-            //     <table>
-            //         <thead>
-            //             <tr class="mt-2">
-            //                 <th width="370px">Obat</th>
-            //                 <th width="90px">Hrg</th>
-            //                 <th width="90px">Qty</th>
-            //                 <th width="150px">Satuan</th>
-            //                 <th width="200px">Signa</th>
-            //                 <th width="230px">Cara Pakai</th>
-            //             </tr>
-            //         </thead>
-            //         <tbody class="mt-2">
-            //             <tr class="mt-2">
-            //                 <td class="mt-2">
-            //                     <input type="text" class="obatResep form-control" id="ch_kd_obat"
-            //                         name="ch_kd_obat[]" style="width: 100%" value="${namaobatResep}" readonly>
-            //                 </td>
-            //                 <input type="hidden" id="ch_nm_obat" name="ch_nm_obat[]" value="${obatResep}">
-            //                 <td>
-            //                     <input type="text" class="form-control" id="ch_hrg_jual" name="ch_hrg_jual[]" value="${hrg_jual}" readonly>
-            //                 </td>
-            //                 <td>
-            //                     <input type="text" class="form-control" id="ch_qty_obat" name="ch_qty_obat[]" value="${qty_obat}" readonly>
-            //                 </td>
-            //                 <td>
-            //                     <input type="text" class="form-control" id="ch_satuan_obat" name="ch_satuan_obat[]" value="${satuan_jual_obat}" readonly>
-            //                 </td>
-            //                 <td>
-            //                     <input type="text" class="form-control" id="ch_signa" name="ch_signa[]" value="${signa_resep}" readonly>
-            //                 </td>
-            //                 <td>
-            //                     <input type="text" class="form-control" id="ch_cara_pakai" name="ch_cara_pakai[]" value="${cara_pakai_resep}" readonly>
-            //                 </td>                             
-            //                 <td>
-            //                     <button type="button" class="remove btn btn-xs btn-danger"><i
-            //                     class="fa fa-trash" onclick="deleteRow(this)"></i></button>
-            //                 </td>
-            //             </tr>
-            //         </tbody>
-            //     </table>
-            //    `
             );
 
             $(".card-resep").append(
-                `${prescription}`
+                `<tbody class="mt-2" id="cardObatList${obatResep}">
+                        <tr class="mt-2">
+                            <td class="mt-2">
+                                <input type="hidden" class="obatResep form-control" id="ch_kd_obat"
+                                    name="ch_kd_obat[]" style="width: 100%" value="${obatResep}" readonly>
+                            </td>
+                            <input type="text" id="ch_nm_obat" name="ch_nm_obat[]" value="${namaobatResep}">
+                            <td>
+                                <input type="text" class="form-control" id="ch_hrg_jual" name="ch_hrg_jual[]" value="${hrg_jual}" readonly>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="ch_qty_obat" name="ch_qty_obat[]" value="${qty_obat}" readonly>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="ch_satuan_obat" name="ch_satuan_obat[]" value="${satuan_jual_obat}" readonly>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="ch_signa" name="ch_signa[]" value="${signa_resep}" readonly>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="ch_cara_pakai" name="ch_cara_pakai[]" value="${cara_pakai_resep}" readonly>
+                            </td>                             
+                        </tr>
+                    </tbody>`
             );
 
             // $("#TESCHCreate").empty();
         });
 
 
-        function deleteRow(btn) {
-            var row = btn.parentNode.parentNode.parentNode.parentNode.parentNode;
-            row.parentNode.removeChild(row);
-            deleteRowReal(btn);
+        function deleteRow(j) {
+            var kdObat = $(j).data('idobat');
+            // alert(kdObat)
+            $('#cardObatList' + kdObat).remove()
         }
 
         function deleteRowReal(btn) {
