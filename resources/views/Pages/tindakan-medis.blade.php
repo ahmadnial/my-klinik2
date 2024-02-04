@@ -1851,7 +1851,7 @@
                                          <h3 class="kt-callout__title-mod e_brgName text-danger">${namaobatResep}
                                          </h3>
                                          <div class="etiket-body">
-                                             <p class="kt-callout__desc e_qty mb-0"
+                                             <p class="mb-0" id="qty_obat_card_resep"
                                                  style="margin-bottom: 0.5rem;">${qty_obat} ${satuan_jual_obat}</p>
                                              <h6 class="e_signa">${signa_resep}</h6>
                                              <h6 class="e_carapakai mb-0">${cara_pakai_resep}</h6>
@@ -1921,12 +1921,14 @@
             $('#editObatResep').modal('show');
         }
 
-        async function updateListObatResep() {
+        function updateListObatResep() {
             var qty = $('#qty_obat_edit').val()
             var signa = $('#signa_obat_edit').val()
             var cara_pakai = $('#cara_pakai_obat_edit').val()
-            alert(qty)
-            $('#qty_obat_edit').val('100')
+            // alert(qty)
+            $('#qty_obat_edit').val('')
+            $('#qty_obat_edit').val(qty)
+            $('#qty_obat_card_resep').val(qty)
         }
 
         // Create 
