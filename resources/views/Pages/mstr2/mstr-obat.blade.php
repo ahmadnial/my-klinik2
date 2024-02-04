@@ -40,7 +40,8 @@
                                 <td id="">{{ $tz->fm_satuan_jual }}</td>
                                 <td id="">@currency($tz->fm_hrg_beli)</td>
                                 <td id="">@currency($tz->fm_hrg_jual_non_resep)</td>
-                                <td id="">@currency($tz->fm_hrg_jual_resep)</td>
+                                <td id="">{{ $tz->fm_hrg_jual_resep }}</td>
+                                {{-- <td id="">@currency($tz->fm_hrg_jual_resep)</td> --}}
                                 <td id="">@currency($tz->fm_hrg_jual_nakes)</td>
                                 <td><button class="btn btn-xs btn-info" data-toggle="modal" data-target=""
                                         data-id="{{ $tz->fm_kd_obat }}" data-nmobat="{{ $tz->fm_nm_obat }}"
@@ -783,8 +784,8 @@
                 $('#efm_hrg_jual_nakes').val(hrgJualNakes);
 
                 $('#efm_hrg_jual_non_resep_persen').val(hrgJualRegPersen);
-                $('#efm_hrg_jual_nakes_persen').val(hrgJualResepPersen);
-                $('#efm_hrg_jual_resep_persen').val(hrgJualNakesPersen);
+                $('#efm_hrg_jual_nakes_persen').val(hrgJualNakesPersen);
+                $('#efm_hrg_jual_resep_persen').val(hrgJualResepPersen);
             };
 
             // Pembagian detail harga beli
