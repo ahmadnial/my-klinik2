@@ -825,7 +825,7 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header bg-nial">
-                    <h4 class="modal-title">Resep</h4>
+                    <h4 class="modal-title-sm">Resep</h4>
                     <button type="button" class="close" id="CloseModalResep" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -895,7 +895,7 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="resepID callout callout-warning mt-5">
+                        <div class="resepID callout callout-warning mt-2">
                             <div class="resep-content">
                                 <div class="row" id="resepList" style="padding: 5px;">
                                 </div>
@@ -920,7 +920,7 @@
                     {{-- <input type="hidden" id="sub_total" name="sub_total" value="0"> --}}
                     <div class="float-right mt-2">
                         <a type="button" id="exitModalResep" onclick="exitModalResep()"
-                            class="btn btn-sm btn-success">add</a>
+                            class="btn btn-sm btn-success">Add Resep</a>
                     </div>
                     </tfoot>
                 </div>
@@ -1027,7 +1027,7 @@
                     </div>
                 </div>
                 <div class="modal-footer p-2">
-                    <button type="button" class="btn btn-primary btn-sm" id="addEtiket"
+                    <button type="button" class="btn btn-primary btn-sm" id="" onclick="updateListObatResep()"
                         style="border-radius: 3px">Update</button>
                     <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"
                         style="border-radius: 3px">Close</button>
@@ -1116,7 +1116,7 @@
                             `
                             <div class="col-md-6 kt-callout-etiket mb-4" id="cardObatList${kd_obat_to}">
                                 <div class="border-radius3"
-                                    style="background-color: rgb(244, 240, 255); padding: 5px; box-shadow: 0px 0px 0px 0px !important;border: 0.5px solid lightgrey;; min-height: 196px;">
+                                    style="background-image: linear-gradient(to bottom right, #D1B9E8, #FBF8EE); padding: 5px; box-shadow: 0px 0px 0px 0px !important;border: 0.5px solid lightgrey;; min-height: 196px;">
                                     <div class="kt-portlet__head"
                                         style="min-height: 10px !important;padding: 0px;z-index: 10; border: 0px;">
                                         <div style="top: 0;position: absolute;left: -2; width: 30%;"
@@ -1798,7 +1798,7 @@
                 `
                      <div class="col-md-6 kt-callout-etiket mb-4" id="cardObatList${obatResep}">
                          <div class="border-radius3"
-                             style="background-color: rgb(244, 240, 255); padding: 5px; box-shadow: 0px 0px 0px 0px !important;border: 0.5px solid lightgrey;; min-height: 196px;">
+                             style="background-image: linear-gradient(to bottom right, #D1B9E8, #FBF8EE); padding: 5px; box-shadow: 0px 0px 0px 0px !important;border: 0.5px solid lightgrey;; min-height: 196px;">
                              <div class="kt-portlet__head"
                                  style="min-height: 10px !important;padding: 0px;z-index: 10; border: 0px;">
                                  <div style="top: 0;position: absolute;left: -2; width: 30%;"
@@ -1919,6 +1919,14 @@
             $('#signa_obat_edit').val(signaObat)
             $('#cara_pakai_obat_edit').val(carapakaiObat)
             $('#editObatResep').modal('show');
+        }
+
+        async function updateListObatResep() {
+            var qty = $('#qty_obat_edit').val()
+            var signa = $('#signa_obat_edit').val()
+            var cara_pakai = $('#cara_pakai_obat_edit').val()
+            alert(qty)
+            $('#qty_obat_edit').val('100')
         }
 
         // Create 
