@@ -350,26 +350,28 @@ class penjualanController extends Controller
                 ->where('kd_reg', $request->tp_kd_reg)
                 ->update(['isImplementasi' => "1"]);
 
-            $newDataLabel = [
-                'reffID' => $request->tp_kd_trs,
-                'Tgl' => Carbon::now(),
-                'labelType' => 'medication (Obat Pulang)',
-                'pasienID' => $request->tp_no_mr,
-                'layananID' => $request->tp_layanan,
-                'kdReg' => $request->tp_kd_reg,
-                'pasienName' => $request->tp_nama,
-                'userID' => Auth::user()->name,
-                'ketFile' => '',
-            ];
-            $ketHTML = [];
-            foreach ($request->kd_obat as $label => $val) {
-                $ketHTML[] = htmlentities('<tr><td>' . $request->nm_obat[$label] . '</td><td>' . $request->qty[$label] . '</td><td>' . $request->satuan[$label] . '</td><td>' . $request->cara_pakai[$label] . '</td></tr>');
-            };
-            $newDataLabel['ketHTML'] = json_encode($ketHTML, JSON_UNESCAPED_SLASHES);
-            // $x = str_replace('","', '', $newDataLabel);
-            // dd($x);
-            t_label_timeline::create($newDataLabel);
 
+            if ($request->tp_no_mr != '') {
+                $newDataLabel = [
+                    'reffID' => $request->tp_kd_trs,
+                    'Tgl' => Carbon::now(),
+                    'labelType' => 'medication (Obat Pulang)',
+                    'pasienID' => $request->tp_no_mr,
+                    'layananID' => $request->tp_layanan,
+                    'kdReg' => $request->tp_kd_reg,
+                    'pasienName' => $request->tp_nama,
+                    'userID' => Auth::user()->name,
+                    'ketFile' => '',
+                ];
+                $ketHTML = [];
+                foreach ($request->kd_obat as $label => $val) {
+                    $ketHTML[] = htmlentities('<tr><td>' . $request->nm_obat[$label] . '</td><td>' . $request->qty[$label] . '</td><td>' . $request->satuan[$label] . '</td><td>' . $request->cara_pakai[$label] . '</td></tr>');
+                };
+                $newDataLabel['ketHTML'] = json_encode($ketHTML, JSON_UNESCAPED_SLASHES);
+                // $x = str_replace('","', '', $newDataLabel);
+                // dd($x);
+                t_label_timeline::create($newDataLabel);
+            }
 
             DB::commit();
 
