@@ -96,7 +96,8 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form method="POST" action="{{ url('add-delivery-order') }}" onkeydown="return event.key != 'Enter';">
+                <form method="POST" action="{{ url('add-delivery-order') }}" onkeydown="return event.key != 'Enter';"
+                    class="needs-validation" novalidate>
                     @csrf
                     <div class="modal-body">
                         <div class="row">
@@ -105,15 +106,21 @@
                                 <input type="text" class="form-control" name="do_hdr_kd" id="do_hdr_kd"
                                     value="{{ $noRef }}" readonly>
                             </div>
-                            <div class="form-group col-sm-2">
-                                <label for="">Tanggal Transaksi</label>
+                            <div class="form-group col-sm-2 has-validation">
+                                <label for="tanggal_trs" class="form-label">Tanggal Transaksi</label>
                                 <input type="date" class="form-control" name="tanggal_trs" id="tanggal_trs"
                                     value="{{ $dateNow }}" required>
+                                <div class="invalid-feedback">
+                                    Please..dont let me blank
+                                </div>
                             </div>
                             <div class="form-group col-sm-3">
                                 <label for="">Nomor Faktur</label>
                                 <input type="text" class="form-control" name="do_hdr_no_faktur" id="do_hdr_no_faktur"
                                     value="" placeholder="Input Nomor Faktur" required>
+                                <div class="invalid-feedback">
+                                    Please..dont let me blank
+                                </div>
                             </div>
                             <div class="form-group col-sm-2">
                                 <label for="">Supplier</label>
@@ -124,12 +131,16 @@
                                         <option value="{{ $sp->fm_nm_supplier }}">{{ $sp->fm_nm_supplier }}</option>
                                     @endforeach
                                 </select>
+                                <div class="invalid-feedback">Please..dont let me blank</div>
                             </div>
                             <div class="form-group">
                                 <label class="form-check-label" for="flexCheckDefault">
                                     <input class="checkbox form-check-input" type="checkbox" value=""
                                         id="flexCheckDefault" onchange="getTglTempo();">
                                     Kredit
+                                    <div class="invalid-feedback">
+                                        Please..dont let me blank
+                                    </div>
                                 </label>
                             </div>
                             <div class="tglJatuhtempo form-group col-sm-2">
@@ -1106,6 +1117,24 @@
                     return getBarang();
                 }
             });
+
+            (function() {
+                'use strict'
+
+                var forms = document.querySelectorAll('.needs-validation')
+
+                Array.prototype.slice.call(forms)
+                    .forEach(function(form) {
+                        form.addEventListener('submit', function(event) {
+                            if (!form.checkValidity()) {
+                                event.preventDefault()
+                                event.stopPropagation()
+                            }
+
+                            form.classList.add('was-validated')
+                        }, false)
+                    })
+            })()
         </script>
     @endpush
 @endsection

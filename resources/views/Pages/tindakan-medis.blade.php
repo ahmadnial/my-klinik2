@@ -12,9 +12,12 @@
             overflow-x: hidden;
             padding-top: 95px;
             padding-bottom: 45px;
+            overflow-y: scroll;
         }
 
+
         .splitLeft {
+            /* display: flex; */
             left: auto;
             right: auto;
             /* height: 100%; */
@@ -27,17 +30,128 @@
             padding-bottom: 45px;
         }
 
-        @media (min-width: 576px) {
+        .static-card-timeline {
+            position: static;
+        }
+
+        @media (min-width: 1025px) {
             #Right {
                 position: fixed;
-                width: 50%;
+                width: auto;
                 max-width: 44%;
                 top: 0;
                 bottom: 0;
                 right: 0;
-                left: unset;
+                left: auto;
             }
         }
+
+        @media (min-width: 769px) {
+            #Right {
+                position: fixed;
+                width: auto;
+                max-width: 44%;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                left: auto;
+            }
+        }
+
+        @media (min-width: 481px) {
+            #Right {
+                position: fixed;
+                width: auto;
+                /* max-width: 40%; */
+                top: 0;
+                bottom: 0;
+                right: 0;
+                left: auto;
+            }
+        }
+
+        #Right {
+            background-color: rgb(187, 116, 22);
+        }
+
+        @media screen and (max-width: 1825px) and (min-width: 1625px) {
+            #Right {
+                background-color: rgb(8, 240, 0);
+                position: fixed;
+                width: auto;
+                max-width: 43%;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                left: auto;
+            }
+        }
+
+        @media screen and (max-width: 1624px) and (min-width: 1525px) {
+            #Right {
+                background-color: rgb(8, 240, 0);
+                position: fixed;
+                width: auto;
+                max-width: 42%;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                left: auto;
+            }
+        }
+
+        @media screen and (max-width: 1524px) and (min-width: 1425px) {
+            #Right {
+                background-color: rgb(8, 240, 0);
+                position: fixed;
+                width: auto;
+                max-width: 42%;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                left: auto;
+            }
+        }
+
+        @media screen and (max-width: 1424px) and (min-width: 1325px) {
+            #Right {
+                background-color: rgb(8, 240, 0);
+                position: fixed;
+                width: auto;
+                max-width: 41%;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                left: auto;
+            }
+        }
+
+        @media screen and (max-width: 1324px) and (min-width: 1225px) {
+            #Right {
+                background-color: rgb(8, 240, 0);
+                position: fixed;
+                width: auto;
+                max-width: 40%;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                left: auto;
+            }
+        }
+
+        @media screen and (max-width: 1224px) and (min-width: 400px) {
+            #Right {
+                background-color: rgb(240, 216, 0);
+                display: none;
+            }
+
+            #timelineChart {
+                width: auto;
+                max-width: 100%;
+            }
+        }
+
+
 
         /* The switch - the box around the slider */
         .switch {
@@ -104,14 +218,13 @@
     </style>
 
 
-    <section class="splitRight col-lg content" id="Right">
-        <div class="card">
+    <div class="splitRight col-lg col-sm col-xs content" id="Right">
+        <div class="card RightSplit">
             <div class="card-body">
-
                 <div class="col-12">
                     {{-- <div name="headerPinPasien" class="kt-header__topbar pr-2 headerTopBar">
-                        <div class="kt-header__topbar-item kt-header__topbar-item--user mx-0">
-                            <div class="kt-header__topbar-wrapper"> --}}
+                                <div class="kt-header__topbar-item kt-header__topbar-item--user mx-0">
+                                    <div class="kt-header__topbar-wrapper"> --}}
                     {{-- <div class="kt-header__topbar-user-pasien-info" style="background: transparent !important;"> --}}
                     <div class="accordion m-1 form-inline accordion-toggle-arrow text-light" id="DetailPasien"
                         style="position:relative; margin-right:0px; z-index:500;">
@@ -134,29 +247,29 @@
                                         <i class="fa fa-user mb-3"></i>
                                     </label>
                                     {{-- <input type="text" class="form-control text-light" name="" id="nmPasienHdr"
-                                        style="background-color:#6c558a; border: none; width: 17vw;"> --}}
+                                                style="background-color:#6c558a; border: none; width: 17vw;"> --}}
                                     {{-- <span id="1MonthUp" name="1MonthUp" class="badge badge-warning kt-font-bold"
-                                        style="border-radius: 3px;padding: 2px 5px;margin-right: 10px; display: none;"
-                                        title="Terakhir periksa"></span>
-                                    <strong>
-                                        <label name="noMrHdr" class="pointer mr-2">00-00-00-00</label>
-                                    </strong>
-                                    <label
-                                        style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;background: #ed2121; font-size: 0.9rem; display: none;"
-                                        name="tagAlergiProfile" class="text-white pointer mx-1 kt-font-normal px-2">
-                                        Allergy
-                                    </label>
-                                    <label
-                                        style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap; font-size: 0.9rem; display: none;"
-                                        name="tagTriageProfile" class="pointer mx-1 kt-font-normal px-2">
-                                        Triage
-                                    </label> --}}
+                                                style="border-radius: 3px;padding: 2px 5px;margin-right: 10px; display: none;"
+                                                title="Terakhir periksa"></span>
+                                            <strong>
+                                                <label name="noMrHdr" class="pointer mr-2">00-00-00-00</label>
+                                            </strong>
+                                            <label
+                                                style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;background: #ed2121; font-size: 0.9rem; display: none;"
+                                                name="tagAlergiProfile" class="text-white pointer mx-1 kt-font-normal px-2">
+                                                Allergy
+                                            </label>
+                                            <label
+                                                style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap; font-size: 0.9rem; display: none;"
+                                                name="tagTriageProfile" class="pointer mx-1 kt-font-normal px-2">
+                                                Triage
+                                            </label> --}}
                                 </div>
 
                                 {{-- <div name="divIcare" style="display: none;">
-                                    <button type="button" class="btn btn-icare border-radius2" name="btnICare"
-                                        title="I Care JKN"></button>
-                                </div> --}}
+                                            <button type="button" class="btn btn-icare border-radius2" name="btnICare"
+                                                title="I Care JKN"></button>
+                                        </div> --}}
                             </div>
                             <div id="DetPsn"
                                 style="position: fixed; margin-top: 40px; z-index: 9999; min-width: 324px; border: 1px solid rgb(119, 94, 151);"
@@ -180,11 +293,11 @@
                                                         style="background-color: #d2eaff; border:none">
                                                 </div>
                                                 {{-- <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
-                                                    style="background-color: #d2eaff;" name="tglPeriksaHdr">
-                                                    01-01-3000 00:00:00
-                                                    <!-- <span name="tglPeriksaHdr"></span> -->
-                                                    <!-- <span name="jamPeriksaHdr"></span> -->
-                                                </div> --}}
+                                                            style="background-color: #d2eaff;" name="tglPeriksaHdr">
+                                                            01-01-3000 00:00:00
+                                                            <!-- <span name="tglPeriksaHdr"></span> -->
+                                                            <!-- <span name="jamPeriksaHdr"></span> -->
+                                                        </div> --}}
                                             </div>
                                             <div class="d-flex flex-wrap">
                                                 <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
@@ -241,14 +354,14 @@
                                             </div>
                                             <div class="d-flex flex-wrap">
                                                 {{-- <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
-                                                    style="background-color: #9976c73d;color: #5000b9;"
-                                                    name="pendidikanHdr">EDU : -
-                                                </div>
-                                                <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
-                                                    style="background-color: #9976c73d;color: #5000b9;"
-                                                    name="pekerjaanHdr">
-                                                    WORK : -
-                                                </div> --}}
+                                                            style="background-color: #9976c73d;color: #5000b9;"
+                                                            name="pendidikanHdr">EDU : -
+                                                        </div>
+                                                        <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                            style="background-color: #9976c73d;color: #5000b9;"
+                                                            name="pekerjaanHdr">
+                                                            WORK : -
+                                                        </div> --}}
                                             </div>
                                             {{-- <div class=""> --}}
                                             <div class="px-2 py-1 m-1 rounded rounded-sm"
@@ -260,123 +373,123 @@
                                             {{-- </div> --}}
                                         </div>
                                         {{-- <table style="width:100%">
-                                            <tbody>
-                                                <tr>
-                                                    <td style="vertical-align: top;"
-                                                        class="kt-font-danger kt-font-boldest">
-                                                        #Allergy
-                                                    </td>
-                                                    <td style="vertical-align: top;">:</td>
-                                                    <td class="pl-2">
-                                                        <div class="dropdown" name="divAddAlergiProfile">
-                                                            <button
-                                                                class="btn btn-sm btn-default border-radius3 kt-font-bolder pull-right p-1 dropdown-toggle"
-                                                                style="position: absolute; right: -10px;"
-                                                                title="Tambah Alergi" id="ddAddAlergiProfileHD"
-                                                                data-toggle="dropdown" aria-haspopup="true"
-                                                                aria-expanded="false" type="button">
-                                                                <i class="fa fa-plus-circle icon-smass"></i>Add
-                                                            </button>
-                                                            <div class="dropdown-menu p-2"
-                                                                aria-labelledby="ddAddAlergiProfileHD"
-                                                                x-placement="bottom-start">
-                                                                <h6 class="kt-font-primary mb-3">Add Alergi
-                                                                    Pasien</h6>
-                                                                <div class="row">
-                                                                    <select class="form-control form-control-sm col mb-2"
-                                                                        id="listAlergiTypeProfileHD">
-                                                                    </select>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <input type="text" id="alergiNameProfileHD"
-                                                                        class="form-control form-control-sm col mb-2"
-                                                                        autocomplete="off" placeholder="Nama Alergi">
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-12 p-0">
-                                                                        <button
-                                                                            class="btn btn-sm btn-primary border-radius3 kt-font-bolder pull-right p-1"
-                                                                            id="addAlergiProfileHD" type="button">
-                                                                            <i class="fa fa-save icon-smass"></i>Save
-                                                                        </button>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="vertical-align: top;"
+                                                                class="kt-font-danger kt-font-boldest">
+                                                                #Allergy
+                                                            </td>
+                                                            <td style="vertical-align: top;">:</td>
+                                                            <td class="pl-2">
+                                                                <div class="dropdown" name="divAddAlergiProfile">
+                                                                    <button
+                                                                        class="btn btn-sm btn-default border-radius3 kt-font-bolder pull-right p-1 dropdown-toggle"
+                                                                        style="position: absolute; right: -10px;"
+                                                                        title="Tambah Alergi" id="ddAddAlergiProfileHD"
+                                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                                        aria-expanded="false" type="button">
+                                                                        <i class="fa fa-plus-circle icon-smass"></i>Add
+                                                                    </button>
+                                                                    <div class="dropdown-menu p-2"
+                                                                        aria-labelledby="ddAddAlergiProfileHD"
+                                                                        x-placement="bottom-start">
+                                                                        <h6 class="kt-font-primary mb-3">Add Alergi
+                                                                            Pasien</h6>
+                                                                        <div class="row">
+                                                                            <select class="form-control form-control-sm col mb-2"
+                                                                                id="listAlergiTypeProfileHD">
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <input type="text" id="alergiNameProfileHD"
+                                                                                class="form-control form-control-sm col mb-2"
+                                                                                autocomplete="off" placeholder="Nama Alergi">
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-12 p-0">
+                                                                                <button
+                                                                                    class="btn btn-sm btn-primary border-radius3 kt-font-bolder pull-right p-1"
+                                                                                    id="addAlergiProfileHD" type="button">
+                                                                                    <i class="fa fa-save icon-smass"></i>Save
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                        <div name="listAlergiProfile"></div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="vertical-align: top;"
-                                                        class="kt-font-danger kt-font-boldest">#Vital Sign
-                                                    </td>
-                                                    <td style="vertical-align: top;">:</td>
-                                                    <td class="pl-2">
-                                                        <div class="col-12 p-0" style="max-width: 300px;">
-                                                            <div class="row" name="listVitalSignProfile">
+                                                                <div name="listAlergiProfile"></div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="vertical-align: top;"
+                                                                class="kt-font-danger kt-font-boldest">#Vital Sign
+                                                            </td>
+                                                            <td style="vertical-align: top;">:</td>
+                                                            <td class="pl-2">
+                                                                <div class="col-12 p-0" style="max-width: 300px;">
+                                                                    <div class="row" name="listVitalSignProfile">
 
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="vertical-align: top;"
-                                                        class="kt-font-danger kt-font-boldest">#Diagnosis
-                                                    </td>
-                                                    <td class="pl-2">
-                                                        <div class="col-12 p-0" style="max-width: 300px;">
-                                                            <div class="row pl-2 scroll-y scrollbar-dusty thin scrollbox"
-                                                                name="listDiagnosisProfile" style="max-height: 250px;">
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr style="display: none;">
-                                                    <td style="color:red">#allergi</td>
-                                                    <td colspan="2"><label name="alergiHdr"
-                                                            style="color: red;"></label>
-                                                    </td>
-                                                </tr>
-                                                <tr style="display: none;">
-                                                    <td>#vital-sign</td>
-                                                    <td colspan="2"><label name="vitalSignHdr"></label>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table> --}}
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="vertical-align: top;"
+                                                                class="kt-font-danger kt-font-boldest">#Diagnosis
+                                                            </td>
+                                                            <td class="pl-2">
+                                                                <div class="col-12 p-0" style="max-width: 300px;">
+                                                                    <div class="row pl-2 scroll-y scrollbar-dusty thin scrollbox"
+                                                                        name="listDiagnosisProfile" style="max-height: 250px;">
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr style="display: none;">
+                                                            <td style="color:red">#allergi</td>
+                                                            <td colspan="2"><label name="alergiHdr"
+                                                                    style="color: red;"></label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr style="display: none;">
+                                                            <td>#vital-sign</td>
+                                                            <td colspan="2"><label name="vitalSignHdr"></label>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table> --}}
                                         <div class="col-12 p-0 hide">
                                             {{-- <div class="row pl-2 scroll-y scrollbar-dusty thin border px-3 pt-2 scrollbox"
-                                                name="listDiagnosaProfile" style="max-height: 250px;">
-                                            </div> --}}
+                                                        name="listDiagnosaProfile" style="max-height: 250px;">
+                                                    </div> --}}
                                         </div>
                                         {{-- <div class="row" id="divQR" style="display: none;">
-                                            <div class="col-12 text-center">
-                                                <div id="qrcode" style="padding-left: 27%;" class="mt-2"></div>
-                                            </div>
-                                        </div> --}}
+                                                    <div class="col-12 text-center">
+                                                        <div id="qrcode" style="padding-left: 27%;" class="mt-2"></div>
+                                                    </div>
+                                                </div> --}}
                                     </div>
                                     {{-- <div class="progress" style="height: 2px;">
-                                        <div class="progress-bar kt-bg-info" id="progressLoadImageQR" role="progressbar"
-                                            style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                                        </div>
-                                    </div> --}}
+                                                <div class="progress-bar kt-bg-info" id="progressLoadImageQR" role="progressbar"
+                                                    style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                                </div>
+                                            </div> --}}
                                 </div>
                                 {{-- <button type="button" class="btn btn-secondary mr-0 col p-0"
-                                                    name="closeDetPsnHdr" aria-label="Close" title="collapse">
-                                                    <i class="fa fa-chevron-circle-up fa-lg text-brand mb-1 fa-sm"></i>
-                                                </button> --}}
+                                                            name="closeDetPsnHdr" aria-label="Close" title="collapse">
+                                                            <i class="fa fa-chevron-circle-up fa-lg text-brand mb-1 fa-sm"></i>
+                                                        </button> --}}
                             </div>
                         </div>
                         {{-- <div class="form-group col-sm-6">
-                            <label for="">Search Registrasi</label>
-                            <select class="form-control-pasien" id="tr_kd_reg" style="width: 100%;" name="tr_kd_reg">
-                                @foreach ($isRegActive as $reg)
-                                    <option value="">--Select--</option>
-                                    <option value="{{ $reg->fr_kd_reg }}">
-                                        {{ $reg->fr_kd_reg . '-' . $reg->fr_nama }}
-                                    </option>
-                                @endforeach
-                            </select> --}}
+                                    <label for="">Search Registrasi</label>
+                                    <select class="form-control-pasien" id="tr_kd_reg" style="width: 100%;" name="tr_kd_reg">
+                                        @foreach ($isRegActive as $reg)
+                                            <option value="">--Select--</option>
+                                            <option value="{{ $reg->fr_kd_reg }}">
+                                                {{ $reg->fr_kd_reg . '-' . $reg->fr_nama }}
+                                            </option>
+                                        @endforeach
+                                    </select> --}}
                     </div>
                 </div>
                 {{-- </div> --}}
@@ -445,7 +558,8 @@
                         SOAP</button>
                 </div> --}}
                 {{-- <div class="card-body"> --}}
-                <form action="{{ url('chartCreate') }}" method="post" id="CHCreate">
+                <form action="{{ url('chartCreate') }}" method="post" id="CHCreate" class="needs-validation"
+                    novalidate>
                     <div class="row">
                         <div class="col">
                             <div class="card card-info">
@@ -556,7 +670,9 @@
                                                             <span class="input-group-text"
                                                                 style="width:7em; text-align:center">mmHg</span>
                                                         </div>
-
+                                                        <div class="invalid-feedback">
+                                                            Please..dont let me blank
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
@@ -753,7 +869,7 @@
                     </div>
             </div>
         </div>
-    </section>
+    </div>
 
 
     {{-- ===============ADD TINDAKAN MODAL================= --}}
@@ -1038,7 +1154,89 @@
 
     {{-- END MODAL EDIT RESEP --}}
 
-    <div class="splitLeft col-sm-7 col-lg-6 col-xs-sm-6 row">
+    <div class="col-md-6 col-sm-10 order-md-1 order-sm-2" id="timelineChart">
+        <div>
+            <div class="static-card-timeline">
+                <div class="justify-content-between px-1"
+                    style="display: flex !important; z-index:100; border: 1px solid #e7ddf0;" id="hid">
+
+                    <div class="p-2" id="">
+                        <div class="form-group float-right">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                                <label class="custom-control-label" for="customSwitch1">Timeline</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-right"></div>
+                    <div class="p-2" id="panelBtnFilterChart">
+                        <div class="btn-group btn-group-sm" role="group" aria-label="Small button group"
+                            style="padding-top: 1px;">
+                            <button type="button"
+                                class="btn btn-sm btn btn-outline-success kt-font-bolder rounded-left px-3"
+                                id="btnfilterChartToday">Today</button>
+                            <button type="button"
+                                class="btn btn-sm btn btn-outline-success kt-font-bolder rounded-right active px-3"
+                                id="btnfilterChartAll">All Data</button>
+                        </div>
+                    </div>
+                    <div class="p-0 col-3 pr-2" id="panelFilterSatTugas" style="padding-top: 5px !important;">
+                        <select class="form-control form-control-sm kt-font-boldest kt-font-info"
+                            id="filterSatTugasChart">
+                            <option value="">No Filter</option>
+                            <option disabled="">----------------</option>
+                            <option disabled="">----------------</option>
+                            </option>
+                        </select>
+                    </div>
+                    <div class="p-0 col-2 pr-2" id="panelFilterInstalasi" style="padding-top: 5px !important;">
+                        <select class="form-control form-control-sm kt-font-bold" id="filterInstalasiDKMC">
+                            <option value="" selected="">Filter Instalasi</option>
+                            <option value="3">Rawat Inap</option>
+                            <option value="2">Rawat Jalan</option>
+                            <option value="1">Rawat Darurat</option>
+                        </select>
+                    </div>
+                    <div class="p-0 border-left pl-1" id="panelPrint">
+                        <span data-toggle="tooltip" title="Print History Register Aktif">
+                            <button type="button" id="printHis"
+                                class="btn btn-icon-only-blue btn-sm btn-icon btn-circle" style="margin-top: 5px;"><i
+                                    class="flaticon2-fax fa-lg"></i></button>
+                        </span>
+                    </div>
+                    {{-- <div class="p-2" id="panelBtnFilterTimeline" style="display: none;">
+                        <div class="btn-group btn-group-sm" role="group" aria-label="Small button group"
+                            style="padding-top: 1px;">
+                            <button type="button"
+                                class="btn btn-sm btn-filter btn btn-outline-success kt-font-bolder rounded-left px-3"
+                                id="btnfilterTimelineMonth">Last Month</button>
+                            <button type="button"
+                                class="btn btn-sm btn-filter btn btn-outline-success kt-font-bolder px-3"
+                                id="btnfilterTimelineWeek">Last Week</button>
+                            <button type="button"
+                                class="btn btn-sm btn-filter btn btn-outline-success kt-font-bolder rounded-right px-3"
+                                id="btnfilterTimelineAllData">All Data</button>
+                        </div>
+                    </div> --}}
+                    {{-- <div class="p-0 py-2" id="panelBack" style="display: none;">
+                        <span data-toggle="tooltip" title="Back To Timeline">
+                            <button type="button" id="backToTimeline" class="btn btn-warning border-radius3 btn-sm"
+                                style="margin-top: 1px;">
+                                <i class="fa fa-chevron-circle-left fa-lg"></i>
+                                Back
+                            </button>
+                        </span>
+                    </div> --}}
+                </div>
+            </div>
+            <div id="" class="isTimeline collapse show bg-light" data-parent="#accordion">
+            </div>
+            <div id="" class="isTimelineListAll collapse show bg-light" data-parent="#accordion">
+            </div>
+
+        </div>
+    </div>
+    {{-- <div class="splitLeft col-sm-6 col-lg-6 col-xs-sm-6 row">
         <div class="col" id="accordion">
             <div class="card card-primary">
                 <a class="" data-toggle="" href="#">
@@ -1060,7 +1258,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- /.content -->
 @endsection
 
@@ -2102,10 +2300,10 @@
                         var dateView = moment(dateFormat).format(
                             "dddd, D MMMM YYYY, h:mm:ss a");
                         $(".isTimeline").append(`
-                    <div class="left card-body">
+                    <div class="left card-body" style="padding-right:0; padding-left:0; padding-top: 7px; max-height: 100%;">
                         <div class="row">
-                            <div class="col">
-                                <div class="col" id="accordion">
+                            <div class="col-12 col-md-12 col-sm-12 order-md-1 order-sm-2" style="width:100%;">
+                                <div id="accordion">
                                     <div class="card card-purple card-outline">
                                         <a class="d-block w-100" data-toggle="collapse" href="#collapse${x++}">
                                             <div class="card-header">
@@ -2412,5 +2610,23 @@
 
         // Get Data setelah reload
         window.onload = getTimeline(), getHeaderInfo();
+
+        (function() {
+            'use strict'
+
+            var forms = document.querySelectorAll('.needs-validation')
+
+            Array.prototype.slice.call(forms)
+                .forEach(function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
     </script>
 @endpush

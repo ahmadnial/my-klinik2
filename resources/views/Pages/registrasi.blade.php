@@ -125,7 +125,7 @@
                         <hr> <br>
                         <div class="form-group col-sm-6">
                             <label for="">Layanan</label>
-                            <select name="fr_layanan" id="fr_layanan" class="fr_layanan form-control">
+                            <select name="fr_layanan" id="fr_layanan" class="fr_layanan form-control" required>
                                 <option value="">--Select--</option>
                                 @foreach ($layanan as $lay)
                                     <option value="{{ $lay->fm_nm_layanan }}">{{ $lay->fm_nm_layanan }}</option>
@@ -134,13 +134,13 @@
                         </div>
                         <div class="form-group col-sm-6">
                             <label for="">Dokter</label>
-                            <select name="fr_dokter" id="fr_dokter" class="fr_dokter form-control">
+                            <select name="fr_dokter" id="fr_dokter" class="fr_dokter form-control" required>
 
                             </select>
                         </div>
                         <div class="form-group col-sm-6">
                             <label for="">Jaminan</label>
-                            <select name="fr_jaminan" id="fr_jaminan" class="form-control">
+                            <select name="fr_jaminan" id="fr_jaminan" class="form-control" required>
                                 <option value="">--Select--</option>
                                 @foreach ($jaminan as $jam)
                                     <option value="{{ $jam->fm_nm_jaminan }}">{{ $jam->fm_nm_jaminan }}</option>
@@ -149,7 +149,7 @@
                         </div>
                         <div class="form-group col-sm-6">
                             <label for="">Session Poli</label>
-                            <select name="fr_session_poli" id="fr_session_poli" class="form-control">
+                            <select name="fr_session_poli" id="fr_session_poli" class="form-control" required>
                                 <option value="">--Select--</option>
                                 <option value="Pagi">Pagi</option>
                                 <option value="Sore">Sore</option>
@@ -164,7 +164,7 @@
                     <hr>
                     <div class="form-group col-sm-12">
                         <label for="">Keluhan Utama</label>
-                        <textarea type="text" class="form-control" name="keluhan_utama" id="keluhan_utama"></textarea>
+                        <textarea type="text" class="form-control" name="keluhan_utama" id="keluhan_utama" required></textarea>
                     </div>
                     {{-- VITAL SIGN --}}
                     {{-- <div id="collapseVitalSign" class="bg-light border collapse show" aria-labelledby="headerVitalSign"
@@ -824,5 +824,23 @@
             })
 
         }
+
+        (function() {
+            'use strict'
+
+            var forms = document.querySelectorAll('.needs-validation')
+
+            Array.prototype.slice.call(forms)
+                .forEach(function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
     </script>
 @endpush

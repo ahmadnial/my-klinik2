@@ -85,7 +85,8 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form method="POST" action="{{ url('add-penjualan') }}" onkeydown="return event.key != 'Enter';">
+                <form method="POST" action="{{ url('add-penjualan') }}" onkeydown="return event.key != 'Enter';"
+                    class="needs-validation" novalidate>
                     @csrf
                     <div class="modal-body">
                         <div class="row">
@@ -167,6 +168,7 @@
                                     <option value="Resep">Resep</option>
                                     <option value="Nakes">Nakes</option>
                                 </select>
+                                <div class="invalid-feedback">Please..dont let me blank</div>
                             </div>
                             <div class="isResepActive form-inline col-sm-9 mb-2">
 
@@ -1624,6 +1626,24 @@
             //         }
             //     });
             // });
+
+            (function() {
+                'use strict'
+
+                var forms = document.querySelectorAll('.needs-validation')
+
+                Array.prototype.slice.call(forms)
+                    .forEach(function(form) {
+                        form.addEventListener('submit', function(event) {
+                            if (!form.checkValidity()) {
+                                event.preventDefault()
+                                event.stopPropagation()
+                            }
+
+                            form.classList.add('was-validated')
+                        }, false)
+                    })
+            })()
         </script>
     @endpush
 @endsection

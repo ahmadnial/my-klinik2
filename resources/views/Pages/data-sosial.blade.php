@@ -79,7 +79,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ url('/create-dasos') }}" method="post">
+                <form action="{{ url('/create-dasos') }}" method="post" class="needs-validation" novalidate>
                     @csrf
                     <div class="modal-body">
                         <div class="row">
@@ -90,7 +90,11 @@
                             </div>
                             <div class="form-group col-sm-6">
                                 <label for="">Nama</label>
-                                <input type="text" class="form-control" name="fs_nama" placeholder="Nama Pasien">
+                                <input type="text" class="form-control" name="fs_nama" placeholder="Nama Pasien"
+                                    required>
+                                <div class="invalid-feedback">
+                                    Please..dont let me blank
+                                </div>
                             </div>
                             <div class="form-group col-sm-6">
                                 <label for="">Tempat Lahir</label>
@@ -100,15 +104,21 @@
                             <div class="form-group col-sm-6">
                                 <label for="">Tanggal Lahir</label>
                                 <input type="date" class="form-control" name="fs_tgl_lahir"
-                                    placeholder="Tanggal Lahir Pasien">
+                                    placeholder="Tanggal Lahir Pasien" required>
+                                <div class="invalid-feedback">
+                                    Please..dont let me blank
+                                </div>
                             </div>
                             <div class="form-group col-sm-6">
                                 <label for="">Jenis Kelamin</label>
-                                <select name="fs_jenis_kelamin" id="fs_jenis_kelamin" class="form-control">
+                                <select name="fs_jenis_kelamin" id="fs_jenis_kelamin" class="form-control" required>
                                     <option value="">--Select--</option>
                                     <option value="Laki-laki">Laki-Laki</option>
                                     <option value="Perempuan">Perempuan</option>
                                 </select>
+                                <div class="invalid-feedback">
+                                    Please..dont let me blank
+                                </div>
                             </div>
                             <div class="form-group col-sm-6">
                                 <label for="">Jenis Identitas</label>
@@ -720,5 +730,23 @@
                 onChangeSelect('{{ route('villages') }}', $(this).val(), 'desa');
             })
         });
+
+        (function() {
+            'use strict'
+
+            var forms = document.querySelectorAll('.needs-validation')
+
+            Array.prototype.slice.call(forms)
+                .forEach(function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
     </script>
 @endpush
