@@ -102,12 +102,16 @@
                                     currency: 'IDR'
                                 });
 
-                                var perkalian = datavalue.total * datavalue.hrg_obat;
+                                var dataRaw = datavalue.total * datavalue.hrg_obat;
+                                var subtotal = dataRaw.toLocaleString('id-ID', {
+                                    style: 'currency',
+                                    currency: 'IDR'
+                                });
 
                                 const dataBaru = [
                                     [datavalue.kd_obat,
-                                        datavalue.nm_obat, datavalue.total, datavalue.satuan,
-                                        hrg_obatShow, perkalian
+                                        datavalue.nm_obat, datavalue.total, datavalue.satuan, datavalue
+                                        .hrg_obat, subtotal
                                     ],
                                 ]
 
@@ -128,7 +132,7 @@
 
                                 injectDataBaru()
 
-                                var ttlInt = parseFloat(perkalian);
+                                var ttlInt = parseFloat(dataRaw);
                                 sumall += ttlInt;
 
                                 var number = sumall;
