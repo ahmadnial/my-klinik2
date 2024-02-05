@@ -6,10 +6,11 @@
             right: 0%;
             height: 100%;
             width: 43%;
-            position: absolute;
-            z-index: 0;
+            max-width: 50%;
+            /* position: absolute; */
+            /* z-index: 0; */
             top: 0;
-            overflow-x: hidden;
+            /* overflow-x: hidden; */
             padding-top: 95px;
             padding-bottom: 45px;
             overflow-y: scroll;
@@ -30,33 +31,7 @@
             padding-bottom: 45px;
         }
 
-        .static-card-timeline {
-            position: static;
-        }
 
-        @media (min-width: 1025px) {
-            #Right {
-                position: fixed;
-                width: auto;
-                max-width: 44%;
-                top: 0;
-                bottom: 0;
-                right: 0;
-                left: auto;
-            }
-        }
-
-        @media (min-width: 769px) {
-            #Right {
-                position: fixed;
-                width: auto;
-                max-width: 44%;
-                top: 0;
-                bottom: 0;
-                right: 0;
-                left: auto;
-            }
-        }
 
         @media (min-width: 481px) {
             #Right {
@@ -68,10 +43,6 @@
                 right: 0;
                 left: auto;
             }
-        }
-
-        #Right {
-            /* background-color: rgb(187, 116, 22); */
         }
 
         @media screen and (max-width: 1825px) and (min-width: 1625px) {
@@ -177,7 +148,29 @@
             }
         }
 
+        @media (min-width: 1025px) {
+            #Right {
+                position: fixed;
+                width: auto;
+                max-width: 44%;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                left: auto;
+            }
+        }
 
+        @media (min-width: 769px) {
+            #Right {
+                position: fixed;
+                width: auto;
+                max-width: 44%;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                left: auto;
+            }
+        }
 
         /* The switch - the box around the slider */
         .switch {
@@ -244,8 +237,8 @@
     </style>
 
 
-    <div class="splitRight col-lg col-sm col-xs content" id="Right">
-        <div class="card RightSplit">
+    <div class="splitRight col-lg content" id="Right">
+        <div class="card">
             <div class="card-body">
                 <div class="col-12">
                     {{-- <div name="headerPinPasien" class="kt-header__topbar pr-2 headerTopBar">
@@ -617,19 +610,19 @@
                                         <div class="s_head">
                                             <div class="btn-group float-right btn-group-xs template-hide" role="group"
                                                 aria-label="Button group with nested dropdown">
-                                                <button type="button"
+                                                {{-- <button type="button"
                                                     class="btn btn-xs btn-primary mb-1 show-count badge-top-right"
                                                     data-toggle="collapse" data-target="#collapseVitalSign"
                                                     aria-expanded="true" aria-controls="collapseVitalSign"
                                                     data-namainput="attachment-o" data-count="0" id="btnVitalSign">
                                                     Vital Sign
-                                                </button>
+                                                </button> --}}
                                                 <!--span class="badge badge-pill badge-success b_pos" style="color:white;">11</span-->
                                             </div>
                                         </div>
                                         <label for="inputDescription">Objective</label>
                                         {{-- VITAL SIGN --}}
-                                        <div id="collapseVitalSign" class="bg-light border collapse show"
+                                        <div id="collapseVitalSign" class="bg-light border collapse show col"
                                             aria-labelledby="headerVitalSign" data-parent="#btnVitalSign" style="">
                                             <div class="row py-2" id="inputMonitoringMC">
                                                 <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
@@ -854,7 +847,7 @@
                                         </div>
                                         {{-- END VITAL SIGN --}}
 
-                                        <textarea id="chart_O" name="chart_O" class="form-control" rows="4"></textarea>
+                                        <textarea id="chart_O" name="chart_O" class="form-control mt-2" rows="4"></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputDescription">Assesment</label>
@@ -1223,13 +1216,13 @@
                             <option value="1">Rawat Darurat</option>
                         </select>
                     </div>
-                    <div class="p-0 border-left pl-1" id="panelPrint">
+                    {{-- <div class="p-0 border-left pl-1" id="panelPrint">
                         <span data-toggle="tooltip" title="Print History Register Aktif">
                             <button type="button" id="printHis"
                                 class="btn btn-icon-only-blue btn-sm btn-icon btn-circle" style="margin-top: 5px;"><i
                                     class="flaticon2-fax fa-lg"></i></button>
                         </span>
-                    </div>
+                    </div> --}}
                     {{-- <div class="p-2" id="panelBtnFilterTimeline" style="display: none;">
                         <div class="btn-group btn-group-sm" role="group" aria-label="Small button group"
                             style="padding-top: 1px;">
