@@ -47,14 +47,19 @@ class LapFarmasiController extends Controller
         // $t = $request->all();
         // dd($t);
         if ($request->ajax()) {
+            // $isDataLaporanDetail = DB::table('tp_detail_item')
+            //     ->select('kd_trs', 'kd_obat', 'nm_obat', 'hrg_obat', 'qty', 'satuan', 'sub_total', 'created_at')
+            //     ->whereBetween('tgl_trs', [$request->date1, $request->date2])
+            //     ->whereNull('kd_reg')
+            //     ->get();
             $isDataLaporanDetail = DB::table('tp_detail_item')
-                ->select('kd_trs', 'kd_obat', 'nm_obat', 'hrg_obat', 'qty', 'satuan', 'sub_total', 'created_at')
-                ->distinct()
+                ->select('kd_obat', 'nm_obat', 'hrg_obat', 'satuan', 'sub_total', DB::raw('sum(qty) as total'))
                 ->whereBetween('tgl_trs', [$request->date1, $request->date2])
                 ->whereNull('kd_reg')
-                // ->where('kd_order_resep', '=', 'null')
-                ->first();
+                ->groupBy('kd_obat', 'nm_obat', 'hrg_obat', 'satuan', 'sub_total',)
+                ->get();
         }
+
         return response()->json($isDataLaporanDetail);
     }
 

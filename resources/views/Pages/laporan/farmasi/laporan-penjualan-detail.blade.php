@@ -20,8 +20,8 @@
                     <table id="penjualan" class="table table-hover table-striped">
                         <thead class="bg-nial">
                             <tr>
-                                <th>kode Transaksi</th>
-                                <th>Tanggal Transaksi</th>
+                                {{-- <th>kode Transaksi</th> --}}
+                                {{-- <th>Tanggal Transaksi</th> --}}
                                 <th>Kode Barang</th>
                                 <th>Nama Barang</th>
                                 <th>QTY</th>
@@ -37,10 +37,12 @@
                             <tr>
                                 <th></th>
                                 <th></th>
-                                <th></th>
+                                <th id="totalQty"></th>
                                 {{-- <td><b><input type="text" id="grandTTL" class="form-control" style="border: none"
                                             readonly></b>
                                 </td> --}}
+                                <th></th>
+                                <th></th>
                                 <th id="grandTTL"></th>
                             </tr>
                         </tfoot>
@@ -84,16 +86,19 @@
                                 .draw();
                             $.each(isDataLaporanDetail, function(key, datavalue) {
                                 const table = $('#penjualan').DataTable();
-                                // var total_pen = datavalue.total_penjualan;
-                                // var ttlPenjualan = total_pen.toLocaleString('id-ID', {
-                                //     style: 'currency',
-                                //     currency: 'IDR'
-                                // });
+
+                                var hrg_obatC = datavalue.hrg_obat;
+                                var hrg_obatShow = hrg_obatC.toLocaleString('id-ID', {
+                                    style: 'currency',
+                                    currency: 'IDR'
+                                });
+
+                                var perkalian = datavalue.total * datavalue.hrg_obat;
+
                                 const dataBaru = [
-                                    [datavalue.kd_trs, datavalue.created_at, datavalue.kd_obat,
-                                        datavalue.nm_obat, datavalue.qty, datavalue.satuan, datavalue
-                                        .hrg_obat,
-                                        datavalue.sub_total,
+                                    [datavalue.kd_obat,
+                                        datavalue.nm_obat, datavalue.total, datavalue.satuan,
+                                        hrg_obatShow, perkalian
                                     ],
                                 ]
 
@@ -106,15 +111,15 @@
                                             data[3],
                                             data[4],
                                             data[5],
-                                            data[6],
-                                            data[7],
+                                            // data[6],
+                                            // data[7],
                                         ]).draw(false)
                                     }
                                 }
 
                                 injectDataBaru()
 
-                                var ttlInt = parseFloat(datavalue.total_penjualan);
+                                var ttlInt = parseFloat(perkalian);
                                 sumall += ttlInt;
 
                                 var number = sumall;
