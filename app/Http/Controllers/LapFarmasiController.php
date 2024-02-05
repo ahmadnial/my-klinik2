@@ -6,6 +6,7 @@ use App\Models\do_detail_item;
 use App\Models\kartuStockHdr;
 use App\Models\mstr_dokter;
 use App\Models\mstr_tindakan;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
@@ -23,7 +24,8 @@ class LapFarmasiController extends Controller
 
     public function lapPenjualanFarmasiDetail()
     {
-        return view('pages.laporan.farmasi.laporan-penjualan-detail');
+        $isUser = DB::table('users')->get();
+        return view('pages.laporan.farmasi.laporan-penjualan-detail', ['isUser' => $isUser]);
     }
 
 
@@ -46,16 +48,19 @@ class LapFarmasiController extends Controller
     {
         // $t = $request->all();
         // dd($t);
-        if ($request->ajax()) {
-            // $isDataLaporanDetail = DB::table('tp_detail_item')
-            //     ->select('kd_trs', 'kd_obat', 'nm_obat', 'hrg_obat', 'qty', 'satuan', 'sub_total', 'created_at')
-            //     ->whereBetween('tgl_trs', [$request->date1, $request->date2])
-            //     ->whereNull('kd_reg')
-            //     ->get();
+        if ($request->user == '') {
             $isDataLaporanDetail = DB::table('tp_detail_item')
                 ->select('kd_obat', 'nm_obat', 'hrg_obat', 'satuan', 'sub_total', DB::raw('sum(qty) as total'))
                 ->whereBetween('tgl_trs', [$request->date1, $request->date2])
                 ->whereNull('kd_reg')
+                ->groupBy('kd_obat', 'nm_obat', 'hrg_obat', 'satuan', 'sub_total',)
+                ->get();
+        } else {
+            $isDataLaporanDetail = DB::table('tp_detail_item')
+                ->select('kd_obat', 'nm_obat', 'hrg_obat', 'satuan', 'sub_total', DB::raw('sum(qty) as total'))
+                ->whereBetween('tgl_trs', [$request->date1, $request->date2])
+                ->whereNull('kd_reg')
+                ->where('user', $request->user)
                 ->groupBy('kd_obat', 'nm_obat', 'hrg_obat', 'satuan', 'sub_total',)
                 ->get();
         }

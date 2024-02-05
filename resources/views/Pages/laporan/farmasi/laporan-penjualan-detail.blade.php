@@ -9,10 +9,17 @@
             </div>
 
             <div class="card-body">
-                <div class="col-4 mb-4 input-group input-daterange">
+                <div class="col-5 mb-4 input-group input-daterange">
                     <input type="date" id="date1" class="form-control">
                     <div class="input-group-addon">&nbsp; s.d&nbsp;</div>
                     <input type="date" id="date2" class="form-control">
+                    <div class="input-group-addon">&nbsp;&nbsp;&nbsp;</div>
+                    <select id="user" class="form-control">
+                        <option value="">Select User</option>
+                        @foreach ($isUser as $iu)
+                            <option value="{{ $iu->name }}">{{ $iu->name }}</option>
+                        @endforeach
+                    </select>
                     <div class="input-group-addon">&nbsp;&nbsp;&nbsp;</div>
                     <button class="btn btn-success" onclick="getDataPenjualan()" id="btnProses">Proses</button>
                 </div>
@@ -58,6 +65,7 @@
             function getDataPenjualan() {
                 var date1 = $('#date1').val();
                 var date2 = $('#date2').val();
+                var user = $('#user').val();
 
                 if (date1 == '') {
                     toastr.info('Pilih Range Tanggal', 'Info!', {
@@ -75,7 +83,8 @@
                         type: 'GET',
                         data: {
                             date1: date1,
-                            date2: date2
+                            date2: date2,
+                            user: user
                         },
                         success: function(isDataLaporanDetail) {
                             var sumall = 0;
@@ -137,6 +146,7 @@
                                 });
                                 $('#date1').val('');
                                 $('#date2').val('');
+                                $('#user').val('');
                             })
                         }
                     })
