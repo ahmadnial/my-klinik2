@@ -71,12 +71,12 @@
         }
 
         #Right {
-            background-color: rgb(187, 116, 22);
+            /* background-color: rgb(187, 116, 22); */
         }
 
         @media screen and (max-width: 1825px) and (min-width: 1625px) {
             #Right {
-                background-color: rgb(8, 240, 0);
+                /* background-color: rgb(8, 240, 0); */
                 position: fixed;
                 width: auto;
                 max-width: 43%;
@@ -89,7 +89,7 @@
 
         @media screen and (max-width: 1624px) and (min-width: 1525px) {
             #Right {
-                background-color: rgb(8, 240, 0);
+                /* background-color: rgb(8, 240, 0); */
                 position: fixed;
                 width: auto;
                 max-width: 42%;
@@ -102,7 +102,7 @@
 
         @media screen and (max-width: 1524px) and (min-width: 1425px) {
             #Right {
-                background-color: rgb(8, 240, 0);
+                /* background-color: rgb(8, 240, 0); */
                 position: fixed;
                 width: auto;
                 max-width: 42%;
@@ -115,7 +115,7 @@
 
         @media screen and (max-width: 1424px) and (min-width: 1325px) {
             #Right {
-                background-color: rgb(8, 240, 0);
+                /* background-color: rgb(8, 240, 0); */
                 position: fixed;
                 width: auto;
                 max-width: 41%;
@@ -128,7 +128,7 @@
 
         @media screen and (max-width: 1324px) and (min-width: 1225px) {
             #Right {
-                background-color: rgb(8, 240, 0);
+                /* background-color: rgb(8, 240, 0); */
                 position: fixed;
                 width: auto;
                 max-width: 40%;
@@ -141,7 +141,7 @@
 
         @media screen and (max-width: 1224px) and (min-width: 1025px) {
             #Right {
-                background-color: rgb(8, 240, 0);
+                /* background-color: rgb(8, 240, 0); */
                 position: fixed;
                 width: auto;
                 max-width: 38%;
@@ -154,7 +154,7 @@
 
         @media screen and (max-width: 1024px) and (min-width: 892px) {
             #Right {
-                background-color: rgb(8, 240, 0);
+                /* background-color: rgb(8, 240, 0); */
                 position: fixed;
                 width: auto;
                 max-width: 50%;
@@ -167,7 +167,7 @@
 
         @media screen and (max-width: 891px) and (min-width: 400px) {
             #Right {
-                background-color: rgb(240, 216, 0);
+                /* background-color: rgb(240, 216, 0); */
                 display: none;
             }
 
