@@ -139,7 +139,33 @@
             }
         }
 
-        @media screen and (max-width: 1224px) and (min-width: 400px) {
+        @media screen and (max-width: 1224px) and (min-width: 1025px) {
+            #Right {
+                background-color: rgb(8, 240, 0);
+                position: fixed;
+                width: auto;
+                max-width: 38%;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                left: auto;
+            }
+        }
+
+        @media screen and (max-width: 1024px) and (min-width: 892px) {
+            #Right {
+                background-color: rgb(8, 240, 0);
+                position: fixed;
+                width: auto;
+                max-width: 50%;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                left: auto;
+            }
+        }
+
+        @media screen and (max-width: 891px) and (min-width: 400px) {
             #Right {
                 background-color: rgb(240, 216, 0);
                 display: none;
