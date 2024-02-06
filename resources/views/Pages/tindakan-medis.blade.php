@@ -2,21 +2,6 @@
 @section('mytitle', 'Medical Chart')
 @section('konten')
     <style>
-        .splitRight {
-            right: 0%;
-            height: 100%;
-            width: 43%;
-            max-width: 50%;
-            /* position: absolute; */
-            /* z-index: 0; */
-            top: 0;
-            /* overflow-x: hidden; */
-            padding-top: 95px;
-            padding-bottom: 45px;
-            overflow-y: scroll;
-        }
-
-
         .splitLeft {
             /* display: flex; */
             left: auto;
@@ -31,146 +16,6 @@
             padding-bottom: 45px;
         }
 
-
-
-        @media (min-width: 481px) {
-            #Right {
-                position: fixed;
-                width: auto;
-                /* max-width: 40%; */
-                top: 0;
-                bottom: 0;
-                right: 0;
-                left: auto;
-            }
-        }
-
-        @media screen and (max-width: 1825px) and (min-width: 1625px) {
-            #Right {
-                /* background-color: rgb(8, 240, 0); */
-                position: fixed;
-                width: auto;
-                max-width: 43%;
-                top: 0;
-                bottom: 0;
-                right: 0;
-                left: auto;
-            }
-        }
-
-        @media screen and (max-width: 1624px) and (min-width: 1525px) {
-            #Right {
-                /* background-color: rgb(8, 240, 0); */
-                position: fixed;
-                width: auto;
-                max-width: 42%;
-                top: 0;
-                bottom: 0;
-                right: 0;
-                left: auto;
-            }
-        }
-
-        @media screen and (max-width: 1524px) and (min-width: 1425px) {
-            #Right {
-                /* background-color: rgb(8, 240, 0); */
-                position: fixed;
-                width: auto;
-                max-width: 42%;
-                top: 0;
-                bottom: 0;
-                right: 0;
-                left: auto;
-            }
-        }
-
-        @media screen and (max-width: 1424px) and (min-width: 1325px) {
-            #Right {
-                /* background-color: rgb(8, 240, 0); */
-                position: fixed;
-                width: auto;
-                max-width: 41%;
-                top: 0;
-                bottom: 0;
-                right: 0;
-                left: auto;
-            }
-        }
-
-        @media screen and (max-width: 1324px) and (min-width: 1225px) {
-            #Right {
-                /* background-color: rgb(8, 240, 0); */
-                position: fixed;
-                width: auto;
-                max-width: 40%;
-                top: 0;
-                bottom: 0;
-                right: 0;
-                left: auto;
-            }
-        }
-
-        @media screen and (max-width: 1224px) and (min-width: 1025px) {
-            #Right {
-                /* background-color: rgb(8, 240, 0); */
-                position: fixed;
-                width: auto;
-                max-width: 38%;
-                top: 0;
-                bottom: 0;
-                right: 0;
-                left: auto;
-            }
-        }
-
-        @media screen and (max-width: 1024px) and (min-width: 892px) {
-            #Right {
-                /* background-color: rgb(8, 240, 0); */
-                position: fixed;
-                width: auto;
-                max-width: 50%;
-                top: 0;
-                bottom: 0;
-                right: 0;
-                left: auto;
-            }
-        }
-
-        @media screen and (max-width: 891px) and (min-width: 400px) {
-            #Right {
-                /* background-color: rgb(240, 216, 0); */
-                display: none;
-            }
-
-            #timelineChart {
-                width: auto;
-                max-width: 100%;
-            }
-        }
-
-        @media (min-width: 1025px) {
-            #Right {
-                position: fixed;
-                width: auto;
-                max-width: 44%;
-                top: 0;
-                bottom: 0;
-                right: 0;
-                left: auto;
-            }
-        }
-
-        @media (min-width: 769px) {
-            #Right {
-                position: fixed;
-                width: auto;
-                max-width: 44%;
-                top: 0;
-                bottom: 0;
-                right: 0;
-                left: auto;
-            }
-        }
 
         /* The switch - the box around the slider */
         .switch {
@@ -237,7 +82,7 @@
     </style>
 
 
-    <div class="splitRight col-lg content" id="Right">
+    <div class="col-sm-6 float-right content" id="Right" style="overflow-y:scroll; height:910px;">
         {{-- <div class="col" style="width:100%;" id="chart-note">
             <div class="card-header hd mt-2 mb-2 px-1 bg-light border" id="chartHeaderInput">
                 <div class="hide" id="hdrChartTypeID"></div>
@@ -553,9 +398,6 @@
 
                 <div class="border-right"></div>
                 <div class="">
-                    {{-- <div class="form-group col-sm">
-
-                    </div> --}}
                 </div>
                 <div class="p-0 col-6 pr-2" style="padding-top: 10px !important;">
                     <select class="form-control-pasien" id="tr_kd_reg" style="width: 100%;" name="tr_kd_reg">
@@ -576,54 +418,32 @@
             </div>
         </div>
 
-        <div class="card">
+        <div class="card" id="chart_soap">
             <div class="">
                 {{-- <div class="col-12">
                 </div> --}}
                 {{-- <div class="col"> --}}
                 {{-- <div class="row"> --}}
-                {{-- <div class="form-group col-sm-6">
-                            <label for="">Search Registrasi</label>
-                            <select class="form-control-pasien" id="tr_kd_reg" style="width: 100%;" name="tr_kd_reg">
-                                @foreach ($isRegActive as $reg)
-                                    <option value="">--Select--</option>
-                                    <option value="{{ $reg->fr_kd_reg }}">
-                                        {{ $reg->fr_kd_reg . '-' . $reg->fr_nama }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div> --}}
-                {{-- <div class="form-group col-sm-6">
-                            <label for="">Tanggal</label>
-                            <input type="date" class="form-control" name="tr_tgl_trs" id="tr_tgl_trs"
-                                value="{{ $dateNow }}" readonly>
-                        </div> --}}
+
                 <div class="form-group col-sm-6">
-                    {{-- <label for="">Nomor RM</label> --}}
                     <input type="hidden" class="form-control" name="tr_no_mr" id="tr_no_mr" value="" readonly>
                 </div>
                 <div class="form-group col-sm-6">
-                    {{-- <label for="">Nama Pasien</label> --}}
                     <input type="hidden" class="form-control" name="tr_nm_pasien" id="tr_nm_pasien" value=""
                         readonly>
                 </div>
                 <div class="form-group col-sm-6">
-                    {{-- <label for="">Layanan</label> --}}
                     <input type="hidden" class="form-control" name="tr_layanan" id="tr_layanan" value=""
                         readonly>
                 </div>
                 <div class="form-group col-sm-6">
-                    {{-- <label for="">Dokter</label> --}}
                     <input type="hidden" class="form-control" name="tr_dokter" id="tr_dokter" value="" readonly>
                 </div>
                 <div class="form-group col-sm-6">
-                    {{-- <label for="">Umur</label> --}}
                     <input type="hidden" class="form-control" name="tr_umur" id="tr_umur" value="" readonly>
                 </div>
                 <div class="form-group col-sm-6">
-                    {{-- <label for="">Alamat</label> --}}
-                    {{-- <textarea type="hidden" class="form-control" name="tr_alamat" id="tr_alamat" value=""
-                        readonly></textarea> --}}
+
                     <input type="hidden" class="form-control" name="tr_alamat" id="tr_alamat" value="">
                 </div>
 
@@ -950,7 +770,8 @@
                             <div class="modal-footer" id="">
                                 <div class="" id="kumpulanButton"></div>
                                 {{-- <button type="button" class="btn btn-primary float-rights">Update</button> --}}
-                                <button id="createSOAPP" class="btn btn-success float-rights"><i class="fa fa-save"></i>
+                                <button id="createSOAPP" class="btn btn-success btn-md float-rights"><i
+                                        class="fa fa-save"></i>
                                     &nbsp;
                                     Save</button>
                                 {{--
@@ -1245,7 +1066,7 @@
 
     {{-- END MODAL EDIT RESEP --}}
 
-    <div class="col-md-6 col-sm-10 order-md-1 order-sm-2" id="timelineChart">
+    <div class="col-md-6 col-sm-10 order-md-1 order-sm-2" id="timelineChart" style="overflow-y:scroll; height:900px;">
         <div>
             <div class="static-card-timeline">
                 <div class="justify-content-between px-1"
