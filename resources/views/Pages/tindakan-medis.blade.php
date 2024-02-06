@@ -418,7 +418,7 @@
             </div>
         </div>
 
-        <div class="card" id="chart_soap" style="overflow-y:scroll; height:810px;">
+        <div class="card" id="chart_soap" style="overflow-y:scroll; overflow-x: hidden; height:810px;">
             <div class="">
                 {{-- <div class="col-12">
                 </div> --}}
@@ -494,13 +494,13 @@
                                     <div class="s_head">
                                         <div class="btn-group float-right btn-group-xs template-hide" role="group"
                                             aria-label="Button group with nested dropdown">
-                                            {{-- <button type="button"
+                                            <button type="button"
                                                 class="btn btn-xs btn-primary mb-1 show-count badge-top-right"
                                                 data-toggle="collapse" data-target="#collapseVitalSign"
                                                 aria-expanded="true" aria-controls="collapseVitalSign"
                                                 data-namainput="attachment-o" data-count="0" id="btnVitalSign">
                                                 Vital Sign
-                                            </button> --}}
+                                            </button>
                                             <!--span class="badge badge-pill badge-success b_pos" style="color:white;">11</span-->
                                         </div>
                                     </div>
@@ -1067,7 +1067,7 @@
     {{-- END MODAL EDIT RESEP --}}
 
     <div class="col-md-6 col-sm-10 order-md-1 order-sm-2" id="timelineChart">
-        <div style="overflow-y:scroll; height:900px;">
+        <div style="overflow-y:scroll; overflow-x: hidden; height:900px;">
             <div class="static-card-timeline">
                 <div class="justify-content-between px-1"
                     style="display: flex !important; z-index:100; border: 1px solid #e0cff0; background-color: #FFFFFF;">
@@ -1142,6 +1142,30 @@
         </div>
     </div> --}}
     <!-- /.content -->
+    {{-- <table class="table table-striped table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Kd.Registrasi :</td>
+                                                    <td>${getValue[getVal].chart_kd_reg}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>No.MR :</td>
+                                                    <td>${getValue[getVal].chart_mr}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Nama :</td>
+                                                    <td>${getValue[getVal].chart_nm_pasien}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Layanan :</td>
+                                                    <td>${getValue[getVal].chart_layanan}</td>
+                                                </tr>
+                                                 <tr>
+                                                    <td>Created By :</td>
+                                                    <td>${getValue[getVal].user}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table> --}}
 @endsection
 
 @push('scripts')
@@ -2199,34 +2223,27 @@
                                     <div class="ml-4 mt-2">
                                         ${buttonEdit}
                                         ${buttonDelete}
-                                        <button type="" id="isShowCahrtID" class="btn btn-outline-warning btn-xs">${getValue[getVal].chart_id}</button>
+                                        <button type="" id="isShowCahrtID" class="btn btn-outline-warning btn-xs mr-4">${getValue[getVal].chart_id}</button>
+                                        <span style="background-color: #E8E8E8; border-radius: px; padding-top:2px; 
+                                            padding-bottom:4px; padding-left:10px; padding-right:20px; color: #002e0a"><b>
+                                            ${getValue[getVal].chart_kd_reg}</b>
+                                        </span>
+                                        <span style="background-color: #E8E8E8; border-radius: px; padding-top:2px; 
+                                            padding-bottom:4px; padding-left:10px; padding-right:20px; color: #002e0a"><b>
+                                            ${getValue[getVal].chart_mr}</b>
+                                        </span>
+                                        <span style="background-color: #E8E8E8; border-radius: px; padding-top:2px; 
+                                            padding-bottom:4px; padding-left:10px; padding-right:20px; color: #002e0a"><b>
+                                            ${getValue[getVal].chart_layanan}</b>
+                                        </span>
+                                        <span style="background-color: #E8E8E8; border-radius: px; padding-top:2px; 
+                                            padding-bottom:4px; padding-left:10px; padding-right:20px; color: #002e0a"><b>
+                                            ${getValue[getVal].user}</b>
+                                        </span>
                                     </div>
                                     <div class="card-body">
                                          <div class="">
-                                        <table class="table table-striped table-bordered">
-                                            <tbody>
-                                                <tr>
-                                                    <td>Kd.Registrasi :</td>
-                                                    <td>${getValue[getVal].chart_kd_reg}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>No.MR :</td>
-                                                    <td>${getValue[getVal].chart_mr}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Nama :</td>
-                                                    <td>${getValue[getVal].chart_nm_pasien}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Layanan :</td>
-                                                    <td>${getValue[getVal].chart_layanan}</td>
-                                                </tr>
-                                                 <tr>
-                                                    <td>Created By :</td>
-                                                    <td>${getValue[getVal].user}</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                        
                                     </div>
                                     <hr>
                                         <div class="form-group ">
@@ -2234,7 +2251,7 @@
                                                 style="background-color: #E8E8E8; border-radius: px; padding-top:5px; 
                                                 padding-bottom:5px; padding-left:10px; padding-right:90px; color: #002e0a"><b>
                                                     SUBJECTIVE</b></span>
-                                            <textarea id="" class="show_chart_S form-control" style="border:none; background-color: #FAFCFE;" rows="4" readonly value="">${getValue[getVal].chart_S}</textarea>
+                                            <textarea id="" class="show_chart_S form-control" style="border:none; background-color: #FAFCFE; color: #4A4B90; font-family: arial" rows="4" readonly value="">${getValue[getVal].chart_S}</textarea>
                                         </div>
                                         <hr>
                                         <div class="show_chart_O form-group">
@@ -2262,7 +2279,7 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                            <textarea id="" class="show_chart_O form-control" style="border:none; background-color: #FAFCFE;" rows="4" readonly>${rmvNullO}</textarea>
+                                            <textarea id="" class="show_chart_O form-control" style="border:none; background-color: #FAFCFE; color: #4A4B90; font-family: arial"" rows="4" readonly>${rmvNullO}</textarea>
                                         </div>
                                         <hr>
                                         <div class="show_chart_A form-group">
@@ -2270,8 +2287,8 @@
                                                 style="background-color: #E8E8E8; border-radius: px; padding-top:5px; 
                                                 padding-bottom:5px; padding-left:10px; padding-right:90px; color: #002e0a"><b>
                                                     ASSESMENT</b></span>
-                                            <textarea id="" class="show_chart_A form-control mb-3" style="border:none; background-color: #FAFCFE;" rows="2" readonly>${rmvNullAD}</textarea>
-                                            <textarea id="" class="show_chart_A form-control" rows="4" style="border:none; background-color: #FAFCFE;" readonly>${rmvNullA}</textarea>
+                                            <textarea id="" class="show_chart_A form-control mb-3" style="border:none; background-color: #FAFCFE; color: #4A4B90; font-family: arial"" rows="2" readonly>${rmvNullAD}</textarea>
+                                            <textarea id="" class="show_chart_A form-control" rows="4" style="border:none; background-color: #FAFCFE; color: #4A4B90; font-family: arial"" readonly>${rmvNullA}</textarea>
                                         </div>
                                         <hr>
                                         <div class="show_chart_P form-group">
@@ -2279,7 +2296,7 @@
                                                 style="background-color: #E8E8E8; border-radius: px; padding-top:5px; 
                                                 padding-bottom:5px; padding-left:10px; padding-right:90px; color: #002e0a"><b>
                                                     PLAN</b></span>
-                                            <textarea id="" class="show_chart_P form-control" rows="4" style="border:none; background-color: #FAFCFE;" readonly>${rmvNullP}</textarea>
+                                            <textarea id="" class="show_chart_P form-control" rows="4" style="border:none; background-color: #FAFCFE; color: #4A4B90; font-family: arial"" readonly>${rmvNullP}</textarea>
                                         </div>
                                         <hr>
                                         <div class="tindakan callout callout-danger" id="TimelineTdk">

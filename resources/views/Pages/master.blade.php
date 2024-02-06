@@ -40,7 +40,21 @@
     <link rel="stylesheet" href="{{ asset('src/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('src/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
     <style>
+        ::-webkit-scrollbar {
+            width: 5px;
 
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #ffffff;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(#c2aefa, #ff7bf0);
+            border-radius: 9px;
+            width: 10px;
+            height: 2px;
+        }
     </style>
 </head>
 
@@ -627,9 +641,6 @@
     <footer class="main-footer">
         <strong>&copy; 2024 <a href="">Asla Med</a>.</strong>
         All rights reserved.
-        <div class="float-right d-none d-sm-inline-block">
-            {{-- <b>Version</b> 1.0.0 --}}
-        </div>
     </footer>
 
     <!-- Control Sidebar -->
