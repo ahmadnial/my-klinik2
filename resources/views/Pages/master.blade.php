@@ -44,13 +44,14 @@
     </style>
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed">
+<body class="hold-transition sidebar-mini sidebar-collapse">
+    {{-- <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed"> --}}
     @include('sweetalert::alert')
     <div class="wrapper">
 
         <!-- Preloader -->
         {{-- <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60"
+            <img class="animation__shake" src="" alt="" height="60"
                 width="60">
         </div> --}}
 
@@ -120,7 +121,7 @@
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-light-primary elevation-6">
+        <aside class="main-sidebar sidebar-light-primary">
             <!-- Brand Logo -->
             <a href="" class="brand-link bg-purple">
                 <img src="" alt="" class="brand-image img-circle elevation-3" style="opacity: .8">
@@ -129,15 +130,15 @@
             </a>
             <!-- Sidebar -->
             <div class="sidebar">
-                {{-- <div class="user-panel mt-3 pb-3 mb-3"> --}}
-                {{-- <div class="image">
-                        <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-                    </div> --}}
-                <div class="user-panel mt-4 pb-1 mb-1 ml-3">
-                    <h5 class="d-block"><i class="fas fa-hospital"></i>&nbsp;Klinik Aulia</h5>
+                <div class="user-panel mt-3 pb-3 mb-2 d-flex">
+                    <div class="image">
+                        {{-- <img src="" class="img-circle elevation-2" alt=""> --}}
+                    </div>
+                    <div class="info"
+                        style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-size: 19px">
+                        <b class="text-danger"><i class="fa fa-hospital"></i> KLINIK AULIA</b>
+                    </div>
                 </div>
-                {{-- </div> --}}
-                {{-- <br> --}}
 
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
@@ -624,7 +625,7 @@
     </div>
     <!-- /.content-wrapper -->
     <footer class="main-footer">
-        <strong>Copyright &copy; 2024 <a href="">Asla Med</a>.</strong>
+        <strong>&copy; 2024 <a href="">Asla Med</a>.</strong>
         All rights reserved.
         <div class="float-right d-none d-sm-inline-block">
             {{-- <b>Version</b> 1.0.0 --}}
@@ -635,7 +636,6 @@
     <aside class="control-sidebar control-sidebar-dark">
     </aside>
     </div>
-
 
 
     <!-- Bootstrap 4 -->

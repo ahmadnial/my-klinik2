@@ -82,7 +82,7 @@
     </style>
 
 
-    <div class="col-sm-6 float-right content" id="Right" style="overflow-y:scroll; height:910px;">
+    <div class="col-sm-6 float-right content" id="Right">
         {{-- <div class="col" style="width:100%;" id="chart-note">
             <div class="card-header hd mt-2 mb-2 px-1 bg-light border" id="chartHeaderInput">
                 <div class="hide" id="hdrChartTypeID"></div>
@@ -418,7 +418,7 @@
             </div>
         </div>
 
-        <div class="card" id="chart_soap">
+        <div class="card" id="chart_soap" style="overflow-y:scroll; height:810px;">
             <div class="">
                 {{-- <div class="col-12">
                 </div> --}}
@@ -1066,8 +1066,8 @@
 
     {{-- END MODAL EDIT RESEP --}}
 
-    <div class="col-md-6 col-sm-10 order-md-1 order-sm-2" id="timelineChart" style="overflow-y:scroll; height:900px;">
-        <div>
+    <div class="col-md-6 col-sm-10 order-md-1 order-sm-2" id="timelineChart">
+        <div style="overflow-y:scroll; height:900px;">
             <div class="static-card-timeline">
                 <div class="justify-content-between px-1"
                     style="display: flex !important; z-index:100; border: 1px solid #e0cff0; background-color: #FFFFFF;">
