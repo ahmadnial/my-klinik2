@@ -1042,7 +1042,7 @@
 
     {{-- END MODAL EDIT RESEP --}}
 
-    <div class="col-md-6 col-sm-10 order-md-1 order-sm-2" id="timelineChart">
+    <div class="col-md-6 col-sm-6 order-md-1 order-sm-2" id="timelineChart">
         <div style="overflow-y:scroll; overflow-x: hidden; height:900px;">
             <div class="static-card-timeline">
                 <div class="justify-content-between px-1"
@@ -1077,13 +1077,13 @@
                             </option>
                         </select>
                     </div>
-                    <div class="p-0 col-3 pr-2" id="panelFilterInstalasi" style="padding-top: 10px !important;">
-                        <select class="form-control form-control-sm kt-font-bold" id="filterInstalasiDKMC">
+                    <div class="p-0 col-2 pr-2" id="panelFilterInstalasi" style="padding-top: 10px !important;">
+                        {{-- <select class="form-control form-control-sm kt-font-bold" id="filterInstalasiDKMC">
                             <option value="" selected="">Filter Instalasi</option>
                             <option value="3">Rawat Inap</option>
                             <option value="2">Rawat Jalan</option>
                             <option value="1">Rawat Darurat</option>
-                        </select>
+                        </select> --}}
                     </div>
                 </div>
             </div>
