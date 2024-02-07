@@ -2227,7 +2227,7 @@
                                                 style="background-color: #E8E8E8; border-radius: px; padding-top:5px; 
                                                 padding-bottom:5px; padding-left:10px; padding-right:90px; color: #002e0a"><b>
                                                     SUBJECTIVE</b></span>
-                                            <textarea id="" class="show_chart_S form-control" style="border:none; background-color: #FAFCFE; color: #4A4B90; font-family: arial" rows="4" readonly value="">${getValue[getVal].chart_S}</textarea>
+                                            <textarea id="" class="show_chart_S form-control" style="border:none; background-color: #FAFCFE; color: #4A4B90; font-family: arial" rows="6" readonly value="">${getValue[getVal].chart_S}</textarea>
                                         </div>
                                         <hr>
                                         <div class="show_chart_O form-group">
@@ -2255,7 +2255,7 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                            <textarea id="" class="show_chart_O form-control" style="border:none; background-color: #FAFCFE; color: #4A4B90; font-family: arial"" rows="4" readonly>${rmvNullO}</textarea>
+                                            <textarea id="" class="show_chart_O form-control" style="border:none; background-color: #FAFCFE; color: #4A4B90; font-family: arial"" rows="6" readonly>${rmvNullO}</textarea>
                                         </div>
                                         <hr>
                                         <div class="show_chart_A form-group">
@@ -2272,7 +2272,7 @@
                                                 style="background-color: #E8E8E8; border-radius: px; padding-top:5px; 
                                                 padding-bottom:5px; padding-left:10px; padding-right:90px; color: #002e0a"><b>
                                                     PLAN</b></span>
-                                            <textarea id="" class="show_chart_P form-control" rows="4" style="border:none; background-color: #FAFCFE; color: #4A4B90; font-family: arial"" readonly>${rmvNullP}</textarea>
+                                            <textarea id="" class="show_chart_P form-control" rows="6" style="border:none; background-color: #FAFCFE; color: #4A4B90; font-family: arial"" readonly>${rmvNullP}</textarea>
                                         </div>
                                         <hr>
                                         <div class="tindakan callout callout-danger" id="TimelineTdk">
