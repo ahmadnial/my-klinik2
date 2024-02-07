@@ -487,20 +487,20 @@
                                         padding-bottom:5px; padding-left:10px; padding-right:50px; color: #ffffff"><b>
                                             SUBJECTIVE</b></span>
                                     {{-- <input class="form-control" style="border: none" id="keluhanutama"> --}}
-                                    <textarea id="chart_S" name="chart_S" class="ta_Chart_S form-control" rows="4"></textarea>
+                                    <textarea id="chart_S" name="chart_S" class="ta_Chart_S form-control" rows="7"></textarea>
                                 </div>
 
                                 <div class="form-group">
                                     <div class="s_head">
                                         <div class="btn-group float-right btn-group-xs template-hide" role="group"
                                             aria-label="Button group with nested dropdown">
-                                            <button type="button"
+                                            {{-- <button type="button"
                                                 class="btn btn-xs btn-primary mb-1 show-count badge-top-right"
                                                 data-toggle="collapse" data-target="#collapseVitalSign"
                                                 aria-expanded="true" aria-controls="collapseVitalSign"
                                                 data-namainput="attachment-o" data-count="0" id="btnVitalSign">
                                                 Vital Sign
-                                            </button>
+                                            </button> --}}
                                             <!--span class="badge badge-pill badge-success b_pos" style="color:white;">11</span-->
                                         </div>
                                     </div>
@@ -515,14 +515,6 @@
                                             <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
                                                 <i class="mb-1">Body Weight</i>
                                                 <div class="input-group input-group-sm mb-3">
-                                                    <div class="invalid-feedback" id="feedbackLoadBW"
-                                                        style="display: none;">load restricted, data &gt; 2 jam yang
-                                                        lalu !
-                                                    </div>
-                                                    <div class="invalid-feedback" id="feedbackLoadEmptyBW"
-                                                        style="display: none;">data not found !</div>
-                                                    <div class="valid-feedback text-info" id="feedbackLoadSuccessBW"
-                                                        style="display: none;">load success</div>
                                                     <div class="input-group-append input-group-sm">
                                                         <input type="number" id="ttv_BW" name="ttv_BW"
                                                             data-satuan="kg" data-monitorname="Body Weight"
@@ -537,14 +529,6 @@
                                             <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
                                                 <i class="mb-1">Body Height</i>
                                                 <div class="input-group input-group-sm mb-3">
-                                                    <div class="invalid-feedback" id="feedbackLoadBH"
-                                                        style="display: none;">load restricted, data &gt; 2 jam yang
-                                                        lalu !
-                                                    </div>
-                                                    <div class="invalid-feedback" id="feedbackLoadEmptyBH"
-                                                        style="display: none;">data not found !</div>
-                                                    <div class="valid-feedback text-info" id="feedbackLoadSuccessBH"
-                                                        style="display: none;">load success</div>
                                                     <div class="input-group-append input-group-sm">
                                                         <input type="number" id="ttv_BH" name="ttv_BH"
                                                             data-satuan="cm" data-monitorname="Body Height"
@@ -559,14 +543,6 @@
                                             <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
                                                 <i class="mb-1">Blood Pressure Sistole</i>
                                                 <div class="input-group input-group-sm mb-3">
-                                                    <div class="invalid-feedback" id="feedbackLoadBP"
-                                                        style="display: none;">load restricted, data &gt; 2 jam yang
-                                                        lalu !
-                                                    </div>
-                                                    <div class="invalid-feedback" id="feedbackLoadEmptyBP"
-                                                        style="display: none;">data not found !</div>
-                                                    <div class="valid-feedback text-info" id="feedbackLoadSuccessBP"
-                                                        style="display: none;">load success</div>
                                                     <div class="input-group-append input-group-sm">
                                                         <input type="number" id="ttv_BPs" name="ttv_BPs"
                                                             data-satuan="mmHg" data-monitorname="Blood Pressure Sistole"
@@ -731,7 +707,7 @@
                                     </div>
                                     {{-- END VITAL SIGN --}}
 
-                                    <textarea id="chart_O" name="chart_O" class="form-control mt-2" rows="4"></textarea>
+                                    <textarea id="chart_O" name="chart_O" class="form-control mt-2" rows="7"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <span for=""
@@ -743,7 +719,7 @@
                                         name="chart_A_diagnosa" id="chart_A_diagnosa" onkeyup="getICDX()">
                                         {{-- <option value="">--Select--</option> --}}
                                     </select>
-                                    <textarea id="chart_A" name="chart_A" class="form-control mt-3 mb-2" rows="4"></textarea>
+                                    <textarea id="chart_A" name="chart_A" class="form-control mt-3 mb-2" rows="7"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <span for=""
@@ -757,7 +733,7 @@
                                         <button type="button" class="btn btn-xs btn-info floar-right"
                                             data-toggle="modal" data-target="#addResep">Resep</button>
                                     </div>
-                                    <textarea id="chart_P" name="chart_P" class="form-control" rows="4"></textarea>
+                                    <textarea id="chart_P" name="chart_P" class="form-control" rows="7"></textarea>
                                 </div>
                                 <div class="card-resep form-group">
 
@@ -770,7 +746,7 @@
                             <div class="modal-footer" id="">
                                 <div class="" id="kumpulanButton"></div>
                                 {{-- <button type="button" class="btn btn-primary float-rights">Update</button> --}}
-                                <button id="createSOAPP" class="btn btn-success btn-md float-rights"><i
+                                <button id="createSOAPP" class="btn btn-success btn-sm float-rights"><i
                                         class="fa fa-save"></i>
                                     &nbsp;
                                     Save</button>

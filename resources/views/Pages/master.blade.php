@@ -431,7 +431,7 @@
                             </ul>
                         </li>
 
-                        @if (auth()->user()->role_id == '1')
+                        @if (auth()->user()->role_id == '1' || auth()->user()->role_id == '4')
                             <li class="nav-header">DATA MASTER APOTEK</li>
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
@@ -603,21 +603,13 @@
         </aside>
 
         <div class="content-wrapper">
-            <div class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-sm-6">
-                            {{-- <h1 class="m-0">Dashboard</h1> --}}
-                        </div>
+            <div class="content mb-2">
+                {{-- <div class="container-fluid">
+                    <div class="row" style="padding-top: 0px">
                     </div>
-                </div>
+                </div> --}}
             </div>
 
-
-
-            {{-- @error('chart_kd_reg')
-                <div class="alert alert-danger">{{ $message }}</div>
-            @enderror --}}
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
