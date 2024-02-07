@@ -237,9 +237,9 @@ Route::group(['middleware' => ['auth', 'checkrole:1,2']], function () {
 Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
     // Route::get('/', [HomeController::class, 'index']);
     // Route::get('/redirect', [RedirectController::class, 'cek']);
-    Route::get('laporan-penjualan-farmasi', [LapFarmasiController::class, 'lapPenjualanFarmasi'])->name('laporan-penjualan-farmasi');
+    Route::get('laporan-penjualan-farmasi-rekap', [LapFarmasiController::class, 'lapPenjualanFarmasiRekap'])->name('laporan-penjualan-farmasi-rekap');
     Route::get('laporan-penjualan-farmasi-detail', [LapFarmasiController::class, 'lapPenjualanFarmasiDetail'])->name('laporan-penjualan-farmasi-detail');
-    Route::get('getLaporanPenjualan', [LapFarmasiController::class, 'getLapPenjualan'])->name('getLaporanPenjualan');
+    Route::get('getLaporanPenjualanRekap', [LapFarmasiController::class, 'getLapPenjualanRekap'])->name('getLaporanPenjualanRekap');
     Route::get('getLaporanPenjualanDetail', [LapFarmasiController::class, 'getLapPenjualanDetail'])->name('getLaporanPenjualanDetail');
     Route::get('buku-stok-rekap', [LapFarmasiController::class, 'bukuStok'])->name('buku-stok-rekap');
     Route::get('getBukuStok', [LapFarmasiController::class, 'getBukuStok'])->name('getBukuStok');

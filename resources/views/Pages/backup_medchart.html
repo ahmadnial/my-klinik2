@@ -1,0 +1,663 @@
+<div class="card">
+    <div class="card-body">
+        <div class="col-12">
+            {{-- <div name="headerPinPasien" class="kt-header__topbar pr-2 headerTopBar">
+                <div class="kt-header__topbar-item kt-header__topbar-item--user mx-0">
+                    <div class="kt-header__topbar-wrapper"> --}}
+                        {{-- <div class="kt-header__topbar-user-pasien-info"
+                            style="background: transparent !important;"> --}}
+                            <div class="accordion m-1 form-inline accordion-toggle-arrow text-light" id="DetailPasien"
+                                style="position:relative; margin-right:0px; z-index:500;">
+                                <!-- min-width:300px; max-width:500px -->
+                                <div class="card" style="border:none; margin-right:0px; margin-top: 1px;">
+                                    <!-- min-width:300px;  -->
+                                    <div class="form-control card-header row" name="PasienHdr"
+                                        style="background-color:#a07ccf">
+                                        <span data-toggle="tooltip" title="Clear" class="text-center">
+                                            <div class="kt-link pointer text-danger ml-2" name="clearPinnedPasienHdr"
+                                                style="margin-top: 7px; display: none;">
+                                                <i class="fa fa-times-circle clearPinPsnHdr"></i>
+                                            </div>
+                                        </span>
+                                        <div class="text-light collapsed pointer" id="collapseCoverPasien"
+                                            data-toggle="collapse" data-target="#DetPsn" aria-expanded="false"
+                                            aria-controls="DetPsn" style="background-color:#a07ccf; border: none;">
+                                            {{-- style="justify-content: space-between; padding: 6px 13px 7px 0px"> --}}
+                                            <label style="width: 2vw;overflow: hidden;text-overflow: "
+                                                name="nmPasienHdr" id="nmPasienHdr" class="text-warning pointer">
+                                                <i class="fa fa-user mb-3"></i>
+                                            </label>
+                                            {{-- <input type="text" class="form-control text-light" name=""
+                                                id="nmPasienHdr"
+                                                style="background-color:#6c558a; border: none; width: 17vw;"> --}}
+                                            {{-- <span id="1MonthUp" name="1MonthUp"
+                                                class="badge badge-warning kt-font-bold"
+                                                style="border-radius: 3px;padding: 2px 5px;margin-right: 10px; display: none;"
+                                                title="Terakhir periksa"></span>
+                                            <strong>
+                                                <label name="noMrHdr" class="pointer mr-2">00-00-00-00</label>
+                                            </strong>
+                                            <label
+                                                style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;background: #ed2121; font-size: 0.9rem; display: none;"
+                                                name="tagAlergiProfile"
+                                                class="text-white pointer mx-1 kt-font-normal px-2">
+                                                Allergy
+                                            </label>
+                                            <label
+                                                style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap; font-size: 0.9rem; display: none;"
+                                                name="tagTriageProfile" class="pointer mx-1 kt-font-normal px-2">
+                                                Triage
+                                            </label> --}}
+                                        </div>
+
+                                        {{-- <div name="divIcare" style="display: none;">
+                                            <button type="button" class="btn btn-icare border-radius2" name="btnICare"
+                                                title="I Care JKN"></button>
+                                        </div> --}}
+                                    </div>
+                                    <div id="DetPsn"
+                                        style="position: fixed; margin-top: 40px; z-index: 9999; min-width: 324px; border: 1px solid rgb(119, 94, 151);"
+                                        class="bg-light text-dark shadow collapse" aria-labelledby="headingOne"
+                                        data-parent="#DetailPasien">
+                                        <div class="scrollbar-dusty-grass square1 thin scroll-y scrollbox"
+                                            style="max-height: 480px;">
+                                            <div class="card-body">
+                                                <div>
+                                                    <div class="d-flex flex-wrap">
+                                                        <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                            style="background-color: #d2eaff" name="">
+                                                            <b>Nama :</b> <input type="text" class="form-control-xs"
+                                                                name="" id="namaHdr"
+                                                                style="background-color: #d2eaff; border:none">
+                                                        </div>
+                                                        <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                            style="background-color: #d2eaff" name="noMRHdr">
+                                                            <b>No. RM :</b><input type="text" class="form-control-xs"
+                                                                name="" id="noMRHdr"
+                                                                style="background-color: #d2eaff; border:none">
+                                                        </div>
+                                                        {{-- <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                            style="background-color: #d2eaff;" name="tglPeriksaHdr">
+                                                            01-01-3000 00:00:00
+                                                            <!-- <span name="tglPeriksaHdr"></span> -->
+                                                            <!-- <span name="jamPeriksaHdr"></span> -->
+                                                        </div> --}}
+                                                    </div>
+                                                    <div class="d-flex flex-wrap">
+                                                        <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                            style="background-color:#f8f5d6;" name="layananCoverHdr">
+                                                            <b>No. Reg :</b><input type="text" class="form-control-xs"
+                                                                name="" id="noRGHdr"
+                                                                style="background-color:#f8f5d6; border:none">
+                                                        </div>
+                                                        <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                            style="background-color:#f8f5d6;" name="">
+                                                            <b>Dokter :</b><input type="text" class="form-control-xs"
+                                                                name="" id="dokterHdr"
+                                                                style="background-color:#f8f5d6; border:none">
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex flex-wrap">
+                                                        <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                            title="" style="background-color:#f8d6e2;" name="">
+                                                            <b>Layanan :</b><input type="text" class="form-control-xs"
+                                                                name="" id="layananHdr"
+                                                                style="background-color: #f8d6e2; border:none">
+                                                        </div>
+                                                        <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                            style="background-color:#f8d6e2;" name="">
+                                                            <b>J/K :</b><input type="text" class="form-control-xs"
+                                                                name="" id="jkHdr"
+                                                                style="background-color:#f8d6e2; border:none">
+                                                        </div>
+                                                        <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                            style="background-color:#f8d6e2;">
+                                                            <span name="usiaHdr">
+                                                                <b>Umur :</b><input type="text" class="form-control-xs"
+                                                                    name="" id="umurHdr"
+                                                                    style="background-color:#f8d6e2; border:none">
+                                                            </span>
+
+                                                            || Tgl. Lahir : <input type="text" class="form-control-xs"
+                                                                name="" id="tglLahirHdr"
+                                                                style="background-color:#f8d6e2; border:none">
+                                                        </div>
+                                                        <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                            style="background-color:#f8d6e2; border:none"
+                                                            name="alergiHdr" id="">
+                                                            <b>Alergi :</b><input type="text" class="form-control-xs"
+                                                                name="" id="alergiHdr"
+                                                                style="background-color:#f8d6e2; border:none">
+                                                        </div>
+                                                        <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                            style="background-color:#f8d6e2; border:none"
+                                                            name="lastTarifDsrHdr" id="">
+                                                            <b>Last tarif Dasar :</b><input type="text"
+                                                                class="form-control-xs" name="" id="lastTarifDsrHdr"
+                                                                style="background-color:#f8d6e2; border:none">
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex flex-wrap">
+                                                        {{-- <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                            style="background-color: #9976c73d;color: #5000b9;"
+                                                            name="pendidikanHdr">EDU : -
+                                                        </div>
+                                                        <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                            style="background-color: #9976c73d;color: #5000b9;"
+                                                            name="pekerjaanHdr">
+                                                            WORK : -
+                                                        </div> --}}
+                                                    </div>
+                                                    {{-- <div class=""> --}}
+                                                        <div class="px-2 py-1 m-1 rounded rounded-sm"
+                                                            style="background-color:#d6f8dd;" name="alamatHdr">
+                                                            <i class="fa fa-home"></i>
+                                                            <input type="text" class="form-control-xs col-8" name=""
+                                                                id="alamatHdr"
+                                                                style="background-color:#d6f8dd; border:none">
+                                                        </div>
+                                                        {{--
+                                                    </div> --}}
+                                                </div>
+                                                {{-- <table style="width:100%">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="vertical-align: top;"
+                                                                class="kt-font-danger kt-font-boldest">
+                                                                #Allergy
+                                                            </td>
+                                                            <td style="vertical-align: top;">:</td>
+                                                            <td class="pl-2">
+                                                                <div class="dropdown" name="divAddAlergiProfile">
+                                                                    <button
+                                                                        class="btn btn-sm btn-default border-radius3 kt-font-bolder pull-right p-1 dropdown-toggle"
+                                                                        style="position: absolute; right: -10px;"
+                                                                        title="Tambah Alergi" id="ddAddAlergiProfileHD"
+                                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                                        aria-expanded="false" type="button">
+                                                                        <i class="fa fa-plus-circle icon-smass"></i>Add
+                                                                    </button>
+                                                                    <div class="dropdown-menu p-2"
+                                                                        aria-labelledby="ddAddAlergiProfileHD"
+                                                                        x-placement="bottom-start">
+                                                                        <h6 class="kt-font-primary mb-3">Add Alergi
+                                                                            Pasien</h6>
+                                                                        <div class="row">
+                                                                            <select
+                                                                                class="form-control form-control-sm col mb-2"
+                                                                                id="listAlergiTypeProfileHD">
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <input type="text" id="alergiNameProfileHD"
+                                                                                class="form-control form-control-sm col mb-2"
+                                                                                autocomplete="off"
+                                                                                placeholder="Nama Alergi">
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-12 p-0">
+                                                                                <button
+                                                                                    class="btn btn-sm btn-primary border-radius3 kt-font-bolder pull-right p-1"
+                                                                                    id="addAlergiProfileHD"
+                                                                                    type="button">
+                                                                                    <i
+                                                                                        class="fa fa-save icon-smass"></i>Save
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div name="listAlergiProfile"></div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="vertical-align: top;"
+                                                                class="kt-font-danger kt-font-boldest">#Vital Sign
+                                                            </td>
+                                                            <td style="vertical-align: top;">:</td>
+                                                            <td class="pl-2">
+                                                                <div class="col-12 p-0" style="max-width: 300px;">
+                                                                    <div class="row" name="listVitalSignProfile">
+
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="vertical-align: top;"
+                                                                class="kt-font-danger kt-font-boldest">#Diagnosis
+                                                            </td>
+                                                            <td class="pl-2">
+                                                                <div class="col-12 p-0" style="max-width: 300px;">
+                                                                    <div class="row pl-2 scroll-y scrollbar-dusty thin scrollbox"
+                                                                        name="listDiagnosisProfile"
+                                                                        style="max-height: 250px;">
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr style="display: none;">
+                                                            <td style="color:red">#allergi</td>
+                                                            <td colspan="2"><label name="alergiHdr"
+                                                                    style="color: red;"></label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr style="display: none;">
+                                                            <td>#vital-sign</td>
+                                                            <td colspan="2"><label name="vitalSignHdr"></label>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table> --}}
+                                                <div class="col-12 p-0 hide">
+                                                    {{-- <div
+                                                        class="row pl-2 scroll-y scrollbar-dusty thin border px-3 pt-2 scrollbox"
+                                                        name="listDiagnosaProfile" style="max-height: 250px;">
+                                                    </div> --}}
+                                                </div>
+                                                {{-- <div class="row" id="divQR" style="display: none;">
+                                                    <div class="col-12 text-center">
+                                                        <div id="qrcode" style="padding-left: 27%;" class="mt-2"></div>
+                                                    </div>
+                                                </div> --}}
+                                            </div>
+                                            {{-- <div class="progress" style="height: 2px;">
+                                                <div class="progress-bar kt-bg-info" id="progressLoadImageQR"
+                                                    role="progressbar" style="width: 0%;" aria-valuenow="0"
+                                                    aria-valuemin="0" aria-valuemax="100">
+                                                </div>
+                                            </div> --}}
+                                        </div>
+                                        {{-- <button type="button" class="btn btn-secondary mr-0 col p-0"
+                                            name="closeDetPsnHdr" aria-label="Close" title="collapse">
+                                            <i class="fa fa-chevron-circle-up fa-lg text-brand mb-1 fa-sm"></i>
+                                        </button> --}}
+                                    </div>
+                                </div>
+                                {{-- <div class="form-group col-sm-6">
+                                    <label for="">Search Registrasi</label>
+                                    <select class="form-control-pasien" id="tr_kd_reg" style="width: 100%;"
+                                        name="tr_kd_reg">
+                                        @foreach ($isRegActive as $reg)
+                                        <option value="">--Select--</option>
+                                        <option value="{{ $reg->fr_kd_reg }}">
+                                            {{ $reg->fr_kd_reg . '-' . $reg->fr_nama }}
+                                        </option>
+                                        @endforeach
+                                    </select> --}}
+                                </div>
+                            </div>
+                            {{--
+                        </div> --}}
+
+                        {{-- </div> --}}
+                    {{--
+                </div> --}}
+                {{--
+            </div> --}}
+            {{-- </div> --}}
+        <div class="col">
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label for="">Search Registrasi</label>
+                    <select class="form-control-pasien" id="tr_kd_reg" style="width: 100%;" name="tr_kd_reg">
+                        @foreach ($isRegActive as $reg)
+                        <option value="">--Select--</option>
+                        <option value="{{ $reg->fr_kd_reg }}">
+                            {{ $reg->fr_kd_reg . '-' . $reg->fr_nama }}
+                        </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label for="">Tanggal</label>
+                    <input type="date" class="form-control" name="tr_tgl_trs" id="tr_tgl_trs" value="{{ $dateNow }}"
+                        readonly>
+                </div>
+                <div class="form-group col-sm-6">
+                    {{-- <label for="">Nomor RM</label> --}}
+                    <input type="hidden" class="form-control" name="tr_no_mr" id="tr_no_mr" value="" readonly>
+                </div>
+                <div class="form-group col-sm-6">
+                    {{-- <label for="">Nama Pasien</label> --}}
+                    <input type="hidden" class="form-control" name="tr_nm_pasien" id="tr_nm_pasien" value="" readonly>
+                </div>
+                <div class="form-group col-sm-6">
+                    {{-- <label for="">Layanan</label> --}}
+                    <input type="hidden" class="form-control" name="tr_layanan" id="tr_layanan" value="" readonly>
+                </div>
+                <div class="form-group col-sm-6">
+                    {{-- <label for="">Dokter</label> --}}
+                    <input type="hidden" class="form-control" name="tr_dokter" id="tr_dokter" value="" readonly>
+                </div>
+                <div class="form-group col-sm-6">
+                    {{-- <label for="">Umur</label> --}}
+                    <input type="hidden" class="form-control" name="tr_umur" id="tr_umur" value="" readonly>
+                </div>
+                <div class="form-group col-sm-6">
+                    {{-- <label for="">Alamat</label> --}}
+                    {{-- <textarea type="hidden" class="form-control" name="tr_alamat" id="tr_alamat" value=""
+                        readonly></textarea> --}}
+                    <input type="hidden" class="form-control" name="tr_alamat" id="tr_alamat" value="">
+                </div>
+
+                <input type="hidden" id="tr_tgl_lahir" name="tr_tgl_lahir">
+                <input type="hidden" id="user" name="user" value="tes">
+            </div>
+        </div>
+        {{-- <input type="text" id="chart_id_show" name="chart_id" value=""> --}}
+
+        {{-- <div class="float-right">
+            <button class="btn btn-success" data-toggle="modal" data-target="#TambahSOAP"><i class="fa fa-plus"></i>
+                SOAP</button>
+        </div> --}}
+        {{-- <div class="card-body"> --}}
+            <form action="{{ url('chartCreate') }}" method="post" id="CHCreate" class="needs-validation" novalidate>
+                <div class="row">
+                    <div class="col">
+                        <div class="card card-info">
+                            <div class="card-header">
+                                <h3 class="card-title">Form SOAP
+                                </h3>
+                            </div>
+                            {{-- Hidden value --}}
+                            @csrf
+                            <div class="card-body">
+                                <input type="hidden" id="chart_id" name="chart_id" value="{{ $isLastChartID }}">
+                                <input type="hidden" id="chart_kd_reg" name="chart_kd_reg" value="">
+                                <input type="hidden" id="chart_tgl_trs" name="chart_tgl_trs" value="{{ $dateNow }}">
+                                <input type="hidden" id="chart_mr" name="chart_mr" value="">
+                                <input type="hidden" id="chart_nm_pasien" name="chart_nm_pasien" value="">
+                                <input type="hidden" id="chart_layanan" name="chart_layanan" value="">
+                                <input type="hidden" id="chart_dokter" name="chart_dokter" value="">
+                                <input type="hidden" id="userActive" name="user" value="{{ Auth::user()->name }}">
+                                {{-- Hidden value --}}
+                                <div class="form-group">
+                                    <label for="inputDescription">Subjective</label>
+                                    {{-- <input class="form-control" style="border: none" id="keluhanutama"> --}}
+                                    <textarea id="chart_S" name="chart_S" class="ta_Chart_S form-control"
+                                        rows="4"></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="s_head">
+                                        <div class="btn-group float-right btn-group-xs template-hide" role="group"
+                                            aria-label="Button group with nested dropdown">
+                                            {{-- <button type="button"
+                                                class="btn btn-xs btn-primary mb-1 show-count badge-top-right"
+                                                data-toggle="collapse" data-target="#collapseVitalSign"
+                                                aria-expanded="true" aria-controls="collapseVitalSign"
+                                                data-namainput="attachment-o" data-count="0" id="btnVitalSign">
+                                                Vital Sign
+                                            </button> --}}
+                                            <!--span class="badge badge-pill badge-success b_pos" style="color:white;">11</span-->
+                                        </div>
+                                    </div>
+                                    <label for="inputDescription">Objective</label>
+                                    {{-- VITAL SIGN --}}
+                                    <div id="collapseVitalSign" class="bg-light border collapse show col"
+                                        aria-labelledby="headerVitalSign" data-parent="#btnVitalSign" style="">
+                                        <div class="row py-2" id="inputMonitoringMC">
+                                            <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                                <i class="mb-1">Body Weight</i>
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <div class="invalid-feedback" id="feedbackLoadBW"
+                                                        style="display: none;">load restricted, data &gt; 2 jam yang
+                                                        lalu !
+                                                    </div>
+                                                    <div class="invalid-feedback" id="feedbackLoadEmptyBW"
+                                                        style="display: none;">data not found !</div>
+                                                    <div class="valid-feedback text-info" id="feedbackLoadSuccessBW"
+                                                        style="display: none;">load success</div>
+                                                    <div class="input-group-append input-group-sm">
+                                                        <input type="number" id="ttv_BW" name="ttv_BW" data-satuan="kg"
+                                                            data-monitorname="Body Weight"
+                                                            class="form-control form-control-sm vital-sign" min="0"
+                                                            value="">
+                                                        <span class="input-group-text"
+                                                            style="width:7em; text-align:center">kg</span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                                <i class="mb-1">Body Height</i>
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <div class="invalid-feedback" id="feedbackLoadBH"
+                                                        style="display: none;">load restricted, data &gt; 2 jam yang
+                                                        lalu !
+                                                    </div>
+                                                    <div class="invalid-feedback" id="feedbackLoadEmptyBH"
+                                                        style="display: none;">data not found !</div>
+                                                    <div class="valid-feedback text-info" id="feedbackLoadSuccessBH"
+                                                        style="display: none;">load success</div>
+                                                    <div class="input-group-append input-group-sm">
+                                                        <input type="number" id="ttv_BH" name="ttv_BH" data-satuan="cm"
+                                                            data-monitorname="Body Height"
+                                                            class="form-control form-control-sm vital-sign" min="0"
+                                                            value="">
+                                                        <span class="input-group-text"
+                                                            style="width:7em; text-align:center">cm</span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                                <i class="mb-1">Blood Pressure Sistole</i>
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <div class="invalid-feedback" id="feedbackLoadBP"
+                                                        style="display: none;">load restricted, data &gt; 2 jam yang
+                                                        lalu !
+                                                    </div>
+                                                    <div class="invalid-feedback" id="feedbackLoadEmptyBP"
+                                                        style="display: none;">data not found !</div>
+                                                    <div class="valid-feedback text-info" id="feedbackLoadSuccessBP"
+                                                        style="display: none;">load success</div>
+                                                    <div class="input-group-append input-group-sm">
+                                                        <input type="number" id="ttv_BPs" name="ttv_BPs"
+                                                            data-satuan="mmHg" data-monitorname="Blood Pressure Sistole"
+                                                            class="form-control form-control-sm vital-sign" min="0"
+                                                            value="" required>
+                                                        <span class="input-group-text"
+                                                            style="width:7em; text-align:center">mmHg</span>
+                                                    </div>
+                                                    <div class="invalid-feedback">
+                                                        Please..dont let me blank
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                                <i class="mb-1">Blood Pressure Diastole</i>
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <div class="invalid-feedback" id="feedbackLoadBPd"
+                                                        style="display: none;">load restricted, data &gt; 2 jam yang
+                                                        lalu !
+                                                    </div>
+                                                    <div class="invalid-feedback" id="feedbackLoadEmptyBPd"
+                                                        style="display: none;">data not found !</div>
+                                                    <div class="valid-feedback text-info" id="feedbackLoadSuccessBPd"
+                                                        style="display: none;">load success</div>
+                                                    <div class="input-group-append input-group-sm">
+                                                        <input type="number" id="ttv_BPd" name="ttv_BPd"
+                                                            data-satuan="mmHg"
+                                                            data-monitorname="Blood Pressure Diastole"
+                                                            class="form-control form-control-sm vital-sign" min="0"
+                                                            value="" required>
+                                                        <span class="input-group-text"
+                                                            style="width:7em; text-align:center">mmHg</span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                                <i class="mb-1">Body Temperatur</i>
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <div class="invalid-feedback" id="feedbackLoadBT"
+                                                        style="display: none;">load restricted, data &gt; 2 jam yang
+                                                        lalu !
+                                                    </div>
+                                                    <div class="invalid-feedback" id="feedbackLoadEmptyBT"
+                                                        style="display: none;">data not found !</div>
+                                                    <div class="valid-feedback text-info" id="feedbackLoadSuccessBT"
+                                                        style="display: none;">load success</div>
+                                                    <div class="input-group-append input-group-sm">
+                                                        <input type="number" id="ttv_BT" name="ttv_BT" data-satuan="°C"
+                                                            data-monitorname="Body Temperatur"
+                                                            class="form-control form-control-sm vital-sign" min="0"
+                                                            value="">
+                                                        <span class="input-group-text"
+                                                            style="width:7em; text-align:center">°C</span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                                <i class="mb-1">Heart Rate</i>
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <div class="invalid-feedback" id="feedbackLoadHR"
+                                                        style="display: none;">load restricted, data &gt; 2 jam yang
+                                                        lalu !
+                                                    </div>
+                                                    <div class="invalid-feedback" id="feedbackLoadEmptyHR"
+                                                        style="display: none;">data not found !</div>
+                                                    <div class="valid-feedback text-info" id="feedbackLoadSuccessHR"
+                                                        style="display: none;">load success</div>
+                                                    <div class="input-group-append input-group-sm">
+                                                        <input type="number" id="ttv_HR" name="ttv_HR"
+                                                            data-satuan="x/mnt" data-monitorname="Heart Rate"
+                                                            class="form-control form-control-sm vital-sign" min="0"
+                                                            value="">
+                                                        <span class="input-group-text"
+                                                            style="width:7em; text-align:center">x/mnt</span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                                <i class="mb-1">Respiratory Rate</i>
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <div class="invalid-feedback" id="feedbackLoadRR"
+                                                        style="display: none;">load restricted, data &gt; 2 jam yang
+                                                        lalu !
+                                                    </div>
+                                                    <div class="invalid-feedback" id="feedbackLoadEmptyRR"
+                                                        style="display: none;">data not found !</div>
+                                                    <div class="valid-feedback text-info" id="feedbackLoadSuccessRR"
+                                                        style="display: none;">load success</div>
+                                                    <div class="input-group-append input-group-sm">
+                                                        <input type="number" id="ttv_RR" name="ttv_RR"
+                                                            data-satuan="x/mnt" data-monitorname="Respiratory Rate"
+                                                            class="form-control form-control-sm vital-sign" min="0"
+                                                            value="">
+                                                        <span class="input-group-text"
+                                                            style="width:7em; text-align:center">x/mnt</span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                                <i class="mb-1">Skala Nyeri NRS</i>
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <div class="invalid-feedback" id="feedbackLoadSN"
+                                                        style="display: none;">load restricted, data &gt; 2 jam yang
+                                                        lalu !
+                                                    </div>
+                                                    <div class="invalid-feedback" id="feedbackLoadEmptySN"
+                                                        style="display: none;">data not found !</div>
+                                                    <div class="valid-feedback text-info" id="feedbackLoadSuccessSN"
+                                                        style="display: none;">load success</div>
+                                                    <div class="input-group-append input-group-sm">
+                                                        <input type="number" id="ttv_SN" name="ttv_SN" data-satuan=""
+                                                            data-monitorname="Skala Nyeri NRS"
+                                                            class="form-control form-control-sm vital-sign" min="0"
+                                                            max="10" value="">
+                                                        <span class="input-group-text"
+                                                            style="width:7em; text-align:center"></span>
+                                                    </div>
+                                                    <div class="invalid-feedback" id="invFeedbackSkalaNyeri">maksimal
+                                                        skala 10 !</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                                <i class="mb-1">SpO2</i>
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <div class="invalid-feedback" id="feedbackLoadSP"
+                                                        style="display: none;">load restricted, data &gt; 2 jam yang
+                                                        lalu !
+                                                    </div>
+                                                    <div class="invalid-feedback" id="feedbackLoadEmptySP"
+                                                        style="display: none;">data not found !</div>
+                                                    <div class="valid-feedback text-info" id="feedbackLoadSuccessSP"
+                                                        style="display: none;">load success</div>
+                                                    <div class="input-group-append input-group-sm">
+                                                        <input type="number" id="ttv_SPO2" name="ttv_SPO2"
+                                                            data-satuan="%" data-monitorname="SpO2"
+                                                            class="form-control form-control-sm vital-sign" min="0"
+                                                            value="">
+                                                        <span class="input-group-text"
+                                                            style="width:7em; text-align:center">%</span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {{-- <div class="modal-footer p-2">
+                                            <div class="col">
+                                                <div class="btn-group pull-left">
+                                                    <button type="button" class="btn btn-sm btn-warning border-radius3"
+                                                        id="loadFromMonitoring">Load</button>
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-sm btn-icon-only" id="hidePanelVitalSign"
+                                                title="hide vital sign">
+                                                <i class="fa fa-chevron-circle-up"></i>
+                                            </button>
+                                            <button style="border-radius: 3px; width: 7em; display: none;"
+                                                class="btn btn-sm btn-success" id="saveMonitor">Save</button>
+                                        </div> --}}
+                                    </div>
+                                    {{-- END VITAL SIGN --}}
+
+                                    <textarea id="chart_O" name="chart_O" class="form-control mt-2" rows="4"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputDescription">Assesment</label>
+                                    <select class="chart_A_diagnosa form-control mb-3" style="width: 100%;"
+                                        name="chart_A_diagnosa" id="chart_A_diagnosa" onkeyup="getICDX()">
+                                        {{-- <option value="">--Select--</option> --}}
+                                    </select>
+                                    <textarea id="chart_A" name="chart_A" class="form-control mt-3 mb-2"
+                                        rows="4"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputDescription">Plan</label>
+                                    <div class="float-right mb-1">
+                                        <button type="button" id="addTindakann"
+                                            class="btn btn-xs btn-warning floar-right text-white" data-toggle="modal"
+                                            data-target="#addTindakans">Tindakan</button>
+                                        <button type="button" class="btn btn-xs btn-info floar-right"
+                                            data-toggle="modal" data-target="#addResep">Resep</button>
+                                    </div>
+                                    <textarea id="chart_P" name="chart_P" class="form-control" rows="4"></textarea>
+                                </div>
+                                <div class="card-resep form-group">
+
+                                </div>
+                                <div class="showOrHideTdk"></div>
+
+                                <input type="hidden" id="user" name="user_create" value="tes">
+                            </div>
+                        </div>
+                        <div class="modal-footer" id="">
+                            <div class="" id="kumpulanButton"></div>
+                            {{-- <button type="button" class="btn btn-primary float-rights">Update</button> --}}
+                            <button id="createSOAPP" class="btn btn-success float-rights"><i class="fa fa-save"></i>
+                                &nbsp;
+                                Save</button>
+                            {{--
+                        </div> --}}
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>

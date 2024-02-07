@@ -1,5 +1,6 @@
 @extends('pages.master')
 @section('mytitle', 'Laporan Apotek')
+
 @section('konten')
     <section class="content">
         <div class="card">
@@ -8,24 +9,32 @@
             </div>
 
             <div class="card-body">
-                <div class="col-4 mb-4 input-group input-daterange">
+                <div class="col-5 mb-4 input-group input-daterange">
                     <input type="date" id="date1" class="form-control">
                     <div class="input-group-addon">&nbsp; s.d&nbsp;</div>
                     <input type="date" id="date2" class="form-control">
+                    <div class="input-group-addon">&nbsp;&nbsp;&nbsp;</div>
+                    <select id="user" class="form-control">
+                        <option value="">Select User</option>
+                        @foreach ($isUser as $iu)
+                            <option value="{{ $iu->name }}">{{ $iu->name }}</option>
+                        @endforeach
+                    </select>
                     <div class="input-group-addon">&nbsp;&nbsp;&nbsp;</div>
                     <button class="btn btn-success" onclick="getDataPenjualan()" id="btnProses">Proses</button>
                 </div>
                 <div>
                     <table id="penjualan" class="table table-hover table-striped">
-                        <thead>
+                        <thead class="bg-nial">
                             <tr>
-                                <th>kode Transaksi</th>
-                                <th>Tanggal Transaksi</th>
-                                <th>Jenis Penjualan</th>
+                                {{-- <th>kode Transaksi</th> --}}
+                                {{-- <th>Tanggal Transaksi</th> --}}
+                                <th>Kode Barang</th>
+                                <th>Nama Barang</th>
+                                <th>QTY</th>
+                                <th>Satuan</th>
+                                <th>Harga Satuan</th>
                                 <th>Sub Total</th>
-                                {{-- <th>Alasan</th>
-                                <th>Dibuat Oleh</th>
-                                <th></th> --}}
                             </tr>
                         </thead>
                         <tbody id="result">
@@ -35,10 +44,12 @@
                             <tr>
                                 <th></th>
                                 <th></th>
-                                <th></th>
+                                <th id="totalQty"></th>
                                 {{-- <td><b><input type="text" id="grandTTL" class="form-control" style="border: none"
                                             readonly></b>
                                 </td> --}}
+                                <th></th>
+                                <th></th>
                                 <th id="grandTTL"></th>
                             </tr>
                         </tfoot>
@@ -54,6 +65,7 @@
             function getDataPenjualan() {
                 var date1 = $('#date1').val();
                 var date2 = $('#date2').val();
+                var user = $('#user').val();
 
                 if (date1 == '') {
                     toastr.info('Pilih Range Tanggal', 'Info!', {
@@ -67,29 +79,39 @@
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
-                        url: "{{ url('getLaporanPenjualan') }}",
+                        url: "{{ url('getLaporanPenjualanRekap') }}",
                         type: 'GET',
                         data: {
                             date1: date1,
-                            date2: date2
+                            date2: date2,
+                            user: user
                         },
-                        success: function(isDataLaporan) {
+                        success: function(isDataLaporanDetail) {
                             var sumall = 0;
                             var table = $('#penjualan').DataTable();
                             var rows = table
                                 .rows()
                                 .remove()
                                 .draw();
-                            $.each(isDataLaporan, function(key, datavalue) {
+                            $.each(isDataLaporanDetail, function(key, datavalue) {
                                 const table = $('#penjualan').DataTable();
-                                var total_pen = datavalue.total_penjualan;
-                                var ttlPenjualan = total_pen.toLocaleString('id-ID', {
+
+                                var hrg_obatC = datavalue.hrg_obat;
+                                var hrg_obatShow = hrg_obatC.toLocaleString('id-ID', {
                                     style: 'currency',
                                     currency: 'IDR'
                                 });
+
+                                var dataRaw = datavalue.total * datavalue.hrg_obat;
+                                var subtotal = dataRaw.toLocaleString('id-ID', {
+                                    style: 'currency',
+                                    currency: 'IDR'
+                                });
+
                                 const dataBaru = [
-                                    [datavalue.kd_trs, datavalue.tgl_trs, datavalue.tipe_tarif,
-                                        ttlPenjualan
+                                    [datavalue.kd_obat,
+                                        datavalue.nm_obat, datavalue.total, datavalue.satuan, datavalue
+                                        .hrg_obat, subtotal
                                     ],
                                 ]
 
@@ -100,13 +122,17 @@
                                             data[1],
                                             data[2],
                                             data[3],
+                                            data[4],
+                                            data[5],
+                                            // data[6],
+                                            // data[7],
                                         ]).draw(false)
                                     }
                                 }
 
                                 injectDataBaru()
 
-                                var ttlInt = parseFloat(datavalue.total_penjualan);
+                                var ttlInt = parseFloat(dataRaw);
                                 sumall += ttlInt;
 
                                 var number = sumall;
@@ -124,6 +150,7 @@
                                 });
                                 $('#date1').val('');
                                 $('#date2').val('');
+                                $('#user').val('');
                             })
                         }
                     })

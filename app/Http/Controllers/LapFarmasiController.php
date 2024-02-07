@@ -17,34 +17,36 @@ use function PHPUnit\Framework\isNull;
 class LapFarmasiController extends Controller
 {
 
-    public function lapPenjualanFarmasi()
+    public function lapPenjualanFarmasiRekap()
     {
-        return view('pages.laporan.farmasi.laporan-penjualan-farmasi');
+        $isUser = DB::table('users')->get();
+        return view('pages.laporan.farmasi.laporan-penjualan-rekap', ['isUser' => $isUser]);
     }
 
     public function lapPenjualanFarmasiDetail()
     {
         $isUser = DB::table('users')->get();
-        return view('pages.laporan.farmasi.laporan-penjualan-detail', ['isUser' => $isUser]);
+
+        return view('pages.laporan.farmasi.laporan-penjualan-farmasi-detail', ['isUser' => $isUser]);
     }
 
 
 
-    public function getLapPenjualan(Request $request)
+    public function getLapPenjualanDetail(Request $request)
     {
         // $t = $request->all();
         // dd($t);
         if ($request->ajax()) {
-            $isDataLaporan = DB::table('tp_hdr')
+            $isDataLaporan = DB::table('tp_detail_item')
                 ->whereBetween('tgl_trs', [$request->date1, $request->date2])
-                ->whereNull('kd_order_resep')
+                ->whereNull('kd_reg')
                 // ->where('kd_order_resep', '=', 'null')
                 ->get();
         }
         return response()->json($isDataLaporan);
     }
 
-    public function getLapPenjualanDetail(Request $request)
+    public function getLapPenjualanRekap(Request $request)
     {
         // $t = $request->all();
         // dd($t);

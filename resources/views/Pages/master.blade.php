@@ -386,12 +386,12 @@
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
-                                {{-- <li class="nav-item">
-                                    <a href="{{ url('/laporan-penjualan-farmasi') }}" class="nav-link">
+                                <li class="nav-item">
+                                    <a href="{{ url('/laporan-penjualan-farmasi-rekap') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Penjualan Apotek Rekap</p>
                                     </a>
-                                </li> --}}
+                                </li>
                                 <li class="nav-item">
                                     <a href="{{ url('/laporan-penjualan-farmasi-detail') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
