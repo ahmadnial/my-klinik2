@@ -590,6 +590,9 @@
                             dom: 'lBfrtip',
                             responsive: true,
                             "bDestroy": true,
+                            "order": [
+                                [1, "dsc"]
+                            ],
                             ajax: {
                                 headers: {
                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
