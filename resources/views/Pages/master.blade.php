@@ -611,7 +611,7 @@
             </div>
 
             <!-- Main content -->
-            <section class="content">
+            <section class="content text-xs">
                 <div class="container-fluid">
                     @if ($errors->any())
                         <div class="alert alert-danger">

@@ -38,6 +38,7 @@
                                 <td id="">{{ $tz->fm_supplier }}</td>
                                 <td id="">{{ $tz->fm_satuan_pembelian }}</td>
                                 <td id="">{{ $tz->fm_satuan_jual }}</td>
+                                {{-- <td id="">{{ $tz->fm_hrg_beli }}</td> --}}
                                 <td id="">@currency($tz->fm_hrg_beli)</td>
                                 <td id="">@currency($tz->fm_hrg_jual_non_resep)</td>
                                 <td id="">{{ $tz->fm_hrg_jual_resep }}</td>

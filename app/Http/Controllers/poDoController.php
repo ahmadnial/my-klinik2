@@ -285,22 +285,33 @@ class poDoController extends Controller
 
             'do_obat' => 'required',
             'nm_obat' => 'required',
-            'do_satuan_pembelian' => 'required',
-            // 'do_diskon',
-            'do_qty' => 'required',
-            'do_isi_pembelian' => 'required',
-            'do_satuan_jual' => 'required',
-            'do_hrg_beli' => 'required',
-            'do_hrg_beli_detail' => 'required',
-            // 'do_pajak',
-            'do_tgl_exp' => 'required',
-            // 'do_batch_number',
-            'do_sub_total' => 'required',
-            // 'do_hdr_id' => 'required'
+            // 'do_satuan_pembelian' => 'required',
+            // // 'do_diskon',
+            // 'do_qty' => 'required',
+            // 'do_isi_pembelian' => 'required',
+            // 'do_satuan_jual' => 'required',
+            // 'do_hrg_beli' => 'required',
+            // 'do_hrg_beli_detail' => 'required',
+            // // 'do_pajak',
+            // 'do_tgl_exp' => 'required',
+            // // 'do_batch_number',
+            // 'do_sub_total' => 'required',
+            'do_hdr_id' => 'required'
         ]);
 
         DB::beginTransaction();
         try {
+            // foreach ($request->do_obat as $uh => $valx) {
+            //     if ($request->has('updateHrg')) {
+            //         // $listBarang = $request->updateHrg[$uh];
+            //         $detailIsi = DB::table('mstr_obat')->whereIn('fm_kd_obat', [$request->updateHrg[$uh]])->value('fm_isi_satuan_pembelian');
+            //         print_r($detailIsi);
+            //     } else {
+            //         return false;
+            //     }
+            // }
+            // die();
+
             $newData = [
                 'tanggal_trs' => $request->tanggal_trs,
                 'do_hdr_kd' => $request->do_hdr_kd,
@@ -335,6 +346,23 @@ class poDoController extends Controller
                 do_detail_item::create($detail);
             }
 
+            if ($request->updateHrg) {
+                foreach ($request->do_obat as $uh => $valx) {
+                    DB::table('mstr_obat')->whereIn('fm_kd_obat', [$request->do_obat[$uh]])->update([
+                        'fm_hrg_beli' => $request->do_hrg_beli[$uh],
+                    ]);
+                    $hrgBeli = $request->do_hrg_beli[$uh];
+                    $isItemTrue = array_filter([$request->do_obat[$uh]]);
+                    $detailIsi = DB::table('mstr_obat')->whereIn('fm_kd_obat', [$isItemTrue])->value('fm_isi_satuan_pembelian');
+
+                    $hrgJualDetail = $hrgBeli / $detailIsi;
+                    DB::table('mstr_obat')->whereIn('fm_kd_obat', [$isItemTrue])->update([
+                        'fm_hrg_beli_detail' => $hrgJualDetail,
+                    ]);
+                    // print_r($hrgJualDetail);
+                }
+            }
+            // die();
             foreach ($request->do_obat as $keyx => $val) {
                 $currentStock = DB::table('tb_stock')->whereIn('kd_obat', [$request->do_obat[$keyx]])->value('qty');
                 $datax =  $request->do_obat[$keyx];

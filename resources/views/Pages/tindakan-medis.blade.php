@@ -1048,27 +1048,26 @@
                 <div class="justify-content-between px-1"
                     style="display: flex !important; z-index:100; border: 1px solid #e0cff0; background-color: #FFFFFF;">
 
-                    <div class="p-2 mt-2" id="" style="align-content: center">
+                    <div class="p-2 mt-2" id="" style="align-content: center; padding-top: 5px;">
                         <div class="form-group float-right">
-                            <div class="custom-control custom-switch">
+                            <div class="custom-control custom-switch" style="padding-top: 5px;">
                                 <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                                <label class="custom-control-label" for="customSwitch1">Timeline</label>
+                                <label class="custom-control-label" for="customSwitch1"
+                                    style="padding-top: 3px;">Timeline</label>
                             </div>
                         </div>
                     </div>
                     <div class="border-right"></div>
                     <div class="p-2" id="panelBtnFilterChart">
                         <div class="btn-group btn-group-sm" role="group" aria-label="Small button group"
-                            style="padding-top: 1px;">
-                            <button type="button"
-                                class="btn btn-sm btn btn-outline-success kt-font-bolder rounded-left px-3"
+                            style="padding-top: 6px;">
+                            <button type="button" class="btn btn-sm btn btn-outline-danger rounded-left px-3"
                                 id="btnfilterChartToday">Today</button>
-                            <button type="button"
-                                class="btn btn-sm btn btn-outline-success kt-font-bolder rounded-right active px-3"
+                            <button type="button" class="btn btn-sm btn btn-outline-danger rounded-right active px-3"
                                 id="btnfilterChartAll">All Data</button>
                         </div>
                     </div>
-                    <div class="p-0 col-3 pr-2" id="panelFilterSatTugas" style="padding-top: 10px !important;">
+                    <div class="p-0 col-3 pr-2" id="panelFilterSatTugas" style="padding-top: 12px !important;">
                         <select class="form-control form-control-sm kt-font-boldest kt-font-info"
                             id="filterSatTugasChart">
                             <option value="">No Filter</option>
@@ -1382,7 +1381,7 @@
 
         // Ajax Search Registrasi
         $('#tr_kd_reg').select2({
-            placeholder: 'Search Registrasi',
+            placeholder: 'Pilih Pasien',
         });
 
         $('.nm_tarif').select2({
