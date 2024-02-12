@@ -68,7 +68,7 @@
                         <div class="form-group col-sm-6">
                             <label for="">Supplier</label>
                             <input type="text" class="form-control" name="fm_nm_supplier" id="fm_nm_supplier"
-                                value="" placeholder="Input Nama Supplier">
+                                value="" placeholder="Input Nama Supplier" required>
                         </div>
                         <div class="form-group col-sm-6">
                             <label for="">Email</label>

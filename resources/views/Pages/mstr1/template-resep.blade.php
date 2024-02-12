@@ -25,7 +25,7 @@
                                 <td>{{ $tz->nm_to }}</td>
                                 <td>{{ $tz->to_user }}</td>
                                 <td><button class="btn btn-xs btn-success"
-                                        data-toggle="modal"data-target="#EditSatuan{{ $tz->id }}">Edit</button>
+                                        data-toggle="modal"data-target="#EditTemplate{{ $tz->kd_to }}">Edit</button>
                                     <button class="btn btn-xs btn-danger"
                                         data-toggle="modal"data-target="#Delete{{ $tz->id }}">Hapus</button>
                                 </td>
@@ -181,6 +181,90 @@
                     </div>
             </div>
         </div>
+
+        {{-- Modal Edit --}}
+        @foreach ($getAllTemplate as $td)
+            <div class="modal fade" id="EditTemplate{{ $td->kd_to }}">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header bg-nial">
+                            <h4 class="modal-title">Template Order Resep</h4>
+                            <button type="button" class="close" id="CloseModalResep" data-dismiss="modal"
+                                aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="add-template-resep" method="post">
+                            @csrf
+                            <div class="modal-body">
+                                <div class="container">
+                                    <div class="nm_to">
+                                        <input type="text" class="form-control mb-3" id="nm_to" name="nm_to"
+                                            placeholder="Nama Template Order..." required>
+                                    </div>
+                                    <div class="">
+                                        <div class="callout callout-success bg-light">
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <th width="370px">Obat</th>
+                                                        <th width="90px">Qty</th>
+                                                        <th width="150px">Satuan</th>
+                                                        <th width="200px">Signa</th>
+                                                        <th width="230px">Cara Pakai</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="TESCHCreate">
+                                                    <tr>
+                                                        <td>
+                                                            <select type="text" class="obatResep form-control"
+                                                                id="obatResep" style="width: 100%"
+                                                                onchange="pasteTo()"></select>
+                                                        </td>
+                                                        <input type="hidden" id="namaObatResep">
+                                                        <td>
+                                                            <input type="text" class="form-control" id="qty_obat">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control"
+                                                                id="satuan_jual_obat" readonly>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" id="signa_resep">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control"
+                                                                id="cara_pakai_resep">
+                                                        </td>
+                                                        <input type="hidden" class="ch_hrg_jual" id="ch_hrg_jual">
+                                                        <td>
+                                                            <a class="btn btn-success btn-sm ml-2"
+                                                                id="addItemObatResepp"><i class="fa fa-plus"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="resepID callout callout-warning mt-5">
+                                        <div class="resep-content">
+                                            <div class="row" id="resepList" style="padding: 5px;">
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="kd_to" value="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ResepCreate"></div>
+                            <div class="modal-footer">
+                                <div class="float-right mb-3">
+                                    <button type="submit" id="exitModalResep"
+                                        class="btn btn-sm btn-success">add</button>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+        @endforeach
         </form>
     @endsection
 

@@ -296,7 +296,7 @@ class poDoController extends Controller
             // 'do_tgl_exp' => 'required',
             // // 'do_batch_number',
             // 'do_sub_total' => 'required',
-            'do_hdr_id' => 'required'
+            // 'do_hdr_id' => 'required'
         ]);
 
         DB::beginTransaction();

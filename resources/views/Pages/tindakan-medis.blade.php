@@ -1181,6 +1181,7 @@
                 },
                 success: function(isDataTemplate) {
                     $("#resepList").empty();
+                    $(".card-resep").empty();
                     var getValue = isDataTemplate;
                     for (var getVal = 0; getVal < getValue.length; getVal++) {
                         var kd_obat_to = getValue[getVal].kd_obat_to;
