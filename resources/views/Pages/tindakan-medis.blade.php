@@ -1271,22 +1271,22 @@
                                             name="ch_kd_obat[]" style="width: 100%" value="${kd_obat_to}" readonly>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" id="ch_nm_obat" name="ch_nm_obat[]" value="${nm_obat_to}">
+                                        <input type="hidden" class="form-control" id="ch_nm_obat" name="ch_nm_obat[]" value="${nm_obat_to}">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" id="ch_hrg_jual" name="ch_hrg_jual[]" value="${hrg_obat_to}" readonly>
+                                        <input type="hidden" class="form-control" id="ch_hrg_jual" name="ch_hrg_jual[]" value="${hrg_obat_to}" readonly>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" id="ch_qty_obat" name="ch_qty_obat[]" value="${qty_to}" readonly>
+                                        <input type="hidden" class="form-control" id="ch_qty_obat" name="ch_qty_obat[]" value="${qty_to}" readonly>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" id="ch_satuan_obat" name="ch_satuan_obat[]" value="${satuan_to}" readonly>
+                                        <input type="hidden" class="form-control" id="ch_satuan_obat" name="ch_satuan_obat[]" value="${satuan_to}" readonly>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" id="ch_signa" name="ch_signa[]" value="${signa_to}" readonly>
+                                        <input type="hidden" class="form-control" id="ch_signa" name="ch_signa[]" value="${signa_to}" readonly>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" id="ch_cara_pakai" name="ch_cara_pakai[]" value="${cara_pakai_to}" readonly>
+                                        <input type="hidden" class="form-control" id="ch_cara_pakai" name="ch_cara_pakai[]" value="${cara_pakai_to}" readonly>
                                     </td>                             
                                 </tr>
                             </tbody>`
