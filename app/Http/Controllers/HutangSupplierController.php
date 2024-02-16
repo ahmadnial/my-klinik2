@@ -67,13 +67,13 @@ class HutangSupplierController extends Controller
         // $k = $request->all();
         // dd($k);
 
-        $request->validate([
-            // 'tgl_trs' => 'required',
-            // 'kd_obat' => 'required',
-            // 'nm_obat' => 'required',
-            // 'hrg_obat' => 'required',
-            // 'qty' => 'required',
-        ]);
+        // $request->validate([
+        //     // 'tgl_trs' => 'required',
+        //     // 'kd_obat' => 'required',
+        //     // 'nm_obat' => 'required',
+        //     // 'hrg_obat' => 'required',
+        //     // 'qty' => 'required',
+        // ]);
 
         DB::beginTransaction();
         // try {

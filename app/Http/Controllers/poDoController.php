@@ -428,7 +428,7 @@ class poDoController extends Controller
                 'alert-type' => 'success'
             ];
 
-            return Redirect::to('/delivery-order')->with($sessionFlash);
+            return Redirect('/delivery-order')->with($sessionFlash);
         } catch (\Exception $e) {
             DB::rollback();
 
@@ -436,7 +436,7 @@ class poDoController extends Controller
                 'message' => $e,
                 'alert-type' => 'error'
             ];
-            return Redirect::to('/delivery-order')->with($sessionFlashErr);
+            return Redirect('/delivery-order')->with($sessionFlashErr);
         }
     }
 

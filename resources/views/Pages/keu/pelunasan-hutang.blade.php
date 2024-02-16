@@ -341,7 +341,7 @@
                                  onKeyup="getPembayaran(this)">
                             </td>
                             <td>
-                            <input type="text" class="form-control" name="pl_potongan" id="pl_potongan" onKeyDown="PotonganHutang(this)">
+                            <input type="text" class="form-control" name="pl_potongan" id="pl_potongan" value="0" onKeyDown="PotonganHutang(this)">
                             </td>
                             <td>
                                 <input type="text" class="form-control" id="pl_hutang_akhir" name="pl_hutang_akhir" readonly value="${getHutangAwal}">

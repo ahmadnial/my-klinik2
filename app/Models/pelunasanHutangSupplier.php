@@ -14,6 +14,7 @@ class pelunasanHutangSupplier extends Model
 
     protected $fillable = [
         'pl_kd_hutang',
+        'pl_kd_pelunasan',
         'pl_kd_hutang_buat',
         'pl_no_kuitansi',
         'pl_no_faktur',
