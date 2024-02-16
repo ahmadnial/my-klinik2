@@ -433,7 +433,7 @@ class poDoController extends Controller
             DB::rollback();
 
             $sessionFlashErr = [
-                'message' => 'Some Error Occured!',
+                'message' => $e,
                 'alert-type' => 'error'
             ];
             return Redirect::to('/delivery-order')->with($sessionFlashErr);

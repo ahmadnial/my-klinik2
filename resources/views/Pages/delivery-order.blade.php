@@ -82,8 +82,8 @@
         }
 
         /* th {
-                                                                                min-width: 180px;
-                                                                            } */
+                                                                                                    min-width: 180px;
+                                                                                                } */
 
         .modal-footer {
             position: sticky;
@@ -124,7 +124,7 @@
                             <div class="form-group col-sm-3">
                                 <label for="">Nomor Faktur</label>
                                 <input type="text" class="form-control" name="do_hdr_no_faktur" id="do_hdr_no_faktur"
-                                    value="" placeholder="Input Nomor Faktur" required>
+                                    value="{{ old('do_hdr_no_faktur') }}" placeholder="Input Nomor Faktur" required>
                                 <div class="invalid-feedback">
                                     Please..dont let me blank
                                 </div>
@@ -183,10 +183,10 @@
                                     {{-- <th>Kode Obat</th> --}}
                                     <th width="250px">Obat</th>
                                     <th>Sat.Beli</th>
-                                    <th>Qty</th>
-                                    <th>Isi</th>
-                                    <th width="60px">Sat.Jual</th>
                                     <th>Hrg.Beli</th>
+                                    <th>Qty</th>
+                                    <th width="60px">Isi</th>
+                                    <th width="90px">Sat.Jual</th>
                                     <th>Disc %</th>
                                     <th>Disc</th>
                                     <th width="100px">Pajak</th>
@@ -426,6 +426,10 @@
                                     name="do_satuan_pembelian[]" value="${getSatBeli}" readonly>
                             </td>
                             <td>
+                                <input type="text" class="do_hrg_beli form-control" id="do_hrg_beli" name="do_hrg_beli[]"
+                                 value="${getHrgBeli}">
+                            </td>
+                            <td>
                                 <input type="text" class="do_qty form-control" id="do_qty" onKeyUp="getQTY(this)" name="do_qty[]">
                             </td>
                             <td>
@@ -435,10 +439,6 @@
                             <td>
                                 <input type="text" class="do_satuan_jual form-control" id="do_satuan_jual" name="do_satuan_jual[]"
                                     value="${getSatJual}" readonly>
-                            </td>
-                            <td>
-                                <input type="text" class="do_hrg_beli form-control" id="do_hrg_beli" name="do_hrg_beli[]"
-                                 value="${getHrgBeli}">
                             </td>
                             <td>
                             <input type="text" class="form-control" name="do_diskon_prosen[]" id="do_diskon_prosen" onKeyDown="discProsen(this)">
