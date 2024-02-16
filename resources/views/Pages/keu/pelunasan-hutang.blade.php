@@ -21,7 +21,7 @@
                         <input type="month" name="monthPelunasan" id="monthPelunasan" onchange="getMonthPelunasan()"
                             class="form-control form-control-sm col-2">
                     </div>
-                    <table id="example1" class="table table-hover">
+                    <table id="example" class="table table-hover">
                         <thead class="">
                             <tr>
                                 <th>Tanggal Trs</th>
@@ -429,7 +429,7 @@
                 const dataBulan = $('#monthPelunasan').val();
                 $.ajax({
                     success: function() {
-                        $('#example1').DataTable({
+                        $('#example').DataTable({
                             processing: true,
                             serverSide: true,
                             dom: 'lBfrtip',
