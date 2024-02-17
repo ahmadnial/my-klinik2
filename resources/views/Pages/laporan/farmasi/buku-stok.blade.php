@@ -19,12 +19,12 @@
                 </div>
                 <div>
 
-                    <table id="bukustok" class="table table-hover table-striped">
+                    <table id="example1" class="table table-hover table-striped">
                         <thead>
                             <tr>
                                 <th>kode Barang</th>
                                 <th>Nama Barang</th>
-                                <th>Qty</th>
+                                <th>Qty Stok</th>
                                 <th>Satuan</th>
                                 <th>Harga Beli Satuan</th>
                                 <th>Nilai Persediaan</th>
@@ -80,7 +80,7 @@
                             $('#buttonGetStok').hide();
 
                             $.each(isDataBukuStok, function(key, datavalue) {
-                                const table = $('#bukustok').DataTable();
+                                const table = $('#example1').DataTable();
                                 var nilai_persediaan = datavalue.qty * datavalue.fm_hrg_beli_detail;
 
                                 var number = nilai_persediaan;
