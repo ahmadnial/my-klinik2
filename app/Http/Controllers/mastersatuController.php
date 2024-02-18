@@ -187,7 +187,7 @@ class mastersatuController extends Controller
             $de = substr($continue->kd_to, -3);
             $kdTo = 'TO' . str_pad(($de + 1), 3, '0', STR_PAD_LEFT);
         }
-        $getAllTemplate = DB::table('t_template_order_hdr')->leftJoin('t_template_order_detail', 't_template_order_detail.kd_to', 't_template_order_hdr.kd_to')->get();
+        $getAllTemplate = DB::table('t_template_order_hdr')->get();
         return view('pages.mstr1.template-resep', [
             'kdTo' => $kdTo,
             'getAllTemplate' => $getAllTemplate
@@ -237,6 +237,97 @@ class mastersatuController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
             toastr()->error('Gagal Tersimpan!');
+            return back();
+        }
+    }
+
+    public function getDetailTemplate(request $Request)
+    {
+        $getDetailTemp = DB::table('t_template_order_hdr')->leftJoin('t_template_order_detail', 't_template_order_detail.kd_to', 't_template_order_hdr.kd_to')
+            ->where('t_template_order_hdr.kd_to', $Request->kdto)
+            ->get();
+        return response()->json($getDetailTemp);
+    }
+
+
+    public function editTemplateResep(Request $request)
+    {
+        dd($request->all());
+        $request->validate([
+            'kd_to' => 'required',
+            'nm_to' => 'required',
+            'kd_obat_to' => 'required',
+            'nm_obat_to' => 'required',
+            'hrg_obat_to' => 'required',
+            'qty_to' => 'required',
+        ]);
+
+        DB::beginTransaction();
+        try {
+            DB::table('t_template_order_hdr')->where('kd_to', $request->kd_to)->update([
+                'nm_to'        => $request->nm_to,
+                'to_user'      => Auth::user()->name
+            ]);
+
+            DB::table('t_template_order_detail')->where('kd_to', $request->kd_to)->delete();
+
+            foreach ($request->kd_obat_to as $key => $xf) {
+                $todetail = [
+                    'kd_to'         => $request->kd_to,
+                    'kd_obat_to'    => $request->kd_obat_to[$key],
+                    'nm_obat_to'    => $request->nm_obat_to[$key],
+                    'hrg_obat_to'   => $request->hrg_obat_to[$key],
+                    'qty_to'        => $request->qty_to[$key],
+                    'satuan_to'     => $request->satuan_to[$key],
+                    'signa_to'      => $request->signa_to[$key],
+                    'cara_pakai_to' => $request->cara_pakai_to[$key],
+                ];
+                t_template_order_detail::create($todetail);
+            }
+            // foreach ($request->kd_obat_to as $key => $xf) {
+            //     DB::table('t_template_order_detail')->where('kd_to', $request->kd_to)->update([
+            //         'kd_to'         => $request->kd_to,
+            //         'kd_obat_to'    => $request->kd_obat_to[$key],
+            //         'nm_obat_to'    => $request->nm_obat_to[$key],
+            //         'hrg_obat_to'   => $request->hrg_obat_to[$key],
+            //         'qty_to'        => $request->qty_to[$key],
+            //         'satuan_to'     => $request->satuan_to[$key],
+            //         'signa_to'      => $request->signa_to[$key],
+            //         'cara_pakai_to' => $request->cara_pakai_to[$key],
+            //     ]);
+            // }
+
+            DB::commit();
+
+            toastr()->success('Data Tersimpan!');
+            return back();
+        } catch (\Exception $e) {
+            DB::rollback();
+            toastr()->error('Gagal Tersimpan!');
+            return back();
+        }
+    }
+
+    public function deleteTemplateResep(Request $request)
+    {
+        // dd($request->all());
+        $request->validate([
+            'kd_to' => 'required',
+        ]);
+
+        DB::beginTransaction();
+        try {
+
+            DB::table('t_template_order_hdr')->where('kd_to', $request->kd_to)->delete();
+            DB::table('t_template_order_detail')->where('kd_to', $request->kd_to)->delete();
+
+            DB::commit();
+
+            toastr()->success('Deleted!');
+            return back();
+        } catch (\Exception $e) {
+            DB::rollback();
+            toastr()->error('Some Error Occured!');
             return back();
         }
     }

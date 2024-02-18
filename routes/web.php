@@ -86,6 +86,9 @@ Route::group(['middleware' => ['auth', 'checkrole:1']], function () {
 Route::group(['middleware' => ['auth', 'checkrole:1,2']], function () {
     Route::get('template-order-resep', [mastersatuController::class, 'templateResep'])->name('template-order-resep');
     Route::post('add-template-resep', [mastersatuController::class, 'addTemplateResep'])->name('add-template-resep');
+    Route::get('getDetailTemplate/{kdto}', [mastersatuController::class, 'getDetailTemplate'])->name('getDetailTemplate');
+    Route::post('edit-template', [mastersatuController::class, 'editTemplateResep'])->name('edit-template');
+    Route::post('delete-template', [mastersatuController::class, 'deleteTemplateResep'])->name('delete-template');
 });
 
 // VIEW AFTER POST
