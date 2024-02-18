@@ -156,20 +156,17 @@
                     </div>
                     <hr>
                     <div class="float-right col-4">
-                        <div class="float-right col-4">
+                    </div>
+                    {{-- <br>
+                        <br> --}}
+                    {{-- <hr> --}}
+                    <div class="modal-footer">
+                        <div class="float-right col-2">
                             <input type="text" class="form-control float-right" name=""
                                 id="pl_total_bayar_show_only" value="" readonly>
                             <input type="hidden" class="form-control float-right" name="pl_total_bayar" id="pl_total_bayar"
                                 value="" readonly>
                         </div>
-                        {{-- <div class="float-right">
-                        <button class="btn btn-xs btn-info" id="addRow">Tambah Barang</button>
-                    </div> --}}
-                    </div>
-                    <br>
-                    <br>
-                    {{-- <hr> --}}
-                    <div class="modal-footer">
                         <button type="submit" id="buat" class="btn btn-success float-right"><i
                                 class="fa fa-save"></i>&nbsp;Save
                         </button>
