@@ -348,21 +348,24 @@ class poDoController extends Controller
 
             if ($request->updateHrg) {
                 foreach ($request->do_obat as $uh => $valx) {
-                    DB::table('mstr_obat')->whereIn('fm_kd_obat', [$request->do_obat[$uh]])->update([
-                        'fm_hrg_beli' => $request->do_hrg_beli[$uh],
-                    ]);
-                    $hrgBeli = $request->do_hrg_beli[$uh];
-                    $isItemTrue = array_filter([$request->do_obat[$uh]]);
-                    $detailIsi = DB::table('mstr_obat')->whereIn('fm_kd_obat', [$isItemTrue])->value('fm_isi_satuan_pembelian');
+                    $isSubttlTrue = $request->do_sub_total[$uh];
+                    $demunLarge = $request->do_qty[$uh];
+                    $hnappnLarge = $isSubttlTrue / $demunLarge;
+                    // DB::table('mstr_obat')->whereIn('fm_kd_obat', [$request->do_obat[$uh]])->update([
+                    //     'fm_hrg_beli' => $request->do_hrg_beli[$uh],
+                    // ]);
+                    // $hrgBeli = $request->do_hrg_beli[$uh];
+                    // $isItemTrue = array_filter([$request->do_obat[$uh]]);
+                    // $detailIsi = DB::table('mstr_obat')->whereIn('fm_kd_obat', [$isItemTrue])->value('fm_isi_satuan_pembelian');
 
-                    $hrgJualDetail = $hrgBeli / $detailIsi;
-                    DB::table('mstr_obat')->whereIn('fm_kd_obat', [$isItemTrue])->update([
-                        'fm_hrg_beli_detail' => $hrgJualDetail,
-                    ]);
-                    // print_r($hrgJualDetail);
+                    // $hrgJualDetail = $hrgBeli / $detailIsi;
+                    // DB::table('mstr_obat')->whereIn('fm_kd_obat', [$isItemTrue])->update([
+                    //     'fm_hrg_beli_detail' => $hrgJualDetail,
+                    // ]);
+                    print_r($hnappnLarge);
                 }
             }
-            // die();
+            die();
             foreach ($request->do_obat as $keyx => $val) {
                 $currentStock = DB::table('tb_stock')->whereIn('kd_obat', [$request->do_obat[$keyx]])->value('qty');
                 $datax =  $request->do_obat[$keyx];
