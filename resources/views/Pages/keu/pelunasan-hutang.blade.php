@@ -524,8 +524,14 @@
                                         return intVal(a) + intVal(b);
                                     }, 0);
 
+                                var ttlInt = parseFloat(pageTotal);
+
+                                var formattedNumber = ttlInt.toLocaleString('id-ID', {
+                                    style: 'currency',
+                                    currency: 'IDR'
+                                });
                                 $(api.column(7).footer()).html(
-                                    'Total Pembayaran : Rp.' + pageTotal
+                                    'Total Pembayaran : Rp.' + formattedNumber
                                 );
                             },
                             "responsive": true,
