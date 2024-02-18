@@ -531,7 +531,7 @@
                                     currency: 'IDR'
                                 });
                                 $(api.column(7).footer()).html(
-                                    'Total Pembayaran : Rp.' + formattedNumber
+                                    'Total Pembayaran : ' + formattedNumber
                                 );
                             },
                             "responsive": true,
