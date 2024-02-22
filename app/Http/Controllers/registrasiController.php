@@ -14,7 +14,6 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 
-
 class registrasiController extends Controller
 {
 
@@ -121,7 +120,9 @@ class registrasiController extends Controller
             'fs_pendidikan' => $request->fs_pendidikan,
             'fs_status_kawin' => $request->fs_status_kawin,
             'fs_no_hp' => $request->fs_no_hp,
+            'fs_alergi' => $request->fs_alergi,
             'fs_user' => Auth::user()->name,
+            'updated_at' => Carbon::now(),
         ]);
         // dd($y);
         if ($y) {

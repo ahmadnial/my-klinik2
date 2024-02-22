@@ -566,6 +566,7 @@
                         $('#efs_tgl_lahir').val(dasos.fs_tgl_lahir);
                         $('#efs_jenis_kelamin').val(dasos.fs_jenis_kelamin);
                         $('#efs_jenis_identitas').val(dasos.fs_jenis_identitas);
+                        $('#efs_no_identitas').val(dasos.fs_no_identitas);
                         $('#efs_nm_ibu_kandung').val(dasos.fs_nm_ibu_kandung);
                         $('#efs_alamat').val(dasos.fs_alamat);
                         $('#efs_suku').val(dasos.fs_suku);
@@ -598,6 +599,7 @@
             var efs_tgl_lahir = $('#efs_tgl_lahir').val();
             var efs_jenis_kelamin = $('#efs_jenis_kelamin').val();
             var efs_jenis_identitas = $('#efs_jenis_identitas').val();
+            var efs_no_identitas = $('#efs_no_identitas').val();
             var efs_nm_ibu_kandung = $('#efs_nm_ibu_kandung').val();
             var efs_alamat = $('#efs_alamat').val();
             var efs_suku = $('#efs_suku').val();
@@ -622,6 +624,7 @@
                     fs_tgl_lahir: efs_tgl_lahir,
                     fs_jenis_kelamin: efs_jenis_kelamin,
                     fs_jenis_identitas: efs_jenis_identitas,
+                    fs_no_identitas: efs_no_identitas,
                     fs_nm_ibu_kandung: efs_nm_ibu_kandung,
                     fs_alamat: efs_alamat,
                     fs_suku: efs_suku,
