@@ -1534,11 +1534,11 @@
             $('#kumpulanButton').empty();
             $('#createSOAPP').show();
 
-            toastr.info('Pasein Pinned!', {
-                timeOut: 600,
-                // preventDuplicates: true,
-                positionClass: 'toast-top-right',
-            });
+            // toastr.info('Pasein Pinned!', {
+            //     timeOut: 600,
+            //     // preventDuplicates: true,
+            //     positionClass: 'toast-top-right',
+            // });
             var kdReg = $('#tr_kd_reg').val();
             $.ajax({
                 headers: {
@@ -1587,6 +1587,10 @@
                         $('#umurHdr').val(isAgeNow);
                         $('#tglLahirHdr').val(isDateBirthday);
 
+                        toastr.info('Pasien\t' + `${dataregvalue.fr_nama}` + '\tPinned!', {
+                            timeOut: 700,
+                            positionClass: 'toast-top-right',
+                        });
                         // Get MR & save  di sessionStorage
                         var mr = {};
                         mr.Text = $("#tr_no_mr").val();

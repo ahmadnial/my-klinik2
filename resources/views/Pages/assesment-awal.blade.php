@@ -1,5 +1,5 @@
 @extends('pages.master')
-
+@section('mytitle', 'Assesment Awal')
 @section('konten')
     <style>
         .search-px {
@@ -8,19 +8,184 @@
         }
 
         .side-panel {
-            /* position: inherit; */
+            position: static;
             background: #ffffff;
-            overflow-x: hidden;
+            /* overflow-x: hidden; */
+            overflow-y: scroll;
             padding: 8px 0;
         }
     </style>
 
 
 
-    <div class="form-box bg-light p-2" style="min-height: 594vh;">
+    <div class="form-box bg-light p-2" style="min-height: 474vh;">
         <div class="row">
             <div class="card col-3 side-panel">
-                <div class="card-header">
+                <div class="static-card-timeline mb-2">
+                    <div class="justify-content-between px-1"
+                        style="display: flex !important; z-index:100; border: 1px solid #e0cff0; background-color: #FFFFFF;">
+
+                        <div class="" id="" style="align-content: center">
+                            <div class="accordion m-1 form-inline  text-light" id="DetailPasien">
+                                <div class="card ml-3 mt-1" style="align-content: center">
+                                    <div class="form-control card-header row" name="PasienHdr"
+                                        style="background-color:#a07ccf">
+                                        <div class="text-light collapsed pointer" id="collapseCoverPasien"
+                                            data-toggle="collapse" data-target="#DetPsn" aria-expanded="false"
+                                            aria-controls="DetPsn" style="background-color:#a07ccf; border: none;">
+                                            <label style="width: 2vw;overflow: hidden;text-overflow: " name="nmPasienHdr"
+                                                id="nmPasienHdr" class="text-warning pointer">
+                                                <i class="fa fa-user"></i>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div id="DetPsn"
+                                        style="position: fixed; margin-top: 40px; z-index: 9999; min-width: 324px; border: 1px solid rgb(119, 94, 151);"
+                                        class="bg-light text-dark shadow collapse" aria-labelledby="headingOne"
+                                        data-parent="#DetailPasien">
+                                        <div class="scrollbar-dusty-grass square1 thin scroll-y scrollbox"
+                                            style="max-height: 480px;">
+                                            <div class="card-body">
+                                                <div>
+                                                    <div class="d-flex flex-wrap">
+                                                        <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                            style="background-color: #d2eaff" name="">
+                                                            <b>Nama :</b> <input type="text" class="form-control-xs"
+                                                                name="" id="namaHdr"
+                                                                style="background-color: #d2eaff; border:none">
+                                                        </div>
+                                                        <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                            style="background-color: #d2eaff" name="noMRHdr">
+                                                            <b>No. RM :</b><input type="text" class="form-control-xs"
+                                                                name="" id="noMRHdr"
+                                                                style="background-color: #d2eaff; border:none">
+                                                        </div>
+                                                        {{-- <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                            style="background-color: #d2eaff;" name="tglPeriksaHdr">
+                                                            01-01-3000 00:00:00
+                                                            <!-- <span name="tglPeriksaHdr"></span> -->
+                                                            <!-- <span name="jamPeriksaHdr"></span> -->
+                                                        </div> --}}
+                                                    </div>
+                                                    <div class="d-flex flex-wrap">
+                                                        <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                            style="background-color:#f8f5d6;" name="layananCoverHdr">
+                                                            <b>No. Reg :</b><input type="text" class="form-control-xs"
+                                                                name="" id="noRGHdr"
+                                                                style="background-color:#f8f5d6; border:none">
+                                                        </div>
+                                                        <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                            style="background-color:#f8f5d6;" name="">
+                                                            <b>Dokter :</b><input type="text" class="form-control-xs"
+                                                                name="" id="dokterHdr"
+                                                                style="background-color:#f8f5d6; border:none">
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex flex-wrap">
+                                                        <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                            title="" style="background-color:#f8d6e2;" name="">
+                                                            <b>Layanan :</b><input type="text" class="form-control-xs"
+                                                                name="" id="layananHdr"
+                                                                style="background-color: #f8d6e2; border:none">
+                                                        </div>
+                                                        <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                            style="background-color:#f8d6e2;" name="">
+                                                            <b>J/K :</b><input type="text" class="form-control-xs"
+                                                                name="" id="jkHdr"
+                                                                style="background-color:#f8d6e2; border:none">
+                                                        </div>
+                                                        <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                            style="background-color:#f8d6e2;">
+                                                            <span name="usiaHdr">
+                                                                <b>Umur :</b><input type="text" class="form-control-xs"
+                                                                    name="" id="umurHdr"
+                                                                    style="background-color:#f8d6e2; border:none">
+                                                            </span>
+
+                                                            || Tgl. Lahir : <input type="text" class="form-control-xs"
+                                                                name="" id="tglLahirHdr"
+                                                                style="background-color:#f8d6e2; border:none">
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex flex-wrap">
+                                                        <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                            style="background-color:#f8d6e2; border:none" name="alergiHdr"
+                                                            id="">
+                                                            <b>Alergi :</b><input type="text" class="form-control-xs"
+                                                                name="" id="alergiHdr"
+                                                                style="background-color:#f8d6e2; border:none">
+                                                        </div>
+                                                        <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                            style="background-color:#f8d6e2; border:none"
+                                                            name="lastTarifDsrHdr" id="">
+                                                            <b>Last tarif Dasar :</b><input type="text"
+                                                                class="form-control-xs" name=""
+                                                                id="lastTarifDsrHdr"
+                                                                style="background-color:#f8d6e2; border:none">
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex flex-wrap">
+                                                        {{-- <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                            style="background-color: #9976c73d;color: #5000b9;"
+                                                            name="pendidikanHdr">EDU : -
+                                                        </div>
+                                                        <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
+                                                            style="background-color: #9976c73d;color: #5000b9;"
+                                                            name="pekerjaanHdr">
+                                                            WORK : -
+                                                        </div> --}}
+                                                    </div>
+                                                    {{-- <div class=""> --}}
+                                                    <div class="px-2 py-1 m-1 rounded rounded-sm"
+                                                        style="background-color:#d6f8dd;" name="alamatHdr">
+                                                        <i class="fa fa-home"></i>
+                                                        <input type="text" class="form-control-xs col-8"
+                                                            name="" id="alamatHdr"
+                                                            style="background-color:#d6f8dd; border:none">
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 p-0 hide">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- <div class="form-group col-sm-6">
+                                    <label for="">Search Registrasi</label>
+                                    <select class="form-control-pasien" id="tr_kd_reg" style="width: 100%;"
+                                        name="tr_kd_reg">
+                                        @foreach ($isRegActive as $reg)
+                                        <option value="">--Select--</option>
+                                        <option value="{{ $reg->fr_kd_reg }}">
+                                            {{ $reg->fr_kd_reg . '-' . $reg->fr_nama }}
+                                        </option>
+                                        @endforeach
+                                    </select> --}}
+                            </div>
+                        </div>
+
+                        <div class="border-right"></div>
+                        <div class="">
+                        </div>
+                        <div class="p-0 col-4 pr-2" style="padding-top: 10px !important;">
+                            <select class="form-control-pasien" id="tr_kd_reg" style="width: 100%;" name="tr_kd_reg">
+                                @foreach ($isRegActive as $reg)
+                                    <option value="">--Select--</option>
+                                    <option value="{{ $reg->fr_kd_reg }}">
+                                        {{ $reg->fr_kd_reg . '-' . $reg->fr_nama }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="border-right"></div>
+
+                        <div class="p-0 col-4 pr-2 pt-2" id="panelFilterInstalasi" style="padding-top: 10px !important;">
+                            <input type="date" class="form-control form-control-sm" name="tr_tgl_trs" id="tr_tgl_trs"
+                                value="{{ $dateNow }}" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-header bg-nial">
                     <h3 class="card-title">History</h3>
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -82,7 +247,8 @@
                                 <div class="col p-0 componen-view" style="top: -2px; right: 0px; display: none;"
                                     id="actionViewAssesment">
                                     <button class="btn btn-success border-radius3 pull-right" id="printView"
-                                        data-toggle="modal" style="display: none;" data-target="#modalPrint" value="">
+                                        data-toggle="modal" style="display: none;" data-target="#modalPrint"
+                                        value="">
                                         <i class="flaticon2-fax"></i> Print
                                     </button>
                                 </div>
@@ -106,7 +272,8 @@
                                                     <button
                                                         class="btn btn-sm btn-icon-only-blue mr-3 mt-2 kt-font-bold pull-right"
                                                         id="collapseAllSection" style="display: none;">
-                                                        <i class="flaticon-interface-5 fa-lg" id="iconCollapseSection"></i>
+                                                        <i class="flaticon-interface-5 fa-lg"
+                                                            id="iconCollapseSection"></i>
                                                         Collapse All
                                                     </button>
                                                 </div>
@@ -126,12 +293,12 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-3 text-right" id="divSimpanAssesment">
-                                            <button class="btn btn-primary pull-right border-radius3" id="simpanAssesment"
-                                                disabled="">
-                                                <i class="flaticon-interface-5"></i> Save
+                                        {{-- <div class="col-3 text-right" id="divSimpanAssesment">
+                                            <button class="btn btn-primary btn-sm pull-right border-radius3"
+                                                id="simpanAssesment">
+                                                <i class="fa fa-save"></i> Save
                                             </button>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </ul>
@@ -151,19 +318,20 @@
                                         /* width: 50%; */
                                     }
                                 </style>
-                                <div class="heading">
+                                <div class="heading" style="background-color: #e9e7eb">
                                     <div class="row">
-                                        <h3 class="col-12">
-                                            ASSESMENT AWAL MEDIS
+                                        <h3 class="col-12 text-center mt-3">
+                                            ASSESMENT AWAL MEDIS RAWAT JALAN
                                         </h3>
                                     </div>
                                 </div>
-
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="container">
-                                            <div class="row borderblok">
-                                                <div class="col-lg-6 col-sm-12">
+                                <form action="addAssesment" method="POST">
+                                    @csrf
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="container">
+                                                <div class="row">
+                                                    {{-- <div class="col-lg-6 col-sm-12">
                                                     <div class="row">
                                                         <div class="col f-group">
                                                             <label class="col-3">Tanggal</label>
@@ -184,8 +352,8 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-lg-6 col-sm-12">
+                                                </div> --}}
+                                                    {{-- <div class="col-lg-6 col-sm-12">
                                                     <div class="f-group">
                                                         <label for="">Sumber Data</label>
                                                         <div class="form-inline" style="margin-left: -10px;">
@@ -201,24 +369,24 @@
                                                             </label>
                                                         </div>
                                                     </div>
+                                                </div> --}}
                                                 </div>
                                             </div>
-                                        </div>
-                                        <hr>
-                                        <div class="">
-                                            <h5 class="sub-ttl">KELUHAN UTAMA</h5>
-                                            <textarea type="text" name="fs_keluhan_utama" rows="3" class="form-control"></textarea>
-                                        </div>
-                                        <div class="card-body">
-                                        </div>
+                                            <hr>
+                                            <div class="">
+                                                <h5 class="sub-ttl">KELUHAN UTAMA</h5>
+                                                <textarea type="text" name="fs_keluhan_utama" rows="3" class="form-control"></textarea>
+                                            </div>
+                                            <div class="card-body">
+                                            </div>
 
-                                        <div class="card-heading">
-                                            <h5 class="sub-ttl">ANAMNESIS</h5>
-                                            <textarea type="text" name="fs_anamnesis" rows="3" class="form-control"></textarea>
-                                        </div>
-                                        <div class="card-body">
-                                        </div>
-                                        <div class="card-heading">
+                                            <div class="card-heading">
+                                                <h5 class="sub-ttl">ANAMNESIS</h5>
+                                                <textarea type="text" name="fs_anamnesis" rows="3" class="form-control"></textarea>
+                                            </div>
+                                            <div class="card-body">
+                                            </div>
+                                            {{-- <div class="card-heading">
                                             <h5 class="sub-ttl">PERJALANAN PENYAKIT SEKARANG</h5>
                                             <label for="">(Lokasi, onset, dan kronologis, kualitas,
                                                 kuantitas, faktor memperberat,
@@ -239,286 +407,286 @@
                                                     <textarea name="fs_ket_gambar" rows="10" class="form-control"></textarea>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
 
-                                        <div class="card-heading">
-                                            <h5 class="sub-ttl">RIWAYAT PENYAKIT TERDAHULU</h5>
-                                            <textarea type="text" name="fs_rwyt_penyakit" rows="4" class="form-control"></textarea>
-                                        </div>
-                                        <div class="card-body">
-                                        </div>
-                                        <div class="card-heading">
-                                            <h5 class="sub-ttl">RIWAYAT PENYAKIT KELUARGA</h5>
-                                            <textarea type="text" name="fs_rwyt_skt_klrg" rows="4" class="form-control"></textarea>
-                                        </div>
-                                        <div class="card-body">
-                                        </div>
-                                        <div class="card-heading">
-                                            <h5 class="sub-ttl">RIWAYAT PENGOBATAN SEBELUMNYA</h5>
-                                            <textarea type="text" name="fs_rwyt_obt_sebelum" rows="4" class="form-control"></textarea>
-                                        </div>
-                                        <div class="card-body">
-                                        </div>
+                                            <div class="card-heading">
+                                                <h5 class="sub-ttl">RIWAYAT PENYAKIT TERDAHULU</h5>
+                                                <textarea type="text" name="fs_rwyt_penyakit" rows="4" class="form-control"></textarea>
+                                            </div>
+                                            <div class="card-body">
+                                            </div>
+                                            <div class="card-heading">
+                                                <h5 class="sub-ttl">RIWAYAT PENYAKIT KELUARGA</h5>
+                                                <textarea type="text" name="fs_rwyt_skt_klrg" rows="4" class="form-control"></textarea>
+                                            </div>
+                                            <div class="card-body">
+                                            </div>
+                                            <div class="card-heading">
+                                                <h5 class="sub-ttl">RIWAYAT PENGOBATAN SEBELUMNYA</h5>
+                                                <textarea type="text" name="fs_rwyt_obt_sebelum" rows="4" class="form-control"></textarea>
+                                            </div>
+                                            <div class="card-body">
+                                            </div>
 
-                                        <div class="card-heading">
-                                            <h5 class="sub-ttl">RIWAYAT ALERGI</h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="p-2">
-                                                <label class="kt-radio kt-radio-outline">
-                                                    <input type="radio" name="fb_rwyt_alergi" value="0">Tidak
-                                                    <span></span>
-                                                </label>
-                                                <div>
+                                            <div class="card-heading">
+                                                <h5 class="sub-ttl">RIWAYAT ALERGI</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="p-2">
                                                     <label class="kt-radio kt-radio-outline">
-                                                        <input type="radio" id="fb_alergi" name="fb_rwyt_alergi"
-                                                            value="1">Ya,
-                                                        sebutkan
+                                                        <input type="radio" name="fb_rwyt_alergi" value="0">Tidak
                                                         <span></span>
                                                     </label>
-                                                    <div class="f-group" id="alergi">
-                                                        <ol>
-                                                            <li>
-                                                                <input type="text" name="fs_rwyt_alergi_1"
-                                                                    class="form-control"
-                                                                    onkeyup="if (this.value != '') document.getElementById('fb_alergi').checked = true;">
-                                                            </li>
-                                                            <li>
-                                                                <input type="text" name="fs_rwyt_alergi_2"
-                                                                    class="form-control">
-                                                            </li>
-                                                            <li>
-                                                                <input type="text" name="fs_rwyt_alergi_3"
-                                                                    class="form-control">
-                                                            </li>
-                                                            <li>
-                                                                <input type="text" name="fs_rwyt_alergi_4"
-                                                                    class="form-control">
-                                                            </li>
-                                                        </ol>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="">
-                                            <div class="card-heading">
-                                                <h4 class="group-ttl">PEMERIKSAAN FISIK</h4>
-                                            </div>
-
-                                            <div class="card-body">
-                                                <div class="">
-                                                    <h5 for="" class="sub-ttl">Kesadaran Umum</h5>
-                                                    <div class="f-group">
-                                                        <label for="">GCS</label>
-                                                        <div class="row">
-                                                            <div class="col">
-                                                                <div class="input-group">
-                                                                    <span class="input-group-prepend"><label
-                                                                            for=""
-                                                                            class="input-group-text">E</label>
-                                                                    </span>
-                                                                    <input type="text" name="fs_gcs_e"
+                                                    <div>
+                                                        <label class="kt-radio kt-radio-outline">
+                                                            <input type="radio" id="fb_alergi" name="fb_rwyt_alergi"
+                                                                value="1">Ya,
+                                                            sebutkan
+                                                            <span></span>
+                                                        </label>
+                                                        <div class="f-group" id="alergi">
+                                                            <ol>
+                                                                <li>
+                                                                    <input type="text" name="fs_rwyt_alergi_1"
+                                                                        class="form-control"
+                                                                        onkeyup="if (this.value != '') document.getElementById('fb_alergi').checked = true;">
+                                                                </li>
+                                                                <li>
+                                                                    <input type="text" name="fs_rwyt_alergi_2"
                                                                         class="form-control">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col">
-                                                                <div class="input-group">
-                                                                    <span class="input-group-prepend"><label
-                                                                            for=""
-                                                                            class="input-group-text">V</label>
-                                                                    </span>
-                                                                    <input type="text" name="fs_gcs_V"
+                                                                </li>
+                                                                <li>
+                                                                    <input type="text" name="fs_rwyt_alergi_3"
                                                                         class="form-control">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col">
-                                                                <div class="input-group">
-                                                                    <span class="input-group-prepend"><label
-                                                                            for=""
-                                                                            class="input-group-text">M</label>
-                                                                    </span>
-                                                                    <input type="text" name="fs_gcs_m"
+                                                                </li>
+                                                                <li>
+                                                                    <input type="text" name="fs_rwyt_alergi_4"
                                                                         class="form-control">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row f-group">
-                                                        <div class="col-lg-6 col-sm-12">
-                                                            <label>Tekanan Darah:&ensp;</label>
-                                                            <label class="input-group">
-                                                                <input style="width: 5em;" name="fs_td" type="text"
-                                                                    class="form-control" />
-                                                                <span
-                                                                    class="input-group-append input-group-text">mmHg</span>
-                                                            </label>&emsp;
-                                                        </div>
-                                                        <div class="col-lg-6 col-sm-12">
-                                                            <label>Nadi:&ensp;</label>
-                                                            <label class="input-group">
-                                                                <input style="width: 6em;" name="fs_N_1" type="number"
-                                                                    class="form-control" />
-                                                                <span
-                                                                    class="input-group-append input-group-text">x/mnt</span>
-                                                            </label>&emsp;
-                                                        </div>
-                                                        <div class="col-lg-6 col-sm-12">
-                                                            <label>Respirasi:&ensp;</label>
-                                                            <label class="input-group">
-                                                                <input style="width: 6em;" name="fs_R_1" type="number"
-                                                                    class="form-control" />
-                                                                <span
-                                                                    class="input-group-append input-group-text">x/mnt</span>
-                                                            </label>&emsp;
-                                                        </div>
-                                                        <div class="col-lg-6 col-sm-12">
-                                                            <label>Suhu:&ensp;</label>
-                                                            <label class="input-group">
-                                                                <input style="width: 6em;" name="fs_S_1" type="number"
-                                                                    class="form-control" />
-                                                                <span
-                                                                    class="input-group-append input-group-text"><sup>o</sup>C</span>
-                                                            </label>
+                                                                </li>
+                                                            </ol>
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <div class="f-group">
-                                                    <label class="col-2">Kepala</label>
-                                                    <div class="col">
-                                                        <input type="text" class="form-control" name="fs_kepala"
-                                                            value="Normal" />
-                                                    </div>
-                                                </div>
-                                                <div class="f-group">
-                                                    <label class="col-2">Leher</label>
-                                                    <div class="col">
-                                                        <input type="text" class="form-control" name="fs_leher"
-                                                            value="Normal" />
-                                                    </div>
-                                                </div>
-                                                <div class="f-group">
-                                                    <label class="col-2">Thorax</label>
-                                                    <div class="col">
-                                                        <input type="text" class="form-control" name="fs_thorax"
-                                                            value="Normal" />
-                                                    </div>
-                                                </div>
-                                                <div class="f-group">
-                                                    <label class="col-2">Abdomen</label>
-                                                    <div class="col">
-                                                        <input type="text" class="form-control" name="fs_abdomen"
-                                                            value="Normal" />
-                                                    </div>
-                                                </div>
-                                                <div class="f-group">
-                                                    <label class="col-2">Ekstremitas</label>
-                                                    <div class="col">
-                                                        <input type="text" class="form-control" name="fs_ekstremitas"
-                                                            value="Normal" />
-                                                    </div>
-                                                </div>
-                                                <div class="f-group">
-                                                    <label class="col-2">Genetalia</label>
-                                                    <div class="col">
-                                                        <input type="text" class="form-control" name="fs_genetalia"
-                                                            value="Normal" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="">
-                                            <div class="card-heading">
-                                                <h5 class="sub-ttl">PEMERIKSAAN PENUNJANG</h5>
-                                                <textarea rows="3" name="fs_periksa_penunjang" class="form-control"></textarea>
                                             </div>
 
-                                            <div class="card-body">
-                                            </div>
-                                        </div>
-                                        <div class="">
-                                            <div class="card-heading">
-                                                <h5 class="sub-ttl">DIAGNOSA BANDING</h5>
-                                                <textarea rows="3" name="fs_diag_banding" class="form-control"></textarea>
-                                            </div>
 
-                                            <div class="card-body">
-                                            </div>
-                                        </div>
-
-                                        <div class="">
-                                            <div class="card-heading">
-                                                <h5 class="sub-ttl">DIAGNOSA KERJA</h5>
-                                                <textarea rows="3" name="fs_diag_kerja" class="form-control"></textarea>
-                                            </div>
-
-                                            <div class="card-body">
-                                            </div>
-                                        </div>
-
-                                        <div class="card-heading">
-                                            <h5 class="sub-ttl">MASALAH MEDIS</h5>
-                                            <textarea rows="4" name="fs_mslh_medis" class="form-control"></textarea>
-                                        </div>
-
-                                        <div class="card-body">
-                                        </div>
-                                        <div class="card-heading">
-                                            <h5 class="group-ttl">PERENCANAAN</h5>
-                                            <textarea name="fs_instruksi_medis" rows="5" class="form-control"></textarea>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="f-group">
-                                                <hr>
-                                                <h5 class="sub-ttl"><b>INSTRUKSI MEDIS</b></h5>
-                                                <hr>
-                                            </div>
-                                        </div>
-                                        <div class="f-group">
                                             <div class="">
-                                                <div>
-                                                    <h4 class="group-ttl">RENCANA TINDAK LANJUT</h4>
+                                                <div class="card-heading">
+                                                    <h4 class="group-ttl">PEMERIKSAAN FISIK</h4>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-lg-12 col-sm-2">
-                                                        <table class="w-100">
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td style="width:25%">
-                                                                        <label class="kt-checkbox kt-checkbox-outline">
-                                                                            <input type="checkbox" name="fb_disposisi"
-                                                                                value="1">
-                                                                            <span></span>Dipulangkan, Kontrol Poliklinik
-                                                                        </label>
-                                                                    </td>
-                                                                    <td><input type="text" name="fs_kontrol_klinik"
+
+                                                <div class="card-body">
+                                                    <div class="">
+                                                        <h5 for="" class="sub-ttl">Kesadaran Umum</h5>
+                                                        <div class="f-group">
+                                                            <label for="">GCS</label>
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-prepend"><label
+                                                                                for=""
+                                                                                class="input-group-text">E</label>
+                                                                        </span>
+                                                                        <input type="text" name="fs_gcs_e"
                                                                             class="form-control">
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        <label class="kt-checkbox kt-checkbox-outline">
-                                                                            <input type="checkbox" name="fb_disposisi2"
-                                                                                value="1">
-                                                                            <span></span>Rujuk, Ke
-                                                                        </label>
-                                                                    </td>
-                                                                    <td><input type="text" name="fs_rujuk"
-                                                                            class="form-control"></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        <label class="kt-checkbox kt-checkbox-outline">
-                                                                            <input type="checkbox" name="fb_disposisi3"
-                                                                                value="1">
-                                                                            <span></span>Pulang Paksa / Menolak
-                                                                        </label>
-                                                                    </td>
-                                                                    <!-- <td><input type="text" name="fs_rawat_jalan" class="form-control"></td> -->
-                                                                </tr>
-                                                                {{-- <tr>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-prepend"><label
+                                                                                for=""
+                                                                                class="input-group-text">V</label>
+                                                                        </span>
+                                                                        <input type="text" name="fs_gcs_V"
+                                                                            class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-prepend"><label
+                                                                                for=""
+                                                                                class="input-group-text">M</label>
+                                                                        </span>
+                                                                        <input type="text" name="fs_gcs_m"
+                                                                            class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row f-group">
+                                                            <div class="col-lg-6 col-sm-12">
+                                                                <label>Tekanan Darah:&ensp;</label>
+                                                                <label class="input-group">
+                                                                    <input style="width: 5em;" name="fs_td"
+                                                                        type="text" class="form-control" />
+                                                                    <span
+                                                                        class="input-group-append input-group-text">mmHg</span>
+                                                                </label>&emsp;
+                                                            </div>
+                                                            <div class="col-lg-6 col-sm-12">
+                                                                <label>Nadi:&ensp;</label>
+                                                                <label class="input-group">
+                                                                    <input style="width: 6em;" name="fs_N_1"
+                                                                        type="number" class="form-control" />
+                                                                    <span
+                                                                        class="input-group-append input-group-text">x/mnt</span>
+                                                                </label>&emsp;
+                                                            </div>
+                                                            <div class="col-lg-6 col-sm-12">
+                                                                <label>Respirasi:&ensp;</label>
+                                                                <label class="input-group">
+                                                                    <input style="width: 6em;" name="fs_R_1"
+                                                                        type="number" class="form-control" />
+                                                                    <span
+                                                                        class="input-group-append input-group-text">x/mnt</span>
+                                                                </label>&emsp;
+                                                            </div>
+                                                            <div class="col-lg-6 col-sm-12">
+                                                                <label>Suhu:&ensp;</label>
+                                                                <label class="input-group">
+                                                                    <input style="width: 6em;" name="fs_S_1"
+                                                                        type="number" class="form-control" />
+                                                                    <span
+                                                                        class="input-group-append input-group-text"><sup>o</sup>C</span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="f-group">
+                                                        <label class="col-2">Kepala</label>
+                                                        <div class="col">
+                                                            <input type="text" class="form-control" name="fs_kepala"
+                                                                value="Normal" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="f-group">
+                                                        <label class="col-2">Leher</label>
+                                                        <div class="col">
+                                                            <input type="text" class="form-control" name="fs_leher"
+                                                                value="Normal" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="f-group">
+                                                        <label class="col-2">Thorax</label>
+                                                        <div class="col">
+                                                            <input type="text" class="form-control" name="fs_thorax"
+                                                                value="Normal" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="f-group">
+                                                        <label class="col-2">Abdomen</label>
+                                                        <div class="col">
+                                                            <input type="text" class="form-control" name="fs_abdomen"
+                                                                value="Normal" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="f-group">
+                                                        <label class="col-2">Ekstremitas</label>
+                                                        <div class="col">
+                                                            <input type="text" class="form-control"
+                                                                name="fs_ekstremitas" value="Normal" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="f-group">
+                                                        <label class="col-2">Genetalia</label>
+                                                        <div class="col">
+                                                            <input type="text" class="form-control"
+                                                                name="fs_genetalia" value="Normal" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="">
+                                                <div class="card-heading">
+                                                    <h5 class="sub-ttl">PEMERIKSAAN PENUNJANG</h5>
+                                                    <textarea rows="3" name="fs_periksa_penunjang" class="form-control"></textarea>
+                                                </div>
+
+                                                <div class="card-body">
+                                                </div>
+                                            </div>
+                                            <div class="">
+                                                <div class="card-heading">
+                                                    <h5 class="sub-ttl">DIAGNOSA BANDING</h5>
+                                                    <textarea rows="3" name="fs_diag_banding" class="form-control"></textarea>
+                                                </div>
+
+                                                <div class="card-body">
+                                                </div>
+                                            </div>
+
+                                            <div class="">
+                                                <div class="card-heading">
+                                                    <h5 class="sub-ttl">DIAGNOSA KERJA</h5>
+                                                    <textarea rows="3" name="fs_diag_kerja" class="form-control"></textarea>
+                                                </div>
+
+                                                <div class="card-body">
+                                                </div>
+                                            </div>
+
+                                            <div class="card-heading">
+                                                <h5 class="sub-ttl">MASALAH MEDIS</h5>
+                                                <textarea rows="4" name="fs_mslh_medis" class="form-control"></textarea>
+                                            </div>
+
+                                            <div class="card-body">
+                                            </div>
+                                            <div class="card-heading">
+                                                <h5 class="group-ttl">PERENCANAAN</h5>
+                                                <textarea name="fs_instruksi_medis" rows="5" class="form-control"></textarea>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="f-group">
+                                                    <hr>
+                                                    <h5 class="sub-ttl"><b>INSTRUKSI MEDIS</b></h5>
+                                                    <hr>
+                                                </div>
+                                            </div>
+                                            <div class="f-group">
+                                                <div class="">
+                                                    <div>
+                                                        <h4 class="group-ttl">RENCANA TINDAK LANJUT</h4>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-sm-2">
+                                                            <table class="w-100">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td style="width:25%">
+                                                                            <label class="kt-checkbox kt-checkbox-outline">
+                                                                                <input type="checkbox" name="fb_disposisi"
+                                                                                    value="1">
+                                                                                <span></span>Dipulangkan, Kontrol Poliklinik
+                                                                            </label>
+                                                                        </td>
+                                                                        <td><input type="text" name="fs_kontrol_klinik"
+                                                                                class="form-control">
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <label class="kt-checkbox kt-checkbox-outline">
+                                                                                <input type="checkbox"
+                                                                                    name="fb_disposisi2" value="1">
+                                                                                <span></span>Rujuk, Ke
+                                                                            </label>
+                                                                        </td>
+                                                                        <td><input type="text" name="fs_rujuk"
+                                                                                class="form-control"></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <label class="kt-checkbox kt-checkbox-outline">
+                                                                                <input type="checkbox"
+                                                                                    name="fb_disposisi3" value="1">
+                                                                                <span></span>Pulang Paksa / Menolak
+                                                                            </label>
+                                                                        </td>
+                                                                        <!-- <td><input type="text" name="fs_rawat_jalan" class="form-control"></td> -->
+                                                                    </tr>
+                                                                    {{-- <tr>
                                                                     <td>
                                                                         <label class="kt-checkbox kt-checkbox-outline">
                                                                             <input type="checkbox" name="fb_disposisi4"
@@ -529,7 +697,7 @@
                                                                     </td>
                                                           
                                                                 </tr> --}}
-                                                                {{-- <tr>
+                                                                    {{-- <tr>
                                                                     <td>
                                                                         <label class="kt-checkbox kt-checkbox-outline">
                                                                             <input type="checkbox" name="fb_disposisi5"
@@ -542,67 +710,54 @@
                                                                             class="form-control col-6 form-inline">
                                                                     </td>
                                                                 </tr> --}}
-                                                                <tr>
-                                                                    <td>
-                                                                        <label class="kt-checkbox kt-checkbox-outline">
-                                                                            <input type="checkbox" name="fb_disposisi6"
-                                                                                value="1">
-                                                                            <span></span>Melarikan Diri
-                                                                        </label>
-                                                                    </td>
-                                                                    <!-- <td><input type="text" name="fs_rawat_jalan" class="form-control"></td> -->
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        <label class="kt-checkbox kt-checkbox-outline">
-                                                                            <input type="checkbox" name="fb_disposisi7"
-                                                                                value="1">
-                                                                            <span></span>Meninggal :
-                                                                        </label>
-                                                                    </td>
-                                                                    <!-- <td><input type="text" name="fs_rawat_inap" class="form-control col-6 form-inline"></td> -->
-                                                                    <!-- <td><label for="">Indikasi :</label></td> -->
-                                                                    <td><input type="text" name="fs_meninggal"
-                                                                            class="form-control col-6 form-inline">
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <label class="kt-checkbox kt-checkbox-outline">
+                                                                                <input type="checkbox"
+                                                                                    name="fb_disposisi6" value="1">
+                                                                                <span></span>Melarikan Diri
+                                                                            </label>
+                                                                        </td>
+                                                                        <!-- <td><input type="text" name="fs_rawat_jalan" class="form-control"></td> -->
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <label class="kt-checkbox kt-checkbox-outline">
+                                                                                <input type="checkbox"
+                                                                                    name="fb_disposisi7" value="1">
+                                                                                <span></span>Meninggal :
+                                                                            </label>
+                                                                        </td>
+                                                                        <!-- <td><input type="text" name="fs_rawat_inap" class="form-control col-6 form-inline"></td> -->
+                                                                        <!-- <td><label for="">Indikasi :</label></td> -->
+                                                                        <td><input type="text" name="fs_meninggal"
+                                                                                class="form-control col-6 form-inline">
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md">
-                                        <div class="col-md-12">
-                                            <div class="card-heading">
-                                                <h5 class="sub-ttl">
-                                                    Edukasi
-                                                </h5>
-                                            </div>
-                                            <div class="card-body">
-                                                <div>
-                                                    <p>
-                                                        Edukasi awal di sampaikan tentang Diagnosis, Renaca dan
-                                                        Tujuan Terapi kepada :
-                                                    </p>
-                                                    <div class="row">
-                                                        <div class="col f-group">
-                                                            <label for="">Pasien</label>
-                                                            <input type="text" name="fs_pasien" id="fs_nama_psn"
-                                                                class="form-control">
-                                                        </div>
-                                                        <div class="col f-group">
-                                                            <label for="">Paraf</label>
-                                                            <img style="width: 100px;">
-                                                        </div>
-                                                    </div>
+                                        <div class="col-md">
+                                            <div class="col-md-12">
+                                                <div class="card-heading">
+                                                    <h5 class="sub-ttl">
+                                                        Edukasi
+                                                    </h5>
+                                                </div>
+                                                <div class="card-body">
                                                     <div>
-                                                        <label for="">Keluarga Pasien</label>
+                                                        <p>
+                                                            Edukasi awal di sampaikan tentang Diagnosis, Renaca dan
+                                                            Tujuan Terapi kepada :
+                                                        </p>
                                                         <div class="row">
                                                             <div class="col f-group">
-                                                                <label for="">Nama</label>
-                                                                <input type="text" name="fs_klrg_pasien"
+                                                                <label for="">Pasien</label>
+                                                                <input type="text" name="fs_pasien" id="fs_nama_psn"
                                                                     class="form-control">
                                                             </div>
                                                             <div class="col f-group">
@@ -610,58 +765,96 @@
                                                                 <img style="width: 100px;">
                                                             </div>
                                                         </div>
+                                                        <div>
+                                                            <label for="">Keluarga Pasien</label>
+                                                            <div class="row">
+                                                                <div class="col f-group">
+                                                                    <label for="">Nama</label>
+                                                                    <input type="text" name="fs_klrg_pasien"
+                                                                        class="form-control">
+                                                                </div>
+                                                                <div class="col f-group">
+                                                                    <label for="">Paraf</label>
+                                                                    <img style="width: 100px;">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <p>Tidak dapat memeberikan edukasi kepada pasien dan keluarga,
+                                                            karena :</p>
+                                                        <input type="text" name="fs_tdk_dpt_edu" class="form-control">
                                                     </div>
-                                                    <p>Tidak dapat memeberikan edukasi kepada pasien dan keluarga,
-                                                        karena :</p>
-                                                    <input type="text" name="fs_tdk_dpt_edu" class="form-control">
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-7"></div>
-                                            <div class="col-md-5" style="align-items: center">
-                                                <div>
-                                                    <div class="form-inline">
-                                                        <label for="">Tanggal/ Jam</label>
-                                                        <div class="input-group">
-                                                            <input type="date" name="fd_tgl_ttd"
-                                                                class="form-control tgl_now">
-                                                            <span class="input-group-append"><label
-                                                                    class="input-group-text">/</label></span>
-                                                            <input type="time" name="fs_jam_ttd"
-                                                                class="form-control jam_now">
-                                                            <span class="input-group-append"><label
-                                                                    class="input-group-text">WIB</label></span>
+                                            <div class="row">
+                                                <div class="col-md-7"></div>
+                                                <div class="col-md-5" style="align-items: center">
+                                                    <div>
+                                                        <div class="form-inline">
+                                                            <label for="">Tanggal/ Jam</label>
+                                                            <div class="input-group">
+                                                                <input type="date" name="fd_tgl_ttd"
+                                                                    class="form-control" value="{{ $dateNow }}">
+                                                                <span class="input-group-append"><label
+                                                                        class="input-group-text">/</label></span>
+                                                                <input type="time" name="fs_jam_ttd"
+                                                                    class="form-control" value="{{ $timeNow }}"
+                                                                    step="1">
+                                                                <span class="input-group-append"><label
+                                                                        class="input-group-text">WIB</label></span>
+                                                            </div>
+                                                        </div>
+                                                        <div style="text-align: center">
+                                                            <label>Dokter</label>
                                                         </div>
                                                     </div>
-                                                    <div style="text-align: center">
-                                                        <label>Dokter</label>
-                                                    </div>
-                                                </div>
-                                                <div>
+                                                    <div>
 
-                                                    <div class="text-center">
-                                                        <img id="tanda_tangan_dokter"
-                                                            style="max-width:200px;height:100px;" />
+                                                        <div class="text-center">
+                                                            <img id="tanda_tangan_dokter"
+                                                                style="max-width:200px;height:100px;" />
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div>
-                                                    <div style="text-align: center">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                <span class="input-group-append input-group-text">(</span>
-                                                                <input type="text" name="fs_dokter_assessment"
-                                                                    class="form-control text-center">
-                                                                <span class="input-group-append input-group-text">)</span>
+                                                    <div>
+                                                        <div style="text-align: center">
+                                                            <div class="form-group">
+                                                                <div class="input-group">
+                                                                    <span
+                                                                        class="input-group-append input-group-text">(</span>
+                                                                    <input type="text" name="fs_dokter_assessment"
+                                                                        class="form-control text-center"
+                                                                        value="{{ Auth::user()->name }}">
+                                                                    <span
+                                                                        class="input-group-append input-group-text">)</span>
+                                                                </div>
                                                             </div>
+                                                            <div class="col-3 pb-4 mt-5 float-right"
+                                                                id="divSimpanAssesment">
+                                                                <button class="btn btn-primary float-right border-radius3"
+                                                                    id="simpanAssesment">
+                                                                    <i class="fa fa-save"></i> Save
+                                                                </button>
+                                                            </div>
+                                                            <br>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                             </div>
+                            <div class="">
+                                <input type="hidden" id="AssId" name="AssId" value="">
+                                <input type="hidden" id="tglTrs" name="tglTrs" value="{{ $dateNow }}">
+                                <input type="hidden" id="jamTrs" name="jamTrs" value="{{ $timeNow }}">
+                                <input type="hidden" id="kdReg" name="kdReg">
+                                <input type="hidden" id="noMr" name="noMr">
+                                <input type="hidden" id="pasienName" name="pasienName">
+                                <input type="hidden" id="jeniskelamin" name="jeniskelamin">
+                                <input type="hidden" id="dokter" name="dokter">
+                                <input type="hidden" id="umur" name="umur">
+                                <input type="hidden" id="layanan" name="layanan">
+                            </div>
+                            </form>
                         </section>
                         <div class="tab-content" style="background-color: white;">
                             <div id="menu0" class="tab-pane fade active show">
@@ -775,17 +968,18 @@
                 return age;
             }
 
-            // Call Hasil Search Registrasi
-            $("#ts_kd_reg").on("change", function() {
-                $('#kumpulanButton').empty();
-                $('#createSOAPP').show();
+            $('#tr_kd_reg').select2({
+                placeholder: 'Pilih Pasien',
+            });
 
-                toastr.info('Pasein Pinned!', {
-                    timeOut: 600,
-                    // preventDuplicates: true,
-                    positionClass: 'toast-top-right',
-                });
-                var kdReg = $('#ts_kd_reg').val();
+
+            // Call Hasil Search Registrasi
+            $("#tr_kd_reg").on("change", function() {
+                // $('#kumpulanButton').empty();
+                // $('#createSOAPP').show();
+
+
+                var kdReg = $('#tr_kd_reg').val();
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -797,13 +991,12 @@
                     },
                     success: function(isRegSearch) {
                         $.each(isRegSearch, function(key, dataregvalue) {
-                            // $('#tr_no_mr').val(dataregvalue.fr_mr);
-                            // $('#tr_nm_pasien').val(dataregvalue.fr_nama);
-                            // $('#tr_jenis_kelamin').val(dataregvalue.fr_jenis_kelamin);
-                            // $('#tr_layanan').val(dataregvalue.fr_layanan);
-                            // $('#tr_dokter').val(dataregvalue.fr_dokter);
-                            // $('#tr_alamat').val(dataregvalue.fr_alamat);
-                            $('#tr_tgl_lahir').val(dataregvalue.fr_tgl_lahir);
+                            $('#noMr').val(dataregvalue.fr_mr);
+                            $('#pasienName').val(dataregvalue.fr_nama);
+                            $('#jeniskelamin').val(dataregvalue.fr_jenis_kelamin);
+                            $('#layanan').val(dataregvalue.fr_layanan);
+                            $('#dokter').val(dataregvalue.fr_dokter);
+                            $('#kdReg').val(dataregvalue.fr_kd_reg);
 
                             $('#namaHdr').val(dataregvalue.fr_nama);
                             $('#noMRHdr').val(dataregvalue.fr_mr);
@@ -827,31 +1020,94 @@
 
                             var isDateBirthday = dataregvalue.fr_tgl_lahir;
                             var isAgeNow = getUmurDetail(isDateBirthday);
-                            $('#tr_umur').val(isAgeNow);
+                            $('#umur').val(isAgeNow);
                             $('#umurHdr').val(isAgeNow);
                             $('#tglLahirHdr').val(isDateBirthday);
 
+                            toastr.info('Pasein\t' + `${dataregvalue.fr_nama}` + '\tPinned!', {
+                                timeOut: 700,
+                                positionClass: 'toast-top-right',
+                            });
                             // Get MR & save  di sessionStorage
                             var mr = {};
-                            mr.Text = $("#tr_no_mr").val();
+                            mr.Text = $("#noMRHdr").val();
 
                             var kdReg = {};
-                            kdReg.Text = $("#tr_kd_reg").val();
+                            kdReg.Text = $("#noRGHdr").val();
 
-                            var ChartID = {};
-                            ChartID.Text = $("#chart_id").val();
+                            // var ChartID = {};
+                            // ChartID.Text = $("#chart_id").val();
 
                             var UserActive = {};
                             UserActive.Text = $("#userActive").val();
                             // mr.isProcessed = false;
                             sessionStorage.setItem("dataMR", JSON.stringify(mr));
                             sessionStorage.setItem("kdReg", JSON.stringify(kdReg));
-                            sessionStorage.setItem("ChartID", JSON.stringify(ChartID));
+                            // sessionStorage.setItem("ChartID", JSON.stringify(ChartID));
                             sessionStorage.setItem("UserActive", JSON.stringify(UserActive));
                         })
                     }
                 })
             });
+
+            getHeaderInfo();
+
+
+            function getHeaderInfo() {
+                var data = sessionStorage.getItem("kdReg");
+                var kdReg;
+
+                if (data != null) {
+                    kdReg = JSON.parse(data);
+                }
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "{{ url('SearchRegister') }}/" + kdReg,
+                    type: 'GET',
+                    data: {
+                        'fr_kd_reg': kdReg
+                    },
+                    success: function(isRegSearch) {
+                        $.each(isRegSearch, function(key, dataregvalue) {
+                            // $('#tr_no_mr').val(dataregvalue.fr_mr);
+                            // $('#tr_nm_pasien').val(dataregvalue.fr_nama);
+                            // $('#tr_jenis_kelamin').val(dataregvalue
+                            //     .fr_jenis_kelamin);
+                            // $('#tr_layanan').val(dataregvalue.fr_layanan);
+                            // $('#tr_dokter').val(dataregvalue.fr_dokter);
+                            // $('#tr_alamat').val(dataregvalue.fr_alamat);
+                            // $('#tr_tgl_lahir').val(dataregvalue.fr_tgl_lahir);
+
+                            $('#namaHdr').val(dataregvalue.fr_nama);
+                            $('#noMRHdr').val(dataregvalue.fr_mr);
+                            $('#noRGHdr').val(dataregvalue.fr_kd_reg);
+                            $('#dokterHdr').val(dataregvalue.fr_dokter);
+                            $('#layananHdr').val(dataregvalue.fr_layanan);
+                            $('#jkHdr').val(dataregvalue.fr_jenis_kelamin);
+                            $('#alamatHdr').val(dataregvalue.fr_alamat);
+                            $('#alergiHdr').val(dataregvalue.fr_alergi);
+                            $('#lastTarifDsrHdr').val(dataregvalue.tcmr
+                                .fs_last_tarif_dasar);
+
+
+                            $('#chart_kd_reg').val(dataregvalue.fr_kd_reg);
+                            $('#chart_mr').val(dataregvalue.fr_mr);
+                            $('#chart_nm_pasien').val(dataregvalue.fr_nama);
+                            $('#chart_layanan').val(dataregvalue.fr_layanan);
+                            $('#chart_dokter').val(dataregvalue.fr_dokter);
+
+                            var isDateBirthday = dataregvalue.fr_tgl_lahir;
+                            var isAgeNow = getUmurDetail(isDateBirthday);
+                            $('#tr_umur').val(isAgeNow);
+                            $('#umurHdr').val(isAgeNow);
+                            $('#tglLahirHdr').val(isDateBirthday);
+
+                        })
+                    }
+                })
+            }
 
             var mt_kanan = new Coret({
                 cvs: "badan",
@@ -866,6 +1122,8 @@
                     fontSize: "20px"
                 }
             });
+
+            // Get Data setelah reload
 
             $(".btn").tooltip({
                 container: 'body'

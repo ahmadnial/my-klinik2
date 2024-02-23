@@ -233,6 +233,7 @@ Route::group(['middleware' => ['auth', 'checkrole:1,2']], function () {
     // Route::get('/', [HomeController::class, 'index']);
     // Route::get('/redirect', [RedirectController::class, 'cek']);
     Route::get('assesment-awal', [AssesmentController::class, 'assAwal'])->name('assesment-awal');
+    Route::post('addAssesment', [AssesmentController::class, 'createAssesment'])->name('addAssesment');
 });
 
 //Laporan Farmasi
