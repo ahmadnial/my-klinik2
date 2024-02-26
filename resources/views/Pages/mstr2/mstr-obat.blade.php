@@ -92,7 +92,7 @@
                         <div class="form-group col-sm-6">
                             <label for="">Obat</label>
                             <input type="text" class="form-control" name="efm_nm_obat" id="efm_nm_obat" value=""
-                                placeholder="Input Nama Obat" readonly>
+                                placeholder="Input Nama Obat">
                         </div>
                         <div class="form-group col-sm-6">
                             <label for="">Kategori</label>
