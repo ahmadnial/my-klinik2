@@ -375,14 +375,14 @@
                                             <hr>
                                             <div class="">
                                                 <h5 class="sub-ttl">KELUHAN UTAMA</h5>
-                                                <textarea type="text" name="fs_keluhan_utama" rows="3" class="form-control"></textarea>
+                                                <textarea type="text" name="fs_keluhan_utama" rows="3" class="form-control">{{ old('fs_keluhan_utama') }}</textarea>
                                             </div>
                                             <div class="card-body">
                                             </div>
 
                                             <div class="card-heading">
                                                 <h5 class="sub-ttl">ANAMNESIS</h5>
-                                                <textarea type="text" name="fs_anamnesis" rows="3" class="form-control"></textarea>
+                                                <textarea type="text" name="fs_anamnesis" rows="3" class="form-control">{{ old('fs_anamnesis') }}</textarea>
                                             </div>
                                             <div class="card-body">
                                             </div>
@@ -411,19 +411,19 @@
 
                                             <div class="card-heading">
                                                 <h5 class="sub-ttl">RIWAYAT PENYAKIT TERDAHULU</h5>
-                                                <textarea type="text" name="fs_rwyt_penyakit" rows="4" class="form-control"></textarea>
+                                                <textarea type="text" name="fs_rwyt_penyakit" rows="4" class="form-control">{{ old('fs_rwyt_penyakit') }}</textarea>
                                             </div>
                                             <div class="card-body">
                                             </div>
                                             <div class="card-heading">
                                                 <h5 class="sub-ttl">RIWAYAT PENYAKIT KELUARGA</h5>
-                                                <textarea type="text" name="fs_rwyt_skt_klrg" rows="4" class="form-control"></textarea>
+                                                <textarea type="text" name="fs_rwyt_skt_klrg" rows="4" class="form-control">{{ old('fs_rwyt_skt_klrg') }}</textarea>
                                             </div>
                                             <div class="card-body">
                                             </div>
                                             <div class="card-heading">
                                                 <h5 class="sub-ttl">RIWAYAT PENGOBATAN SEBELUMNYA</h5>
-                                                <textarea type="text" name="fs_rwyt_obt_sebelum" rows="4" class="form-control"></textarea>
+                                                <textarea type="text" name="fs_rwyt_obt_sebelum" rows="4" class="form-control">{{ old('fs_rwyt_obt_sebelum') }}</textarea>
                                             </div>
                                             <div class="card-body">
                                             </div>
@@ -449,19 +449,23 @@
                                                                 <li>
                                                                     <input type="text" name="fs_rwyt_alergi_1"
                                                                         class="form-control"
-                                                                        onkeyup="if (this.value != '') document.getElementById('fb_alergi').checked = true;">
+                                                                        onkeyup="if (this.value != '') document.getElementById('fb_alergi').checked = true;"
+                                                                        value="{{ old('fs_rwyt_alergi_1') }}">
                                                                 </li>
                                                                 <li>
                                                                     <input type="text" name="fs_rwyt_alergi_2"
-                                                                        class="form-control">
+                                                                        class="form-control"
+                                                                        value="{{ old('fs_rwyt_alergi_2') }}">
                                                                 </li>
                                                                 <li>
                                                                     <input type="text" name="fs_rwyt_alergi_3"
-                                                                        class="form-control">
+                                                                        class="form-control"
+                                                                        value="{{ old('fs_rwyt_alergi_3') }}">
                                                                 </li>
                                                                 <li>
                                                                     <input type="text" name="fs_rwyt_alergi_4"
-                                                                        class="form-control">
+                                                                        class="form-control"
+                                                                        value="{{ old('fs_rwyt_alergi_4') }}">
                                                                 </li>
                                                             </ol>
                                                         </div>
@@ -488,7 +492,8 @@
                                                                                 class="input-group-text">E</label>
                                                                         </span>
                                                                         <input type="text" name="fs_gcs_e"
-                                                                            class="form-control">
+                                                                            class="form-control"
+                                                                            value="{{ old('fs_gcs_e') }}">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col">
@@ -498,7 +503,8 @@
                                                                                 class="input-group-text">V</label>
                                                                         </span>
                                                                         <input type="text" name="fs_gcs_V"
-                                                                            class="form-control">
+                                                                            class="form-control"
+                                                                            value="{{ old('fs_gcs_V') }}">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col">
@@ -508,7 +514,8 @@
                                                                                 class="input-group-text">M</label>
                                                                         </span>
                                                                         <input type="text" name="fs_gcs_m"
-                                                                            class="form-control">
+                                                                            class="form-control"
+                                                                            value="{{ old('fs_gcs_m') }}">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -518,7 +525,8 @@
                                                                 <label>Tekanan Darah:&ensp;</label>
                                                                 <label class="input-group">
                                                                     <input style="width: 5em;" name="fs_td"
-                                                                        type="text" class="form-control" />
+                                                                        type="text" value="{{ old('fs_td') }}"
+                                                                        class="form-control" />
                                                                     <span
                                                                         class="input-group-append input-group-text">mmHg</span>
                                                                 </label>&emsp;
@@ -527,7 +535,8 @@
                                                                 <label>Nadi:&ensp;</label>
                                                                 <label class="input-group">
                                                                     <input style="width: 6em;" name="fs_N_1"
-                                                                        type="number" class="form-control" />
+                                                                        type="number" value="{{ old('fs_N_1') }}"
+                                                                        class="form-control" />
                                                                     <span
                                                                         class="input-group-append input-group-text">x/mnt</span>
                                                                 </label>&emsp;
@@ -536,7 +545,8 @@
                                                                 <label>Respirasi:&ensp;</label>
                                                                 <label class="input-group">
                                                                     <input style="width: 6em;" name="fs_R_1"
-                                                                        type="number" class="form-control" />
+                                                                        type="number" value="{{ old('fs_R_1') }}"
+                                                                        class="form-control" />
                                                                     <span
                                                                         class="input-group-append input-group-text">x/mnt</span>
                                                                 </label>&emsp;
@@ -545,7 +555,8 @@
                                                                 <label>Suhu:&ensp;</label>
                                                                 <label class="input-group">
                                                                     <input style="width: 6em;" name="fs_S_1"
-                                                                        type="number" class="form-control" />
+                                                                        type="number" value="{{ old('fs_S_1') }}"
+                                                                        class="form-control" />
                                                                     <span
                                                                         class="input-group-append input-group-text"><sup>o</sup>C</span>
                                                                 </label>
@@ -609,7 +620,7 @@
                                             <div class="">
                                                 <div class="card-heading">
                                                     <h5 class="sub-ttl">DIAGNOSA BANDING</h5>
-                                                    <textarea rows="3" name="fs_diag_banding" class="form-control"></textarea>
+                                                    <textarea rows="3" name="fs_diag_banding" class="form-control">{{ old('fs_diag_banding') }}</textarea>
                                                 </div>
 
                                                 <div class="card-body">
@@ -619,7 +630,7 @@
                                             <div class="">
                                                 <div class="card-heading">
                                                     <h5 class="sub-ttl">DIAGNOSA KERJA</h5>
-                                                    <textarea rows="3" name="fs_diag_kerja" class="form-control"></textarea>
+                                                    <textarea rows="3" name="fs_diag_kerja" class="form-control">{{ old('fs_diag_kerja') }}</textarea>
                                                 </div>
 
                                                 <div class="card-body">
@@ -628,14 +639,14 @@
 
                                             <div class="card-heading">
                                                 <h5 class="sub-ttl">MASALAH MEDIS</h5>
-                                                <textarea rows="4" name="fs_mslh_medis" class="form-control"></textarea>
+                                                <textarea rows="4" name="fs_mslh_medis" class="form-control">{{ old('fs_mslh_medis') }}</textarea>
                                             </div>
 
                                             <div class="card-body">
                                             </div>
                                             <div class="card-heading">
                                                 <h5 class="group-ttl">PERENCANAAN</h5>
-                                                <textarea name="fs_instruksi_medis" rows="5" class="form-control"></textarea>
+                                                <textarea name="fs_instruksi_medis" rows="5" class="form-control">{{ old('fs_instruksi_medis') }}</textarea>
                                             </div>
                                             <div class="card-body">
                                                 <div class="f-group">
@@ -758,7 +769,7 @@
                                                             <div class="col f-group">
                                                                 <label for="">Pasien</label>
                                                                 <input type="text" name="fs_pasien" id="fs_nama_psn"
-                                                                    class="form-control">
+                                                                    class="form-control" value="{{ old('fs_pasien') }}">
                                                             </div>
                                                             <div class="col f-group">
                                                                 <label for="">Paraf</label>
@@ -771,7 +782,8 @@
                                                                 <div class="col f-group">
                                                                     <label for="">Nama</label>
                                                                     <input type="text" name="fs_klrg_pasien"
-                                                                        class="form-control">
+                                                                        class="form-control"
+                                                                        alue="{{ old('fs_klrg_pasien') }}">
                                                                 </div>
                                                                 <div class="col f-group">
                                                                     <label for="">Paraf</label>
@@ -781,7 +793,8 @@
                                                         </div>
                                                         <p>Tidak dapat memeberikan edukasi kepada pasien dan keluarga,
                                                             karena :</p>
-                                                        <input type="text" name="fs_tdk_dpt_edu" class="form-control">
+                                                        <input type="text" name="fs_tdk_dpt_edu" class="form-control"
+                                                            alue="{{ old('fs_tdk_dpt_edu') }}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -843,7 +856,7 @@
                                     </div>
                             </div>
                             <div class="">
-                                <input type="hidden" id="AssId" name="AssId" value="">
+                                <input type="hidden" id="assId" name="assId" value="{{ $ass_id }}">
                                 <input type="hidden" id="tglTrs" name="tglTrs" value="{{ $dateNow }}">
                                 <input type="hidden" id="jamTrs" name="jamTrs" value="{{ $timeNow }}">
                                 <input type="hidden" id="kdReg" name="kdReg">
