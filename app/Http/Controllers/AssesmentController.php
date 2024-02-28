@@ -42,10 +42,15 @@ class AssesmentController extends Controller
     public function getLabelAssHdr(Request $request)
     {
         $isLabelAssHdr = tc_assesment_hdr::where('noMr', $request->noMr)->get();
-        // $isRegSearch = registrasiCreate::with('tcmr')
-        // ->where('fr_kd_reg', $request->fr_kd_reg)->get();
 
         return response()->json($isLabelAssHdr);
+    }
+
+    public function getAssDetail(Request $request)
+    {
+        $isAssDetail = tc_assesment_detail::where('AssId', $request->assId)->get();
+
+        return response()->json($isAssDetail);
     }
 
     public function registerSearch(Request $request)
@@ -63,7 +68,6 @@ class AssesmentController extends Controller
     {
         // dd($request->all());
         $request->validate([
-            // 'assId' => 'required',
             'tglTrs' => 'required',
             'jamTrs' => 'required',
             'kdReg' => 'required',

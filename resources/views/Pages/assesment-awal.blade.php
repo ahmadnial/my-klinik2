@@ -178,7 +178,8 @@
                         <div class="">
                         </div>
                         <div class="p-0 col-4 pr-2" style="padding-top: 10px !important;">
-                            <select class="form-control-pasien" id="tr_kd_reg" style="width: 100%;" name="tr_kd_reg">
+                            <select class="form-control-pasien" id="tr_kd_reg" style="width: 100%;" name="tr_kd_reg"
+                                onchange="getLabelPasien()">
                                 @foreach ($isRegActive as $reg)
                                     <option value="">--Select--</option>
                                     <option value="{{ $reg->fr_kd_reg }}">
@@ -206,14 +207,12 @@
                 <div class="card-body p-0">
                     <ul class="nav nav-pills flex-column">
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <div class="" id="labelAssHdr" onclick="bismilah(this)">
-                                    <i class="fas fa-inbox"></i> &nbsp; <span></span>
-                                </div>
-                                {{-- <input type="text" name="labelAssHdr" id="labelAssHdr"
+                            <div class="" id="showListLabelAss">
+
+                            </div>
+                            {{-- <input type="text" name="labelAssHdr" id="labelAssHdr"
                                     class="form-control form-control-sm" style="border: none"> --}}
-                                {{-- <span class="badge bg-primary float-right">12</span> --}}
-                            </a>
+                            {{-- <span class="badge bg-primary float-right">12</span> --}}
                         </li>
                         {{-- <li class="nav-item">
                             <a href="#" class="nav-link">
@@ -237,7 +236,7 @@
                             </a>
                         </li> --}}
                     </ul>
-                    <div id="folder-structure">
+                    {{-- <div id="folder-structure">
                         <ul>
                             <li class="folder">Folder 1
                                 <ul>
@@ -252,7 +251,7 @@
                                 </ul>
                             </li>
                         </ul>
-                    </div>
+                    </div> --}}
                     {{-- <ul class="folder-structure">
                         <li><span class="folder"
                                 data-subfolders='[{"name": "file1.txt"},{"name": "file2.txt"}]'>MyFolder<i
@@ -414,14 +413,14 @@
                                             <hr>
                                             <div class="">
                                                 <h5 class="sub-ttl">KELUHAN UTAMA</h5>
-                                                <textarea type="text" name="fs_keluhan_utama" rows="3" class="form-control">{{ old('fs_keluhan_utama') }}</textarea>
+                                                <textarea type="text" name="fs_keluhan_utama" id="fs_keluhan_utama" rows="3" class="form-control">{{ old('fs_keluhan_utama') }}</textarea>
                                             </div>
                                             <div class="card-body">
                                             </div>
 
                                             <div class="card-heading">
                                                 <h5 class="sub-ttl">ANAMNESIS</h5>
-                                                <textarea type="text" name="fs_anamnesis" rows="3" class="form-control">{{ old('fs_anamnesis') }}</textarea>
+                                                <textarea type="text" name="fs_anamnesis" id="fs_anamnesis" rows="3" class="form-control">{{ old('fs_anamnesis') }}</textarea>
                                             </div>
                                             <div class="card-body">
                                             </div>
@@ -450,19 +449,19 @@
 
                                             <div class="card-heading">
                                                 <h5 class="sub-ttl">RIWAYAT PENYAKIT TERDAHULU</h5>
-                                                <textarea type="text" name="fs_rwyt_penyakit" rows="4" class="form-control">{{ old('fs_rwyt_penyakit') }}</textarea>
+                                                <textarea type="text" name="fs_rwyt_penyakit" id="fs_rwyt_penyakit" rows="4" class="form-control">{{ old('fs_rwyt_penyakit') }}</textarea>
                                             </div>
                                             <div class="card-body">
                                             </div>
                                             <div class="card-heading">
                                                 <h5 class="sub-ttl">RIWAYAT PENYAKIT KELUARGA</h5>
-                                                <textarea type="text" name="fs_rwyt_skt_klrg" rows="4" class="form-control">{{ old('fs_rwyt_skt_klrg') }}</textarea>
+                                                <textarea type="text" name="fs_rwyt_skt_klrg" id="fs_rwyt_skt_klrg" rows="4" class="form-control">{{ old('fs_rwyt_skt_klrg') }}</textarea>
                                             </div>
                                             <div class="card-body">
                                             </div>
                                             <div class="card-heading">
                                                 <h5 class="sub-ttl">RIWAYAT PENGOBATAN SEBELUMNYA</h5>
-                                                <textarea type="text" name="fs_rwyt_obt_sebelum" rows="4" class="form-control">{{ old('fs_rwyt_obt_sebelum') }}</textarea>
+                                                <textarea type="text" name="fs_rwyt_obt_sebelum" id="fs_rwyt_obt_sebelum" rows="4" class="form-control">{{ old('fs_rwyt_obt_sebelum') }}</textarea>
                                             </div>
                                             <div class="card-body">
                                             </div>
@@ -473,7 +472,8 @@
                                             <div class="card-body">
                                                 <div class="p-2">
                                                     <label class="kt-radio kt-radio-outline">
-                                                        <input type="radio" name="fb_rwyt_alergi" value="0">Tidak
+                                                        <input type="radio" name="fb_rwyt_alergi" id="fb_rwyt_alergi"
+                                                            value="0">Tidak
                                                         <span></span>
                                                     </label>
                                                     <div>
@@ -487,23 +487,23 @@
                                                             <ol>
                                                                 <li>
                                                                     <input type="text" name="fs_rwyt_alergi_1"
-                                                                        class="form-control"
+                                                                        id="fs_rwyt_alergi_1" class="form-control"
                                                                         onkeyup="if (this.value != '') document.getElementById('fb_alergi').checked = true;"
                                                                         value="{{ old('fs_rwyt_alergi_1') }}">
                                                                 </li>
                                                                 <li>
                                                                     <input type="text" name="fs_rwyt_alergi_2"
-                                                                        class="form-control"
+                                                                        id="fs_rwyt_alergi_2" class="form-control"
                                                                         value="{{ old('fs_rwyt_alergi_2') }}">
                                                                 </li>
                                                                 <li>
                                                                     <input type="text" name="fs_rwyt_alergi_3"
-                                                                        class="form-control"
+                                                                        id="fs_rwyt_alergi_3" class="form-control"
                                                                         value="{{ old('fs_rwyt_alergi_3') }}">
                                                                 </li>
                                                                 <li>
                                                                     <input type="text" name="fs_rwyt_alergi_4"
-                                                                        class="form-control"
+                                                                        id="fs_rwyt_alergi_4" class="form-control"
                                                                         value="{{ old('fs_rwyt_alergi_4') }}">
                                                                 </li>
                                                             </ol>
@@ -531,7 +531,7 @@
                                                                                 class="input-group-text">E</label>
                                                                         </span>
                                                                         <input type="text" name="fs_gcs_e"
-                                                                            class="form-control"
+                                                                            id="fs_gcs_e" class="form-control"
                                                                             value="{{ old('fs_gcs_e') }}">
                                                                     </div>
                                                                 </div>
@@ -542,7 +542,7 @@
                                                                                 class="input-group-text">V</label>
                                                                         </span>
                                                                         <input type="text" name="fs_gcs_V"
-                                                                            class="form-control"
+                                                                            id="fs_gcs_V" class="form-control"
                                                                             value="{{ old('fs_gcs_V') }}">
                                                                     </div>
                                                                 </div>
@@ -553,7 +553,7 @@
                                                                                 class="input-group-text">M</label>
                                                                         </span>
                                                                         <input type="text" name="fs_gcs_m"
-                                                                            class="form-control"
+                                                                            id="fs_gcs_m" class="form-control"
                                                                             value="{{ old('fs_gcs_m') }}">
                                                                     </div>
                                                                 </div>
@@ -564,7 +564,8 @@
                                                                 <label>Tekanan Darah:&ensp;</label>
                                                                 <label class="input-group">
                                                                     <input style="width: 5em;" name="fs_td"
-                                                                        type="text" value="{{ old('fs_td') }}"
+                                                                        id="fs_td" type="text"
+                                                                        value="{{ old('fs_td') }}"
                                                                         class="form-control" />
                                                                     <span
                                                                         class="input-group-append input-group-text">mmHg</span>
@@ -574,7 +575,8 @@
                                                                 <label>Nadi:&ensp;</label>
                                                                 <label class="input-group">
                                                                     <input style="width: 6em;" name="fs_N_1"
-                                                                        type="number" value="{{ old('fs_N_1') }}"
+                                                                        id="fs_N_1" type="number"
+                                                                        value="{{ old('fs_N_1') }}"
                                                                         class="form-control" />
                                                                     <span
                                                                         class="input-group-append input-group-text">x/mnt</span>
@@ -584,7 +586,8 @@
                                                                 <label>Respirasi:&ensp;</label>
                                                                 <label class="input-group">
                                                                     <input style="width: 6em;" name="fs_R_1"
-                                                                        type="number" value="{{ old('fs_R_1') }}"
+                                                                        id="fs_R_1" type="number"
+                                                                        value="{{ old('fs_R_1') }}"
                                                                         class="form-control" />
                                                                     <span
                                                                         class="input-group-append input-group-text">x/mnt</span>
@@ -594,7 +597,8 @@
                                                                 <label>Suhu:&ensp;</label>
                                                                 <label class="input-group">
                                                                     <input style="width: 6em;" name="fs_S_1"
-                                                                        type="number" value="{{ old('fs_S_1') }}"
+                                                                        id="fs_S_1" type="number"
+                                                                        value="{{ old('fs_S_1') }}"
                                                                         class="form-control" />
                                                                     <span
                                                                         class="input-group-append input-group-text"><sup>o</sup>C</span>
@@ -607,42 +611,43 @@
                                                         <label class="col-2">Kepala</label>
                                                         <div class="col">
                                                             <input type="text" class="form-control" name="fs_kepala"
-                                                                value="Normal" />
+                                                                id="fs_kepala" value="Normal" />
                                                         </div>
                                                     </div>
                                                     <div class="f-group">
                                                         <label class="col-2">Leher</label>
                                                         <div class="col">
                                                             <input type="text" class="form-control" name="fs_leher"
-                                                                value="Normal" />
+                                                                id="fs_leher" value="Normal" />
                                                         </div>
                                                     </div>
                                                     <div class="f-group">
                                                         <label class="col-2">Thorax</label>
                                                         <div class="col">
                                                             <input type="text" class="form-control" name="fs_thorax"
-                                                                value="Normal" />
+                                                                id="fs_thorax" value="Normal" />
                                                         </div>
                                                     </div>
                                                     <div class="f-group">
                                                         <label class="col-2">Abdomen</label>
                                                         <div class="col">
                                                             <input type="text" class="form-control" name="fs_abdomen"
-                                                                value="Normal" />
+                                                                id="fs_abdomen" value="Normal" />
                                                         </div>
                                                     </div>
                                                     <div class="f-group">
                                                         <label class="col-2">Ekstremitas</label>
                                                         <div class="col">
                                                             <input type="text" class="form-control"
-                                                                name="fs_ekstremitas" value="Normal" />
+                                                                name="fs_ekstremitas" id="fs_ekstremitas"
+                                                                value="Normal" />
                                                         </div>
                                                     </div>
                                                     <div class="f-group">
                                                         <label class="col-2">Genetalia</label>
                                                         <div class="col">
                                                             <input type="text" class="form-control"
-                                                                name="fs_genetalia" value="Normal" />
+                                                                name="fs_genetalia" id="fs_genetalia" value="Normal" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -650,7 +655,7 @@
                                             <div class="">
                                                 <div class="card-heading">
                                                     <h5 class="sub-ttl">PEMERIKSAAN PENUNJANG</h5>
-                                                    <textarea rows="3" name="fs_periksa_penunjang" class="form-control"></textarea>
+                                                    <textarea rows="3" name="fs_periksa_penunjang" id="fs_periksa_penunjang" class="form-control"></textarea>
                                                 </div>
 
                                                 <div class="card-body">
@@ -659,7 +664,7 @@
                                             <div class="">
                                                 <div class="card-heading">
                                                     <h5 class="sub-ttl">DIAGNOSA BANDING</h5>
-                                                    <textarea rows="3" name="fs_diag_banding" class="form-control">{{ old('fs_diag_banding') }}</textarea>
+                                                    <textarea rows="3" name="fs_diag_banding" id="fs_diag_banding" class="form-control">{{ old('fs_diag_banding') }}</textarea>
                                                 </div>
 
                                                 <div class="card-body">
@@ -669,7 +674,7 @@
                                             <div class="">
                                                 <div class="card-heading">
                                                     <h5 class="sub-ttl">DIAGNOSA KERJA</h5>
-                                                    <textarea rows="3" name="fs_diag_kerja" class="form-control">{{ old('fs_diag_kerja') }}</textarea>
+                                                    <textarea rows="3" name="fs_diag_kerja" id="fs_diag_kerja" class="form-control">{{ old('fs_diag_kerja') }}</textarea>
                                                 </div>
 
                                                 <div class="card-body">
@@ -678,14 +683,14 @@
 
                                             <div class="card-heading">
                                                 <h5 class="sub-ttl">MASALAH MEDIS</h5>
-                                                <textarea rows="4" name="fs_mslh_medis" class="form-control">{{ old('fs_mslh_medis') }}</textarea>
+                                                <textarea rows="4" name="fs_mslh_medis" id="fs_mslh_medis" class="form-control">{{ old('fs_mslh_medis') }}</textarea>
                                             </div>
 
                                             <div class="card-body">
                                             </div>
                                             <div class="card-heading">
                                                 <h5 class="group-ttl">PERENCANAAN</h5>
-                                                <textarea name="fs_instruksi_medis" rows="5" class="form-control">{{ old('fs_instruksi_medis') }}</textarea>
+                                                <textarea name="fs_instruksi_medis" id="fs_instruksi_medis" rows="5" class="form-control">{{ old('fs_instruksi_medis') }}</textarea>
                                             </div>
                                             <div class="card-body">
                                                 <div class="f-group">
@@ -707,11 +712,12 @@
                                                                         <td style="width:25%">
                                                                             <label class="kt-checkbox kt-checkbox-outline">
                                                                                 <input type="checkbox" name="fb_disposisi"
-                                                                                    value="1">
+                                                                                    id="fb_disposisi" value="1">
                                                                                 <span></span>Dipulangkan, Kontrol Poliklinik
                                                                             </label>
                                                                         </td>
                                                                         <td><input type="text" name="fs_kontrol_klinik"
+                                                                                id="fs_kontrol_klinik"
                                                                                 class="form-control">
                                                                         </td>
                                                                     </tr>
@@ -719,18 +725,20 @@
                                                                         <td>
                                                                             <label class="kt-checkbox kt-checkbox-outline">
                                                                                 <input type="checkbox"
-                                                                                    name="fb_disposisi2" value="1">
+                                                                                    name="fb_disposisi2"
+                                                                                    id="fb_disposisi2" value="1">
                                                                                 <span></span>Rujuk, Ke
                                                                             </label>
                                                                         </td>
                                                                         <td><input type="text" name="fs_rujuk"
-                                                                                class="form-control"></td>
+                                                                                id="fs_rujuk" class="form-control"></td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>
                                                                             <label class="kt-checkbox kt-checkbox-outline">
                                                                                 <input type="checkbox"
-                                                                                    name="fb_disposisi3" value="1">
+                                                                                    name="fb_disposisi3"
+                                                                                    id="fb_disposisi3" value="1">
                                                                                 <span></span>Pulang Paksa / Menolak
                                                                             </label>
                                                                         </td>
@@ -764,7 +772,8 @@
                                                                         <td>
                                                                             <label class="kt-checkbox kt-checkbox-outline">
                                                                                 <input type="checkbox"
-                                                                                    name="fb_disposisi6" value="1">
+                                                                                    name="fb_disposisi6"
+                                                                                    id="fb_disposisi6" value="1">
                                                                                 <span></span>Melarikan Diri
                                                                             </label>
                                                                         </td>
@@ -774,13 +783,15 @@
                                                                         <td>
                                                                             <label class="kt-checkbox kt-checkbox-outline">
                                                                                 <input type="checkbox"
-                                                                                    name="fb_disposisi7" value="1">
+                                                                                    name="fb_disposisi7"
+                                                                                    id="fb_disposisi7" value="1">
                                                                                 <span></span>Meninggal :
                                                                             </label>
                                                                         </td>
                                                                         <!-- <td><input type="text" name="fs_rawat_inap" class="form-control col-6 form-inline"></td> -->
                                                                         <!-- <td><label for="">Indikasi :</label></td> -->
                                                                         <td><input type="text" name="fs_meninggal"
+                                                                                id="fs_meninggal"
                                                                                 class="form-control col-6 form-inline">
                                                                         </td>
                                                                     </tr>
@@ -821,7 +832,7 @@
                                                                 <div class="col f-group">
                                                                     <label for="">Nama</label>
                                                                     <input type="text" name="fs_klrg_pasien"
-                                                                        class="form-control"
+                                                                        id="fs_klrg_pasien" class="form-control"
                                                                         alue="{{ old('fs_klrg_pasien') }}">
                                                                 </div>
                                                                 <div class="col f-group">
@@ -832,8 +843,8 @@
                                                         </div>
                                                         <p>Tidak dapat memeberikan edukasi kepada pasien dan keluarga,
                                                             karena :</p>
-                                                        <input type="text" name="fs_tdk_dpt_edu" class="form-control"
-                                                            alue="{{ old('fs_tdk_dpt_edu') }}">
+                                                        <input type="text" name="fs_tdk_dpt_edu" id="fs_tdk_dpt_edu"
+                                                            class="form-control" alue="{{ old('fs_tdk_dpt_edu') }}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -844,11 +855,11 @@
                                                         <div class="form-inline">
                                                             <label for="">Tanggal/ Jam</label>
                                                             <div class="input-group">
-                                                                <input type="date" name="fd_tgl_ttd"
+                                                                <input type="date" name="fd_tgl_ttd" id="fd_tgl_ttd"
                                                                     class="form-control" value="{{ $dateNow }}">
                                                                 <span class="input-group-append"><label
                                                                         class="input-group-text">/</label></span>
-                                                                <input type="time" name="fs_jam_ttd"
+                                                                <input type="time" name="fs_jam_ttd" id="fs_jam_ttd"
                                                                     class="form-control" value="{{ $timeNow }}"
                                                                     step="1">
                                                                 <span class="input-group-append"><label
@@ -873,6 +884,7 @@
                                                                     <span
                                                                         class="input-group-append input-group-text">(</span>
                                                                     <input type="text" name="fs_dokter_assessment"
+                                                                        id="fs_dokter_assessment"
                                                                         class="form-control text-center"
                                                                         value="{{ Auth::user()->name }}">
                                                                     <span
@@ -969,12 +981,6 @@
 
     @push('scripts')
         <script>
-            document.querySelectorAll('.folder').forEach(folder => {
-                folder.addEventListener('click', () => {
-                    folder.querySelector('ul').classList.toggle('show');
-                });
-            });
-
             // Hitung Umur
             function getUmurDetail(dateString) {
                 var today = new Date();
@@ -1067,14 +1073,11 @@
                             $('#lastTarifDsrHdr').val(dataregvalue.tcmr.fs_last_tarif_dasar);
 
 
-                            $('#chart_kd_reg').val(dataregvalue.fr_kd_reg);
-                            $('#chart_mr').val(dataregvalue.fr_mr);
-                            $('#chart_nm_pasien').val(dataregvalue.fr_nama);
-                            $('#chart_layanan').val(dataregvalue.fr_layanan);
-                            $('#chart_dokter').val(dataregvalue.fr_dokter);
-
-                            // $('#keluhanutama').val(dataregvalue.keluhan_utama);
-                            // $('.ta_Chart_S').val(dataregvalue.keluhan_utama);
+                            // $('#chart_kd_reg').val(dataregvalue.fr_kd_reg);
+                            // $('#chart_mr').val(dataregvalue.fr_mr);
+                            // $('#chart_nm_pasien').val(dataregvalue.fr_nama);
+                            // $('#chart_layanan').val(dataregvalue.fr_layanan);
+                            // $('#chart_dokter').val(dataregvalue.fr_dokter);
 
                             var isDateBirthday = dataregvalue.fr_tgl_lahir;
                             var isAgeNow = getUmurDetail(isDateBirthday);
@@ -1108,8 +1111,109 @@
                 })
             });
 
+            function getLabelPasien() {
+                var data = sessionStorage.getItem("dataMR");
+                var noMr;
+
+                if (data != null) {
+                    noMr = JSON.parse(data);
+                }
+                $('#showListLabelAss').empty();
+
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "{{ url('getLabelAssHdr') }}/" + noMr,
+                    type: 'GET',
+                    data: {
+                        'noMr': noMr
+                    },
+                    success: function(isRegSearch) {
+                        $.each(isRegSearch, function(key, datarmvalue) {
+                            $('#showListLabelAss').empty();
+                            var dateFormat = datarmvalue.tglTrs
+                            var dateView = moment(dateFormat).format(
+                                "dddd, D MMMM YYYY");
+                            $('#showListLabelAss').append(
+                                `<a href="#" class="nav-link" onclick="bismilah(this)" data-assid="${datarmvalue.assId}">
+                                    <div class="" id="labelAssHdr">
+                                        <i class="fas fa-inbox"></i> &nbsp; <span>${dateView + '\n-\n' + datarmvalue.jamTrs + '\n-\n' + datarmvalue.assLabel +'\n-\n' + datarmvalue.layanan}</span>
+                                    </div>
+                                </a>`
+                            )
+                            // $('#labelAssHdr span').text(datarmvalue.tglTrs + '-' + datarmvalue.assLabel +
+                            //     '-' + datarmvalue.assLabel);
+                        })
+                    }
+                })
+            }
+
             function bismilah(r) {
-                alert('yuoi')
+                var assId = $(r).data('assid');
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "{{ url('getAssDetail') }}/" + assId,
+                    type: 'GET',
+                    data: {
+                        'AssId': assId
+                    },
+                    success: function(isAssDetail) {
+                        $.each(isAssDetail, function(key, datavalue) {
+                            $('#fs_keluhan_utama').val(datavalue.fs_anamnesis);
+                            $('#fs_anamnesis').val(datavalue.fs_anamnesis);
+                            $('#fs_rwyt_penyakit').val(datavalue.fs_rwyt_penyakit);
+                            $('#fs_rwyt_skt_klrg').val(datavalue.fs_rwyt_skt_klrg);
+                            $('#fs_rwyt_obt_sebelum').val(datavalue.fs_rwyt_obt_sebelum);
+
+                            $('#fb_rwyt_alergi').val(datavalue.fb_rwyt_alergi);
+                            $('#fs_rwyt_alergi_1').val(datavalue.fs_rwyt_alergi_1);
+                            $('#fs_rwyt_alergi_2').val(datavalue.fs_rwyt_alergi_2);
+                            $('#fs_rwyt_alergi_3').val(datavalue.fs_rwyt_alergi_3);
+                            $('#fs_rwyt_alergi_4').val(datavalue.fs_rwyt_alergi_4);
+
+                            $('#fs_gcs_e').val(datavalue.fs_gcs_e);
+                            $('#fs_gcs_V').val(datavalue.fs_gcs_V);
+                            $('#fs_gcs_m').val(datavalue.fs_gcs_m);
+                            $('#fs_td').val(datavalue.fs_td);
+                            $('#fs_N_1').val(datavalue.fs_N_1);
+                            $('#fs_R_1').val(datavalue.fs_R_1);
+                            $('#fs_S_1').val(datavalue.fs_S_1);
+
+                            $('#fs_kepala').val(datavalue.fs_kepala);
+                            $('#fs_leher').val(datavalue.fs_leher);
+                            $('#fs_thorax').val(datavalue.fs_thorax);
+                            $('#fs_abdomen').val(datavalue.fs_abdomen);
+                            $('#fs_ekstremitas').val(datavalue.fs_ekstremitas);
+                            $('#fs_genetalia').val(datavalue.fs_genetalia);
+
+                            $('#fs_periksa_penunjang').val(datavalue.fs_periksa_penunjang);
+                            $('#fs_diag_banding').val(datavalue.fs_diag_banding);
+                            $('#fs_diag_kerja').val(datavalue.fs_diag_kerja);
+                            $('#fs_mslh_medis').val(datavalue.fs_mslh_medis);
+                            $('#fs_instruksi_medis').val(datavalue.fs_instruksi_medis);
+
+                            $('#fb_disposisi').val(datavalue.fb_disposisi);
+                            $('#fb_disposisi2').val(datavalue.fb_disposisi2);
+                            $('#fb_disposisi3').val(datavalue.fb_disposisi3);
+                            $('#fb_disposisi6').val(datavalue.fb_disposisi6);
+                            $('#fb_disposisi7').val(datavalue.fb_disposisi7);
+                            $('#fs_kontrol_klinik').val(datavalue.fs_kontrol_klinik);
+                            $('#fs_rujuk').val(datavalue.fs_rujuk);
+                            $('#fs_meninggal').val(datavalue.fs_meninggal);
+
+                            $('#fs_nama_psn').val(datavalue.fs_nama_psn);
+                            $('#fs_klrg_pasien').val(datavalue.fs_klrg_pasien);
+                            $('#fs_tdk_dpt_edu').val(datavalue.fs_tdk_dpt_edu);
+
+                            $('#fd_tgl_ttd').val(datavalue.fd_tgl_ttd);
+                            $('#fs_jam_ttd').val(datavalue.fs_jam_ttd);
+                            $('#fs_dokter_assessment').val(datavalue.fs_dokter_assessment);
+                        })
+                    }
+                })
             }
 
             getHeaderInfo();
@@ -1152,7 +1256,6 @@
                             $('#lastTarifDsrHdr').val(dataregvalue.tcmr
                                 .fs_last_tarif_dasar);
 
-
                             $('#chart_kd_reg').val(dataregvalue.fr_kd_reg);
                             $('#chart_mr').val(dataregvalue.fr_mr);
                             $('#chart_nm_pasien').val(dataregvalue.fr_nama);
@@ -1170,7 +1273,7 @@
                 })
             }
 
-            getLabelAssHdr();
+            // getLabelAssHdr();
 
             function getLabelAssHdr() {
                 var data = sessionStorage.getItem("dataMR");
@@ -1190,9 +1293,18 @@
                     },
                     success: function(isRegSearch) {
                         $.each(isRegSearch, function(key, datarmvalue) {
-                            // $('#labelAssHdr').val(datarmvalue.assId);
-                            $('#labelAssHdr span').text(datarmvalue.tglTrs + '-' + datarmvalue.assLabel +
-                                '-' + datarmvalue.assLabel);
+                            var dateFormat = datarmvalue.tglTrs
+                            var dateView = moment(dateFormat).format(
+                                "dddd, D MMMM YYYY");
+                            $('#showListLabelAss').append(
+                                `<a href="#" class="nav-link" onclick="bismilah(this)" data-assid="${datarmvalue.assId}">
+                                    <div class="" id="labelAssHdr">
+                                        <i class="fas fa-inbox"></i> &nbsp; <span>${dateView + '\n-\n' + datarmvalue.jamTrs + '\n-\n' + datarmvalue.assLabel +'\n-\n' + datarmvalue.layanan}</span>
+                                    </div>
+                                </a>`
+                            )
+                            // $('#labelAssHdr span').text(datarmvalue.tglTrs + '-' + datarmvalue.assLabel +
+                            //     '-' + datarmvalue.assLabel);
                         })
                     }
                 })

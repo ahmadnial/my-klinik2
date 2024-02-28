@@ -39,6 +39,7 @@
     <link rel="stylesheet" href="{{ asset('src/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('src/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('src/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+    {{-- <link rel="stylesheet" href="https://cdn.metroui.org.ua/current/metro.css"> --}}
     <style>
         ::-webkit-scrollbar {
             width: 5px;
@@ -649,6 +650,7 @@
     <script src="{{ asset('src/dist/js/select2.min.js') }}"></script>
     {{-- <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script> --}}
     <script src="{{ asset('src/plugins/jsgrid/jsgrid.min.js') }}"></script>
+    {{-- <script src="https://cdn.metroui.org.ua/current/metro.js"></script> --}}
     {{-- <script src="{{ asset('srcplugins/jsgrid/demos/db.js') }}"></script> --}}
     <!-- ChartJS -->
     <script src="{{ asset('src/plugins/chart.js/Chart.min.js') }}"></script>

@@ -233,6 +233,7 @@ Route::group(['middleware' => ['auth', 'checkrole:1,2']], function () {
     Route::get('assesment-awal', [AssesmentController::class, 'assAwal'])->name('assesment-awal');
     Route::post('addAssesment', [AssesmentController::class, 'createAssesment'])->name('addAssesment');
     Route::get('getLabelAssHdr/{noMr}', [AssesmentController::class, 'getLabelAssHdr'])->name('getLabelAssHdr');
+    Route::get('getAssDetail/{assId}', [AssesmentController::class, 'getAssDetail'])->name('getAssDetail');
 });
 
 //Laporan Farmasi
