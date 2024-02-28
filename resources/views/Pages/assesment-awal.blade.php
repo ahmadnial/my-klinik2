@@ -14,9 +14,19 @@
             overflow-y: scroll;
             padding: 8px 0;
         }
+
+        .folder {
+            cursor: pointer;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
+        ul ul {
+            display: none;
+        }
     </style>
-
-
 
     <div class="form-box bg-light p-2" style="min-height: 474vh;">
         <div class="row">
@@ -195,9 +205,13 @@
                 </div>
                 <div class="card-body p-0">
                     <ul class="nav nav-pills flex-column">
-                        <li class="nav-item active">
+                        <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="fas fa-inbox"></i> 23 September 2023
+                                <div class="" id="labelAssHdr" onclick="bismilah(this)">
+                                    <i class="fas fa-inbox"></i> &nbsp; <span></span>
+                                </div>
+                                {{-- <input type="text" name="labelAssHdr" id="labelAssHdr"
+                                    class="form-control form-control-sm" style="border: none"> --}}
                                 {{-- <span class="badge bg-primary float-right">12</span> --}}
                             </a>
                         </li>
@@ -223,6 +237,31 @@
                             </a>
                         </li> --}}
                     </ul>
+                    <div id="folder-structure">
+                        <ul>
+                            <li class="folder">Folder 1
+                                <ul>
+                                    <li>File 1</li>
+                                    <li>File 2</li>
+                                </ul>
+                            </li>
+                            <li class="folder">Folder 2
+                                <ul>
+                                    <li>File 3</li>
+                                    <li>File 4</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    {{-- <ul class="folder-structure">
+                        <li><span class="folder"
+                                data-subfolders='[{"name": "file1.txt"},{"name": "file2.txt"}]'>MyFolder<i
+                                    class="fas fa-caret-down"></i></span>
+                            <ul class="nested">
+                                <!-- Subfolders will be added here by the JavaScript code -->
+                            </ul>
+                        </li>
+                    </ul> --}}
                 </div>
             </div>
             <div class="col square1 thin mb-2" style="max-height: 90vh;">
@@ -930,6 +969,12 @@
 
     @push('scripts')
         <script>
+            document.querySelectorAll('.folder').forEach(folder => {
+                folder.addEventListener('click', () => {
+                    folder.querySelector('ul').classList.toggle('show');
+                });
+            });
+
             // Hitung Umur
             function getUmurDetail(dateString) {
                 var today = new Date();
@@ -1063,8 +1108,11 @@
                 })
             });
 
-            getHeaderInfo();
+            function bismilah(r) {
+                alert('yuoi')
+            }
 
+            getHeaderInfo();
 
             function getHeaderInfo() {
                 var data = sessionStorage.getItem("kdReg");
@@ -1121,6 +1169,35 @@
                     }
                 })
             }
+
+            getLabelAssHdr();
+
+            function getLabelAssHdr() {
+                var data = sessionStorage.getItem("dataMR");
+                var noMr;
+
+                if (data != null) {
+                    noMr = JSON.parse(data);
+                }
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "{{ url('getLabelAssHdr') }}/" + noMr,
+                    type: 'GET',
+                    data: {
+                        'noMr': noMr
+                    },
+                    success: function(isRegSearch) {
+                        $.each(isRegSearch, function(key, datarmvalue) {
+                            // $('#labelAssHdr').val(datarmvalue.assId);
+                            $('#labelAssHdr span').text(datarmvalue.tglTrs + '-' + datarmvalue.assLabel +
+                                '-' + datarmvalue.assLabel);
+                        })
+                    }
+                })
+            }
+
 
             var mt_kanan = new Coret({
                 cvs: "badan",

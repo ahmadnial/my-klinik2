@@ -13,6 +13,7 @@ class tc_assesment_hdr extends Model
 
     protected $fillable = [
         'assId',
+        'assLabel',
         'tglTrs',
         'jamTrs',
         'kdReg',

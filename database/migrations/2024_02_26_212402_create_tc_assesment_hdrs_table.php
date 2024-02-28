@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('tc_assesment_hdr', function (Blueprint $table) {
             $table->string('assId')->unique();
+            $table->string('assLabel');
             $table->string('tglTrs');
             $table->string('jamTrs');
             $table->string('kdReg');

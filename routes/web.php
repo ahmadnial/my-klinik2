@@ -230,10 +230,9 @@ Route::controller(WilayahController::class)->group(function () {
 //Assesment Awal
 // Route::controller(AssesmentController::class)->group(function () {
 Route::group(['middleware' => ['auth', 'checkrole:1,2']], function () {
-    // Route::get('/', [HomeController::class, 'index']);
-    // Route::get('/redirect', [RedirectController::class, 'cek']);
     Route::get('assesment-awal', [AssesmentController::class, 'assAwal'])->name('assesment-awal');
     Route::post('addAssesment', [AssesmentController::class, 'createAssesment'])->name('addAssesment');
+    Route::get('getLabelAssHdr/{noMr}', [AssesmentController::class, 'getLabelAssHdr'])->name('getLabelAssHdr');
 });
 
 //Laporan Farmasi
