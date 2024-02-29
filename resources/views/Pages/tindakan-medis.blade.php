@@ -118,6 +118,7 @@
                 </div>
             </div>
         </div> --}}
+        <div class="border-right"></div>
 
         <div class="static-card-timeline mb-2">
             <div class="justify-content-between px-1"

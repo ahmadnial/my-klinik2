@@ -47,6 +47,11 @@ return new class extends Migration
             $table->string('fs_diag_banding')->nullable()->default('');
             $table->string('fs_diag_kerja')->nullable()->default('');
             $table->string('fs_mslh_medis')->nullable()->default('');
+            $table->string('fb_disposisi')->nullable()->default('');
+            $table->string('fb_disposisi2')->nullable()->default('');
+            $table->string('fb_disposisi3')->nullable()->default('');
+            $table->string('fb_disposisi6')->nullable()->default('');
+            $table->string('fb_disposisi7')->nullable()->default('');
             $table->string('fs_instruksi_medis')->nullable()->default('');
             $table->string('fs_kontrol_klinik')->nullable()->default('');
             $table->string('fs_rujuk')->nullable()->default('');

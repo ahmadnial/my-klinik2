@@ -269,16 +269,16 @@
                             <ul class="nav nav-tabs" style="margin:0px !important;">
                                 <li class="nav-item">
                                     <a data-toggle="pill" style="background:none"
-                                        class="nav-link kt-font-bolder text-primary navContent active" href="#menu0"
-                                        id="tabNew">
-                                        <i class="flaticon-list-1"></i>New/Edit Assesment
+                                        class="nav-link kt-font-bolder text-primary navContent active" href="#"
+                                        id="tabNew" onclick="editAssDisable()">
+                                        <i class="flaticon-list-1"></i>View Assesment
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a data-toggle="pill" style="background:none; opacity: 0.5;"
-                                        class="nav-link kt-font-bolder navContent text-primary" href="#menu1"
-                                        id="tabView">
-                                        <i class="flaticon-medical"></i>View Assesment
+                                        class="nav-link kt-font-bolder navContent text-primary" href=""
+                                        id="tabView" onclick="editAssEnable()">
+                                        <i class="flaticon-medical"></i>Edit Assesment
                                     </a>
                                 </li>
                                 <div class="col p-0 componen-view" style="top: -2px; right: 0px; display: none;"
@@ -817,7 +817,7 @@
                                                         <div class="row">
                                                             <div class="col f-group">
                                                                 <label for="">Pasien</label>
-                                                                <input type="text" name="fs_pasien" id="fs_nama_psn"
+                                                                <input type="text" name="fs_pasien" id="fs_pasien"
                                                                     class="form-control" value="{{ old('fs_pasien') }}">
                                                             </div>
                                                             <div class="col f-group">
@@ -1123,6 +1123,24 @@
                 })
             });
 
+            function editAssEnable() {
+                var allInputtextarea = document.querySelectorAll("textarea");
+                var allInputText = document.querySelectorAll(
+                    "input[type=text],input[type=number],input[type=radio],input[type=checkbox]"
+                );
+                $(allInputtextarea).prop('disabled', false);
+                $(allInputText).prop('disabled', false);
+            }
+
+            function editAssDisable() {
+                var allInputtextarea = document.querySelectorAll("textarea");
+                var allInputText = document.querySelectorAll(
+                    "input[type=text],input[type=number],input[type=radio],input[type=checkbox]"
+                );
+                $(allInputtextarea).prop('disabled', true);
+                $(allInputText).prop('disabled', true);
+            }
+
             getLabelPasien()
 
             function getLabelPasien() {
@@ -1150,7 +1168,7 @@
                             var dateView = moment(dateFormat).format(
                                 "D MMMM YYYY");
                             $('.showListLabelAss').append(
-                                `<a href="#" class="nav-link" onclick="bismilah(this)" data-assid="${datarmvalue.assId}">
+                                `<a href="#" class="nav-link" onclick="showContent(this)" data-assid="${datarmvalue.assId}">
                                     <div class="" id="labelAssHdr">
                                         <i class="fas fa-archive"></i> &nbsp; <span>${dateView + '\n-\n' + datarmvalue.jamTrs + '\n-\n' + datarmvalue.assLabel +'\n-\n' + datarmvalue.layanan + '\n-\n' + datarmvalue.user}</span>
                                     </div>
@@ -1163,7 +1181,7 @@
                 })
             }
 
-            function bismilah(r) {
+            function showContent(r) {
                 var assId = $(r).data('assid');
                 $.ajax({
                     headers: {
@@ -1176,7 +1194,7 @@
                     },
                     success: function(isAssDetail) {
                         $.each(isAssDetail, function(key, datavalue) {
-                            $('#fs_keluhan_utama').val(datavalue.fs_anamnesis);
+                            $('#fs_keluhan_utama').val(datavalue.fs_keluhan_utama);
                             $('#fs_anamnesis').val(datavalue.fs_anamnesis);
                             $('#fs_rwyt_penyakit').val(datavalue.fs_rwyt_penyakit);
                             $('#fs_rwyt_skt_klrg').val(datavalue.fs_rwyt_skt_klrg);
@@ -1218,7 +1236,7 @@
                             $('#fs_rujuk').val(datavalue.fs_rujuk);
                             $('#fs_meninggal').val(datavalue.fs_meninggal);
 
-                            $('#fs_nama_psn').val(datavalue.fs_nama_psn);
+                            $('#fs_pasien').val(datavalue.fs_pasien);
                             $('#fs_klrg_pasien').val(datavalue.fs_klrg_pasien);
                             $('#fs_tdk_dpt_edu').val(datavalue.fs_tdk_dpt_edu);
 
@@ -1331,7 +1349,7 @@
                             var dateView = moment(dateFormat).format(
                                 "dddd, D MMMM YYYY");
                             $('.showListLabelAss').append(
-                                `<a href="#" class="nav-link" onclick="bismilah(this)" data-assid="${datarmvalue.assId}">
+                                `<a href="#" class="nav-link" onclick="showContent(this)" data-assid="${datarmvalue.assId}">
                                     <div class="" id="labelAssHdr">
                                         <i class="fas fa-inbox"></i> &nbsp; <span>${dateView + '\n-\n' + datarmvalue.jamTrs + '\n-\n' + datarmvalue.assLabel +'\n-\n' + datarmvalue.layanan}</span>
                                     </div>

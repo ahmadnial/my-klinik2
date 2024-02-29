@@ -618,7 +618,8 @@
                                     data: 'layanan_order',
                                     name: 'layanan_order',
                                     render: function(data, type, row) {
-                                        if (data == 'Poliklinik Umum') {
+                                        if (data == 'Poliklinik Umum' || data ==
+                                            'Poliklinik Bedah') {
                                             return '<span class="badge badge-success">Resep Klinik</span>';
                                         } else {
                                             return '<span class="badge badge-danger">Apotek</span>';
