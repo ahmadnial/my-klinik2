@@ -28,7 +28,7 @@
         }
     </style>
 
-    <div class="form-box bg-light p-2" style="min-height: 474vh;">
+    <div class="form-box bg-light p-2" style="overflow-y:scroll;">
         <div class="row">
             <div class="card col-3 side-panel">
                 <div class="static-card-timeline mb-2">
@@ -178,8 +178,7 @@
                         <div class="">
                         </div>
                         <div class="p-0 col-4 pr-2" style="padding-top: 10px !important;">
-                            <select class="form-control-pasien" id="tr_kd_reg" style="width: 100%;" name="tr_kd_reg"
-                                onchange="getLabelPasien()">
+                            <select class="form-control-pasien" id="tr_kd_reg" style="width: 100%;" name="tr_kd_reg">
                                 @foreach ($isRegActive as $reg)
                                     <option value="">--Select--</option>
                                     <option value="{{ $reg->fr_kd_reg }}">
@@ -207,7 +206,7 @@
                 <div class="card-body p-0">
                     <ul class="nav nav-pills flex-column">
                         <li class="nav-item">
-                            <div class="" id="showListLabelAss">
+                            <div class="showListLabelAss" id="showListLabelAss">
 
                             </div>
                             {{-- <input type="text" name="labelAssHdr" id="labelAssHdr"
@@ -263,7 +262,7 @@
                     </ul> --}}
                 </div>
             </div>
-            <div class="col square1 thin mb-2" style="max-height: 90vh;">
+            <div class="col square1 thin mb-2" style="max-height: 90vh; overflow-y:scroll;">
                 <div style="width:100%; background-color: white;" id="mainAssesment" class="p-0">
                     <div class="form-box p-2" style="margin-bottom:8px;background-color: white;" id="template-select">
                         <div class="col-md-12 px-0 bg-white">
@@ -891,8 +890,9 @@
                                                                         class="input-group-append input-group-text">)</span>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-3 pb-4 mt-5 float-right"
-                                                                id="divSimpanAssesment">
+                                                            <div class="btn-group pb-4 float-right"
+                                                                id="divSimpanAssesment" role="group">
+
                                                                 <button class="btn btn-primary float-right border-radius3"
                                                                     id="simpanAssesment">
                                                                     <i class="fa fa-save"></i> Save
@@ -1106,10 +1106,24 @@
                             sessionStorage.setItem("kdReg", JSON.stringify(kdReg));
                             // sessionStorage.setItem("ChartID", JSON.stringify(ChartID));
                             sessionStorage.setItem("UserActive", JSON.stringify(UserActive));
+
+                            var allInputtextarea = document.querySelectorAll("textarea");
+                            var allInputText = document.querySelectorAll(
+                                "input[type=text],input[type=number],input[type=radio],input[type=checkbox]"
+                            );
+                            $(allInputtextarea).prop('disabled', false);
+                            $(allInputText).prop('disabled', false);
+
+                            $('#simpanAssesment').prop('disabled', false)
+                            $('#updateAssesment').remove()
                         })
+
+                        getLabelPasien()
                     }
                 })
             });
+
+            getLabelPasien()
 
             function getLabelPasien() {
                 var data = sessionStorage.getItem("dataMR");
@@ -1118,7 +1132,7 @@
                 if (data != null) {
                     noMr = JSON.parse(data);
                 }
-                $('#showListLabelAss').empty();
+                $('.showListLabelAss').empty();
 
                 $.ajax({
                     headers: {
@@ -1131,14 +1145,14 @@
                     },
                     success: function(isRegSearch) {
                         $.each(isRegSearch, function(key, datarmvalue) {
-                            $('#showListLabelAss').empty();
+                            // $('.showListLabelAss').empty();
                             var dateFormat = datarmvalue.tglTrs
                             var dateView = moment(dateFormat).format(
-                                "dddd, D MMMM YYYY");
-                            $('#showListLabelAss').append(
+                                "D MMMM YYYY");
+                            $('.showListLabelAss').append(
                                 `<a href="#" class="nav-link" onclick="bismilah(this)" data-assid="${datarmvalue.assId}">
                                     <div class="" id="labelAssHdr">
-                                        <i class="fas fa-inbox"></i> &nbsp; <span>${dateView + '\n-\n' + datarmvalue.jamTrs + '\n-\n' + datarmvalue.assLabel +'\n-\n' + datarmvalue.layanan}</span>
+                                        <i class="fas fa-archive"></i> &nbsp; <span>${dateView + '\n-\n' + datarmvalue.jamTrs + '\n-\n' + datarmvalue.assLabel +'\n-\n' + datarmvalue.layanan + '\n-\n' + datarmvalue.user}</span>
                                     </div>
                                 </a>`
                             )
@@ -1211,6 +1225,26 @@
                             $('#fd_tgl_ttd').val(datavalue.fd_tgl_ttd);
                             $('#fs_jam_ttd').val(datavalue.fs_jam_ttd);
                             $('#fs_dokter_assessment').val(datavalue.fs_dokter_assessment);
+
+                            $('#simpanAssesment').prop('disabled', true)
+                            $('#updateAssesment').remove()
+
+                            var getSessionUser = '{{ Auth::user()->name }}';
+
+                            if (getSessionUser == datavalue.fs_dokter_assessment) {
+                                $('#divSimpanAssesment').append(
+                                    `<button class="btn btn-success float-right border-radius3"
+                                        id="updateAssesment">
+                                        <i class="fa fa-save"></i> Update
+                                    </button>`
+                                )
+                            }
+                            var allInputtextarea = document.querySelectorAll("textarea");
+                            var allInputText = document.querySelectorAll(
+                                "input[type=text],input[type=number],input[type=radio],input[type=checkbox]"
+                            );
+                            $(allInputtextarea).prop('disabled', true);
+                            $(allInputText).prop('disabled', true);
                         })
                     }
                 })
@@ -1296,7 +1330,7 @@
                             var dateFormat = datarmvalue.tglTrs
                             var dateView = moment(dateFormat).format(
                                 "dddd, D MMMM YYYY");
-                            $('#showListLabelAss').append(
+                            $('.showListLabelAss').append(
                                 `<a href="#" class="nav-link" onclick="bismilah(this)" data-assid="${datarmvalue.assId}">
                                     <div class="" id="labelAssHdr">
                                         <i class="fas fa-inbox"></i> &nbsp; <span>${dateView + '\n-\n' + datarmvalue.jamTrs + '\n-\n' + datarmvalue.assLabel +'\n-\n' + datarmvalue.layanan}</span>
