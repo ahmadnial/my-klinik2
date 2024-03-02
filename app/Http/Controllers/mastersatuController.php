@@ -252,7 +252,7 @@ class mastersatuController extends Controller
 
     public function editTemplateResep(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $request->validate([
             'kd_to' => 'required',
             'nm_to' => 'required',
