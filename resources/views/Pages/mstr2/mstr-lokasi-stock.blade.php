@@ -53,7 +53,7 @@
                             value="">
                     </div> --}}
                     <div class="form-group col-sm">
-                        <label for="">Satuan</label>
+                        <label for="">Lokasi Stock</label>
                         <input type="text" class="form-control" name="fm_nm_lokasi_stock" id="fm_nm_lokasi_stock"
                             placeholder="Masukan Lokasi Stock">
                     </div>

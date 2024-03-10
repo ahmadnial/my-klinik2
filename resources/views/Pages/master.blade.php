@@ -240,6 +240,17 @@
                                 </p>
                             </a>
                         </li>
+
+                        <li class="nav-item">
+                            <a href="{{ url('/arsip') }}" class="nav-link">
+                                {{-- <i class="nav-icon fa fa-syringe"></i> --}}
+                                <i class="nav-icon fa fa-archive"></i>
+                                <p>
+                                    Arsip RM
+                                    <span class="badge badge-info right"></span>
+                                </p>
+                            </a>
+                        </li>
                         {{-- @endif --}}
 
                         {{-- @if (auth()->user()->role_id == '4' || '1') --}}
