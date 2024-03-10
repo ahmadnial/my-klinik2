@@ -125,6 +125,9 @@ Route::group(['middleware' => ['auth', 'checkrole:1,2']], function () {
     Route::get('selectTemplateOrder', [TindakanController::class, 'selectTemplateOrder'])->name('selectTemplateOrder');
 
     Route::get('arsip', [arsipController::class, 'arsip'])->name('arsip');
+    Route::get('regSearchArs', [arsipController::class, 'regSearchArs'])->name('regSearchArs');
+    Route::get('getListChart/{fs_mr}', [arsipController::class, 'getListChart'])->name('getListChart');
+    Route::get('getListChartDetail/{chart_id}', [arsipController::class, 'getListChartDetail'])->name('getListChartDetail');
 });
 
 
