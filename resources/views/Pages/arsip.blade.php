@@ -4,27 +4,27 @@
     <div id="kt-content" class="" style="background-color: white;">
         <div class="">
             <div class="scrollbar-dusty square1 thin scroll-y pt-3 pr-2 pl-2" style="overflow-x: hidden;">
-                <div class="kt-portlet__body">
+                <div class="">
                     <div class="row mb-3">
 
                     </div>
-                    <div class="kt-section form-box bg-light p-2" id="arsip" style="min-height: 92vh;">
+                    <div class="p-2" id="arsip">
                         <div class="row">
-                            <div class="col-md-3 pl-0 pr-2">
-                                <div class="kt-portlet kt-portlet--height-fluid- p-2">
+                            <div class="col-md-3 pl-0 pr-2" style="background-color: rgb(239, 247, 255)">
+                                <div class="col p-2">
                                     <div class="form-group mb-0">
                                         <div class="">
-                                            <select class="form-control ui-autocomplete-input" id="searchRegister"
+                                            <select class="col form-control" id="searchRegister" style="width: 100%"
                                                 autofocus="" autocomplete="off" onchange="getData()">
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="listHistoryPx">
+                                    <div class="listHistoryPx" style="max-height: 30vh; overflow-y:scroll">
                                         {{-- <div class="form-group mb-0 scrollbar-dusty square1 thin scroll-y mt-2"
                                             id="listsearchRegArc"
-                                            style="max-height: 180px; border: 1px solid rgb(226, 229, 236);">
+                                            style="max-height: 180px; border: 1px solid rgb(255, 254, 248);">
                                             <div class="kt-portlet kt-iconbox kt-iconbox--wave p-1 m-1 listRegArc"
-                                                id="RG00326354" style="background-color: rgb(239, 245, 193);">
+                                                id="RG00326354" style="background-color: rgb(77, 77, 77);">
                                                 <div class="kt-portlet__body p-1">
                                                     <div class="kt-iconbox__desc kt-font-bolder">
                                                         <div class="row">
@@ -119,10 +119,12 @@
                                                     </div>
                                                     <div class="ml-3 pr-3" id="infoPasienArc" style="z-index: 10;"
                                                         style="font-size: 200px">
-                                                        <span class="text-primary" id="pasienNameArc"></span>
-                                                        <br>
-                                                        <span class="pt-0" id="pasienNoMr"></span><br>
-                                                        <span class="pt-0 text-info" id="regIDArc"></span>
+                                                        <h2>
+                                                            <span class="text-primary" id="pasienNameArc"></span>
+                                                        </h2>
+                                                        <span class="pt-0 text-md" id="pasienNoMr"></span><br>
+                                                        {{-- <br> --}}
+                                                        <span class="pt-0 text-info" id="alamatArc"></span>
                                                     </div>
                                                 </div>
                                                 {{-- <div class="kt-widget__body px-2">
@@ -338,27 +340,30 @@
                     },
                     success: function(isdata2) {
                         // var json = isdata2;
+                        $('.listHistoryPx').empty();
+                        $('.showlistChart').empty();
                         $.each(isdata2, function(key, datavalue) {
                             document.getElementById("pasienNameArc").innerText = (datavalue.fs_nama);
                             document.getElementById("pasienNoMr").innerText = (datavalue.fs_mr);
-                            $('.listHistoryPx').empty();
+                            document.getElementById("alamatArc").innerText = (datavalue.fs_alamat);
+
                             if (datavalue.chart_kd_reg == null) {
                                 $('.listHistoryPx').append(`<div class="form-group mb-0 scrollbar-dusty square1 thin scroll-y mt-2"
                                             id="listsearchRegArc"
-                                            style="max-height: 180px; border: 1px solid rgb(226, 229, 236);">
+                                            style="max-height: 180px; border: 2px solid rgb(226, 229, 236);">
                                             <div class="kt-portlet kt-iconbox kt-iconbox--wave p-1 m-1 listRegArc"
-                                                id="RG00326354" style="background-color: rgb(239, 245, 193);">
+                                                id="RG00326354" style="background-color: rgb(252, 225, 174);">
                                                 <div class="kt-portlet__body p-1">
                                                     <div class="kt-iconbox__desc kt-font-bolder">
                                                         <div class="row">
-                                                            <span class="kt-iconbox__content col-6">History Not Found.</span>
+                                                            <span class="col-6">History Not Found.</span>
                                                             <span
-                                                                class="kt-iconbox__content col-6 kt-font-regular text-right"></span>
+                                                                class="col-6 kt-font-regular text-right"></span>
                                                         </div>
                                                         <div class="row">
-                                                            <span class="kt-iconbox__content col-6 kt-font-regular"><em></em></span>
+                                                            <span class="col-6 kt-font-regular"><em></em></span>
                                                             <span
-                                                                class="kt-iconbox__content col-6 kt-font-regular text-right">-</span>
+                                                                class="col-6 kt-font-regular text-right">-</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -367,20 +372,20 @@
                                         </div>`);
                             } else {
                                 $('.listHistoryPx').append(`<div class="cardReg${datavalue.chart_id} form-group mb-0 scrollbar-dusty square1 thin scroll-y mt-2" id="listsearchRegArc"
-                                   style="max-height: 180px; border: 1px solid rgb(226, 229, 236);" data-chartid="${datavalue.chart_id}" onClick="getHistory(this)">
+                                   style="max-height: 180px; border: 2px solid rgb(226, 229, 236);" data-chartid="${datavalue.chart_id}" onClick="getHistory(this)">
                                    <div class="kt-portlet kt-iconbox kt-iconbox--wave p-1 m-1 listRegArc"
-                                       id="RG00326354" style="background-color: rgb(239, 245, 193);">
+                                       id="RG00326354" style="background-color: rgb(252, 225, 174);">
                                        <div class="kt-portlet__body p-1">
                                            <div class="kt-iconbox__desc kt-font-bolder">
                                                <div class="row">
-                                                   <span class="kt-iconbox__content col-6">${datavalue.chart_kd_reg}</span>
+                                                   <span class="col-6">${datavalue.chart_kd_reg}</span>
                                                    <span
-                                                       class="kt-iconbox__content col-6 kt-font-regular text-right">${datavalue.chart_tgl_trs}</span>
+                                                       class="col-6 kt-font-regular text-right">${datavalue.chart_tgl_trs}</span>
                                                </div>
                                                <div class="row">
-                                                   <span class="kt-iconbox__content col-6 kt-font-regular"><em></em></span>
+                                                   <span class="col-6 kt-font-regular"><em>${datavalue.chart_layanan}</em></span>
                                                    <span
-                                                       class="kt-iconbox__content col-6 kt-font-regular text-right">-</span>
+                                                       class="col-6 kt-font-regular text-right">-</span>
                                                </div>
                                            </div>
                                        </div>

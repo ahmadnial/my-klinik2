@@ -30,7 +30,7 @@ class arsipController extends Controller
         // $isdata2 = dataSosialCreate::where('fs_mr', $fs_mr->fs_mr)->get();
         $isdata2 = DB::table('tc_mr')
             ->leftJoin('chart_tindakan', 'chart_tindakan.chart_mr', 'tc_mr.fs_mr')
-            ->select('fs_nama', 'fs_mr', 'fs_alamat', 'chart_id', 'chart_kd_reg', 'chart_tgl_trs')
+            ->select('fs_nama', 'fs_mr', 'fs_alamat', 'chart_id', 'chart_kd_reg', 'chart_tgl_trs', 'chart_layanan')
             ->where('tc_mr.fs_mr', $fs_mr->fs_mr)
             ->get();
 
