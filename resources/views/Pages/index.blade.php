@@ -179,7 +179,7 @@
                             </div> --}}
                             <!-- /.d-flex -->
 
-                            <table id="" class="table table-striped table-bordered table-responsive">
+                            <table id="exm2" class="table table-striped table-bordered table-responsive">
                                 <thead class="bg-nial">
                                     <tr>
                                         <th>Kode DO</th>
