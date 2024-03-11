@@ -40,7 +40,8 @@ class arsipController extends Controller
     public function getListChartDetail(request $chart_id)
     {
         $isListChartDetail = DB::table('chart_tindakan')
-            ->where('chart_id', $chart_id->chart_id)
+            ->leftJoin('trs_chart_resep', 'trs_chart_resep.chart_id', 'chart_tindakan.chart_id')
+            ->where('chart_tindakan.chart_id', $chart_id->chart_id)
             ->get();
 
         return response()->json($isListChartDetail);

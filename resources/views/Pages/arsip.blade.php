@@ -495,13 +495,9 @@
                                                                                     <br>
                                                                                     <div class="card col-6 border-secondary p-2 pl-3 mb-2 ml-2"
                                                                                         style="background-color: rgb(248, 240, 229)">
-                                                                                        <div><u><b>Order Laborat
-                                                                                                    (KP0348568A)</b></u>
+                                                                                        <div><u><b>Prescription</b></u>
                                                                                         </div>
-                                                                                        <label class="pl-2">1. DARAH
-                                                                                            RUTIN
-                                                                                            (AUTO)</label><label
-                                                                                            class="pl-2">2. GDS</label>
+                                                                                        <label class="pl-2">${datavalue.ch_nm_obat + - + datavalue.ch_qty_obat ?? ''}</label>
                                                                                     </div>
                                                                                 </td>
                                                                             </tr>
