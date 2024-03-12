@@ -4,7 +4,7 @@
     <section class="content">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title"><i class="fa fa-truck">&nbsp;</i>Laporan Pendapatan Klinik Rekap</h3>
+                <h3 class="card-title"><i class="fa fa-money">&nbsp;</i>Laporan Pendapatan Klinik Rekap</h3>
             </div>
 
             <div class="card-body">
@@ -21,11 +21,13 @@
                             <tr>
                                 <th>kode Registrasi</th>
                                 <th>Tanggal Keluar</th>
+                                <th>No.RM</th>
+                                <th>Nama</th>
                                 <th>Layanan</th>
+                                <th>Dokter</th>
+                                <th>Session Poli</th>
                                 <th>Sub Total</th>
-                                {{-- <th>Alasan</th>
-                                <th>Dibuat Oleh</th>
-                                <th></th> --}}
+                                {{-- <th>Dibuat Oleh</th> --}}
                             </tr>
                         </thead>
                         <tbody id="result">
@@ -33,6 +35,10 @@
                         </tbody>
                         <tfoot align="">
                             <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
@@ -88,7 +94,9 @@
                                     currency: 'IDR'
                                 });
                                 const dataBaru = [
-                                    [datavalue.rk_kd_reg, datavalue.rk_tgl_regout, datavalue.rk_layanan,
+                                    [datavalue.rk_kd_reg, datavalue.rk_tgl_regout, datavalue.rk_no_mr,
+                                        datavalue.rk_pasienName, datavalue.rk_layanan, datavalue
+                                        .rk_dokter, datavalue.rk_session_poli,
                                         ttlPenjualan
                                     ],
                                 ]
@@ -100,6 +108,10 @@
                                             data[1],
                                             data[2],
                                             data[3],
+                                            data[4],
+                                            data[5],
+                                            data[6],
+                                            data[7]
                                         ]).draw(false)
                                     }
                                 }

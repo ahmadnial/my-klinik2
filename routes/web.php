@@ -219,6 +219,8 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4,3']], function () {
     // Route::get('/redirect', [RedirectController::class, 'cek']);
     Route::get('kasir-poli', [kasirPoliController::class, 'kasirPoli'])->name('kasir-poli');
     Route::get('SearchRegisterKsr/{kdReg}', [kasirPoliController::class, 'xregisterSearch'])->name('SearchRegisterKsr');
+    Route::get('getMonthRegOut', [kasirPoliController::class, 'getMonthRegOut'])->name('getMonthRegOut');
+    Route::get('getDetailRegOut/{kd_trs}', [kasirPoliController::class, 'getDetailRegOut'])->name('getDetailRegOut');
 
     Route::get('kasir-apotek', [kasirPoliController::class, 'kasirApotek'])->name('kasir-apotek');
     Route::post('regout', [kasirPoliController::class, 'regOut'])->name('regout');

@@ -16,6 +16,9 @@ class rekening_pendapatan_poliklinik_total extends Model
         'rk_tgl_regout',
         'rk_no_mr',
         'rk_layanan',
-        'rk_nilai'
+        'rk_nilai',
+        'rk_pasienName',
+        'rk_session_poli',
+        'rk_dokter',
     ];
 }
