@@ -103,6 +103,7 @@ class HomeController extends Controller
         if ($request->filled('q')) {
             $isdata = dataSosialCreate::select("fs_mr", "fs_nama", "fs_alamat", "fs_tgl_lahir")
                 ->where('fs_nama', 'LIKE', '%' . $request->get('q') . '%')
+                ->orWhere('fs_mr', 'LIKE', '%' . $request->get('q') . '%')
                 ->get();
         }
         // dd($data);

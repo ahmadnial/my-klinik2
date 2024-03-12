@@ -104,7 +104,7 @@
                                 value="{{ $dateNow }}">
                         </div>
                         <div class="form-group col-sm-6">
-                            <label for="">Nama Pasien</label>
+                            <label for="">Nama / No.RM Pasien</label>
                             <select class="form-control-pasien" id="fr_mr" style="width: 100%;" name="fr_mr"
                                 onchange="getData()"></select>
                         </div>
@@ -544,7 +544,7 @@
         var path = "{{ route('registrasiSearch') }}";
 
         $('#fr_mr').select2({
-            placeholder: 'Nama Pasien',
+            placeholder: 'Nama / Nomor RM Pasien',
             ajax: {
                 url: path,
                 dataType: 'json',

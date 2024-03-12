@@ -388,6 +388,7 @@ class TindakanController extends Controller
         if ($request->filled('q')) {
             $isICDX = mstr_icdx::select("code", "name_id")
                 ->where('name_id', 'LIKE', '%' . $request->get('q') . '%')
+                ->orWhere('code', 'LIKE', '%' . $request->get('q') . '%')
                 ->get();
         }
         // dd($data);
