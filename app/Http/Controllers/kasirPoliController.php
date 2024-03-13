@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\rekening_pendapatan_poliklinik_total;
 use App\Models\ta_registrasi_keluar;
 use App\Models\registrasiCreate;
+use App\Models\ta_registrasi_keluar_hdr;
 use App\Models\trs_chart;
 use App\Models\trs_kasir_poliklinik;
 use Illuminate\Http\Request;
@@ -55,9 +56,9 @@ class kasirPoliController extends Controller
         if (!$selectMonth) {
             $monthNow = Carbon::now()->format("m");
             $yearNow = Carbon::now()->format("Y");
-            $isListPenjualan = ta_registrasi_keluar::whereyear('trs_kp_tgl_keluar', '=', $yearNow)->whereMonth('trs_kp_tgl_keluar', '=', $monthNow)->latest('trs_kp_tgl_keluar')->get();
+            $isListPenjualan = ta_registrasi_keluar_hdr::whereyear('kp_tgl_keluar', '=', $yearNow)->whereMonth('kp_tgl_keluar', '=', $monthNow)->latest('kp_tgl_keluar')->distinct();
         } else {
-            $isListPenjualan = ta_registrasi_keluar::where('trs_kp_tgl_keluar', 'LIKE', '%' . $selectMonth . '%')->latest('created_at')->get();
+            $isListPenjualan = ta_registrasi_keluar_hdr::where('kp_tgl_keluar', 'LIKE', '%' . $selectMonth . '%')->latest('created_at')->distinct();
         }
 
         return DataTables::of($isListPenjualan)
@@ -132,6 +133,20 @@ class kasirPoliController extends Controller
         ]);
         DB::beginTransaction();
         try {
+
+            $newregouthdr = new ta_registrasi_keluar_hdr();
+            $newregouthdr->kd_trs_reg_out = $request->kd_trs_reg_out;
+            $newregouthdr->kp_kd_reg = $request->trs_kp_kd_reg;
+            $newregouthdr->kp_tgl_keluar  = $request->trs_kp_tgl_keluar;
+            $newregouthdr->kp_nm_pasien  = $request->trs_kp_nm_pasien;
+            $newregouthdr->kp_no_mr  = $request->trs_kp_no_mr;
+            $newregouthdr->kp_layanan    = $request->trs_kp_layanan;
+            $newregouthdr->kp_dokter    = $request->trs_kp_dokter;
+            $newregouthdr->nm_tarif_dasar = $request->nm_tarif_dasar;
+            $newregouthdr->kp_nilai_total    = $request->trs_kp_nilai_total;
+            $newregouthdr->user    = Auth::user()->name;
+            $newregouthdr->save();
+
             if ($request->trs_kp_nm_tarif == null) {
                 $newrgout = new ta_registrasi_keluar();
                 $newrgout->kd_trs_reg_out = $request->kd_trs_reg_out;
@@ -214,9 +229,18 @@ class kasirPoliController extends Controller
 
     public function getDetailRegOut(Request $request)
     {
-        $isDataRegOut = ta_registrasi_keluar::where('ta_registrasi_keluar.kd_trs_reg_out', '=', $request->kd_trs)
-            ->leftJoin('trs_chart', 'ta_registrasi_keluar.trs_kp_kd_trs_chart', 'trs_chart.kd_trs')
+        // $isDataRegOut = ta_registrasi_keluar::where('ta_registrasi_keluar.kd_trs_reg_out', '=', $request->kd_trs)
+        //     ->leftJoin('trs_chart', 'ta_registrasi_keluar.trs_kp_kd_trs_chart', 'trs_chart.kd_trs')
+        //     ->get();
+
+        $isDataRegOut = ta_registrasi_keluar_hdr::with('regoutDetail.tindakan.nm_trf')
+            ->where('kd_trs_reg_out', '=', $request->kd_trs)
+            // ->leftJoin('trs_chart', 'ta_registrasi_keluar.trs_kp_kd_trs_chart', 'trs_chart.kd_trs')
             ->get();
+
+        // $isChartID = ChartTindakan::with('trstdk.nm_trf')
+        // ->where('chart_id', $request->chartid)
+        // ->get();
 
         return response()->json($isDataRegOut);
     }

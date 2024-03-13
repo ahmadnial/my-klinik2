@@ -29,4 +29,9 @@ class ta_registrasi_keluar extends Model
         // 'trs_kp_nilai_tarif',
         'trs_kp_nilai_total'
     ];
+
+    public function tindakan()
+    {
+        return $this->hasMany(trs_chart::class, 'kd_trs', 'trs_kp_kd_trs_chart');
+    }
 }
