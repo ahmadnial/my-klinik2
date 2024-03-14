@@ -730,7 +730,7 @@
                                     </td>
                                     <td>
                                         <input type="text" class="form-control" id="diskon"
-                                            name="diskon[]">
+                                            name="diskon[]" onKeyUp="getDiskon(this)">
                                     </td>
                                     <td>
                                         <input type="text" class="sub_total form-control" id="sub_total"
