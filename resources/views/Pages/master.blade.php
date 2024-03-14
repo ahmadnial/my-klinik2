@@ -53,7 +53,7 @@
         ::-webkit-scrollbar-thumb {
             background: linear-gradient(#c2aefa, #ff7bf0);
             border-radius: 9px;
-            width: 10px;
+            width: 4px;
             height: 2px;
         }
     </style>

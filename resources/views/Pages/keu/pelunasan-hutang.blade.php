@@ -213,6 +213,7 @@
                             <tr>
                                 <th>Kode Transaksi</th>
                                 <th>No.Faktur</th>
+                                <th>Nama Supplier</th>
                                 <th>Tanggal</th>
                                 <th>Hutang Awal</th>
                                 <th>Pembayaran</th>
@@ -270,6 +271,10 @@
                                 {
                                     data: 'hs_no_faktur',
                                     name: 'hs_no_faktur'
+                                },
+                                {
+                                    data: 'hs_supplier',
+                                    name: 'hs_supplier'
                                 },
                                 {
                                     data: 'hs_tanggal_hutang',

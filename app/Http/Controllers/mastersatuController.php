@@ -207,38 +207,38 @@ class mastersatuController extends Controller
         ]);
 
         DB::beginTransaction();
-        try {
+        // try {
 
-            $toHdr = new t_template_order_hdr();
-            $toHdr->kd_to = $request->kd_to;
-            $toHdr->nm_to = $request->nm_to;
-            $toHdr->to_user   = Auth::user()->name;
-            $toHdr->save();
+        $toHdr = new t_template_order_hdr();
+        $toHdr->kd_to = $request->kd_to;
+        $toHdr->nm_to = $request->nm_to;
+        $toHdr->to_user   = Auth::user()->name;
+        $toHdr->save();
 
-            foreach ($request->kd_obat_to as $key => $xf) {
-                $todetail = [
-                    'kd_to'         => $request->kd_to,
-                    'kd_obat_to'    => $request->kd_obat_to[$key],
-                    'nm_obat_to'    => $request->nm_obat_to[$key],
-                    'hrg_obat_to'   => $request->hrg_obat_to[$key],
-                    'qty_to'        => $request->qty_to[$key],
-                    'satuan_to'     => $request->satuan_to[$key],
-                    'signa_to'      => $request->signa_to[$key],
-                    'cara_pakai_to' => $request->cara_pakai_to[$key],
-                ];
-                t_template_order_detail::create($todetail);
-            }
-
-            DB::commit();
-
-            toastr()->success('Data Tersimpan!');
-            return back();
-            // return redirect()->route('/tindakan-medis');
-        } catch (\Exception $e) {
-            DB::rollback();
-            toastr()->error('Gagal Tersimpan!');
-            return back();
+        foreach ($request->kd_obat_to as $key => $xf) {
+            $todetail = [
+                'kd_to'         => $request->kd_to,
+                'kd_obat_to'    => $request->kd_obat_to[$key],
+                'nm_obat_to'    => $request->nm_obat_to[$key],
+                'hrg_obat_to'   => $request->hrg_obat_to[$key],
+                'qty_to'        => $request->qty_to[$key],
+                'satuan_to'     => $request->satuan_to[$key],
+                'signa_to'      => $request->signa_to[$key],
+                'cara_pakai_to' => $request->cara_pakai_to[$key],
+            ];
+            t_template_order_detail::create($todetail);
         }
+
+        DB::commit();
+
+        toastr()->success('Data Tersimpan!');
+        return back();
+        // return redirect()->route('/tindakan-medis');
+        // } catch (\Exception $e) {
+        DB::rollback();
+        toastr()->error('Gagal Tersimpan!');
+        return back();
+        // }
     }
 
     public function getDetailTemplate(request $Request)
