@@ -1124,7 +1124,7 @@
                         </td>
                         <td>
                             <input type="text" class="form-control" id="diskon"
-                                name="diskon[]">
+                                name="diskon[]" onKeyUp="getDiskon(this)" value="0">
                         </td>
                         <td>
                             <input type="text" class="sub_total form-control" id="sub_total"
@@ -1204,6 +1204,22 @@
                     // console.log(hsl);
                     $(parentE).find('#sub_total').val(resultE);
                 }
+                GrandTotal();
+                GrandTotalEdit();
+
+            };
+
+            function getDiskon(d) {
+                let parentT = d.parentElement.parentElement;
+                let diskon = $(parentT).find('#diskon').val();
+                // alert(diskon);
+                let subtotalsementara = $(parentT).find('#sub_total_hidden').val();
+                let hsl = parseFloat(subtotalsementara) - parseFloat(diskon);
+                let resultT = hsl.toFixed(2);
+
+                $(parentT).find('#sub_total').val(resultT);
+                $(parentT).find('#sub_total_hidden_after_tuslah').val(resultT);
+
                 GrandTotal();
                 GrandTotalEdit();
 
@@ -1416,7 +1432,7 @@
                                             </td>
                                               <td>
                                                 <input type="text" class="form-control" id="diskon"
-                                                    name="diskon[]" readonly>
+                                                    name="diskon[]" onKeyUp="getDiskon(this)" readonly>
                                             </td>
                                             <td>
                                                 <input type="text" class="sub_totalEdit form-control" id="sub_total"
@@ -1510,7 +1526,7 @@
                         </td>
                         <td>
                             <input type="text" class="form-control" id="diskon"
-                                name="diskon[]">
+                                name="diskon[]" onKeyUp="getDiskon(this)">
                         </td>
                         <td>
                             <input type="text" class="sub_totalEdit form-control" id="sub_total"
