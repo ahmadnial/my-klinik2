@@ -356,6 +356,12 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
+                                    <a href="{{ url('/laporan-laba') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Laporan Laba Rugi</p>
+                                    </a>
+                                </li>
+                                {{-- <li class="nav-item">
                                     <a href="{{ url('#') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Jurnal Umum</p>
@@ -372,7 +378,7 @@
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Arus Kas</p>
                                     </a>
-                                </li>
+                                </li> --}}
                                 {{-- <li class="nav-item">
                                     <a href="" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>

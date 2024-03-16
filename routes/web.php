@@ -17,6 +17,7 @@ use App\Http\Controllers\WilayahController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HutangSupplierController;
+use App\Http\Controllers\lapAccountingController;
 use App\Http\Controllers\settingController;
 use App\Http\Controllers\RedirectController;
 
@@ -280,6 +281,8 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4,6']], function () {
     Route::get('getMonthPelunasan', [HutangSupplierController::class, 'getMonthPelunasan'])->name('getMonthPelunasan');
     Route::get('info-hutang', [HutangSupplierController::class, 'infoHutang'])->name('info-hutang');
     Route::get('getinfohutang', [HutangSupplierController::class, 'getInfoHutang'])->name('getinfohutang');
+
+    Route::get('laporan-laba', [lapAccountingController::class, 'laporanLaba'])->name('laporanLaba');
 });
 
 //Setting / Tools
