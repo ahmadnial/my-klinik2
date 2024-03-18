@@ -19,14 +19,8 @@
                     <table id="penjualan" class="table table-hover table-striped">
                         <thead>
                             <tr>
-                                <th>kode Transaksi</th>
-                                <th>Tanggal Transaksi</th>
-                                <th>QTY</th>
-                                <th>Sub Total</th>
-                                {{-- <th>Alasan</th>
-                                <th>Dibuat Oleh</th>
-                                <th></th> --}}
-                            </tr>
+                                <th>Nama Akun</th>
+                                <th>Nominal</th>
                         </thead>
                         <tbody id="result">
 
@@ -34,11 +28,26 @@
                         <tfoot align="">
                             <tr>
                                 <th></th>
+                                <th id="grandTTL"></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    {{-- <input type="text" class="form-control col-4" id="grandttl"> --}}
+                </div>
+
+                <div>
+                    <table id="penjualan" class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nama Akun</th>
+                                <th>Nominal</th>
+                        </thead>
+                        <tbody id="result">
+
+                        </tbody>
+                        <tfoot align="">
+                            <tr>
                                 <th></th>
-                                <th></th>
-                                {{-- <td><b><input type="text" id="grandTTL" class="form-control" style="border: none"
-                                            readonly></b>
-                                </td> --}}
                                 <th id="grandTTL"></th>
                             </tr>
                         </tfoot>
@@ -47,6 +56,8 @@
                 </div>
             </div>
         </div>
+
+
     </section>
 
     @push('scripts')
@@ -67,20 +78,20 @@
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
-                        url: "{{ url('getLaporanPenjualanDetail') }}",
+                        url: "{{ url('getLaporanLR') }}",
                         type: 'GET',
                         data: {
                             date1: date1,
                             date2: date2
                         },
-                        success: function(isDataLaporan) {
+                        success: function(isDataLR) {
                             var sumall = 0;
                             var table = $('#penjualan').DataTable();
                             var rows = table
                                 .rows()
                                 .remove()
                                 .draw();
-                            $.each(isDataLaporan, function(key, datavalue) {
+                            $.each(isDataLR, function(key, datavalue) {
                                 const table = $('#penjualan').DataTable();
                                 var total_pen = datavalue.sub_total;
                                 var ttlPenjualan = total_pen.toLocaleString('id-ID', {
@@ -104,7 +115,7 @@
                                     }
                                 }
 
-                                injectDataBaru()
+                                // injectDataBaru()
 
                                 var ttlInt = parseFloat(datavalue.sub_total);
                                 sumall += ttlInt;

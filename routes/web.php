@@ -283,6 +283,7 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4,6']], function () {
     Route::get('getinfohutang', [HutangSupplierController::class, 'getInfoHutang'])->name('getinfohutang');
 
     Route::get('laporan-laba', [lapAccountingController::class, 'laporanLaba'])->name('laporanLaba');
+    Route::get('getLaporanLR', [lapAccountingController::class, 'laporanLR'])->name('getLaporanLR');
 });
 
 //Setting / Tools
