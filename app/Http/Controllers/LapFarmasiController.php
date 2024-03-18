@@ -52,17 +52,19 @@ class LapFarmasiController extends Controller
         // dd($t);
         if ($request->user == '') {
             $isDataLaporanDetail = DB::table('tp_detail_item')
-                ->select('kd_obat', 'nm_obat', 'hrg_obat', 'satuan', DB::raw('sum(qty) as total'))
+                ->leftJoin('mstr_obat', 'tp_detail_item.kd_obat', 'mstr_obat.fm_kd_obat')
+                ->select('kd_obat', 'nm_obat', 'hrg_obat', 'satuan', 'fm_hrg_beli_detail', DB::raw('sum(qty) as total'))
                 ->whereBetween('tgl_trs', [$request->date1, $request->date2])
                 ->whereNull('kd_reg')
                 ->groupBy('kd_obat', 'nm_obat', 'hrg_obat', 'satuan')
                 ->get();
         } else {
             $isDataLaporanDetail = DB::table('tp_detail_item')
-                ->select('kd_obat', 'nm_obat', 'hrg_obat', 'satuan', DB::raw('sum(qty) as total'))
+                ->leftJoin('mstr_obat', 'tp_detail_item.kd_obat', 'mstr_obat.fm_kd_obat')
+                ->select('kd_obat', 'nm_obat', 'hrg_obat', 'satuan', 'fm_hrg_beli_detail', DB::raw('sum(qty) as total'))
                 ->whereBetween('tgl_trs', [$request->date1, $request->date2])
                 ->whereNull('kd_reg')
-                ->where('user', $request->user)
+                ->where('tp_detail_item.user', $request->user)
                 ->groupBy('kd_obat', 'nm_obat', 'hrg_obat', 'satuan')
                 ->get();
         }
