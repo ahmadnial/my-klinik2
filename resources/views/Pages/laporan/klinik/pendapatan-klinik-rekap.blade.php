@@ -13,10 +13,16 @@
                     <div class="input-group-addon">&nbsp; s.d&nbsp;</div>
                     <input type="date" id="date2" class="form-control">
                     <div class="input-group-addon">&nbsp;&nbsp;&nbsp;</div>
-                    <button class="btn btn-success" onclick="getDataPendapatan()" id="btnProses">Proses</button>
+                    <select id="session" class="form-control">
+                        <option value="">Session Poli</option>
+                        <option value="Pagi">Pagi</option>
+                        <option value="Sore">Sore</option>
+                    </select>
+                    <div class="input-group-addon">&nbsp;&nbsp;&nbsp;</div>
+                    <button class="btn btn-success btn-sm" onclick="getDataPendapatan()" id="btnProses">Proses</button>
                 </div>
                 <div>
-                    <table id="exm2" class="table table-hover table-striped">
+                    <table id="penjualan" class="table table-hover table-striped">
                         <thead>
                             <tr>
                                 <th>kode Registrasi</th>
@@ -60,6 +66,7 @@
             function getDataPendapatan() {
                 var date1 = $('#date1').val();
                 var date2 = $('#date2').val();
+                var session = $('#session').val();
 
                 if (date1 == '') {
                     toastr.info('Pilih Range Tanggal', 'Info!', {
@@ -77,17 +84,18 @@
                         type: 'GET',
                         data: {
                             date1: date1,
-                            date2: date2
+                            date2: date2,
+                            session: session
                         },
                         success: function(isDataPendapatan) {
                             var sumall = 0;
-                            var table = $('#exm2').DataTable();
+                            var table = $('#penjualan').DataTable();
                             var rows = table
                                 .rows()
                                 .remove()
                                 .draw();
                             $.each(isDataPendapatan, function(key, datavalue) {
-                                const table = $('#exm2').DataTable();
+                                const table = $('#penjualan').DataTable();
                                 var total_pen = datavalue.rk_nilai;
                                 var ttlPenjualan = total_pen.toLocaleString('id-ID', {
                                     style: 'currency',

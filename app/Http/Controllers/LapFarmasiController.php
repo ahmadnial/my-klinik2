@@ -149,10 +149,18 @@ class LapFarmasiController extends Controller
 
     public function getLapPendapatanKlinik(Request $request)
     {
+        $session = $request->session;
         if ($request->ajax()) {
-            $isDataPendapatan = DB::table('rekening_pendapatan_poliklinik_total')
-                ->whereBetween('rk_tgl_regout', [$request->date1, $request->date2])
-                ->get();
+            if (!$session) {
+                $isDataPendapatan = DB::table('rekening_pendapatan_poliklinik_total')
+                    ->whereBetween('rk_tgl_regout', [$request->date1, $request->date2])
+                    ->get();
+            } else {
+                $isDataPendapatan = DB::table('rekening_pendapatan_poliklinik_total')
+                    ->where('rk_session_poli', '=', $session)
+                    ->whereBetween('rk_tgl_regout', [$request->date1, $request->date2])
+                    ->get();
+            }
         }
         return response()->json($isDataPendapatan);
     }
