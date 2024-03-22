@@ -10,7 +10,7 @@
                     </div>
                     <div class="p-2" id="arsip">
                         <div class="row">
-                            <div class="col-md-3 pl-0 pr-2" style="background-color: rgb(239, 247, 255)">
+                            <div class="col-md-3 pl-0 pr-2" style="background-color: rgb(238, 244, 250)">
                                 <div class="col p-2">
                                     <div class="form-group mb-0">
                                         <div class="">
@@ -414,6 +414,29 @@
                         $.each(isListChartDetail, function(key, datavalue) {
                             $('.showlistChart').empty();
 
+                            const trstdk = datavalue.trstdk;
+                            let tindakan = "";
+                            for (i in trstdk) {
+                                if (trstdk[i].nm_trf != null) {
+                                    tindakan +=
+                                        `<label class="pl-2">&#129174; ${trstdk[i].nm_trf.nm_tindakan ?? ''}</label>`;
+                                } else {
+                                    $('.tindakanShowOff').empty();
+                                    tindakan += ``;
+                                }
+                            }
+
+                            const resep = datavalue.resep;
+                            let resepShow = "";
+                            for (i in resep) {
+                                if (resep[i] != null) {
+                                    resepShow +=
+                                        `<label class="pl-2">&#129174; ${resep[i].ch_nm_obat + - + resep[i].ch_qty_obat + ' ' + resep[i].ch_satuan_obat + '-' + resep[i].ch_cara_pakai ?? ''}</label>`;
+                                } else {
+                                    resepShow += ``;
+                                }
+                            }
+
                             $('.showlistChart').append(`<div class="kt-portlet shadow-sm border border-radius3 p-2 mb-4 ">
                                         <div class="kt-portlet__body" id="content${datavalue.chart_id}">
                                             <div class="kt-widget kt-widget--user-profile-3 border">
@@ -461,7 +484,18 @@
                                                                         <tbody>
                                                                             <tr name="1O">
                                                                                 <td colspan="2" class="p-2">
-                                                                                    <p class="text-mc-black">${datavalue.chart_O ?? ''}</p>
+                                                                                    <p class="text-mc-black">
+                                                                                        ${datavalue.chart_O ?? ''} <br>
+                                                                                        &#11166; Berat Badan : <b class="text-danger">${datavalue.ttv_BW ?? ''}</b> Kg<br>
+                                                                                        &#11166; Tinggi Badan : <b class="text-danger">${datavalue.ttv_BT ?? ''}</b> Cm<br>
+                                                                                        &#11166; TD Sistole : <b class="text-danger"> ${datavalue.ttv_BPs ?? ''}</b> mmHg<br>
+                                                                                        &#11166; TD Diastole : <b class="text-danger">${datavalue.ttv_BPd ?? ''}</b> mmHg<br>
+                                                                                        &#11166; Suhu : <b class="text-danger">${datavalue.ttv_BT ?? ''}</b> &deg;C<br>
+                                                                                        &#11166; Nadi : <b class="text-danger">${datavalue.ttv_HR?? ''}</b> x/menit<br>
+                                                                                        &#11166; Respirasi : <b class="text-danger">${datavalue.ttv_RR ?? ''}</b> x/menit<br>
+                                                                                        &#11166; Skala Nyeri : <b class="text-danger">${datavalue.ttv_SN ?? ''}</b> <br>
+                                                                                        &#11166; Saturasi : <b class="text-danger">${datavalue.ttv_SPO2 ?? ''}</b> %<br>
+                                                                                    </p>
                                                                                 </td>
                                                                             </tr>
                                                                         </tbody>
@@ -493,11 +527,27 @@
                                                                                 <td colspan="2" class="p-2">
                                                                                     <p class="text-mc-black">${datavalue.chart_P ?? ''}</p>
                                                                                     <br>
-                                                                                    <div class="card col-6 border-secondary p-2 pl-3 mb-2 ml-2"
-                                                                                        style="background-color: rgb(248, 240, 229)">
-                                                                                        <div><u><b>Prescription</b></u>
+                                                                                    <div class="row">
+                                                                                        <div class="card col border-secondary p-2 pl-3 mb-2 ml-2"
+                                                                                            style="background-color: rgb(248, 240, 229)">
+                                                                                            <div><u><b>Prescription (Resep)</b></u>
+                                                                                            </div>
+                                                                                            ${resepShow}
                                                                                         </div>
-                                                                                        <label class="pl-2">${datavalue.ch_nm_obat + - + datavalue.ch_qty_obat ?? ''}</label>
+
+                                                                                        <div class="card col border-secondary p-2 pl-3 mb-2 ml-2"
+                                                                                            style="background-color: rgb(248, 240, 229)">
+                                                                                            <div><u><b>Medication (Obat didapat)</b></u>
+                                                                                            </div>
+                                                                                            -
+                                                                                        </div>
+
+                                                                                        <div class="tindakanShowOff card col border-secondary p-2 pl-3 mb-2 ml-2"
+                                                                                            style="background-color: rgb(248, 240, 229)">
+                                                                                            <div><u><b>Tindakan</b></u>
+                                                                                            </div>
+                                                                                            ${tindakan}
+                                                                                        </div>
                                                                                     </div>
                                                                                 </td>
                                                                             </tr>

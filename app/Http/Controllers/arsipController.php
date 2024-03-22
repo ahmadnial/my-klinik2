@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\dataSosialCreate;
+use App\Models\ChartTindakan;
 use Illuminate\Support\Facades\DB;
 
 class arsipController extends Controller
@@ -40,9 +41,13 @@ class arsipController extends Controller
 
     public function getListChartDetail(request $chart_id)
     {
-        $isListChartDetail = DB::table('chart_tindakan')
-            ->leftJoin('trs_chart_resep', 'trs_chart_resep.chart_id', 'chart_tindakan.chart_id')
-            ->where('chart_tindakan.chart_id', $chart_id->chart_id)
+        // $isListChartDetail = DB::table('chart_tindakan')
+        //     ->leftJoin('trs_chart_resep', 'trs_chart_resep.chart_id', 'chart_tindakan.chart_id')
+        //     ->where('chart_tindakan.chart_id', $chart_id->chart_id)
+        //     ->get();
+        $isListChartDetail = ChartTindakan::with('trstdk.nm_trf', 'resep')
+            ->where('chart_id', $chart_id->chart_id)
+            // ->orderBy('chart_tindakan.created_at', 'DESC')
             ->get();
 
         return response()->json($isListChartDetail);

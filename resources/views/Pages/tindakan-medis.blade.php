@@ -2243,20 +2243,20 @@
                                             <table class="table" style="border:none;">
                                             <tbody style="background-color:#edfafa; border:none">
                                                 <tr>
-                                                    <td>BW :${getValue[getVal].ttv_BW ?? ''}(Kg)</td>
-                                                    <td>BH :${getValue[getVal].ttv_BH ?? ''}(CM)</td>
-                                                    <td>BT :${getValue[getVal].ttv_BT ?? ''}(C)</td>
+                                                    <td>BW :<b class="text-danger">${getValue[getVal].ttv_BW ?? ''}</b>(Kg)</td>
+                                                    <td>BH :<b class="text-danger">${getValue[getVal].ttv_BH ?? ''}</b>(CM)</td>
+                                                    <td>BT :<b class="text-danger">${getValue[getVal].ttv_BT ?? ''}</b>(&deg;C)</td>
                                                     
                                                 </tr>
                                                 <tr>
-                                                    <td>BPs :${getValue[getVal].ttv_BPs ?? ''}(mmHg)</td>
-                                                    <td>BPd :${getValue[getVal].ttv_BPd ?? ''}(mmHg)</td>
-                                                    <td>HR  :${getValue[getVal].ttv_HR ?? ''}(x/mnt)</td>
+                                                    <td>BPs :<b class="text-danger">${getValue[getVal].ttv_BPs ?? ''}</b>(mmHg)</td>
+                                                    <td>BPd :<b class="text-danger">${getValue[getVal].ttv_BPd ?? ''}</b>(mmHg)</td>
+                                                    <td>HR  :<b class="text-danger">${getValue[getVal].ttv_HR ?? ''}</b>(x/mnt)</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>RR  :${getValue[getVal].ttv_RR ?? ''}(x/mnt)</td>
-                                                    <td>SN  :${getValue[getVal].ttv_SN ?? ''}</td>
-                                                    <td>SpO2:${getValue[getVal].ttv_SPO2 ?? ''}(%)</td>
+                                                    <td>RR  :<b class="text-danger">${getValue[getVal].ttv_RR ?? ''}</b>(x/mnt)</td>
+                                                    <td>SN  :<b class="text-danger">${getValue[getVal].ttv_SN ?? ''}</b></td>
+                                                    <td>SpO2:<b class="text-danger">${getValue[getVal].ttv_SPO2 ?? ''}</b>(%)</td>
                                                 </tr>
                                             </tbody>
                                         </table>
