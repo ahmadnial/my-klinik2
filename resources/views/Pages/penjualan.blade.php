@@ -762,9 +762,6 @@
                 GrandTotalEdit();
             }
 
-
-
-
             function getTipeTarif() {
                 var tes = $('#tp_tipe_tarif').val();
 

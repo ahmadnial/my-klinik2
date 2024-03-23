@@ -225,6 +225,7 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4,3']], function () {
 
     Route::get('kasir-apotek', [kasirPoliController::class, 'kasirApotek'])->name('kasir-apotek');
     Route::post('regout', [kasirPoliController::class, 'regOut'])->name('regout');
+    Route::post('EditRegout', [kasirPoliController::class, 'EditRegout'])->name('EditRegout');
 });
 
 

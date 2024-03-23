@@ -233,7 +233,7 @@ class kasirPoliController extends Controller
         //     ->leftJoin('trs_chart', 'ta_registrasi_keluar.trs_kp_kd_trs_chart', 'trs_chart.kd_trs')
         //     ->get();
 
-        $isDataRegOut = ta_registrasi_keluar_hdr::with('regoutDetail.tindakan.nm_trf')
+        $isDataRegOut = ta_registrasi_keluar_hdr::with('regoutDetail')
             ->where('kd_trs_reg_out', '=', $request->kd_trs)
             // ->leftJoin('trs_chart', 'ta_registrasi_keluar.trs_kp_kd_trs_chart', 'trs_chart.kd_trs')
             ->get();
@@ -243,5 +243,27 @@ class kasirPoliController extends Controller
         // ->get();
 
         return response()->json($isDataRegOut);
+    }
+
+    public function EditRegout(Request $request)
+    {
+        dd($request->all());
+        $request->validate([
+            'trs_kp_kd_regE' => 'Required',
+            'trs_kp_tgl_keluarE' => 'Required',
+            // 'trs_kp_nm_pasienE' => 'Required',
+            // 'trs_kp_no_mrE' => 'Required',
+            // 'trs_kp_layananE' => 'Required',
+            // 'trs_kp_dokterE' => 'Required',
+            'nm_tarif_dasarE' => 'Required',
+            'trs_kp_nilai_totalE' => 'Required'
+
+        ]);
+
+        DB::table('ta_registrasi_keluar_hdr')->where('kd_trs_reg_out', $request->kd_trs_reg_outE)->update([
+            'nm_tarif_dasar' => $request->nm_tarif_dasarE,
+            'kp_nilai_total' => $request->kp_nilai_totalE,
+            'user' => Auth::user()->name
+        ]);
     }
 }

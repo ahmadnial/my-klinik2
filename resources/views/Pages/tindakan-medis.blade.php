@@ -760,7 +760,6 @@
         </div>
     </div>
 
-
     {{-- ===============ADD TINDAKAN MODAL================= --}}
     <div class="modal fade" id="addTindakans">
         <div class="modal-dialog">
@@ -910,9 +909,13 @@
                         <tfoot>
                             <hr>
                             <div class="float-left mt-2">
-                                <button type="button" class="btn btn-sm btn-warning float-right dropdown-toggle"
+                                {{-- <button type="button" class="btn btn-sm btn-warning float-right dropdown-toggle"
                                     role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false" onclick="getTemplateOrder()">Load
+                                    Template
+                                </button> --}}
+                                <button type="button" class="btn btn-sm btn-warning float-right dropdown-toggle"
+                                    onclick="getTemplateOrder()">Load
                                     Template
                                 </button>
 
@@ -935,6 +938,37 @@
     </form>
 
     {{-- ========================END MODAL ADD RESEP============================= --}}
+
+    {{-- ===============TEMPLATE OPNE MODAL================= --}}
+    <div class="modal fade" id="loadTemplate">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Template Resep</h4>
+                    <button type="button" class="close" id="CloseModalTemplate" data-dismiss="modal"
+                        aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="">
+                            <table class="table table-striped table-hover" id="penjualan">
+                                <tbody id="loadListAllTemplate">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    {{-- <div class="float-right mt-2">
+                        <a type="button" id="exitModal" onclick="exitModalTemplate()" class="btn btn-success">add</a>
+                    </div> --}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- ========================END MODAL TEMPLATE============================= --}}
 
     {{-- MODAL EDIT OBAT RESEP --}}
     {{-- <div class="modal fade show" id="modalAddObat" tabindex="-1" role="dialog"
@@ -1147,6 +1181,8 @@
 @push('scripts')
     <script>
         function getTemplateOrder() {
+            $('#loadTemplate').modal('show');
+            $("#loadListAllTemplate").empty();
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1161,8 +1197,13 @@
                         var templateName = getValue[getVal].nm_to;
                         var kd_to = getValue[getVal].kd_to;
 
-                        $("#showTemplateOrder").append(
-                            `<a class="dropdown-item" onClick="selectDataTemplate(this)" data-kd_to="${kd_to}" href="#">${templateName}</a>`
+                        // $("#showTemplateOrder").append(
+                        //     `<a class="dropdown-item" onClick="selectDataTemplate(this)" data-kd_to="${kd_to}" href="#">${templateName}</a>`
+                        // )
+                        $("#loadListAllTemplate").append(
+                            `<tr>
+                                <td><a class="dropdown-item" onClick="selectDataTemplate(this)" data-kd_to="${kd_to}" href="#">${templateName}</a></td>
+                            </tr>`
                         )
                     }
                 }
@@ -1170,6 +1211,8 @@
         }
 
         function selectDataTemplate(x) {
+            $('#loadTemplate').modal('hide');
+
             var getKdTo = $(x).data('kd_to');
             $.ajax({
                 headers: {
