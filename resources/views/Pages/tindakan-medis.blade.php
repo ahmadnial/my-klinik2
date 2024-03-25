@@ -899,7 +899,7 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="resepID callout mt-2" style="overflow-y: scroll; max-height:450px;">
+                        <div class="resepID callout mt-2" style="overflow-y: scroll; max-height:350px;">
                             <div class="resep-content">
                                 <div class="row" id="resepList" style="padding: 5px;">
                                 </div>
