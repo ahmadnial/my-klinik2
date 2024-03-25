@@ -390,7 +390,7 @@ class TindakanController extends Controller
     // Get ChartID utk Edit
     public function chartIdSearch(Request $request)
     {
-        $isChartID = ChartTindakan::with('trstdk.nm_trf')
+        $isChartID = ChartTindakan::with('trstdk.nm_trf', 'resep')
             ->where('chart_id', $request->chartid)
             ->get();
 

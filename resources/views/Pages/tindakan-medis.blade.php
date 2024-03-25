@@ -2211,7 +2211,7 @@
                             var buttonEdit =
                                 `<button type="button" class="btn btn-outline-info btn-xs" id="btneditchart" data-is_chart_id="${getValue[getVal].chart_id}" onClick="editChart(this)"><i class="fa fa-pen"></i></button>`;
                             var buttonDelete =
-                                `<button type="button" class="btn btn-outline-danger btn-xs" id="btneditchart" data-is_chart_id="${getValue[getVal].chart_id}" onClick="deleteChart(this)"><i class="fa fa-trash"></i></button>`;
+                                `<button type="button" class="btn btn-outline-danger btn-xs" id="btnDeleteChart" data-is_chart_id="${getValue[getVal].chart_id}" onClick="deleteChart(this)"><i class="fa fa-trash"></i></button>`;
                         } else {
                             var buttonEdit = '';
                             var buttonDelete = '';
