@@ -1821,6 +1821,7 @@
                         $('#satuan_jual_obat').val(datavalue.fm_satuan_jual);
                         $('#namaObatResep').val(datavalue.fm_nm_obat);
                         $('.ch_hrg_jual').val(datavalue.fm_hrg_jual_non_resep);
+                        $('#qty_obat').val('1');
                     })
                 }
             })
