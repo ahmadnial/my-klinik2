@@ -899,7 +899,7 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="resepID callout callout-warning mt-2">
+                        <div class="resepID callout mt-2" style="overflow-y: scroll; max-height:450px;">
                             <div class="resep-content">
                                 <div class="row" id="resepList" style="padding: 5px;">
                                 </div>
@@ -1240,7 +1240,7 @@
                             `
                             <div class="col-md-6 kt-callout-etiket mb-4" id="cardObatList${kd_obat_to}">
                                 <div class="border-radius3"
-                                    style="background-image: linear-gradient(to bottom right, #D1B9E8, #FBF8EE); padding: 5px; box-shadow: 0px 0px 0px 0px !important;border: 0.5px solid lightgrey;; min-height: 196px;">
+                                    style="background-image: linear-gradient(to bottom right, #ECEBF4, #B0A8E5); padding: 5px; box-shadow: 0px 0px 0px 0px !important;border: 0.5px solid lightgrey;; min-height: 196px;">
                                     <div class="kt-portlet__head"
                                         style="min-height: 10px !important;padding: 0px;z-index: 10; border: 0px;">
                                         <div style="top: 0;position: absolute;left: -2; width: 30%;"
@@ -1926,7 +1926,7 @@
                 `
                      <div class="col-md-6 kt-callout-etiket mb-4" id="cardObatList${obatResep}">
                          <div class="border-radius3"
-                             style="background-image: linear-gradient(to bottom right, #D1B9E8, #FBF8EE); padding: 5px; box-shadow: 0px 0px 0px 0px !important;border: 0.5px solid lightgrey;; min-height: 196px;">
+                             style="background-image: linear-gradient(to bottom right, #ECEBF4, #B0A8E5); padding: 5px; box-shadow: 0px 0px 0px 0px !important;border: 0.5px solid lightgrey;; min-height: 196px;">
                              <div class="kt-portlet__head"
                                  style="min-height: 10px !important;padding: 0px;z-index: 10; border: 0px;">
                                  <div style="top: 0;position: absolute;left: -2; width: 30%;"

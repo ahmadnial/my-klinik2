@@ -66,14 +66,12 @@ class kasirPoliController extends Controller
                 // $today = Carbon::today()->toDateString();
                 // if ($row->tgl_trs == $today) {
                 $actionBtn = '
-                <button class="btn btn-xs btn-info" data-toggle="modal" data-target="#EditObat"
-                onclick="getDetailPen(this)" data-kd_trs="' . $row->kd_trs_reg_out . '">&nbsp;&nbsp;<i class="fa fa-info">&nbsp;&nbsp;</i></button>
                 <button class="btn btn-xs btn-primary" data-toggle="modal" data-target=""
                 onclick="EditTrs(this);" data-kd_trsu="' . $row->kd_trs_reg_out . '"><i class="fa fa-edit"></i></button>
                 <button class="btn btn-xs btn-warning" data-toggle="modal" data-target="#EditObat"
                 onclick="cetakNota(this)" data-kd_trsc="' . $row->kd_trs_reg_out . '" target="_blank"> <i class="fa fa-print"></i> </button>
                  <button class="btn btn-xs btn-danger" data-toggle="modal" data-target=""
-                onclick="DeleteTrs(this);" data-kd_trsu="' . $row->kd_trs_reg_out . '"><i class="fa fa-trash"></i></button>
+                
                 ';
                 // } else {
                 //     $actionBtn = '
@@ -247,7 +245,7 @@ class kasirPoliController extends Controller
 
     public function EditRegout(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $request->validate([
             'trs_kp_kd_regE' => 'Required',
             'trs_kp_tgl_keluarE' => 'Required',
@@ -260,10 +258,43 @@ class kasirPoliController extends Controller
 
         ]);
 
-        DB::table('ta_registrasi_keluar_hdr')->where('kd_trs_reg_out', $request->kd_trs_reg_outE)->update([
-            'nm_tarif_dasar' => $request->nm_tarif_dasarE,
-            'kp_nilai_total' => $request->kp_nilai_totalE,
-            'user' => Auth::user()->name
-        ]);
+        DB::beginTransaction();
+        try {
+            DB::table('ta_registrasi_keluar_hdr')->where('kd_trs_reg_out', $request->kd_trs_reg_outE)->update([
+                'nm_tarif_dasar' => $request->nm_tarif_dasarE,
+                'kp_nilai_total' => $request->trs_kp_nilai_totalE,
+                'user' => Auth::user()->name
+            ]);
+
+            if ($request->trs_kp_kd_trs_chart != null) {
+                DB::table('ta_registrasi_keluar')->where('kd_trs_reg_out', $request->kd_trs_reg_outE)->update([
+                    'nm_tarif_dasar' => $request->nm_tarif_dasarE,
+                    'trs_kp_nilai_total' => $request->trs_kp_nilai_totalE,
+                    'user' => Auth::user()->name
+                ]);
+            }
+
+            DB::table('rekening_pendapatan_poliklinik_total')->where('rk_kd_reg', $request->trs_kp_kd_regE)->update([
+                'rk_nilai' => $request->trs_kp_nilai_totalE
+                // 'user' => Auth::user()->name
+            ]);
+
+            DB::commit();
+
+            $sessionFlash = [
+                'message' => 'Saved!',
+                'alert-type' => 'success'
+            ];
+
+            return Redirect::to('/kasir-poli')->with($sessionFlash);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            $sessionFlashErr = [
+                'message' => $e,
+                'alert-type' => 'error'
+            ];
+            return Redirect::to('/kasir-poli')->with($sessionFlashErr);
+        }
     }
 }
