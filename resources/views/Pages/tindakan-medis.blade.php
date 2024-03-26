@@ -419,12 +419,66 @@
             </div>
         </div>
 
-        <div class="card" id="chart_soap" style="overflow-y:scroll; overflow-x: hidden; height:810px;">
+        <div class="mt-2">
+            <table class="table table-bordered" style="border:none;">
+                <tbody style="background-color:#f5f2e9; border:none">
+                    <tr>
+                        <td><span class="text-center">Nama</span><input type="text"
+                                class="form-control form-control-sm" id="pasienName" value="" readonly
+                                style="border: none; font-size: 18px">
+                        </td>
+                        <td><span class="text-center">Alamat</span><input type="text"
+                                class="form-control form-control-sm" id="pasienAddress" value="" readonly
+                                style="border: none; font-size: 18px">
+                        </td>
+                        <td><span class="text-center">Usia</span><input type="text"
+                                class="form-control form-control-sm col" id="pasienAge" value="" readonly
+                                style="border: none; font-size: 18px"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="text-center">Alergi</span><input type="text"
+                                class="form-control form-control-sm" id="pasienAlergi" value="" readonly
+                                style="border: none">
+                        </td>
+                        <td><span class="text-center">Last Tarif</span><input type="text"
+                                class="form-control form-control-sm" id="pasienLastTarifDasar" value="" readonly
+                                style="border: none"></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card" id="chart_soap" style="overflow-y:scroll; overflow-x: hidden; height:650px;">
             <div class="">
                 {{-- <div class="col-12">
                 </div> --}}
                 {{-- <div class="col"> --}}
                 {{-- <div class="row"> --}}
+                {{-- <div class="container mt-2">
+                    <table class="table table-bordered" style="border:none;">
+                        <tbody style="background-color:#f5f2e9; border:none">
+                            <tr>
+                                <td><input type="text" class="form-control form-control-sm" id="pasienName"
+                                        value="" readonly style="border: none; font-size: 18px">
+                                </td>
+                                <td><input type="text" class="form-control form-control-sm" id="pasienAddress"
+                                        value="" readonly style="border: none; font-size: 18px">
+                                </td>
+                                <td><input type="text" class="form-control form-control-sm" id="pasienAge"
+                                        value="" readonly style="border: none; font-size: 18px"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="form-control form-control-sm" id="pasienAlergi"
+                                        value="" readonly style="border: none">
+                                </td>
+                                <td><input type="text" class="form-control form-control-sm" id="pasienLastTarifDasar"
+                                        value="" readonly style="border: none"></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> --}}
 
                 <div class="form-group col-sm-6">
                     <input type="hidden" class="form-control" name="tr_no_mr" id="tr_no_mr" value="" readonly>
@@ -488,7 +542,7 @@
                                         padding-bottom:5px; padding-left:10px; padding-right:50px; color: #ffffff"><b>
                                             SUBJECTIVE</b></span>
                                     {{-- <input class="form-control" style="border: none" id="keluhanutama"> --}}
-                                    <textarea id="chart_S" name="chart_S" class="ta_Chart_S form-control" rows="7"></textarea>
+                                    <textarea id="chart_S" name="chart_S" class="ta_Chart_S form-control" rows="4"></textarea>
                                 </div>
 
                                 <div class="form-group">
@@ -548,13 +602,13 @@
                                                         <input type="number" id="ttv_BPs" name="ttv_BPs"
                                                             data-satuan="mmHg" data-monitorname="Blood Pressure Sistole"
                                                             class="form-control form-control-sm vital-sign" min="0"
-                                                            value="" required>
+                                                            value="">
                                                         <span class="input-group-text"
                                                             style="width:7em; text-align:center">mmHg</span>
                                                     </div>
-                                                    <div class="invalid-feedback">
+                                                    {{-- <div class="invalid-feedback">
                                                         Please..dont let me blank
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                             </div>
                                             <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
@@ -572,7 +626,7 @@
                                                         <input type="number" id="ttv_BPd" name="ttv_BPd"
                                                             data-satuan="mmHg" data-monitorname="Blood Pressure Diastole"
                                                             class="form-control form-control-sm vital-sign" min="0"
-                                                            value="" required>
+                                                            value="">
                                                         <span class="input-group-text"
                                                             style="width:7em; text-align:center">mmHg</span>
                                                     </div>
@@ -708,7 +762,7 @@
                                     </div>
                                     {{-- END VITAL SIGN --}}
 
-                                    <textarea id="chart_O" name="chart_O" class="form-control mt-2" rows="7"></textarea>
+                                    <textarea id="chart_O" name="chart_O" class="form-control mt-2" rows="4"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <span for=""
@@ -720,7 +774,7 @@
                                         name="chart_A_diagnosa" id="chart_A_diagnosa" onkeyup="getICDX()">
                                         {{-- <option value="">--Select--</option> --}}
                                     </select>
-                                    <textarea id="chart_A" name="chart_A" class="form-control mt-3 mb-2" rows="7"></textarea>
+                                    <textarea id="chart_A" name="chart_A" class="form-control mt-3 mb-2" rows="4"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <span for=""
@@ -734,7 +788,7 @@
                                         <button type="button" class="btn btn-xs btn-info floar-right"
                                             data-toggle="modal" data-target="#addResep">Resep</button>
                                     </div>
-                                    <textarea id="chart_P" name="chart_P" class="form-control" rows="7"></textarea>
+                                    <textarea id="chart_P" name="chart_P" class="form-control" rows="4"></textarea>
                                 </div>
                                 <div class="card-resep form-group">
 
@@ -1630,6 +1684,12 @@
                         $('#tr_umur').val(isAgeNow);
                         $('#umurHdr').val(isAgeNow);
                         $('#tglLahirHdr').val(isDateBirthday);
+
+                        $('#pasienName').val(dataregvalue.fr_nama);
+                        $('#pasienAddress').val(dataregvalue.fr_alamat);
+                        $('#pasienAlergi').val(dataregvalue.fr_alergi);
+                        $('#pasienLastTarifDasar').val(dataregvalue.tcmr.fs_last_tarif_dasar);
+                        $('#pasienAge').val(isAgeNow);
 
                         toastr.info('Pasien\t' + `${dataregvalue.fr_nama}` + '\tPinned!', {
                             timeOut: 700,
