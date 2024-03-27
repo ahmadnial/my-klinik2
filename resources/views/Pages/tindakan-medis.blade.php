@@ -834,7 +834,7 @@
                         <img src="https://s3.amazonaws.com/creativetim_bucket/new_logo.png" class="mr-3 images"
                             alt="...">
                         <div class="media-body">
-                            <textarea class="autosize" placeholder="add..." rows="1" id="note" data-emoji="false"></textarea>
+                            <textarea class="autosize" id="autosize" placeholder="add..." rows="1" id="note" data-emoji="false"></textarea>
                             <div class="position-relative">
                                 <input type="file" class="d-none form-control"
                                     accept="audio/*|video/*|video/x-m4v|video/webm|video/x-ms-wmv|video/x-msvideo|video/3gpp|video/flv|video/x-flv|video/mp4|video/quicktime|video/mpeg|video/ogv|.ts|.mkv|image/*|image/heic|image/heif"
@@ -848,7 +848,7 @@
                 <div class="row col-md-12 ml-auto mr-auto preview"></div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-                    <span class="btn btn-info btn-sm" disabled>Save changes</span>
+                    <span class="btn btn-info btn-sm" disabled>Upload</span>
                 </div>
             </div>
         </div>
@@ -2715,7 +2715,7 @@
             var files = document.querySelector('input[type=file]').files;
 
             function readAndPreview(file) {
-                if (/\.(jpe?g|png|gif|mp4|webm|ogg|ogv|mp3|wav)$/i.test(file.name)) {
+                if (/\.(jpe?g|png|gif|docx|webm|ogg|ogv|pdf|wav)$/i.test(file.name)) {
                     if (file.size < 10 * 1024 * 1024) { // MAX 10 mb
                         var reader = new FileReader();
                         var spc = '\u00A0';
@@ -2818,7 +2818,7 @@
                 } else {
                     return iziToast.error({
                         title: 'failed',
-                        message: 'Please provide avalid file. Accepted formats include .png, .jpg, and .gif.',
+                        message: 'Please provide a valid file. Accepted formats include .png, .jpg, and .gif.',
                         iconText: 'error_outline'
                     });
                 }
