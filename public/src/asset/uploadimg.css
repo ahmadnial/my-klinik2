@@ -258,11 +258,11 @@ img {
     user-select: none;
 }
 
-.form-group {
+/* .form-group {
     padding-bottom: 10px;
     position: relative;
     margin: 8px 0 0;
-}
+} */
 
 .progress {
     height: 4px;

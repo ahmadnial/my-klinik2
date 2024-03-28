@@ -514,7 +514,7 @@
         </div> --}}
                 {{-- <div class="card-body"> --}}
                 <form action="{{ url('chartCreate') }}" method="post" id="CHCreate" class="needs-validation"
-                    novalidate>
+                    novalidate enctype="multipart/form-data">
                     <div class="row">
                         <div class="col">
                             {{-- <div class="card card-info"> --}}
@@ -797,8 +797,49 @@
 
                                 </div>
                                 <div class="showOrHideTdk"></div>
+                                {{-- ===============ADD IMAGE MODAL================= --}}
+                                <div class="modal fade" id="uploadImg" role="dialog"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="indicator"></div>
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="media mb-3">
+                                                    <img src="https://s3.amazonaws.com/creativetim_bucket/new_logo.png"
+                                                        class="mr-3 images" alt="...">
+                                                    <div class="media-body">
+                                                        <textarea class="autosize" id="autosize" placeholder="add..." rows="1" id="note" data-emoji="false"></textarea>
+                                                        <div class="position-relative">
+                                                            <input type="file" class="d-none form-control"
+                                                                accept="audio/*|video/*|video/x-m4v|video/webm|video/x-ms-wmv|video/x-msvideo|video/3gpp|video/flv|video/x-flv|video/mp4|video/quicktime|video/mpeg|video/ogv|.ts|.mkv|image/*|image/heic|image/heif"
+                                                                onchange="previewFiles()" name="chart_img[]"
+                                                                id="inputUp" multiple>
+                                                            <a class="mediaUp mr-4"><i class="fa fa-images mr-2"
+                                                                    data-tippy="add (Photo)"
+                                                                    onclick="trgger('inputUp')"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row col-md-12 ml-auto mr-auto preview"></div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary btn-sm"
+                                                    data-dismiss="modal">Close</button>
+                                                <span class="btn btn-info btn-sm" disabled>Upload</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- ===============END ADD IMAGE MODAL================= --}}
 
-                                <input type="hidden" id="user" name="user_create" value="tes">
+                                {{-- <input type="hidden" id="user" name="user_create" value="tes"> --}}
                             </div>
                             {{-- </div> --}}
                             <div class="modal-footer" id="">
@@ -817,43 +858,7 @@
         </div>
     </div>
 
-    {{-- ===============ADD IMAGE MODAL================= --}}
-    <div class="modal fade" id="uploadImg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="indicator"></div>
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="media mb-3">
-                        <img src="https://s3.amazonaws.com/creativetim_bucket/new_logo.png" class="mr-3 images"
-                            alt="...">
-                        <div class="media-body">
-                            <textarea class="autosize" id="autosize" placeholder="add..." rows="1" id="note" data-emoji="false"></textarea>
-                            <div class="position-relative">
-                                <input type="file" class="d-none form-control"
-                                    accept="audio/*|video/*|video/x-m4v|video/webm|video/x-ms-wmv|video/x-msvideo|video/3gpp|video/flv|video/x-flv|video/mp4|video/quicktime|video/mpeg|video/ogv|.ts|.mkv|image/*|image/heic|image/heif"
-                                    onchange="previewFiles()" id="inputUp" multiple>
-                                <a class="mediaUp mr-4"><i class="fa fa-images mr-2" data-tippy="add (Photo)"
-                                        onclick="trgger('inputUp')"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row col-md-12 ml-auto mr-auto preview"></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-                    <span class="btn btn-info btn-sm" disabled>Upload</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    {{-- ===============END ADD IMAGE MODAL================= --}}
+
 
     {{-- ===============ADD TINDAKAN MODAL================= --}}
     <div class="modal fade" id="addTindakans">

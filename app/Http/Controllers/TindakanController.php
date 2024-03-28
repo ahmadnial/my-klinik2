@@ -53,7 +53,12 @@ class TindakanController extends Controller
             $kd_trs = 'TU' . '-' . $vardate . str_pad(($dec + 1), 8, '0', STR_PAD_LEFT);
         };
         $isTindakanChart = ChartTindakan::where('chart_mr', '=', $request)->get();
-        $isRegActive = registrasiCreate::where('fr_tgl_keluar', '=', '')->get();
+
+        $isRegActive = registrasiCreate::where([
+            ['fr_tgl_keluar', '=', ''],
+            ['fr_dokter', '=', Auth::user()->name]
+        ])->get();
+
         $icdx = mstr_icdx::all();
         $isTindakanTarif = mstr_tindakan::all();
         $isHistoryTindakan = trs_chart::all();
