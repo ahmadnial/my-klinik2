@@ -787,9 +787,9 @@
                                             data-target="#addTindakans">Tindakan</button>
                                         <button type="button" class="btn btn-xs btn-info floar-right"
                                             data-toggle="modal" data-target="#addResep">Resep</button>
-                                        <button type="button" class="btn btn-xs btn-danger floar-right"
+                                        {{-- <button type="button" class="btn btn-xs btn-danger floar-right"
                                             data-toggle="modal" data-target="#uploadImg"><i
-                                                class="fa fa-plus"></i>&nbsp;Upload</button>
+                                                class="fa fa-plus"></i>&nbsp;Upload</button> --}}
                                     </div>
                                     <textarea id="chart_P" name="chart_P" class="form-control" rows="4"></textarea>
                                 </div>
