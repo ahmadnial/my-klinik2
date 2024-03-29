@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\chart_images;
 use App\Models\ChartTindakan;
 use App\Models\mstr_dokter;
 use App\Models\mstr_icdx;
@@ -66,7 +67,7 @@ class TindakanController extends Controller
 
         // $data = response()->json($chart_id);
         // $isLastChartID = $chart_id;
-        // dd($dateNow);
+        // dd($kd_trs);
 
         return view('pages.tindakan-medis', [
             'isRegActive' => $isRegActive,
@@ -163,8 +164,8 @@ class TindakanController extends Controller
 
     public function chartCreate(Request $request)
     {
-        $yes = $request->all();
-        dd($yes);
+        // $yes = $request->all();
+        // dd($yes);
 
         $request->validate([
             // 'user' => 'required',
@@ -175,6 +176,7 @@ class TindakanController extends Controller
             'chart_nm_pasien' => 'required',
             'chart_layanan' => 'required',
             'chart_dokter' => 'required',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             // 'user_create' => 'required',
             // 'kd_trs' => 'required',
             // 'tgl_trs' => 'required',
@@ -283,6 +285,21 @@ class TindakanController extends Controller
             };
         }
 
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $fileOriginalName = $image->getClientOriginalExtension();
+                $fileNewName = $request->chart_id . '.' . $fileOriginalName;
+                $image->storeAs('images', $fileNewName, 'public');
+                chart_images::create([
+                    'chart_id' => $request->chart_id,
+                    'chart_noRm' => $request->chart_mr,
+                    'chart_kd_reg' => $request->chart_kd_reg,
+                    'chart_imageName' => $fileNewName,
+                    'chart_tglTrs' => $request->chart_tgl_trs
+                ]);
+            }
+        }
+
         // $insertLabel = [];
         // foreach ($request->ch_kd_obat as $label => $val) {
         //     $newDataLabel = [
@@ -357,7 +374,7 @@ class TindakanController extends Controller
     // get timeline pemeriksaan
     public function getTimeline(Request $request)
     {
-        $isTimelineHistory = ChartTindakan::with('trstdk.nm_trf', 'resep')
+        $isTimelineHistory = ChartTindakan::with('trstdk.nm_trf', 'resep', 'images')
             ->where('chart_mr', $request->chart_mr)
             ->orderBy('chart_tindakan.created_at', 'DESC')
             ->get();

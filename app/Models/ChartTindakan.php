@@ -56,4 +56,9 @@ class ChartTindakan extends Model
     {
         return $this->hasMany(tp_hdr::class, 'no_mr', 'chart_mr');
     }
+
+    public function images()
+    {
+        return $this->hasMany(chart_images::class, 'chart_noRm', 'chart_mr');
+    }
 }

@@ -513,16 +513,16 @@
                 SOAP</button>
         </div> --}}
                 {{-- <div class="card-body"> --}}
-                <form action="{{ url('chartCreate') }}" method="post" id="CHCreate" class="needs-validation"
-                    novalidate enctype="multipart/form-data">
-                    <div class="row">
-                        <div class="col">
-                            {{-- <div class="card card-info"> --}}
-                            {{-- <div class="card-header">
+                <div class="row">
+                    <div class="col">
+                        {{-- <div class="card card-info"> --}}
+                        {{-- <div class="card-header">
                                     <h3 class="card-title">Form SOAP
                                     </h3>
                                 </div> --}}
-                            {{-- Hidden value --}}
+                        {{-- Hidden value --}}
+                        <form action="{{ url('chartCreate') }}" method="post" id="CHCreate" class="needs-validation"
+                            novalidate enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
                                 <input type="hidden" id="chart_id" name="chart_id" value="{{ $isLastChartID }}">
@@ -787,11 +787,13 @@
                                             data-target="#addTindakans">Tindakan</button>
                                         <button type="button" class="btn btn-xs btn-info floar-right"
                                             data-toggle="modal" data-target="#addResep">Resep</button>
-                                        {{-- <button type="button" class="btn btn-xs btn-danger floar-right"
+                                        <button type="button" class="btn btn-xs btn-danger floar-right"
                                             data-toggle="modal" data-target="#uploadImg"><i
-                                                class="fa fa-plus"></i>&nbsp;Upload</button> --}}
+                                                class="fa fa-plus"></i>&nbsp;Upload</button>
                                     </div>
                                     <textarea id="chart_P" name="chart_P" class="form-control" rows="4"></textarea>
+                                    {{-- <input required type="file" class="form-control" name="images[]"
+                                        placeholder="address" multiple> --}}
                                 </div>
                                 <div class="card-resep form-group">
 
@@ -819,8 +821,8 @@
                                                         <div class="position-relative">
                                                             <input type="file" class="d-none form-control"
                                                                 accept="audio/*|video/*|video/x-m4v|video/webm|video/x-ms-wmv|video/x-msvideo|video/3gpp|video/flv|video/x-flv|video/mp4|video/quicktime|video/mpeg|video/ogv|.ts|.mkv|image/*|image/heic|image/heif"
-                                                                onchange="previewFiles()" name="chart_img[]"
-                                                                id="inputUp" multiple>
+                                                                onchange="previewFiles()" name="images[]" id="inputUp"
+                                                                multiple>
                                                             <a class="mediaUp mr-4"><i class="fa fa-images mr-2"
                                                                     data-tippy="add (Photo)"
                                                                     onclick="trgger('inputUp')"></i></a>
@@ -832,7 +834,7 @@
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary btn-sm"
                                                     data-dismiss="modal">Close</button>
-                                                <span class="btn btn-info btn-sm" disabled>Upload</span>
+                                                <span class="btn btn-info btn-sm" data-dismiss="modal">Save</span>
                                             </div>
                                         </div>
                                     </div>
@@ -852,12 +854,11 @@
                                 {{--
                         </div> --}}
                             </div>
-                        </div>
                     </div>
+                </div>
             </div>
         </div>
     </div>
-
 
 
     {{-- ===============ADD TINDAKAN MODAL================= --}}
@@ -940,8 +941,8 @@
                             <div class="">
                                 <div class="callout callout-danger bg-light">
                                     <label for="">Tarif Dasar</label>
-                                    <input type="number" class="form-control" name="nm_tarif_dasar"
-                                        id="nm_tarif_dasar">
+                                    <input type="number" class="form-control" name="nm_tarif_dasar" id="nm_tarif_dasar"
+                                        value="0">
                                     {{-- <select class="nm_tarif_dasar form-control" style="width:100%;" name="nm_tarif_dasar"
                                         id="nm_tarif_dasar">
                                         <option value="">--Select--</option>
@@ -1035,7 +1036,7 @@
             </div>
         </div>
     </div>
-    </form>
+
 
     {{-- ========================END MODAL ADD RESEP============================= --}}
 
@@ -1174,8 +1175,18 @@
             </div>
         </div>
     </div>
+    </form>
 
     {{-- END MODAL EDIT RESEP --}}
+
+    <div class="modal fade" role="dialog" tabindex="-1" id="showImgChart">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content"><button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                <div class="modal-body"><img class="img-fluid" id="imageShowOff" src=""></div>
+            </div>
+        </div>
+    </div>
+
 
     <div class="col-md-6 col-sm-6 order-md-1 order-sm-2" id="timelineChart">
         <div style="overflow-y:scroll; overflow-x: hidden; height:900px;">
@@ -2300,6 +2311,19 @@
                             // }
                         }
 
+                        const images = getValue[getVal].images;
+                        let imagesShow = "";
+                        for (i in images) {
+                            if (images[i] != null && images[i].chart_id == getValue[getVal].chart_id) {
+                                imagesShow +=
+                                    `<button class="btn btn-info btn-sm mr-1" data-toggle="modal" data-target="#showImgChart" data-bigimage="{{ asset('/storage/images/${images[i].chart_imageName}') }}">
+                                        ${images[i].chart_imageName}
+                                    </button>`;
+                            } else {
+                                imagesShow += ``;
+                            }
+                        }
+
                         const resep = getValue[getVal].resep;
                         let resepShow = "";
                         for (i in resep) {
@@ -2310,6 +2334,7 @@
                                 resepShow += ``;
                             }
                         }
+
                         var getSessionName = '{{ Auth::user()->name }}';
                         // var ttv =
                         // `#VitalSign : <b class="text-primary">#BW:</b>${getValue[getVal].ttv_BW}(Kg) #BH:${getValue[getVal].ttv_BH}(CM) #BPs:${getValue[getVal].ttv_BPs}(mmHg)`;
@@ -2428,6 +2453,7 @@
                                                 padding-bottom:5px; padding-left:10px; padding-right:90px; color: #002e0a"><b>
                                                     PLAN</b></span>
                                             <textarea id="" class="show_chart_P form-control" rows="6" style="border:none; background-color: #FAFCFE; color: #4A4B90; font-family: arial"" readonly>${rmvNullP}</textarea>
+                                            <div class="image_show mt-2 mr-2">${imagesShow}</div>
                                         </div>
                                         <hr>
                                         <div class="tindakan callout callout-danger" id="TimelineTdk">
@@ -2465,6 +2491,21 @@
             })
         };
 
+        (function(document) {
+            "use strict";
+            const ready = (callback) => {
+                if (document.readyState != "loading") callback();
+                else document.addEventListener("DOMContentLoaded", callback);
+            };
+            ready(() => {
+                const img = document.getElementById("imageShowOff");
+                const simpleModal = document.getElementById("showImgChart");
+                simpleModal.addEventListener("show.bs.modal", (e) => {
+                    const bigImage = e.relatedTarget.getAttribute('data-bigimage')
+                    img.src = bigImage;
+                });
+            });
+        })(document);
 
         // Edit Chart
         function editChart(f) {
