@@ -1179,10 +1179,24 @@
 
     {{-- END MODAL EDIT RESEP --}}
 
-    <div class="modal fade" role="dialog" tabindex="-1" id="showImgChart">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content"><button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                <div class="modal-body"><img class="img-fluid" id="imageShowOff" src=""></div>
+    <div class="modal fade" role="dialog" id="showImgChart">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    {{-- <h4 class="modal-title">Template Resep</h4> --}}
+                    <button type="button" class="close" id="CloseModalTemplate" data-dismiss="modal"
+                        aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="img-fluid" id="imageShowOff">
+
+                    </div>
+                    {{-- <div class="float-right mt-2">
+                        <a type="button" id="exitModal" onclick="exitModalTemplate()" class="btn btn-success">add</a>
+                    </div> --}}
+                </div>
             </div>
         </div>
     </div>
@@ -2319,6 +2333,7 @@
                                     `<button class="btn btn-info btn-sm mr-1" data-toggle="modal" data-target="#showImgChart" data-bigimage="{{ asset('/storage/images/${images[i].chart_imageName}') }}">
                                         ${images[i].chart_imageName}
                                     </button>`;
+
                             } else {
                                 imagesShow += ``;
                             }
