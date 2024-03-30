@@ -176,7 +176,7 @@ class TindakanController extends Controller
             'chart_nm_pasien' => 'required',
             'chart_layanan' => 'required',
             'chart_dokter' => 'required',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,pdf|max:4048',
             // 'user_create' => 'required',
             // 'kd_trs' => 'required',
             // 'tgl_trs' => 'required',
@@ -295,6 +295,7 @@ class TindakanController extends Controller
                     'chart_noRm' => $request->chart_mr,
                     'chart_kd_reg' => $request->chart_kd_reg,
                     'chart_imageName' => $fileNewName,
+                    'chart_note' => $request->imgNote,
                     'chart_tglTrs' => $request->chart_tgl_trs
                 ]);
             }

@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('chart_noRm');
             $table->string('chart_kd_reg');
             $table->string('chart_imageName');
+            $table->string('chart_imageLabel');
+            $table->string('chart_note');
             $table->string('chart_tglTrs');
             $table->timestamps();
         });

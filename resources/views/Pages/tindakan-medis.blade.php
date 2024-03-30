@@ -784,9 +784,10 @@
                                     <div class="float-right mb-1">
                                         <button type="button" id="addTindakann"
                                             class="btn btn-xs btn-warning floar-right text-white" data-toggle="modal"
-                                            data-target="#addTindakans">Tindakan</button>
+                                            data-target="#addTindakans"><i class="fa fa-plus"></i>&nbsp;Tindakan</button>
                                         <button type="button" class="btn btn-xs btn-info floar-right"
-                                            data-toggle="modal" data-target="#addResep">Resep</button>
+                                            data-toggle="modal" data-target="#addResep"><i
+                                                class="fa fa-plus"></i>&nbsp;Resep</button>
                                         <button type="button" class="btn btn-xs btn-danger floar-right"
                                             data-toggle="modal" data-target="#uploadImg"><i
                                                 class="fa fa-plus"></i>&nbsp;Upload</button>
@@ -817,12 +818,12 @@
                                                     <img src="https://s3.amazonaws.com/creativetim_bucket/new_logo.png"
                                                         class="mr-3 images" alt="...">
                                                     <div class="media-body">
-                                                        <textarea class="autosize" id="autosize" placeholder="add..." rows="1" id="note" data-emoji="false"></textarea>
+                                                        <textarea class="autosize" id="autosize" placeholder="add..." rows="1" id="note" name="imgNote"
+                                                            data-emoji="false"></textarea>
                                                         <div class="position-relative">
                                                             <input type="file" class="d-none form-control"
-                                                                accept="audio/*|video/*|video/x-m4v|video/webm|video/x-ms-wmv|video/x-msvideo|video/3gpp|video/flv|video/x-flv|video/mp4|video/quicktime|video/mpeg|video/ogv|.ts|.mkv|image/*|image/heic|image/heif"
-                                                                onchange="previewFiles()" name="images[]" id="inputUp"
-                                                                multiple>
+                                                                {{-- accept="audio/*|video/*|video/x-m4v|video/webm|video/x-ms-wmv|video/x-msvideo|video/3gpp|video/flv|video/x-flv|video/mp4|video/quicktime|video/mpeg|video/ogv|.ts|.mkv|image/*|image/heic|image/heif" --}} onchange="previewFiles()"
+                                                                name="images[]" id="inputUp" multiple>
                                                             <a class="mediaUp mr-4"><i class="fa fa-images mr-2"
                                                                     data-tippy="add (Photo)"
                                                                     onclick="trgger('inputUp')"></i></a>
@@ -1180,7 +1181,7 @@
     {{-- END MODAL EDIT RESEP --}}
 
     <div class="modal fade" role="dialog" id="showImgChart">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     {{-- <h4 class="modal-title">Template Resep</h4> --}}
@@ -1190,7 +1191,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="img-fluid" id="imageShowOff">
+                    <div class="img-fluid" id="imageShowOff" style="max-width:100%; height:auto; width:auto">
 
                     </div>
                     {{-- <div class="float-right mt-2">
@@ -2330,7 +2331,8 @@
                         for (i in images) {
                             if (images[i] != null && images[i].chart_id == getValue[getVal].chart_id) {
                                 imagesShow +=
-                                    `<button class="btn btn-info btn-sm mr-1" data-toggle="modal" data-target="#showImgChart" data-bigimage="{{ asset('/storage/images/${images[i].chart_imageName}') }}">
+                                    `<button class="btn btn-info btn-sm mr-1" data-toggle="modal" data-target="#showImgChart" onclick="getImagesUpload(this)"
+                                    data-bigimage="{{ asset('/storage/images/${images[i].chart_imageName}') }}">
                                         ${images[i].chart_imageName}
                                     </button>`;
 
@@ -2506,21 +2508,36 @@
             })
         };
 
-        (function(document) {
-            "use strict";
-            const ready = (callback) => {
-                if (document.readyState != "loading") callback();
-                else document.addEventListener("DOMContentLoaded", callback);
-            };
-            ready(() => {
-                const img = document.getElementById("imageShowOff");
-                const simpleModal = document.getElementById("showImgChart");
-                simpleModal.addEventListener("show.bs.modal", (e) => {
-                    const bigImage = e.relatedTarget.getAttribute('data-bigimage')
-                    img.src = bigImage;
-                });
-            });
-        })(document);
+        function getImagesUpload(b) {
+            $("#imageShowOff").empty();
+            var src = $(b).data('bigimage');
+            show_image(src, 700, 842, "Images");
+        }
+
+        function show_image(src, width, height, alt) {
+            var img = document.createElement("img");
+            img.src = src;
+            img.width = width;
+            img.height = height;
+            img.alt = alt;
+            $("#imageShowOff").append(img);
+        }
+        // (function(document) {
+        //     "use strict";
+        //     const ready = (callback) => {
+        //         if (document.readyState != "loading") callback();
+        //         else document.addEventListener("DOMContentLoaded", callback);
+        //     };
+        //     ready(() => {
+        //         const img = document.getElementById("imageShowOff");
+        //         const simpleModal = document.getElementById("showImgChart");
+        //         simpleModal.addEventListener("show.bs.modal", (e) => {
+        //             const bigImage = e.relatedTarget.getAttribute('data-bigimage')
+        //             img.src = bigImage;
+        //             // $('#imageShowOff').append(bigImage)
+        //         });
+        //     });
+        // })(document);
 
         // Edit Chart
         function editChart(f) {
@@ -2827,7 +2844,7 @@
                             preview.appendChild(div);
                             var i = document.createElement('i');
                             i.setAttribute('class', 'material-icons remove');
-                            i.textContent = "close";
+                            i.textContent = "X";
                             div.appendChild(i);
                             if (/\.(jpe?g|png|gif|)$/i.test(file.name)) {
                                 var image = new Image();

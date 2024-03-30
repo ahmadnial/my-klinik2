@@ -15,6 +15,8 @@ class chart_images extends Model
         'chart_noRm',
         'chart_kd_reg',
         'chart_imageName',
-        'chart_tglTrs'
+        'chart_tglTrs',
+        'chart_imageLabel',
+        'chart_note',
     ];
 }
