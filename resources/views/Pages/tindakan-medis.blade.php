@@ -814,27 +814,33 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <div class="media mb-3">
-                                                    <img src="https://s3.amazonaws.com/creativetim_bucket/new_logo.png"
-                                                        class="mr-3 images" alt="...">
-                                                    <div class="media-body">
-                                                        <textarea class="autosize" id="autosize" placeholder="add..." rows="1" id="note" name="imgNote"
-                                                            data-emoji="false"></textarea>
-                                                        <div class="position-relative">
-                                                            <input type="file" class="d-none form-control"
-                                                                {{-- accept="audio/*|video/*|video/x-m4v|video/webm|video/x-ms-wmv|video/x-msvideo|video/3gpp|video/flv|video/x-flv|video/mp4|video/quicktime|video/mpeg|video/ogv|.ts|.mkv|image/*|image/heic|image/heif" --}} onchange="previewFiles()"
-                                                                name="images[]" id="inputUp" multiple>
-                                                            <a class="mediaUp mr-4"><i class="fa fa-images mr-2"
-                                                                    data-tippy="add (Photo)"
-                                                                    onclick="trgger('inputUp')"></i></a>
+                                                <div class="container text-center mb-5">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <h4><a href="https://plugins.krajee.com/file-input"
+                                                                    target="_blank"><b>File Upload</b></a></h4>
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                <section class="bg-diffrent">
+                                                    <div class="container">
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-xl">
+                                                                <div class="file-upload-contain">
+                                                                    <input id="multiplefileupload" type="file"
+                                                                        name="images[]" class="d-none"
+                                                                        accept=".jpg,.gif,.png" multiple>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </section>
                                             </div>
-                                            <div class="row col-md-12 ml-auto mr-auto preview"></div>
+                                            {{-- <div class="row col-md-12 ml-auto mr-auto preview"></div> --}}
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary btn-sm"
-                                                    data-dismiss="modal">Close</button>
+                                                {{-- <button type="button" class="btn btn-secondary btn-sm"
+                                                    data-dismiss="modal">Close</button> --}}
                                                 <span class="btn btn-info btn-sm" data-dismiss="modal">Save</span>
                                             </div>
                                         </div>
@@ -2746,238 +2752,51 @@
 
         // Upload Image
 
-        function trgger(e) {
-            document.getElementById(e).click();
-            new Showprogress();
-        }
+        $(document).ready(function() {
+            var fileArr = [];
+            $("#images").change(function() {
+                // check if fileArr length is greater than 0
+                if (fileArr.length > 0) fileArr = [];
 
-        function Showprogress() {
-            var indicator = document.querySelector('div.indicator');
-            var preview = document.querySelector('div.preview');
-            var divand = document.createElement('div');
-            divand.setAttribute('id', 'progressand');
-            divand.style.display = "none";
-            indicator.appendChild(divand);
-            var div = document.createElement('div');
-            div.setAttribute('class', 'progress');
-            divand.appendChild(div);
-            var dynamic = document.createElement('div');
-            dynamic.setAttribute('id', 'dynamic');
-            dynamic.setAttribute('class', 'progress-bar progress-bar-striped bg-info progress-bar-animated');
-            dynamic.setAttribute('role', 'progressbar');
-            dynamic.setAttribute('aria-valuenow', '0');
-            dynamic.setAttribute('aria-valuemin', '0');
-            dynamic.setAttribute('aria-valuemax', '100');
-            dynamic.style.width = "0%";
-            div.appendChild(dynamic);
-            var percent = document.createElement('span');
-            percent.setAttribute('class', 'percent');
-            percent.textContent = '0%';
-            dynamic.appendChild(percent);
-            var load = document.createElement('div');
-            load.setAttribute('class', 'ml-auto mr-auto lds-contuner');
-            load.setAttribute('id', 'loader');
-            load.style.display = "none";
-            preview.appendChild(load);
-            var loader = document.createElement('div');
-            loader.setAttribute('class', 'lds-ellipsis');
-            load.appendChild(loader);
-            for (let x = 0; x < 4; x++) {
-                var divm = document.createElement('div');
-                loader.appendChild(divm);
-            }
-        }
-
-        function previewFiles() {
-            var preview = document.querySelector('div.preview');
-            var files = document.querySelector('input[type=file]').files;
-
-            function readAndPreview(file) {
-                if (/\.(jpe?g|png|gif|docx|webm|ogg|ogv|pdf|wav)$/i.test(file.name)) {
-                    if (file.size < 10 * 1024 * 1024) { // MAX 10 mb
-                        var reader = new FileReader();
-                        var spc = '\u00A0';
-
-                        function returnFileSize(n) {
-                            if (n < 1024) {
-                                return n + ' octets';
-                            } else if (n >= 1024 && n < 1048576) {
-                                return (n / 1024).toFixed(1) + spc + 'Ko';
-                            } else if (n >= 1048576) {
-                                return (n / 1048576).toFixed(1) + spc + 'Mo';
-                            }
-                        }
-
-                        function abortRead() {
-                            reader.abort();
-                        }
-                        reader.onloadstart = function(e) {
-                            document.querySelector("#progressand").style.display = "block";
-                            document.querySelector("#loader").style.display = "block";
-                        }
-                        reader.onprogress = function(e) {
-                            if (e.lengthComputable) {
-                                var percentLoaded = Math.round((e.loaded / e.total) * 99);
-                                if (percentLoaded < 99) {
-                                    document.querySelector('#dynamic').style.width = percentLoaded + '%';
-                                    document.querySelector('.percent').textContent = percentLoaded + '%';
-                                }
-                            }
-                        }
-                        reader.onloadend = function(e) {
-                            document.querySelector('#dynamic').style.width = '100%';
-                            document.querySelector('.percent').textContent = '100%';
-                            setTimeout(function() {
-                                $("#progressand").remove();
-                                $("#loader").remove();
-                            }, 900);
-                        }
-                        reader.onabort = function(e) {
-                            return iziError(failed, 'File read cancelled');
-                        }
-                        reader.addEventListener('error', function() {
-                            return iziError(failed, 'Error occurred reading file: ${file.name}');
-                        })
-                        reader.addEventListener("load", function() {
-                            var div = document.createElement('div');
-                            div.setAttribute('class', 'Imgpreview mb-3'); // animated zoomIn
-                            preview.appendChild(div);
-                            var i = document.createElement('i');
-                            i.setAttribute('class', 'material-icons remove');
-                            i.textContent = "X";
-                            div.appendChild(i);
-                            if (/\.(jpe?g|png|gif|)$/i.test(file.name)) {
-                                var image = new Image();
-                                //image.addEventListener("load", function () {/*image.width+'×'+image.height*/})
-                                image.setAttribute('data-tippy-content', file.name + spc + '\u002f' + spc +
-                                    'file size' + spc + returnFileSize(file.size));
-                                image.setAttribute('onclick', 'this.classList.toggle("Imgpreview-zoom");');
-                                image.src = this.result;
-                                div.appendChild(image);
-                            } else if (/\.(mp4|webm|ogg|ogv)$/i.test(file.name)) {
-                                var video = document.createElement('video');
-                                video.setAttribute('width', '100%');
-                                video.setAttribute('data-tippy-content', file.name + spc + '\u002f' + spc +
-                                    'file size' + spc + returnFileSize(file.size));
-                                video.setAttribute('onclick', 'this.classList.toggle("Imgpreview-zoom");');
-                                video.muted = false;
-                                video.volume = 0;
-                                video.autoplay = true;
-                                video.loop = true;
-                                video.preload = "auto";
-                                video.src = this.result;
-                                div.appendChild(video);
-                            } else if (/\.(mp3|wav|ogg)$/i.test(file.name)) {
-                                var audio = document.createElement('audio');
-                                audio.setAttribute('data-tippy-content', file.name + spc + '\u002f' + spc +
-                                    'file size' + spc + returnFileSize(file.size));
-                                audio.setAttribute('controlslist', 'nodownload');
-                                audio.controls = true;
-                                audio.preload = "auto";
-                                audio.src = this.result;
-                                div.appendChild(audio);
-                            }
-                            tippy([image, video, audio]);
-                            $(i).click(function() {
-                                $(div).removeClass('zoomIn').addClass('flipOutX'); // hinge
-                                setTimeout(function() {
-                                    $(i).parent(div).remove();
-                                }, 500);
-                            });
-                        }, false);
-                        reader.readAsDataURL(file);
+                $('#image_preview').html("");
+                var total_file = document.getElementById("images").files;
+                if (!total_file.length) return;
+                for (var i = 0; i < total_file.length; i++) {
+                    if (total_file[i].size > 1048576) {
+                        return false;
                     } else {
-                        return iziToast.error({
-                            title: 'failed',
-                            message: 'max 10 MB',
-                            iconText: 'error_outline'
-                        });
+                        fileArr.push(total_file[i]);
+                        $('#image_preview').append("<div class='img-div' id='img-div" + i + "'><img src='" +
+                            URL.createObjectURL(event.target.files[i]) +
+                            "' class='img-responsive image img-thumbnail' title='" + total_file[i]
+                            .name + "'><div class='middle'><button id='action-icon' value='img-div" +
+                            i + "' class='btn btn-danger' role='" + total_file[i].name +
+                            "'><i class='fa fa-trash'></i></button></div></div>");
                     }
-                } else {
-                    return iziToast.error({
-                        title: 'failed',
-                        message: 'Please provide a valid file. Accepted formats include .png, .jpg, and .gif.',
-                        iconText: 'error_outline'
-                    });
                 }
-            }
-            if (files) {
-                [].forEach.call(files, readAndPreview);
-            }
-        }
-        autosize(document.querySelectorAll('textarea'));
-
-        /*emoji*/
-        ! function(f) {
-            if ("object" == typeof exports && "undefined" != typeof module) module.exports = f();
-            else if ("function" == typeof define && define.amd) define([], f);
-            else {
-                ("undefined" != typeof window ? window : "undefined" != typeof global ? global : "undefined" !=
-                    typeof self ? self : this).MDEmoji = f()
-            }
-        }(function() {
-            return function e(t, n, r) {
-                function s(o, u) {
-                    if (!n[o]) {
-                        if (!t[o]) {
-                            var a = "function" == typeof require && require;
-                            if (!u && a) return a(o, !0);
-                            if (i) return i(o, !0);
-                            var f = new Error("Cannot find module '" + o + "'");
-                            throw f.code = "MODULE_NOT_FOUND", f
-                        }
-                        var l = n[o] = {
-                            exports: {}
-                        };
-                        t[o][0].call(l.exports, function(e) {
-                            var n = t[o][1][e];
-                            return s(n || e)
-                        }, l, l.exports, e, t, n, r)
-                    }
-                    return n[o].exports
-                }
-                for (var i = "function" == typeof require && require, o = 0; o < r.length; o++) s(r[o]);
-                return s
-            }({
-                1: [function(require, module, exports) {
-                    ! function(global, factory) {
-                        if (void 0 !== exports) factory(module);
-                        else {
-                            var mod = {
-                                exports: {}
-                            };
-                            factory(mod), global.mdEmoji = mod.exports
-                        }
-                    }
-                }, {}]
-            }, {}, [1])(1)
-        });
-        /*and emoji*/
-        new MDEmoji();
-
-        $('.scroll-bar').each(function() {
-            var ps = new PerfectScrollbar($(this)[0], {
-                wheelSpeed: 0.4,
-                minScrollbarLength: 100,
-                suppressScrollX: true
             });
-        });
 
+            $('body').on('click', '#action-icon', function(evt) {
+                var divName = this.value;
+                var fileName = $(this).attr('role');
+                $(`#${divName}`).remove();
 
+                for (var i = 0; i < fileArr.length; i++) {
+                    if (fileArr[i].name === fileName) {
+                        fileArr.splice(i, 1);
+                    }
+                }
+                document.getElementById('images').files = FileListItem(fileArr);
+                evt.preventDefault();
+            });
 
-        var psA = new PerfectScrollbar('.modal');
-        iziToast.settings({
-            theme: 'dark',
-            timeout: 5000,
-            drag: true,
-            pauseOnHover: true,
-            animateInside: true,
-            icon: 'material-icons',
-            transitionIn: 'bounceInLeft',
-            progressBarColor: '#ff0000',
-            transitionOut: 'flipOutX',
-            color: '#f44336',
-            position: 'topRight'
+            function FileListItem(file) {
+                file = [].slice.call(Array.isArray(file) ? file : arguments)
+                for (var c, b = c = file.length, d = !0; b-- && d;) d = file[b] instanceof File
+                if (!d) throw new TypeError("expected argument to FileList is File or array of File objects")
+                for (b = (new ClipboardEvent("")).clipboardData || new DataTransfer; c--;) b.items.add(file[c])
+                return b.files
+            }
         });
     </script>
 @endpush
