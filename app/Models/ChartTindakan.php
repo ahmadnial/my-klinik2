@@ -57,6 +57,11 @@ class ChartTindakan extends Model
         return $this->hasMany(tp_hdr::class, 'no_mr', 'chart_mr');
     }
 
+    public function arsipobatpulang()
+    {
+        return $this->hasMany(t_label_timeline::class, 'kdReg', 'chart_kd_reg');
+    }
+
     public function images()
     {
         return $this->hasMany(chart_images::class, 'chart_noRm', 'chart_mr');

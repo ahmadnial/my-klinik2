@@ -197,6 +197,10 @@
                                 <div class="showlistChart">
                                     {{-- append --}}
                                 </div>
+
+                                <div id="" class="isTimelineObatPulang">
+                                    {{-- append --}}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -328,6 +332,7 @@
 
             // Call Hasil Search MR
             function getData() {
+                $('.isTimelineObatPulang').empty();
                 var fs_mr = $('#searchRegister').val();
                 $.ajax({
                     headers: {
@@ -372,7 +377,7 @@
                                         </div>`);
                             } else {
                                 $('.listHistoryPx').append(`<div class="cardReg${datavalue.chart_id} form-group mb-0 scrollbar-dusty square1 thin scroll-y mt-2" id="listsearchRegArc"
-                                   style="max-height: 180px; border: 2px solid rgb(226, 229, 236);" data-chartid="${datavalue.chart_id}" onClick="getHistory(this)">
+                                   style="max-height: 180px; border: 2px solid rgb(226, 229, 236);" data-chartid="${datavalue.chart_id}" data-kdreg="${datavalue.chart_kd_reg}" onClick="getHistory(this)">
                                    <div class="kt-portlet kt-iconbox kt-iconbox--wave p-1 m-1 listRegArc"
                                        id="RG00326354" style="background-color: rgb(252, 225, 174);">
                                        <div class="kt-portlet__body p-1">
@@ -413,6 +418,7 @@
                     success: function(isListChartDetail) {
                         $.each(isListChartDetail, function(key, datavalue) {
                             $('.showlistChart').empty();
+                            $('.isTimelineObatPulang').empty();
 
                             const trstdk = datavalue.trstdk;
                             let tindakan = "";
@@ -436,6 +442,49 @@
                                     resepShow += ``;
                                 }
                             }
+
+                            // let obtplg = "";
+                            // let showResepOff = datavalue.arsipobatpulang.ketHTML;
+                            // let decode = $('<div>').html(showResepOff).text()
+                            // let ShowTimelineResep = decode.replace(/[["","",""]/g, "");
+                            // obtplg +=
+                            //     `<label class="pl-2">&#129174; ${showResepOff} </label>`;
+
+                            const obatPulang = datavalue.arsipobatpulang;
+                            let obtplg = "";
+                            for (i in obatPulang) {
+                                if (obatPulang[i] != null && obatPulang[i].labelType ==
+                                    'medication (Obat Pulang)') {
+                                    let showResepOff = obatPulang[i].ketHTML;
+                                    let decode = $('<div>').html(showResepOff).text()
+                                    let ShowTimelineResep = decode.replace(/[["","",""]/g, "");
+                                    obtplg +=
+                                        `<div class="kt-portlet__body" id="content${datavalue.chart_id}">
+                                        <div class="kt-widget kt-widget--user-profile-3 border">
+                                            <div class="container-fluid mt-2">
+                                            <h5>Medication (Obat Pulang)</h5>
+                                            <table class="col table table-hover table-bordered">
+                                                <thead class="" style="background-color: rgb(227, 239, 253)">
+                                                    <tr>
+                                                        <th>Obat</th>
+                                                        <th>Qty</th>
+                                                        <th>Satuan</th>
+                                                        <th>Cara Pakai</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                   <label class="pl-2">&#129174; ${ShowTimelineResep ?? ''} </label>
+                                                </tbody>
+                                            </table>
+                                            </div>
+                                        </div>
+                                    </div>`;
+                                } else {
+                                    obtplg += ``;
+                                }
+                            }
+
+
 
                             $('.showlistChart').append(`<div class="kt-portlet shadow-sm border border-radius3 p-2 mb-4 ">
                                         <div class="kt-portlet__body" id="content${datavalue.chart_id}">
@@ -535,13 +584,6 @@
                                                                                             ${resepShow}
                                                                                         </div>
 
-                                                                                        <div class="card col border-secondary p-2 pl-3 mb-2 ml-2"
-                                                                                            style="background-color: rgb(248, 240, 229)">
-                                                                                            <div><u><b>Medication (Obat didapat)</b></u>
-                                                                                            </div>
-                                                                                            -
-                                                                                        </div>
-
                                                                                         <div class="tindakanShowOff card col border-secondary p-2 pl-3 mb-2 ml-2"
                                                                                             style="background-color: rgb(248, 240, 229)">
                                                                                             <div><u><b>Tindakan</b></u>
@@ -572,9 +614,17 @@
                                             </div>
                                         </div>
                                     </div>`)
+
+                            $(".isTimelineObatPulang").append(
+                                `${obtplg}`
+                            )
                         })
                     }
                 })
+            }
+
+            function getLabel() {
+
             }
         </script>
     @endpush

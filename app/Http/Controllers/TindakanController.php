@@ -176,7 +176,7 @@ class TindakanController extends Controller
             'chart_nm_pasien' => 'required',
             'chart_layanan' => 'required',
             'chart_dokter' => 'required',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif,pdf|max:4048',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,pdf|max:5048',
             // 'user_create' => 'required',
             // 'kd_trs' => 'required',
             // 'tgl_trs' => 'required',
@@ -288,7 +288,7 @@ class TindakanController extends Controller
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
                 $fileOriginalName = $image->getClientOriginalExtension();
-                $fileNewName = $request->chart_id . '-' . $request->chart_kd_reg . '.' . $fileOriginalName;
+                $fileNewName = $request->chart_id . '-'  . uniqid() . '.' . $fileOriginalName;
                 $image->storeAs('images', $fileNewName, 'public');
                 chart_images::create([
                     'chart_id' => $request->chart_id,
@@ -413,7 +413,7 @@ class TindakanController extends Controller
     // Get ChartID utk Edit
     public function chartIdSearch(Request $request)
     {
-        $isChartID = ChartTindakan::with('trstdk.nm_trf', 'resep')
+        $isChartID = ChartTindakan::with('trstdk.nm_trf', 'resep', 'images')
             ->where('chart_id', $request->chartid)
             ->get();
 
@@ -468,6 +468,7 @@ class TindakanController extends Controller
         DB::table('chart_tindakan')->where('chart_id', $request->chartid)->delete();
         DB::table('trs_chart_resep')->where('chart_id', $request->chartid)->delete();
         DB::table('trs_chart')->where('chart_id', $request->chartid)->delete();
+        DB::table('chart_images')->where('chart_id', $request->chartid)->delete();
 
         return back();
     }

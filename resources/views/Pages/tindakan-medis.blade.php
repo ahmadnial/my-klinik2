@@ -790,7 +790,7 @@
                                                 class="fa fa-plus"></i>&nbsp;Resep</button>
                                         <button type="button" class="btn btn-xs btn-danger floar-right"
                                             data-toggle="modal" data-target="#uploadImg"><i
-                                                class="fa fa-plus"></i>&nbsp;Upload</button>
+                                                class="fa fa-plus"></i>&nbsp;Upload </button>
                                     </div>
                                     <textarea id="chart_P" name="chart_P" class="form-control" rows="4"></textarea>
                                     {{-- <input required type="file" class="form-control" name="images[]"
@@ -2341,9 +2341,9 @@
                         for (i in images) {
                             if (images[i] != null && images[i].chart_id == getValue[getVal].chart_id) {
                                 imagesShow +=
-                                    `<button class="row btn btn-info btn-sm mr-1 mb-1 col-6" data-toggle="modal" data-target="#showImgChart" onclick="getImagesUpload(this)"
+                                    `<button class="row btn btn-outline-success btn-sm mr-1 mb-1 col" data-toggle="modal" data-target="#showImgChart" onclick="getImagesUpload(this)"
                                     data-bigimage="{{ asset('/storage/images/${images[i].chart_imageName}') }}">
-                                        ${images[i].chart_imageName} - ${images[i].chart_note}
+                                        File Attachment - ${images[i].chart_imageName} - ${images[i].chart_note}
                                     </button>`;
 
                             } else {
@@ -2480,7 +2480,7 @@
                                                 padding-bottom:5px; padding-left:10px; padding-right:90px; color: #002e0a"><b>
                                                     PLAN</b></span>
                                             <textarea id="" class="show_chart_P form-control" rows="6" style="border:none; background-color: #FAFCFE; color: #4A4B90; font-family: arial"" readonly>${rmvNullP}</textarea>
-                                            <div class="image_show mt-2 mr-2">${imagesShow}</div>
+                                            <div class="image_show mt-2 mr-1">${imagesShow}</div>
                                         </div>
                                         <hr>
                                         <div class="tindakan callout callout-danger" id="TimelineTdk">

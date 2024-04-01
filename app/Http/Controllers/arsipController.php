@@ -45,11 +45,22 @@ class arsipController extends Controller
         //     ->leftJoin('trs_chart_resep', 'trs_chart_resep.chart_id', 'chart_tindakan.chart_id')
         //     ->where('chart_tindakan.chart_id', $chart_id->chart_id)
         //     ->get();
-        $isListChartDetail = ChartTindakan::with('trstdk.nm_trf', 'resep')
+        $isListChartDetail = ChartTindakan::with('trstdk.nm_trf', 'resep', 'arsipobatpulang')
             ->where('chart_id', $chart_id->chart_id)
+            // ->where('labelType', 'medication (Obat Pulang)')
             // ->orderBy('chart_tindakan.created_at', 'DESC')
             ->get();
 
         return response()->json($isListChartDetail);
+    }
+
+    public function getLabel(Request $request)
+    {
+        $isLabel = DB::table('t_label_timeline')
+            ->where('pasienID', $request->pasienID)
+            ->orderBy('t_label_timeline.Tgl', 'DESC')
+            ->get();
+
+        return response()->json($isLabel);
     }
 }
