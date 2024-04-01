@@ -834,6 +834,10 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div class="">
+                                                            <input type="text" class="form-control" value=""
+                                                                name="imgNote" placeholder="Note..">
+                                                        </div>
                                                     </div>
                                                 </section>
                                             </div>
@@ -2337,9 +2341,9 @@
                         for (i in images) {
                             if (images[i] != null && images[i].chart_id == getValue[getVal].chart_id) {
                                 imagesShow +=
-                                    `<button class="btn btn-info btn-sm mr-1" data-toggle="modal" data-target="#showImgChart" onclick="getImagesUpload(this)"
+                                    `<button class="row btn btn-info btn-sm mr-1 mb-1 col-6" data-toggle="modal" data-target="#showImgChart" onclick="getImagesUpload(this)"
                                     data-bigimage="{{ asset('/storage/images/${images[i].chart_imageName}') }}">
-                                        ${images[i].chart_imageName}
+                                        ${images[i].chart_imageName} - ${images[i].chart_note}
                                     </button>`;
 
                             } else {

@@ -288,7 +288,7 @@ class TindakanController extends Controller
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
                 $fileOriginalName = $image->getClientOriginalExtension();
-                $fileNewName = $request->chart_id . '.' . $fileOriginalName;
+                $fileNewName = $request->chart_id . '-' . $request->chart_kd_reg . '.' . $fileOriginalName;
                 $image->storeAs('images', $fileNewName, 'public');
                 chart_images::create([
                     'chart_id' => $request->chart_id,
