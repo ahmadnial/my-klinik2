@@ -38,7 +38,8 @@ class TindakanController extends Controller
             $chart_id =  'CH' . '-' . $vardate . $id;
         } else {
             $continue = ChartTindakan::all()->last();
-            $de = substr($continue->chart_id, -3);
+            $de = substr($continue->chart_id, -7);
+            // $de = preg_replace('/[^0-9]/', '', $continue->chart_id);
             $chart_id = 'CH' . '-' . $vardate . str_pad(($de + 1), 8, '0', STR_PAD_LEFT);
         };
 
@@ -50,7 +51,7 @@ class TindakanController extends Controller
             $kd_trs =  'TU' . '-' . $vardate . $idc;
         } else {
             $continue = trs_chart::all()->last();
-            $dec = substr($continue->kd_trs, -3);
+            $dec = substr($continue->kd_trs, -5);
             $kd_trs = 'TU' . '-' . $vardate . str_pad(($dec + 1), 8, '0', STR_PAD_LEFT);
         };
         $isTindakanChart = ChartTindakan::where('chart_mr', '=', $request)->get();

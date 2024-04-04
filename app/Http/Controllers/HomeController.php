@@ -73,7 +73,8 @@ class HomeController extends Controller
         } else {
             $continue = registrasiCreate::withTrashed()->latest('created_at')->first();
             // $continue = DB::table('ta_registrasi')->withTrashed()->latest('created_at')->first();
-            $de = substr($continue->fr_kd_reg, -3);
+            // $de = substr($continue->fr_kd_reg, -8); //old way
+            $de = preg_replace('/[^0-9]/', '', $continue->fr_kd_reg);
             $kd_reg = 'RG' . str_pad(($de + 1), 8, '0', STR_PAD_LEFT);
         };
 
