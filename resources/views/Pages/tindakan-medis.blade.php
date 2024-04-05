@@ -525,7 +525,7 @@
                             novalidate enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
-                                <input type="hidden" id="chart_id" name="chart_id" value="{{ $isLastChartID }}">
+                                <input type="hidden" id="chart_id" name="chart_id" value="">
                                 <input type="hidden" id="chart_kd_reg" name="chart_kd_reg" value="">
                                 <input type="hidden" id="chart_tgl_trs" name="chart_tgl_trs"
                                     value="{{ $dateNow }}">

@@ -31,17 +31,17 @@ class TindakanController extends Controller
      */
     public function tindakanMedis(Request $request)
     {
-        $id = str_pad(00000001, 8, 0, STR_PAD_LEFT);
-        $vardate = date("Y-m");
-        $cekid = ChartTindakan::count();
-        if ($cekid == 0) {
-            $chart_id =  'CH' . '-' . $vardate . $id;
-        } else {
-            $continue = ChartTindakan::all()->last();
-            $de = substr($continue->chart_id, -7);
-            // $de = preg_replace('/[^0-9]/', '', $continue->chart_id);
-            $chart_id = 'CH' . '-' . $vardate . str_pad(($de + 1), 8, '0', STR_PAD_LEFT);
-        };
+        // $id = str_pad(00000001, 8, 0, STR_PAD_LEFT);
+        // $vardate = date("Y-m");
+        // $cekid = ChartTindakan::count();
+        // if ($cekid == 0) {
+        //     $chart_id =  'CH' . '-' . $vardate . $id;
+        // } else {
+        //     $continue = ChartTindakan::all()->last();
+        //     $de = substr($continue->chart_id, -7);
+        //     // $de = preg_replace('/[^0-9]/', '', $continue->chart_id);
+        //     $chart_id = 'CH' . '-' . $vardate . str_pad(($de + 1), 8, '0', STR_PAD_LEFT);
+        // };
 
         // kd_chart
         $idc = str_pad(00000001, 8, 0, STR_PAD_LEFT);
@@ -72,7 +72,7 @@ class TindakanController extends Controller
 
         return view('pages.tindakan-medis', [
             'isRegActive' => $isRegActive,
-            'isLastChartID' => $chart_id,
+            // 'isLastChartID' => $chart_id,
             'isTindakanChart' => $isTindakanChart,
             'icdx' => $icdx,
             'isTindakanTarif' => $isTindakanTarif,
@@ -170,7 +170,7 @@ class TindakanController extends Controller
 
         $request->validate([
             // 'user' => 'required',
-            'chart_id' => 'required',
+            // 'chart_id' => 'required',
             // 'chart_tgl_trs' => 'required',
             'chart_kd_reg' => 'required',
             'chart_mr' => 'required',
@@ -199,9 +199,20 @@ class TindakanController extends Controller
         ]);
         DB::beginTransaction();
         // try {
+        $id = str_pad(00000001, 8, 0, STR_PAD_LEFT);
+        $vardate = date("Y-m");
+        $cekid = ChartTindakan::count();
+        if ($cekid == 0) {
+            $chartId =  'CH' . '-' . $vardate . $id;
+        } else {
+            $continue = ChartTindakan::all()->last();
+            $de = substr($continue->chart_id, -7);
+            // $de = preg_replace('/[^0-9]/', '', $continue->chart_id);
+            $chartId = 'CH' . '-' . $vardate . str_pad(($de + 1), 8, '0', STR_PAD_LEFT);
+        };
 
         $nerChart = new ChartTindakan;
-        $nerChart->chart_id = $request->chart_id;
+        $nerChart->chart_id = $chartId;
         $nerChart->chart_tgl_trs = $request->chart_tgl_trs;
         $nerChart->chart_kd_reg  = $request->chart_kd_reg;
         $nerChart->chart_mr    = $request->chart_mr;
@@ -231,7 +242,7 @@ class TindakanController extends Controller
             foreach ($request->nm_tarif as $key => $val) {
                 $newData = [
                     'kd_trs' => $request->kd_trs,
-                    'chart_id' => $request->chart_id,
+                    'chart_id' => $chartId,
                     'tgl_trs' => $request->chart_tgl_trs,
                     'layanan' => $request->chart_layanan,
                     'kd_reg' => $request->chart_kd_reg,
@@ -248,7 +259,7 @@ class TindakanController extends Controller
         } else {
             $newData = [
                 'kd_trs' => $request->kd_trs,
-                'chart_id' => $request->chart_id,
+                'chart_id' => $chartId,
                 'tgl_trs' => $request->chart_tgl_trs,
                 'layanan' => $request->chart_layanan,
                 'kd_reg' => $request->chart_kd_reg,
@@ -267,7 +278,7 @@ class TindakanController extends Controller
             foreach ($request->ch_kd_obat as $far => $val) {
                 $newDataResep = [
                     'kd_trs' => $request->kd_trs,
-                    'chart_id' => $request->chart_id,
+                    'chart_id' => $chartId,
                     'layanan' => $request->chart_layanan,
                     'tgl_trs' => $request->chart_tgl_trs,
                     'kd_reg' => $request->chart_kd_reg,
@@ -289,10 +300,10 @@ class TindakanController extends Controller
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
                 $fileOriginalName = $image->getClientOriginalExtension();
-                $fileNewName = $request->chart_id . '-'  . uniqid() . '.' . $fileOriginalName;
+                $fileNewName = $request->chartId . '-'  . uniqid() . '.' . $fileOriginalName;
                 $image->storeAs('images', $fileNewName, 'public');
                 chart_images::create([
-                    'chart_id' => $request->chart_id,
+                    'chart_id' => $chartId,
                     'chart_noRm' => $request->chart_mr,
                     'chart_kd_reg' => $request->chart_kd_reg,
                     'chart_imageName' => $fileNewName,
