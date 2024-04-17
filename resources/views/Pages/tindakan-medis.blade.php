@@ -924,7 +924,7 @@
                             </div> --}}
                         </div>
                     </div>
-                    <input type="hidden" id="kd_trs" name="kd_trs" value="{{ $kd_trs }}">
+                    {{-- <input type="hidden" id="kd_trs" name="kd_trs" value="{{ $kd_trs }}"> --}}
                     <input type="hidden" id="sub_total" name="sub_total" value="0">
                     <div class="float-right mt-2">
                         <a type="button" id="exitModal" onclick="exitModalTindakan()" class="btn btn-success">add</a>

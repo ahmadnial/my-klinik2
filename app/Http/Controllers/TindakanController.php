@@ -44,18 +44,18 @@ class TindakanController extends Controller
         // };
 
         // kd_chart
-        $idc = str_pad(00000001, 8, 0, STR_PAD_LEFT);
-        $vardate = date("m");
-        $cekidc = trs_chart::count();
-        if ($cekidc == 0) {
-            $kd_trs =  'TU' . '-' . $vardate . $idc;
-        } else {
-            $continue = trs_chart::all()->last();
-            $dec = substr($continue->kd_trs, -6);
-            // $kd_trs = 'TU' . '-' . $vardate . str_pad(($dec + 1), 8, '0', STR_PAD_LEFT);
-            $kd_trs = 'TU' . '-' . $vardate . str_pad(($dec + 1), 8, '0', STR_PAD_LEFT);
-        };
-        dd($continue);
+        // $idc = str_pad(00000001, 8, 0, STR_PAD_LEFT);
+        // $vardate = date("m");
+        // $cekidc = trs_chart::count();
+        // if ($cekidc == 0) {
+        //     $kd_trs =  'TU' . '-' . $vardate . $idc;
+        // } else {
+        //     $continue = trs_chart::all()->last();
+        //     $dec = substr($continue->kd_trs, -6);
+        //     // $kd_trs = 'TU' . '-' . $vardate . str_pad(($dec + 1), 8, '0', STR_PAD_LEFT);
+        //     $kd_trs = 'TU' . '-' . $vardate . str_pad(($dec + 1), 8, '0', STR_PAD_LEFT);
+        // };
+        // dd($continue);
         $isTindakanChart = ChartTindakan::where('chart_mr', '=', $request)->get();
 
         $isRegActive = registrasiCreate::where([
@@ -78,7 +78,7 @@ class TindakanController extends Controller
             'isTindakanChart' => $isTindakanChart,
             'icdx' => $icdx,
             'isTindakanTarif' => $isTindakanTarif,
-            'kd_trs' => $kd_trs,
+            // 'kd_trs' => $kd_trs,
             'isHistoryTindakan' => $isHistoryTindakan,
             'dateNow' => $dateNow,
         ]);
@@ -213,6 +213,18 @@ class TindakanController extends Controller
             $chartId = 'CH' . '-' . $vardate . str_pad(($de + 1), 8, '0', STR_PAD_LEFT);
         };
 
+        $idc = str_pad(00000001, 8, 0, STR_PAD_LEFT);
+        $vardate = date("m");
+        $cekidc = trs_chart::count();
+        if ($cekidc == 0) {
+            $kd_trs =  'TU' . '-' . $vardate . $idc;
+        } else {
+            $continue = trs_chart::all()->last();
+            $dec = substr($continue->kd_trs, -6);
+            // $kd_trs = 'TU' . '-' . $vardate . str_pad(($dec + 1), 8, '0', STR_PAD_LEFT);
+            $kd_trs = 'TU' . '-' . $vardate . str_pad(($dec + 1), 8, '0', STR_PAD_LEFT);
+        };
+
         $nerChart = new ChartTindakan;
         $nerChart->chart_id = $chartId;
         $nerChart->chart_tgl_trs = $request->chart_tgl_trs;
@@ -243,7 +255,7 @@ class TindakanController extends Controller
         if ($request->nm_tarif != null) {
             foreach ($request->nm_tarif as $key => $val) {
                 $newData = [
-                    'kd_trs' => $request->kd_trs,
+                    'kd_trs' => $kd_trs,
                     'chart_id' => $chartId,
                     'tgl_trs' => $request->chart_tgl_trs,
                     'layanan' => $request->chart_layanan,
@@ -260,7 +272,7 @@ class TindakanController extends Controller
             };
         } else {
             $newData = [
-                'kd_trs' => $request->kd_trs,
+                'kd_trs' => $kd_trs,
                 'chart_id' => $chartId,
                 'tgl_trs' => $request->chart_tgl_trs,
                 'layanan' => $request->chart_layanan,
@@ -279,7 +291,7 @@ class TindakanController extends Controller
         if (!empty($request->ch_kd_obat)) {
             foreach ($request->ch_kd_obat as $far => $val) {
                 $newDataResep = [
-                    'kd_trs' => $request->kd_trs,
+                    'kd_trs' => $kd_trs,
                     'chart_id' => $chartId,
                     'layanan' => $request->chart_layanan,
                     'tgl_trs' => $request->chart_tgl_trs,
@@ -334,7 +346,7 @@ class TindakanController extends Controller
         // t_label_timeline::insert($insertLabel);
         if ($request->ch_kd_obat != '') {
             $newDataLabel = [
-                'reffID' => $request->kd_trs,
+                'reffID' => $kd_trs,
                 'Tgl' => Carbon::now(),
                 'labelType' => 'Prescription (Resep)',
                 'pasienID' => $request->chart_mr,
