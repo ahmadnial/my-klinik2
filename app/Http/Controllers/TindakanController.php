@@ -51,9 +51,11 @@ class TindakanController extends Controller
             $kd_trs =  'TU' . '-' . $vardate . $idc;
         } else {
             $continue = trs_chart::all()->last();
-            $dec = substr($continue->kd_trs, -5);
+            $dec = substr($continue->kd_trs, -6);
+            // $kd_trs = 'TU' . '-' . $vardate . str_pad(($dec + 1), 8, '0', STR_PAD_LEFT);
             $kd_trs = 'TU' . '-' . $vardate . str_pad(($dec + 1), 8, '0', STR_PAD_LEFT);
         };
+        dd($continue);
         $isTindakanChart = ChartTindakan::where('chart_mr', '=', $request)->get();
 
         $isRegActive = registrasiCreate::where([
