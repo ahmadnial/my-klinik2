@@ -112,10 +112,10 @@
     <div class="container">
         <div class="header" style="margin-bottom: 10px;">
             <div class="">
-                <img src="{{ asset('src/img/AMnw.png') }}" alt="" height="60px" width="60px">
+                {{-- <img src="{{ asset('src/img/AMnw.png') }}" alt="" height="60px" width="60px"> --}}
             </div>
-            <h2>ABHIPRAYA MEDIC</h2>
-            <small>Susukan 1, Genjahan, Ponjong, Gunungkidul <br> Hp.085727042405
+            <h2>APOTEK AULIA</h2>
+            <small>Playen, Playen, Playen, Gunungkidul <br> Hp.085727042405
             </small>
         </div>
         <hr>

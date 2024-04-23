@@ -336,7 +336,9 @@ class masterFarmasiController extends Controller
         // $d = $request->all();
         // dd($d);
 
-        DB::table('mstr_obat')->where('fm_kd_obat', $request->kd_obat)->delete();
+        // $find = DB::table('mstr_obat')->where('fm_kd_obat', $request->kd_obat)->get();
+        $find = mstr_obat::where('fm_kd_obat', $request->kd_obat);
+        $find->delete();
 
         $dataSuccess = [
             'success' => true,
