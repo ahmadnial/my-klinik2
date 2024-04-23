@@ -64,6 +64,9 @@
                                         onClick="getIDObat(this)"><i class="fa fa-edit"></i>Edit</button>
                                     {{-- <button class="btn btn-xs btn-danger" data-toggle="modal"
                                         data-target="#DeleteSupplier{{ $tz->fm_kd_supplier }}">Hapus</button> --}}
+                                    <button class="btn btn-danger btn-xs" data-id="{{ $tz->fm_kd_obat }}"
+                                        data-nmobat="{{ $tz->fm_nm_obat }}" onClick="delObat(this)"><i
+                                            class="fa fa-trash"></i>Delete</button>
                                 </td>
                             </tr>
                         @endforeach
@@ -72,6 +75,28 @@
             </div>
         </div>
     </section>
+    {{-- modal delete --}}
+    <div class="modal fade" id="deleteModalObat" data-bs-backdrop="static" aria-labelledby="staticBackdropLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="kd_obat_del" id="kd_obat_del">
+                    apakah yakin akan menghapus <span class="text-danger" id="obatNameToDel"></span>?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" onclick="execDelObat()">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- end modal delete --}}
+
     <!-- The modal Edit -->
     <div class="modal fade" id="EditObatModal">
         <div class="modal-dialog modal-lg">
@@ -91,8 +116,8 @@
                         </div>
                         <div class="form-group col-sm-6">
                             <label for="">Obat</label>
-                            <input type="text" class="form-control" name="efm_nm_obat" id="efm_nm_obat" value=""
-                                placeholder="Input Nama Obat">
+                            <input type="text" class="form-control" name="efm_nm_obat" id="efm_nm_obat"
+                                value="" placeholder="Input Nama Obat">
                         </div>
                         <div class="form-group col-sm-6">
                             <label for="">Kategori</label>
@@ -742,6 +767,54 @@
             });
 
 
+            function delObat(dx) {
+                var ids = $(dx).data('id');
+                var obatName = $(dx).data('nmobat');
+
+                $('#deleteModalObat').modal('show');
+                $('#obatNameToDel').text(obatName)
+                $('#kd_obat_del').val(ids)
+            }
+
+            function execDelObat() {
+                var kd_obat = $('#kd_obat_del').val()
+
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "{{ url('deleteObat') }}/" + kd_obat,
+                    type: "POST",
+                    data: {
+                        fm_kd_obat: kd_obat,
+                    },
+
+                    success: function(response) {
+                        if (response.success) {
+                            toastr.success('Saved!', `${response.message}`, {
+                                timeOut: 2000,
+                                preventDuplicates: true,
+                                positionClass: 'toast-top-right',
+                            });
+                            return window.location.href = "{{ url('mstr-obat') }}";
+                        } else {
+                            toastr.error('Saved!', 'Error!', {
+                                timeOut: 2000,
+                                preventDuplicates: true,
+                                positionClass: 'toast-top-right',
+                            });
+                        }
+                        // error: function(xhr, status, error) {
+                        //     toastr.success('Saved!', status, {
+                        //         timeOut: 2000,
+                        //         preventDuplicates: true,
+                        //         positionClass: 'toast-top-right',
+                        //     });
+                        // },
+                    }
+
+                });
+            }
             // modal Edit
             function getIDObat(tx) {
                 var ids = $(tx).data('id');

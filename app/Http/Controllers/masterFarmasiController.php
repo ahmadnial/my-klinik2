@@ -330,4 +330,19 @@ class masterFarmasiController extends Controller
 
         return response()->json($dataSuccess);
     }
+
+    public function obatDelete(Request $request)
+    {
+        // $d = $request->all();
+        // dd($d);
+
+        DB::table('mstr_obat')->where('fm_kd_obat', $request->kd_obat)->delete();
+
+        $dataSuccess = [
+            'success' => true,
+            'message' => 'Data Berhasil Dihapus!',
+        ];
+
+        return response()->json($dataSuccess);
+    }
 }

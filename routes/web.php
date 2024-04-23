@@ -156,6 +156,7 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
     Route::post('add-mstr-supplier', [masterFarmasiController::class, 'supplierCreate'])->name('add-mstr-supplier');
     Route::post('add-mstr-obat', [masterFarmasiController::class, 'obatCreate'])->name('add-mstr-obat');
     Route::post('edit-mstr-obat/{efmkdobat}', [masterFarmasiController::class, 'obatEdit'])->name('edit-mstr-obat');
+    Route::post('deleteObat/{kd_obat}', [masterFarmasiController::class, 'obatDelete'])->name('deleteObat');
 });
 
 // DELETE MSTR FARMASI
