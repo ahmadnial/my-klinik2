@@ -115,7 +115,7 @@
                 {{-- <img src="{{ asset('src/img/AMnw.png') }}" alt="" height="60px" width="60px"> --}}
             </div>
             <h2>APOTEK AULIA</h2>
-            <small>Playen, Playen, Playen, Gunungkidul <br> Hp.085727042405
+            <small>Ngawu RT03/RW01,Ngawu,Playen <br> Hp.085228935645
             </small>
         </div>
         <hr>
