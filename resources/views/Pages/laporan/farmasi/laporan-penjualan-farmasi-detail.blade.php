@@ -115,7 +115,7 @@
                                     currency: 'IDR'
                                 });
 
-                                // document.getElementById("grandTTL").innerHTML = formattedNumber;
+                                document.getElementById("grandTTL").innerHTML = formattedNumber;
 
                                 toastr.success('Data Load Complete!', 'Complete!', {
                                     timeOut: 2000,
