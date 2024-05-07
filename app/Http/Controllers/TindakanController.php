@@ -179,7 +179,7 @@ class TindakanController extends Controller
             'chart_nm_pasien' => 'required',
             'chart_layanan' => 'required',
             'chart_dokter' => 'required',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif,pdf|max:5048',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,pdf|max:10048',
             // 'user_create' => 'required',
             // 'kd_trs' => 'required',
             // 'tgl_trs' => 'required',

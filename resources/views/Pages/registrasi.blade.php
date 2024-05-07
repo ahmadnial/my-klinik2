@@ -95,7 +95,7 @@
                         <div class="form-group col-sm-6">
                             <label for="">Kode Registrasi</label>
                             <input type="text" class="form-control" name="fr_kd_reg" id="fr_kd_reg" readonly
-                                value="{{ $kd_reg }}">
+                                value="">
                         </div>
                         <input type="hidden" id="fr_nama" name="fr_nama">
                         <div class="form-group col-sm-6">

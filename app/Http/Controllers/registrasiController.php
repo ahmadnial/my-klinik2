@@ -48,8 +48,20 @@ class registrasiController extends Controller
     public function registrasiCreate(Request $request)
     {
         // dd($request->all());
+        $num = str_pad(00000001, 8, 0, STR_PAD_LEFT);
+        $cekid = registrasiCreate::withTrashed()->get();
+        if ($cekid == '') {
+            $kd_reg =  'RG'  . $num;
+        } else {
+            $continue = registrasiCreate::withTrashed()->latest('created_at')->first();
+            // $continue = DB::table('ta_registrasi')->withTrashed()->latest('created_at')->first();
+            // $de = substr($continue->fr_kd_reg, -8); //old way
+            $de = preg_replace('/[^0-9]/', '', $continue->fr_kd_reg);
+            $kd_reg = 'RG' . str_pad(($de + 1), 8, '0', STR_PAD_LEFT);
+        };
+
         $request->validate([
-            'fr_kd_reg' => 'required',
+            // 'fr_kd_reg' => 'required',
             'fr_mr' => 'required',
             // 'fr_nama' => 'required',
             'fr_tgl_reg' => 'required',
@@ -63,9 +75,29 @@ class registrasiController extends Controller
             'fr_session_poli' => 'required'
         ]);
 
-        $data = registrasiCreate::create($request->all());
+        $newReg = new registrasiCreate();
+        $newReg->fr_kd_reg = $kd_reg;
+        $newReg->fr_mr = $request->fr_mr;
+        $newReg->fr_nama = $request->fr_nama;
+        $newReg->fr_tgl_lahir = $request->fr_tgl_lahir;
+        $newReg->fr_jenis_kelamin = $request->fr_jenis_kelamin;
+        $newReg->fr_alamat = $request->fr_alamat;
+        $newReg->fr_no_hp = $request->fr_no_hp;
+        $newReg->fr_layanan = $request->fr_layanan;
+        $newReg->fr_dokter = $request->fr_dokter;
+        $newReg->fr_session_poli = $request->fr_session_poli;
+        $newReg->fr_jaminan = $request->fr_jaminan;
+        $newReg->fr_bb = $request->fr_bb;
+        $newReg->fr_alergi = $request->fr_alergi;
+        $newReg->fr_user = Auth::user()->name;
+        $newReg->fr_tgl_reg = $request->fr_tgl_reg;
+        $newReg->keluhan_utama = $request->keluhan_utama;
 
-        if ($data->save()) {
+        $newReg->save();
+
+        // $data = registrasiCreate::create($request->all());
+
+        if ($newReg->save()) {
             toastr()->success('Data Tersimpan!');
             return back();
         } else {
