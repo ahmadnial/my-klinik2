@@ -183,6 +183,8 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
     Route::get('getObatList/{obat}', [poDoController::class, 'getObatList'])->name('getObatList');
     Route::get('get-data-do/{kd_do}', [poDoController::class, 'getDOList'])->name('get-data-do');
     Route::get('getListObatDO', [poDoController::class, 'getListObatDO'])->name('getListObatDO');
+    Route::get('getMonthAdjusment', [poDoController::class, 'getMonthAdjusment'])->name('getMonthAdjusment');
+    Route::get('getDetailAdjusment/{kd_trs}', [poDoController::class, 'getDetailAdjusment'])->name('getDetailAdjusment');
 });
 
 // CREATE PO-DO + ADJ

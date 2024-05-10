@@ -12,6 +12,7 @@ use App\Models\mstr_supplier;
 use App\Models\tb_adjusment_detail;
 use App\Models\tb_adjusment_hdr;
 use App\Models\tb_stock;
+use App\Models\tp_detail_item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -136,19 +137,53 @@ class poDoController extends Controller
             ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
             ->select('mstr_obat.*', 'tb_stock.*')
             ->get();
-        $isListAdj = DB::table('tb_adjusment_hdr')
-            ->leftJoin('tb_adjusment_detail', 'tb_adjusment_hdr.kd_adj', 'tb_adjusment_detail.kd_adj')
-            ->select('tb_adjusment_hdr.*', 'tb_adjusment_detail.*')
-            ->latest('tb_adjusment_hdr.created_at')
-            ->get();
+        // $isListAdj = DB::table('tb_adjusment_hdr')
+        //     ->leftJoin('tb_adjusment_detail', 'tb_adjusment_hdr.kd_adj', 'tb_adjusment_detail.kd_adj')
+        //     ->select('tb_adjusment_hdr.*', 'tb_adjusment_detail.*')
+        //     ->latest('tb_adjusment_hdr.created_at')
+        //     ->get();
         $dateNow = Carbon::now()->format("Y-m-d");
 
         return view('pages.adjusment', [
             'ListObat' => $ListObat,
             // 'noReff'    => $noRef,
-            'isListAdj'    => $isListAdj,
+            // 'isListAdj'    => $isListAdj,
             'dateNow'   => $dateNow
         ]);
+    }
+
+    public function getMonthAdjusment(Request $request)
+    {
+        // $today = Carbon::today()->toDateString();
+        $selectMonth = $request->dataBulan;
+        // dd($selectMonth);
+        if (!$selectMonth) {
+            $monthNow = Carbon::now()->format("m");
+            $yearNow = Carbon::now()->format("Y");
+            $isListAdjusment = tb_adjusment_hdr::whereyear('tgl_trs', '=', $yearNow)->whereMonth('tgl_trs', '=', $monthNow)->latest('tgl_trs')->get();
+        } else {
+            $isListAdjusment = tb_adjusment_hdr::where('tgl_trs', 'LIKE', '%' . $selectMonth . '%')->latest('created_at')->get();
+        }
+
+        return DataTables::of($isListAdjusment)
+            ->addColumn('action', function ($row) {
+                $actionBtn = '
+                <button class="btn btn-xs btn-primary" data-toggle="modal" data-target="#EditAdjusment"
+                onclick="getDetailAdj(this)" data-kd_adj="' . $row->kd_adj . '">&nbsp;&nbsp;<i class="fa fa-eye">&nbsp;&nbsp;</i></button>
+                ';
+                return $actionBtn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+    }
+
+    public function getDetailAdjusment(Request $request)
+    {
+        $isViewAdjusment = tb_adjusment_hdr::where('tb_adjusment_hdr.kd_adj', '=', $request->kd_trs)
+            ->leftJoin('tb_adjusment_detail', 'tb_adjusment_hdr.kd_adj', 'tb_adjusment_detail.kd_adj')
+            ->get();
+
+        return response()->json($isViewAdjusment);
     }
 
     public function createAdj(Request $request)

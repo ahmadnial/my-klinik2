@@ -4,41 +4,52 @@
     <section class="content">
         <div class="card">
             <div class="card-header">
-                <button type="submit" class="btn btn-success float-right" data-toggle="modal" data-target="#TambahADJ">Tambah
+                <button type="submit" class="btn btn-success btn-sm float-right" data-toggle="modal"
+                    data-target="#TambahADJ">Tambah
                     Adj</button>
                 <h3 class="card-title"><i class="fa fa-truck">&nbsp;</i>ADJUSMENT STOCK</h3>
             </div>
 
             <div class="card-body">
-                {{-- <div id=""> --}}
-                <table id="exm2" class="table table-hover">
-                    <thead style="background-color:rgb(242, 231, 255)">
-                        <tr>
-                            <th>Tanggal</th>
-                            <th>No Ref</th>
-                            <th>Alasan</th>
-                            <th>Nilai Adjusment</th>
-                            <th>Dibuat Oleh</th>
-                            <th>Act.</th>
-                            {{-- <th></th> --}}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($isListAdj as $ila)
+                <div id="">
+                    <div class="mb-3">
+                        <input type="month" name="MonthAdjusment" id="MonthAdjusment" onchange="getMonthAdjusment()"
+                            class="form-control form-control-sm col-2">
+                    </div>
+                    <table id="penjualan" class="table table-hover">
+                        <thead style="background-color:rgb(242, 231, 255)">
                             <tr>
-                                <td id="">{{ $ila->tgl_trs }}</td>
-                                <td id="">{{ $ila->kd_adj }}</td>
-                                <td id="">{{ $ila->keterangan }}</td>
-                                <td id="">@currency($ila->nilai_total_adjusment)</td>
-                                <td id="">{{ $ila->user }}</td>
-                                <td><button class="btn btn-xs btn-success" data-toggle="modal"
-                                        data-target="#EditXDo">Detail</button>
-                                </td>
+                                <th>Tanggal</th>
+                                <th>No Ref</th>
+                                <th>Keterangan</th>
+                                <th>Nilai Adjusment</th>
+                                <th>Periode Adjusment</th>
+                                <th>Act.</th>
+                                {{-- <th></th> --}}
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                {{-- </div> --}}
+                        </thead>
+                        <tbody>
+                            {{-- @foreach ($isListAdj as $ila) --}}
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                {{-- <td id="">{{ $ila->tgl_trs }}</td>
+                                    <td id="">{{ $ila->kd_adj }}</td>
+                                    <td id="">{{ $ila->keterangan }}</td>
+                                    <td id="">@currency($ila->nilai_total_adjusment)</td>
+                                    <td id="">{{ $ila->user }}</td>
+                                    <td><button class="btn btn-xs btn-success" data-toggle="modal"
+                                            data-target="#EditXDo">Detail</button>
+                                    </td> --}}
+                            </tr>
+                            {{-- @endforeach --}}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </section>
@@ -48,6 +59,13 @@
         }
 
         #TambahADJ .fullmodal {
+            width: 90%;
+            max-width: none;
+            height: auto;
+            margin: 40;
+        }
+
+        #ViewADJ .fullmodal {
             width: 90%;
             max-width: none;
             height: auto;
@@ -135,20 +153,15 @@
                     </div>
                     <hr>
                     <div class="float-right col-4">
-                        <div class="float-right col-4">
+                    </div>
+                    {{-- <hr> --}}
+                    <div class="modal-footer">
+                        <div class="float-right col-2">
                             <input type="text" class="form-control float-right" name="total_adj_show_only"
                                 id="total_adj_show_only" value="" readonly>
                             <input type="hidden" class="form-control float-right" name="total_adj" id="total_adj"
                                 value="" readonly>
                         </div>
-                        {{-- <div class="float-right">
-                        <button class="btn btn-xs btn-info" id="addRow">Tambah Barang</button>
-                    </div> --}}
-                    </div>
-                    <br>
-                    <br>
-                    {{-- <hr> --}}
-                    <div class="modal-footer">
                         <button type="submit" id="buat" class="btn btn-success float-right"><i
                                 class="fa fa-save"></i>&nbsp;Save
                         </button>
@@ -159,8 +172,82 @@
     </div>
 
     <!-- The modal Edit -->
-    <div class="modal xeditmodal fade" id="EditDO">
+    <div class="modal fade" id="ViewADJ" data-backdrop="static">
+        <div class="modal-dialog modal-xl fullmodal">
+            <div class="modal-content document">
+                <div class="modal-header bg-success">
+                    <h4 class="modal-title"><i class="fa fa-truck">&nbsp;</i>Adjusment Stock Barang</h4>
+                    <button type="button" class="close btn btn-danger" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-sm-2">
+                            <label for="">Nomor Ref</label>
+                            <input type="text" class="form-control" name="kd_adjV" id="kd_adjV" value=""
+                                readonly>
+                        </div>
+                        <div class="form-group col-sm-2">
+                            <label for="">Tanggal Jam</label>
+                            <input type="date" class="form-control" name="tgl_trsV" id="tgl_trsV" value="">
+                        </div>
+                        <div class="form-group col-sm-2">
+                            <label for="">Periode Adjusment</label>
+                            <input type="date" class="periode_adjusment form-control" id="periode_adjusmentV"
+                                name="periode_adjusmentV">
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label for="">Keterangan</label>
+                            <textarea class="keterangan form-control" id="keteranganV" name="keteranganV"></textarea>
+                        </div>
+                    </div>
+                </div>
 
+                {{-- <hr> --}}
+                <div class="scrollable-table">
+                    <table id="" class="table table-bordered" style="width: 100%">
+                        <thead>
+                            <tr>
+                                {{-- <th>Kode Obat</th> --}}
+                                <th width="150px">kd Obat</th>
+                                <th width="250px">Nama Obat</th>
+                                <th>satuan</th>
+                                <th>Qty Stock / Tercatat</th>
+                                <th>Sebenarnya</th>
+                                <th>Koreksi</th>
+                                <th>Nilai HPP</th>
+                                <th>Sub Total HPP</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="AdjTable">
+
+                        </tbody>
+                    </table>
+                </div>
+                <hr>
+                <div class="float-right col-4">
+                </div>
+                {{-- <hr> --}}
+                <div class="modal-footer">
+                    <div class="float-left col">
+                        <span id="createdby" class="text-danger"></span>
+                    </div>
+                    <div class="float-right col-2">
+                        <input type="text" class="form-control float-right" name="total_adj_show_onlyV"
+                            id="total_adj_show_onlyV" value="" readonly>
+                        <input type="hidden" class="form-control float-right" name="total_adjV" id="total_adjV"
+                            value="" readonly>
+                    </div>
+
+                    {{-- <button type="submit" id="buat" class="btn btn-success float-right"><i
+                            class="fa fa-save"></i>&nbsp;Save
+                    </button> --}}
+                </div>
+            </div>
+        </div>
     </div>
 
 
@@ -207,16 +294,74 @@
 
     @push('scripts')
         <script>
-            // $("#periode_adjusment").datepicker({
-            //     format: "mm-yyyy",
-            //     startView: "months",
-            //     minViewMode: "months"
-            // });
+            getMonthAdjusment()
 
-            // $('#periode_adjusment').datepicker({
-            //     minViewMode: 2,
-            //     format: 'yyyy'
-            // });
+            function getMonthAdjusment() {
+                const dataBulan = $('#MonthAdjusment').val();
+                $.ajax({
+                    success: function() {
+                        $('#penjualan').DataTable({
+                            processing: true,
+                            serverSide: true,
+                            dom: 'lBfrtip',
+                            responsive: true,
+                            "bDestroy": true,
+                            "order": [
+                                [1, "dsc"]
+                            ],
+                            ajax: {
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                url: "{{ url('getMonthAdjusment') }}",
+                                type: 'GET',
+                                data: {
+                                    dataBulan: dataBulan
+                                }
+                            },
+                            columns: [{
+                                    data: 'tgl_trs',
+                                    name: 'tgl_trs',
+                                    render: function(data, type, row) {
+                                        return moment(data).format('D MMMM YYYY');
+                                    }
+                                },
+                                {
+                                    data: 'kd_adj',
+                                    name: 'kd_adj'
+                                },
+                                {
+                                    data: 'keterangan',
+                                    name: 'keterangan',
+                                },
+                                {
+                                    data: 'nilai_total_adjusment',
+                                    name: 'nilai_total_adjusment',
+                                    render: $.fn.dataTable.render.number(',', '.', 2, 'Rp ')
+                                },
+                                {
+                                    data: 'periode_adjusment',
+                                    name: 'periode_adjusment',
+                                    render: function(data, type, row) {
+                                        return moment(data).format('D MMMM YYYY');
+                                    }
+                                },
+                                {
+                                    data: 'action',
+                                    name: 'action'
+                                },
+                            ],
+                            "responsive": true,
+                            "paging": true,
+                            "searching": true,
+                            "lengthChange": true,
+                            "autoWidth": true,
+                            "buttons": ["copy", "excel", "pdf", "print", "colvis"]
+                        }).buttons().container().appendTo('#penjualan_wrapper .col-md-6:eq(0)');
+                    }
+                })
+            };
+
 
             function getBarang() {
                 $('#obatSearch').modal('show');
@@ -363,6 +508,73 @@
                     return getBarang();
                 }
             });
+
+            function getDetailAdj(tx) {
+                $('#ViewADJ').modal('show');
+
+                var kd_adj = $(tx).data('kd_adj');
+                $('#AdjTable').empty();
+
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "{{ url('getDetailAdjusment') }}/" + kd_adj,
+                    type: "GET",
+                    data: {
+                        kd_adj: kd_adj
+                    },
+                    success: function(isViewAdjusment) {
+                        $.each(isViewAdjusment, function(key, datavalue) {
+                            $('#kd_adjV').val(datavalue.kd_adj);
+                            $('#tgl_trsV').val(datavalue.tgl_trs);
+                            $('#periode_adjusmentV').val(datavalue.periode_adjusment);
+                            $('#keteranganV').val(datavalue.keterangan);
+                            $('#total_adj_show_onlyV').val(datavalue.nilai_total_adjusment);
+                            $('#total_adjV').val(datavalue.nilai_total_adjusment);
+                            $('#createdby').html('Created By : ' +
+                                datavalue.user);
+                            $("#AdjTable").append(`
+                                         <tr>
+                                            <td>
+                                                <input class="searchObat form-control" style="border: none"
+                                                    id="kd_obat" name="kd_obat[]" placeholder="kode obat" readonly
+                                                    style="border: none;" value="${datavalue.kd_obat}">
+                                            </td>
+                                            <td>
+                                                <input class="searchObat form-control" id="nm_obat"
+                                                    name="nm_obat[]" ondblclick="getListObat()" aria-placeholder="Search" value="${datavalue.nm_obat}" readonly>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="do_satuan_pembelian form-control"
+                                                    id="satuan" name="satuan[]" readonly
+                                                    value="${datavalue.satuan}">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" readonly style="border: none;" id="" name="[]" value=${datavalue.qty_awal}>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="qty form-control" id="qty" name="qty[]" onKeyUp="getQTY(this)" value="${datavalue.qty_sebenarnya}" readonly>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="cara_pakai form-control" id="cara_pakai" name="cara_pakai[]" value="${datavalue.koreksi_adj}" readonly>
+                                            </td>
+                                          
+                                            <td>
+                                                <input type="text" class="form-control" id="tuslah"
+                                                    name="tuslah[]" readonly value="${datavalue.nilai_hpp}">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" id="embalase"
+                                                    name="embalase[]" readonly value="${datavalue.sub_total_adjusment}">
+                                            </td>
+                                        </tr>
+                                        `);
+                        })
+                    }
+
+                });
+            };
         </script>
     @endpush
 @endsection
