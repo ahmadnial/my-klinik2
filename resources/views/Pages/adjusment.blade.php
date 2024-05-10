@@ -84,8 +84,8 @@
                         <div class="row">
                             <div class="form-group col-sm-2">
                                 <label for="">Nomor Ref</label>
-                                <input type="text" class="form-control" name="kd_adj" id="kd_adj"
-                                    value="{{ $noReff }}" readonly>
+                                <input type="text" class="form-control" name="kd_adj" id="kd_adj" value=""
+                                    readonly>
                             </div>
                             <div class="form-group col-sm-2">
                                 <label for="">Tanggal Jam</label>

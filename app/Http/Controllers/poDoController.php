@@ -121,17 +121,17 @@ class poDoController extends Controller
 
     public function adj()
     {
-        $num = str_pad(000001, 6, 0, STR_PAD_LEFT);
-        $Y = date("Y");
-        $M = date("m");
-        $cekid = tb_adjusment_hdr::count();
-        if ($cekid == 0) {
-            $noRef =  'AJ'  . '-' . substr($Y, -2) . $M . '-' . $num;
-        } else {
-            $continue = tb_adjusment_hdr::all()->last();
-            $de = substr($continue->kd_adj, -6);
-            $noRef = 'AJ' . '-' . substr($Y, -2) . $M  . '-' . str_pad(($de + 1), 6, '0', STR_PAD_LEFT);
-        };
+        // $num = str_pad(000001, 6, 0, STR_PAD_LEFT);
+        // $Y = date("Y");
+        // $M = date("m");
+        // $cekid = tb_adjusment_hdr::count();
+        // if ($cekid == 0) {
+        //     $noRef =  'AJ'  . '-' . substr($Y, -2) . $M . '-' . $num;
+        // } else {
+        //     $continue = tb_adjusment_hdr::all()->last();
+        //     $de = substr($continue->kd_adj, -6);
+        //     $noRef = 'AJ' . '-' . substr($Y, -2) . $M  . '-' . str_pad(($de + 1), 6, '0', STR_PAD_LEFT);
+        // };
         $ListObat = DB::table('mstr_obat')
             ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
             ->select('mstr_obat.*', 'tb_stock.*')
@@ -145,7 +145,7 @@ class poDoController extends Controller
 
         return view('pages.adjusment', [
             'ListObat' => $ListObat,
-            'noReff'    => $noRef,
+            // 'noReff'    => $noRef,
             'isListAdj'    => $isListAdj,
             'dateNow'   => $dateNow
         ]);
@@ -156,95 +156,109 @@ class poDoController extends Controller
         // $y = $request->all();
         // dd($y);
         $request->validate([
-            'kd_adj' => 'required',
+            // 'kd_adj' => 'required',
             'tgl_trs' => 'required',
             'periode_adjusment' => 'required',
             // 'nilai_total_adjusment' => 'required',   
         ]);
 
         DB::beginTransaction();
-        // try {
-        $HdrAdj = [
-            'kd_adj' => $request->kd_adj,
-            'tgl_trs' => $request->tgl_trs,
-            'periode_adjusment' => $request->periode_adjusment,
-            'nilai_total_adjusment' => $request->total_adj,
-            'keterangan' => $request->keterangan,
-        ];
-        tb_adjusment_hdr::create($HdrAdj);
+        try {
 
-        foreach ($request->kd_obat as $key => $val) {
-            $detailObat = [
-                'kd_adj' => $request->kd_adj,
-                'kd_obat' => $request->kd_obat[$key],
-                'nm_obat' => $request->nm_obat[$key],
-                'satuan' => $request->satuan[$key],
-                'qty_awal' => $request->qty[$key],
-                'qty_sebenarnya' => $request->qty_adj[$key],
-                'koreksi_adj' => $request->qty_hasil_koreksi[$key],
-                'nilai_hpp' => $request->hrg_beli_hpp[$key],
-                'sub_total_adjusment' => $request->sub_total_adj[$key],
-                'user' => Auth::user()->name,
-            ];
-            tb_adjusment_detail::create($detailObat);
-        }
-
-        foreach ($request->kd_obat as $keyz => $val) {
-            // $currentStock = DB::table('tb_stock')->whereIn('kd_obat', [$request->do_obat[$keyz]])->value('qty');
-            if ($request->qty_hasil_koreksi[$keyz] < 0) {
-                $qtyKeluar = preg_replace("/[^0-9]/", "", $request->qty_hasil_koreksi[$keyz]);
-                $dataZ = [
-                    'tanggal_trs' => $request->tgl_trs,
-                    'kd_trs' => $request->kd_adj,
-                    'kd_obat' => $request->kd_obat[$keyz],
-                    'nm_obat' => $request->nm_obat[$keyz],
-                    'supplier' => 'Adjusment/SO',
-                    'no_batch' => '-',
-                    'expired_date' => '-',
-                    'qty_awal' => $request->qty[$keyz],
-                    'qty_masuk' => '0',
-                    'qty_keluar' => $qtyKeluar,
-                    'qty_akhir'  => $request->qty_adj[$keyz],
-                    'hpp_satuan' => $request->hrg_beli_hpp[$keyz],
-                ];
+            $num = str_pad(000001, 6, 0, STR_PAD_LEFT);
+            $Y = date("Y");
+            $M = date("m");
+            $cekid = tb_adjusment_hdr::count();
+            if ($cekid == 0) {
+                $noRef =  'AJ'  . '-' . substr($Y, -2) . $M . '-' . $num;
             } else {
-                $dataZ = [
-                    'tanggal_trs' => $request->tgl_trs,
-                    'kd_trs' => $request->kd_adj,
-                    'kd_obat' => $request->kd_obat[$keyz],
-                    'nm_obat' => $request->nm_obat[$keyz],
-                    'supplier' => 'Adjusment/SO',
-                    'no_batch' => '-',
-                    'expired_date' => '-',
-                    'qty_awal' => $request->qty[$keyz],
-                    'qty_masuk' => $request->qty_hasil_koreksi[$keyz],
-                    'qty_keluar' => '0',
-                    'qty_akhir'  => $request->qty_adj[$keyz],
-                    'hpp_satuan' => $request->hrg_beli_hpp[$keyz],
+                $continue = tb_adjusment_hdr::all()->last();
+                $de = substr($continue->kd_adj, -6);
+                $noRef = 'AJ' . '-' . substr($Y, -2) . $M  . '-' . str_pad(($de + 1), 6, '0', STR_PAD_LEFT);
+            };
+
+
+            $HdrAdj = [
+                'kd_adj' => $noRef,
+                'tgl_trs' => $request->tgl_trs,
+                'periode_adjusment' => $request->periode_adjusment,
+                'nilai_total_adjusment' => $request->total_adj,
+                'keterangan' => $request->keterangan,
+            ];
+            tb_adjusment_hdr::create($HdrAdj);
+
+            foreach ($request->kd_obat as $key => $val) {
+                $detailObat = [
+                    'kd_adj' => $noRef,
+                    'kd_obat' => $request->kd_obat[$key],
+                    'nm_obat' => $request->nm_obat[$key],
+                    'satuan' => $request->satuan[$key],
+                    'qty_awal' => $request->qty[$key],
+                    'qty_sebenarnya' => $request->qty_adj[$key],
+                    'koreksi_adj' => $request->qty_hasil_koreksi[$key],
+                    'nilai_hpp' => $request->hrg_beli_hpp[$key],
+                    'sub_total_adjusment' => $request->sub_total_adj[$key],
+                    'user' => Auth::user()->name,
                 ];
+                tb_adjusment_detail::create($detailObat);
             }
 
-            kartuStockDetail::create($dataZ);
+            foreach ($request->kd_obat as $keyz => $val) {
+                // $currentStock = DB::table('tb_stock')->whereIn('kd_obat', [$request->do_obat[$keyz]])->value('qty');
+                if ($request->qty_hasil_koreksi[$keyz] < 0) {
+                    $qtyKeluar = preg_replace("/[^0-9]/", "", $request->qty_hasil_koreksi[$keyz]);
+                    $dataZ = [
+                        'tanggal_trs' => $request->tgl_trs,
+                        'kd_trs' => $noRef,
+                        'kd_obat' => $request->kd_obat[$keyz],
+                        'nm_obat' => $request->nm_obat[$keyz],
+                        'supplier' => 'Adjusment/SO',
+                        'no_batch' => '-',
+                        'expired_date' => '-',
+                        'qty_awal' => $request->qty[$keyz],
+                        'qty_masuk' => '0',
+                        'qty_keluar' => $qtyKeluar,
+                        'qty_akhir'  => $request->qty_adj[$keyz],
+                        'hpp_satuan' => $request->hrg_beli_hpp[$keyz],
+                    ];
+                } else {
+                    $dataZ = [
+                        'tanggal_trs' => $request->tgl_trs,
+                        'kd_trs' => $noRef,
+                        'kd_obat' => $request->kd_obat[$keyz],
+                        'nm_obat' => $request->nm_obat[$keyz],
+                        'supplier' => 'Adjusment/SO',
+                        'no_batch' => '-',
+                        'expired_date' => '-',
+                        'qty_awal' => $request->qty[$keyz],
+                        'qty_masuk' => $request->qty_hasil_koreksi[$keyz],
+                        'qty_keluar' => '0',
+                        'qty_akhir'  => $request->qty_adj[$keyz],
+                        'hpp_satuan' => $request->hrg_beli_hpp[$keyz],
+                    ];
+                }
+
+                kartuStockDetail::create($dataZ);
+            }
+
+            foreach ($request->kd_obat as $keys => $val) {
+                $datax =  $request->kd_obat[$keys];
+                $dataQty =  $request->qty_adj[$keys];
+                $toInt = (int)$dataQty;
+
+                tb_stock::whereIn('kd_obat', [$datax])->update(['qty' => $toInt]);
+            }
+
+            DB::commit();
+
+            toastr()->success('Data Tersimpan!');
+            return back();
+            // return redirect()->route('/tindakan-medis');
+        } catch (\Exception $e) {
+            DB::rollback();
+            toastr()->error('Gagal Tersimpan!');
+            return back();
         }
-
-        foreach ($request->kd_obat as $keys => $val) {
-            $datax =  $request->kd_obat[$keys];
-            $dataQty =  $request->qty_adj[$keys];
-            $toInt = (int)$dataQty;
-
-            tb_stock::whereIn('kd_obat', [$datax])->update(['qty' => $toInt]);
-        }
-
-        DB::commit();
-
-        toastr()->success('Data Tersimpan!');
-        return back();
-        // return redirect()->route('/tindakan-medis');
-        // } catch (\Exception $e) {
-        DB::rollback();
-        toastr()->error('Gagal Tersimpan!');
-        return back();
-        // }
     }
 
     public function obatSearch(Request $request)
