@@ -663,6 +663,7 @@
             $('#alldss').DataTable({
                 processing: true,
                 serverSide: true,
+                dom: 'lBfrtip',
                 responsive: true,
                 "bDestroy": true,
                 ajax: "{{ url('getAllDasos') }}",
@@ -690,8 +691,14 @@
                         data: 'action',
                         name: 'action'
                     },
-                ]
-            });
+                ],
+                "responsive": true,
+                "paging": true,
+                "searching": true,
+                "lengthChange": true,
+                "autoWidth": true,
+                "buttons": ["copy", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#alldss_wrapper .col-md-6:eq(0)');
         };
 
         getAllDss();
