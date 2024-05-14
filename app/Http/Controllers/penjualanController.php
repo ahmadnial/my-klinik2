@@ -96,6 +96,7 @@ class penjualanController extends Controller
     {
         if (request()->ajax()) {
             $isObatReguler = DB::table('mstr_obat')
+                ->where('isActive', '=', '1')
                 ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
                 ->select('mstr_obat.*', 'tb_stock.*')
                 ->get();
@@ -117,6 +118,7 @@ class penjualanController extends Controller
     {
         if (request()->ajax()) {
             $isObatResep = DB::table('mstr_obat')
+                ->where('isActive', '=', '1')
                 ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
                 ->select('fm_kd_obat', 'fm_nm_obat', 'fm_hrg_jual_resep', 'fm_hrg_beli_detail', 'fm_satuan_jual', 'qty')
                 ->get();
@@ -139,6 +141,7 @@ class penjualanController extends Controller
         // $isObatNakes = mstr_obat::select("fm_kd_obat", "fm_nm_obat", "fm_satuan_jual", "fm_hrg_beli", "fm_hrg_jual_nakes")->get();
         if (request()->ajax()) {
             $isObatNakes = DB::table('mstr_obat')
+                ->where('isActive', '=', '1')
                 ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
                 ->select('fm_kd_obat', 'fm_nm_obat', 'fm_hrg_jual_nakes', 'fm_hrg_beli_detail', 'fm_satuan_jual', 'qty')
                 ->get();
@@ -161,6 +164,7 @@ class penjualanController extends Controller
     {
         if (request()->ajax()) {
             $isObatReguler = DB::table('mstr_obat')
+                ->where('isActive', '=', '1')
                 ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
                 ->select('mstr_obat.*', 'tb_stock.*')
                 ->get();
@@ -182,6 +186,7 @@ class penjualanController extends Controller
     {
         if (request()->ajax()) {
             $isObatResep = DB::table('mstr_obat')
+                ->where('isActive', '=', '1')
                 ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
                 ->select('fm_kd_obat', 'fm_nm_obat', 'fm_hrg_jual_resep', 'fm_satuan_jual', 'qty')
                 ->get();
@@ -204,6 +209,7 @@ class penjualanController extends Controller
         // $isObatNakes = mstr_obat::select("fm_kd_obat", "fm_nm_obat", "fm_satuan_jual", "fm_hrg_beli", "fm_hrg_jual_nakes")->get();
         if (request()->ajax()) {
             $isObatNakes = DB::table('mstr_obat')
+                ->where('isActive', '=', '1')
                 ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
                 ->select('fm_kd_obat', 'fm_nm_obat', 'fm_hrg_jual_nakes', 'fm_satuan_jual', 'qty')
                 ->get();
