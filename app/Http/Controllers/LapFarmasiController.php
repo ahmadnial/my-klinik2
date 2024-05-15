@@ -84,6 +84,7 @@ class LapFarmasiController extends Controller
         if ($request->ajax()) {
             $isDataBukuStok = DB::table('tb_stock')
                 ->leftJoin('mstr_obat', 'tb_stock.kd_obat', 'mstr_obat.fm_kd_obat')
+                ->where('mstr_obat.isActive', '=', '1')
                 ->select('mstr_obat.*', 'tb_stock.*')
                 ->get();
         }

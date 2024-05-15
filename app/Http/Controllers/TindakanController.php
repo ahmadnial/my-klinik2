@@ -93,6 +93,7 @@ class TindakanController extends Controller
             $isdataObat = mstr_obat::select("fm_kd_obat", "fm_nm_obat", "fm_satuan_pembelian", "fm_hrg_beli", "qty", "satuan")
                 ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
                 ->where('mstr_obat.fm_nm_obat', 'LIKE', '%' . $request->get('q') . '%')
+                ->where('mstr_obat.isActive', '=', '1')
                 ->get();
         }
         // dd($data);

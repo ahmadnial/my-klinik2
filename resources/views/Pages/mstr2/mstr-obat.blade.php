@@ -25,6 +25,7 @@
                             <th>Hrg Jual Non-resep</th>
                             <th>Hrg Jual Resep</th>
                             <th>Hrg Jual Nakes</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -44,6 +45,13 @@
                                 <td id="">{{ $tz->fm_hrg_jual_resep }}</td>
                                 {{-- <td id="">@currency($tz->fm_hrg_jual_resep)</td> --}}
                                 <td id="">@currency($tz->fm_hrg_jual_nakes)</td>
+                                <td id="">
+                                    @if ($tz->isActive == '1')
+                                        <span class="badge badge-success">Active</span>
+                                    @else
+                                        <span class="badge badge-primary">Non-Active</span>
+                                    @endif
+                                </td>
                                 <td><button class="btn btn-xs btn-info" data-toggle="modal" data-target=""
                                         data-id="{{ $tz->fm_kd_obat }}" data-nmobat="{{ $tz->fm_nm_obat }}"
                                         data-kategori="{{ $tz->fm_kategori }}" data-supplier="{{ $tz->fm_supplier }}"
@@ -62,12 +70,12 @@
                                         data-hrg_jual_resep_persen="{{ $tz->fm_hrg_jual_resep_persen }}"
                                         data-isactive="{{ $tz->isActive }}"
                                         data-hrg_jual_nakes_persen="{{ $tz->fm_hrg_jual_nakes_persen }}" id="editObat"
-                                        onClick="getIDObat(this)"><i class="fa fa-edit"></i>Edit</button>
+                                        onClick="getIDObat(this)"><i class="fa fa-edit"></i></button>
                                     {{-- <button class="btn btn-xs btn-danger" data-toggle="modal"
                                         data-target="#DeleteSupplier{{ $tz->fm_kd_supplier }}">Hapus</button> --}}
-                                    <button class="btn btn-danger btn-xs" data-id="{{ $tz->fm_kd_obat }}"
+                                    {{-- <button class="btn btn-danger btn-xs" data-id="{{ $tz->fm_kd_obat }}"
                                         data-nmobat="{{ $tz->fm_nm_obat }}" onClick="delObat(this)"><i
-                                            class="fa fa-trash"></i>Delete</button>
+                                            class="fa fa-trash"></i>Delete</button> --}}
                                 </td>
                             </tr>
                         @endforeach
