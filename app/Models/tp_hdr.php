@@ -28,7 +28,9 @@ class tp_hdr extends Model
         'tgl_lahir',
         'tipe_tarif',
         'total_penjualan',
-        'tgl_trs'
+        'tgl_trs',
+        'reserDari',
+        'noResep'
     ];
 
     public function tpdetail()

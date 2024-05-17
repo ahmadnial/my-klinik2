@@ -824,11 +824,11 @@
                         `
                              <div class="col-sm-2">
                                     <input type="text" class="form-control" name="resep_dari"
-                                        id="resep_dari" value="" readonly placeholder="Resep Dari">
+                                        id="resep_dari" value="" placeholder="Resep Dari">
                                 </div>
                                 <div class="col-sm-2">
                                     <input type="text" class="form-control" name="no_resep"
-                                        id="no_resep" value="" readonly placeholder="No.Resep">
+                                        id="no_resep" value="" placeholder="No.Resep">
                                 </div>
                             `
                     )

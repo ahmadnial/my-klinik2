@@ -32,6 +32,9 @@ class tp_detail_item extends Model
         'tgl_trs',
         'user',
         'tuslah',
-        'embalase'
+        'embalase',
+        'tipeTarif',
+        'resepDari',
+        'noResep'
     ];
 }
