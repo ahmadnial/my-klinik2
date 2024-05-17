@@ -21,6 +21,14 @@
                         @endforeach
                     </select>
                     <div class="input-group-addon">&nbsp;&nbsp;&nbsp;</div>
+                    <div class="input-group-addon">&nbsp;&nbsp;&nbsp;</div>
+                    <select id="tipeTarif" class="form-control">
+                        <option value="">Tipe Tarif</option>
+                        <option value="Reguler">Reguler</option>
+                        <option value="Resep">Resep</option>
+                        <option value="Nakes">Nakes</option>
+                    </select>
+                    <div class="input-group-addon">&nbsp;&nbsp;&nbsp;</div>
                     <button class="btn btn-success btn-sm" onclick="getDataPenjualan()" id="btnProses">Proses</button>
                     <div class="spinLoad d-flex align-items-center ml-4">
                         {{-- <strong>Loading...</strong> --}}
@@ -77,6 +85,7 @@
                 var date1 = $('#date1').val();
                 var date2 = $('#date2').val();
                 var user = $('#user').val();
+                var tipeTarif = $('#tipeTarif').val();
 
                 if (date1 == '') {
                     toastr.info('Pilih Range Tanggal', 'Info!', {
@@ -95,7 +104,8 @@
                         data: {
                             date1: date1,
                             date2: date2,
-                            user: user
+                            user: user,
+                            tipeTarif: tipeTarif
                         },
                         success: function(isDataLaporanDetail) {
                             $('#HNA').empty();
