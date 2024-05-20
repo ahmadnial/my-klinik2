@@ -14,7 +14,7 @@
                     <div class="input-group-addon">&nbsp; s.d&nbsp;</div>
                     <input type="date" id="date2" class="form-control">
                     <div class="input-group-addon">&nbsp;&nbsp;&nbsp;</div>
-                    <select id="user" class="form-control">
+                    <select id="user" class="form-control" disabled>
                         <option value="">Select User</option>
                         @foreach ($isUser as $iu)
                             <option value="{{ $iu->name }}">{{ $iu->name }}</option>
@@ -22,7 +22,7 @@
                     </select>
                     <div class="input-group-addon">&nbsp;&nbsp;&nbsp;</div>
                     <div class="input-group-addon">&nbsp;&nbsp;&nbsp;</div>
-                    <select id="tipeTarif" class="form-control">
+                    <select id="tipeTarif" class="form-control" disabled>
                         <option value="">Tipe Tarif</option>
                         <option value="Reguler">Reguler</option>
                         <option value="Resep">Resep</option>

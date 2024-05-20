@@ -453,7 +453,7 @@
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 {{-- <i class="nav-icon fas fa-bed"></i> --}}
-                                <i class="nav-icon fas fa-chart-line"></i>
+                                <i class="nav-icon fas fa-star"></i>
                                 <p>
                                     Analisa
                                     <i class="right fas fa-angle-left"></i>
