@@ -114,6 +114,7 @@
                             var rows = table
                                 .rows()
                                 .remove()
+                                .order(3, 'dsc')
                                 .draw();
                             $.each(isDataLaporanDetail, function(key, datavalue) {
                                 const table = $('#penjualan').DataTable();

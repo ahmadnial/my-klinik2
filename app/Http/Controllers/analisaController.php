@@ -26,7 +26,7 @@ class analisaController extends Controller
                 ->whereBetween('tgl_trs', [$request->date1, $request->date2])
                 ->whereNull('kd_reg')
                 ->groupBy('kd_obat', 'nm_obat', 'hrg_obat', 'satuan')
-                ->orderBy('total')
+                ->orderBy('total', 'DESC')
                 ->get();
         } else if ($request->user != '' && $request->tipeTarif == '') {
             $isDataLaporanDetail = DB::table('tp_detail_item')
