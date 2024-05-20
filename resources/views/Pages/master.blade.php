@@ -450,6 +450,25 @@
                             </ul>
                         </li>
 
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                {{-- <i class="nav-icon fas fa-bed"></i> --}}
+                                <i class="nav-icon fas fa-chart-line"></i>
+                                <p>
+                                    Analisa
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('/produk-terlaris') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Produk Terlaris</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
                         @if (auth()->user()->role_id == '1' || auth()->user()->role_id == '4')
                             <li class="nav-header">DATA MASTER APOTEK</li>
                             <li class="nav-item">

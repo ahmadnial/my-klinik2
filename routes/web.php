@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\analisaController;
 use App\Http\Controllers\arsipController;
 use App\Http\Controllers\AssesmentController;
 use Illuminate\Support\Facades\Route;
@@ -275,6 +276,12 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
     Route::get('pricelistHrgReguler', [LapFarmasiController::class, 'pricelistHrgReguler'])->name('pricelistHrgReguler');
     Route::get('pricelistHrgResep', [LapFarmasiController::class, 'pricelistHrgResep'])->name('pricelistHrgResep');
     Route::get('pricelistHrgNakes', [LapFarmasiController::class, 'pricelistHrgNakes'])->name('pricelistHrgNakes');
+});
+
+//Laporan Analisa
+Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
+    Route::get('produk-terlaris', [analisaController::class, 'laporanProdukTerlaris'])->name('produk-terlaris');
+    Route::get('getLaporanProdukTerlaris', [analisaController::class, 'getLaporanProdukTerlaris'])->name('getLaporanProdukTerlaris');
 });
 
 //Accounting / KEU
