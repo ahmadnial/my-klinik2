@@ -100,11 +100,27 @@ class LapFarmasiController extends Controller
         // $t = $request->all();
         // dd($t);
         if ($request->ajax()) {
-            $isDataBukuStok = DB::table('tb_stock')
-                ->leftJoin('mstr_obat', 'tb_stock.kd_obat', 'mstr_obat.fm_kd_obat')
-                ->where('mstr_obat.isActive', '=', '1')
-                ->select('mstr_obat.*', 'tb_stock.*')
-                ->get();
+            if ($request->kondisiStock == '') {
+                $isDataBukuStok = DB::table('tb_stock')
+                    ->leftJoin('mstr_obat', 'tb_stock.kd_obat', 'mstr_obat.fm_kd_obat')
+                    ->where('mstr_obat.isActive', '=', '1')
+                    ->select('mstr_obat.*', 'tb_stock.*')
+                    ->get();
+            } else if ($request->kondisiStock == 'ada') {
+                $isDataBukuStok = DB::table('tb_stock')
+                    ->leftJoin('mstr_obat', 'tb_stock.kd_obat', 'mstr_obat.fm_kd_obat')
+                    ->where('mstr_obat.isActive', '=', '1')
+                    ->where('tb_stock.qty', '!=', '0')
+                    ->select('mstr_obat.*', 'tb_stock.*')
+                    ->get();
+            } else if ($request->kondisiStock == 'kosong') {
+                $isDataBukuStok = DB::table('tb_stock')
+                    ->leftJoin('mstr_obat', 'tb_stock.kd_obat', 'mstr_obat.fm_kd_obat')
+                    ->where('mstr_obat.isActive', '=', '1')
+                    ->where('tb_stock.qty', '=', '0')
+                    ->select('mstr_obat.*', 'tb_stock.*')
+                    ->get();
+            }
         }
         return response()->json($isDataBukuStok);
     }

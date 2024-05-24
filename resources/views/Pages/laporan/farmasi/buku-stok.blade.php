@@ -8,7 +8,13 @@
             </div>
 
             <div class="card-body">
-                <div class="col-4 mb-4 input-group input-daterange" id="buttonGetStok">
+                <div class="col-2 mb-4 input-group input-daterange" id="buttonGetStok">
+                    <select id="kondisiStock" class="form-control">
+                        <option value="">Kondisi Stock</option>
+                        <option value="ada">Stock Ada</option>
+                        <option value="kosong">Stock Kosong</option>
+                    </select>
+                    <div class="input-group-addon">&nbsp;&nbsp;&nbsp;</div>
                     <button class="btn btn-success" onclick="getDataPenjualan()" id="btnProses">Proses</button>
                     <div class="spinLoad d-flex align-items-center ml-4">
                         {{-- <strong>Loading...</strong> --}}
@@ -18,7 +24,6 @@
                     </div>
                 </div>
                 <div>
-
                     <table id="example1" class="table table-hover table-striped">
                         <thead>
                             <tr>
@@ -56,6 +61,7 @@
                 $('#spinLoad').show();
                 var date1 = $('#date1').val();
                 var date2 = $('#date2').val();
+                var kondisiStock = $('#kondisiStock').val();
 
                 if (date1 == '') {
                     toastr.info('Pilih Range Tanggal', 'Info!', {
@@ -73,11 +79,14 @@
                         type: 'GET',
                         data: {
                             date1: date1,
-                            date2: date2
+                            date2: date2,
+                            kondisiStock: kondisiStock
                         },
                         success: function(isDataBukuStok) {
                             var sumall = 0;
-                            $('#buttonGetStok').hide();
+                            $('#spinLoad').hide();
+
+                            // $('#buttonGetStok').hide();
 
                             $.each(isDataBukuStok, function(key, datavalue) {
                                 const table = $('#example1').DataTable();

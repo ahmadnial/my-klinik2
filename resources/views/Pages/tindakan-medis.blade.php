@@ -1935,7 +1935,7 @@
                                 text: item.fm_kd_obat + ' - ' + item.fm_nm_obat +
                                     ' - ' + item.qty +
                                     ' ' +
-                                    item.satuan,
+                                    item.fm_satuan_jual,
                                 id: item.fm_kd_obat,
                                 // alamat: item.fm_nm_obat,
                             }
