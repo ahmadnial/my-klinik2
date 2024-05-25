@@ -714,9 +714,21 @@
                             ttv_SPO2: ttv_SPO2
                         },
                         cache: false,
-                        success: function(dataResult) {
+                        success: function(sessionFlash) {
                             $('.close').click();
-                            // document.getElementById("fm_nm_layanan").value = "";
+                            if (sessionFlash == 'success') {
+                                toastr.success('Saved!', 'Berhasil Tersimpan', {
+                                    timeOut: 2000,
+                                    preventDuplicates: true,
+                                    positionClass: 'toast-top-right',
+                                });
+                            } else {
+                                toastr.success('Error', 'Gagal Tersimpan', {
+                                    timeOut: 2000,
+                                    preventDuplicates: true,
+                                    positionClass: 'toast-top-right',
+                                });
+                            }
                             window.location.replace("{{ url('registrasi') }}")
                             // viewRegistrasi()
                             // toastr.success('Saved');

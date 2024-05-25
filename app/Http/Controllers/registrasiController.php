@@ -8,11 +8,12 @@ use App\Models\registrasiCreate;
 use App\Models\trs_chart;
 use App\Models\trs_chart_resep;
 use RealRashid\SweetAlert\Toaster;
-use Yoeunes\Toastr\Toastr;
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class registrasiController extends Controller
 {
@@ -53,7 +54,7 @@ class registrasiController extends Controller
         if ($cekid == '') {
             $kd_reg =  'RG'  . $num;
         } else {
-            $continue = registrasiCreate::withTrashed()->latest('created_at')->first();
+            $continue = registrasiCreate::withTrashed()->latest('created_at')->limit(1)->first();
             // $continue = DB::table('ta_registrasi')->withTrashed()->latest('created_at')->first();
             // $de = substr($continue->fr_kd_reg, -8); //old way
             $de = preg_replace('/[^0-9]/', '', $continue->fr_kd_reg);
@@ -75,6 +76,27 @@ class registrasiController extends Controller
             'fr_session_poli' => 'required'
         ]);
 
+        DB::beginTransaction();
+        // try {
+        $baseURL = getenv('BASE_URL_API');
+
+        // Http::post($baseURL . '/encounter', [
+        //     'regID' => $kd_reg,
+
+        // ]);
+        $client = new Client();
+        $res = $client->request('POST', $baseURL . 'encounter', [
+            // 'form_params' => [
+            'regID' => $kd_reg
+            // ]
+        ]);
+        // echo $res->getStatusCode();
+        // // 200
+        // echo $res->getHeader('content-type');
+        // // 'application/json; charset=utf8'
+        // echo $res->getBody();
+        // {"type":"User"...'
+
         $newReg = new registrasiCreate();
         $newReg->fr_kd_reg = $kd_reg;
         $newReg->fr_mr = $request->fr_mr;
@@ -95,15 +117,26 @@ class registrasiController extends Controller
 
         $newReg->save();
 
+        DB::commit();
+        $sessionFlash = 'success';
+
+        // return Redirect::to('/registrasi')->with($sessionFlash);
+        return response()->json($sessionFlash);
+        // } catch (\Exception $e) {
+        DB::rollback();
+
+        $sessionFlash = 'Error';
+        // return Redirect::to('/registrasi')->with($sessionFlashErr);
+        return response()->json($sessionFlash);
         // $data = registrasiCreate::create($request->all());
 
-        if ($newReg->save()) {
-            toastr()->success('Data Tersimpan!');
-            return back();
-        } else {
-            toastr()->error('Gagal Tersimpan!');
-            return back();
-        }
+        // if ($newReg->save()) {
+        //     toastr()->success('Data Tersimpan!');
+        //     return back();
+        // } else {
+        //     toastr()->error('Gagal Tersimpan!');
+        //     return back();
+        // }
     }
 
     public function editRegister(Request $request)
