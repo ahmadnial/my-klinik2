@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\do_hdr;
 use App\Models\HutangSupplier;
+use App\Models\tp_detail_item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
+use Termwind\Components\Raw;
 
 class DashboardController extends Controller
 {
@@ -24,9 +26,17 @@ class DashboardController extends Controller
             // ->leftJoin('tp_detail_item', 'tb_stock.kd_obat', 'mstr_obat.fm_kd_obat')
             ->get();
 
+        $getMonthSales = tp_detail_item::select(DB::raw("SUM(sub_total)as monthSales"))
+            // ->whereYear('tgl_trs', date('Y'))
+            ->whereNull('kd_reg')
+            ->GroupBy(DB::Raw("Month(tgl_trs)"))
+            ->pluck('monthSales');
+        // dd($getMonthSales);
+
         return view('Pages.index', [
             'isFakturTempo' => $isFakturTempo,
-            'isDefacta' => $isDefacta
+            'isDefacta' => $isDefacta,
+            'getMonthSales' => $getMonthSales
         ]);
     }
 }

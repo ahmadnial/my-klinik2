@@ -694,7 +694,7 @@
     <!-- Sparkline -->
     <script src="{{ asset('src/plugins/sparklines/sparkline.js') }}"></script>
     <script src="{{ asset('src/asset/uploadimg.js') }}"></script>
-
+    <script src="https://code.highcharts.com/highcharts.js"></script>
     {{-- <script src="{{ asset('src/plugins/jqvmap/jquery.vmap.min.js') }}"></script> --}}
     {{-- <script src="{{ asset('src/plugins/jqvmap/maps/jquery.vmap.usa.js') }}"></script> --}}
     <!-- jQuery Knob Chart -->
@@ -704,7 +704,11 @@
     <script src="{{ asset('src/plugins/daterangepicker/daterangepicker.js') }}"></script>
     <!-- Tempusdominus Bootstrap 4 -->
     {{-- <script src="{{ asset('src/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script> --}}
-
+    <script src="{{ asset('src/plugins/flot/jquery.flot.js') }}"></script>
+    <!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
+    <script src="{{ asset('src/plugins/flot/plugins/jquery.flot.resize.js') }}"></script>
+    <!-- FLOT PIE PLUGIN - also used to draw donut charts -->
+    <script src="{{ asset('src/plugins/flot/plugins/jquery.flot.pie.js') }}"></script>
     <script src="{{ asset('src/plugins/summernote/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('src/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
     <script src="{{ asset('src/dist/js/adminlte.js') }}"></script>
