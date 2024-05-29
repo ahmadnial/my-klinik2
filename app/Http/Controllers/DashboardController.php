@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\do_detail_item;
 use App\Models\do_hdr;
 use App\Models\HutangSupplier;
 use App\Models\tp_detail_item;
@@ -31,19 +32,28 @@ class DashboardController extends Controller
             ->whereNull('kd_reg')
             ->GroupBy(DB::Raw("Month(tgl_trs)"))
             ->pluck('monthSales');
-        // dd($getMonthSales);
 
         $bulanPenjualan = tp_detail_item::Select(DB::raw("MONTHNAME(tgl_trs) as month"))
             ->groupBy(DB::raw("MONTHNAME(tgl_trs)"))
             ->pluck('month');
 
-        // dd($bulanPenjualan);
+        $getMonthPembelian = do_detail_item::select(DB::raw("SUM(do_sub_total)as monthPembelian"))
+            // ->whereYear('tgl_trs', date('Y'))
+            ->GroupBy(DB::Raw("Month(tanggal_trs)"))
+            ->pluck('monthPembelian');
+
+        // dd($getMonthPembelian);
+        $bulanPembelian = do_detail_item::Select(DB::raw("MONTHNAME(tanggal_trs) as monthView"))
+            ->groupBy(DB::raw("MONTHNAME(tanggal_trs)"))
+            ->pluck('monthView');
 
         return view('Pages.index', [
             'isFakturTempo' => $isFakturTempo,
             'isDefacta' => $isDefacta,
             'getMonthSales' => $getMonthSales,
-            'bulanPenjualan' => $bulanPenjualan
+            'bulanPenjualan' => $bulanPenjualan,
+            'getMonthPembelian' => $getMonthPembelian,
+            'bulanPembelian' => $bulanPembelian
         ]);
     }
 }
