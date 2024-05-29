@@ -8,6 +8,7 @@
         <div class="container-fluid">
             <div id="getMonthSales" class="mb-3 mt-2"></div>
             <div id="getMonthPembelian" class="mb-3 mt-2"></div>
+            <div id="getObatTerlaris" class="mb-3 mt-2"></div>
             {{-- <section class="content">
                 <div class="container-fluid">
                     <div class="row">
@@ -399,7 +400,7 @@
                 text: 'Grafik Penjualan Apotek'
             },
             subtitle: {
-                text: 'Source: Apotek Aulia'
+                text: 'Source: Trs Penjualan Apotek'
             },
             xAxis: {
                 categories: bulanPenjualan
@@ -439,7 +440,7 @@
             }
         });
 
-        // chart pembelian
+        // chart pembelian barang
 
         var getMonthPembelian = <?php echo json_encode($getMonthPembelian); ?>;
         var bulanPembelian = <?php echo json_encode($bulanPembelian); ?>;
@@ -448,7 +449,7 @@
                 text: 'Grafik Pembelian Apotek'
             },
             subtitle: {
-                text: 'Source: Apotek Aulia'
+                text: 'Source: Trs Pembelian Obat (DO)'
             },
             xAxis: {
                 categories: bulanPembelian
@@ -471,6 +472,55 @@
             series: [{
                 name: 'Nilai Pemb.',
                 data: getMonthPembelian
+            }],
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 500
+                    },
+                    chartOptions: {
+                        legend: {
+                            layout: 'horizontal',
+                            align: 'center',
+                            verticalAlign: 'bottom'
+                        }
+                    }
+                }]
+            }
+        });
+
+        // Obat Terlaris TOP 10
+
+        var obatTerlarisQty = <?php echo json_encode($obatTerlarisQty); ?>;
+        var obatTerlarisName = <?php echo json_encode($obatTerlarisName); ?>;
+        Highcharts.chart('getObatTerlaris', {
+            title: {
+                text: 'Grafik TOP 10 Obat Terlaris '
+            },
+            subtitle: {
+                text: 'Source: Trs Penjualan Apotek'
+            },
+            xAxis: {
+                categories: obatTerlarisName
+            },
+            yAxis: {
+                title: {
+                    text: 'IDR'
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle'
+            },
+            plotOptions: {
+                series: {
+                    allowPointSelect: true
+                }
+            },
+            series: [{
+                name: 'QTY pnj.',
+                data: obatTerlarisQty
             }],
             responsive: {
                 rules: [{

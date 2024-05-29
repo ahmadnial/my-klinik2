@@ -84,12 +84,12 @@ class registrasiController extends Controller
         //     'regID' => $kd_reg,
 
         // ]);
-        $client = new Client();
-        $res = $client->request('POST', $baseURL . 'encounter', [
-            // 'form_params' => [
-            'regID' => $kd_reg
-            // ]
-        ]);
+        // $client = new Client();
+        // $res = $client->request('POST', $baseURL . 'encounter', [
+        //     // 'form_params' => [
+        //     'regID' => $kd_reg
+        //     // ]
+        // ]);
         // echo $res->getStatusCode();
         // // 200
         // echo $res->getHeader('content-type');

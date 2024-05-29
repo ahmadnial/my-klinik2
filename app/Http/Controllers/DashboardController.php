@@ -6,6 +6,7 @@ use App\Models\do_detail_item;
 use App\Models\do_hdr;
 use App\Models\HutangSupplier;
 use App\Models\tp_detail_item;
+use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
@@ -47,13 +48,40 @@ class DashboardController extends Controller
             ->groupBy(DB::raw("MONTHNAME(tanggal_trs)"))
             ->pluck('monthView');
 
+
+        $obatTerlarisQty = DB::table('tp_detail_item')
+            ->leftJoin('mstr_obat', 'tp_detail_item.kd_obat', 'mstr_obat.fm_kd_obat')
+            ->select('nm_obat', DB::raw('sum(qty) as total'))
+            ->whereYear('tgl_trs', '=', $yearNow)
+            ->whereMonth('tgl_trs', '=', $monthNow)
+            ->whereNull('kd_reg')
+            ->groupBy('nm_obat')
+            ->orderBy('total', 'DESC')
+            ->limit('10')
+            ->pluck('total');
+        // dd($obatTerlaris);
+
+        $obatTerlarisName = DB::table('tp_detail_item')
+            ->leftJoin('mstr_obat', 'tp_detail_item.kd_obat', 'mstr_obat.fm_kd_obat')
+            ->select('nm_obat', 'hrg_obat', DB::raw('sum(qty) as total'))
+            ->whereYear('tgl_trs', '=', $yearNow)
+            ->whereMonth('tgl_trs', '=', $monthNow)
+            ->whereNull('kd_reg')
+            ->groupBy('nm_obat', 'hrg_obat')
+            ->orderBy('total', 'DESC')
+            ->limit('10')
+            ->pluck('nm_obat');
+        // dd($obatTerlarisQty);
+
         return view('Pages.index', [
             'isFakturTempo' => $isFakturTempo,
             'isDefacta' => $isDefacta,
             'getMonthSales' => $getMonthSales,
             'bulanPenjualan' => $bulanPenjualan,
             'getMonthPembelian' => $getMonthPembelian,
-            'bulanPembelian' => $bulanPembelian
+            'bulanPembelian' => $bulanPembelian,
+            'obatTerlarisQty' => $obatTerlarisQty,
+            'obatTerlarisName' => $obatTerlarisName
         ]);
     }
 }
