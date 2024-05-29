@@ -33,10 +33,17 @@ class DashboardController extends Controller
             ->pluck('monthSales');
         // dd($getMonthSales);
 
+        $bulanPenjualan = tp_detail_item::Select(DB::raw("MONTHNAME(tgl_trs) as month"))
+            ->groupBy(DB::raw("MONTHNAME(tgl_trs)"))
+            ->pluck('month');
+
+        // dd($bulanPenjualan);
+
         return view('Pages.index', [
             'isFakturTempo' => $isFakturTempo,
             'isDefacta' => $isDefacta,
-            'getMonthSales' => $getMonthSales
+            'getMonthSales' => $getMonthSales,
+            'bulanPenjualan' => $bulanPenjualan
         ]);
     }
 }

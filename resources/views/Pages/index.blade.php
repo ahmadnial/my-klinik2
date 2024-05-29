@@ -392,6 +392,7 @@
 @push('scripts')
     <script>
         var getMonthSales = <?php echo json_encode($getMonthSales); ?>;
+        var bulanPenjualan = <?php echo json_encode($bulanPenjualan); ?>;
         Highcharts.chart('getMonthSales', {
             title: {
                 text: 'Laporan Penjualan Apotek'
@@ -400,9 +401,7 @@
                 text: 'Source: Apotek Aulia'
             },
             xAxis: {
-                categories: ['February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
-                    'October', 'November', 'December'
-                ]
+                categories: bulanPenjualan
             },
             yAxis: {
                 title: {
