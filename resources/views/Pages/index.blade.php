@@ -6,9 +6,13 @@
 
     <div class="content">
         <div class="container-fluid">
-            <div id="getMonthSales" class="mb-3 mt-2"></div>
-            <div id="getMonthPembelian" class="mb-3 mt-2"></div>
-            <div id="getObatTerlaris" class="mb-3 mt-2"></div>
+            <div class="col">
+                <div class="">
+                    <div id="getMonthSales" class="mb-2 mt-2"></div>
+                    <div id="getMonthPembelian" class="mb-2 mt-2"></div>
+                    <div id="getObatTerlaris" class="mb-2 mt-2"></div>
+                </div>
+            </div>
             {{-- <section class="content">
                 <div class="container-fluid">
                     <div class="row">
