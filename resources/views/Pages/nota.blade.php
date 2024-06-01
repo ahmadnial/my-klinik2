@@ -172,8 +172,17 @@
             </div>
             <div style="text-align: right;">
                 <ul>
+                    {{-- <?php $sub_ttl = 0; ?>
+                    @foreach ($isListPenjualan as $item)
+                        <?php $sub_ttl += $item->sub_total; ?>
+                    @endforeach
+                    <li>@currency($sub_ttl)</li> --}}
+                    <?php $sum_diskon = 0; ?>
+                    @foreach ($isListPenjualan as $item)
+                        <?php $sum_diskon += $item->diskon; ?>
+                    @endforeach
+                    <li>@currency($sum_diskon)</li>
                     @foreach ($isListPenjualanHdr as $item)
-                        <li>-</li>
                         <li>@currency($item->total_penjualan)</li>
                     @endforeach
                 </ul>

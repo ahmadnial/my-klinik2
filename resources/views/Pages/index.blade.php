@@ -504,7 +504,7 @@
                 text: 'Grafik TOP 10 Obat Terlaris '
             },
             subtitle: {
-                text: 'Source: Trs Penjualan Apotek'
+                text: 'Source: Trs Penjualan Apotek (Bulan Ini)'
             },
             xAxis: {
                 categories: obatTerlarisName
