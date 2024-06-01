@@ -11,6 +11,8 @@
                     <div id="getMonthSales" class="mb-2 mt-2"></div>
                     <div id="getMonthPembelian" class="mb-2 mt-2"></div>
                     <div id="getObatTerlaris" class="mb-2 mt-2"></div>
+                    <div id="kunjunganPasien" class="mb-2 mt-2"></div>
+                    <div id="topTenDiagnosa" class="mb-2 mt-2"></div>
                 </div>
             </div>
             {{-- <section class="content">
@@ -525,6 +527,104 @@
             series: [{
                 name: 'QTY pnj.',
                 data: obatTerlarisQty
+            }],
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 500
+                    },
+                    chartOptions: {
+                        legend: {
+                            layout: 'horizontal',
+                            align: 'center',
+                            verticalAlign: 'bottom'
+                        }
+                    }
+                }]
+            }
+        });
+
+        // Kunjungan Pasien Klinik
+
+        var kunjunganPasien = <?php echo json_encode($kunjunganPasien); ?>;
+        var bulanKunjungan = <?php echo json_encode($bulanKunjungan); ?>;
+        Highcharts.chart('kunjunganPasien', {
+            title: {
+                text: 'Grafik Kunjungan Pasien Klinik'
+            },
+            subtitle: {
+                text: 'Source: Trs Registrasi'
+            },
+            xAxis: {
+                categories: bulanKunjungan
+            },
+            yAxis: {
+                title: {
+                    text: 'Pengunjung'
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle'
+            },
+            plotOptions: {
+                series: {
+                    allowPointSelect: true
+                }
+            },
+            series: [{
+                name: 'Total Pengunjung',
+                data: kunjunganPasien
+            }],
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 500
+                    },
+                    chartOptions: {
+                        legend: {
+                            layout: 'horizontal',
+                            align: 'center',
+                            verticalAlign: 'bottom'
+                        }
+                    }
+                }]
+            }
+        });
+
+        // TOP 10 Diagnosa
+
+        var topTenDiagnosa = <?php echo json_encode($topTenDiagnosa); ?>;
+        var topTenDiagnosaName = <?php echo json_encode($topTenDiagnosaName); ?>;
+        Highcharts.chart('topTenDiagnosa', {
+            title: {
+                text: 'Grafik 10 Besar Penyakit'
+            },
+            subtitle: {
+                text: 'Source: Trs SOAP (Bulan Ini)'
+            },
+            xAxis: {
+                categories: topTenDiagnosaName
+            },
+            yAxis: {
+                title: {
+                    text: 'Diagnosa'
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle'
+            },
+            plotOptions: {
+                series: {
+                    allowPointSelect: true
+                }
+            },
+            series: [{
+                name: 'Total diag.',
+                data: topTenDiagnosa
             }],
             responsive: {
                 rules: [{

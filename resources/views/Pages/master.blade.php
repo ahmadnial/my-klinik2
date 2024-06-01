@@ -152,7 +152,11 @@
                     </div>
                     <div class="info"
                         style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-size: 19px">
-                        <b class="text-danger"><i class="fa fa-hospital"></i> KLINIK AULIA</b>
+                        <b class="text-danger"><i class="fa fa-hospital"></i>
+                            <?php
+                            $tmp = \App\models\profilePerusahaan::select('nmPerusahaan')->value('nmPerusahaan');
+                            ?>
+                            {{ $tmp }} </b>
                     </div>
                 </div>
 
@@ -595,6 +599,12 @@
                                         <a href="{{ url('/pricelist') }}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Pricelist Barang</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ url('/profile-perusahaan') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Profile</p>
                                         </a>
                                     </li>
                                     {{-- <li class="nav-item">

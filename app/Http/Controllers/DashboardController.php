@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\do_detail_item;
 use App\Models\do_hdr;
 use App\Models\HutangSupplier;
+use App\Models\registrasiCreate;
 use App\Models\tp_detail_item;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
@@ -73,6 +74,41 @@ class DashboardController extends Controller
             ->pluck('nm_obat');
         // dd($obatTerlarisQty);
 
+        $kunjunganPasien = registrasiCreate::select(DB::raw("count(*)as totalPasien"))
+            ->whereNotNull('fr_tgl_keluar')
+            ->GroupBy(DB::Raw("Month(fr_tgl_reg)"))
+            ->pluck('totalPasien');
+        // dd($kunjunganPasien);
+
+        $bulanKunjungan = registrasiCreate::Select(DB::raw("MONTHNAME(fr_tgl_reg) as month"))
+            ->groupBy(DB::raw("MONTHNAME(fr_tgl_reg)"))
+            ->pluck('month');
+        // dd($bulanKunjungan);
+
+        $topTenDiagnosa = DB::table('chart_tindakan')
+            ->select('chart_A_diagnosa', DB::raw('count(*) as total'))
+            ->whereNotNull('chart_A_diagnosa')
+            ->whereYear('chart_tgl_trs', '=', $yearNow)
+            ->whereMonth('chart_tgl_trs', '=', $monthNow)
+            ->whereNull('chart_tgl_void')
+            ->groupBy('chart_A_diagnosa')
+            ->orderBy('total', 'DESC')
+            ->limit('10')
+            ->pluck('total');
+        // dd($topTenDiagnosa);
+
+        $topTenDiagnosaName = DB::table('chart_tindakan')
+            ->select('chart_A_diagnosa', DB::raw('count(*) as total'))
+            ->whereNotNull('chart_A_diagnosa')
+            ->whereYear('chart_tgl_trs', '=', $yearNow)
+            ->whereMonth('chart_tgl_trs', '=', $monthNow)
+            ->whereNull('chart_tgl_void')
+            ->groupBy('chart_A_diagnosa')
+            ->orderBy('total', 'DESC')
+            ->limit('10')
+            ->pluck('chart_A_diagnosa');
+        // dd($topTenDiagnosaName);
+
         return view('Pages.index', [
             'isFakturTempo' => $isFakturTempo,
             'isDefacta' => $isDefacta,
@@ -81,7 +117,11 @@ class DashboardController extends Controller
             'getMonthPembelian' => $getMonthPembelian,
             'bulanPembelian' => $bulanPembelian,
             'obatTerlarisQty' => $obatTerlarisQty,
-            'obatTerlarisName' => $obatTerlarisName
+            'obatTerlarisName' => $obatTerlarisName,
+            'kunjunganPasien' => $kunjunganPasien,
+            'bulanKunjungan' => $bulanKunjungan,
+            'topTenDiagnosa' => $topTenDiagnosa,
+            'topTenDiagnosaName' => $topTenDiagnosaName,
         ]);
     }
 }

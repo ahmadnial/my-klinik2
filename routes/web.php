@@ -301,4 +301,6 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4,6']], function () {
 Route::group(['middleware' => ['auth', 'checkrole:1,2']], function () {
     Route::get('hak-akses', [settingController::class, 'hakAkses'])->name('hak-akses');
     Route::post('userCreate', [settingController::class, 'userCreate'])->name('userCreate');
+    Route::get('profile-perusahaan', [settingController::class, 'profilePerusahaan'])->name('profile-perusahaan');
+    Route::post('createProfile', [settingController::class, 'createProfile'])->name('createProfile');
 });
