@@ -4,7 +4,7 @@
     <section class="content">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title"><i class="fa fa-truck">&nbsp;</i>Laporan Penjualan Apotek Detail</h3>
+                <h3 class="card-title"><i class="fa fa-book">&nbsp;</i>Laporan Laba Rugi</h3>
             </div>
 
             <div class="card-body">

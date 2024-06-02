@@ -295,6 +295,8 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4,6']], function () {
 
     Route::get('laporan-laba', [lapAccountingController::class, 'laporanLaba'])->name('laporanLaba');
     Route::get('getLaporanLR', [lapAccountingController::class, 'laporanLR'])->name('getLaporanLR');
+    Route::get('laba-rugi-peritem', [lapAccountingController::class, 'labaRugiPerItem'])->name('laba-rugi-peritem');
+    Route::get('getLabaRugiPerItem', [lapAccountingController::class, 'getLabaRugiPerItem'])->name('getLabaRugiPerItem');
 });
 
 //Setting / Tools

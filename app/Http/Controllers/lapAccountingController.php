@@ -28,4 +28,24 @@ class lapAccountingController extends Controller
         }
         return response()->json($isDataLR);
     }
+
+    public function labaRugiPerItem()
+    {
+        return view('pages.laporan.accounting.laba-rugi-peritem');
+    }
+
+    public function getLabaRugiPerItem(Request $request)
+    {
+        // $t = $request->all();
+        // dd($t);
+        $isDataLaporanDetail = DB::table('tp_detail_item')
+            ->leftJoin('mstr_obat', 'tp_detail_item.kd_obat', 'mstr_obat.fm_kd_obat')
+            ->select('kd_obat', 'nm_obat', 'hrg_obat', 'satuan', 'fm_hrg_beli_detail', 'fm_kategori', 'fm_golongan_obat', DB::raw('sum(qty) as total'))
+            ->whereBetween('tgl_trs', [$request->date1, $request->date2])
+            ->whereNull('kd_reg')
+            ->groupBy('kd_obat', 'nm_obat', 'hrg_obat', 'satuan')
+            ->get();
+
+        return response()->json($isDataLaporanDetail);
+    }
 }

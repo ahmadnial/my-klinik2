@@ -366,6 +366,12 @@
                                         <p>Laporan Laba Rugi</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('/laba-rugi-peritem') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Laporan Laba Rugi Per Item</p>
+                                    </a>
+                                </li>
                                 {{-- <li class="nav-item">
                                     <a href="{{ url('#') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
