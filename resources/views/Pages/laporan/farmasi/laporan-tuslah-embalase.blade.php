@@ -149,6 +149,13 @@
 
                                 var embalaseRaw = parseFloat(datavalue.embalase);
 
+                                var dateString = datavalue.tgl_trs;
+                                var date = new Date(dateString);
+                                var day = date.getDate();
+                                var month = date.getMonth() + 1;
+                                var year = date.getFullYear();
+                                var formattedDate = `${day}/${month}/${year}`;
+
                                 var hna = hnaRaw.toLocaleString('id-ID', {
                                     style: 'currency',
                                     currency: 'IDR'
@@ -160,7 +167,7 @@
                                 });
 
                                 const dataBaru = [
-                                    [datavalue.tgl_trs, datavalue.kd_obat,
+                                    [formattedDate, datavalue.kd_obat,
                                         datavalue.nm_obat, datavalue.total, datavalue.satuan,
                                         hrg_obatHnaShow, hrg_obatShow, datavalue.tuslah, datavalue
                                         .embalase,
