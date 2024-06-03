@@ -276,6 +276,8 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
     Route::get('pricelistHrgReguler', [LapFarmasiController::class, 'pricelistHrgReguler'])->name('pricelistHrgReguler');
     Route::get('pricelistHrgResep', [LapFarmasiController::class, 'pricelistHrgResep'])->name('pricelistHrgResep');
     Route::get('pricelistHrgNakes', [LapFarmasiController::class, 'pricelistHrgNakes'])->name('pricelistHrgNakes');
+    Route::get('laporan-tuslah-embalase', [LapFarmasiController::class, 'lapTuslahEmbalase'])->name('laporan-tuslah-embalase');
+    Route::get('getLaporanTuslahEmbalase', [LapFarmasiController::class, 'getLaporanTuslahEmbalase'])->name('getLaporanTuslahEmbalase');
 });
 
 //Laporan Analisa

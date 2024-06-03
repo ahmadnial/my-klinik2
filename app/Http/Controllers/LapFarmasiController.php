@@ -400,4 +400,56 @@ class LapFarmasiController extends Controller
             return response()->json($isObatNakes);
         }
     }
+
+    public function lapTuslahEmbalase()
+    {
+        $isUser = DB::table('users')->get();
+        return view('pages.laporan.farmasi.laporan-tuslah-embalase', ['isUser' => $isUser]);
+    }
+
+    public function getLaporanTuslahEmbalase(Request $request)
+    {
+        // $t = $request->all();
+        // dd($t);
+        if ($request->user == '' && $request->tipeTarif == '') {
+            $isDataLaporanTuslahEmbalase = DB::table('tp_detail_item')
+                ->leftJoin('mstr_obat', 'tp_detail_item.kd_obat', 'mstr_obat.fm_kd_obat')
+                ->select('kd_obat', 'nm_obat', 'hrg_obat', 'satuan', 'tuslah', 'embalase', 'tgl_trs', 'fm_hrg_beli_detail', DB::raw('sum(qty) as total'))
+                ->whereBetween('tgl_trs', [$request->date1, $request->date2])
+                ->where('tuslah', '!=', '0')
+                // ->orWhere('embalase', '!=', '0')
+                ->whereNull('kd_reg')
+                ->groupBy('kd_obat', 'nm_obat', 'hrg_obat', 'satuan', 'tuslah', 'embalase', 'tgl_trs')
+                ->get();
+        } else if ($request->user != '' && $request->tipeTarif == '') {
+            $isDataLaporanDetail = DB::table('tp_detail_item')
+                ->leftJoin('mstr_obat', 'tp_detail_item.kd_obat', 'mstr_obat.fm_kd_obat')
+                ->select('kd_obat', 'nm_obat', 'hrg_obat', 'satuan', 'fm_hrg_beli_detail', DB::raw('sum(qty) as total'))
+                ->whereBetween('tgl_trs', [$request->date1, $request->date2])
+                ->whereNull('kd_reg')
+                ->where('tp_detail_item.user', $request->user)
+                ->groupBy('kd_obat', 'nm_obat', 'hrg_obat', 'satuan')
+                ->get();
+        } else if ($request->user == '' && $request->tipeTarif != '') {
+            $isDataLaporanDetail = DB::table('tp_detail_item')
+                ->leftJoin('mstr_obat', 'tp_detail_item.kd_obat', 'mstr_obat.fm_kd_obat')
+                ->select('kd_obat', 'nm_obat', 'hrg_obat', 'satuan', 'fm_hrg_beli_detail', DB::raw('sum(qty) as total'))
+                ->whereBetween('tgl_trs', [$request->date1, $request->date2])
+                ->whereNull('kd_reg')
+                ->where('tp_detail_item.tipeTarif', $request->tipeTarif)
+                ->groupBy('kd_obat', 'nm_obat', 'hrg_obat', 'satuan')
+                ->get();
+        } else if ($request->user != '' && $request->tipeTarif != '') {
+            $isDataLaporanDetail = DB::table('tp_detail_item')
+                ->leftJoin('mstr_obat', 'tp_detail_item.kd_obat', 'mstr_obat.fm_kd_obat')
+                ->select('kd_obat', 'nm_obat', 'hrg_obat', 'satuan', 'fm_hrg_beli_detail', DB::raw('sum(qty) as total'))
+                ->whereBetween('tgl_trs', [$request->date1, $request->date2])
+                ->whereNull('kd_reg')
+                ->where('tp_detail_item.user', $request->user)
+                ->where('tp_detail_item.tipeTarif', $request->tipeTarif)
+                ->groupBy('kd_obat', 'nm_obat', 'hrg_obat', 'satuan')
+                ->get();
+        }
+        return response()->json($isDataLaporanTuslahEmbalase);
+    }
 }

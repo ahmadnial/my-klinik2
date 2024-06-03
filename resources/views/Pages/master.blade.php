@@ -445,6 +445,12 @@
                                         <p>Info Tindakan</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('/laporan-tuslah-embalase') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Lap Tuslah & Embalase</p>
+                                    </a>
+                                </li>
                                 {{-- <li class="nav-item">
                                     <a href="{{ url('/delivery-order') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
