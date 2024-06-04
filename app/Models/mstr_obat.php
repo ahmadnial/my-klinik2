@@ -35,6 +35,10 @@ class mstr_obat extends Model
         'st_hrg_beli_per2',
         'fm_hrg_jual_non_resep_persen',
         'fm_hrg_jual_resep_persen',
-        'fm_hrg_jual_nakes_persen'
+        'fm_hrg_jual_nakes_persen',
+        'fm_jenis_pembelian',
+        'fm_kandungan_obat',
+        'fm_stok_minimal',
+        'fm_zat_prekursor',
     ];
 }

@@ -1171,10 +1171,16 @@
             function getTuslah(q) {
                 let parentT = q.parentElement.parentElement;
                 let tuslah = $(parentT).find('#tuslah').val();
+                // if (tuslah == "") {
+                //     $('#tuslah').val('0')
+                //     GrandTotal();
+                //     GrandTotalEdit();
+                // }
                 // console.log(tuslah);
                 let subtotalsementara = $(parentT).find('#sub_total_hidden').val();
                 let hsl = parseFloat(tuslah) + parseFloat(subtotalsementara);
                 let resultT = hsl.toFixed(2);
+
 
                 $(parentT).find('#sub_total').val(resultT);
                 $(parentT).find('#sub_total_hidden_after_tuslah').val(resultT);

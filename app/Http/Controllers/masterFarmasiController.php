@@ -270,7 +270,7 @@ class masterFarmasiController extends Controller
             // return redirect()->route('/tindakan-medis');
         } catch (\Exception $e) {
             DB::rollback();
-            toastr()->error('Gagal Tersimpan!');
+            toastr()->error('Gagal Tersimpan!', $e);
             return back();
         }
     }

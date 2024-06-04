@@ -310,6 +310,15 @@
                                 placeholder="Input Nama Obat" required>
                         </div>
                         <div class="form-group col-sm-6">
+                            <label for="">Jenis</label>
+                            <select class="fm_jenis_pembelian form-control-pasien" id="fm_jenis_pembelian"
+                                style="width: 100%;" name="fm_jenis_pembelian" required>
+                                <option value="">--Select--</option>
+                                <option value="Konsinyasi">Konsinyasi</option>
+                                <option value="Non Konsinyasi">Non Konsinyasi</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-6">
                             <label for="">Kategori</label>
                             <select class="fm_kategori form-control-pasien" id="fm_kategori" style="width: 100%;"
                                 name="fm_kategori" required>
@@ -342,6 +351,11 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="form-group col-sm-6">
+                            <label for="">Kandungan</label>
+                            <textarea class="form-control" name="fm_kandungan_obat" id="fm_kandungan_obat" cols="5" rows="2"></textarea>
+                        </div>
+
                         <div class="form-group col-sm-6">
                             <label for="">Satuan Pembelian</label>
                             <select class="fm_satuan_pembelian form-control-pasien" id="fm_satuan_pembelian"
@@ -384,6 +398,10 @@
                                 <input type="text" class="fm_hrg_beli_detail form-control" name="fm_hrg_beli_detail"
                                     id="fm_hrg_beli_detail" value="" placeholder="Input Isi Satuan Pembelian">
                             </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="">Stok Minimal</label>
+                            <input type="text" class="form-control" name="fm_stok_minimal" id="fm_stok_minimal">
                         </div>
                     </div>
                     <hr>
@@ -499,6 +517,10 @@
             // Select2 call
             $('#fm_supplier').select2({
                 placeholder: 'Supplier',
+            });
+
+            $('#fm_jenis_pembelian').select2({
+                placeholder: 'Konsinyasi/Non Konsinyasi',
             });
 
             $('#fm_kategori').select2({
@@ -1014,14 +1036,17 @@
                 $('#buat').on('click', function() {
                     var fm_kd_obat = $('#fm_kd_obat').val();
                     var fm_nm_obat = $('#fm_nm_obat').val();
+                    var fm_jenis_pembelian = $('#fm_jenis_pembelian').val();
                     var fm_kategori = $('#fm_kategori').val();
                     var fm_golongan_obat = $('#fm_golongan_obat').val();
                     var fm_supplier = $('#fm_supplier').val();
+                    var fm_kandungan_obat = $('#fm_kandungan_obat').val();
                     var fm_satuan_pembelian = $('#fm_satuan_pembelian').val();
                     var fm_isi_satuan_pembelian = $('#fm_isi_satuan_pembelian').val();
                     var fm_satuan_jual = $('#fm_satuan_jual').val();
                     var fm_hrg_beli = $('#fm_hrg_beli').val();
                     var fm_hrg_beli_detail = $('#fm_hrg_beli_detail').val();
+                    var fm_stok_minimal = $('#fm_stok_minimal').val();
                     var fm_hrg_jual_non_resep = $('#fm_hrg_jual_non_resep').val();
                     var fm_hrg_jual_resep = $('#fm_hrg_jual_resep').val();
                     var fm_hrg_jual_nakes = $('#fm_hrg_jual_nakes').val();
@@ -1067,13 +1092,16 @@
                                 type: 2,
                                 fm_kd_obat: fm_kd_obat,
                                 fm_nm_obat: fm_nm_obat,
+                                fm_jenis_pembelian: fm_jenis_pembelian,
                                 fm_kategori: fm_kategori,
                                 fm_supplier: fm_supplier,
+                                fm_kandungan_obat: fm_kandungan_obat,
                                 fm_golongan_obat: fm_golongan_obat,
                                 fm_satuan_pembelian: fm_satuan_pembelian,
                                 fm_isi_satuan_pembelian: fm_isi_satuan_pembelian,
                                 fm_hrg_beli: sfm_hrg_beli,
                                 fm_hrg_beli_detail: fm_hrg_beli_detail,
+                                fm_stok_minimal: fm_stok_minimal,
                                 fm_satuan_jual: fm_satuan_jual,
                                 fm_hrg_jual_non_resep: sfm_hrg_jual_non_resep,
                                 fm_hrg_jual_resep: sfm_hrg_jual_resep,

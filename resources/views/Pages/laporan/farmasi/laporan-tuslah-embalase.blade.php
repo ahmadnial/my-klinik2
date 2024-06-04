@@ -14,19 +14,18 @@
                     <div class="input-group-addon">&nbsp; s.d&nbsp;</div>
                     <input type="date" id="date2" class="form-control">
                     <div class="input-group-addon">&nbsp;&nbsp;&nbsp;</div>
-                    <select id="user" class="form-control">
+                    {{-- <select id="user" class="form-control">
                         <option value="">Select User</option>
                         @foreach ($isUser as $iu)
                             <option value="{{ $iu->name }}">{{ $iu->name }}</option>
                         @endforeach
                     </select>
+                    <div class="input-group-addon">&nbsp;&nbsp;&nbsp;</div> --}}
                     <div class="input-group-addon">&nbsp;&nbsp;&nbsp;</div>
-                    <div class="input-group-addon">&nbsp;&nbsp;&nbsp;</div>
-                    <select id="tipeTarif" class="form-control">
-                        <option value="">Tipe Tarif</option>
-                        <option value="Reguler">Reguler</option>
-                        <option value="Resep">Resep</option>
-                        <option value="Nakes">Nakes</option>
+                    <select id="jenisData" class="form-control">
+                        <option value="">Jenis</option>
+                        <option value="tuslah">Tuslah</option>
+                        <option value="embalase">Embalase</option>
                     </select>
                     <div class="input-group-addon">&nbsp;&nbsp;&nbsp;</div>
                     <button class="btn btn-success btn-sm" onclick="getDataPenjualan()" id="btnProses">Proses</button>
@@ -89,15 +88,21 @@
                 $('#spinLoad').show();
                 var date1 = $('#date1').val();
                 var date2 = $('#date2').val();
-                var user = $('#user').val();
-                var tipeTarif = $('#tipeTarif').val();
+                var jenisData = $('#jenisData').val();
 
                 if (date1 == '') {
-                    toastr.info('Pilih Range Tanggal', 'Info!', {
+                    toastr.info('Pilih Filter Dahulu', 'Info!', {
                         timeOut: 2000,
                         preventDuplicates: true,
                         positionClass: 'toast-top-right',
                     });
+                } else if (jenisData == '') {
+                    toastr.info('Pilih Filter Dahulu', 'Info!', {
+                        timeOut: 2000,
+                        preventDuplicates: true,
+                        positionClass: 'toast-top-right',
+                    });
+
                 } else {
                     // $('#result').empty();
                     $.ajax({
@@ -109,8 +114,7 @@
                         data: {
                             date1: date1,
                             date2: date2,
-                            user: user,
-                            tipeTarif: tipeTarif
+                            jenisData: jenisData
                         },
                         success: function(isDataLaporanTuslahEmbalase) {
                             $('#HNA').empty();
