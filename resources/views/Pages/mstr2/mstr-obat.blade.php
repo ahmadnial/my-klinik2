@@ -55,12 +55,16 @@
                                 <td><button class="btn btn-xs btn-info" data-toggle="modal" data-target=""
                                         data-id="{{ $tz->fm_kd_obat }}" data-nmobat="{{ $tz->fm_nm_obat }}"
                                         data-kategori="{{ $tz->fm_kategori }}" data-supplier="{{ $tz->fm_supplier }}"
+                                        data-golongan_obat="{{ $tz->fm_golongan_obat }}"
                                         data-satuan_pembelian="{{ $tz->fm_satuan_pembelian }}"
+                                        data-jenis_pembelian="{{ $tz->fm_jenis_pembelian }}"
                                         data-satuan_penjualan="{{ $tz->fm_satuan_jual }}"
                                         data-isi_sat_beli="{{ $tz->fm_isi_satuan_pembelian }}"
                                         data-isi_satuan_beli="{{ $tz->st_isi_pembelian }}"
                                         data-hrg_beli_per1="{{ $tz->st_hrg_beli_per1 }}"
                                         data-hrg_beli_per2="{{ $tz->st_hrg_beli_per2 }}"
+                                        data-kandungan_obat="{{ $tz->fm_kandungan_obat }}"
+                                        data-stok_minimal="{{ $tz->fm_stok_minimal }}"
                                         data-hrg_beli_terbesar="{{ $tz->fm_hrg_beli }}"
                                         data-hrg_beli_terkecil="{{ $tz->fm_hrg_beli_detail }}"
                                         data-hrg_jual_reg="{{ $tz->fm_hrg_jual_non_resep }}"
@@ -129,6 +133,15 @@
                                 value="" placeholder="Input Nama Obat">
                         </div>
                         <div class="form-group col-sm-6">
+                            <label for="">Jenis</label>
+                            <select class="fm_jenis_pembelian form-control-pasien" id="efm_jenis_pembelian"
+                                style="width: 100%;" name="efm_jenis_pembelian" required>
+                                <option value="">--Select--</option>
+                                <option value="Konsinyasi">Konsinyasi</option>
+                                <option value="Non Konsinyasi">Non Konsinyasi</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-6">
                             <label for="">Kategori</label>
                             <select class="efm_kategori form-control" id="efm_kategori" style="width: 100%;"
                                 name="efm_kategori">
@@ -144,7 +157,7 @@
                             <label for="">Golongan</label>
                             <select class="efm_golongan_obat form-control" id="efm_golongan_obat" style="width: 100%;"
                                 name="efm_golongan_obat">
-                                <option value=""></option>
+                                {{-- <option value=""></option> --}}
                                 @foreach ($golongan as $gol)
                                     <option value="{{ $gol->fm_nm_jenis_obat }}">
                                         {{ $gol->fm_nm_jenis_obat }}
@@ -158,9 +171,14 @@
                                 name="efm_supplier">
                                 @foreach ($supplier as $sp)
                                     <option value="{{ $sp->fm_nm_supplier }}">
-                                        {{ $sp->fm_nm_supplier }}</option>
+                                        {{ $sp->fm_nm_supplier }}
+                                    </option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="">Kandungan</label>
+                            <textarea class="form-control" name="efm_kandungan_obat" id="efm_kandungan_obat" cols="5" rows="2"></textarea>
                         </div>
                         <div class="form-group col-sm-6">
                             <label for="">Satuan Pembelian</label>
@@ -207,6 +225,10 @@
                                 <input type="text" class="efm_hrg_beli_detail form-control" name="efm_hrg_beli_detail"
                                     id="efm_hrg_beli_detail" value="" placeholder="Input Isi Satuan Pembelian">
                             </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="">Stok Minimal</label>
+                            <input type="text" class="form-control" name="efm_stok_minimal" id="efm_stok_minimal">
                         </div>
                     </div>
                     <hr>
@@ -548,6 +570,10 @@
                 placeholder: 'Supplier',
             });
 
+            $('#efm_jenis_pembelian').select2({
+                placeholder: 'Jenis Pembelian',
+            });
+
             $('#efm_kategori').select2({
                 placeholder: 'Kategori Produk',
             });
@@ -851,7 +877,7 @@
                 var ids = $(tx).data('id');
                 var nmobat = $(tx).data('nmobat');
                 var kategori = $(tx).data('kategori');
-                var golongan = $(tx).data('golongan');
+                var golongan = $(tx).data('golongan_obat');
                 var supplier = $(tx).data('supplier');
                 var satBeli = $(tx).data('satuan_pembelian');
                 var satJual = $(tx).data('satuan_penjualan');
@@ -866,6 +892,10 @@
                 var hrgJualNakes = $(tx).data('hrg_jual_nakes');
                 var isActive = $(tx).data('isactive');
 
+                var jenisPembelian = $(tx).data('jenis_pembelian');
+                var kandunganObat = $(tx).data('kandungan_obat');
+                var stokMinimal = $(tx).data('stok_minimal');
+
                 if (isActive == 1) {
                     $('#eisActive').attr("checked", "checked");
                 }
@@ -879,7 +909,7 @@
                 $('#efm_kd_obat').val(ids);
                 $('#efm_nm_obat').val(nmobat);
                 $('#efm_kategori').append(`<option value="${kategori}" selected>${kategori}</option>`);
-                $('#efm_kategori').append(`<option value="${golongan}" selected>${golongan}</option>`);
+                $('#efm_golongan_obat').append(`<option value="${golongan}" selected>${golongan}</option>`);
                 $('#efm_supplier').append(`<option value="${supplier}" selected>${supplier}</option>`);
                 $('#efm_satuan_pembelian').append(`<option value="${satBeli}" selected>${satBeli}</option>`);
                 $('#efm_satuan_jual').append(`<option value="${satJual}" selected>${satJual}</option>`);
@@ -896,6 +926,10 @@
                 $('#efm_hrg_jual_non_resep_persen').val(hrgJualRegPersen);
                 $('#efm_hrg_jual_nakes_persen').val(hrgJualNakesPersen);
                 $('#efm_hrg_jual_resep_persen').val(hrgJualResepPersen);
+
+                $('#efm_jenis_pembelian').append(`<option value="${jenisPembelian}" selected>${jenisPembelian}</option>`);
+                $('#efm_kandungan_obat').val(kandunganObat);
+                $('#efm_stok_minimal').val(stokMinimal);
             };
 
             // Pembagian detail harga beli
@@ -1144,6 +1178,7 @@
                 $('#editXObat').on('click', function() {
                     var efm_kd_obat = $('#efm_kd_obat').val();
                     var efm_nm_obat = $('#efm_nm_obat').val();
+                    var efm_jenis_pembelian = $('#efm_jenis_pembelian').val();
                     var efm_kategori = $('#efm_kategori').val();
                     var efm_golongan_obat = $('#efm_golongan_obat').val();
                     var efm_supplier = $('#efm_supplier').val();
@@ -1152,6 +1187,8 @@
                     var efm_satuan_jual = $('#efm_satuan_jual').val();
                     var efm_hrg_beli = $('#efm_hrg_beli').val();
                     var efm_hrg_beli_detail = $('#efm_hrg_beli_detail').val();
+                    var efm_kandungan_obat = $('#efm_kandungan_obat').val();
+                    var efm_stok_minimal = $('#efm_stok_minimal').val();
                     var efm_hrg_jual_non_resep = $('#efm_hrg_jual_non_resep').val();
                     var efm_hrg_jual_resep = $('#efm_hrg_jual_resep').val();
                     var efm_hrg_jual_nakes = $('#efm_hrg_jual_nakes').val();
@@ -1191,6 +1228,7 @@
                         data: {
                             fm_kd_obat: efm_kd_obat,
                             fm_nm_obat: efm_nm_obat,
+                            fm_jenis_pembelian: efm_jenis_pembelian,
                             fm_kategori: efm_kategori,
                             fm_golongan_obat: efm_golongan_obat,
                             fm_supplier: efm_supplier,
@@ -1199,6 +1237,8 @@
                             fm_hrg_beli: esfm_hrg_beli,
                             fm_hrg_beli_detail: efm_hrg_beli_detail,
                             fm_satuan_jual: efm_satuan_jual,
+                            fm_kandungan_obat: efm_kandungan_obat,
+                            fm_stok_minimal: efm_stok_minimal,
                             fm_hrg_jual_non_resep: esfm_hrg_jual_non_resep,
                             fm_hrg_jual_resep: esfm_hrg_jual_resep,
                             fm_hrg_jual_nakes: esfm_hrg_jual_nakes,

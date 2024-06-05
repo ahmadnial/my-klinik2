@@ -303,6 +303,7 @@ class masterFarmasiController extends Controller
             DB::table('mstr_obat')->where('fm_kd_obat', $request->fm_kd_obat)->update([
                 // 'fm_kd_obat' => $request->efm_kd_obat,
                 'fm_nm_obat' => $request->fm_nm_obat,
+                'fm_jenis_pembelian' => $request->fm_jenis_pembelian,
                 'fm_kategori' => $request->fm_kategori,
                 'fm_supplier' => $request->fm_supplier,
                 'fm_golongan_obat' => $request->fm_golongan_obat,
@@ -311,6 +312,8 @@ class masterFarmasiController extends Controller
                 'fm_hrg_beli' => $request->fm_hrg_beli,
                 'fm_hrg_beli_detail' => $request->fm_hrg_beli_detail,
                 'fm_satuan_jual' => $request->fm_satuan_jual,
+                'fm_kandungan_obat' => $request->fm_kandungan_obat,
+                'fm_stok_minimal' => $request->fm_stok_minimal,
                 'fm_hrg_jual_non_resep' => $request->fm_hrg_jual_non_resep,
                 'fm_hrg_jual_resep' => $request->fm_hrg_jual_resep,
                 'fm_hrg_jual_nakes' => $request->fm_hrg_jual_nakes,
