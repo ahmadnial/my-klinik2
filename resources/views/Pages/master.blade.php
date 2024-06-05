@@ -309,9 +309,15 @@
                                         <p>Kartu Stok</p>
                                     </a>
                                 </li>
+                                {{-- <li class="nav-item">
+                                    <a href="{{ url('/ubah-harga-jual') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Ubah Harga Jual</p>
+                                    </a>
+                                </li> --}}
                                 <li class="nav-item">
                                     <a href="{{ url('/pembelian-detail') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="far fa-user nav-icon"></i>
                                         <p>Info Pembelian Detail</p>
                                     </a>
                                 </li>
@@ -453,6 +459,12 @@
                                     <a href="{{ url('/laporan-tuslah-embalase') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Lap Tuslah & Embalase</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('/laporan-kondisi-stok') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Lap Kondisi Stok</p>
                                     </a>
                                 </li>
                                 {{-- <li class="nav-item">

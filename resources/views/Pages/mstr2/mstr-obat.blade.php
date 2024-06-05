@@ -22,6 +22,7 @@
                             <th>Sat. Beli</th>
                             <th>Sat. Jual</th>
                             <th>Hrg Beli</th>
+                            <th>Stok Minimal</th>
                             <th>Hrg Jual Non-resep</th>
                             <th>Hrg Jual Resep</th>
                             <th>Hrg Jual Nakes</th>
@@ -30,7 +31,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($obatView as $tz)
+                        {{-- @foreach ($obatView as $tz)
                             <tr>
                                 <td id="">{{ $tz->fm_kd_obat }}</td>
                                 <td id="">{{ $tz->fm_nm_obat }}</td>
@@ -39,11 +40,9 @@
                                 <td id="">{{ $tz->fm_supplier }}</td>
                                 <td id="">{{ $tz->fm_satuan_pembelian }}</td>
                                 <td id="">{{ $tz->fm_satuan_jual }}</td>
-                                {{-- <td id="">{{ $tz->fm_hrg_beli }}</td> --}}
                                 <td id="">@currency($tz->fm_hrg_beli)</td>
                                 <td id="">@currency($tz->fm_hrg_jual_non_resep)</td>
                                 <td id="">{{ $tz->fm_hrg_jual_resep }}</td>
-                                {{-- <td id="">@currency($tz->fm_hrg_jual_resep)</td> --}}
                                 <td id="">@currency($tz->fm_hrg_jual_nakes)</td>
                                 <td id="">
                                     @if ($tz->isActive == '1')
@@ -75,14 +74,9 @@
                                         data-isactive="{{ $tz->isActive }}"
                                         data-hrg_jual_nakes_persen="{{ $tz->fm_hrg_jual_nakes_persen }}" id="editObat"
                                         onClick="getIDObat(this)"><i class="fa fa-edit"></i></button>
-                                    {{-- <button class="btn btn-xs btn-danger" data-toggle="modal"
-                                        data-target="#DeleteSupplier{{ $tz->fm_kd_supplier }}">Hapus</button> --}}
-                                    {{-- <button class="btn btn-danger btn-xs" data-id="{{ $tz->fm_kd_obat }}"
-                                        data-nmobat="{{ $tz->fm_nm_obat }}" onClick="delObat(this)"><i
-                                            class="fa fa-trash"></i>Delete</button> --}}
                                 </td>
                             </tr>
-                        @endforeach
+                        @endforeach --}}
                     </tbody>
                 </table>
             </div>
@@ -129,8 +123,8 @@
                         </div>
                         <div class="form-group col-sm-6">
                             <label for="">Obat</label>
-                            <input type="text" class="form-control" name="efm_nm_obat" id="efm_nm_obat"
-                                value="" placeholder="Input Nama Obat">
+                            <input type="text" class="form-control" name="efm_nm_obat" id="efm_nm_obat" value=""
+                                placeholder="Input Nama Obat">
                         </div>
                         <div class="form-group col-sm-6">
                             <label for="">Jenis</label>
@@ -536,6 +530,110 @@
 
     @push('scripts')
         <script>
+            getItemObat()
+
+            function getItemObat() {
+                $.ajax({
+                    success: function() {
+                        $('#example1').DataTable({
+                            processing: true,
+                            serverSide: true,
+                            dom: 'lBfrtip',
+                            responsive: true,
+                            "bDestroy": true,
+                            // "order": [
+                            //     [1, "dsc"]
+                            // ],
+                            ajax: {
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                url: "{{ url('getMsaterObat') }}",
+                                type: 'GET',
+                                // data: {
+                                //     dataBulan: dataBulan
+                                // }
+                            },
+                            columns: [{
+                                    data: 'fm_kd_obat',
+                                    name: 'fm_kd_obat',
+                                },
+                                {
+                                    data: 'fm_nm_obat',
+                                    name: 'fm_nm_obat'
+                                },
+                                {
+                                    data: 'fm_kategori',
+                                    name: 'fm_kategori',
+                                },
+                                {
+                                    data: 'fm_golongan_obat',
+                                    name: 'no_mfm_golongan_obatr'
+                                },
+                                {
+                                    data: 'fm_supplier',
+                                    name: 'fm_supplier'
+                                },
+                                {
+                                    data: 'fm_satuan_pembelian',
+                                    name: 'fm_satuan_pembelian'
+                                },
+                                {
+                                    data: 'fm_satuan_jual',
+                                    name: 'fm_satuan_jual',
+                                },
+                                {
+                                    data: 'fm_hrg_beli',
+                                    name: 'fm_hrg_beli',
+                                    render: $.fn.dataTable.render.number(',', '.', 2, 'Rp ')
+                                },
+                                {
+                                    data: 'fm_stok_minimal',
+                                    name: 'fm_stok_minimal',
+                                },
+                                {
+                                    data: 'fm_hrg_jual_non_resep',
+                                    name: 'fm_hrg_jual_non_resep',
+                                    render: $.fn.dataTable.render.number(',', '.', 2, 'Rp ')
+                                },
+                                {
+                                    data: 'fm_hrg_jual_resep',
+                                    name: 'fm_hrg_jual_resep',
+                                    render: $.fn.dataTable.render.number(',', '.', 2, 'Rp ')
+                                },
+                                {
+                                    data: 'fm_hrg_jual_nakes',
+                                    name: 'fm_hrg_jual_nakes',
+                                    render: $.fn.dataTable.render.number(',', '.', 2, 'Rp ')
+                                },
+                                {
+                                    data: 'isActive',
+                                    name: 'isActive',
+                                    render: function(data, type, row) {
+                                        if (data == '1') {
+                                            return '<span class="badge badge-success">Active</span>';
+                                        } else {
+                                            return '<span class="badge badge-danger">Non-Active</span>';
+                                        }
+                                    }
+                                },
+                                {
+                                    data: 'action',
+                                    name: 'action'
+                                },
+                            ],
+                            "responsive": true,
+                            "paging": true,
+                            "searching": true,
+                            "lengthChange": true,
+                            "autoWidth": true,
+                            "buttons": ["copy", "excel", "pdf", "print", "colvis"]
+                        }).buttons().container().appendTo('#penjualan_wrapper .col-md-6:eq(0)');
+                    }
+                })
+            };
+
+
             // Select2 call
             $('#fm_supplier').select2({
                 placeholder: 'Supplier',

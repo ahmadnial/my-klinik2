@@ -13,6 +13,7 @@ use App\Models\tb_stock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Facades\DataTables;
 
 class masterFarmasiController extends Controller
 {
@@ -206,14 +207,14 @@ class masterFarmasiController extends Controller
         $kategori = mstr_kategori_produk::all();
         $satuanBeli = mstr_satuan::all();
         $golongan = mstr_jenis_obat::all();
-        $obatview = mstr_obat::all();
+        // $obatview = mstr_obat::all();
 
         return view('pages.mstr2.mstr-obat', [
             'supplier' => $supplier,
             'kategori' => $kategori,
             'kd_obat' => $kd_obat,
             'satuanBeli' => $satuanBeli,
-            'obatView' => $obatview,
+            // 'obatView' => $obatview,
             'golongan' => $golongan
         ]);
     }
@@ -363,5 +364,53 @@ class masterFarmasiController extends Controller
         ];
 
         return response()->json($dataSuccess);
+    }
+
+    public function getMsaterObat(Request $request)
+    {
+
+        $isMasterObat = DB::table('mstr_obat')->get();
+
+        return DataTables::of($isMasterObat)
+            ->addColumn('action', function ($row) {
+
+                // $actionBtn = '
+                // <button class="btn btn-xs btn-info" data-toggle="modal" data-target="#EditObat"
+                // onclick="getDetailPen(this)" data-kd_trs="' . $row->kd_trs . '">&nbsp;&nbsp;<i class="fa fa-info">&nbsp;&nbsp;</i></button>
+                // <button class="btn btn-xs btn-warning" data-toggle="modal" data-target="#EditObat"
+                // onclick="cetakNota(this)" data-kd_trsc="' . $row->kd_trs . '" target="_blank"> <i class="fa fa-print"></i> </button>
+                // ';
+
+                $actionBtn = '<button class="btn btn-xs btn-info" data-toggle="modal" data-target=""
+                                        data-id="' . $row->fm_kd_obat . '" 
+                                        data-nmobat="' . $row->fm_nm_obat . '"
+                                        data-kategori="' . $row->fm_kategori . '" 
+                                        data-supplier="' . $row->fm_supplier . '"
+                                        data-golongan_obat="' . $row->fm_golongan_obat . '"
+                                        data-satuan_pembelian="' . $row->fm_satuan_pembelian . '"
+                                        data-jenis_pembelian="' . $row->fm_jenis_pembelian . '"
+                                        data-satuan_penjualan="' . $row->fm_satuan_jual . '"
+                                        data-isi_sat_beli="' . $row->fm_isi_satuan_pembelian . '"
+                                        data-isi_satuan_beli="' . $row->st_isi_pembelian . '"
+                                        data-hrg_beli_per1="' . $row->st_hrg_beli_per1 . '"
+                                        data-hrg_beli_per2="' . $row->st_hrg_beli_per2 . '"
+                                        data-kandungan_obat="' . $row->fm_kandungan_obat . '"
+                                        data-stok_minimal="' . $row->fm_stok_minimal . '"
+                                        data-hrg_beli_terbesar="' . $row->fm_hrg_beli . '"
+                                        data-hrg_beli_terkecil="' . $row->fm_hrg_beli_detail . '"
+                                        data-hrg_jual_reg="' . $row->fm_hrg_jual_non_resep . '"
+                                        data-hrg_jual_resep="' . $row->fm_hrg_jual_resep . '"
+                                        data-hrg_jual_nakes="' . $row->fm_hrg_jual_nakes . '"
+                                        data-hrg_jual_reg_persen="' . $row->fm_hrg_jual_non_resep_persen . '"
+                                        data-hrg_jual_resep_persen="' . $row->fm_hrg_jual_resep_persen . '"
+                                        data-isactive="' . $row->isActive . '"
+                                        data-hrg_jual_nakes_persen="' . $row->fm_hrg_jual_nakes_persen . '" id="editObat"
+                                        onClick="getIDObat(this)"><i class="fa fa-edit"></i></button>
+                ';
+
+                return $actionBtn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 }

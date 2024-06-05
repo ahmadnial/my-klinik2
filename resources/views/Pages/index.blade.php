@@ -310,7 +310,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($isDefacta as $defacta)
+                                    {{-- @foreach ($isDefacta as $defacta)
                                         <tr>
                                             <td>{{ $defacta->fm_kd_obat }}</td>
                                             <td>{{ $defacta->fm_nm_obat }}</td>
@@ -318,9 +318,8 @@
                                             <td></td>
                                             <td>{{ $defacta->fm_satuan_pembelian }}</td>
                                             <td>{{ $defacta->fm_satuan_jual }}</td>
-                                            {{-- <td>{{ $defacta->fm_kd_obat }}</td> --}}
                                         </tr>
-                                    @endforeach
+                                    @endforeach --}}
                                 </tbody>
                             </table>
 

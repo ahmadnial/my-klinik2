@@ -146,6 +146,7 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
     Route::get('mstr-jenis-obat', [masterFarmasiController::class, 'jenBat'])->name('mstr-jenis-obat');
     Route::get('mstr-supplier', [masterFarmasiController::class, 'supplier'])->name('mstr-supplier');
     Route::get('mstr-obat', [masterFarmasiController::class, 'obat'])->name('mstr-Obat');
+    Route::get('getMsaterObat', [masterFarmasiController::class, 'getMsaterObat'])->name('getMsaterObat');
 });
 
 // CREATE MSTR FARMASI
@@ -279,6 +280,8 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
     Route::get('pricelistHrgNakes', [LapFarmasiController::class, 'pricelistHrgNakes'])->name('pricelistHrgNakes');
     Route::get('laporan-tuslah-embalase', [LapFarmasiController::class, 'lapTuslahEmbalase'])->name('laporan-tuslah-embalase');
     Route::get('getLaporanTuslahEmbalase', [LapFarmasiController::class, 'getLaporanTuslahEmbalase'])->name('getLaporanTuslahEmbalase');
+    Route::get('laporan-kondisi-stok', [LapFarmasiController::class, 'lapKondisiStok'])->name('laporan-kondisi-stok');
+    Route::get('getLapKondisiStok', [LapFarmasiController::class, 'getLapKondisiStok'])->name('getLapKondisiStok');
 });
 
 //Laporan Analisa

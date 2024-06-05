@@ -110,14 +110,14 @@ class LapFarmasiController extends Controller
                 $isDataBukuStok = DB::table('tb_stock')
                     ->leftJoin('mstr_obat', 'tb_stock.kd_obat', 'mstr_obat.fm_kd_obat')
                     ->where('mstr_obat.isActive', '=', '1')
-                    ->where('tb_stock.qty', '!=', '0')
+                    ->where('tb_stock.qty', '>', '0')
                     ->select('mstr_obat.*', 'tb_stock.*')
                     ->get();
             } else if ($request->kondisiStock == 'kosong') {
                 $isDataBukuStok = DB::table('tb_stock')
                     ->leftJoin('mstr_obat', 'tb_stock.kd_obat', 'mstr_obat.fm_kd_obat')
                     ->where('mstr_obat.isActive', '=', '1')
-                    ->where('tb_stock.qty', '=', '0')
+                    ->where('tb_stock.qty', '<=', '0')
                     ->select('mstr_obat.*', 'tb_stock.*')
                     ->get();
             }
@@ -431,5 +431,52 @@ class LapFarmasiController extends Controller
                 ->get();
         }
         return response()->json($isDataLaporanTuslahEmbalase);
+    }
+
+    public function lapKondisiStok()
+    {
+        return view('pages.laporan.farmasi.laporan-kondisi-stok');
+    }
+
+    public function getlapKondisiStok(Request $request)
+    {
+        // $t = $request->all();
+        // dd($t);
+        if ($request->ajax()) {
+            if ($request->kondisiStock == '') {
+                $isDataBukuStok = DB::table('tb_stock')
+                    ->leftJoin('mstr_obat', 'tb_stock.kd_obat', 'mstr_obat.fm_kd_obat')
+                    ->where('mstr_obat.isActive', '=', '1')
+                    ->select('mstr_obat.*', 'tb_stock.*')
+                    ->get();
+            } else if ($request->kondisiStock == 'ada') {
+                $isDataBukuStok = DB::table('tb_stock')
+                    ->leftJoin('mstr_obat', 'tb_stock.kd_obat', 'mstr_obat.fm_kd_obat')
+                    ->where('mstr_obat.isActive', '=', '1')
+                    ->where('tb_stock.qty', '>', '0')
+                    ->select('mstr_obat.*', 'tb_stock.*')
+                    ->get();
+            } else if ($request->kondisiStock == 'habis') {
+                $isDataBukuStok = DB::table('tb_stock')
+                    ->leftJoin('mstr_obat', 'tb_stock.kd_obat', 'mstr_obat.fm_kd_obat')
+                    ->where('mstr_obat.isActive', '=', '1')
+                    ->where('tb_stock.qty', '<=', '0')
+                    ->select('mstr_obat.*', 'tb_stock.*')
+                    ->get();
+            } else if ($request->kondisiStock == 'hampirHabis') {
+                // $stokMinimal = DB::table('mstr_obat')->whereIn('fm_stok_minimal', [$request->kd_obat[$keyx]] );
+                $kodeBarang = DB::table('mstr_obat')->select('fm_kd_obat', 'fm_stok_minimal')->where('isActive', '=', '1')->where('fm_stok_minimal', '!=', null)->pluck('fm_kd_obat');
+                // $stokMinimal = DB::table('mstr_obat')->select('fm_stok_minimal')->where('isActive', '=', '1')->where('fm_stok_minimal', '!=', null)->pluck('fm_stok_minimal');
+                // dd($stokMinimal);
+                $isDataBukuStok = DB::table('tb_stock')
+                    ->leftJoin('mstr_obat', 'tb_stock.kd_obat', 'mstr_obat.fm_kd_obat')
+                    // ->where('mstr_obat.isActive', '=', '1')
+                    ->whereIn('mstr_obat.fm_kd_obat', $kodeBarang)
+                    // ->whereIn('tb_stock.qty', '<=', $stokMinimal)
+                    ->select('mstr_obat.*', 'tb_stock.*')
+                    ->get();
+            }
+        }
+        return response()->json($isDataBukuStok);
     }
 }
