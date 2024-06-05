@@ -82,8 +82,8 @@
         }
 
         /* th {
-                                                                                                    min-width: 180px;
-                                                                                                } */
+                                                                                                                                            min-width: 180px;
+                                                                                                                                        } */
 
         .modal-footer {
             position: sticky;
@@ -121,10 +121,22 @@
                                     Please..dont let me blank
                                 </div>
                             </div>
-                            <div class="form-group col-sm-3">
+                            <div class="form-group col-sm-2">
                                 <label for="">Nomor Faktur</label>
                                 <input type="text" class="form-control" name="do_hdr_no_faktur" id="do_hdr_no_faktur"
                                     value="{{ old('do_hdr_no_faktur') }}" placeholder="Input Nomor Faktur" required>
+                                <div class="invalid-feedback">
+                                    Please..dont let me blank
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-1">
+                                <label for="">Jenis Pembelian</label>
+                                <select class="do_jenis_pembelian form-control-pasien" id="do_jenis_pembelian"
+                                    style="width: 100%;" name="do_jenis_pembelian" required>
+                                    <option value="">--Select--</option>
+                                    <option value="Konsinyasi">Konsinyasi</option>
+                                    <option value="Non Konsinyasi">Non Konsinyasi</option>
+                                </select>
                                 <div class="invalid-feedback">
                                     Please..dont let me blank
                                 </div>
@@ -770,6 +782,10 @@
             // Select2 call
             $('.do_hdr_supplier').select2({
                 placeholder: 'Supplier',
+            });
+
+            $('.do_jenis_pembelian').select2({
+                placeholder: 'Konsinyasi/Non Konsinyasi',
             });
 
             $('.do_hdr_lokasi_stock').select2({

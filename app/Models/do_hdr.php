@@ -21,7 +21,9 @@ class do_hdr extends Model
         'do_hdr_tgl_tempo',
         // 'do_hdr_lokasi_stock',
         'do_hdr_total_faktur',
-        'user'
+        'user',
+        'do_jenis_pembelian',
+        'do_kd_po'
     ];
 
     public function hdrToDetail()

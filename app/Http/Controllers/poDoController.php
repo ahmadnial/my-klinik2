@@ -369,6 +369,8 @@ class poDoController extends Controller
                 'do_hdr_tgl_tempo' => $request->do_hdr_tgl_tempo,
                 // 'do_hdr_lokasi_stock' => $request->do_hdr_lokasi_stock,
                 'do_hdr_total_faktur' => $request->do_hdr_total_faktur,
+                'do_jenis_pembelian' => $request->do_jenis_pembelian,
+                // 'do_kd_po' => $request->do_kd_po,
                 'user' => Auth::user()->name,
             ];
             do_hdr::create($newData);
