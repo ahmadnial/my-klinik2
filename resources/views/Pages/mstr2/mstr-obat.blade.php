@@ -11,7 +11,7 @@
             </div>
 
             <div class="card-body">
-                <table id="example1" class="table table-striped table-hover">
+                <table id="masterObat" class="table table-striped table-hover">
                     <thead class="">
                         <tr>
                             <th>Kode Barang</th>
@@ -83,7 +83,7 @@
         </div>
     </section>
     {{-- modal delete --}}
-    <div class="modal fade" id="deleteModalObat" data-bs-backdrop="static" aria-labelledby="staticBackdropLabel"
+    {{-- <div class="modal fade" id="deleteModalObat" data-bs-backdrop="static" aria-labelledby="staticBackdropLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -101,7 +101,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     {{-- end modal delete --}}
 
     <!-- The modal Edit -->
@@ -176,8 +176,8 @@
                         </div>
                         <div class="form-group col-sm-6">
                             <label for="">Satuan Pembelian</label>
-                            <select class="efm_satuan_pembelian form-control" id="efm_satuan_pembelian"
-                                style="width: 100%;" name="efm_satuan_pembelian">
+                            <select class="efm_satuan_pembelian form-control" id="efm_satuan_pembelian" style="width: 100%;"
+                                name="efm_satuan_pembelian">
                                 <option value="">
                                 </option>
                                 @foreach ($satuanBeli as $sb)
@@ -187,9 +187,8 @@
                             </select>
                         </div>
                         <div class="form-group col-sm-6">
-                            <label for="">Isi Satuan Pembelian | Satuan: <input style="border:none"
-                                    type="text" id="eisiSatuanBeli" class="eisiSatuanBeli text-danger text-bold col-4"
-                                    readonly>
+                            <label for="">Isi Satuan Pembelian | Satuan: <input style="border:none" type="text"
+                                    id="eisiSatuanBeli" class="eisiSatuanBeli text-danger text-bold col-4" readonly>
                             </label>
                             <input type="text" class="efm_isi_satuan_pembelian form-control"
                                 name="efm_isi_satuan_pembelian" id="efm_isi_satuan_pembelian" value=""
@@ -530,12 +529,10 @@
 
     @push('scripts')
         <script>
-            getItemObat()
-
             function getItemObat() {
                 $.ajax({
                     success: function() {
-                        $('#example1').DataTable({
+                        $('#masterObat').DataTable({
                             processing: true,
                             serverSide: true,
                             dom: 'lBfrtip',
@@ -550,9 +547,7 @@
                                 },
                                 url: "{{ url('getMsaterObat') }}",
                                 type: 'GET',
-                                // data: {
-                                //     dataBulan: dataBulan
-                                // }
+
                             },
                             columns: [{
                                     data: 'fm_kd_obat',
@@ -560,7 +555,7 @@
                                 },
                                 {
                                     data: 'fm_nm_obat',
-                                    name: 'fm_nm_obat'
+                                    name: 'fm_nm_obat',
                                 },
                                 {
                                     data: 'fm_kategori',
@@ -568,15 +563,15 @@
                                 },
                                 {
                                     data: 'fm_golongan_obat',
-                                    name: 'no_mfm_golongan_obatr'
+                                    name: 'fm_golongan_obat',
                                 },
                                 {
                                     data: 'fm_supplier',
-                                    name: 'fm_supplier'
+                                    name: 'fm_supplier',
                                 },
                                 {
                                     data: 'fm_satuan_pembelian',
-                                    name: 'fm_satuan_pembelian'
+                                    name: 'fm_satuan_pembelian',
                                 },
                                 {
                                     data: 'fm_satuan_jual',
@@ -619,7 +614,7 @@
                                 },
                                 {
                                     data: 'action',
-                                    name: 'action'
+                                    name: 'action',
                                 },
                             ],
                             "responsive": true,
@@ -633,6 +628,7 @@
                 })
             };
 
+            getItemObat();
 
             // Select2 call
             $('#fm_supplier').select2({

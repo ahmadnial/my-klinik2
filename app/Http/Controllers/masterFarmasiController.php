@@ -381,7 +381,7 @@ class masterFarmasiController extends Controller
                 // onclick="cetakNota(this)" data-kd_trsc="' . $row->kd_trs . '" target="_blank"> <i class="fa fa-print"></i> </button>
                 // ';
 
-                $actionBtn = '<button class="btn btn-xs btn-info" data-toggle="modal" data-target=""
+                $actionBtn = '<button class="btn btn-xs btn-info" data-toggle="modal" 
                                         data-id="' . $row->fm_kd_obat . '" 
                                         data-nmobat="' . $row->fm_nm_obat . '"
                                         data-kategori="' . $row->fm_kategori . '" 
@@ -405,8 +405,7 @@ class masterFarmasiController extends Controller
                                         data-hrg_jual_resep_persen="' . $row->fm_hrg_jual_resep_persen . '"
                                         data-isactive="' . $row->isActive . '"
                                         data-hrg_jual_nakes_persen="' . $row->fm_hrg_jual_nakes_persen . '" id="editObat"
-                                        onClick="getIDObat(this)"><i class="fa fa-edit"></i></button>
-                ';
+                                        onClick="getIDObat(this)"><i class="fa fa-edit"></i></button>';
 
                 return $actionBtn;
             })
