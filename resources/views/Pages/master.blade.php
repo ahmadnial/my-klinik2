@@ -57,6 +57,10 @@
             width: 4px;
             height: 2px;
         }
+
+        .modal-lookUp {
+            opacity: 0.9 !important;
+        }
     </style>
 </head>
 
@@ -668,6 +672,31 @@
                     <div class="row" style="padding-top: 0px">
                     </div>
                 </div> --}}
+                <!-- start modal-->
+                <div class="modal" id="universalLookUp">
+                    <div class="modal-dialog modal-lg modal-lookUp" role="document">
+                        <div class="modal-content modal-content-demo">
+                            {{-- <div class="modal-header">
+                                <h6 class="modal-title">Search for product to add</h6><button aria-label="Close"
+                                    class="close" data-dismiss="modal" type="button"><span
+                                        aria-hidden="true">&times;</span></button>
+                            </div> --}}
+                            <div class="modal-body">
+                                <div class="card-body pb-2">
+                                    <div class="mb-2">
+                                        <select class="form-control-pasien" id="lookUpSearch" style="width: 100%;"
+                                            name="lookUpSearch"></select>
+                                        <span class="input-group-append">
+                                            {{-- <button class="btn ripple btn-primary" type="submit"><i
+                                                    class="fa fa-search"></i></button> --}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end modal-->
             </div>
 
             <!-- Main content -->
@@ -838,6 +867,61 @@
             const toggleMenu = document.querySelector(".menu");
             toggleMenu.classList.toggle("active");
         }
+
+        function lookUp(e) {
+            var evtobj = window.event ? event : e
+            if (evtobj.keyCode == 32 && evtobj.ctrlKey) {
+                $('#universalLookUp').modal('show');
+            };
+        }
+        document.onkeydown = lookUp;
+
+        function lookUpSearch() {
+            // var keyword = $('#lookUpSearch').val();
+            // $.ajax({
+            //     headers: {
+            //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //     },
+            //     url: "{{ url('getuniversalLookUp') }}",
+            //     type: 'GET',
+            //     data: {
+            //         'keyword': keyword
+            //     },
+            //     dataType: 'json',
+            //     delay: 100,
+            //     success: function(keyword) {
+            //         $.each(keyword, function(key, datavalue) {
+
+            //         })
+            //     }
+            // })
+
+        }
+        var path = "{{ route('getuniversalLookUp') }}";
+
+        $('#lookUpSearch').select2({
+            placeholder: 'Nama Obat / Kandungan Obat',
+            ajax: {
+                url: path,
+                dataType: 'json',
+                delay: 150,
+                processResults: function(keyword) {
+                    return {
+                        results: $.map(keyword, function(item) {
+                            return {
+                                text: item.fm_nm_obat,
+                                text: item.fm_nm_obat + ' - ' + 'Kandungan : ' + item
+                                    .fm_kandungan_obat + ' - ' + 'Stok : ' + item
+                                    .qty + ' ' + item.fm_satuan_jual + ' - ' + 'Hrg Reguler : Rp.' +
+                                    item
+                                    .fm_hrg_jual_non_resep + ' /' + item.fm_satuan_jual,
+                            }
+                        })
+                    };
+                },
+                cache: true
+            }
+        });
     </script>
 </body>
 

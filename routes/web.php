@@ -19,6 +19,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HutangSupplierController;
 use App\Http\Controllers\lapAccountingController;
+use App\Http\Controllers\lookUpController;
 use App\Http\Controllers\settingController;
 use App\Http\Controllers\RedirectController;
 
@@ -307,4 +308,9 @@ Route::group(['middleware' => ['auth', 'checkrole:1,2']], function () {
     Route::post('userCreate', [settingController::class, 'userCreate'])->name('userCreate');
     Route::get('profile-perusahaan', [settingController::class, 'profilePerusahaan'])->name('profile-perusahaan');
     Route::post('createProfile', [settingController::class, 'createProfile'])->name('createProfile');
+});
+
+//Universal Look Up
+Route::group(['middleware' => ['auth', 'checkrole:1,2,3,4,5']], function () {
+    Route::get('getuniversalLookUp', [lookUpController::class, 'getuniversalLookUp'])->name('getuniversalLookUp');
 });
