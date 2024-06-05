@@ -82,8 +82,8 @@
         }
 
         /* th {
-                                                                                                                                            min-width: 180px;
-                                                                                                                                        } */
+                                                                                                                                                    min-width: 180px;
+                                                                                                                                                } */
 
         .modal-footer {
             position: sticky;
@@ -1007,10 +1007,10 @@
                                                     value="${toDetail[i].do_hrg_beli}" readonly>
                                                 </td>
                                                 <td>
-                                                <input type="text" class="form-control" name="do_diskon_prosen" id="do_diskon_prosen" onKeyDown="discProsen(this)" value="${toDetail[i].do_diskon_prosen}" readonly>
+                                                <input type="text" class="form-control" name="do_diskon_prosen" id="do_diskon_prosen" onKeyDown="discProsen(this)" value="${toDetail[i].do_diskon_prosen ?? ''}" readonly>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" id="do_diskon" name="do_diskon[]" onKeyDown="discRp(this)" value="${toDetail[i].do_diskon}" readonly>
+                                                    <input type="text" class="form-control" id="do_diskon" name="do_diskon[]" onKeyDown="discRp(this)" value="${toDetail[i].do_diskon ?? ''}" readonly>
                                                 </td>
                                                 <td>
                                                     <select type="text" class="form-control" id="do_pajak" name="do_pajak[]" onChange="pajakPPN(this)" readonly>
