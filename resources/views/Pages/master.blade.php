@@ -193,13 +193,13 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ url('/registrasi') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Registrasi</p>
+                                        <i class="fa fa-wheelchair nav-icon"></i>
+                                        <p>Registrasi Masuk</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ url('/data-sosial') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="far fa-user nav-icon"></i>
                                         <p>Data Sosial</p>
                                     </a>
                                 </li>
@@ -281,31 +281,31 @@
                                 </li> --}}
                                 <li class="nav-item">
                                     <a href="{{ url('/delivery-order') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="fa fa-ambulance nav-icon"></i>
                                         <p>Delivery Order</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ url('/penjualan') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="fa fa-paper-plane nav-icon"></i>
                                         <p>Penjualan</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ url('/adjusment-stock') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="fa fa-check-square nav-icon"></i>
                                         <p>Adjusment Stock</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ url('/buku-stok-rekap') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="fa fa-list-ol nav-icon"></i>
                                         <p>Info Stok</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ url('/kartu-stok') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="fa fa-book nav-icon"></i>
                                         <p>Kartu Stok</p>
                                     </a>
                                 </li>
@@ -317,7 +317,7 @@
                                 </li> --}}
                                 <li class="nav-item">
                                     <a href="{{ url('/pembelian-detail') }}" class="nav-link">
-                                        <i class="far fa-user nav-icon"></i>
+                                        <i class="fa fa-cart-plus nav-icon"></i>
                                         <p>Info Pembelian Detail</p>
                                     </a>
                                 </li>
@@ -335,7 +335,7 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ url('/kasir-poli') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="fa fa-university nav-icon"></i>
                                         <p>Kasir Poliklinik</p>
                                     </a>
                                 </li>
@@ -360,25 +360,25 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ url('info-hutang') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="fa fa-calculator nav-icon"></i>
                                         <p>Info Hutang Rekap</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ url('/pelunasan-hutang') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="fa fa-university nav-icon"></i>
                                         <p>Pelunasan Hutang</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ url('/laporan-laba') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="fa fa-bar-chart nav-icon"></i>
                                         <p>Laporan Laba Rugi</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ url('/laba-rugi-peritem') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="fa fa-bar-chart nav-icon"></i>
                                         <p>Laporan Laba Rugi Per Item</p>
                                     </a>
                                 </li>
@@ -427,43 +427,43 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ url('/laporan-penjualan-farmasi-rekap') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="fa fa-bar-chart  nav-icon"></i>
                                         <p>Penjualan Apotek Rekap</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ url('/laporan-penjualan-farmasi-detail') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="fa fa-bar-chart  nav-icon"></i>
                                         <p>Penjualan Apotek Detail</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ url('/laporan-registrasi-masuk') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="fa fa-bar-chart  nav-icon"></i>
                                         <p>Registrasi Masuk</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ url('/pendapatan-klinik-rekap') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="fa fa-bar-chart  nav-icon"></i>
                                         <p>Pendapatan Klinik Rekap</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ url('/info-tindakan') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="fa fa-bar-chart  nav-icon"></i>
                                         <p>Info Tindakan</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ url('/laporan-tuslah-embalase') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="fa fa-bar-chart  nav-icon"></i>
                                         <p>Lap Tuslah & Embalase</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ url('/laporan-kondisi-stok') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="fa fa-bar-chart  nav-icon"></i>
                                         <p>Lap Kondisi Stok</p>
                                     </a>
                                 </li>
