@@ -25,17 +25,17 @@ class poDoController extends Controller
 
     public function po()
     {
-        // $num = str_pad(00001, 5, 0, STR_PAD_LEFT);
-        // $cekid = mstr_supplier::count();
-        // if ($cekid == 0) {
-        //     $kd_po =  'PO'  . $num;
-        // } else {
-        //     $continue = mstr_supplier::all()->last();
-        //     $de = substr($continue->fm_kd_supplier, -5);
-        //     // dd($de);
-        //     $kd_po = 'PO' . str_pad(($de + 1), 5, '0', STR_PAD_LEFT);
-        //     // dd($kd_reg);
-        // };
+        $num = str_pad(000001, 6, 0, STR_PAD_LEFT);
+        $Y = date("Y");
+        $M = date("m");
+        $cekid = do_hdr::count();
+        if ($cekid == 0) {
+            $noRef =  'DO'  . '-' . substr($Y, -2) . $M . '-' . $num;
+        } else {
+            $continue = do_hdr::all()->last();
+            $de = substr($continue->do_hdr_kd, -6);
+            $noRef = 'DO' . '-' . substr($Y, -2) . $M  . '-' . str_pad(($de + 1), 6, '0', STR_PAD_LEFT);
+        };
 
         $supplier = mstr_supplier::all();
         $lokasi = mstr_lokasi_stock::all();

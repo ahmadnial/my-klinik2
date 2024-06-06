@@ -796,7 +796,7 @@
                                     {{-- <input required type="file" class="form-control" name="images[]"
                                         placeholder="address" multiple> --}}
                                 </div>
-                                <div class="card-resep form-group">
+                                <div class="card-resep form-group" id="card-resep">
 
                                 </div>
                                 <div class="showOrHideTdk"></div>
@@ -1451,22 +1451,22 @@
                                             name="ch_kd_obat[]" style="width: 100%" value="${kd_obat_to}" readonly>
                                     </td>
                                     <td>
-                                        <input type="hidden" class="form-control" id="ch_nm_obat" name="ch_nm_obat[]" value="${nm_obat_to}">
+                                        <input type="hidden" class="form-control" id="ch_nm_obat[]" name="ch_nm_obat[]" value="${nm_obat_to}">
                                     </td>
                                     <td>
-                                        <input type="hidden" class="form-control" id="ch_hrg_jual" name="ch_hrg_jual[]" value="${hrg_obat_to}" readonly>
+                                        <input type="hidden" class="form-control" id="ch_hrg_jual[]" name="ch_hrg_jual[]" value="${hrg_obat_to}" readonly>
                                     </td>
                                     <td>
-                                        <input type="hidden" class="form-control" id="ch_qty_obat" name="ch_qty_obat[]" value="${qty_to}" readonly>
+                                        <input type="hidden" class="form-control" id="ch_qty_obat[]" name="ch_qty_obat[]" value="${qty_to}" readonly>
                                     </td>
                                     <td>
-                                        <input type="hidden" class="form-control" id="ch_satuan_obat" name="ch_satuan_obat[]" value="${satuan_to}" readonly>
+                                        <input type="hidden" class="form-control" id="ch_satuan_obat[]" name="ch_satuan_obat[]" value="${satuan_to}" readonly>
                                     </td>
                                     <td>
-                                        <input type="hidden" class="form-control" id="ch_signa" name="ch_signa[]" value="${signa_to}" readonly>
+                                        <input type="hidden" class="form-control" id="ch_signa[]" name="ch_signa[]" value="${signa_to}" readonly>
                                     </td>
                                     <td>
-                                        <input type="hidden" class="form-control" id="ch_cara_pakai" name="ch_cara_pakai[]" value="${cara_pakai_to}" readonly>
+                                        <input type="hidden" class="form-control" id="ch_cara_pakai[]" name="ch_cara_pakai[]" value="${cara_pakai_to}" readonly>
                                     </td>                             
                                 </tr>
                             </tbody>`
@@ -2140,26 +2140,26 @@
                 `<tbody class="mt-2" id="cardObatList${obatResep}">
                         <tr class="mt-2">
                             <td class="mt-2">
-                                <input type="hidden" class="obatResep form-control" id="ch_kd_obat"
+                                <input type="hidden" class="obatResep form-control" id="ch_kd_obat[]"
                                     name="ch_kd_obat[]" style="width: 100%" value="${obatResep}" readonly>
                             </td>
                             <td>
-                                <input type="hidden" class="form-control" id="ch_nm_obat" name="ch_nm_obat[]" value="${namaobatResep}">
+                                <input type="hidden" class="form-control" id="ch_nm_obat[]" name="ch_nm_obat[]" value="${namaobatResep}">
                             </td>
                             <td>
-                                <input type="hidden" class="form-control" id="ch_hrg_jual" name="ch_hrg_jual[]" value="${hrg_jual}" readonly>
+                                <input type="hidden" class="form-control" id="ch_hrg_jual[]" name="ch_hrg_jual[]" value="${hrg_jual}" readonly>
                             </td>
                             <td>
-                                <input type="hidden" class="form-control" id="ch_qty_obat" name="ch_qty_obat[]" value="${qty_obat}" readonly>
+                                <input type="hidden" class="form-control" id="ch_qty_obat[]" name="ch_qty_obat[]" value="${qty_obat}" readonly>
                             </td>
                             <td>
-                                <input type="hidden" class="form-control" id="ch_satuan_obat" name="ch_satuan_obat[]" value="${satuan_jual_obat}" readonly>
+                                <input type="hidden" class="form-control" id="ch_satuan_obat[]" name="ch_satuan_obat[]" value="${satuan_jual_obat}" readonly>
                             </td>
                             <td>
-                                <input type="hidden" class="form-control" id="ch_signa" name="ch_signa[]" value="${signa_resep}" readonly>
+                                <input type="hidden" class="form-control" id="ch_signa[]" name="ch_signa[]" value="${signa_resep}" readonly>
                             </td>
                             <td>
-                                <input type="hidden" class="form-control" id="ch_cara_pakai" name="ch_cara_pakai[]" value="${cara_pakai_resep}" readonly>
+                                <input type="hidden" class="form-control" id="ch_cara_pakai[]" name="ch_cara_pakai[]" value="${cara_pakai_resep}" readonly>
                             </td>                             
                         </tr>
                     </tbody>`
@@ -2356,7 +2356,7 @@
                         for (i in resep) {
                             if (resep[i] != null) {
                                 resepShow +=
-                                    `<tr><td>${resep[i].ch_nm_obat} - <i class="text-danger">${resep[i].ch_cara_pakai}</i></td></tr>`;
+                                    `<tr><td>${resep[i].ch_nm_obat} - ${resep[i].ch_qty_obat} ${resep[i].ch_satuan_obat} - <i class="text-danger">${resep[i].ch_cara_pakai}</i></td></tr>`;
                             } else {
                                 resepShow += ``;
                             }
@@ -2589,11 +2589,117 @@
                                 tdk += ``;
                             }
                         }
-                        // console.log(chartvalue);
+
+                        const diagnosa =
+                            `<option value="${chartvalue.chart_A_diagnosa}" selected>${chartvalue.chart_A_diagnosa}</option>`;
+
+                        const resepHistory = chartvalue.resep
+                        let resepEditShow = "";
+                        for (i in resepHistory) {
+                            // resepHistory[i].ch_nm_obat
+                            resepEditShow += `
+                                    <div class="col-md-6 kt-callout-etiket mb-4" id="cardObatList${resepHistory[i].ch_kd_obat}">
+                                <div class="border-radius3"
+                                    style="background-image: linear-gradient(to bottom right, #ECEBF4, #B0A8E5); padding: 5px; box-shadow: 0px 0px 0px 0px !important;border: 0.5px solid lightgrey;; min-height: 196px;">
+                                    <div class="kt-portlet__head"
+                                        style="min-height: 10px !important;padding: 0px;z-index: 10; border: 0px;">
+                                        <div style="top: 0;position: absolute;left: -2; width: 30%;"
+                                            class="kt-portlet__head kt-portlet__head--noborder kt-ribbon kt-ribbon--left">
+                                            <div class="kt-ribbon__target bg-warning"
+                                                style="top: 3px; left: -2px;padding: 1px 8px 1px 10px;background-color: #b3c0eb;color: rgb(163, 0, 101);font-size: 0.96em;">
+                                                <label style="margin: 0px;" class="e_brgID">${resepHistory[i].ch_kd_obat}</label>
+                                                <span id="infoGEN000000209" data-toggle="popover"
+                                                    data-placement="bottom" data-content=""
+                                                    data-original-title="" title=""></span>
+                                            </div>
+                                        </div>
+                                        <div class="head-label">
+                                        </div>
+                                        <div class="head-toolbar">
+                                            <span class="mr-3 bg-lightgreen text-dark px-2"
+                                                id="iterGEN000000209"></span>
+                                            <div class="kt-portlet__head-actions">
+                                                <span data-toggle="tooltip" title="Info">
+                                                    <a href="javascript:;"
+                                                        class="btn btn-clean btn-sm btn-icon btn-icon-md pointer infoObat"
+                                                        data-infoid="infoGEN000000209">
+                                                        <i class="fa fa-info-circle"></i>
+                                                    </a>
+                                                </span>
+                                                <span data-toggle="tooltip" title="Edit">
+                                                        <a href="javascript:;"
+                                                            class="btn btn-clean btn-sm btn-icon btn-icon-md pointer"
+                                                            data-toggle="modal" data-target="#"
+                                                            data-isracik="0" data-idobat="${resepHistory[i].ch_kd_obat}" data-nmobat="${resepHistory[i].ch_nm_obat}" data-qtyobat="${resepHistory[i].ch_qty_obat}" data-satuanobat="${resepHistory[i].ch_satuan_obat}"
+                                                            data-signaobat="${resepHistory[i].ch_signa}" data-carapakaiobat="${resepHistory[i].ch_cara_pakai}"
+                                                            onclick="editObat(this)">
+                                                            <i class="fa fa-edit"></i>
+                                                        </a>
+                                                        </span>
+                                                <span data-toggle="tooltip" title="Delete">
+                                                    <a href="javascript:;"
+                                                        class="btn btn-clean btn-sm btn-icon btn-icon-md pointer"
+                                                        data-idobat="${resepHistory[i].ch_kd_obat}"
+                                                        onclick="deleteRow(this)">
+                                                        <i class="fa fa-trash"></i>
+                                                    </a>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="kt-portlet__body" style="padding: 0 10px 0 10px;">
+                                        <div class="kt-callout__body">
+                                            <div class="kt-callout__content">
+                                                <h3 class="kt-callout__title-mod e_brgName text-danger">${resepHistory[i].ch_nm_obat}
+                                                </h3>
+                                                <div class="etiket-body">
+                                                    <p class="mb-0" id="qty_obat_card_resep"
+                                                        style="margin-bottom: 0.5rem;">${resepHistory[i].ch_qty_obat} ${resepHistory[i].ch_satuan_obat}</p>
+                                                    <h6 class="e_signa">${resepHistory[i].ch_signa}</h6>
+                                                    <h6 class="e_carapakai mb-0">${resepHistory[i].ch_cara_pakai}</h6>
+                                                </div>
+                                                <h6 class="pull-right e_harga mb-0 "> Rp. ${resepHistory[i].ch_hrg_jual} / ${resepHistory[i].ch_satuan_obat}</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            `;
+
+                            $(".card-resep").append(
+                                `<tbody class="mt-2" id="cardObatList${resepHistory[i].ch_kd_obat}">
+                                    <tr class="mt-2" id="editResepChart">
+                                        <td class="mt-2">
+                                            <input type="hidden" class="ch_kd_obat obatResep form-control" id="ch_kd_obat[]"
+                                                name="ch_kd_obat[]" style="width: 100%" value="${resepHistory[i].ch_kd_obat}" readonly>
+                                        </td>
+                                        <td>
+                                            <input type="hidden" class="form-control ch_nm_obat" id="ch_nm_obat[]" name="ch_nm_obat[]" value="${resepHistory[i].ch_nm_obat}">
+                                        </td>
+                                        <td>
+                                            <input type="hidden" class="form-control ch_hrg_jual" id="ch_hrg_jual[]" name="ch_hrg_jual[]" value="${resepHistory[i].ch_hrg_jual}" readonly>
+                                        </td>
+                                        <td>
+                                            <input type="hidden" class="form-control ch_qty_obat" id="ch_qty_obat[]" name="ch_qty_obat[]" value="${resepHistory[i].ch_qty_obat}" readonly>
+                                        </td>
+                                        <td>
+                                            <input type="hidden" class="form-control ch_satuan_obat" id="ch_satuan_obat[]" name="ch_satuan_obat[]" value="${resepHistory[i].ch_satuan_obat}" readonly>
+                                        </td>
+                                        <td>
+                                            <input type="hidden" class="form-control ch_signa" id="ch_signa[]" name="ch_signa[]" value="${resepHistory[i].ch_signa}" readonly>
+                                        </td>
+                                        <td>
+                                            <input type="hidden" class="form-control ch_cara_pakai" id="ch_cara_pakai[]" name="ch_cara_pakai[]" value="${resepHistory[i].ch_cara_pakai}" readonly>
+                                        </td>                             
+                                    </tr>
+                                </tbody>`
+                            );
+
+                        }
                         $('#chart_S').val(chartvalue.chart_S)
                         $('#chart_O').val(chartvalue.chart_O)
                         $('#chart_A').val(chartvalue.chart_A)
-                        $('#chart_A_diagnosa').val(chartvalue.chart_A_diagnosa)
+                        $('#chart_A_diagnosa').append(diagnosa)
                         $('#chart_P').val(chartvalue.chart_P)
 
                         $('#ttv_BW').val(chartvalue.ttv_BW)
@@ -2607,6 +2713,8 @@
                         $('#ttv_SPO2').val(chartvalue.ttv_SPO2)
                         $('#nm_tarif').empty()
                         $('#nm_tarif').append(`${tdk}`)
+                        $('#resepList').empty()
+                        $('#resepList').append(`${resepEditShow}`)
 
                     })
                 }
@@ -2633,17 +2741,23 @@
             var ttv_SN = $('#ttv_SN').val();
             var ttv_SPO2 = $('#ttv_SPO2').val();
             var getTarif = $('#nm_tarif').val();
+            var ch_kd_obat = $('.ch_kd_obat').val();
+            var ch_nm_obat = $('.ch_nm_obat').val();
+            var ch_hrg_jual = $('.ch_hrg_jual').val();
+            var ch_qty_obat = $('.ch_qty_obat').val();
+            var ch_satuan_obat = $('.ch_satuan_obat').val();
+            var ch_signa = $('.ch_signa').val();
+            var ch_cara_pakai = $('.ch_cara_pakai').val();
+            // var resepList = $('#card-resep').val();
             var nm_tariff = [];
             for (i = 0; i < getTarif.length; i++) {
                 nm_tariff.push([getTarif[i].nm_tarif]);
             }
 
-            // var nm_tarif = [];
-            // var sub_total = $('#sub_total').val();
-
-            // $('#nm_tarif').val(function() {
-            //     nm_tarif.push($(this).text());
-            // });
+            // var elements = $("#editResepChart").val();
+            // for (var i = 0; i < elements.length; i++) {
+            //     console.log(elements[i].ch_kd_obat)
+            // }
 
             $.ajax({
                 headers: {
@@ -2667,7 +2781,14 @@
                     ttv_RR: ttv_RR,
                     ttv_SN: ttv_SN,
                     ttv_SPO2: ttv_SPO2,
-                    nm_tarif: nm_tariff
+                    nm_tarif: getTarif,
+                    ch_kd_obat: ch_kd_obat,
+                    ch_nm_obat: ch_nm_obat,
+                    ch_hrg_jual: ch_hrg_jual,
+                    ch_qty_obat: ch_qty_obat,
+                    ch_satuan_obat: ch_satuan_obat,
+                    ch_signa: ch_signa,
+                    ch_cara_pakai: ch_cara_pakai,
                 },
                 cache: false,
                 success: function(dataResult) {
