@@ -118,6 +118,191 @@
                 </div>
             </div>
         </div> --}}
+
+        {{-- modal show antrian --}}
+        {{-- <div class="modal fade" id="modalPasienShow" style="overflow-y: hidden; z-index: 3100; display: block;"> --}}
+        <div class="modal fade" id="modalPasienShow" data-backdrop="static">
+            <div class="modal-dialog modal-dialog-scrollable" style="width: 450px">
+                <div class="modal-content" style="padding: 5px">
+                    <div style="margin-left: 92.5%; position: absolute">
+                    </div>
+                    {{-- <button type="button" class="close btn btn-danger" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button> --}}
+                    <div class="modal-header bg-nial">
+                        <h5 class="modal-title"><i class="fa fa-user">&nbsp;&nbsp;</i>Antrian Pasien</h5>
+                        <button type="button" class="close btn btn-danger" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <ul class="nav nav-tabs nav-fill bg-light mb-0 col-12 px-0 mt-1" role="tablist"
+                            id="tabModalPilihPasien">
+                            <li class="nav-item px-0">
+                                <a class="nav-link nav-link-pilih-pasien text-center active" data-toggle="tab"
+                                    href="#antrian_periksa_modal" id="linkTabListPasien"><i
+                                        class="fas fa-user-shield"></i><b>List Pasien</b> <span class=""></span></a>
+                            </li>
+                            <li class="nav-item px-0">
+                                <a class="nav-link nav-link-pilih-pasien text-center" data-toggle="tab"
+                                    href="#kt_tabs_list_reaktif_modal">
+                                    <i class="fas fa-user"></i><b>List Re-Aktif Pasien</b></a>
+                            </li>
+                            {{-- <li class="nav-item px-0" id="navListPerDokter">
+                            <a class="nav-link nav-link-pilih-pasien text-center" data-toggle="tab"
+                                href="#kt_tabs_list_pasien_dokter_modal" id="linkTabPasienDokter"><i
+                                    class="fas fa-user"></i><b>List Pasien dr.FATURRAHMAN</b></a>
+                        </li> --}}
+                        </ul>
+                        <div class="tab-content col-md-12">
+                            <div class="tab-pane active mb-6" id="antrian_periksa_modal" role="tabpanel">
+                                {{-- <div class="modal-header form-inline form-box p-1 my-2" id="headerModalPasien"
+                                    style="">
+                                    <input id="searchPilihPasien" class="form-control col-4 pl-2" type="text"
+                                        style="margin-left: 3px" placeholder="Cari Pasien..." autocomplete="off">
+                                    <select id="optDokterModalPasien" class="custom-select form-control col-5">
+                                        <option value="">Pilih Dokter</option>
+                                        <option value="dr.Khoirul Falah,Sp.PD">dr.Khoirul Falah,Sp.PD</option>
+                                    </select>
+                                    <div class="row" style="text-align: right; margin-top: 5px">
+                                        <div class="col-md-5">
+                                            <span class="kt-switch kt-switch--sm kt-switch--outline kt-switch--icon"
+                                                title="Isi dokter jika switch ke non List All">
+                                                <label>
+                                                    <input type="checkbox" id="check-listall" name=""
+                                                        disabled="disabled">
+                                                    <span></span>
+                                                </label>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-7" style="padding-right: 5px; margin-top: 5px">List All</div>
+                                    </div>
+                                </div> --}}
+                                @php
+                                    $noAntrian = 1;
+                                @endphp
+                                @foreach ($isRegActive as $reg)
+                                    <div class="col-12" id="kt_tabs_antrian_modal"
+                                        style="padding: 0px; overflow-x: hidden; max-height: 60vh; min-height: 50px; zoom: 1;">
+                                        <div class="card info antri-content-bg my-1" onclick="pinPasien(this)"
+                                            reg="{{ $reg->fr_kd_reg }}" style="line-height:1.5rem; cursor: pointer;"
+                                            data-kode_registrasi="{{ $reg->fr_kd_reg }}">
+                                            {{-- <input type="text" id="tr_kd_reg" name="tr_kd_reg"
+                                                value="{{ $reg->fr_kd_reg }}"> --}}
+                                            {{-- <div class=" " style="margin: 2px 0 0 4px;">
+                                                <div class="bg-danger status" style="margin-top: 1px; display: none;"></div>
+                                            </div> --}}
+                                            <div class="row" style="padding-bottom: 2px; background-color:#fdd578;">
+                                                <div class="col-md-2"
+                                                    style="max-width:65px; min-width:65px;padding-left: 7px;">
+                                                    <div class="text-center mt-4">
+                                                        {{-- <i class="fa fa-user fa-xs"></i> --}}
+                                                        <h2><b>{{ $noAntrian++ }}</b></h2>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-10 px-2"
+                                                    style="line-height: 1.45rem; background-color:#f9f7ca;"><span
+                                                        class="font-10">MR {{ $reg->fr_mr }} - {{ $reg->fr_kd_reg }}
+                                                    </span><span class="font-12 ml-2"> </span><br>
+                                                    <span class="font-14 f-600"
+                                                        name="pasienNameList"><b>{{ $reg->fr_nama }}</b>
+                                                        &nbsp;&nbsp;<span
+                                                            class="mr-2 badge badge-danger">{{ $reg->fr_jenis_kelamin }}</span>
+                                                    </span><br> <span class="font-10" name="dokterNameList"
+                                                        style="color: blue;">{{ $reg->fr_dokter }}</span>
+                                                    <br><span class="border-radius2 mr-2 px-2"
+                                                        style="font-size: 10px;line-height: 1rem;color: white;font-weight: 400;background: #25b938;"><em>{{ $reg->fr_jaminan }}</em></span>
+
+                                                </div>
+                                            </div>
+                                            {{-- <div class="btn btn-sm hide text-white" name="badgeStatusAntrianPasien">
+                                                &nbsp;<i class="fa fa-user-shield fa-sm"></i></div>
+                                            <div class="detail mb-2" detail="h0"></div> --}}
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                            <div class="tab-pane" id="kt_tabs_list_reaktif_modal" role="tabpanel">
+                                <div class="form-inline my-1" id="headerModalPasien" style="padding: 5px 0">
+                                    <input id="searchPilihPasienReAktif" class="form-control col-12 p-2" type="text"
+                                        placeholder="Cari Pasien...">
+                                </div>
+                                <div class="col-12 scrollbar-dusty square1 thin scroll-y" id="listPasienCoverReAktif"
+                                    style="padding: 0px; overflow-x: hidden; max-height: 60vh; min-height: 50px;">
+                                    <div class="nmPasienReAktif card info antri-content-bg my-1 pointer"
+                                        onclick="pinPasienByRegLayanan('RG00337681', 'IGD01', true)" reg="RG00337681"
+                                        style="line-height:1.5rem;">
+                                        <div class="" style="margin: 2px 0 0 4px;">
+                                        </div>
+                                        <div class="row" style="padding-bottom: 2px;">
+                                            <div class="col-md-2" style="max-width:65px; min-width:65px;padding-left: 2px;">
+                                                <div class="bg-success text-center number f-600 border-radius2"
+                                                    style="line-height:55px; margin:2px; padding:4px;">
+                                                    <i class="fa fa-folder-open fa-xs"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8 mr-1 ml-2"><span class="font-10">MR 340302100145208
+                                                    -
+                                                    RG00337681
+                                                </span><br><span class="font-14 f-600" name="pasienNameListReAktif">SUGINEM
+                                                    NY
+                                                </span><br> <span class="font-10" name="dokterNameList"
+                                                    style="color: blue;">dr. Nia Ariasti, Sp.M</span>
+                                                <br><span class="text-mc-green kt-font-sm">UNIT GAWAT DARURAT</span>
+                                            </div>
+                                        </div>
+                                        <div class="btn btn-sm badge-pilih-antrian-other text-white"
+                                            name="badgeStatusAntrianPasien">Re-Aktif &nbsp;<i
+                                                class="fa fa-user-shield fa-sm"></i></div>
+                                        <div class="detail mb-2" detail="h0"></div>
+                                    </div>
+
+                                    <div class="nmPasienReAktif card info antri-content-bg my-1 pointer"
+                                        onclick="pinPasienByRegLayanan('RG00337880', 'RI007', true)" reg="RG00337880"
+                                        style="line-height:1.5rem;">
+                                        <div class="" style="margin: 2px 0 0 4px;">
+                                        </div>
+                                        <div class="row" style="padding-bottom: 2px;">
+                                            <div class="col-md-2"
+                                                style="max-width:65px; min-width:65px;padding-left: 2px;">
+                                                <div class="bg-success text-center number f-600 border-radius2"
+                                                    style="line-height:55px; margin:2px; padding:4px;">
+                                                    <i class="fa fa-folder-open fa-xs"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8 mr-1 ml-2"><span class="font-10">MR
+                                                    340302100199269 -
+                                                    RG00337880
+                                                </span><br><span class="font-14 f-600" name="pasienNameListReAktif">TRI
+                                                    WARTI NY
+                                                </span><br> <span class="font-10" name="dokterNameList"
+                                                    style="color: blue;">dr.BAMBANG SIGIT R.,SP.PD</span>
+                                                <br><span class="text-mc-green kt-font-sm">HCU</span>
+                                            </div>
+                                        </div>
+                                        <div class="btn btn-sm badge-pilih-antrian-other text-white"
+                                            name="badgeStatusAntrianPasien">Re-Aktif &nbsp;<i
+                                                class="fa fa-user-shield fa-sm"></i></div>
+                                        <div class="detail mb-2" detail="h0"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="kt_tabs_list_pasien_dokter_modal" role="tabpanel">
+                                <div class="form-inline my-1" id="headerModalPasien" style="padding: 5px 0">
+                                    <input id="searchPilihPasienRanapPerDokter" class="form-control col-12 p-2"
+                                        type="text" placeholder="Cari Pasien...">
+                                </div>
+                                <div class="col-12 scrollbar-dusty square1 thin scroll-y" id="listPasienRanapPerDokter"
+                                    style="padding: 0px; overflow-x: hidden; max-height: 60vh; min-height: 50px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- end modal show antrian --}}
         <div class="border-right"></div>
 
         <div class="static-card-timeline mb-2">
@@ -217,8 +402,9 @@
                                                 </div>
                                                 <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
                                                     style="background-color:#f8d6e2;" name="">
-                                                    <b>J/K :</b><input type="text" class="form-control-xs" name=""
-                                                        id="jkHdr" style="background-color:#f8d6e2; border:none">
+                                                    <b>J/K :</b><input type="text" class="form-control-xs"
+                                                        name="" id="jkHdr"
+                                                        style="background-color:#f8d6e2; border:none">
                                                 </div>
                                                 <div class="text-center px-2 py-1 m-1 rounded rounded-sm"
                                                     style="background-color:#f8d6e2;">
@@ -400,7 +586,7 @@
                 <div class="border-right"></div>
                 <div class="">
                 </div>
-                <div class="p-0 col-6 pr-2" style="padding-top: 10px !important;">
+                {{-- <div class="p-0 col-6 pr-2" style="padding-top: 10px !important;">
                     <select class="form-control-pasien" id="tr_kd_reg" style="width: 100%;" name="tr_kd_reg">
                         @foreach ($isRegActive as $reg)
                             <option value="">--Select--</option>
@@ -409,6 +595,12 @@
                             </option>
                         @endforeach
                     </select>
+                </div> --}}
+                <div class="p-0 col-3 pr-2" style="padding-top: 10px !important;">
+                    <button class="btn" style="background-color: #dccfee" onclick="showAntrianPasien()"><i
+                            class="fa fa-search"></i>
+                        &nbsp;&nbsp;List
+                        Antrian Pasien</button>
                 </div>
                 <div class="border-right"></div>
 
@@ -448,6 +640,7 @@
                 </tbody>
             </table>
         </div>
+
 
         <div class="card" id="chart_soap" style="overflow-y:scroll; overflow-x: hidden; height:650px;">
             <div class="">
@@ -615,13 +808,15 @@
                                                 <i class="mb-1">Blood Pressure Diastole</i>
                                                 <div class="input-group input-group-sm mb-3">
                                                     <div class="invalid-feedback" id="feedbackLoadBPd"
-                                                        style="display: none;">load restricted, data &gt; 2 jam yang
+                                                        style="display: none;">load restricted, data &gt; 2 jam
+                                                        yang
                                                         lalu !
                                                     </div>
                                                     <div class="invalid-feedback" id="feedbackLoadEmptyBPd"
                                                         style="display: none;">data not found !</div>
                                                     <div class="valid-feedback text-info" id="feedbackLoadSuccessBPd"
-                                                        style="display: none;">load success</div>
+                                                        style="display: none;">load
+                                                        success</div>
                                                     <div class="input-group-append input-group-sm">
                                                         <input type="number" id="ttv_BPd" name="ttv_BPd"
                                                             data-satuan="mmHg" data-monitorname="Blood Pressure Diastole"
@@ -637,13 +832,15 @@
                                                 <i class="mb-1">Body Temperatur</i>
                                                 <div class="input-group input-group-sm mb-3">
                                                     <div class="invalid-feedback" id="feedbackLoadBT"
-                                                        style="display: none;">load restricted, data &gt; 2 jam yang
+                                                        style="display: none;">load restricted, data &gt; 2 jam
+                                                        yang
                                                         lalu !
                                                     </div>
                                                     <div class="invalid-feedback" id="feedbackLoadEmptyBT"
                                                         style="display: none;">data not found !</div>
                                                     <div class="valid-feedback text-info" id="feedbackLoadSuccessBT"
-                                                        style="display: none;">load success</div>
+                                                        style="display: none;">load
+                                                        success</div>
                                                     <div class="input-group-append input-group-sm">
                                                         <input type="number" id="ttv_BT" name="ttv_BT"
                                                             data-satuan="°C" data-monitorname="Body Temperatur"
@@ -659,13 +856,15 @@
                                                 <i class="mb-1">Heart Rate</i>
                                                 <div class="input-group input-group-sm mb-3">
                                                     <div class="invalid-feedback" id="feedbackLoadHR"
-                                                        style="display: none;">load restricted, data &gt; 2 jam yang
+                                                        style="display: none;">load restricted, data &gt; 2 jam
+                                                        yang
                                                         lalu !
                                                     </div>
                                                     <div class="invalid-feedback" id="feedbackLoadEmptyHR"
                                                         style="display: none;">data not found !</div>
                                                     <div class="valid-feedback text-info" id="feedbackLoadSuccessHR"
-                                                        style="display: none;">load success</div>
+                                                        style="display: none;">load
+                                                        success</div>
                                                     <div class="input-group-append input-group-sm">
                                                         <input type="number" id="ttv_HR" name="ttv_HR"
                                                             data-satuan="x/mnt" data-monitorname="Heart Rate"
@@ -681,13 +880,15 @@
                                                 <i class="mb-1">Respiratory Rate</i>
                                                 <div class="input-group input-group-sm mb-3">
                                                     <div class="invalid-feedback" id="feedbackLoadRR"
-                                                        style="display: none;">load restricted, data &gt; 2 jam yang
+                                                        style="display: none;">load restricted, data &gt; 2 jam
+                                                        yang
                                                         lalu !
                                                     </div>
                                                     <div class="invalid-feedback" id="feedbackLoadEmptyRR"
                                                         style="display: none;">data not found !</div>
                                                     <div class="valid-feedback text-info" id="feedbackLoadSuccessRR"
-                                                        style="display: none;">load success</div>
+                                                        style="display: none;">load
+                                                        success</div>
                                                     <div class="input-group-append input-group-sm">
                                                         <input type="number" id="ttv_RR" name="ttv_RR"
                                                             data-satuan="x/mnt" data-monitorname="Respiratory Rate"
@@ -703,13 +904,15 @@
                                                 <i class="mb-1">Skala Nyeri NRS</i>
                                                 <div class="input-group input-group-sm mb-3">
                                                     <div class="invalid-feedback" id="feedbackLoadSN"
-                                                        style="display: none;">load restricted, data &gt; 2 jam yang
+                                                        style="display: none;">load restricted, data &gt; 2 jam
+                                                        yang
                                                         lalu !
                                                     </div>
                                                     <div class="invalid-feedback" id="feedbackLoadEmptySN"
                                                         style="display: none;">data not found !</div>
                                                     <div class="valid-feedback text-info" id="feedbackLoadSuccessSN"
-                                                        style="display: none;">load success</div>
+                                                        style="display: none;">load
+                                                        success</div>
                                                     <div class="input-group-append input-group-sm">
                                                         <input type="number" id="ttv_SN" name="ttv_SN"
                                                             data-satuan="" data-monitorname="Skala Nyeri NRS"
@@ -718,7 +921,8 @@
                                                         <span class="input-group-text"
                                                             style="width:7em; text-align:center"></span>
                                                     </div>
-                                                    <div class="invalid-feedback" id="invFeedbackSkalaNyeri">maksimal
+                                                    <div class="invalid-feedback" id="invFeedbackSkalaNyeri">
+                                                        maksimal
                                                         skala 10 !</div>
                                                 </div>
                                             </div>
@@ -726,13 +930,15 @@
                                                 <i class="mb-1">SpO2</i>
                                                 <div class="input-group input-group-sm mb-3">
                                                     <div class="invalid-feedback" id="feedbackLoadSP"
-                                                        style="display: none;">load restricted, data &gt; 2 jam yang
+                                                        style="display: none;">load restricted, data &gt; 2 jam
+                                                        yang
                                                         lalu !
                                                     </div>
                                                     <div class="invalid-feedback" id="feedbackLoadEmptySP"
                                                         style="display: none;">data not found !</div>
                                                     <div class="valid-feedback text-info" id="feedbackLoadSuccessSP"
-                                                        style="display: none;">load success</div>
+                                                        style="display: none;">load
+                                                        success</div>
                                                     <div class="input-group-append input-group-sm">
                                                         <input type="number" id="ttv_SPO2" name="ttv_SPO2"
                                                             data-satuan="%" data-monitorname="SpO2"
@@ -1316,6 +1522,10 @@
 
 @push('scripts')
     <script>
+        function showAntrianPasien() {
+            $('#modalPasienShow').modal('show');
+        }
+
         function getTemplateOrder() {
             $('#loadTemplate').modal('show');
             $("#loadListAllTemplate").empty();
@@ -1561,9 +1771,9 @@
             });
 
         // Ajax Search Registrasi
-        $('#tr_kd_reg').select2({
-            placeholder: 'Pilih Pasien',
-        });
+        // $('#tr_kd_reg').select2({
+        //     placeholder: 'Pilih Pasien',
+        // });
 
         $('.nm_tarif').select2({
             placeholder: 'Search Tindakan',
@@ -1710,7 +1920,10 @@
 
 
         // Call Hasil Search Registrasi
-        $("#tr_kd_reg").on("change", function() {
+        // $("#tr_kd_reg").on("click", function() {
+        function pinPasien(j) {
+            $('#modalPasienShow').modal('hide');
+
             $('#kumpulanButton').empty();
             $('#createSOAPP').show();
 
@@ -1719,7 +1932,8 @@
             //     // preventDuplicates: true,
             //     positionClass: 'toast-top-right',
             // });
-            var kdReg = $('#tr_kd_reg').val();
+            var kdReg = $(j).data('kode_registrasi');
+            // var kdReg = $('#tr_kd_reg').val();
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1782,7 +1996,7 @@
                         mr.Text = $("#tr_no_mr").val();
 
                         var kdReg = {};
-                        kdReg.Text = $("#tr_kd_reg").val();
+                        kdReg.Text = $(j).data('kode_registrasi');
 
                         var ChartID = {};
                         ChartID.Text = $("#chart_id").val();
@@ -1807,7 +2021,7 @@
                     })
                 }
             })
-        });
+        };
 
         function getHeaderInfo() {
             var data = sessionStorage.getItem("kdReg");
