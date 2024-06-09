@@ -224,69 +224,45 @@
                                 @endforeach
                             </div>
                             <div class="tab-pane" id="kt_tabs_list_reaktif_modal" role="tabpanel">
-                                <div class="form-inline my-1" id="headerModalPasien" style="padding: 5px 0">
+                                {{-- <div class="form-inline my-1" id="headerModalPasien" style="padding: 5px 0">
                                     <input id="searchPilihPasienReAktif" class="form-control col-12 p-2" type="text"
                                         placeholder="Cari Pasien...">
-                                </div>
-                                <div class="col-12 scrollbar-dusty square1 thin scroll-y" id="listPasienCoverReAktif"
-                                    style="padding: 0px; overflow-x: hidden; max-height: 60vh; min-height: 50px;">
-                                    <div class="nmPasienReAktif card info antri-content-bg my-1 pointer"
-                                        onclick="pinPasienByRegLayanan('RG00337681', 'IGD01', true)" reg="RG00337681"
-                                        style="line-height:1.5rem;">
-                                        <div class="" style="margin: 2px 0 0 4px;">
-                                        </div>
-                                        <div class="row" style="padding-bottom: 2px;">
-                                            <div class="col-md-2" style="max-width:65px; min-width:65px;padding-left: 2px;">
-                                                <div class="bg-success text-center number f-600 border-radius2"
-                                                    style="line-height:55px; margin:2px; padding:4px;">
-                                                    <i class="fa fa-folder-open fa-xs"></i>
+                                </div> --}}
+                                @foreach ($listDeAktifasi as $da)
+                                    <div class="col-12 scrollbar-dusty square1 thin scroll-y" id="listPasienCoverReAktif"
+                                        style="padding: 0px; overflow-x: hidden; max-height: 60vh; min-height: 50px;">
+                                        <div class="nmPasienReAktif card info antri-content-bg my-1 pointer"
+                                            onclick="pinPasien(this)" reg=""
+                                            style="line-height:1.5rem; cursor: pointer;"
+                                            data-kode_registrasi="{{ $da->reg_aktifasi }}">
+                                            <div class="" style="margin: 2px 0 0 4px;">
+                                            </div>
+                                            <div class="row"
+                                                style="padding-bottom: 2px; background-color:#bdddf9; border-style: ridge;">
+                                                <div class="col-md-2"
+                                                    style="max-width:65px; min-width:65px;padding-left: 2px;">
+                                                    <div class="text-center"
+                                                        style="line-height:60px; margin:2px; padding:4px; background-color:#76bdfb;">
+                                                        <b class="fa fa-user"></b>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 mr-1 ml-2"><span class="font-10">MR
+                                                        {{ $da->mr_aktifasi }} - {{ $da->reg_aktifasi }}
+                                                    </span><br><span class="font-19" name="pasienNameListReAktif">
+                                                        <b>{{ $da->nm_pasien_aktifasi }}</b>
+                                                        {{-- </span><br> <span class="font-10" name="dokterNameList"
+                                                        style="color: blue;"></span> --}}
+                                                        <br>
+                                                        <span class="text-mc-green kt-font-sm"
+                                                            style="color: rgb(255, 21, 0);">{{ $da->layanan_aktifasi }}</span>
                                                 </div>
                                             </div>
-                                            <div class="col-md-8 mr-1 ml-2"><span class="font-10">MR 340302100145208
-                                                    -
-                                                    RG00337681
-                                                </span><br><span class="font-14 f-600" name="pasienNameListReAktif">SUGINEM
-                                                    NY
-                                                </span><br> <span class="font-10" name="dokterNameList"
-                                                    style="color: blue;">dr. Nia Ariasti, Sp.M</span>
-                                                <br><span class="text-mc-green kt-font-sm">UNIT GAWAT DARURAT</span>
-                                            </div>
+                                            {{-- <div class="btn btn-sm badge-pilih-antrian-other text-white"
+                                                name="badgeStatusAntrianPasien">Re-Aktif &nbsp;<i
+                                                    class="fa fa-user-shield fa-sm"></i></div> --}}
                                         </div>
-                                        <div class="btn btn-sm badge-pilih-antrian-other text-white"
-                                            name="badgeStatusAntrianPasien">Re-Aktif &nbsp;<i
-                                                class="fa fa-user-shield fa-sm"></i></div>
-                                        <div class="detail mb-2" detail="h0"></div>
                                     </div>
-
-                                    <div class="nmPasienReAktif card info antri-content-bg my-1 pointer"
-                                        onclick="pinPasienByRegLayanan('RG00337880', 'RI007', true)" reg="RG00337880"
-                                        style="line-height:1.5rem;">
-                                        <div class="" style="margin: 2px 0 0 4px;">
-                                        </div>
-                                        <div class="row" style="padding-bottom: 2px;">
-                                            <div class="col-md-2"
-                                                style="max-width:65px; min-width:65px;padding-left: 2px;">
-                                                <div class="bg-success text-center number f-600 border-radius2"
-                                                    style="line-height:55px; margin:2px; padding:4px;">
-                                                    <i class="fa fa-folder-open fa-xs"></i>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-8 mr-1 ml-2"><span class="font-10">MR
-                                                    340302100199269 -
-                                                    RG00337880
-                                                </span><br><span class="font-14 f-600" name="pasienNameListReAktif">TRI
-                                                    WARTI NY
-                                                </span><br> <span class="font-10" name="dokterNameList"
-                                                    style="color: blue;">dr.BAMBANG SIGIT R.,SP.PD</span>
-                                                <br><span class="text-mc-green kt-font-sm">HCU</span>
-                                            </div>
-                                        </div>
-                                        <div class="btn btn-sm badge-pilih-antrian-other text-white"
-                                            name="badgeStatusAntrianPasien">Re-Aktif &nbsp;<i
-                                                class="fa fa-user-shield fa-sm"></i></div>
-                                        <div class="detail mb-2" detail="h0"></div>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
                             <div class="tab-pane" id="kt_tabs_list_pasien_dokter_modal" role="tabpanel">
                                 <div class="form-inline my-1" id="headerModalPasien" style="padding: 5px 0">
@@ -674,7 +650,8 @@
                 </div> --}}
 
                 <div class="form-group col-sm-6">
-                    <input type="hidden" class="form-control" name="tr_no_mr" id="tr_no_mr" value="" readonly>
+                    <input type="hidden" class="tr_no_mr form-control" name="tr_no_mr" id="tr_no_mr" value=""
+                        readonly>
                 </div>
                 <div class="form-group col-sm-6">
                     <input type="hidden" class="form-control" name="tr_nm_pasien" id="tr_nm_pasien" value=""
@@ -832,7 +809,8 @@
                                                 <i class="mb-1">Body Temperatur</i>
                                                 <div class="input-group input-group-sm mb-3">
                                                     <div class="invalid-feedback" id="feedbackLoadBT"
-                                                        style="display: none;">load restricted, data &gt; 2 jam
+                                                        style="display: none;">
+                                                        load restricted, data &gt; 2 jam
                                                         yang
                                                         lalu !
                                                     </div>
@@ -856,7 +834,8 @@
                                                 <i class="mb-1">Heart Rate</i>
                                                 <div class="input-group input-group-sm mb-3">
                                                     <div class="invalid-feedback" id="feedbackLoadHR"
-                                                        style="display: none;">load restricted, data &gt; 2 jam
+                                                        style="display: none;">
+                                                        load restricted, data &gt; 2 jam
                                                         yang
                                                         lalu !
                                                     </div>
@@ -880,7 +859,8 @@
                                                 <i class="mb-1">Respiratory Rate</i>
                                                 <div class="input-group input-group-sm mb-3">
                                                     <div class="invalid-feedback" id="feedbackLoadRR"
-                                                        style="display: none;">load restricted, data &gt; 2 jam
+                                                        style="display: none;">
+                                                        load restricted, data &gt; 2 jam
                                                         yang
                                                         lalu !
                                                     </div>
@@ -904,7 +884,8 @@
                                                 <i class="mb-1">Skala Nyeri NRS</i>
                                                 <div class="input-group input-group-sm mb-3">
                                                     <div class="invalid-feedback" id="feedbackLoadSN"
-                                                        style="display: none;">load restricted, data &gt; 2 jam
+                                                        style="display: none;">
+                                                        load restricted, data &gt; 2 jam
                                                         yang
                                                         lalu !
                                                     </div>
@@ -930,7 +911,8 @@
                                                 <i class="mb-1">SpO2</i>
                                                 <div class="input-group input-group-sm mb-3">
                                                     <div class="invalid-feedback" id="feedbackLoadSP"
-                                                        style="display: none;">load restricted, data &gt; 2 jam
+                                                        style="display: none;">
+                                                        load restricted, data &gt; 2 jam
                                                         yang
                                                         lalu !
                                                     </div>
@@ -1927,11 +1909,6 @@
             $('#kumpulanButton').empty();
             $('#createSOAPP').show();
 
-            // toastr.info('Pasein Pinned!', {
-            //     timeOut: 600,
-            //     // preventDuplicates: true,
-            //     positionClass: 'toast-top-right',
-            // });
             var kdReg = $(j).data('kode_registrasi');
             // var kdReg = $('#tr_kd_reg').val();
             $.ajax({
@@ -2022,6 +1999,105 @@
                 }
             })
         };
+
+        // function pinPasienAktifasi(d) {
+        //     $('#modalPasienShow').modal('hide');
+
+        //     $('#kumpulanButton').empty();
+        //     $('#createSOAPP').show();
+
+        //     var kdReg = $(d).data('kd_registrasi');
+        //     // console.log(kdReg);
+        //     // var kdReg = $('#tr_kd_reg').val();
+        //     $.ajax({
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //         },
+        //         url: "{{ url('SearchRegister') }}/" + kdReg,
+        //         type: 'GET',
+        //         data: {
+        //             'fr_kd_reg': kdReg
+        //         },
+        //         success: function(isRegSearch) {
+        //             $.each(isRegSearch, function(key, dataregvalue) {
+        //                 $('.tr_no_mr').val(dataregvalue.fr_mr);
+        //                 $('#tr_nm_pasien').val(dataregvalue.fr_nama);
+        //                 $('#tr_jenis_kelamin').val(dataregvalue
+        //                     .fr_jenis_kelamin);
+        //                 $('#tr_layanan').val(dataregvalue.fr_layanan);
+        //                 $('#tr_dokter').val(dataregvalue.fr_dokter);
+        //                 $('#tr_alamat').val(dataregvalue.fr_alamat);
+        //                 $('#tr_tgl_lahir').val(dataregvalue.fr_tgl_lahir);
+
+        //                 $('#namaHdr').val(dataregvalue.fr_nama);
+        //                 $('#noMRHdr').val(dataregvalue.fr_mr);
+        //                 $('#noRGHdr').val(dataregvalue.fr_kd_reg);
+        //                 $('#dokterHdr').val(dataregvalue.fr_dokter);
+        //                 $('#layananHdr').val(dataregvalue.fr_layanan);
+        //                 $('#jkHdr').val(dataregvalue.fr_jenis_kelamin);
+        //                 $('#alamatHdr').val(dataregvalue.fr_alamat);
+        //                 $('#alergiHdr').val(dataregvalue.fr_alergi);
+        //                 $('#lastTarifDsrHdr').val(dataregvalue.tcmr
+        //                     .fs_last_tarif_dasar);
+
+
+        //                 $('#chart_kd_reg').val(dataregvalue.fr_kd_reg);
+        //                 $('#chart_mr').val(dataregvalue.fr_mr);
+        //                 $('#chart_nm_pasien').val(dataregvalue.fr_nama);
+        //                 $('#chart_layanan').val(dataregvalue.fr_layanan);
+        //                 $('#chart_dokter').val(dataregvalue.fr_dokter);
+
+        //                 // $('#keluhanutama').val(dataregvalue.keluhan_utama);
+        //                 $('.ta_Chart_S').val(dataregvalue.keluhan_utama);
+
+        //                 var isDateBirthday = dataregvalue.fr_tgl_lahir;
+        //                 var isAgeNow = getUmurDetail(isDateBirthday);
+        //                 $('#tr_umur').val(isAgeNow);
+        //                 $('#umurHdr').val(isAgeNow);
+        //                 $('#tglLahirHdr').val(isDateBirthday);
+
+        //                 $('#pasienName').val(dataregvalue.fr_nama);
+        //                 $('#pasienAddress').val(dataregvalue.fr_alamat);
+        //                 $('#pasienAlergi').val(dataregvalue.fr_alergi);
+        //                 $('#pasienLastTarifDasar').val(dataregvalue.tcmr.fs_last_tarif_dasar);
+        //                 $('#pasienAge').val(isAgeNow);
+
+        //                 toastr.info('Pasien\t' + `${dataregvalue.fr_nama}` + '\tPinned!', {
+        //                     timeOut: 700,
+        //                     positionClass: 'toast-top-right',
+        //                 });
+        //                 // Get MR & save  di sessionStorage
+        //                 var mr = {};
+        //                 mr.Text = $(".tr_no_mr").val();
+
+        //                 var kdReg = {};
+        //                 kdReg.Text = $(j).data('kd_registrasi');
+
+        //                 var ChartID = {};
+        //                 ChartID.Text = $("#chart_id").val();
+
+        //                 var UserActive = {};
+        //                 UserActive.Text = $("#userActive").val();
+        //                 // mr.isProcessed = false;
+        //                 sessionStorage.setItem("dataMR", JSON.stringify(
+        //                     mr));
+        //                 sessionStorage.setItem("kdReg", JSON.stringify(
+        //                     kdReg));
+        //                 sessionStorage.setItem("ChartID", JSON.stringify(
+        //                     ChartID));
+        //                 sessionStorage.setItem("UserActive", JSON.stringify(
+        //                     UserActive));
+
+
+        //                 getTimeline();
+        //                 // getTimelineTindakan();
+        //                 // $(".isTimeline").empty();
+
+        //             })
+        //         }
+        //     })
+        // };
+
 
         function getHeaderInfo() {
             var data = sessionStorage.getItem("kdReg");
@@ -2884,23 +2960,23 @@
                                 `<tbody class="mt-2" id="cardObatList${resepHistory[i].ch_kd_obat}">
                                     <tr class="mt-2" id="editResepChart">
                                         <td class="mt-2">
-                                            <input type="hidden" class="ch_kd_obat obatResep form-control" id="ch_kd_obat[]"
+                                            <input type="text" class="ch_kd_obat obatResep form-control" id="ch_kd_obat[]"
                                                 name="ch_kd_obat[]" style="width: 100%" value="${resepHistory[i].ch_kd_obat}" readonly>
                                         </td>
                                         <td>
-                                            <input type="hidden" class="form-control ch_nm_obat" id="ch_nm_obat[]" name="ch_nm_obat[]" value="${resepHistory[i].ch_nm_obat}">
+                                            <input type="text" class="form-control ch_nm_obat" id="ch_nm_obat[]" name="ch_nm_obat[]" value="${resepHistory[i].ch_nm_obat}">
                                         </td>
                                         <td>
-                                            <input type="hidden" class="form-control ch_hrg_jual" id="ch_hrg_jual[]" name="ch_hrg_jual[]" value="${resepHistory[i].ch_hrg_jual}" readonly>
+                                            <input type="text" class="form-control ch_hrg_jual" id="ch_hrg_jual[]" name="ch_hrg_jual[]" value="${resepHistory[i].ch_hrg_jual}" readonly>
                                         </td>
                                         <td>
-                                            <input type="hidden" class="form-control ch_qty_obat" id="ch_qty_obat[]" name="ch_qty_obat[]" value="${resepHistory[i].ch_qty_obat}" readonly>
+                                            <input type="text" class="form-control ch_qty_obat" id="ch_qty_obat[]" name="ch_qty_obat[]" value="${resepHistory[i].ch_qty_obat}" readonly>
                                         </td>
                                         <td>
-                                            <input type="hidden" class="form-control ch_satuan_obat" id="ch_satuan_obat[]" name="ch_satuan_obat[]" value="${resepHistory[i].ch_satuan_obat}" readonly>
+                                            <input type="text" class="form-control ch_satuan_obat" id="ch_satuan_obat[]" name="ch_satuan_obat[]" value="${resepHistory[i].ch_satuan_obat}" readonly>
                                         </td>
                                         <td>
-                                            <input type="hidden" class="form-control ch_signa" id="ch_signa[]" name="ch_signa[]" value="${resepHistory[i].ch_signa}" readonly>
+                                            <input type="text" class="form-control ch_signa" id="ch_signa[]" name="ch_signa[]" value="${resepHistory[i].ch_signa}" readonly>
                                         </td>
                                         <td>
                                             <input type="hidden" class="form-control ch_cara_pakai" id="ch_cara_pakai[]" name="ch_cara_pakai[]" value="${resepHistory[i].ch_cara_pakai}" readonly>

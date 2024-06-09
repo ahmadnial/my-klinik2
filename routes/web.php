@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\aktifasiRegisterController;
 use App\Http\Controllers\analisaController;
 use App\Http\Controllers\arsipController;
 use App\Http\Controllers\AssesmentController;
@@ -60,6 +61,10 @@ Route::group(['middleware' => ['auth', 'checkrole:1,5']], function () {
     Route::post('edit-dasos', [registrasiController::class, 'editDasos'])->name('edit-dasos');
     Route::get('delete-dasos', [registrasiController::class, 'deleteDasos'])->name('delete-dasos');
     Route::post('voidRegister/{regID}', [registrasiController::class, 'voidRegister'])->name('voidRegister');
+
+    Route::get('aktifasi-berkas', [aktifasiRegisterController::class, 'aktifasiRegister'])->name('aktifasi-berkas');
+    Route::post('create-aktifasi', [aktifasiRegisterController::class, 'aktifasiCreate'])->name('create-aktifasi');
+    Route::post('deaktif', [aktifasiRegisterController::class, 'deaktif'])->name('deaktif');
 });
 
 
@@ -131,6 +136,9 @@ Route::group(['middleware' => ['auth', 'checkrole:1,2']], function () {
     Route::get('regSearchArs', [arsipController::class, 'regSearchArs'])->name('regSearchArs');
     Route::get('getListChart/{fs_mr}', [arsipController::class, 'getListChart'])->name('getListChart');
     Route::get('getListChartDetail/{chart_id}', [arsipController::class, 'getListChartDetail'])->name('getListChartDetail');
+
+    Route::get('getRegAktifasi', [aktifasiRegisterController::class, 'getRegAktifasi'])->name('getRegAktifasi');
+    Route::get('selectRegAktifasi/{fr_mr}', [aktifasiRegisterController::class, 'selectRegAktifasi'])->name('selectRegAktifasi');
 });
 
 

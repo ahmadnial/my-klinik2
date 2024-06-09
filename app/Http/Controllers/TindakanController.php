@@ -62,6 +62,7 @@ class TindakanController extends Controller
             ['fr_tgl_keluar', '=', ''],
             ['fr_dokter', '=', Auth::user()->name]
         ])->get();
+        $listDeAktifasi = DB::table('aktifasi_register')->where('tgl_deaktif', '=', '3000-01-01')->get();
 
         $icdx = mstr_icdx::all();
         $isTindakanTarif = mstr_tindakan::all();
@@ -81,6 +82,7 @@ class TindakanController extends Controller
             // 'kd_trs' => $kd_trs,
             'isHistoryTindakan' => $isHistoryTindakan,
             'dateNow' => $dateNow,
+            'listDeAktifasi' => $listDeAktifasi,
         ]);
         // return response()->json($chart_id);
     }
@@ -463,7 +465,7 @@ class TindakanController extends Controller
 
     public function chartUpdate(Request $request)
     {
-        // dd($request->all());
+        dd($request->all());
         $c =  DB::table('chart_tindakan')->where('chart_id', $request->chart_id)->update([
             'chart_S' => $request->chart_S,
             'chart_O' => $request->chart_O,

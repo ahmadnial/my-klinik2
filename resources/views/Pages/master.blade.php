@@ -203,6 +203,12 @@
                                         <p>Data Sosial</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('/aktifasi-berkas') }}" class="nav-link">
+                                        <i class="far fa-user nav-icon"></i>
+                                        <p>Aktifasi Berkas RM</p>
+                                    </a>
+                                </li>
                                 {{-- <li class="nav-item">
                                     <a href="pages/charts/inline.html" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
