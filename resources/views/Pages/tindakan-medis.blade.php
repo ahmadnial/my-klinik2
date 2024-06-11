@@ -142,12 +142,13 @@
                             <li class="nav-item px-0">
                                 <a class="nav-link nav-link-pilih-pasien text-center active" data-toggle="tab"
                                     href="#antrian_periksa_modal" id="linkTabListPasien"><i
-                                        class="fas fa-user-shield"></i><b>List Pasien</b> <span class=""></span></a>
+                                        class="fas fa-user-shield"></i>&nbsp;&nbsp;<b>List Pasien</b> <span
+                                        class=""></span></a>
                             </li>
                             <li class="nav-item px-0">
                                 <a class="nav-link nav-link-pilih-pasien text-center" data-toggle="tab"
                                     href="#kt_tabs_list_reaktif_modal">
-                                    <i class="fas fa-user"></i><b>List Re-Aktif Pasien</b></a>
+                                    <i class="fas fa-user"></i>&nbsp;&nbsp;<b>List Re-Aktif Berkas</b></a>
                             </li>
                             {{-- <li class="nav-item px-0" id="navListPerDokter">
                             <a class="nav-link nav-link-pilih-pasien text-center" data-toggle="tab"
@@ -195,7 +196,7 @@
                                             </div> --}}
                                             <div class="row" style="padding-bottom: 2px; background-color:#fdd578;">
                                                 <div class="col-md-2"
-                                                    style="max-width:65px; min-width:65px;padding-left: 7px;">
+                                                    style="max-width:65px; min-width:65px;padding-left: 8px;">
                                                     <div class="text-center mt-4">
                                                         {{-- <i class="fa fa-user fa-xs"></i> --}}
                                                         <h2><b>{{ $noAntrian++ }}</b></h2>
