@@ -589,7 +589,7 @@
 
         <div class="mt-2">
             <table class="table table-bordered" style="border:none;">
-                <tbody style="background-color:#f5f2e9; border:none">
+                <tbody style="background-color:#f9f4e7; border:none">
                     <tr>
                         <td><span class="text-center">Nama</span><input type="text"
                                 class="form-control form-control-sm" id="pasienName" value="" readonly
@@ -691,8 +691,14 @@
                                     </h3>
                                 </div> --}}
                         {{-- Hidden value --}}
-                        <form action="{{ url('chartCreate') }}" method="post" id="CHCreate" class="needs-validation"
-                            novalidate enctype="multipart/form-data">
+                        {{-- @php
+                            $actionUrl = $model->id ? route('route_update', $model) : route('route_store');
+                        @endphp --}}
+                        <form action="" method="post" id="CHCreate" class="needs-validation" novalidate
+                            enctype="multipart/form-data">
+                            {{-- @if ($model->id)
+                                @method('PUT')
+                            @endif --}}
                             @csrf
                             <div class="card-body">
                                 <input type="hidden" id="chart_id" name="chart_id" value="">
@@ -981,6 +987,7 @@
                                                 class="fa fa-plus"></i>&nbsp;Upload </button>
                                     </div>
                                     <textarea id="chart_P" name="chart_P" class="form-control" rows="4"></textarea>
+                                    <input type="hidden" class="form-control" id="kd_trs" name="kd_trs" readonly>
                                     {{-- <input required type="file" class="form-control" name="images[]"
                                         placeholder="address" multiple> --}}
                                 </div>
@@ -1022,9 +1029,10 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div class="showImgEdit" id="showImgEdit"></div>
                                                         <div class="">
                                                             <input type="text" class="form-control" value=""
-                                                                name="imgNote" placeholder="Note..">
+                                                                name="imgNote" placeholder="Note.." id="imgNote">
                                                         </div>
                                                     </div>
                                                 </section>
@@ -1905,7 +1913,8 @@
         // $("#tr_kd_reg").on("click", function() {
         function pinPasien(j) {
             $('#modalPasienShow').modal('hide');
-
+            $('form').attr('action', '');
+            $('form').attr('action', 'chartCreate');
             $('#kumpulanButton').empty();
             $('#createSOAPP').show();
 
@@ -2847,13 +2856,16 @@
                 positionClass: 'toast-top-right',
             });
 
+            $('form').attr('action', 'chartUpdate');
+
             $('#kumpulanButton').empty();
+            $('.card-resep').empty();
             $('#createSOAPP').hide();
 
             var chartid = $(f).data('is_chart_id');
 
             $('#kumpulanButton').append(
-                `<button type="button" id="updateChart" onClick="updateChartC(this)" data-chart_id_update="${chartid}" class="btn btn-primary float-rights">Update</button>`
+                `<button type="submit" id="updateChart" onClick="updateChartC(this)" data-chart_id_update="${chartid}" class="btn btn-primary float-rights">Update</button>`
             )
 
             // console.log(chartid);
@@ -2957,35 +2969,46 @@
                             `;
 
                             $(".card-resep").append(
-                                `<tbody class="mt-2" id="cardObatList${resepHistory[i].ch_kd_obat}">
-                                    <tr class="mt-2" id="editResepChart">
+                                `<tbody class="mt-2 resepEditChart" id="cardObatList${resepHistory[i].ch_kd_obat}">
+                                    <tr class="mt-2" id="editResepChart" class="resepEditChart">
                                         <td class="mt-2">
-                                            <input type="text" class="ch_kd_obat obatResep form-control" id="ch_kd_obat[]"
+                                            <input type="hidden" class="ch_kd_obat obatResep form-control" id="ch_kd_obat[]"
                                                 name="ch_kd_obat[]" style="width: 100%" value="${resepHistory[i].ch_kd_obat}" readonly>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control ch_nm_obat" id="ch_nm_obat[]" name="ch_nm_obat[]" value="${resepHistory[i].ch_nm_obat}">
+                                            <input type="hidden" class="form-control ch_nm_obat" id="ch_nm_obat[]" name="ch_nm_obat[]" value="${resepHistory[i].ch_nm_obat}">
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control ch_hrg_jual" id="ch_hrg_jual[]" name="ch_hrg_jual[]" value="${resepHistory[i].ch_hrg_jual}" readonly>
+                                            <input type="hidden" class="form-control ch_hrg_jual" id="ch_hrg_jual[]" name="ch_hrg_jual[]" value="${resepHistory[i].ch_hrg_jual}" readonly>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control ch_qty_obat" id="ch_qty_obat[]" name="ch_qty_obat[]" value="${resepHistory[i].ch_qty_obat}" readonly>
+                                            <input type="hidden" class="form-control ch_qty_obat" id="ch_qty_obat[]" name="ch_qty_obat[]" value="${resepHistory[i].ch_qty_obat}" readonly>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control ch_satuan_obat" id="ch_satuan_obat[]" name="ch_satuan_obat[]" value="${resepHistory[i].ch_satuan_obat}" readonly>
+                                            <input type="hidden" class="form-control ch_satuan_obat" id="ch_satuan_obat[]" name="ch_satuan_obat[]" value="${resepHistory[i].ch_satuan_obat}" readonly>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control ch_signa" id="ch_signa[]" name="ch_signa[]" value="${resepHistory[i].ch_signa}" readonly>
+                                            <input type="hidden" class="form-control ch_signa" id="ch_signa[]" name="ch_signa[]" value="${resepHistory[i].ch_signa}" readonly>
                                         </td>
                                         <td>
                                             <input type="hidden" class="form-control ch_cara_pakai" id="ch_cara_pakai[]" name="ch_cara_pakai[]" value="${resepHistory[i].ch_cara_pakai}" readonly>
-                                        </td>                             
+                                        </td>                       
                                     </tr>
                                 </tbody>`
                             );
 
                         }
+
+                        const imagesHistory = chartvalue.images
+                        let imagesShow = "";
+                        let chartImagesNote = "";
+                        for (i in imagesHistory) {
+                            // resepHistory[i].ch_nm_obat
+                            imagesShow += `<div>${imagesHistory[i].chart_imageName}</div>
+                                    `;
+                            chartImagesNote += imagesHistory[i].chart_note
+                        }
+                        $('#chart_id').val(chartvalue.chart_id)
                         $('#chart_S').val(chartvalue.chart_S)
                         $('#chart_O').val(chartvalue.chart_O)
                         $('#chart_A').val(chartvalue.chart_A)
@@ -3001,18 +3024,27 @@
                         $('#ttv_RR').val(chartvalue.ttv_RR)
                         $('#ttv_SN').val(chartvalue.ttv_SN)
                         $('#ttv_SPO2').val(chartvalue.ttv_SPO2)
+                        $('#kd_trs').val(chartvalue.kd_trs)
                         $('#nm_tarif').empty()
                         $('#nm_tarif').append(`${tdk}`)
                         $('#resepList').empty()
                         $('#resepList').append(`${resepEditShow}`)
+                        $('#showImgEdit').append(`${imagesShow}`)
+                        $('#imgNote').val(chartImagesNote)
 
+                        // header2
+                        $('#pasienName').val(dataregvalue.fr_nama);
+                        $('#pasienAddress').val(dataregvalue.fr_alamat);
+                        $('#pasienAlergi').val(dataregvalue.fr_alergi);
+                        $('#pasienLastTarifDasar').val(dataregvalue.tcmr.fs_last_tarif_dasar);
+                        $('#pasienAge').val(isAgeNow);
                     })
                 }
             })
         }
 
 
-        function updateChartC(c) {
+        function updateChartCs(c) {
             var chart_id = $(c).data('chart_id_update');
             // alert(chart_id)
             var chart_S = $('#chart_S').val();
@@ -3031,23 +3063,27 @@
             var ttv_SN = $('#ttv_SN').val();
             var ttv_SPO2 = $('#ttv_SPO2').val();
             var getTarif = $('#nm_tarif').val();
-            var ch_kd_obat = $('.ch_kd_obat').val();
-            var ch_nm_obat = $('.ch_nm_obat').val();
-            var ch_hrg_jual = $('.ch_hrg_jual').val();
-            var ch_qty_obat = $('.ch_qty_obat').val();
-            var ch_satuan_obat = $('.ch_satuan_obat').val();
-            var ch_signa = $('.ch_signa').val();
-            var ch_cara_pakai = $('.ch_cara_pakai').val();
-            // var resepList = $('#card-resep').val();
-            var nm_tariff = [];
-            for (i = 0; i < getTarif.length; i++) {
-                nm_tariff.push([getTarif[i].nm_tarif]);
-            }
+            // var ch_kd_obat = $('.ch_kd_obat').val();
+            // var ch_nm_obat = $('.ch_nm_obat').val();
+            // var ch_hrg_jual = $('.ch_hrg_jual').val();
+            // var ch_qty_obat = $('.ch_qty_obat').val();
+            // var ch_satuan_obat = $('.ch_satuan_obat').val();
+            // var ch_signa = $('.ch_signa').val();
+            // var ch_cara_pakai = $('.ch_cara_pakai').val();
 
-            // var elements = $("#editResepChart").val();
-            // for (var i = 0; i < elements.length; i++) {
-            //     console.log(elements[i].ch_kd_obat)
-            // }
+            let obj = [];
+            document.querySelectorAll('.resepEditChart').forEach(e => {
+                obj.push({
+                    ch_kd_obat: e.querySelector('input[name="ch_kd_obat"]').value,
+                    ch_nm_obat: e.querySelector('input[name="ch_nm_obat"]').value,
+                    ch_hrg_jual: e.querySelector('input[name="ch_hrg_jual"]').value,
+                    ch_qty_obat: e.querySelector('input[name="ch_qty_obat"]').value,
+                    ch_satuan_obat: e.querySelector('input[name="ch_satuan_obat"]').value,
+                    ch_signa: e.querySelector('input[name="ch_signa"]').value,
+                    ch_cara_pakai: e.querySelector('input[name="ch_cara_pakai"]').value
+                })
+            })
+            console.log('obj:', obj);
 
             $.ajax({
                 headers: {
@@ -3072,13 +3108,14 @@
                     ttv_SN: ttv_SN,
                     ttv_SPO2: ttv_SPO2,
                     nm_tarif: getTarif,
-                    ch_kd_obat: ch_kd_obat,
-                    ch_nm_obat: ch_nm_obat,
-                    ch_hrg_jual: ch_hrg_jual,
-                    ch_qty_obat: ch_qty_obat,
-                    ch_satuan_obat: ch_satuan_obat,
-                    ch_signa: ch_signa,
-                    ch_cara_pakai: ch_cara_pakai,
+                    obj: obj
+                    // ch_kd_obat: ch_kd_obat,
+                    // ch_nm_obat: ch_nm_obat,
+                    // ch_hrg_jual: ch_hrg_jual,
+                    // ch_qty_obat: ch_qty_obat,
+                    // ch_satuan_obat: ch_satuan_obat,
+                    // ch_signa: ch_signa,
+                    // ch_cara_pakai: ch_cara_pakai,
                 },
                 cache: false,
                 success: function(dataResult) {
@@ -3181,10 +3218,12 @@
                         return false;
                     } else {
                         fileArr.push(total_file[i]);
-                        $('#image_preview').append("<div class='img-div' id='img-div" + i + "'><img src='" +
+                        $('#image_preview').append("<div class='img-div' id='img-div" + i +
+                            "'><img src='" +
                             URL.createObjectURL(event.target.files[i]) +
                             "' class='img-responsive image img-thumbnail' title='" + total_file[i]
-                            .name + "'><div class='middle'><button id='action-icon' value='img-div" +
+                            .name +
+                            "'><div class='middle'><button id='action-icon' value='img-div" +
                             i + "' class='btn btn-danger' role='" + total_file[i].name +
                             "'><i class='fa fa-trash'></i></button></div></div>");
                     }

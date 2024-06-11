@@ -465,8 +465,10 @@ class TindakanController extends Controller
 
     public function chartUpdate(Request $request)
     {
-        dd($request->all());
-        $c =  DB::table('chart_tindakan')->where('chart_id', $request->chart_id)->update([
+        DB::beginTransaction();
+        // try {
+        // dd($request->all());
+        DB::table('chart_tindakan')->where('chart_id', $request->chart_id)->update([
             'chart_S' => $request->chart_S,
             'chart_O' => $request->chart_O,
             'chart_A' => $request->chart_A,
@@ -483,13 +485,76 @@ class TindakanController extends Controller
             'ttv_SPO2' => $request->ttv_SPO2,
         ]);
 
-        // if ($c) {
-        //     toastr()->success('Edit Data Berhasil!');
-        //     return back();
-        // } else {
-        //     toastr()->error('Gagal Tersimpan!');
-        //     return back();
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $fileOriginalName = $image->getClientOriginalExtension();
+                $fileNewName = $request->chart_id . '-'  . uniqid() . '.' . $fileOriginalName;
+                $image->storeAs('images', $fileNewName, 'public');
+                chart_images::create([
+                    'chart_id' => $request->chart_id,
+                    'chart_noRm' => $request->chart_mr,
+                    'chart_kd_reg' => $request->chart_kd_reg,
+                    'chart_imageName' => $fileNewName,
+                    'chart_note' => $request->imgNote,
+                    'chart_tglTrs' => $request->chart_tgl_trs
+                ]);
+            }
+        }
+        // DB::table('trs_chart_resep')->where('chart_id', '=', $request->chart_id)->delete();
+
+        // if (!empty($request->ch_kd_obat)) {
+        //     foreach ($request->ch_kd_obat as $far => $val) {
+        //         $newDataResep = [
+        //             'kd_trs' => $request->kd_trs,
+        //             'chart_id' => $request->chart_id,
+        //             'layanan' => $request->chart_layanan,
+        //             'tgl_trs' => $request->chart_tgl_trs,
+        //             'kd_reg' => $request->chart_kd_reg,
+        //             'mr_pasien' => $request->chart_mr,
+        //             'nm_pasien' => $request->chart_nm_pasien,
+
+        //             'ch_kd_obat' => $request->ch_kd_obat[$far],
+        //             'ch_nm_obat' => $request->ch_nm_obat[$far],
+        //             'ch_qty_obat' => $request->ch_qty_obat[$far],
+        //             'ch_satuan_obat' => $request->ch_satuan_obat[$far],
+        //             'ch_signa' => $request->ch_signa[$far],
+        //             'ch_cara_pakai' => $request->ch_cara_pakai[$far],
+        //             'ch_hrg_jual' => $request->ch_hrg_jual[$far],
+        //         ];
+        //         trs_chart_resep::create($newDataResep);
+        //     };
         // }
+        // if (!is_null($request->ch_kd_obat)) {
+        //     foreach ($request->ch_kd_obat as $obatValue => $xv) {
+        //         DB::table('trs_chart_resep')->where('chart_id', $request->chart_id)->update(
+        //             [
+        //                 'ch_kd_obat' => $request->ch_kd_obat[$obatValue],
+        //                 'ch_nm_obat' => $request->ch_nm_obat[$obatValue],
+        //                 'ch_qty_obat' => $request->ch_qty_obat[$obatValue],
+        //                 'ch_satuan_obat' => $request->ch_satuan_obat[$obatValue],
+        //                 'ch_signa' => $request->ch_signa[$obatValue],
+        //                 'ch_cara_pakai' => $request->ch_cara_pakai[$obatValue],
+        //                 'ch_hrg_jual' => $request->ch_hrg_jual[$obatValue],
+        //             ]
+        //         );
+        //     }
+        // }
+        DB::commit();
+
+        $sessionFlash = [
+            'message' => 'Edit Berhasil!',
+            'alert-type' => 'success'
+        ];
+
+        return Redirect::to('/tindakan-medis')->with($sessionFlash);
+        // } catch (\Exception $e) {
+        DB::rollback();
+
+        $sessionFlashErr = [
+            'message' => 'Some Error Occured!',
+            'alert-type' => 'error'
+        ];
+        return Redirect::to('/tindakan-medis')->with($sessionFlashErr);
     }
 
     public function chartDelete(Request $request)
