@@ -23,7 +23,8 @@ class do_hdr extends Model
         'do_hdr_total_faktur',
         'user',
         'do_jenis_pembelian',
-        'do_kd_po'
+        'do_kd_po',
+        'kd_po',
     ];
 
     public function hdrToDetail()

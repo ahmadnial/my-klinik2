@@ -81,10 +81,6 @@
             overflow-x: scroll;
         }
 
-        /* th {
-                                                                                                                                                    min-width: 180px;
-                                                                                                                                                } */
-
         .modal-footer {
             position: sticky;
             bottom: 0;
@@ -109,7 +105,12 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="form-group col-sm-2">
-                                <label for="">Nomor Ref</label>
+                                <label for="">Nomor Ref PO</label>
+                                <input type="text" class="form-control" name="kd_po" id="kd_po" value=""
+                                    readonly>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label for="">Nomor Ref DO</label>
                                 <input type="text" class="form-control" name="do_hdr_kd" id="do_hdr_kd"
                                     value="{{ $noRef }}" readonly>
                             </div>
@@ -180,7 +181,9 @@
                         </div>
                         <div class="">
                             <button type="button" id="searchObat" onclick="getBarang()" class="btn btn-info"><i
-                                    class="fa fa-plus">&nbsp;Item</i></button>
+                                    class="fa fa-plus"></i>&nbsp;Item</button>
+                            <button type="button" id="searchPO" onclick="getListPO()" class="btn btn-warning ml-1"><i
+                                    class="fa fa-search"></i>&nbsp;Search PO</button>
                             <i class="text-danger text-sm float-right">
                                 *Tekan F9 untuk membuka List Obat/Klik Tombol +Item
                             </i>
@@ -193,18 +196,18 @@
                             <thead style="background-color: aliceblue">
                                 <tr>
                                     {{-- <th>Kode Obat</th> --}}
-                                    <th width="250px">Obat</th>
+                                    <th width="270px">Obat</th>
                                     <th>Sat.Beli</th>
                                     <th>Hrg.Beli</th>
-                                    <th>Qty</th>
-                                    <th width="60px">Isi</th>
+                                    <th width="80px">Qty</th>
+                                    <th width="80px">Isi</th>
                                     <th width="90px">Sat.Jual</th>
-                                    <th>Disc %</th>
+                                    <th width="90px">Disc %</th>
                                     <th>Disc</th>
                                     <th width="100px">Pajak</th>
                                     <th width="40px">Tgl.Exp</th>
                                     <th>Batch No.</th>
-                                    <th width="110px">Sub Total</th>
+                                    <th>Sub Total</th>
                                     <th>updt hrg</th>
                                     <th></th>
                                 </tr>
@@ -301,6 +304,51 @@
         </div>
     </div>
     {{-- End Modal --}}
+
+    {{-- search modal PO --}}
+    <div class="modal fade" id="POSearch">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content document">
+                <div class="modal-header">
+                    <h4 class="modal-title">Transaksi Purchase Order(PO)</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body table-responsive">
+                    {{-- <div class="row"> --}}
+                    <table class="table table-hover table-stripped" id="tablePo" style="width: 100%">
+                        <thead>
+                            <tr>
+                                <th>Kode PO</th>
+                                <th>Tgl Trs</th>
+                                <th>Supplier</th>
+                                <th>Jenis</th>
+                                <th>Kategori</th>
+                                <th>Total</th>
+                                <th>CreatedBy</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="ListPOActive">
+
+                        </tbody>
+                    </table>
+
+                    <input type="hidden" id="user" name="user" value="tes">
+                    {{-- </div> --}}
+                    <div class="modal-footer">
+                        {{-- <button type="" class=""></button> --}}
+                        {{-- <button type="button" id="buat" class="btn btn-success float-right"><i
+                                class="fa fa-save"></i>
+                            &nbsp;
+                            Save</button> --}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     @push('scripts')
         <script>
@@ -413,6 +461,176 @@
                     }
                 })
             }
+
+            function getListPO() {
+                $('#POSearch').modal('show');
+
+                // var table = $('#exm2').DataTable();
+                // var rows = table
+                //     .rows()
+                //     .remove()
+                //     .draw();
+
+                $.ajax({
+                    // headers: {
+                    //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    // },
+                    // url: "{{ url('getListPoActive') }}",
+                    // type: 'GET',
+
+                    success: function(isPoActive) {
+                        $('#tablePo').DataTable({
+                            "bDestroy": true,
+                            processing: true,
+                            serverSide: true,
+                            responsive: true,
+                            ajax: "{{ url('getListPoActive') }}",
+                            columns: [{
+                                    data: 'po_hdr_kd',
+                                    name: 'po_hdr_kd'
+                                },
+                                {
+                                    data: 'po_tgl_trs',
+                                    name: 'po_tgl_trs'
+                                },
+                                {
+                                    data: 'po_hdr_supplier',
+                                    name: 'po_hdr_supplier'
+                                },
+                                {
+                                    data: 'po_jenis_pembelian',
+                                    name: 'po_jenis_pembelian'
+                                },
+                                {
+                                    data: 'po_hdr_kategori',
+                                    name: 'po_hdr_kategori'
+                                },
+                                {
+                                    data: 'po_hdr_total_faktur',
+                                    name: 'po_hdr_total_faktur'
+                                },
+                                {
+                                    data: 'user',
+                                    name: 'user'
+                                },
+                                {
+                                    data: 'action',
+                                    name: 'action'
+                                },
+                            ]
+                        });
+                    }
+                })
+            }
+
+            function SelectPoDetail(yx) {
+                var po_hdr_kd = $(yx).data('po_hdr_kd');
+                $("#doTable").empty();
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "{{ url('getDetailPO') }}/" + po_hdr_kd,
+                    type: "GET",
+                    data: {
+                        po_hdr_kd: po_hdr_kd
+                    },
+                    success: function(isViewDetailPO) {
+                        $.each(isViewDetailPO, function(key, datavalue) {
+                            $('#kd_po').val(datavalue.po_hdr_kd)
+
+                            $('#do_hdr_supplier').append(
+                                `<option value="${datavalue.po_hdr_supplier}" selected>${datavalue.po_hdr_supplier}</option>`
+                            );
+                            $('#do_jenis_pembelian').append(
+                                `<option value="${datavalue.po_jenis_pembelian}" selected>${datavalue.po_jenis_pembelian}</option>`
+                            );
+                            // var totalpo = datavalue.po_hdr_total_faktur;
+                            // var result = totalpo.toFixed(2);
+
+                            $('#do_hdr_total_faktur').val(datavalue.po_hdr_total_faktur);
+
+                            var ttlInt = parseFloat(datavalue.po_hdr_total_faktur);
+
+                            var formattedNumber = ttlInt.toLocaleString('id-ID', {
+                                style: 'currency',
+                                currency: 'IDR'
+                            });
+
+                            $('#do_hdr_total_faktur_show_only').val(formattedNumber);
+
+                            $("#doTable").append(`
+                                    <tr>
+                                    <input type="hidden" class="searchObat" id="do_obat"
+                                            name="do_obat[]" onchange="getDataObat()" value="${datavalue.po_obat}" readonly>
+                                        
+                                        <td>
+                                            <input class="form-control" style='width: 100%;' id="nm_obat"
+                                            name="nm_obat[]" onchange="getDataObat()" value="${datavalue.po_nm_obat}" readonly>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="do_satuan_pembelian form-control" id="do_satuan_pembelian[]"
+                                                name="do_satuan_pembelian[]" value="${datavalue.po_satuan_pembelian}" readonly>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="do_hrg_beli form-control" id="do_hrg_beli" name="do_hrg_beli[]"
+                                            value="${datavalue.po_hrg_beli}">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="do_qty form-control" id="do_qty" onKeyUp="getQTY(this)" name="do_qty[]" value="${datavalue.po_qty}">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="do_isi_pembelian form-control" id="do_isi_pembelian"
+                                                name="do_isi_pembelian[]" value="${datavalue.po_isi_pembelian}" readonly>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="do_satuan_jual form-control" id="do_satuan_jual" name="do_satuan_jual[]"
+                                                value="${datavalue.po_satuan_jual}" readonly>
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" name="do_diskon_prosen[]" id="do_diskon_prosen" onKeyDown="discProsen(this)">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" id="do_diskon" name="do_diskon[]" onKeyDown="discRp(this)">
+                                        </td>
+                                        <td>
+                                            <select type="text" class="form-control" id="do_pajak" name="do_pajak[]" onChange="pajakPPN(this)">
+                                                <option value="Tanpa Pajak">Tanpa Pajak</option>
+                                                <option value="11">PPN 11%</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="date" class="form-control" id="do_tgl_exp" name="do_tgl_exp[]" required>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" id="do_batch_number"
+                                                name="do_batch_number[]" required>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="do_sub_total form-control" id="do_sub_total" name="do_sub_total[]" value="${datavalue.po_sub_total}">
+                                        </td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="updateHrg" name="updateHrg[]" value="${datavalue.po_obat}">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="remove btn btn-xs btn-danger"><i class="fa fa-trash" onclick="deleteRow(this)"></i></button>
+                                        </td>
+                                            <input type="hidden" class="do_hrg_beli_detail form-control" id="do_hrg_beli_detail" name="do_hrg_beli_detail[]" value="">
+                            
+                            </tr>`);
+
+                        })
+                    }
+
+                });
+                // GrandTotal();
+
+                $('#POSearch').modal('hide');
+            };
 
             // $(".SelectItemObat").on("click", function() {
             function SelectItemObatDO(x) {

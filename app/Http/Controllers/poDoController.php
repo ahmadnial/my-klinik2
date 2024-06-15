@@ -365,20 +365,35 @@ class poDoController extends Controller
             //     }
             // }
             // die();
-
-            $newData = [
-                'tanggal_trs' => $request->tanggal_trs,
-                'do_hdr_kd' => $request->do_hdr_kd,
-                'do_hdr_no_faktur' => $request->do_hdr_no_faktur,
-                'do_hdr_supplier' => $request->do_hdr_supplier,
-                'do_hdr_tgl_tempo' => $request->do_hdr_tgl_tempo,
-                // 'do_hdr_lokasi_stock' => $request->do_hdr_lokasi_stock,
-                'do_hdr_total_faktur' => $request->do_hdr_total_faktur,
-                'do_jenis_pembelian' => $request->do_jenis_pembelian,
-                // 'do_kd_po' => $request->do_kd_po,
-                'user' => Auth::user()->name,
-            ];
-            do_hdr::create($newData);
+            if ($request->kd_po == '') {
+                $newData = [
+                    'tanggal_trs' => $request->tanggal_trs,
+                    'do_hdr_kd' => $request->do_hdr_kd,
+                    'do_hdr_no_faktur' => $request->do_hdr_no_faktur,
+                    'do_hdr_supplier' => $request->do_hdr_supplier,
+                    'do_hdr_tgl_tempo' => $request->do_hdr_tgl_tempo,
+                    // 'do_hdr_lokasi_stock' => $request->do_hdr_lokasi_stock,
+                    'do_hdr_total_faktur' => $request->do_hdr_total_faktur,
+                    'do_jenis_pembelian' => $request->do_jenis_pembelian,
+                    // 'do_kd_po' => $request->do_kd_po,
+                    'user' => Auth::user()->name,
+                ];
+                do_hdr::create($newData);
+            } else {
+                $newData = [
+                    'tanggal_trs' => $request->tanggal_trs,
+                    'do_hdr_kd' => $request->do_hdr_kd,
+                    'do_hdr_no_faktur' => $request->do_hdr_no_faktur,
+                    'do_hdr_supplier' => $request->do_hdr_supplier,
+                    'do_hdr_tgl_tempo' => $request->do_hdr_tgl_tempo,
+                    // 'do_hdr_lokasi_stock' => $request->do_hdr_lokasi_stock,
+                    'do_hdr_total_faktur' => $request->do_hdr_total_faktur,
+                    'do_jenis_pembelian' => $request->do_jenis_pembelian,
+                    'user' => Auth::user()->name,
+                    'kd_po' => $request->kd_po,
+                ];
+                do_hdr::create($newData);
+            }
 
             foreach ($request->do_obat as $key => $val) {
                 $detail = [
@@ -483,6 +498,12 @@ class poDoController extends Controller
                 HutangSupplier::create($HutangCreate);
             }
 
+            if ($request->kd_po != '') {
+                DB::table('po_hdr')->where('po_hdr_kd', $request->kd_po)->update([
+                    'isImplementasi' => '1',
+                ]);
+            }
+
             DB::commit();
 
             $sessionFlash = [
@@ -526,6 +547,7 @@ class poDoController extends Controller
                 'po_hdr_supplier' => $request->po_hdr_supplier,
                 'po_hdr_total_faktur' => $request->po_hdr_total_faktur,
                 'user' => Auth::user()->name,
+                // 'isImplementasi' => '0',
             ];
 
             po_hdr::create($newData);
@@ -534,6 +556,7 @@ class poDoController extends Controller
                 $detail = [
                     'po_obat' => $request->po_obat[$key],
                     'po_satuan_pembelian' => $request->po_satuan_pembelian[$key],
+                    'po_satuan_jual' => $request->po_satuan_jual[$key],
                     'po_diskon' => $request->po_diskon[$key],
                     'po_qty' => $request->po_qty[$key],
                     'po_isi_pembelian' => $request->po_isi_pembelian[$key],
@@ -574,5 +597,75 @@ class poDoController extends Controller
             ->get();
 
         return response()->json($isListDO);
+    }
+
+    public function getMonthPO(Request $request)
+    {
+        // $today = Carbon::today()->toDateString();
+        $selectMonth = $request->dataBulan;
+        // dd($selectMonth);
+        if (!$selectMonth) {
+            $monthNow = Carbon::now()->format("m");
+            $yearNow = Carbon::now()->format("Y");
+            $isListPenjualan = po_hdr::whereyear('po_tgl_trs', '=', $yearNow)->whereMonth('po_tgl_trs', '=', $monthNow)->latest('po_tgl_trs')->get();
+        } else {
+            $isListPenjualan = po_hdr::where('po_tgl_trs', 'LIKE', '%' . $selectMonth . '%')->latest('created_at')->get();
+        }
+
+        return DataTables::of($isListPenjualan)
+            ->addColumn('action', function ($row) {
+                $today = Carbon::today()->toDateString();
+                // if ($row->tgl_trs == $today) {
+                $actionBtn = '
+                <button class="btn btn-xs btn-info" data-toggle="modal" data-target="#EditObat"
+                onclick="getDetailPO(this)" data-po_hdr_kd="' . $row->po_hdr_kd . '">&nbsp;&nbsp;<i class="fa fa-info">&nbsp;&nbsp;</i></button>
+                <button class="btn btn-xs btn-primary" data-toggle="modal" data-target=""
+                onclick="EditTrsPO(this);validasiTrs(this);" data-po_hdr_kd="' . $row->po_hdr_kd . '"><i class="fa fa-edit"></i></button>
+                <button class="btn btn-xs btn-warning" data-toggle="modal" data-target="#EditObat"
+                onclick="cetakPO(this)" data-po_hdr_kd="' . $row->po_hdr_kd . '" target="_blank"> <i class="fa fa-print"></i> </button>
+                 <button class="btn btn-xs btn-danger" data-toggle="modal" data-target=""
+                onclick="DeleteTrsPO(this);" data-po_hdr_kd="' . $row->po_hdr_kd . '"><i class="fa fa-trash"></i></button>
+                ';
+                // } else {
+                //     $actionBtn = '
+                // <button class="btn btn-xs btn-info" data-toggle="modal" data-target="#EditObat"
+                // onclick="getDetailPen(this)" data-kd_trs="' . $row->po_hdr_kd . '">&nbsp;&nbsp;<i class="fa fa-info">&nbsp;&nbsp;</i></button>
+                // <button class="btn btn-xs btn-warning" data-toggle="modal" data-target="#EditObat"
+                // onclick="cetakNota(this)" data-kd_trsc="' . $row->po_hdr_kd . '" target="_blank"> <i class="fa fa-print"></i> </button>
+                // ';
+                // }
+
+                return $actionBtn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+    }
+
+    public function getDetailPO(Request $request)
+    {
+        $isViewDetailPO = po_hdr::where('po_hdr.po_hdr_kd', '=', $request->po_hdr_kd)
+            ->leftJoin('po_detail_item', 'po_hdr.po_hdr_kd', 'po_detail_item.po_hdr_kd')
+            ->get();
+
+        return response()->json($isViewDetailPO);
+    }
+
+    public function getListPoActive(Request $request)
+    {
+        if (request()->ajax()) {
+            $isPoactive = DB::table('po_hdr')->whereNull('isImplementasi')
+                // ->leftJoin('po_detail_item', 'po_hdr.po_hdr_kd', '=', 'po_detail_item.po_hdr_kd')
+                ->get();
+            return DataTables::of($isPoactive)
+                ->addColumn('action', function ($row) {
+                    $actionBtn = '<a href="javascript:void(0)" id="' . $row->po_hdr_kd . '" onClick="SelectPoDetail(this)"
+                    data-po_hdr_kd="' . $row->po_hdr_kd . '" 
+                    class="btn btn-xs btn-sm" style="background-color:#06D981; color:#ffffff;">Select</a>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+            return response()->json($isPoactive);
+        }
     }
 }

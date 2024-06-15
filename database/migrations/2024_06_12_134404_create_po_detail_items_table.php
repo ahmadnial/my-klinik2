@@ -18,12 +18,14 @@ return new class extends Migration
             $table->string('po_obat');
             $table->string('po_nm_obat');
             $table->string('po_satuan_pembelian');
+            $table->string('po_satuan_jual');
             $table->string('po_diskon')->nullable();
             $table->string('po_diskon_prosen')->nullable();
             $table->string('po_qty');
             $table->string('po_isi_pembelian');
             $table->string('po_hrg_beli');
             $table->string('po_sub_total');
+            $table->string('isImplementasi')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

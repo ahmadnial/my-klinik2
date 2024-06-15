@@ -13,15 +13,23 @@
 
             <div class="card-body">
                 <div id="">
+                    <div class="mb-3">
+                        {{-- <select name="" id="" class="form-control form-control-sm col-2">
+                            <option value=""></option>
+                        </select> --}}
+                        <input type="month" name="monthPO" id="monthPO" onchange="getMonthPO()"
+                            class="form-control form-control-sm col-2">
+                    </div>
                     <table id="example1" class="table table-hover">
                         <thead class="">
                             <tr>
                                 <th>Tanggal Trs</th>
                                 <th>No Ref</th>
-                                <th>No Faktur</th>
+                                <th>Jenis Pembelian</th>
                                 <th>Supplier</th>
-                                <th>Tgl Jatuh Tempo</th>
-                                <th>Nilai Faktur</th>
+                                <th>Kategori</th>
+                                <th>Created By</th>
+                                <th>Nilai PO</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -62,7 +70,7 @@
             margin: 40;
         }
 
-        #EditDO .fullmodal {
+        #EditPO .fullmodal {
             width: 95%;
             max-width: none;
             height: auto;
@@ -77,10 +85,6 @@
             white-space: nowrap;
             overflow-x: scroll;
         }
-
-        /* th {
-                                                                                                                                                                                                                                                                                                                                                                                                                                            min-width: 180px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                        } */
 
         .modal-footer {
             position: sticky;
@@ -171,7 +175,6 @@
                         </div>
                     </div>
 
-                    {{-- <hr> --}}
                     <div class="scrollable-table">
                         <table class="table table-bordered" id="deliverOrder">
                             <thead style="background-color: aliceblue">
@@ -180,6 +183,7 @@
                                     <th width="350px"> Obat</th>
                                     <th width="100px">Sat.Beli</th>
                                     <th width="140px">Hrg.Beli</th>
+                                    <th width="100px">Sat.Jual</th>
                                     <th width="120px">Qty</th>
                                     <th width="120px">Isi</th>
                                     <th width="120px">Disc %</th>
@@ -220,19 +224,126 @@
     </div>
 
     <!-- The modal Edit -->
-    <div class="modal xeditmodal fade" id="EditDO">
+    <div class="modal fade" id="EditPO" data-backdrop="static">
         <div class="modal-dialog modal-xl fullmodal">
             <div class="modal-content document">
-                <div class="modal-header">
-                    <h4 class="modal-title"><i class="fa fa-truck">&nbsp;</i>Penerimaan Barang</h4>
-                    <button type="button" class="close btn btn-danger" id="EditDOClose" data-dismiss="close"
-                        aria-label="Close">
+                <div class="modal-header bg-info">
+                    <h4 class="modal-title"> <i class="fas fa-cart-plus"></i>&nbsp;Purchase Order</h4>
+                    <button type="button" class="close btn btn-danger" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form method="POST" action="{{ url('edit-delivery-order') }}" onkeydown="return event.key != 'Enter';">
+                <form method="POST" action="{{ url('add-purchase-order') }}" onkeydown="return event.key != 'Enter';"
+                    class="needs-validation" novalidate>
                     @csrf
-                    <div class="modal-body" id="AppendEditDO">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="form-group col-sm-2">
+                                <label for="">Nomor Ref</label>
+                                <input type="text" class="form-control" name="po_hdr_kdE" id="po_hdr_kdE"
+                                    value="" readonly>
+                            </div>
+                            <div class="form-group col-sm-2 has-validation">
+                                <label for="po_tgl_trs" class="form-label">Tanggal Transaksi</label>
+                                <input type="date" class="form-control" name="po_tgl_trsE" id="po_tgl_trsE"
+                                    value="" required>
+                                <div class="invalid-feedback">
+                                    Please..dont let me blank
+                                </div>
+                            </div>
+
+                            <div class="form-group col-sm-1">
+                                <label for="">Jenis Pembelian</label>
+                                <select class="po_jenis_pembelian form-control-pasien" id="po_jenis_pembelianE"
+                                    style="width: 100%;" name="po_jenis_pembelianE" required>
+                                    <option value="Konsinyasi">Konsinyasi</option>
+                                    <option value="Non Konsinyasi">Non Konsinyasi</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please..dont let me blank
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label for="">Supplier</label>
+                                <select class="po_hdr_supplier form-control-pasien" id="po_hdr_supplierE"
+                                    style="width: 100%;" name="po_hdr_supplierE" required>
+                                    <option value="">--Select--</option>
+                                    @foreach ($supplier as $sp)
+                                        <option value="{{ $sp->fm_nm_supplier }}">{{ $sp->fm_nm_supplier }}</option>
+                                    @endforeach
+                                </select>
+                                <div class="invalid-feedback">Please..dont let me blank</div>
+                            </div>
+
+                            <div class="form-group col-sm-2">
+                                <label for="">Kategori PO</label>
+                                <select class="po_hdr_kategori form-control-pasien" id="po_hdr_kategoriE"
+                                    style="width: 100%;" name="po_hdr_kategoriE">
+                                    <option value="">--Select--</option>
+                                    <option value="Reguler">Reguler</option>
+                                    <option value="Prekursor">Prekursor</option>
+                                    <option value="Narkotika">Narkotika</option>
+                                    <option value="Psikotropika">Psikotropika</option>
+                                    <option value="Obat Tertentu">Obat Tertentu</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-sm-2">
+                                <label for="">Note</label>
+                                <textarea name="po_hdr_noteE" id="po_hdr_noteE" cols="15" rows="2" class="form-control"></textarea>
+                            </div>
+                            <input type="hidden" id="hs_kd_hutang" name="hs_kd_hutang" value="">
+                        </div>
+                        <div class="">
+                            <button type="button" id="searchObat" onclick="getBarang()" class="btn btn-info"><i
+                                    class="fa fa-plus">&nbsp;Item</i></button>
+                            <i class="text-danger text-sm float-right">
+                                *Tekan F9 untuk membuka List Obat/Klik Tombol +Item
+                            </i>
+                        </div>
+                    </div>
+
+                    <div class="scrollable-table">
+                        <table class="table table-bordered" id="deliverOrder">
+                            <thead style="background-color: aliceblue">
+                                <tr>
+                                    {{-- <th>Kode Obat</th> --}}
+                                    <th width="350px"> Obat</th>
+                                    <th width="100px">Sat.Beli</th>
+                                    <th width="140px">Hrg.Beli</th>
+                                    <th width="120px">Qty</th>
+                                    <th width="120px">Isi</th>
+                                    <th width="120px">Disc %</th>
+                                    <th width="120px">Disc</th>
+                                    <th width="250px">Sub Total</th>
+                                    <th width="50px"></th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="listObatEdit">
+                                {{-- <tr>
+
+                                </tr> --}}
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr>
+
+                    <br>
+                    <br>
+                    {{-- <hr> --}}
+                    <div class="modal-footer">
+                        <div class="float-right col-4">
+                            <div class="float-right col-4">
+                                <input type="text" class="form-control float-right" name=""
+                                    id="po_hdr_total_faktur_show_onlyE" value="" readonly>
+                                <input type="hidden" class="form-control float-right" name="po_hdr_total_fakturE"
+                                    id="po_hdr_total_fakturE" value="" readonly>
+                            </div>
+                        </div>
+                        <button type="submit" id="buat" class="btn btn-success float-right"><i
+                                class="fa fa-save"></i>&nbsp;Save
+                        </button>
                     </div>
                 </form>
             </div>
@@ -283,6 +394,181 @@
 
     @push('scripts')
         <script>
+            getMonthPO()
+
+            function getMonthPO() {
+                const dataBulan = $('#monthPO').val();
+                $.ajax({
+                    success: function() {
+                        $('#example1').DataTable({
+                            processing: true,
+                            serverSide: true,
+                            dom: 'lBfrtip',
+                            responsive: true,
+                            "bDestroy": true,
+                            "order": [
+                                [1, "dsc"]
+                            ],
+                            ajax: {
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                url: "{{ url('getMonthPO') }}",
+                                type: 'GET',
+                                data: {
+                                    dataBulan: dataBulan
+                                }
+                            },
+                            columns: [{
+                                    data: 'po_tgl_trs',
+                                    name: 'po_tgl_trs',
+                                    render: function(data, type, row) {
+                                        return moment(data).format('D MMMM YYYY');
+                                    }
+                                },
+                                {
+                                    data: 'po_hdr_kd',
+                                    name: 'po_hdr_kd'
+                                },
+                                {
+                                    data: 'po_jenis_pembelian',
+                                    name: 'po_jenis_pembelian',
+                                    render: function(data, type, row) {
+                                        if (data == 'konsinyasi') {
+                                            return '<span class="badge badge-success">Konsinyasi</span>';
+                                        } else {
+                                            return '<span class="badge badge-danger">Non Konsinyasi</span>';
+                                        }
+                                    }
+                                },
+                                {
+                                    data: 'po_hdr_supplier',
+                                    name: 'po_hdr_supplier'
+                                },
+                                {
+                                    data: 'po_hdr_kategori',
+                                    name: 'po_hdr_kategori'
+                                },
+                                {
+                                    data: 'user',
+                                    name: 'user'
+                                },
+                                {
+                                    data: 'po_hdr_total_faktur',
+                                    name: 'po_hdr_total_faktur',
+                                    render: $.fn.dataTable.render.number(',', '.', 2, 'Rp ')
+                                },
+                                {
+                                    data: 'action',
+                                    name: 'action'
+                                },
+                            ],
+                            "responsive": true,
+                            "paging": true,
+                            "searching": true,
+                            "lengthChange": true,
+                            "autoWidth": true,
+                            "buttons": ["copy", "excel", "pdf", "print", "colvis"]
+                        }).buttons().container().appendTo('#penjualan_wrapper .col-md-6:eq(0)');
+                    }
+                })
+            };
+
+            function getDetailPO(tx) {
+                var kd_trs = $(tx).data('po_hdr_kd');
+                // alert(kd_trs)
+            }
+
+            function EditTrsPO(te) {
+                $('#EditPO').modal('show');
+                var po_hdr_kd = $(te).data('po_hdr_kd');
+
+                $("#listObatEdit").empty();
+
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "{{ url('getDetailPO') }}/" + po_hdr_kd,
+                    type: "GET",
+                    data: {
+                        po_hdr_kd: po_hdr_kd
+                    },
+                    success: function(isViewDetailPO) {
+                        $.each(isViewDetailPO, function(key, datavalue) {
+                            $('#po_hdr_kdE').val(datavalue.po_hdr_kd);
+                            $('#po_tgl_trsE').val(datavalue.po_tgl_trs);
+                            $('#tgl_trse').val(datavalue.tgl_trs);
+                            // $('#po_jenis_pembelianE').empty();
+                            $('#po_jenis_pembelianE').append(
+                                `<option value="${datavalue.po_jenis_pembelian}" selected>${datavalue.po_jenis_pembelian}</option>`
+                            );
+                            $('#po_hdr_supplierE').append(
+                                `<option value="${datavalue.po_hdr_supplier}" selected>${datavalue.po_hdr_supplier}</option>`
+                            );
+                            $('#po_hdr_kategoriE').append(
+                                `<option value="${datavalue.po_hdr_kategori}" selected>${datavalue.po_hdr_kategori}</option>`
+                            );
+
+
+                            var ttlInte = parseFloat(datavalue.po_hdr_total_faktur);
+
+                            var formattedNumbers = ttlInte.toLocaleString('id-ID', {
+                                style: 'currency',
+                                currency: 'IDR'
+                            });
+                            $('#po_hdr_total_faktur_show_onlyE').val(formattedNumbers);
+                            $('#po_hdr_total_fakturE').val(datavalue.po_hdr_total_faktur);
+
+                            $("#listObatEdit").append(`
+                                         <tr>
+                                            <td>
+                                                <input class="searchObat form-control" style="border: none"
+                                                    id="kd_obat" name="kd_obat[]" placeholder="kode obat" readonly
+                                                    style="border: none;" value="${datavalue.po_nm_obat}">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="do_satuan_pembelian form-control"
+                                                    id="satuan" name="satuan[]" readonly
+                                                    value="${datavalue.po_satuan_pembelian}">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" readonly style="border: none;" id="hrg_obat" name="hrg_obat[]" value=${datavalue.po_hrg_beli}>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="qty form-control" id="qty" name="qty[]" onKeyUp="getQTY(this)" value="${datavalue.po_qty}">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="cara_pakai form-control" id="cara_pakai" name="cara_pakai[]" value="${datavalue.po_isi_pembelian}" readonly>
+                                            </td>
+                                          
+                                            <td>
+                                                <input type="text" class="form-control" id="tuslah"
+                                                    name="tuslah[]" readonly value="${datavalue.po_diskon ?? ''}">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" id="embalase"
+                                                    name="embalase[]" readonly value="${datavalue.po_diskon_prosen ?? ''}">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="sub_totalEdit form-control" id="sub_total"
+                                                    name="sub_total[]" readonly style="border: none;" value="${datavalue.po_sub_total}">
+                                            </td>
+                                            <td>
+                                                <button type="button" class="remove btn btn-xs btn-danger"><i
+                                                class="fa fa-trash" onclick="deleteRow(this)"></i></button>
+                                            </td>
+
+                                            <input type="hidden" name="user" id="user" value="tes user">
+                                        </tr>
+                                        `);
+                        })
+                    }
+
+                });
+            };
+
+
             function getBarang() {
                 $('#obatSearch').modal('show');
 
@@ -366,6 +652,7 @@
                 var getKdObat = $(x).data('fm_kd_obat');
                 var getNmObat = $(x).data('fm_nm_obat');
                 var getSatBeli = $(x).data('fm_satuan_pembelian');
+                var getSatJual = $(x).data('fm_satuan_jual');
                 var getIsiSatBeli = $(x).data('fm_isi_satuan_pembelian');
                 var getSatJual = $(x).data('fm_satuan_jual');
                 var getHrgBeli = $(x).data('fm_hrg_beli');
@@ -387,6 +674,10 @@
                             <td>
                                 <input type="text" class="po_hrg_beli form-control" id="po_hrg_beli" name="po_hrg_beli[]"
                                  value="${getHrgBeli}" readonly>
+                            </td>
+                            <td>
+                                <input type="text" class="po_satuan_jual form-control" id="po_satuan_jual[]"
+                                    name="po_satuan_jual[]" value="${getSatJual}" readonly>
                             </td>
                             <td>
                                 <input type="text" class="po_qty form-control" id="po_qty" onKeyUp="getQTY(this)" name="po_qty[]">
