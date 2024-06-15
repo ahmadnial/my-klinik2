@@ -202,6 +202,7 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
 // Route::controller(poDoController::class)->group(function () {
 Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
     Route::post('add-delivery-order', [poDoController::class, 'doCreate'])->name('add-delivery-order');
+    Route::post('add-purchase-order', [poDoController::class, 'poCreate'])->name('add-purchase-order');
     Route::post('CreateAdj', [poDoController::class, 'createAdj'])->name('CreateAdj');
 });
 

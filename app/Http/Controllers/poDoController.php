@@ -13,6 +13,8 @@ use App\Models\tb_adjusment_detail;
 use App\Models\tb_adjusment_hdr;
 use App\Models\tb_stock;
 use App\Models\tp_detail_item;
+use App\Models\po_hdr;
+use App\Models\po_detail_item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -28,18 +30,21 @@ class poDoController extends Controller
         $num = str_pad(000001, 6, 0, STR_PAD_LEFT);
         $Y = date("Y");
         $M = date("m");
-        $cekid = do_hdr::count();
+        $cekid = po_hdr::count();
         if ($cekid == 0) {
-            $noRef =  'DO'  . '-' . substr($Y, -2) . $M . '-' . $num;
+            $noRef =  'PO'  . '-' . substr($Y, -2) . $M . '-' . $num;
         } else {
-            $continue = do_hdr::all()->last();
-            $de = substr($continue->do_hdr_kd, -6);
-            $noRef = 'DO' . '-' . substr($Y, -2) . $M  . '-' . str_pad(($de + 1), 6, '0', STR_PAD_LEFT);
+            $continue = po_hdr::all()->last();
+            $de = substr($continue->po_hdr_kd, -6);
+            $noRef = 'PO' . '-' . substr($Y, -2) . $M  . '-' . str_pad(($de + 1), 6, '0', STR_PAD_LEFT);
         };
+        // dd($noRef);
 
         $supplier = mstr_supplier::all();
         $lokasi = mstr_lokasi_stock::all();
-        return view('pages.purchase-order', ['supplier' => $supplier, 'lokasi' => $lokasi]);
+        $dateNow = Carbon::now()->format("Y-m-d");
+
+        return view('pages.purchase-order', ['supplier' => $supplier, 'lokasi' => $lokasi, 'noRef' => $noRef, 'dateNow' => $dateNow]);
     }
 
     public function do()
@@ -494,6 +499,71 @@ class poDoController extends Controller
                 'alert-type' => 'error'
             ];
             return Redirect('/delivery-order')->with($sessionFlashErr);
+        }
+    }
+
+    public function poCreate(Request $request)
+    {
+        // dd($request->all());
+
+        $request->validate([
+            'po_hdr_kd' => 'required',
+            'po_hdr_supplier' => 'required',
+
+            'po_obat' => 'required',
+            'po_nm_obat' => 'required',
+
+        ]);
+
+        DB::beginTransaction();
+        try {
+
+            $newData = [
+                'po_tgl_trs' => $request->po_tgl_trs,
+                'po_hdr_kd' => $request->po_hdr_kd,
+                'po_jenis_pembelian' => $request->po_jenis_pembelian,
+                'po_hdr_kategori' => $request->po_hdr_kategori,
+                'po_hdr_supplier' => $request->po_hdr_supplier,
+                'po_hdr_total_faktur' => $request->po_hdr_total_faktur,
+                'user' => Auth::user()->name,
+            ];
+
+            po_hdr::create($newData);
+
+            foreach ($request->po_obat as $key => $val) {
+                $detail = [
+                    'po_obat' => $request->po_obat[$key],
+                    'po_satuan_pembelian' => $request->po_satuan_pembelian[$key],
+                    'po_diskon' => $request->po_diskon[$key],
+                    'po_qty' => $request->po_qty[$key],
+                    'po_isi_pembelian' => $request->po_isi_pembelian[$key],
+                    'po_hrg_beli' => $request->po_hrg_beli[$key],
+                    'po_sub_total' => $request->po_sub_total[$key],
+                    'po_hdr_kd' => $request->po_hdr_kd,
+                    'po_diskon_prosen' => $request->po_diskon_prosen[$key],
+                    'po_nm_obat' => $request->po_nm_obat[$key],
+                    'po_tgl_trs' => $request->po_tgl_trs,
+                ];
+                po_detail_item::create($detail);
+            }
+
+
+            DB::commit();
+
+            $sessionFlash = [
+                'message' => 'Saved!',
+                'alert-type' => 'success'
+            ];
+
+            return Redirect('/purchase-order')->with($sessionFlash);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            $sessionFlashErr = [
+                'message' => $e,
+                'alert-type' => 'error'
+            ];
+            return Redirect('/purchase-order')->with($sessionFlashErr);
         }
     }
 

@@ -14,11 +14,9 @@ class po_hdr extends Model
     protected $fillable = [
         'po_hdr_kd',
         'po_tgl_trs',
-        'po_hdr_no_faktur',
         'po_jenis_pembelian',
         'po_hdr_supplier',
-        'po_hdr_tgl_tempo',
-        'po_hdr_lokasi_stock',
+        'po_hdr_kategori',
         'po_hdr_total_faktur',
         'user'
     ];
