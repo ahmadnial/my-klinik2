@@ -393,7 +393,7 @@ class poDoController extends Controller
                     'kd_po' => $request->kd_po,
                 ];
                 do_hdr::create($newData);
-            }
+            };
 
             foreach ($request->do_obat as $key => $val) {
                 $detail = [
