@@ -117,7 +117,11 @@ class HomeController extends Controller
 
     public function getDasos(request $fs_mr)
     {
-        $isRegAktifNow = DB::table('ta_registrasi')->where('fr_mr', $fs_mr->fs_mr)->where('fr_tgl_keluar', '=', '')->count();
+        $isRegAktifNow = DB::table('ta_registrasi')->where([
+            ['fr_mr', '=', $fs_mr->fs_mr],
+            ['fr_tgl_keluar', '=', ''],
+            ['deleted_at', '=', null],
+        ])->count();
         // dd($isRegAktifNow);
         if ($isRegAktifNow == 0) {
             $isdata2 = dataSosialCreate::where('fs_mr', $fs_mr->fs_mr)->get();
