@@ -150,7 +150,7 @@
                 <a href="" class="brand-link bg-purple">
                     <img src="" alt="" class="brand-image img-circle elevation-3" style="opacity: .8">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="brand-text font-weight-light"><i
-                            class=""></i>&nbsp;
+                            class="fab fa-think-peaks"></i>&nbsp;
                         <b>Asla</b>Med</span>
                 </a>
                 <!-- Sidebar -->
@@ -1032,8 +1032,9 @@
                 <a href="" class="brand-link bg-purple">
                     <img src="" alt="" class="brand-image img-circle elevation-3"
                         style="opacity: .8">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="brand-text font-weight-light">&nbsp;
-                        <b>Asla</b>Med</span><i class="fab fa-think-peaks"></i>`
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="brand-text font-weight-light"><i
+                            class="fab fa-think-peaks"></i>&nbsp;
+                        <b>Asla</b>Med</span>
                 </a>
                 <!-- Sidebar -->
                 <div class="sidebar">
@@ -1043,7 +1044,7 @@
                         </div>
                         <div class="info"
                             style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-size: 19px">
-                            <b class="text-danger"><i class="fab fa-think-peaks"></i>
+                            <b class="text-danger"><i class="fa fa-hospital"></i>
                                 <?php
                                 $tmp = \App\models\profilePerusahaan::select('nmPerusahaan')->value('nmPerusahaan');
                                 ?>
@@ -1152,7 +1153,7 @@
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
                                         <a href="{{ url('/purchase-order') }}" class="nav-link">
-                                            <i class="far fa-chart nav-icon"></i>
+                                            <i class="fas fa-cart-plus nav-icon"></i>
                                             <p>Purchase Order</p>
                                         </a>
                                     </li>
