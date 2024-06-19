@@ -247,6 +247,7 @@
                     <div class="row">
                         <input class="btn btn-xs btn-outline-info mb-3" id="kd_trs_viewDetailItem"> <input
                             class="btn btn-xs btn-outline-info mb-3 ml-2" id="view_kd_reg">
+                        <input class="btn btn-xs btn-outline-info mb-3 ml-2" id="createdby" disabled>
                         <table class="table table-stripped table-bordered">
                             <thead>
                                 <tr>
@@ -1296,6 +1297,7 @@
                         $.each(isViewDetailPenjualan, function(key, datavalue) {
                             $('#kd_trs_viewDetailItem').val(datavalue.kd_trs);
                             $('#view_kd_reg').val(datavalue.kd_reg);
+                            $('#createdby').val(datavalue.user);
                             var caraPakai = datavalue.cara_pakai ?? '';
 
                             $("#viewDetailJual").append(`
