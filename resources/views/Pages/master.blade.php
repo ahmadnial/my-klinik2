@@ -161,7 +161,7 @@
                         </div>
                         <div class="info"
                             style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-size: 19px">
-                            <b class="text-danger"><i class="fa fa-hospital"></i>
+                            <b class="text-danger"><i class="far fa-hospital"></i>
                                 <?php
                                 $tmp = \App\models\profilePerusahaan::select('nmPerusahaan')->value('nmPerusahaan');
                                 ?>
@@ -1044,7 +1044,7 @@
                         </div>
                         <div class="info"
                             style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-size: 19px">
-                            <b class="text-danger"><i class="fa fa-hospital"></i>
+                            <b class="text-danger"><i class="far fa-hospital"></i>
                                 <?php
                                 $tmp = \App\models\profilePerusahaan::select('nmPerusahaan')->value('nmPerusahaan');
                                 ?>
