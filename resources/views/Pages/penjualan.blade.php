@@ -6,8 +6,8 @@
         <div class="card">
             <div class="card-header">
                 <button type="submit" class="btn btn-success btn-sm float-right" data-toggle="modal"
-                    data-target="#addPenjualan"><i class="fa fa-plus"></i>&nbsp;Tambah</button>
-                <h3 class="card-title"><i class="fa fa-money">&nbsp;</i>Transaksi Penjualan</h3>
+                    data-target="#addPenjualan"><i class="fa fa-plus"></i>&nbsp;Penjualan</button>
+                <h3 class="card-title"><i class="fas fa-pills"></i>&nbsp;</i>Transaksi Penjualan</h3>
             </div>
 
             <div class="card-body">
@@ -80,7 +80,7 @@
         <div class="modal-dialog modal-dialog-scrollable fullmodal">
             <div class="modal-content" role="document">
                 <div class="modal-header bg-nial">
-                    <h4 class="modal-title"><i class="fa fa-truck">&nbsp;</i>Transaksi Penjualan</h4>
+                    <h4 class="modal-title"><i class="fab fa-cc-amazon-pay"></i>&nbsp;Transaksi Penjualan</h4>
                     <button type="button" class="close btn btn-danger" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

@@ -6,9 +6,10 @@
     <section class="content">
         <div class="card">
             <div class="card-header">
-                <button type="submit" class="btn btn-success float-right" data-toggle="modal" data-target="#TambahDO">Tambah
+                <button type="submit" class="btn btn-success float-right" data-toggle="modal" data-target="#TambahDO"><i
+                        class="fas fa-dolly"></i>&nbsp;Tambah
                     DO</button>
-                <h3 class="card-title"><i class="fa fa-truck">&nbsp;</i>PENERIMAAN BARANG</h3>
+                <h3 class="card-title"><i class="fas fa-shipping-fast"></i>&nbsp;PENERIMAAN BARANG</h3>
             </div>
 
             <div class="card-body">

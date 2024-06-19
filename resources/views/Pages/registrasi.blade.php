@@ -22,8 +22,8 @@
         <div class="card">
             <div class="card-header">
                 <h2 class="card-title"><i class="fa fa-user-plus"></i>&nbsp;&nbsp;Registrasi Pasien</h2>
-                <button type="submit" class="btn btn-success float-right" data-toggle="modal" data-target="#TambahPasien"><i
-                        class="fa fa-user-plus"></i>&nbsp;&nbsp;Registrasi
+                <button type="submit" class="btn btn-sm btn-success float-right" data-toggle="modal"
+                    data-target="#TambahPasien"><i class="fa fa-user-plus"></i>&nbsp;&nbsp;Registrasi
                     Pasien</button>
             </div>
 
