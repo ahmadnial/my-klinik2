@@ -6,7 +6,7 @@
         <div class="card">
             <div class="card-header">
                 <button type="submit" class="btn btn-success btn-sm float-right" data-toggle="modal"
-                    data-target="#addPenjualan"><i class="fa fa-plus"></i>&nbsp;Penjualan</button>
+                    data-target="#addPenjualan"><i class="far fa-plus-square"></i>&nbsp;Penjualan</button>
                 <h3 class="card-title"><i class="fas fa-pills"></i>&nbsp;</i>Transaksi Penjualan</h3>
             </div>
 
@@ -636,7 +636,16 @@
                                 },
                                 {
                                     data: 'tipe_tarif',
-                                    name: 'tipe_tarif'
+                                    name: 'tipe_tarif',
+                                    render: function(data, type, row) {
+                                        if (data == 'Resep') {
+                                            return '<span class=""><i class="fas fa-prescription"></i> <b>Resep</b></span>';
+                                        } else if (data == 'Reguler') {
+                                            return '<span class=""><i class="fas fa-pills"></i>&nbsp;<b>Reguler</b></span>';
+                                        } else {
+                                            return '<span class=""><i class="far fa-hospital"></i>&nbsp;<b>Nakes</b></span>';
+                                        }
+                                    }
                                 },
                                 {
                                     data: 'total_penjualan',
