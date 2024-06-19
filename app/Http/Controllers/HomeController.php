@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use Yajra\DataTables\Contracts\DataTable;
 use Yajra\DataTables\Facades\DataTables;
+use RealRashid\SweetAlert\Facades\Alert;
+
+
+use function Laravel\Prompts\error;
 
 class HomeController extends Controller
 {
@@ -113,13 +117,12 @@ class HomeController extends Controller
 
     public function getDasos(request $fs_mr)
     {
-        // $true = '100013';
-        $isdata2 = dataSosialCreate::where('fs_mr', $fs_mr->fs_mr)->get();
-
-        // dd($isdata2);
-
-        // return view('Pages.registrasi', ['isdata' => $isdata2]);
-        return response()->json($isdata2);
+        $isRegAktifNow = DB::table('ta_registrasi')->where('fr_mr', $fs_mr->fs_mr)->where('fr_tgl_keluar', '=', '')->count();
+        // dd($isRegAktifNow);
+        if ($isRegAktifNow == 0) {
+            $isdata2 = dataSosialCreate::where('fs_mr', $fs_mr->fs_mr)->get();
+            return response()->json($isdata2);
+        }
     }
 
     public function getLayananMedis(request $id_layanan)

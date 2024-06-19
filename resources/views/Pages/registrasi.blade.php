@@ -565,6 +565,8 @@
             }
         });
 
+        // import Swal from 'sweetalert2'
+
         // Call Hasil Search MR
         function getData() {
             var fs_mr = $('#fr_mr').val();
@@ -578,16 +580,23 @@
                     'fs_mr': fs_mr
                 },
                 success: function(isdata2) {
-                    // var json = isdata2;
-                    $.each(isdata2, function(key, datavalue) {
-                        $('#fr_nama').val(datavalue.fs_nama);
-                        $('#fr_alamat').val(datavalue.fs_alamat);
-                        $('#fr_no_hp').val(datavalue.fs_no_hp);
-                        $('#fr_tgl_lahir').val(datavalue.fs_tgl_lahir);
-                        $('#fr_jenis_kelamin').val(datavalue.fs_jenis_kelamin);
-                        $('#fr_alergi').val(datavalue.fs_alergi);
-                        $('#kunjungan_terakhir').val(datavalue.fs_tgl_kunjungan_terakhir);
-                    })
+                    if (isdata2) {
+                        $.each(isdata2, function(key, datavalue) {
+                            $('#fr_nama').val(datavalue.fs_nama);
+                            $('#fr_alamat').val(datavalue.fs_alamat);
+                            $('#fr_no_hp').val(datavalue.fs_no_hp);
+                            $('#fr_tgl_lahir').val(datavalue.fs_tgl_lahir);
+                            $('#fr_jenis_kelamin').val(datavalue.fs_jenis_kelamin);
+                            $('#fr_alergi').val(datavalue.fs_alergi);
+                            $('#kunjungan_terakhir').val(datavalue.fs_tgl_kunjungan_terakhir);
+                        })
+                    } else {
+                        Swal.fire({
+                            title: "Duplicate",
+                            text: "Pasien dengan no.MR tersebut sudah ter Registrasi",
+                            icon: "info"
+                        });
+                    }
                 }
             })
         };
@@ -818,10 +827,15 @@
                 },
                 success: function(sessionFlash) {
                     if (sessionFlash == 'Error') {
-                        toastr.error('Register Locked! Sudah Ada Transaksi Lain', {
-                            timeOut: 2000,
-                            preventDuplicates: true,
-                            positionClass: 'toast-top-right',
+                        // toastr.error('Register Locked! Sudah Ada Transaksi Lain', {
+                        //     timeOut: 2000,
+                        //     preventDuplicates: true,
+                        //     positionClass: 'toast-top-right',
+                        // });
+                        Swal.fire({
+                            title: "Register Locked!",
+                            text: "Sudah Ada Transaksi Lain",
+                            icon: "error"
                         });
                         $('#voidReg').modal('hide');
                     } else {

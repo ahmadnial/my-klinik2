@@ -13,7 +13,7 @@
         "laravel/tinker": "^2.8",
         "laravolt/indonesia": "^0.34.0",
         "nesbot/carbon": "^2.71",
-        "realrashid/sweet-alert": "^7.1",
+        "realrashid/sweet-alert": "^7.2",
         "yajra/laravel-datatables-buttons": "10",
         "yajra/laravel-datatables-oracle": "^10.11",
         "yoeunes/toastr": "^2.3"

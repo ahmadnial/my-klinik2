@@ -365,8 +365,22 @@ class poDoController extends Controller
             //     }
             // }
             // die();
-            if ($request->kd_po == '') {
+            if ($request->kd_po) {
                 $newData = [
+                    'tanggal_trs' => $request->tanggal_trs,
+                    'do_hdr_kd' => $request->do_hdr_kd,
+                    'kd_po' => $request->kd_po,
+                    'do_hdr_no_faktur' => $request->do_hdr_no_faktur,
+                    'do_hdr_supplier' => $request->do_hdr_supplier,
+                    'do_hdr_tgl_tempo' => $request->do_hdr_tgl_tempo,
+                    // 'do_hdr_lokasi_stock' => $request->do_hdr_lokasi_stock,
+                    'do_hdr_total_faktur' => $request->do_hdr_total_faktur,
+                    'do_jenis_pembelian' => $request->do_jenis_pembelian,
+                    'user' => Auth::user()->name,
+                ];
+                do_hdr::create($newData);
+            } else {
+                $newDataP = [
                     'tanggal_trs' => $request->tanggal_trs,
                     'do_hdr_kd' => $request->do_hdr_kd,
                     'do_hdr_no_faktur' => $request->do_hdr_no_faktur,
@@ -378,21 +392,7 @@ class poDoController extends Controller
                     // 'do_kd_po' => $request->do_kd_po,
                     'user' => Auth::user()->name,
                 ];
-                do_hdr::create($newData);
-            } else {
-                $newData = [
-                    'tanggal_trs' => $request->tanggal_trs,
-                    'do_hdr_kd' => $request->do_hdr_kd,
-                    'do_hdr_no_faktur' => $request->do_hdr_no_faktur,
-                    'do_hdr_supplier' => $request->do_hdr_supplier,
-                    'do_hdr_tgl_tempo' => $request->do_hdr_tgl_tempo,
-                    // 'do_hdr_lokasi_stock' => $request->do_hdr_lokasi_stock,
-                    'do_hdr_total_faktur' => $request->do_hdr_total_faktur,
-                    'do_jenis_pembelian' => $request->do_jenis_pembelian,
-                    'user' => Auth::user()->name,
-                    'kd_po' => $request->kd_po,
-                ];
-                do_hdr::create($newData);
+                do_hdr::create($newDataP);
             };
 
             foreach ($request->do_obat as $key => $val) {

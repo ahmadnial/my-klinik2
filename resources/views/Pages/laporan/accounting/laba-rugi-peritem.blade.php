@@ -47,11 +47,12 @@
                                 <th>Kategori</th>
                                 <th>Satuan</th>
                                 <th>QTY</th>
-                                <th>Harga Jual</th>
                                 <th>HPP</th>
-                                {{-- <th>Margin</th>
-                                <th>Nilai Margin</th> --}}
-                                <th>Total</th>
+                                <th>Harga Jual</th>
+                                {{-- <th>Margin</th> --}}
+                                <th>Sub Ttl HPP</th>
+                                <th>Sub Total</th>
+                                <th>Laba/Rugi</th>
                             </tr>
                         </thead>
                         <tbody id="result">
@@ -66,10 +67,10 @@
                                 <th></th>
                                 <th id="totalQty"></th>
                                 <th></th>
-                                {{-- <th></th>
-                                <th></th> --}}
+                                <th></th>
                                 <th id="HNA"></th>
                                 <th id="grandTTL"></th>
+                                <th id="labaRugi"></th>
                             </tr>
                         </tfoot>
                     </table>
@@ -109,6 +110,7 @@
                             $('#grandTTL').empty();
                             var sumall = 0;
                             var sumallHna = 0;
+                            var sumallLR = 0;
                             var table = $('#penjualan').DataTable();
                             var rows = table
                                 .rows()
@@ -145,12 +147,19 @@
                                     currency: 'IDR'
                                 });
 
+                                var labaRugi = dataRaw - hnaRaw;
+
+                                var labaRugiShow = labaRugi.toLocaleString('id-ID', {
+                                    style: 'currency',
+                                    currency: 'IDR'
+                                });
+
                                 const dataBaru = [
                                     [datavalue.kd_obat,
                                         datavalue.nm_obat, datavalue.fm_golongan_obat, datavalue
                                         .fm_kategori, datavalue.satuan, datavalue.total,
-                                        hrg_obatShow,
-                                        hrg_obatHnaShow, subtotal
+                                        hrg_obatHnaShow,
+                                        hrg_obatShow, hna, subtotal, labaRugiShow
                                     ],
                                 ]
 
@@ -166,6 +175,8 @@
                                             data[6],
                                             data[7],
                                             data[8],
+                                            data[9],
+                                            data[10],
                                         ]).draw(false)
                                     }
                                 }
@@ -190,8 +201,18 @@
                                     currency: 'IDR'
                                 });
 
+                                var ttlIntLR = parseFloat(labaRugi);
+                                sumallLR += ttlIntLR;
+
+                                var numberLR = sumallLR;
+                                var formattedNumberLR = numberLR.toLocaleString('id-ID', {
+                                    style: 'currency',
+                                    currency: 'IDR'
+                                });
+
                                 document.getElementById("HNA").innerHTML = formattedNumberHna;
                                 document.getElementById("grandTTL").innerHTML = formattedNumber;
+                                document.getElementById("labaRugi").innerHTML = formattedNumberLR;
 
                                 toastr.success('Data Load Complete!', 'Complete!', {
                                     timeOut: 2000,

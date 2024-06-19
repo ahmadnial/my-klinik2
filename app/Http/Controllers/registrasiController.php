@@ -206,7 +206,7 @@ class registrasiController extends Controller
     public function deleteDasos(Request $request)
     {
         $delete =  DB::table('tc_mr')->where('fs_mr', $request->fs_mr)->get();
-        dd($delete);
+        // dd($delete);
         $delete->delete();
 
         return back();
