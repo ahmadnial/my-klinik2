@@ -176,7 +176,7 @@ class TindakanController extends Controller
         $request->validate([
             // 'user' => 'required',
             // 'chart_id' => 'required',
-            // 'chart_tgl_trs' => 'required',
+            'chart_tgl_trs' => 'required',
             'chart_kd_reg' => 'required',
             'chart_mr' => 'required',
             'chart_nm_pasien' => 'required',

@@ -594,16 +594,11 @@
                 <input type="hidden" class="form-control" name="tr_tgl_trs" id="tr_tgl_trs"
                     value="{{ $dateNow }}">
 
-                <form action="" method="post" id="CHCreate" class="needs-validation" novalidate
-                    enctype="multipart/form-data">
-                    {{-- @if ($model->id)
-                                @method('PUT')
-                            @endif --}}
-                    @csrf
-                    <div class="col pr-6" id="" style="padding-top: 10px !important;">
-                        <input type="date" class="form-control" name="chart_tgl_trs" id="chart_tgl_trs"
-                            value="{{ $dateNow }}">
-                    </div>
+
+                <div class="col-3 pr-2" id="" style="padding-top: 10px !important;">
+                    <input type="date" class="form-control" name="" id="chart_tgl_trs_select"
+                        value="{{ $dateNow }}" onchange="getTanggalChart()">
+                </div>
             </div>
         </div>
 
@@ -640,11 +635,21 @@
 
         <div class="card" id="chart_soap" style="overflow-y:scroll; overflow-x: hidden; height:650px;">
             <div class="">
-                {{-- <div class="col-12">
+                <form action="" method="post" id="CHCreate" class="needs-validation" novalidate
+                    enctype="multipart/form-data">
+                    {{-- @if ($model->id)
+                                @method('PUT')
+                            @endif --}}
+                    @csrf
+                    <div class="chart_tgl_trs">
+                        <input type="hidden" class="form-control" name="chart_tgl_trs" id="chart_tgl_trs"
+                            value="{{ $dateNow }}">
+                    </div>
+                    {{-- <div class="col-12">
                 </div> --}}
-                {{-- <div class="col"> --}}
-                {{-- <div class="row"> --}}
-                {{-- <div class="container mt-2">
+                    {{-- <div class="col"> --}}
+                    {{-- <div class="row"> --}}
+                    {{-- <div class="container mt-2">
                     <table class="table table-bordered" style="border:none;">
                         <tbody style="background-color:#f5f2e9; border:none">
                             <tr>
@@ -670,261 +675,266 @@
                 </div> --}}
 
 
-                {{-- </div> --}}
-                {{-- </div> --}}
-                {{-- <input type="text" id="chart_id_show" name="chart_id" value=""> --}}
+                    {{-- </div> --}}
+                    {{-- </div> --}}
+                    {{-- <input type="text" id="chart_id_show" name="chart_id" value=""> --}}
 
-                {{-- <div class="float-right">
+                    {{-- <div class="float-right">
             <button class="btn btn-success" data-toggle="modal" data-target="#TambahSOAP"><i class="fa fa-plus"></i>
                 SOAP</button>
         </div> --}}
-                {{-- <div class="card-body"> --}}
-                <div class="row">
-                    <div class="col">
-                        {{-- <div class="card card-info"> --}}
-                        {{-- <div class="card-header">
+                    {{-- <div class="card-body"> --}}
+                    <div class="row">
+                        <div class="col">
+                            {{-- <div class="card card-info"> --}}
+                            {{-- <div class="card-header">
                                     <h3 class="card-title">Form SOAP
                                     </h3>
                                 </div> --}}
-                        {{-- Hidden value --}}
-                        {{-- @php
+                            {{-- Hidden value --}}
+                            {{-- @php
                             $actionUrl = $model->id ? route('route_update', $model) : route('route_store');
                         @endphp --}}
 
-                        <div class="card-body">
-                            <input type="hidden" id="chart_id" name="chart_id" value="">
-                            <input type="hidden" id="chart_kd_reg" name="chart_kd_reg" value="">
-                            {{-- <input type="hidden" id="chart_tgl_trs" name="chart_tgl_trs" value="{{ $dateNow }}"> --}}
-                            <input type="hidden" id="chart_mr" name="chart_mr" value="">
-                            <input type="hidden" id="chart_nm_pasien" name="chart_nm_pasien" value="">
-                            <input type="hidden" id="chart_layanan" name="chart_layanan" value="">
-                            <input type="hidden" id="chart_dokter" name="chart_dokter" value="">
-                            <input type="hidden" id="userActive" name="user" value="{{ Auth::user()->name }}">
-                            {{-- Hidden value --}}
-                            <div class="form-group">
-                                {{-- <label for="inputDescription" style="color: #ed2121">Subjective</label> --}}
-                                <span for="inputDescription"
-                                    style="background-color: #408ef3; border-radius: px; padding-top:5px; 
+                            <div class="card-body">
+                                <input type="hidden" id="chart_id" name="chart_id" value="">
+                                <input type="hidden" id="chart_kd_reg" name="chart_kd_reg" value="">
+                                {{-- <input type="hidden" id="chart_tgl_trs" name="chart_tgl_trs" value="{{ $dateNow }}"> --}}
+                                <input type="hidden" id="chart_mr" name="chart_mr" value="">
+                                <input type="hidden" id="chart_nm_pasien" name="chart_nm_pasien" value="">
+                                <input type="hidden" id="chart_layanan" name="chart_layanan" value="">
+                                <input type="hidden" id="chart_dokter" name="chart_dokter" value="">
+                                <input type="hidden" id="userActive" name="user" value="{{ Auth::user()->name }}">
+                                {{-- Hidden value --}}
+                                <div class="form-group">
+                                    {{-- <label for="inputDescription" style="color: #ed2121">Subjective</label> --}}
+                                    <span for="inputDescription"
+                                        style="background-color: #408ef3; border-radius: px; padding-top:5px; 
                                         padding-bottom:5px; padding-left:10px; padding-right:50px; color: #ffffff"><b>
-                                        SUBJECTIVE</b></span>
-                                {{-- <input class="form-control" style="border: none" id="keluhanutama"> --}}
-                                <textarea id="chart_S" name="chart_S" class="ta_Chart_S form-control" rows="4"></textarea>
-                            </div>
+                                            SUBJECTIVE</b></span>
+                                    {{-- <input class="form-control" style="border: none" id="keluhanutama"> --}}
+                                    <textarea id="chart_S" name="chart_S" class="ta_Chart_S form-control" rows="4"></textarea>
+                                </div>
 
-                            <div class="form-group">
-                                <div class="s_head">
-                                    <div class="btn-group float-right btn-group-xs template-hide" role="group"
-                                        aria-label="Button group with nested dropdown">
-                                        {{-- <button type="button"
+                                <div class="form-group">
+                                    <div class="s_head">
+                                        <div class="btn-group float-right btn-group-xs template-hide" role="group"
+                                            aria-label="Button group with nested dropdown">
+                                            {{-- <button type="button"
                                                 class="btn btn-xs btn-primary mb-1 show-count badge-top-right"
                                                 data-toggle="collapse" data-target="#collapseVitalSign"
                                                 aria-expanded="true" aria-controls="collapseVitalSign"
                                                 data-namainput="attachment-o" data-count="0" id="btnVitalSign">
                                                 Vital Sign
                                             </button> --}}
-                                        <!--span class="badge badge-pill badge-success b_pos" style="color:white;">11</span-->
+                                            <!--span class="badge badge-pill badge-success b_pos" style="color:white;">11</span-->
+                                        </div>
                                     </div>
-                                </div>
-                                <span for="inputDescription"
-                                    style="background-color: #f39140; border-radius: px; padding-top:5px; 
+                                    <span for="inputDescription"
+                                        style="background-color: #f39140; border-radius: px; padding-top:5px; 
                                         padding-bottom:5px; padding-left:10px; padding-right:50px; color: #ffffff"><b>
-                                        OBJECTIVE</b></span>
-                                {{-- VITAL SIGN --}}
-                                <div id="collapseVitalSign" class="bg-light border collapse show col"
-                                    aria-labelledby="headerVitalSign" data-parent="#btnVitalSign" style="">
-                                    <div class="row py-2" id="inputMonitoringMC">
-                                        <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
-                                            <i class="mb-1">Body Weight</i>
-                                            <div class="input-group input-group-sm mb-3">
-                                                <div class="input-group-append input-group-sm">
-                                                    <input type="number" id="ttv_BW" name="ttv_BW" data-satuan="kg"
-                                                        data-monitorname="Body Weight"
-                                                        class="form-control form-control-sm vital-sign" min="0"
-                                                        value="">
-                                                    <span class="input-group-text"
-                                                        style="width:7em; text-align:center">kg</span>
-                                                </div>
+                                            OBJECTIVE</b></span>
+                                    {{-- VITAL SIGN --}}
+                                    <div id="collapseVitalSign" class="bg-light border collapse show col"
+                                        aria-labelledby="headerVitalSign" data-parent="#btnVitalSign" style="">
+                                        <div class="row py-2" id="inputMonitoringMC">
+                                            <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                                <i class="mb-1">Body Weight</i>
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <div class="input-group-append input-group-sm">
+                                                        <input type="number" id="ttv_BW" name="ttv_BW"
+                                                            data-satuan="kg" data-monitorname="Body Weight"
+                                                            class="form-control form-control-sm vital-sign" min="0"
+                                                            value="">
+                                                        <span class="input-group-text"
+                                                            style="width:7em; text-align:center">kg</span>
+                                                    </div>
 
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
-                                            <i class="mb-1">Body Height</i>
-                                            <div class="input-group input-group-sm mb-3">
-                                                <div class="input-group-append input-group-sm">
-                                                    <input type="number" id="ttv_BH" name="ttv_BH" data-satuan="cm"
-                                                        data-monitorname="Body Height"
-                                                        class="form-control form-control-sm vital-sign" min="0"
-                                                        value="">
-                                                    <span class="input-group-text"
-                                                        style="width:7em; text-align:center">cm</span>
                                                 </div>
+                                            </div>
+                                            <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                                <i class="mb-1">Body Height</i>
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <div class="input-group-append input-group-sm">
+                                                        <input type="number" id="ttv_BH" name="ttv_BH"
+                                                            data-satuan="cm" data-monitorname="Body Height"
+                                                            class="form-control form-control-sm vital-sign" min="0"
+                                                            value="">
+                                                        <span class="input-group-text"
+                                                            style="width:7em; text-align:center">cm</span>
+                                                    </div>
 
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
-                                            <i class="mb-1">Blood Pressure Sistole</i>
-                                            <div class="input-group input-group-sm mb-3">
-                                                <div class="input-group-append input-group-sm">
-                                                    <input type="number" id="ttv_BPs" name="ttv_BPs"
-                                                        data-satuan="mmHg" data-monitorname="Blood Pressure Sistole"
-                                                        class="form-control form-control-sm vital-sign" min="0"
-                                                        value="">
-                                                    <span class="input-group-text"
-                                                        style="width:7em; text-align:center">mmHg</span>
                                                 </div>
-                                                {{-- <div class="invalid-feedback">
+                                            </div>
+                                            <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                                <i class="mb-1">Blood Pressure Sistole</i>
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <div class="input-group-append input-group-sm">
+                                                        <input type="number" id="ttv_BPs" name="ttv_BPs"
+                                                            data-satuan="mmHg" data-monitorname="Blood Pressure Sistole"
+                                                            class="form-control form-control-sm vital-sign" min="0"
+                                                            value="">
+                                                        <span class="input-group-text"
+                                                            style="width:7em; text-align:center">mmHg</span>
+                                                    </div>
+                                                    {{-- <div class="invalid-feedback">
                                                         Please..dont let me blank
                                                     </div> --}}
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
-                                            <i class="mb-1">Blood Pressure Diastole</i>
-                                            <div class="input-group input-group-sm mb-3">
-                                                <div class="invalid-feedback" id="feedbackLoadBPd"
-                                                    style="display: none;">load restricted, data &gt; 2 jam
-                                                    yang
-                                                    lalu !
-                                                </div>
-                                                <div class="invalid-feedback" id="feedbackLoadEmptyBPd"
-                                                    style="display: none;">data not found !</div>
-                                                <div class="valid-feedback text-info" id="feedbackLoadSuccessBPd"
-                                                    style="display: none;">load
-                                                    success</div>
-                                                <div class="input-group-append input-group-sm">
-                                                    <input type="number" id="ttv_BPd" name="ttv_BPd"
-                                                        data-satuan="mmHg" data-monitorname="Blood Pressure Diastole"
-                                                        class="form-control form-control-sm vital-sign" min="0"
-                                                        value="">
-                                                    <span class="input-group-text"
-                                                        style="width:7em; text-align:center">mmHg</span>
-                                                </div>
+                                            <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                                <i class="mb-1">Blood Pressure Diastole</i>
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <div class="invalid-feedback" id="feedbackLoadBPd"
+                                                        style="display: none;">load restricted, data &gt; 2 jam
+                                                        yang
+                                                        lalu !
+                                                    </div>
+                                                    <div class="invalid-feedback" id="feedbackLoadEmptyBPd"
+                                                        style="display: none;">data not found !</div>
+                                                    <div class="valid-feedback text-info" id="feedbackLoadSuccessBPd"
+                                                        style="display: none;">load
+                                                        success</div>
+                                                    <div class="input-group-append input-group-sm">
+                                                        <input type="number" id="ttv_BPd" name="ttv_BPd"
+                                                            data-satuan="mmHg" data-monitorname="Blood Pressure Diastole"
+                                                            class="form-control form-control-sm vital-sign" min="0"
+                                                            value="">
+                                                        <span class="input-group-text"
+                                                            style="width:7em; text-align:center">mmHg</span>
+                                                    </div>
 
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
-                                            <i class="mb-1">Body Temperatur</i>
-                                            <div class="input-group input-group-sm mb-3">
-                                                <div class="invalid-feedback" id="feedbackLoadBT" style="display: none;">
-                                                    load restricted, data &gt; 2 jam
-                                                    yang
-                                                    lalu !
-                                                </div>
-                                                <div class="invalid-feedback" id="feedbackLoadEmptyBT"
-                                                    style="display: none;">data not found !</div>
-                                                <div class="valid-feedback text-info" id="feedbackLoadSuccessBT"
-                                                    style="display: none;">load
-                                                    success</div>
-                                                <div class="input-group-append input-group-sm">
-                                                    <input type="number" id="ttv_BT" name="ttv_BT" data-satuan="°C"
-                                                        data-monitorname="Body Temperatur"
-                                                        class="form-control form-control-sm vital-sign" min="0"
-                                                        value="">
-                                                    <span class="input-group-text"
-                                                        style="width:7em; text-align:center">°C</span>
-                                                </div>
+                                            <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                                <i class="mb-1">Body Temperatur</i>
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <div class="invalid-feedback" id="feedbackLoadBT"
+                                                        style="display: none;">
+                                                        load restricted, data &gt; 2 jam
+                                                        yang
+                                                        lalu !
+                                                    </div>
+                                                    <div class="invalid-feedback" id="feedbackLoadEmptyBT"
+                                                        style="display: none;">data not found !</div>
+                                                    <div class="valid-feedback text-info" id="feedbackLoadSuccessBT"
+                                                        style="display: none;">load
+                                                        success</div>
+                                                    <div class="input-group-append input-group-sm">
+                                                        <input type="number" id="ttv_BT" name="ttv_BT"
+                                                            data-satuan="°C" data-monitorname="Body Temperatur"
+                                                            class="form-control form-control-sm vital-sign" min="0"
+                                                            value="">
+                                                        <span class="input-group-text"
+                                                            style="width:7em; text-align:center">°C</span>
+                                                    </div>
 
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
-                                            <i class="mb-1">Heart Rate</i>
-                                            <div class="input-group input-group-sm mb-3">
-                                                <div class="invalid-feedback" id="feedbackLoadHR" style="display: none;">
-                                                    load restricted, data &gt; 2 jam
-                                                    yang
-                                                    lalu !
-                                                </div>
-                                                <div class="invalid-feedback" id="feedbackLoadEmptyHR"
-                                                    style="display: none;">data not found !</div>
-                                                <div class="valid-feedback text-info" id="feedbackLoadSuccessHR"
-                                                    style="display: none;">load
-                                                    success</div>
-                                                <div class="input-group-append input-group-sm">
-                                                    <input type="number" id="ttv_HR" name="ttv_HR"
-                                                        data-satuan="x/mnt" data-monitorname="Heart Rate"
-                                                        class="form-control form-control-sm vital-sign" min="0"
-                                                        value="">
-                                                    <span class="input-group-text"
-                                                        style="width:7em; text-align:center">x/mnt</span>
-                                                </div>
+                                            <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                                <i class="mb-1">Heart Rate</i>
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <div class="invalid-feedback" id="feedbackLoadHR"
+                                                        style="display: none;">
+                                                        load restricted, data &gt; 2 jam
+                                                        yang
+                                                        lalu !
+                                                    </div>
+                                                    <div class="invalid-feedback" id="feedbackLoadEmptyHR"
+                                                        style="display: none;">data not found !</div>
+                                                    <div class="valid-feedback text-info" id="feedbackLoadSuccessHR"
+                                                        style="display: none;">load
+                                                        success</div>
+                                                    <div class="input-group-append input-group-sm">
+                                                        <input type="number" id="ttv_HR" name="ttv_HR"
+                                                            data-satuan="x/mnt" data-monitorname="Heart Rate"
+                                                            class="form-control form-control-sm vital-sign" min="0"
+                                                            value="">
+                                                        <span class="input-group-text"
+                                                            style="width:7em; text-align:center">x/mnt</span>
+                                                    </div>
 
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
-                                            <i class="mb-1">Respiratory Rate</i>
-                                            <div class="input-group input-group-sm mb-3">
-                                                <div class="invalid-feedback" id="feedbackLoadRR" style="display: none;">
-                                                    load restricted, data &gt; 2 jam
-                                                    yang
-                                                    lalu !
-                                                </div>
-                                                <div class="invalid-feedback" id="feedbackLoadEmptyRR"
-                                                    style="display: none;">data not found !</div>
-                                                <div class="valid-feedback text-info" id="feedbackLoadSuccessRR"
-                                                    style="display: none;">load
-                                                    success</div>
-                                                <div class="input-group-append input-group-sm">
-                                                    <input type="number" id="ttv_RR" name="ttv_RR"
-                                                        data-satuan="x/mnt" data-monitorname="Respiratory Rate"
-                                                        class="form-control form-control-sm vital-sign" min="0"
-                                                        value="">
-                                                    <span class="input-group-text"
-                                                        style="width:7em; text-align:center">x/mnt</span>
-                                                </div>
+                                            <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                                <i class="mb-1">Respiratory Rate</i>
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <div class="invalid-feedback" id="feedbackLoadRR"
+                                                        style="display: none;">
+                                                        load restricted, data &gt; 2 jam
+                                                        yang
+                                                        lalu !
+                                                    </div>
+                                                    <div class="invalid-feedback" id="feedbackLoadEmptyRR"
+                                                        style="display: none;">data not found !</div>
+                                                    <div class="valid-feedback text-info" id="feedbackLoadSuccessRR"
+                                                        style="display: none;">load
+                                                        success</div>
+                                                    <div class="input-group-append input-group-sm">
+                                                        <input type="number" id="ttv_RR" name="ttv_RR"
+                                                            data-satuan="x/mnt" data-monitorname="Respiratory Rate"
+                                                            class="form-control form-control-sm vital-sign" min="0"
+                                                            value="">
+                                                        <span class="input-group-text"
+                                                            style="width:7em; text-align:center">x/mnt</span>
+                                                    </div>
 
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
-                                            <i class="mb-1">Skala Nyeri NRS</i>
-                                            <div class="input-group input-group-sm mb-3">
-                                                <div class="invalid-feedback" id="feedbackLoadSN" style="display: none;">
-                                                    load restricted, data &gt; 2 jam
-                                                    yang
-                                                    lalu !
+                                            <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                                <i class="mb-1">Skala Nyeri NRS</i>
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <div class="invalid-feedback" id="feedbackLoadSN"
+                                                        style="display: none;">
+                                                        load restricted, data &gt; 2 jam
+                                                        yang
+                                                        lalu !
+                                                    </div>
+                                                    <div class="invalid-feedback" id="feedbackLoadEmptySN"
+                                                        style="display: none;">data not found !</div>
+                                                    <div class="valid-feedback text-info" id="feedbackLoadSuccessSN"
+                                                        style="display: none;">load
+                                                        success</div>
+                                                    <div class="input-group-append input-group-sm">
+                                                        <input type="number" id="ttv_SN" name="ttv_SN"
+                                                            data-satuan="" data-monitorname="Skala Nyeri NRS"
+                                                            class="form-control form-control-sm vital-sign" min="0"
+                                                            max="10" value="">
+                                                        <span class="input-group-text"
+                                                            style="width:7em; text-align:center"></span>
+                                                    </div>
+                                                    <div class="invalid-feedback" id="invFeedbackSkalaNyeri">
+                                                        maksimal
+                                                        skala 10 !</div>
                                                 </div>
-                                                <div class="invalid-feedback" id="feedbackLoadEmptySN"
-                                                    style="display: none;">data not found !</div>
-                                                <div class="valid-feedback text-info" id="feedbackLoadSuccessSN"
-                                                    style="display: none;">load
-                                                    success</div>
-                                                <div class="input-group-append input-group-sm">
-                                                    <input type="number" id="ttv_SN" name="ttv_SN" data-satuan=""
-                                                        data-monitorname="Skala Nyeri NRS"
-                                                        class="form-control form-control-sm vital-sign" min="0"
-                                                        max="10" value="">
-                                                    <span class="input-group-text"
-                                                        style="width:7em; text-align:center"></span>
-                                                </div>
-                                                <div class="invalid-feedback" id="invFeedbackSkalaNyeri">
-                                                    maksimal
-                                                    skala 10 !</div>
                                             </div>
-                                        </div>
-                                        <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
-                                            <i class="mb-1">SpO2</i>
-                                            <div class="input-group input-group-sm mb-3">
-                                                <div class="invalid-feedback" id="feedbackLoadSP" style="display: none;">
-                                                    load restricted, data &gt; 2 jam
-                                                    yang
-                                                    lalu !
-                                                </div>
-                                                <div class="invalid-feedback" id="feedbackLoadEmptySP"
-                                                    style="display: none;">data not found !</div>
-                                                <div class="valid-feedback text-info" id="feedbackLoadSuccessSP"
-                                                    style="display: none;">load
-                                                    success</div>
-                                                <div class="input-group-append input-group-sm">
-                                                    <input type="number" id="ttv_SPO2" name="ttv_SPO2" data-satuan="%"
-                                                        data-monitorname="SpO2"
-                                                        class="form-control form-control-sm vital-sign" min="0"
-                                                        value="">
-                                                    <span class="input-group-text"
-                                                        style="width:7em; text-align:center">%</span>
-                                                </div>
+                                            <div class="col-xl-4 col-sm-4 col-xs-6 px-3">
+                                                <i class="mb-1">SpO2</i>
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <div class="invalid-feedback" id="feedbackLoadSP"
+                                                        style="display: none;">
+                                                        load restricted, data &gt; 2 jam
+                                                        yang
+                                                        lalu !
+                                                    </div>
+                                                    <div class="invalid-feedback" id="feedbackLoadEmptySP"
+                                                        style="display: none;">data not found !</div>
+                                                    <div class="valid-feedback text-info" id="feedbackLoadSuccessSP"
+                                                        style="display: none;">load
+                                                        success</div>
+                                                    <div class="input-group-append input-group-sm">
+                                                        <input type="number" id="ttv_SPO2" name="ttv_SPO2"
+                                                            data-satuan="%" data-monitorname="SpO2"
+                                                            class="form-control form-control-sm vital-sign" min="0"
+                                                            value="">
+                                                        <span class="input-group-text"
+                                                            style="width:7em; text-align:center">%</span>
+                                                    </div>
 
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    {{-- <div class="modal-footer p-2">
+                                        {{-- <div class="modal-footer p-2">
                                             <div class="col">
                                                 <div class="btn-group pull-left">
                                                     <button type="button" class="btn btn-sm btn-warning border-radius3"
@@ -938,114 +948,116 @@
                                             <button style="border-radius: 3px; width: 7em; display: none;"
                                                 class="btn btn-sm btn-success" id="saveMonitor">Save</button>
                                         </div> --}}
-                                </div>
-                                {{-- END VITAL SIGN --}}
+                                    </div>
+                                    {{-- END VITAL SIGN --}}
 
-                                <textarea id="chart_O" name="chart_O" class="form-control mt-2" rows="4"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <span for=""
-                                    style="background-color: #d40b47; border-radius: px; padding-top:5px; 
+                                    <textarea id="chart_O" name="chart_O" class="form-control mt-2" rows="4"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <span for=""
+                                        style="background-color: #d40b47; border-radius: px; padding-top:5px; 
                                         padding-bottom:5px; padding-left:10px; padding-right:50px; color: #ffffff"><b>
-                                        ASSESMENT</b></span>
-                                <div class="mb-1"></div>
-                                <select class="chart_A_diagnosa form-control mb-3" style="width: 100%;"
-                                    name="chart_A_diagnosa" id="chart_A_diagnosa" onkeyup="getICDX()">
-                                    {{-- <option value="">--Select--</option> --}}
-                                </select>
-                                <textarea id="chart_A" name="chart_A" class="form-control mt-3 mb-2" rows="4"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <span for=""
-                                    style="background-color: #0cbd2a; border-radius: px; padding-top:5px; 
-                                        padding-bottom:5px; padding-left:10px; padding-right:90px; color: #ffffff"><b>
-                                        PLAN</b></span>
-                                <div class="float-right mb-1">
-                                    <button type="button" id="addTindakann"
-                                        class="btn btn-xs btn-warning floar-right text-white" data-toggle="modal"
-                                        data-target="#addTindakans"><i class="fa fa-plus"></i>&nbsp;Tindakan</button>
-                                    <button type="button" class="btn btn-xs btn-info floar-right" data-toggle="modal"
-                                        data-target="#addResep"><i class="fa fa-plus"></i>&nbsp;Resep</button>
-                                    <button type="button" class="btn btn-xs btn-danger floar-right" data-toggle="modal"
-                                        data-target="#uploadImg"><i class="fa fa-plus"></i>&nbsp;Upload </button>
+                                            ASSESMENT</b></span>
+                                    <div class="mb-1"></div>
+                                    <select class="chart_A_diagnosa form-control mb-3" style="width: 100%;"
+                                        name="chart_A_diagnosa" id="chart_A_diagnosa" onkeyup="getICDX()">
+                                        {{-- <option value="">--Select--</option> --}}
+                                    </select>
+                                    <textarea id="chart_A" name="chart_A" class="form-control mt-3 mb-2" rows="4"></textarea>
                                 </div>
-                                <textarea id="chart_P" name="chart_P" class="form-control" rows="4"></textarea>
-                                <input type="hidden" class="form-control" id="kd_trs" name="kd_trs" readonly>
-                                {{-- <input required type="file" class="form-control" name="images[]"
+                                <div class="form-group">
+                                    <span for=""
+                                        style="background-color: #0cbd2a; border-radius: px; padding-top:5px; 
+                                        padding-bottom:5px; padding-left:10px; padding-right:90px; color: #ffffff"><b>
+                                            PLAN</b></span>
+                                    <div class="float-right mb-1">
+                                        <button type="button" id="addTindakann"
+                                            class="btn btn-xs btn-warning floar-right text-white" data-toggle="modal"
+                                            data-target="#addTindakans"><i class="fa fa-plus"></i>&nbsp;Tindakan</button>
+                                        <button type="button" class="btn btn-xs btn-info floar-right"
+                                            data-toggle="modal" data-target="#addResep"><i
+                                                class="fa fa-plus"></i>&nbsp;Resep</button>
+                                        <button type="button" class="btn btn-xs btn-danger floar-right"
+                                            data-toggle="modal" data-target="#uploadImg"><i
+                                                class="fa fa-plus"></i>&nbsp;Upload </button>
+                                    </div>
+                                    <textarea id="chart_P" name="chart_P" class="form-control" rows="4"></textarea>
+                                    <input type="hidden" class="form-control" id="kd_trs" name="kd_trs" readonly>
+                                    {{-- <input required type="file" class="form-control" name="images[]"
                                         placeholder="address" multiple> --}}
-                            </div>
-                            <div class="card-resep form-group" id="card-resep">
+                                </div>
+                                <div class="card-resep form-group" id="card-resep">
 
-                            </div>
-                            <div class="showOrHideTdk"></div>
-                            {{-- ===============ADD IMAGE MODAL================= --}}
-                            <div class="modal fade" id="uploadImg" role="dialog" aria-labelledby="exampleModalLabel"
-                                aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="indicator"></div>
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel"></h5>
-                                            <button type="button" class="close" data-dismiss="modal"
-                                                aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="container text-center mb-5">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <h4><a href="https://plugins.krajee.com/file-input"
-                                                                target="_blank"><b>File Upload</b></a></h4>
-                                                    </div>
-                                                </div>
+                                </div>
+                                <div class="showOrHideTdk"></div>
+                                {{-- ===============ADD IMAGE MODAL================= --}}
+                                <div class="modal fade" id="uploadImg" role="dialog"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="indicator"></div>
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
                                             </div>
-
-                                            <section class="bg-diffrent">
-                                                <div class="container">
-                                                    <div class="row justify-content-center">
-                                                        <div class="col-xl">
-                                                            <div class="file-upload-contain">
-                                                                <input id="multiplefileupload" type="file"
-                                                                    name="images[]" class="d-none"
-                                                                    accept=".jpg,.gif,.png" multiple>
-                                                            </div>
+                                            <div class="modal-body">
+                                                <div class="container text-center mb-5">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <h4><a href="https://plugins.krajee.com/file-input"
+                                                                    target="_blank"><b>File Upload</b></a></h4>
                                                         </div>
                                                     </div>
-                                                    <div class="showImgEdit" id="showImgEdit"></div>
-                                                    <div class="">
-                                                        <input type="text" class="form-control" value=""
-                                                            name="imgNote" placeholder="Note.." id="imgNote">
-                                                    </div>
                                                 </div>
-                                            </section>
-                                        </div>
-                                        {{-- <div class="row col-md-12 ml-auto mr-auto preview"></div> --}}
-                                        <div class="modal-footer">
-                                            {{-- <button type="button" class="btn btn-secondary btn-sm"
+
+                                                <section class="bg-diffrent">
+                                                    <div class="container">
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-xl">
+                                                                <div class="file-upload-contain">
+                                                                    <input id="multiplefileupload" type="file"
+                                                                        name="images[]" class="d-none"
+                                                                        accept=".jpg,.gif,.png" multiple>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="showImgEdit" id="showImgEdit"></div>
+                                                        <div class="">
+                                                            <input type="text" class="form-control" value=""
+                                                                name="imgNote" placeholder="Note.." id="imgNote">
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                            </div>
+                                            {{-- <div class="row col-md-12 ml-auto mr-auto preview"></div> --}}
+                                            <div class="modal-footer">
+                                                {{-- <button type="button" class="btn btn-secondary btn-sm"
                                                     data-dismiss="modal">Close</button> --}}
-                                            <span class="btn btn-info btn-sm" data-dismiss="modal">Save</span>
+                                                <span class="btn btn-info btn-sm" data-dismiss="modal">Save</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            {{-- ===============END ADD IMAGE MODAL================= --}}
+                                {{-- ===============END ADD IMAGE MODAL================= --}}
 
-                            {{-- <input type="hidden" id="user" name="user_create" value="tes"> --}}
-                        </div>
-                        {{-- </div> --}}
-                        <div class="modal-footer" id="">
-                            <div class="" id="kumpulanButton"></div>
-                            {{-- <button type="button" class="btn btn-primary float-rights">Update</button> --}}
-                            <button id="createSOAPP" class="btn btn-success btn-sm float-rights"><i
-                                    class="fa fa-save"></i>
-                                &nbsp;
-                                Save</button>
-                            {{--
+                                {{-- <input type="hidden" id="user" name="user_create" value="tes"> --}}
+                            </div>
+                            {{-- </div> --}}
+                            <div class="modal-footer" id="">
+                                <div class="" id="kumpulanButton"></div>
+                                {{-- <button type="button" class="btn btn-primary float-rights">Update</button> --}}
+                                <button id="createSOAPP" class="btn btn-success btn-sm float-rights"><i
+                                        class="fa fa-save"></i>
+                                    &nbsp;
+                                    Save</button>
+                                {{--
                         </div> --}}
+                            </div>
                         </div>
                     </div>
-                </div>
             </div>
         </div>
     </div>
@@ -1495,6 +1507,15 @@
 
 @push('scripts')
     <script>
+        function getTanggalChart() {
+            var dateSelect = $('#chart_tgl_trs_select').val();
+            $(".chart_tgl_trs").empty();
+            $(".chart_tgl_trs").append(`
+            <input type="hidden" class="form-control" name="chart_tgl_trs" id="chart_tgl_trs"
+              value="${dateSelect}">
+            `)
+        }
+
         function showAntrianPasien() {
             $('#modalPasienShow').modal('show');
         }
@@ -1630,26 +1651,26 @@
                             `<tbody class="mt-2" id="cardObatList${kd_obat_to}">
                                 <tr class="mt-2">
                                     <td class="mt-2">
-                                        <input type="hidden" class="obatResep form-control" id="ch_kd_obat"
+                                        <input type="text" class="obatResep form-control" id="ch_kd_obat"
                                             name="ch_kd_obat[]" style="width: 100%" value="${kd_obat_to}" readonly>
                                     </td>
                                     <td>
-                                        <input type="hidden" class="form-control" id="ch_nm_obat[]" name="ch_nm_obat[]" value="${nm_obat_to}">
+                                        <input type="text" class="form-control" id="ch_nm_obat[]" name="ch_nm_obat[]" value="${nm_obat_to}">
                                     </td>
                                     <td>
-                                        <input type="hidden" class="form-control" id="ch_hrg_jual[]" name="ch_hrg_jual[]" value="${hrg_obat_to}" readonly>
+                                        <input type="text" class="form-control" id="ch_hrg_jual[]" name="ch_hrg_jual[]" value="${hrg_obat_to}" readonly>
                                     </td>
                                     <td>
-                                        <input type="hidden" class="form-control" id="ch_qty_obat[]" name="ch_qty_obat[]" value="${qty_to}" readonly>
+                                        <input type="text" class="form-control" id="ch_qty_obat[]" name="ch_qty_obat[]" value="${qty_to}" readonly>
                                     </td>
                                     <td>
-                                        <input type="hidden" class="form-control" id="ch_satuan_obat[]" name="ch_satuan_obat[]" value="${satuan_to}" readonly>
+                                        <input type="text" class="form-control" id="ch_satuan_obat[]" name="ch_satuan_obat[]" value="${satuan_to}" readonly>
                                     </td>
                                     <td>
-                                        <input type="hidden" class="form-control" id="ch_signa[]" name="ch_signa[]" value="${signa_to}" readonly>
+                                        <input type="text" class="form-control" id="ch_signa[]" name="ch_signa[]" value="${signa_to}" readonly>
                                     </td>
                                     <td>
-                                        <input type="hidden" class="form-control" id="ch_cara_pakai[]" name="ch_cara_pakai[]" value="${cara_pakai_to}" readonly>
+                                        <input type="text" class="form-control" id="ch_cara_pakai[]" name="ch_cara_pakai[]" value="${cara_pakai_to}" readonly>
                                     </td>                             
                                 </tr>
                             </tbody>`
