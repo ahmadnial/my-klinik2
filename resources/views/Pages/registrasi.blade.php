@@ -21,9 +21,9 @@
     <section class="content">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Registrasi Pasien</h3>
-                <button type="submit" class="btn btn-success float-right" data-toggle="modal"
-                    data-target="#TambahPasien">Registrasi
+                <h2 class="card-title"><i class="fa fa-user-plus"></i>&nbsp;&nbsp;Registrasi Pasien</h2>
+                <button type="submit" class="btn btn-success float-right" data-toggle="modal" data-target="#TambahPasien"><i
+                        class="fa fa-user-plus"></i>&nbsp;&nbsp;Registrasi
                     Pasien</button>
             </div>
 
@@ -31,7 +31,7 @@
                 <div class="button"></div>
                 <div id="result" class="">
                     <table id="example1" class="table table-hover">
-                        <thead class="">
+                        <thead style="background-color: rgb(254, 225, 140)">
                             <tr>
                                 <th>Kode Registrasi</th>
                                 <th>No.MR</th>
@@ -84,8 +84,8 @@
     <div class="modal fade" id="TambahPasien">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header bg-info">
-                    <h4 class="modal-title">Registrasi Pasien</h4>
+                <div class="modal-header" style="background-color: rgb(175, 171, 255)">
+                    <h4 class="modal-title"><i class="fa fa-user-plus"></i>&nbsp; Registrasi Pasien</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
