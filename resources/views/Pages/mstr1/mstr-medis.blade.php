@@ -114,6 +114,11 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="form-group col-sm">
+                        <label for="">SIP</label>
+                        <input type="text" class="form-control" name="fm_nik" id="fm_nik"
+                            placeholder="SIP Dokter">
+                    </div>
                 </div>
                 <div class="modal-footer">
                     {{-- <button type="" class=""></button> --}}
@@ -138,6 +143,7 @@
                 var fm_sip_medis = $('#fm_sip_medis').val();
                 var fm_kadaluarsa_sip = $('#fm_kadaluarsa_sip').val();
                 var fm_layanan = $('#fm_layanan').val();
+                var fm_nik = $('#fm_nik').val();
                 // alert(fm_nm_layanan);
                 if (fm_nm_medis != "") {
                     $.ajax({
@@ -153,6 +159,7 @@
                             fm_sip_medis: fm_sip_medis,
                             fm_kadaluarsa_sip: fm_kadaluarsa_sip,
                             fm_layanan: fm_layanan,
+                            fm_nik: fm_nik,
                         },
                         cache: false,
                         success: function(dataResult) {
