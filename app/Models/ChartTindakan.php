@@ -38,7 +38,8 @@ class ChartTindakan extends Model
         'ttv_HR',
         'ttv_RR',
         'ttv_SN',
-        'ttv_SPO2'
+        'ttv_SPO2',
+        'user_satuan_tugas'
     ];
 
 

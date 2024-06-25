@@ -2677,6 +2677,14 @@
                             var buttonEdit = '';
                             var buttonDelete = '';
                         }
+
+                        var ceksatuanTugas = getValue[getVal].user_satuan_tugas;
+
+                        if (ceksatuanTugas == '2') {
+                            var satuanTugas = 'Medis';
+                        } else if (ceksatuanTugas == '3') {
+                            var satuanTugas = 'Paramedis';
+                        }
                         // const trstdk = getValue[getVal].trstdk;
                         // let html = "";
                         // trstdk.forEach(xkx => {
@@ -2729,6 +2737,10 @@
                                             padding-bottom:4px; padding-left:10px; padding-right:20px; color: #002e0a"><b>
                                             ${getValue[getVal].user}</b>
                                         </span>
+                                        <span style="background-color: #E8E8E8; border-radius: px; padding-top:2px; 
+                                            padding-bottom:4px; padding-bottom:4px; padding-left:10px; padding-right:20px; color: #002e0a"><b>
+                                            ${satuanTugas}</b>
+                                        </span>
                                     </div>
                                     <div class="card-body">
                                          <div class="">
@@ -2776,7 +2788,7 @@
                                                 style="background-color: #E8E8E8; border-radius: px; padding-top:5px; 
                                                 padding-bottom:5px; padding-left:10px; padding-right:90px; color: #002e0a"><b>
                                                     ASSESMENT</b></span>
-                                            <textarea id="" class="show_chart_A form-control mb-3" style="border:none; background-color: #FAFCFE; color: #4A4B90; font-family: arial"" rows="2" readonly>${rmvNullAD}</textarea>
+                                            <textarea id="" class="show_chart_A form-control mb-3" style="border:none; background-color: #FAFCFE; color: #4A4B90; font-family: arial"" rows="2" readonly>${rmvNullAD ?? ''}</textarea>
                                             <textarea id="" class="show_chart_A form-control" rows="4" style="border:none; background-color: #FAFCFE; color: #4A4B90; font-family: arial"" readonly>${rmvNullA}</textarea>
                                         </div>
                                         <hr>
@@ -2789,6 +2801,7 @@
                                             <div class="image_show mt-2 mr-1">${imagesShow}</div>
                                         </div>
                                         <hr>
+                                        
                                         <div class="tindakan callout callout-danger" id="TimelineTdk">
                                             <table class="table-hover">
                                                 <thead class="">

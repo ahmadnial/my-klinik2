@@ -58,10 +58,19 @@ class TindakanController extends Controller
         // dd($continue);
         $isTindakanChart = ChartTindakan::where('chart_mr', '=', $request)->get();
 
-        $isRegActive = registrasiCreate::where([
-            ['fr_tgl_keluar', '=', ''],
-            ['fr_dokter', '=', Auth::user()->name]
-        ])->get();
+        $getSatuanTugas = Auth::user()->role_id;
+
+        if ($getSatuanTugas == '2') {
+            $isRegActive = registrasiCreate::where([
+                ['fr_tgl_keluar', '=', ''],
+                ['fr_dokter', '=', Auth::user()->name]
+            ])->get();
+        } else if ($getSatuanTugas == '3') {
+            $isRegActive = registrasiCreate::where('fr_tgl_keluar', '=', '')->get();
+        } else if ($getSatuanTugas == '1') {
+            $isRegActive = registrasiCreate::where('fr_tgl_keluar', '=', '')->get();
+        }
+
         $listDeAktifasi = DB::table('aktifasi_register')->where('tgl_deaktif', '=', '3000-01-01')->get();
 
         $icdx = mstr_icdx::all();
@@ -228,35 +237,84 @@ class TindakanController extends Controller
             $kd_trs = 'TU' . '-' . $vardate . str_pad(($dec + 1), 8, '0', STR_PAD_LEFT);
         };
 
-        $nerChart = new ChartTindakan;
-        $nerChart->chart_id = $chartId;
-        $nerChart->chart_tgl_trs = $request->chart_tgl_trs;
-        $nerChart->chart_kd_reg  = $request->chart_kd_reg;
-        $nerChart->chart_mr    = $request->chart_mr;
-        $nerChart->chart_nm_pasien = $request->chart_nm_pasien;
-        $nerChart->chart_layanan = $request->chart_layanan;
-        $nerChart->chart_dokter = $request->chart_dokter;
-        $nerChart->user   = Auth::user()->name;
-        $nerChart->chart_S = $request->chart_S;
-        $nerChart->chart_O = $request->chart_O;
-        $nerChart->chart_A    = $request->chart_A;
-        $nerChart->chart_A_diagnosa = $request->chart_A_diagnosa;
-        $nerChart->chart_P = $request->chart_P;
+        $cekSatuanTugas = Auth::user()->role_id;
 
-        $nerChart->ttv_BW = $request->ttv_BW;
-        $nerChart->ttv_BH = $request->ttv_BH;
-        $nerChart->ttv_BPs = $request->ttv_BPs;
-        $nerChart->ttv_BPd = $request->ttv_BPd;
-        $nerChart->ttv_BT = $request->ttv_BT;
-        $nerChart->ttv_HR = $request->ttv_HR;
-        $nerChart->ttv_RR = $request->ttv_RR;
-        $nerChart->ttv_SN = $request->ttv_SN;
-        $nerChart->ttv_SPO2 = $request->ttv_SPO2;
+        if ($cekSatuanTugas == 3) {
+            $nerChart = new ChartTindakan;
+            $nerChart->chart_id = $chartId;
+            $nerChart->chart_tgl_trs = $request->chart_tgl_trs;
+            $nerChart->chart_kd_reg  = $request->chart_kd_reg;
+            $nerChart->chart_mr    = $request->chart_mr;
+            $nerChart->chart_nm_pasien = $request->chart_nm_pasien;
+            $nerChart->chart_layanan = $request->chart_layanan;
+            $nerChart->chart_dokter = $request->chart_dokter;
+            $nerChart->user   = Auth::user()->name;
+            $nerChart->user_satuan_tugas   = Auth::user()->role_id;
+            $nerChart->chart_S = $request->chart_S;
+            $nerChart->chart_O = $request->chart_O;
+            $nerChart->chart_A    = $request->chart_A;
+            $nerChart->chart_A_diagnosa = $request->chart_A_diagnosa;
+            $nerChart->chart_P = $request->chart_P;
 
-        $nerChart->save();
+            $nerChart->ttv_BW = $request->ttv_BW;
+            $nerChart->ttv_BH = $request->ttv_BH;
+            $nerChart->ttv_BPs = $request->ttv_BPs;
+            $nerChart->ttv_BPd = $request->ttv_BPd;
+            $nerChart->ttv_BT = $request->ttv_BT;
+            $nerChart->ttv_HR = $request->ttv_HR;
+            $nerChart->ttv_RR = $request->ttv_RR;
+            $nerChart->ttv_SN = $request->ttv_SN;
+            $nerChart->ttv_SPO2 = $request->ttv_SPO2;
 
-        if ($request->nm_tarif != null) {
-            foreach ($request->nm_tarif as $key => $val) {
+            $nerChart->save();
+        } else {
+            $nerChart = new ChartTindakan;
+            $nerChart->chart_id = $chartId;
+            $nerChart->chart_tgl_trs = $request->chart_tgl_trs;
+            $nerChart->chart_kd_reg  = $request->chart_kd_reg;
+            $nerChart->chart_mr    = $request->chart_mr;
+            $nerChart->chart_nm_pasien = $request->chart_nm_pasien;
+            $nerChart->chart_layanan = $request->chart_layanan;
+            $nerChart->chart_dokter = $request->chart_dokter;
+            $nerChart->user   = Auth::user()->name;
+            $nerChart->user_satuan_tugas   = Auth::user()->role_id;
+            $nerChart->chart_S = $request->chart_S;
+            $nerChart->chart_O = $request->chart_O;
+            $nerChart->chart_A    = $request->chart_A;
+            $nerChart->chart_A_diagnosa = $request->chart_A_diagnosa;
+            $nerChart->chart_P = $request->chart_P;
+
+            $nerChart->ttv_BW = $request->ttv_BW;
+            $nerChart->ttv_BH = $request->ttv_BH;
+            $nerChart->ttv_BPs = $request->ttv_BPs;
+            $nerChart->ttv_BPd = $request->ttv_BPd;
+            $nerChart->ttv_BT = $request->ttv_BT;
+            $nerChart->ttv_HR = $request->ttv_HR;
+            $nerChart->ttv_RR = $request->ttv_RR;
+            $nerChart->ttv_SN = $request->ttv_SN;
+            $nerChart->ttv_SPO2 = $request->ttv_SPO2;
+
+            $nerChart->save();
+
+            if ($request->nm_tarif != null) {
+                foreach ($request->nm_tarif as $key => $val) {
+                    $newData = [
+                        'kd_trs' => $kd_trs,
+                        'chart_id' => $chartId,
+                        'tgl_trs' => $request->chart_tgl_trs,
+                        'layanan' => $request->chart_layanan,
+                        'kd_reg' => $request->chart_kd_reg,
+                        'mr_pasien' => $request->chart_mr,
+                        'nm_pasien' => $request->chart_nm_pasien,
+                        'nm_tarif' => $request->nm_tarif[$key],
+                        'nm_tarif_dasar' => $request->nm_tarif_dasar,
+                        'nm_dokter_jm' => $request->chart_dokter,
+                        'sub_total' => $request->sub_total,
+                        'user' => Auth::user()->name,
+                    ];
+                    trs_chart::create($newData);
+                };
+            } else {
                 $newData = [
                     'kd_trs' => $kd_trs,
                     'chart_id' => $chartId,
@@ -265,111 +323,95 @@ class TindakanController extends Controller
                     'kd_reg' => $request->chart_kd_reg,
                     'mr_pasien' => $request->chart_mr,
                     'nm_pasien' => $request->chart_nm_pasien,
-                    'nm_tarif' => $request->nm_tarif[$key],
                     'nm_tarif_dasar' => $request->nm_tarif_dasar,
                     'nm_dokter_jm' => $request->chart_dokter,
-                    'sub_total' => $request->sub_total,
+                    // 'nm_dokter_jm' => $request->chart_dokter,
+                    // 'sub_total' => $request->sub_total,
                     'user' => Auth::user()->name,
                 ];
                 trs_chart::create($newData);
             };
-        } else {
-            $newData = [
-                'kd_trs' => $kd_trs,
-                'chart_id' => $chartId,
-                'tgl_trs' => $request->chart_tgl_trs,
-                'layanan' => $request->chart_layanan,
-                'kd_reg' => $request->chart_kd_reg,
-                'mr_pasien' => $request->chart_mr,
-                'nm_pasien' => $request->chart_nm_pasien,
-                'nm_tarif_dasar' => $request->nm_tarif_dasar,
-                'nm_dokter_jm' => $request->chart_dokter,
-                // 'nm_dokter_jm' => $request->chart_dokter,
-                // 'sub_total' => $request->sub_total,
-                'user' => Auth::user()->name,
-            ];
-            trs_chart::create($newData);
-        };
 
-        if (!empty($request->ch_kd_obat)) {
-            foreach ($request->ch_kd_obat as $far => $val) {
-                $newDataResep = [
-                    'kd_trs' => $kd_trs,
-                    'chart_id' => $chartId,
-                    'layanan' => $request->chart_layanan,
-                    'tgl_trs' => $request->chart_tgl_trs,
-                    'kd_reg' => $request->chart_kd_reg,
-                    'mr_pasien' => $request->chart_mr,
-                    'nm_pasien' => $request->chart_nm_pasien,
+            if (!empty($request->ch_kd_obat)) {
+                foreach ($request->ch_kd_obat as $far => $val) {
+                    $newDataResep = [
+                        'kd_trs' => $kd_trs,
+                        'chart_id' => $chartId,
+                        'layanan' => $request->chart_layanan,
+                        'tgl_trs' => $request->chart_tgl_trs,
+                        'kd_reg' => $request->chart_kd_reg,
+                        'mr_pasien' => $request->chart_mr,
+                        'nm_pasien' => $request->chart_nm_pasien,
 
-                    'ch_kd_obat' => $request->ch_kd_obat[$far],
-                    'ch_nm_obat' => $request->ch_nm_obat[$far],
-                    'ch_qty_obat' => $request->ch_qty_obat[$far],
-                    'ch_satuan_obat' => $request->ch_satuan_obat[$far],
-                    'ch_signa' => $request->ch_signa[$far],
-                    'ch_cara_pakai' => $request->ch_cara_pakai[$far],
-                    'ch_hrg_jual' => $request->ch_hrg_jual[$far],
-                ];
-                trs_chart_resep::create($newDataResep);
-            };
-        }
-
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $image) {
-                $fileOriginalName = $image->getClientOriginalExtension();
-                $fileNewName = $request->chartId . '-'  . uniqid() . '.' . $fileOriginalName;
-                $image->storeAs('images', $fileNewName, 'public');
-                chart_images::create([
-                    'chart_id' => $chartId,
-                    'chart_noRm' => $request->chart_mr,
-                    'chart_kd_reg' => $request->chart_kd_reg,
-                    'chart_imageName' => $fileNewName,
-                    'chart_note' => $request->imgNote,
-                    'chart_tglTrs' => $request->chart_tgl_trs
-                ]);
+                        'ch_kd_obat' => $request->ch_kd_obat[$far],
+                        'ch_nm_obat' => $request->ch_nm_obat[$far],
+                        'ch_qty_obat' => $request->ch_qty_obat[$far],
+                        'ch_satuan_obat' => $request->ch_satuan_obat[$far],
+                        'ch_signa' => $request->ch_signa[$far],
+                        'ch_cara_pakai' => $request->ch_cara_pakai[$far],
+                        'ch_hrg_jual' => $request->ch_hrg_jual[$far],
+                    ];
+                    trs_chart_resep::create($newDataResep);
+                };
             }
-        }
 
-        // $insertLabel = [];
-        // foreach ($request->ch_kd_obat as $label => $val) {
-        //     $newDataLabel = [
-        //         'reffID' => $request->kd_trs,
-        //         'Tgl' => Carbon::now(),
-        //         'labelType' => 'Prescription (Resep)',
-        //         'pasienID' => $request->chart_mr,
-        //         'layananID' => $request->chart_layanan,
-        //         'kdReg' => $request->chart_kd_reg,
-        //         'pasienName' => $request->chart_nm_pasien,
-        //         'userID' => Auth::user()->name,
-        //         'ketFile' => '',
-        //         'ketHTML' => htmlentities('<tr><td>' . $request->ch_nm_obat[$label] . '</td><td>' . $request->ch_qty_obat[$label] . '</td><td>' . $request->ch_satuan_obat[$label] . '</td><td>' . $request->ch_cara_pakai[$label] . '</td></tr>')
-        //     ];
-        //     $insertLabel[] = $newDataLabel;
-        // };
-        // t_label_timeline::insert($insertLabel);
-        if ($request->ch_kd_obat != '') {
-            $newDataLabel = [
-                'reffID' => $kd_trs,
-                'Tgl' => Carbon::now(),
-                'labelType' => 'Prescription (Resep)',
-                'pasienID' => $request->chart_mr,
-                'layananID' => $request->chart_layanan,
-                'kdReg' => $request->chart_kd_reg,
-                'pasienName' => $request->chart_nm_pasien,
-                'userID' => Auth::user()->name,
-                'ketFile' => '',
-            ];
-            $ketHTML = [];
-            foreach ($request->ch_kd_obat as $label => $val) {
-                $ketHTML[] = htmlentities('<tr><td>' . $request->ch_nm_obat[$label] . '</td><td>' . $request->ch_qty_obat[$label] . '</td><td>' . $request->ch_satuan_obat[$label] . '</td><td>' . $request->ch_cara_pakai[$label] . '</td></tr>');
-            };
-            // array_push($newDataLabel, ['ketHTML' => json_encode($ketHTML)]);
-            // $newDataLabel['ketHTML'][] = json_encode($ketHTML);
-            $newDataLabel['ketHTML'] = json_encode($ketHTML, JSON_UNESCAPED_SLASHES);
-            // dd($ketHTML);
-            // dd($newDataLabel);
-            // $newDataLabel[] = ['ketHTML' => $ketHTML];
-            t_label_timeline::create($newDataLabel);
+            if ($request->hasFile('images')) {
+                foreach ($request->file('images') as $image) {
+                    $fileOriginalName = $image->getClientOriginalExtension();
+                    $fileNewName = $request->chartId . '-'  . uniqid() . '.' . $fileOriginalName;
+                    $image->storeAs('images', $fileNewName, 'public');
+                    chart_images::create([
+                        'chart_id' => $chartId,
+                        'chart_noRm' => $request->chart_mr,
+                        'chart_kd_reg' => $request->chart_kd_reg,
+                        'chart_imageName' => $fileNewName,
+                        'chart_note' => $request->imgNote,
+                        'chart_tglTrs' => $request->chart_tgl_trs
+                    ]);
+                }
+            }
+
+            // $insertLabel = [];
+            // foreach ($request->ch_kd_obat as $label => $val) {
+            //     $newDataLabel = [
+            //         'reffID' => $request->kd_trs,
+            //         'Tgl' => Carbon::now(),
+            //         'labelType' => 'Prescription (Resep)',
+            //         'pasienID' => $request->chart_mr,
+            //         'layananID' => $request->chart_layanan,
+            //         'kdReg' => $request->chart_kd_reg,
+            //         'pasienName' => $request->chart_nm_pasien,
+            //         'userID' => Auth::user()->name,
+            //         'ketFile' => '',
+            //         'ketHTML' => htmlentities('<tr><td>' . $request->ch_nm_obat[$label] . '</td><td>' . $request->ch_qty_obat[$label] . '</td><td>' . $request->ch_satuan_obat[$label] . '</td><td>' . $request->ch_cara_pakai[$label] . '</td></tr>')
+            //     ];
+            //     $insertLabel[] = $newDataLabel;
+            // };
+            // t_label_timeline::insert($insertLabel);
+            if ($request->ch_kd_obat != '') {
+                $newDataLabel = [
+                    'reffID' => $kd_trs,
+                    'Tgl' => Carbon::now(),
+                    'labelType' => 'Prescription (Resep)',
+                    'pasienID' => $request->chart_mr,
+                    'layananID' => $request->chart_layanan,
+                    'kdReg' => $request->chart_kd_reg,
+                    'pasienName' => $request->chart_nm_pasien,
+                    'userID' => Auth::user()->name,
+                    'ketFile' => '',
+                ];
+                $ketHTML = [];
+                foreach ($request->ch_kd_obat as $label => $val) {
+                    $ketHTML[] = htmlentities('<tr><td>' . $request->ch_nm_obat[$label] . '</td><td>' . $request->ch_qty_obat[$label] . '</td><td>' . $request->ch_satuan_obat[$label] . '</td><td>' . $request->ch_cara_pakai[$label] . '</td></tr>');
+                };
+                // array_push($newDataLabel, ['ketHTML' => json_encode($ketHTML)]);
+                // $newDataLabel['ketHTML'][] = json_encode($ketHTML);
+                $newDataLabel['ketHTML'] = json_encode($ketHTML, JSON_UNESCAPED_SLASHES);
+                // dd($ketHTML);
+                // dd($newDataLabel);
+                // $newDataLabel[] = ['ketHTML' => $ketHTML];
+                t_label_timeline::create($newDataLabel);
+            }
         }
 
         DB::commit();
