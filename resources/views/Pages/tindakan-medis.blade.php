@@ -2608,6 +2608,7 @@
                     chart_mr: dataObject
                 },
                 success: function(isTimelineHistory) {
+                    // <button type="" id="isShowCahrtID" class="btn btn-outline-warning btn-xs mr-4">${getValue[getVal].chart_id}</button>
                     // $.each(isTimelineHistory, function(key, getVal) {
                     var getValue = isTimelineHistory;
                     for (var getVal = 0; getVal < getValue.length; getVal++) {
@@ -2702,7 +2703,9 @@
                             "dddd, D MMMM YYYY");
                         var timeView = moment(timeFormat).format(
                             "h:mm:ss a");
-                        $(".isTimeline").append(`
+
+                        if (tindakan == '' || resepShow == '') {
+                            $(".isTimeline").append(`
                     <div class="left card-body" style="padding-right:0; padding-left:0; padding-top: 7px; max-height: 100%;">
                         <div class="row">
                             <div class="col-12 col-md-12 col-sm-12 order-md-1 order-sm-2" style="width:100%;">
@@ -2720,21 +2723,24 @@
                                     <div class="ml-4 mt-2">
                                         ${buttonEdit}
                                         ${buttonDelete}
-                                        <button type="" id="isShowCahrtID" class="btn btn-outline-warning btn-xs mr-4">${getValue[getVal].chart_id}</button>
+                                         <span class="ml-3" style="background-color: #E8E8E8; border-radius: px; padding-top:2px; 
+                                            padding-bottom:4px; padding-left:10px; padding-right:10px; color: #002e0a"><b>
+                                            ${getValue[getVal].chart_id}</b>
+                                        </span>
                                         <span style="background-color: #E8E8E8; border-radius: px; padding-top:2px; 
-                                            padding-bottom:4px; padding-left:10px; padding-right:20px; color: #002e0a"><b>
+                                            padding-bottom:4px; padding-left:10px; padding-right:10px; color: #002e0a"><b>
                                             ${getValue[getVal].chart_kd_reg}</b>
                                         </span>
                                         <span style="background-color: #E8E8E8; border-radius: px; padding-top:2px; 
-                                            padding-bottom:4px; padding-left:10px; padding-right:20px; color: #002e0a"><b>
+                                            padding-bottom:4px; padding-left:10px; padding-right:10px; color: #002e0a"><b>
                                             ${getValue[getVal].chart_mr}</b>
                                         </span>
                                         <span style="background-color: #E8E8E8; border-radius: px; padding-top:2px; 
-                                            padding-bottom:4px; padding-left:10px; padding-right:20px; color: #002e0a"><b>
+                                            padding-bottom:4px; padding-left:10px; padding-right:10px; color: #002e0a"><b>
                                             ${getValue[getVal].chart_layanan}</b>
                                         </span>
                                         <span style="background-color: #E8E8E8; border-radius: px; padding-top:2px; 
-                                            padding-bottom:4px; padding-left:10px; padding-right:20px; color: #002e0a"><b>
+                                            padding-bottom:4px; padding-left:10px; padding-right:10px; color: #002e0a"><b>
                                             ${getValue[getVal].user}</b>
                                         </span>
                                         <span style="background-color: #E8E8E8; border-radius: px; padding-top:2px; 
@@ -2747,7 +2753,7 @@
                                         
                                     </div>
                                     <hr>
-                                        <div class="form-group ">
+                                        <div class="form-group">
                                              <span for=""
                                                 style="background-color: #E8E8E8; border-radius: px; padding-top:5px; 
                                                 padding-bottom:5px; padding-left:10px; padding-right:90px; color: #002e0a"><b>
@@ -2788,7 +2794,6 @@
                                                 style="background-color: #E8E8E8; border-radius: px; padding-top:5px; 
                                                 padding-bottom:5px; padding-left:10px; padding-right:90px; color: #002e0a"><b>
                                                     ASSESMENT</b></span>
-                                            <textarea id="" class="show_chart_A form-control mb-3" style="border:none; background-color: #FAFCFE; color: #4A4B90; font-family: arial"" rows="2" readonly>${rmvNullAD ?? ''}</textarea>
                                             <textarea id="" class="show_chart_A form-control" rows="4" style="border:none; background-color: #FAFCFE; color: #4A4B90; font-family: arial"" readonly>${rmvNullA}</textarea>
                                         </div>
                                         <hr>
@@ -2800,38 +2805,146 @@
                                             <textarea id="" class="show_chart_P form-control" rows="6" style="border:none; background-color: #FAFCFE; color: #4A4B90; font-family: arial"" readonly>${rmvNullP}</textarea>
                                             <div class="image_show mt-2 mr-1">${imagesShow}</div>
                                         </div>
-                                        <hr>
-                                        
-                                        <div class="tindakan callout callout-danger" id="TimelineTdk">
-                                            <table class="table-hover">
-                                                <thead class="">
-                                                    <tr>
-                                                        <th>Tindakan</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="TimelineTdk">
-                                                    ${tindakan}
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <hr>
-                                        <div class="resep callout callout-success">
-                                            <table class="table-hover">
-                                                <thead class="">
-                                                    <tr>
-                                                        <th><i class="fa fa-prescription"></i>&nbsp;Resep</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="TimelineResep">
-                                                        ${resepShow}
-                                                </tbody>
-                                            </table>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>`)
+                        } else {
+                            $(".isTimeline").append(`
+                        <div class="left card-body" style="padding-right:0; padding-left:0; padding-top: 7px; max-height: 100%;">
+                            <div class="row">
+                                <div class="col-12 col-md-12 col-sm-12 order-md-1 order-sm-2" style="width:100%;">
+                                    <div id="accordion">
+                                        <div class="card card-purple card-outline">
+                                            <a class="d-block w-100" data-toggle="collapse" href="#collapse${x++}">
+                                                <div class="card-header">
+                                                    <h4 class="card-title w-100">
+                                                        <input type="text" style="border:none" class="form-control bg-nial"
+                                                        id="" value="${'&nbsp;&nbsp;&nbsp&nbsp;' + dateView + ', ' + timeView}" readonly>
+                                                    </h4>
+                                                </div>
+                                            </a>
+                                    <div id="collapse${x++}" class="collapse show" data-parent="#accordion">
+                                        <div class="ml-4 mt-2">
+                                            ${buttonEdit}
+                                            ${buttonDelete}
+                                            <span class="ml-2" style="background-color: #E8E888; border-radius: px; padding-top:2px; 
+                                                padding-bottom:4px; padding-left:10px; padding-right:10px; color: #002e0a"><b>
+                                                ${getValue[getVal].chart_id}</b>
+                                            </span>
+                                            <span style="background-color: #E8E888; border-radius: px; padding-top:2px; 
+                                                padding-bottom:4px; padding-left:10px; padding-right:10px; color: #002e0a"><b>
+                                                ${getValue[getVal].chart_kd_reg}</b>
+                                            </span>
+                                            <span style="background-color: #E8E888; border-radius: px; padding-top:2px; 
+                                                padding-bottom:4px; padding-left:10px; padding-right:10px; color: #002e0a"><b>
+                                                ${getValue[getVal].chart_mr}</b>
+                                            </span>
+                                            <span style="background-color: #E8E888; border-radius: px; padding-top:2px; 
+                                                padding-bottom:4px; padding-left:10px; padding-right:10px; color: #002e0a"><b>
+                                                ${getValue[getVal].chart_layanan}</b>
+                                            </span>
+                                            <span style="background-color: #E8E888; border-radius: px; padding-top:2px; 
+                                                padding-bottom:4px; padding-left:10px; padding-right:10px; color: #002e0a"><b>
+                                                ${getValue[getVal].user}</b>
+                                            </span>
+                                            <span style="background-color: #E8E888; border-radius: px; padding-top:2px; 
+                                                padding-bottom:4px; padding-bottom:4px; padding-left:10px; padding-right:20px; color: #002e0a"><b>
+                                                ${satuanTugas}</b>
+                                            </span>
+                                        </div>
+                                        <div class="card-body">
+                                             <div class="">
+                                            
+                                        </div>
+                                        <hr>
+                                            <div class="form-group ">
+                                                 <span for=""
+                                                    style="background-color: #E8E8E8; border-radius: px; padding-top:5px; 
+                                                    padding-bottom:5px; padding-left:10px; padding-right:90px; color: #002e0a"><b>
+                                                        SUBJECTIVE</b></span>
+                                                <textarea id="" class="show_chart_S form-control" style="border:none; background-color: #FAFCFE; color: #4A4B90; font-family: arial" rows="6" readonly value="">${getValue[getVal].chart_S}</textarea>
+                                            </div>
+                                            <hr>
+                                            <div class="show_chart_O form-group">
+                                                <span for=""
+                                                    style="background-color: #E8E8E8; border-radius: px; padding-top:5px; 
+                                                    padding-bottom:5px; padding-left:10px; padding-right:90px; color: #002e0a"><b>
+                                                        OBJECTIVE</b></span>
+                                                <table class="table" style="border:none;">
+                                                <tbody style="background-color:#edfafa; border:none">
+                                                    <tr>
+                                                        <td>BW :<b class="text-danger">${getValue[getVal].ttv_BW ?? ''}</b>(Kg)</td>
+                                                        <td>BH :<b class="text-danger">${getValue[getVal].ttv_BH ?? ''}</b>(CM)</td>
+                                                        <td>BT :<b class="text-danger">${getValue[getVal].ttv_BT ?? ''}</b>(&deg;C)</td>
+                                                        
+                                                    </tr>
+                                                    <tr>
+                                                        <td>BPs :<b class="text-danger">${getValue[getVal].ttv_BPs ?? ''}</b>(mmHg)</td>
+                                                        <td>BPd :<b class="text-danger">${getValue[getVal].ttv_BPd ?? ''}</b>(mmHg)</td>
+                                                        <td>HR  :<b class="text-danger">${getValue[getVal].ttv_HR ?? ''}</b>(x/mnt)</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>RR  :<b class="text-danger">${getValue[getVal].ttv_RR ?? ''}</b>(x/mnt)</td>
+                                                        <td>SN  :<b class="text-danger">${getValue[getVal].ttv_SN ?? ''}</b></td>
+                                                        <td>SpO2:<b class="text-danger">${getValue[getVal].ttv_SPO2 ?? ''}</b>(%)</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                                <textarea id="" class="show_chart_O form-control" style="border:none; background-color: #FAFCFE; color: #4A4B90; font-family: arial"" rows="6" readonly>${rmvNullO}</textarea>
+                                            </div>
+                                            <hr>
+                                            <div class="show_chart_A form-group">
+                                                 <span for=""
+                                                    style="background-color: #E8E8E8; border-radius: px; padding-top:5px; 
+                                                    padding-bottom:5px; padding-left:10px; padding-right:90px; color: #002e0a"><b>
+                                                        ASSESMENT</b></span>
+                                                <textarea id="" class="show_chart_A form-control mb-3" style="border:none; background-color: #FAFCFE; color: #4A4B90; font-family: arial"" rows="2" readonly>${rmvNullAD ?? ''}</textarea>
+                                                <textarea id="" class="show_chart_A form-control" rows="4" style="border:none; background-color: #FAFCFE; color: #4A4B90; font-family: arial"" readonly>${rmvNullA}</textarea>
+                                            </div>
+                                            <hr>
+                                            <div class="show_chart_P form-group">
+                                                 <span for=""
+                                                    style="background-color: #E8E8E8; border-radius: px; padding-top:5px; 
+                                                    padding-bottom:5px; padding-left:10px; padding-right:90px; color: #002e0a"><b>
+                                                        PLAN</b></span>
+                                                <textarea id="" class="show_chart_P form-control" rows="6" style="border:none; background-color: #FAFCFE; color: #4A4B90; font-family: arial"" readonly>${rmvNullP}</textarea>
+                                                <div class="image_show mt-2 mr-1">${imagesShow}</div>
+                                            </div>
+                                            <hr>
+                                            
+                                            <div class="tindakan callout callout-danger" id="TimelineTdk">
+                                                <table class="table-hover">
+                                                    <thead class="">
+                                                        <tr>
+                                                            <th>Tindakan</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="TimelineTdk">
+                                                        ${tindakan}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <hr>
+                                            <div class="resep callout callout-success">
+                                                <table class="table-hover">
+                                                    <thead class="">
+                                                        <tr>
+                                                            <th><i class="fa fa-prescription"></i>&nbsp;Resep</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="TimelineResep">
+                                                            ${resepShow}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`)
+                        }
                     }
                 }
             })
