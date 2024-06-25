@@ -2704,7 +2704,7 @@
                         var timeView = moment(timeFormat).format(
                             "h:mm:ss a");
 
-                        if (tindakan == '' || resepShow == '') {
+                        if (ceksatuanTugas == '3') {
                             $(".isTimeline").append(`
                     <div class="left card-body" style="padding-right:0; padding-left:0; padding-top: 7px; max-height: 100%;">
                         <div class="row">
