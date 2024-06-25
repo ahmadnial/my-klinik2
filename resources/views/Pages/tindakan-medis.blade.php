@@ -2745,7 +2745,7 @@
                                         </span>
                                         <span style="background-color: #E8E8E8; border-radius: px; padding-top:2px; 
                                             padding-bottom:4px; padding-bottom:4px; padding-left:10px; padding-right:20px; color: #002e0a"><b>
-                                            ${satuanTugas}</b>
+                                            ${satuanTugas ?? ''}</b>
                                         </span>
                                     </div>
                                     <div class="card-body">
@@ -2851,7 +2851,7 @@
                                             </span>
                                             <span style="background-color: #E8E888; border-radius: px; padding-top:2px; 
                                                 padding-bottom:4px; padding-bottom:4px; padding-left:10px; padding-right:20px; color: #002e0a"><b>
-                                                ${satuanTugas}</b>
+                                                ${satuanTugas ?? ''}</b>
                                             </span>
                                         </div>
                                         <div class="card-body">
