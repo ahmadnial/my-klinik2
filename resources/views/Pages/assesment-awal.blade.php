@@ -26,6 +26,11 @@
         ul ul {
             display: none;
         }
+
+        .imgImtShow {
+            width: 100%;
+            height: auto;
+        }
     </style>
 
     <div class="form-box bg-light p-2" style="overflow-y:scroll;">
@@ -694,6 +699,56 @@
                                             <div class="card-body">
                                                 <div class="f-group">
                                                     <hr>
+                                                    <h5 class="sub-ttl"><b>SKRINING GIZI</b></h5>
+                                                    <hr>
+                                                </div>
+                                            </div>
+                                            <div class="f-group">
+                                                <label for=""></label>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="input-group">
+                                                            <span class="input-group-prepend"><label for=""
+                                                                    class="input-group-text">BB</label>
+                                                            </span>
+                                                            <input type="number" name="fs_sg_bb" id="fs_sg_bb"
+                                                                class="form-control" value="{{ old('') }}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="input-group">
+                                                            <span class="input-group-prepend"><label for=""
+                                                                    class="input-group-text">TB</label>
+                                                            </span>
+                                                            <input type="number" name="fs_sg_tb" id="fs_sg_tb"
+                                                                class="form-control" value="{{ old('') }}"
+                                                                onkeyup="calculateIMT()">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="input-group">
+                                                            <span class="input-group-prepend"><label for=""
+                                                                    class="input-group-text">IMT</label>
+                                                            </span>
+                                                            <input type="text" name="fs_sg_imt" id="fs_sg_imt"
+                                                                class="form-control" value="{{ old('') }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="BMI mt-3">
+                                                    <span class="" style="font-size: 18px">Keterangan IMT :</span>
+                                                    <span class="text-danger" style="font-size: 20px"
+                                                        id="showImtNote"><b>Normal</b></span>
+                                                    <input type="hidden" name="fs_sg_imt_note" id="fs_sg_imt_note">
+                                                </div>
+                                                <div class="imgImt mt-3">
+                                                    <img class="imgImtShow" src="{{ asset('src/img/IMT2.png') }}"
+                                                        alt="" height="" width="">
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="f-group">
+                                                    <hr>
                                                     <h5 class="sub-ttl"><b>INSTRUKSI MEDIS</b></h5>
                                                     <hr>
                                                 </div>
@@ -981,6 +1036,46 @@
 
     @push('scripts')
         <script>
+            // hitung IMT
+            function calculateIMT() {
+                var sgBB = $('#fs_sg_bb').val()
+                var sgTB = $('#fs_sg_tb').val()
+                var konversi = sgTB / 100
+                var tbkuadrat = konversi * konversi
+                var imtResult = sgBB / tbkuadrat
+                $('#fs_sg_imt').val(imtResult.toFixed(2))
+
+                // IMT Result 
+                var imtResults = imtResult.toFixed(2)
+                if (imtResults < 18.50) {
+                    $("#showImtNote").text("Kurus");
+                    $("#fs_sg_imt_note").val("Kurus");
+                } else if (imtResults == 18.50) {
+                    $("#showImtNote").text("Normal");
+                    $("#fs_sg_imt_note").val("Normal");
+                } else if (imtResults > 18.50 && imtResults < 24.90) {
+                    $("#showImtNote").text("Normal");
+                    $("#fs_sg_imt_note").val("Normal");
+                } else if (imtResults == 24.90) {
+                    $("#showImtNote").text("Normal");
+                    $("#fs_sg_imt_note").val("Normal");
+                } else if (imtResults > 25.00 && imtResults < 29.90) {
+                    $("#showImtNote").text("Gemuk");
+                    $("#fs_sg_imt_note").val("Gemuk");
+                } else if (imtResults == 29.90) {
+                    $("#showImtNote").text("Gemuk");
+                    $("#fs_sg_imt_note").val("Gemuk");
+                } else if (imtResults > 29.90 && imtResults < 34.90) {
+                    $("#showImtNote").text("Obesitas 1");
+                    $("#fs_sg_imt_note").val("Obesitas 1");
+                } else if (imtResults == 34.90) {
+                    $("#showImtNote").text("Obesitas 1");
+                    $("#fs_sg_imt_note").val("Obesitas 1");
+                } else if (imtResults > 35.00) {
+                    $("#showImtNote").text("Obesitas 2");
+                    $("#fs_sg_imt_note").val("Obesitas 2");
+                }
+            }
             // Hitung Umur
             function getUmurDetail(dateString) {
                 var today = new Date();

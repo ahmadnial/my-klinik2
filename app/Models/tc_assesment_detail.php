@@ -58,5 +58,11 @@ class tc_assesment_detail extends Model
         'fd_tgl_ttd',
         'fs_jam_ttd',
         'fs_dokter_assessment',
+        'fs_sg_bb',
+        'fs_sg_tb',
+        'fs_sg_imt',
+        'fs_sg_imt_note',
+        'fs_sg_masalah_gizi',
+        'fs_sg_masalah_gizi_note',
     ];
 }
