@@ -746,6 +746,35 @@
                                                         alt="" height="" width="">
                                                 </div>
                                             </div>
+                                            <div class="card-heading">
+                                                <h5 class="sub-ttl">MASALAH GIZI</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="p-2">
+                                                    <label class="kt-radio kt-radio-outline">
+                                                        <input type="radio" name="fb_masalah_gizi" id="fb_masalah_gizi"
+                                                            value="0">Tidak
+                                                        <span></span>
+                                                    </label>
+                                                    <div>
+                                                        <label class="kt-radio kt-radio-outline">
+                                                            <input type="radio" id="fb_masalah_gizi"
+                                                                name="fb_masalah_gizi" value="1">Ya,
+                                                            sebutkan
+                                                            <span></span>
+                                                        </label>
+                                                        <div class="f-group" id="alergi">
+                                                            <ol>
+                                                                <li>
+                                                                    <input type="text" name="fs_rwyt_alergi_1"
+                                                                        id="fb_masalah_gizi_note" class="form-control"
+                                                                        value="">
+                                                                </li>
+                                                            </ol>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="card-body">
                                                 <div class="f-group">
                                                     <hr>
@@ -1308,6 +1337,11 @@
                             $('#fs_N_1').val(datavalue.fs_N_1);
                             $('#fs_R_1').val(datavalue.fs_R_1);
                             $('#fs_S_1').val(datavalue.fs_S_1);
+
+                            $('#fs_sg_bb').val(datavalue.fs_sg_bb);
+                            $('#fs_sg_tb').val(datavalue.fs_sg_tb);
+                            $('#fs_sg_imt').val(datavalue.fs_sg_imt);
+                            $('#fs_sg_imt_note').val(datavalue.fs_sg_imt_note);
 
                             $('#fs_kepala').val(datavalue.fs_kepala);
                             $('#fs_leher').val(datavalue.fs_leher);

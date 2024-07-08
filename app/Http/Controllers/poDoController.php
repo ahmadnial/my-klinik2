@@ -15,6 +15,7 @@ use App\Models\tb_stock;
 use App\Models\tp_detail_item;
 use App\Models\po_hdr;
 use App\Models\po_detail_item;
+use App\Models\tb_stock_detail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -476,6 +477,30 @@ class poDoController extends Controller
                 $toInt = (int)$X;
 
                 tb_stock::whereIn('kd_obat', [$datax])->increment("qty", $toInt);
+            }
+
+            foreach ($request->do_obat as $key => $val) {
+                $dataQtyx =  $request->do_qty[$key];
+                $dataIsix =  $request->do_isi_pembelian[$key];
+                $Xresult = (int)$dataQtyx * (int)$dataIsix;
+                $toIntX = (int)$Xresult;
+                $stockDetail = [
+                    'kd_trs' => $request->do_hdr_kd,
+                    'kd_obat' => $request->do_obat[$key],
+                    'nm_obat' => $request->nm_obat[$key],
+                    'layanan' => 'Farmasi',
+                    'qty' => $toIntX,
+                    'hpp' => $request->do_hrg_beli[$key],
+                    'kd_po' => '',
+                    'kd_do' => $request->do_hdr_kd,
+                    'tgl_do' => $request->tanggal_trs,
+                    'kd_mutasi' => '',
+                    'tgl_mutasi' => '',
+                    'tgl_ed' => $request->do_tgl_exp[$key],
+                    'no_batch' => $request->do_batch_number[$key],
+                    'satuan' => $request->do_satuan_jual[$key],
+                ];
+                tb_stock_detail::create($stockDetail);
             }
 
             if ($request->do_hdr_tgl_tempo) {
