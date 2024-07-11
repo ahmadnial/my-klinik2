@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Session;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\t_label_timeline;
+use App\Models\tb_stock_detail;
 
 class penjualanController extends Controller
 {
@@ -286,6 +287,7 @@ class penjualanController extends Controller
         // }
         DB::beginTransaction();
         // try {
+
         $newData = [
             'kd_trs'        => $request->tp_kd_trs,
             'kd_order_resep' => $request->tp_kd_order,
@@ -367,6 +369,22 @@ class penjualanController extends Controller
 
             tb_stock::where('kd_obat', [$datax])->decrement("qty", $toInt);
         }
+
+        $perusahaan = getenv('PERUSAHAAN');
+        $tipePenjualan = getenv('TIPE_PENJUALAN');
+        if ($perusahaan != 0) {
+            if ($tipePenjualan == 'FEFO') {
+                foreach ($request->kd_obat as $keys => $val) {
+                    $dataObat =  $request->kd_obat[$keys];
+                    $tpPenjualan = tb_stock_detail::whereIn('kd_obat', [$dataObat])->get();
+                    $dataQty =  $request->qty[$keys];
+                    $toInt = (int)$dataQty;
+                    tb_stock_detail::where('kd_obat', [$tpPenjualan])->decrement("qty", $toInt);
+                }
+                // print_r($tpPenjualan);
+            }
+        }
+        // die();
 
         // trs_chart_resep::where('kd_trs', $request->tp_kd_trs)->update(['isImplementasi' => "1"]);
         DB::table('trs_chart_resep')
