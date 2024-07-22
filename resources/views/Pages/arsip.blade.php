@@ -485,7 +485,6 @@
                             }
 
 
-
                             $('.showlistChart').append(`<div class="kt-portlet shadow-sm border border-radius3 p-2 mb-4 ">
                                         <div class="kt-portlet__body" id="content${datavalue.chart_id}">
                                             <div class="kt-widget kt-widget--user-profile-3 border">
