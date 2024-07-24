@@ -8,6 +8,7 @@ use App\Models\mstr_tindakan;
 use Illuminate\Http\Request;
 use App\Models\mstr_layanan;
 use App\Models\mstr_nilai_tindakan;
+use App\Models\satuan_pemeriksaan_lab;
 use App\Models\t_template_order_detail;
 use App\Models\t_template_order_hdr;
 use Yoeunes\Toastr\Toastr;
@@ -331,5 +332,50 @@ class mastersatuController extends Controller
             toastr()->error('Some Error Occured!');
             return back();
         }
+    }
+
+     public function satuanPemeriksaanLab()
+    {
+        // $num = str_pad(001, 3, 0, STR_PAD_LEFT);
+
+        // $cekid = mstr_layanan::count();
+        // if ($cekid == 0) {
+        //     $kd_layanan =  'ST'  . $num;
+        // } else {
+        //     $continue = mstr_layanan::all()->last();
+        //     $de = substr($continue->fm_kd_layanan, -3);
+        //     $kd_layanan = 'LA' . str_pad(($de + 1), 3, '0', STR_PAD_LEFT);
+        // }
+
+        $isview = satuan_pemeriksaan_lab::all();
+
+        return view('pages.mstr1.satuan-pemeriksaan-lab', ['isview' => $isview]);
+    }
+
+      public function addSatuanPemeriksaan(Request $request)
+    {
+        $request->validate([
+            'nm_satuan' => 'required',
+        ]);
+
+        satuan_pemeriksaan_lab::create($request->all());
+    }
+
+     public function jenisPemeriksaanLab()
+    {
+        // $num = str_pad(001, 3, 0, STR_PAD_LEFT);
+
+        // $cekid = mstr_layanan::count();
+        // if ($cekid == 0) {
+        //     $kd_layanan =  'ST'  . $num;
+        // } else {
+        //     $continue = mstr_layanan::all()->last();
+        //     $de = substr($continue->fm_kd_layanan, -3);
+        //     $kd_layanan = 'LA' . str_pad(($de + 1), 3, '0', STR_PAD_LEFT);
+        // }
+
+        $isview = satuan_pemeriksaan_lab::all();
+
+        return view('pages.mstr1.jenis-pemeriksaan-lab');
     }
 }

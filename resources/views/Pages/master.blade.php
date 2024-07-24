@@ -271,6 +271,26 @@
                                     </p>
                                 </a>
                             </li>
+
+                              <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    {{-- <i class="nav-icon fas fa-bed"></i> --}}
+                                    <i class="nav-icon fa fa-light fa-heartbeat"></i>
+                                    <p>
+                                        Laboratorium
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ url('/purchase-order') }}" class="nav-link">
+                                            <i class="fas fa-cart-plus nav-icon"></i>
+                                            <p>Pemeriksaan </p>
+                                        </a>
+                                    </li>
+                                    
+                                </ul>
+                            </li>
                             {{-- @endif --}}
 
                             {{-- @if (auth()->user()->role_id == '4' || '1') --}}
@@ -617,6 +637,30 @@
                                         </li>
                                     </ul>
                                 </li>
+                                  <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    {{-- <i class="nav-icon fas fa-bed"></i> --}}
+                                    <i class="nav-icon fa fa-light fa-heartbeat"></i>
+                                    <p>
+                                        Laboratorium
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ url('/satuan-pemeriksaan-lab') }}" class="nav-link">
+                                            <i class="fas fa-gear nav-icon"></i>
+                                            <p>Satuan Pemeriksaan</p>
+                                        </a>
+                                    </li>
+                                     <li class="nav-item">
+                                        <a href="{{ url('/jenis-pemeriksaan-lab') }}" class="nav-link">
+                                            <i class="fas fa-gear nav-icon"></i>
+                                            <p>Jenis Pemeriksaan</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
 
                                 <li class="nav-header">TOOLS</li>
                                 <li class="nav-item">
