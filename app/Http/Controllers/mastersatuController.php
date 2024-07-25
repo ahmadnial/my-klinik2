@@ -372,41 +372,47 @@ class mastersatuController extends Controller
             $kd_jenis =  'JL'  . $num;
         } else {
             $continue = jenis_pemeriksaan_lab_hdr::all()->last();
-            $de = substr($continue->fm_kd_layanan, -3);
+            $de = substr($continue->kd_jenis_pemeriksaan_lab, -3);
             $kd_jenis = 'JL' . str_pad(($de + 1), 3, '0', STR_PAD_LEFT);
         }
 
         $isview = jenis_pemeriksaan_lab_hdr::all();
+        $satuan = satuan_pemeriksaan_lab::all();
 
-        return view('pages.mstr1.jenis-pemeriksaan-lab',['kd_jenis' => $kd_jenis], ['isview' => $isview]);
+
+        return view('pages.mstr1.jenis-pemeriksaan-lab',['kd_jenis' => $kd_jenis,'satuan' => $satuan,'isData' => $isview]);
     }
 
     public function addJenisPemeriksaan(Request $request)
     {
         $request->validate([
-            'nm_satuan' => 'required',
+            'kd_jenis_pemeriksaan' => 'required',
+            'nm_jenis_pemeriksaan' => 'required',
+            'satuan_hasil' => 'required',
+            'ket_normal' => 'required',
         ]);
 
         DB::beginTransaction();
         try {
         $newData = [
-            'kd_jenis_pemeriksaan_lab'        => $request->kd_jenis_pemeriksaan_lab,
-            'nm_jenis_pemeriksaan_lab' => $request->nm_jenis_pemeriksaan_lab,
-            'satuan_hasil' => $request->satuan_hasil,
-            'grup_periksa_sub'        => $request->grup_periksa_sub,
-            'metode_uji'        => $request->metode_uji,
-                            'user' => Auth::user()->name,
+            'kd_jenis_pemeriksaan_lab'  => $request->kd_jenis_pemeriksaan,
+            'nm_jenis_pemeriksaan_lab'  => $request->nm_jenis_pemeriksaan,
+            'satuan_hasil'              => $request->satuan_hasil,
+            'grup_periksa_sub'          => $request->grup_periksa_sub,
+            'metode_uji'                => $request->metode_uji,
+            'user'                      => Auth::user()->name,
 
-        ];
+        ];  
         jenis_pemeriksaan_lab_hdr::create($newData);
 
         foreach ($request->jenis_kelamin as $key => $xf) {
             $tpdetail = [
-                'kd_jenis_pemeriksaan_lab'    => $request->kd_jenis_pemeriksaan_lab,
+                'kd_jenis_pemeriksaan_lab'    => $request->kd_jenis_pemeriksaan,
                 'jenis_kelamin'    => $request->jenis_kelamin[$key],
                 'batas_atas'   => $request->batas_atas[$key],
                 'batas_bawah'   => $request->batas_bawah[$key],
                 'ket_normal'   => $request->ket_normal[$key],
+                
             ];
             jenis_pemeriksaan_lab_detail::create($tpdetail);
         }

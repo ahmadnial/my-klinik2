@@ -24,7 +24,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($isview as $tz)
+                            @foreach ($isData as $tz)
                                 <td id="">{{ $tz->kd_jenis_pemeriksaan_lab }}</td>
                                 <td id="">{{ $tz->nm_jenis_pemeriksaan_lab }}</td>
                                 <td id="">{{ $tz->satuan_hasil }}</td>
@@ -54,7 +54,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ url('add-jenis-pemeriksaan') }}" onkeydown="return event.key != 'Enter';" method="post">
+                <form action="{{ url('add-jenis-pemeriksaan') }}" method="post" onkeydown="return event.key != 'Enter';" >
                 @csrf
                 <div class="modal-body">
                     <div class="row">
@@ -71,7 +71,10 @@
                         <div class="form-group col-sm-6">
                             <label for="">Satuan Hasil</label>
                             <select name="satuan_hasil" id="satuan_hasil" class="form-control form-control-sm">
-                                <option value="">Pilih Satuan Hasil</option>
+                                <option value="">___Pilih___</option>
+                                @foreach ($satuan as $st)
+                                <option value="{{ $st->nm_satuan}}">{{ $st->nm_satuan }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group col-sm-6">
@@ -155,7 +158,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="buat" class="btn btn-success float-right"><i
+                    <button type="submit" id="buat" class="btn btn-success float-right"><i
                             class="fa fa-save"></i>
                         &nbsp;
                         Save</button>
@@ -198,50 +201,50 @@
 
         @push('scripts')
             <script>
-                $(document).ready(function() {
-                    $('#buat').on('click', function() {
-                        var fm_kd_supplier = $('#fm_kd_supplier').val();
-                        var fm_nm_supplier = $('#fm_nm_supplier').val();
-                        var fm_email = $('#fm_email').val();
-                        var fm_no_tlp = $('#fm_no_tlp').val();
-                        var fm_alamat = $('#fm_alamat').val();
-                        var fm_kota = $('#fm_kota').val();
-                        var fm_kd_pos = $('#fm_kd_pos').val();
-                        var fm_npwp = $('#fm_npwp').val();
-                        if (fm_nm_supplier != "") {
-                            $.ajax({
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                },
-                                url: "{{ route('add-mstr-supplier') }}",
-                                type: "POST",
-                                data: {
-                                    type: 2,
-                                    fm_kd_supplier: fm_kd_supplier,
-                                    fm_nm_supplier: fm_nm_supplier,
-                                    fm_email: fm_email,
-                                    fm_no_tlp: fm_no_tlp,
-                                    fm_alamat: fm_alamat,
-                                    fm_kota: fm_kota,
-                                    fm_kd_pos: fm_kd_pos,
-                                    fm_npwp: fm_npwp
-                                },
-                                cache: false,
-                                success: function(dataResult) {
-                                    // $('.close').click();
-                                    // document.getElementById("fm_nm_kategori_produk").value = "";
-                                    toastr.success('Saved!', 'Your fun', {
-                                        timeOut: 2000,
-                                        preventDuplicates: true,
-                                        positionClass: 'toast-top-right',
-                                    });
-                                    return window.location.href = "{{ url('mstr-supplier') }}";
-                                }
-                            });
-                        } else {
-                            alert('Please fill all the field !');
-                        }
-                    });
-                });
+                // $(document).ready(function() {
+                //     $('#buat').on('click', function() {
+                //         var fm_kd_supplier = $('#fm_kd_supplier').val();
+                //         var fm_nm_supplier = $('#fm_nm_supplier').val();
+                //         var fm_email = $('#fm_email').val();
+                //         var fm_no_tlp = $('#fm_no_tlp').val();
+                //         var fm_alamat = $('#fm_alamat').val();
+                //         var fm_kota = $('#fm_kota').val();
+                //         var fm_kd_pos = $('#fm_kd_pos').val();
+                //         var fm_npwp = $('#fm_npwp').val();
+                //         if (fm_nm_supplier != "") {
+                //             $.ajax({
+                //                 headers: {
+                //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                //                 },
+                //                 url: "{{ route('add-mstr-supplier') }}",
+                //                 type: "POST",
+                //                 data: {
+                //                     type: 2,
+                //                     fm_kd_supplier: fm_kd_supplier,
+                //                     fm_nm_supplier: fm_nm_supplier,
+                //                     fm_email: fm_email,
+                //                     fm_no_tlp: fm_no_tlp,
+                //                     fm_alamat: fm_alamat,
+                //                     fm_kota: fm_kota,
+                //                     fm_kd_pos: fm_kd_pos,
+                //                     fm_npwp: fm_npwp
+                //                 },
+                //                 cache: false,
+                //                 success: function(dataResult) {
+                //                     // $('.close').click();
+                //                     // document.getElementById("fm_nm_kategori_produk").value = "";
+                //                     toastr.success('Saved!', 'Your fun', {
+                //                         timeOut: 2000,
+                //                         preventDuplicates: true,
+                //                         positionClass: 'toast-top-right',
+                //                     });
+                //                     return window.location.href = "{{ url('mstr-supplier') }}";
+                //                 }
+                //             });
+                //         } else {
+                //             alert('Please fill all the field !');
+                //         }
+                //     });
+                // });
             </script>
         @endpush
