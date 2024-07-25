@@ -92,6 +92,7 @@ Route::group(['middleware' => ['auth', 'checkrole:1']], function () {
     Route::post('add-mstr-jaminan', [mastersatuController::class, 'jaminanCreate'])->name('add-mstr-jaminan');
     Route::post('add-mstr-tindakan', [mastersatuController::class, 'tindakanCreate'])->name('add-mstr-tindakan');
     Route::post('add-mstr-nilai-tindakan', [mastersatuController::class, 'nilaiTindakanCreate'])->name('add-mstr-nilai-tindakan');
+    Route::post('add-jenis-pemeriksaan', [mastersatuController::class, 'addJenisPemeriksaan'])->name('add-jenis-pemeriksaan');
 });
 
 // MSTR SATU GET DOKTER

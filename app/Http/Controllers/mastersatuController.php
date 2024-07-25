@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\jenis_pemeriksaan_lab_detail;
+use App\Models\jenis_pemeriksaan_lab_hdr;
 use App\Models\mstr_dokter;
 use App\Models\mstr_jaminan;
 use App\Models\mstr_tindakan;
@@ -363,19 +365,58 @@ class mastersatuController extends Controller
 
      public function jenisPemeriksaanLab()
     {
-        // $num = str_pad(001, 3, 0, STR_PAD_LEFT);
+        $num = str_pad(001, 3, 0, STR_PAD_LEFT);
 
-        // $cekid = mstr_layanan::count();
-        // if ($cekid == 0) {
-        //     $kd_layanan =  'ST'  . $num;
-        // } else {
-        //     $continue = mstr_layanan::all()->last();
-        //     $de = substr($continue->fm_kd_layanan, -3);
-        //     $kd_layanan = 'LA' . str_pad(($de + 1), 3, '0', STR_PAD_LEFT);
-        // }
+        $cekid = jenis_pemeriksaan_lab_hdr::count();
+        if ($cekid == 0) {
+            $kd_jenis =  'JL'  . $num;
+        } else {
+            $continue = jenis_pemeriksaan_lab_hdr::all()->last();
+            $de = substr($continue->fm_kd_layanan, -3);
+            $kd_jenis = 'JL' . str_pad(($de + 1), 3, '0', STR_PAD_LEFT);
+        }
 
-        $isview = satuan_pemeriksaan_lab::all();
+        $isview = jenis_pemeriksaan_lab_hdr::all();
 
-        return view('pages.mstr1.jenis-pemeriksaan-lab');
+        return view('pages.mstr1.jenis-pemeriksaan-lab',['kd_jenis' => $kd_jenis], ['isview' => $isview]);
+    }
+
+    public function addJenisPemeriksaan(Request $request)
+    {
+        $request->validate([
+            'nm_satuan' => 'required',
+        ]);
+
+        DB::beginTransaction();
+        try {
+        $newData = [
+            'kd_jenis_pemeriksaan_lab'        => $request->kd_jenis_pemeriksaan_lab,
+            'nm_jenis_pemeriksaan_lab' => $request->nm_jenis_pemeriksaan_lab,
+            'satuan_hasil' => $request->satuan_hasil,
+            'grup_periksa_sub'        => $request->grup_periksa_sub,
+            'metode_uji'        => $request->metode_uji,
+                            'user' => Auth::user()->name,
+
+        ];
+        jenis_pemeriksaan_lab_hdr::create($newData);
+
+        foreach ($request->jenis_kelamin as $key => $xf) {
+            $tpdetail = [
+                'kd_jenis_pemeriksaan_lab'    => $request->kd_jenis_pemeriksaan_lab,
+                'jenis_kelamin'    => $request->jenis_kelamin[$key],
+                'batas_atas'   => $request->batas_atas[$key],
+                'batas_bawah'   => $request->batas_bawah[$key],
+                'ket_normal'   => $request->ket_normal[$key],
+            ];
+            jenis_pemeriksaan_lab_detail::create($tpdetail);
+        }
+            DB::commit();
+            toastr()->success('Data Tersimpan!');
+            return back();
+        } catch (\Exception $e) {
+            DB::rollback();
+            toastr()->error('Gagal Tersimpan!');
+            return back();
+        }
     }
 }

@@ -11,37 +11,33 @@
 
             <div class="card-body">
                 <div id="">
-                    <table id="example2" class="table table-hover">
+                    <table id="example2" class="table table-hover table-bordered table-striped">
                         <thead class="">
                             <tr>
-                                <th>Kode Supplier</th>
-                                <th>Supplier</th>
-                                <th>Email</th>
-                                <th>No.Tlp</th>
-                                <th>Alamat</th>
-                                <th>Kota</th>
-                                <th>Kode POS</th>
-                                <th>NPWP</th>
+                                <th>Kode</th>
+                                <th>Nama Jenis Pemeriksaan</th>
+                                <th>Satuan Hasil</th>
+                                <th>Grup PEriksa</th>
+                                <th>Metode Uji</th>
+                                <th>Created By</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach ($supplier as $tz)
-                                <td id="">{{ $tz->fm_kd_supplier }}</td>
-                                <td id="">{{ $tz->fm_nm_supplier }}</td>
-                                <td id="">{{ $tz->fm_email }}</td>
-                                <td id="">{{ $tz->fm_no_tlp }}</td>
-                                <td id="">{{ $tz->fm_alamat }}</td>
-                                <td id="">{{ $tz->fm_kota }}</td>
-                                <td id="">{{ $tz->fm_kd_pos }}</td>
-                                <td id="">{{ $tz->fm_npwp }}</td>
+                            @foreach ($isview as $tz)
+                                <td id="">{{ $tz->kd_jenis_pemeriksaan_lab }}</td>
+                                <td id="">{{ $tz->nm_jenis_pemeriksaan_lab }}</td>
+                                <td id="">{{ $tz->satuan_hasil }}</td>
+                                <td id="">{{ $tz->grup_periksa_sub }}</td>
+                                <td id="">{{ $tz->metode_uji }}</td>
+                                <td id="">{{ $tz->user }}</td>
                                 <td><button class="btn btn-xs btn-success" data-toggle="modal"
-                                        data-target="#EditSupplier{{ $tz->fm_kd_supplier }}">Edit</button>
+                                        data-target="#EditSupplier{{ $tz->kd_jenis_pemeriksaan_lab }}">Edit</button>
                                     <button class="btn btn-xs btn-danger" data-toggle="modal"
-                                        data-target="#DeleteSupplier{{ $tz->fm_kd_supplier }}">Hapus</button>
+                                        data-target="#DeleteSupplier{{ $tz->kd_jenis_pemeriksaan_lab }}">Hapus</button>
                                 </td>
                         </tbody>
-                        @endforeach --}}
+                        @endforeach
                     </table>
                 </div>
             </div>
@@ -53,65 +49,119 @@
         <div class="modal-dialog modal-lg ">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Tambah Supplier</h4>
+                    <h4 class="modal-title">Tambah Jenis Pemeriksaan</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+                <form action="{{ url('add-jenis-pemeriksaan') }}" onkeydown="return event.key != 'Enter';" method="post">
+                @csrf
                 <div class="modal-body">
                     <div class="row">
                         <div class="form-group col-sm-6">
                             <label for="">Kode</label>
-                            <input type="text" class="form-control" name="kd_jenis_pemeriksaan" id="kd_jenis_pemeriksaan" readonly
-                                value="">
+                            <input type="text" class="form-control form-control-sm" name="kd_jenis_pemeriksaan" id="kd_jenis_pemeriksaan" readonly
+                                value="{{$kd_jenis}}">
                         </div>
                         <div class="form-group col-sm-6">
                             <label for="">Nama Jenis Pemeriksaan</label>
-                            <input type="text" class="form-control" name="nm_jenis_pemeriksaan" id="nm_jenis_pemeriksaan"
-                                value="" placeholder="Input Nama Supplier" required>
+                            <input type="text" class="form-control form-control-sm" name="nm_jenis_pemeriksaan" id="nm_jenis_pemeriksaan"
+                                value="" placeholder="Input Nama jenis Pemeriksaan" required>
                         </div>
                         <div class="form-group col-sm-6">
                             <label for="">Satuan Hasil</label>
-                            <select name="satuan_hasil" id="">
+                            <select name="satuan_hasil" id="satuan_hasil" class="form-control form-control-sm">
                                 <option value="">Pilih Satuan Hasil</option>
                             </select>
                         </div>
                         <div class="form-group col-sm-6">
-                            <label for="">No. Telephone</label>
-                            <input type="number" class="form-control" name="fm_no_tlp" id="fm_no_tlp" value=""
-                                placeholder="Input Nomor Telephone">
+                            <label for="">Grup Periksa Sub</label>
+                            <select name="grup_periksa_sub" id="grup_periksa_sub" class="form-control form-control-sm">
+                                <option value="">Pilih Satuan Hasil</option>
+                            </select>
                         </div>
-                        <div class="form-group col-sm-6">
-                            <label for="">Alamat</label>
-                            <textarea class="form-control" name="fm_alamat" id="fm_alamat" value="" rows="2"></textarea>
-                        </div>
-                        <div class="form-group col-sm-6">
-                            <label for="">Kota</label>
-                            <input type="text" class="form-control" name="fm_kota" id="fm_kota" value=""
-                                placeholder="Input Kota">
-                        </div>
-                        <div class="form-group col-sm-6">
-                            <label for="">Kode POS</label>
-                            <input type="text" class="form-control" name="fm_kd_pos" id="fm_kd_pos" value=""
-                                placeholder="Input Kode POS">
-                        </div>
-                        <div class="form-group col-sm-6">
-                            <label for="">NPWP</label>
-                            <input type="text" class="form-control" name="fm_npwp" id="fm_npwp" value=""
-                                placeholder="NPWP">
+                         <div class="form-group col-sm-6">
+                            <label for="">Metode Uji</label>
+                            <select name="metode_uji" id="metode_uji" class="form-control form-control-sm">
+                                <option value="">Pilih Satuan Hasil</option>
+                            </select>
                         </div>
 
-                        <div class="modal-footer">
-                            {{-- <button type="" class=""></button> --}}
-                            <button type="button" id="buat" class="btn btn-success float-right"><i
-                                    class="fa fa-save"></i>
-                                &nbsp;
-                                Save</button>
-                        </div>
+                    </div>
+                    <hr>
+                    <h5 class="text-center">Nilai Rujukan</h5>
+                    <div class="value-nilai-rujukan">
+                        <table class="table table-scroll table-stripped table-bordered">
+                            <thead style="background-color: rgb(205, 218, 243)">
+                                <tr>
+                                    <th width="">Sex</th>
+                                    <th width="">Batas Atas</th>
+                                    <th width="">Batas Bawah</th>
+                                    <th width="">Keterangan Normal</th>
+                                </tr>
+                            </thead>
+
+                            <tbody class="" id="">
+                                <tr>
+                                     <td>
+                                        <select name="jenis_kelamin[]" id="jenis_kelamin" class="form-control form-control-sm">
+                                            <option value="">Pilih</option>
+                                            <option value="Pria">Pria</option>
+                                            <option value="Wanita">Wanita</option>
+                                        </select>
+                                     </td>
+                                     <td>
+                                         <input class="form-control form-control-sm" id="batas_atas"
+                                             name="batas_atas[]" aria-placeholder="" value="" >
+                                     </td>
+                                     <td>
+                                         <input type="text" class="form-control-sm form-control"
+                                             id="batas_bawah" name="batas_bawah[]" 
+                                             value="">
+                                     </td>
+                                      <td>
+                                         <input type="text" class="form-control-sm form-control"
+                                             id="ket_normal" name="ket_normal[]" 
+                                             value="">
+                                     </td>
+                                     
+                                </tr>
+                                <tr>
+                                     <td>
+                                        <select name="jenis_kelamin[]" id="jenis_kelamin" class="form-control form-control-sm">
+                                            <option value="">Pilih</option>
+                                            <option value="Pria">Pria</option>
+                                            <option value="Wanita">Wanita</option>
+                                        </select>
+                                     </td>
+                                     <td>
+                                         <input class="form-control form-control-sm" id="batas_atas"
+                                             name="batas_atas[]" aria-placeholder="" value="" >
+                                     </td>
+                                     <td>
+                                         <input type="text" class="form-control-sm form-control"
+                                             id="batas_bawah" name="batas_bawah[]" 
+                                             value="">
+                                     </td>
+                                      <td>
+                                         <input type="text" class="form-control-sm form-control"
+                                             id="ket_normal" name="ket_normal[]" 
+                                             value="">
+                                     </td>
+                                     
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
+                <div class="modal-footer">
+                    <button type="button" id="buat" class="btn btn-success float-right"><i
+                            class="fa fa-save"></i>
+                        &nbsp;
+                        Save</button>
+                </div>
             </div>
-
+        </form>
 
 
                 <!-- The modal Delete -->
