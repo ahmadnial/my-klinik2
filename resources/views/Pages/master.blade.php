@@ -659,6 +659,12 @@
                                             <p>Jenis Pemeriksaan</p>
                                         </a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a href="{{ url('/tarif-lab') }}" class="nav-link">
+                                            <i class="fas fa-gear nav-icon"></i>
+                                            <p>Tarif Lab</p>
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
 

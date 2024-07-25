@@ -81,6 +81,7 @@ Route::group(['middleware' => ['auth', 'checkrole:1']], function () {
     Route::get('satuan-pemeriksaan-lab', [mastersatuController::class, 'satuanPemeriksaanLab'])->name('satuan-pemeriksaan-lab');
     Route::get('satuan-pemeriksaan-lab', [mastersatuController::class, 'satuanPemeriksaanLab'])->name('satuan-pemeriksaan-lab');
     Route::get('jenis-pemeriksaan-lab', [mastersatuController::class, 'jenisPemeriksaanLab'])->name('jenis-pemeriksaan-lab');
+    Route::get('tarif-lab', [mastersatuController::class, 'tarifLaboratorium'])->name('tarif-lab');
 });
 
 

@@ -425,4 +425,24 @@ class mastersatuController extends Controller
             return back();
         }
     }
+
+     public function tarifLaboratorium()
+    {
+        // $num = str_pad(001, 3, 0, STR_PAD_LEFT);
+
+        // $cekid = jenis_pemeriksaan_lab_hdr::count();
+        // if ($cekid == 0) {
+        //     $kd_jenis =  'TL'  . $num;
+        // } else {
+        //     $continue = jenis_pemeriksaan_lab_hdr::all()->last();
+        //     $de = substr($continue->kd_jenis_pemeriksaan_lab, -3);
+        //     $kd_jenis = 'TL' . str_pad(($de + 1), 3, '0', STR_PAD_LEFT);
+        // }
+
+        // $isview = jenis_pemeriksaan_lab_hdr::all();
+        // $satuan = satuan_pemeriksaan_lab::all();
+
+
+        return view('pages.mstr1.tarif-laboratorium');
+    }
 }
