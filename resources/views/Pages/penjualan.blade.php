@@ -171,7 +171,6 @@
                                 <div class="invalid-feedback">Please..dont let me blank</div>
                             </div>
                             <div class="isResepActive form-inline col-sm-9 mb-2">
-
                                 <input type="hidden" id="user" name="user" value="tes">
                             </div>
                         </div>

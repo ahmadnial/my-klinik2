@@ -16,6 +16,9 @@ use App\Models\t_template_order_hdr;
 use Yoeunes\Toastr\Toastr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\Services\DataTable;
+use Yajra\DataTables\Facades\DataTables;
+
 
 class mastersatuController extends Controller
 {
@@ -444,5 +447,35 @@ class mastersatuController extends Controller
 
 
         return view('pages.mstr1.tarif-laboratorium');
+    }
+
+     public function getListJenisPemeriksaan()
+    {
+        if (request()->ajax()) {
+            $isKomponenLab = DB::table('jenis_pemeriksaan_lab_hdr')
+                // ->leftJoin('jenis_pemeriksaan_lab_detail', 'jenis_pemeriksaan_lab_hdr.kd_jenis_pemeriksaan_lab', 'jenis_pemeriksaan_lab_detail.kd_jenis_pemeriksaan_lab')
+                // ->select('jenis_pemeriksaan_lab_hdr.*', 'jenis_pemeriksaan_lab_detail.*')
+                ->get();
+            return DataTables::of($isKomponenLab)
+                ->addColumn('action', function ($row) {
+                    $actionBtn = '<a href="javascript:void(0)" id="' . $row->kd_jenis_pemeriksaan_lab . '" onClick="SelectItem(this)" 
+                    data-kdpemeriksaan="' . $row->kd_jenis_pemeriksaan_lab . '"
+                    class="edit btn btn-xs btn-sm" style="background-color:#10F3A4; color:#ffffff;">Select</a>';
+                    return $actionBtn;
+                    // $actionBtn = '<a href="javascript:void(0)" id="' . $row->kd_jenis_pemeriksaan_lab . '" onClick="SelectItem(this)" 
+                    // data-kdpemeriksaan="' . $row->kd_jenis_pemeriksaan_lab . '"
+                    // data-nm_jenis_pemeriksaan="' . $row->nm_jenis_pemeriksaan_lab . '" 
+                    // data-satuan_hasil="' . $row->satuan_hasil . '" 
+                    // data-jenis_kelamin="' . $row->jenis_kelamin . '"
+                    // data-batas_atas="' . $row->batas_atas . '" 
+                    // data-batas_bawah="' . $row->batas_bawah . '" 
+                    // data-ket_normal="' . $row->ket_normal . '" 
+                    // class="edit btn btn-xs btn-sm" style="background-color:#10F3A4; color:#ffffff;">Select</a>';
+                    // return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+            return response()->json($isKomponenLab);
+        }
     }
 }
