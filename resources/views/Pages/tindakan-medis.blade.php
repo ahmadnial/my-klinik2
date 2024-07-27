@@ -974,6 +974,9 @@
                                         <button type="button" id="addTindakann"
                                             class="btn btn-xs btn-warning floar-right text-white" data-toggle="modal"
                                             data-target="#addTindakans"><i class="fa fa-plus"></i>&nbsp;Tindakan</button>
+                                        <button type="button" id="addLab"
+                                            class="btn btn-xs btn-success floar-right text-white" data-toggle="modal"
+                                            data-target="#addLaborat"><i class="fa fa-plus"></i>&nbsp;Laborat</button>
                                         <button type="button" class="btn btn-xs btn-info floar-right"
                                             data-toggle="modal" data-target="#addResep"><i
                                                 class="fa fa-plus"></i>&nbsp;Resep</button>
@@ -1117,6 +1120,41 @@
                     </div>
                     {{-- <input type="hidden" id="kd_trs" name="kd_trs" value="{{ $kd_trs }}"> --}}
                     <input type="hidden" id="sub_total" name="sub_total" value="0">
+                    <div class="float-right mt-2">
+                        <a type="button" id="exitModal" onclick="exitModalTindakan()" class="btn btn-success">add</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- ========================END MODAL ADD TINDAKANs============================= --}}
+
+
+    {{-- ===============ADD ORDER LABRAT MODAL================= --}}
+    <div class="modal fade" id="addLaborat">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Order Laboratorium</h4>
+                    <button type="button" class="close" id="CloseModalLab" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @foreach ($isTarifLab as $tl)
+                    <div class="showListLaborat mt-2 mb-2">
+                        <div class="icheck-primary d-inline">
+                                <input type="checkbox" id="nm_tarif_lab" name="nm_tarif_lab[]"
+                                    value="{{ $tl->kd_tarif }}">
+                                <label for="nm_tarif_lab">
+                                    {{ $tl->nm_tarif }}
+                                </label>
+                            </div>
+                        </div>
+                        @endforeach
+                </div>
+                <div class="modal-footer">
                     <div class="float-right mt-2">
                         <a type="button" id="exitModal" onclick="exitModalTindakan()" class="btn btn-success">add</a>
                     </div>

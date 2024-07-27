@@ -12,6 +12,7 @@ use App\Models\registrasiCreate;
 use App\Models\t_label_detail;
 use App\Models\t_label_hdr;
 use App\Models\t_label_timeline;
+use App\Models\tarif_lab_hdr;
 use App\Models\trs_chart;
 use App\Models\trs_chart_resep;
 use Illuminate\Http\Request;
@@ -75,6 +76,7 @@ class TindakanController extends Controller
 
         $icdx = mstr_icdx::all();
         $isTindakanTarif = mstr_tindakan::all();
+        $isTarifLab = tarif_lab_hdr::all();
         $isHistoryTindakan = trs_chart::all();
         $dateNow = Carbon::now()->format("Y-m-d");
 
@@ -88,7 +90,7 @@ class TindakanController extends Controller
             'isTindakanChart' => $isTindakanChart,
             'icdx' => $icdx,
             'isTindakanTarif' => $isTindakanTarif,
-            // 'kd_trs' => $kd_trs,
+            'isTarifLab' => $isTarifLab,
             'isHistoryTindakan' => $isHistoryTindakan,
             'dateNow' => $dateNow,
             'listDeAktifasi' => $listDeAktifasi,
