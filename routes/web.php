@@ -83,6 +83,7 @@ Route::group(['middleware' => ['auth', 'checkrole:1']], function () {
     Route::get('jenis-pemeriksaan-lab', [mastersatuController::class, 'jenisPemeriksaanLab'])->name('jenis-pemeriksaan-lab');
     Route::get('tarif-lab', [mastersatuController::class, 'tarifLaboratorium'])->name('tarif-lab');
     Route::get('getListJenisPemeriksaan', [mastersatuController::class, 'getListJenisPemeriksaan'])->name('getListJenisPemeriksaan');
+    Route::get('getSelectedItem/{kd_jenis_pemeriksaan_lab}', [mastersatuController::class, 'getSelectedItem'])->name('getSelectedItem');
 });
 
 
@@ -96,6 +97,7 @@ Route::group(['middleware' => ['auth', 'checkrole:1']], function () {
     Route::post('add-mstr-nilai-tindakan', [mastersatuController::class, 'nilaiTindakanCreate'])->name('add-mstr-nilai-tindakan');
     Route::post('add-jenis-pemeriksaan', [mastersatuController::class, 'addJenisPemeriksaan'])->name('add-jenis-pemeriksaan');
     Route::post('add-satuan-pemeriksaan', [mastersatuController::class, 'addSatuanPemeriksaan'])->name('add-satuan-pemeriksaan');
+    Route::post('add-tariflab', [mastersatuController::class, 'addTarifLab'])->name('add-tariflab');
 });
 
 // MSTR SATU GET DOKTER

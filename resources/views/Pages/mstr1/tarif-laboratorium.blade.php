@@ -11,25 +11,25 @@
 
             <div class="card-body">
                 <div id="">
-                    <table id="example2" class="table table-hover table-bordered table-striped">
+                    <table id="exm2" class="table table-hover table-bordered table-striped">
                         <thead class="">
                             <tr>
                                 <th>Kode</th>
-                                <th>Nama Jenis Pemeriksaan</th>
-                                <th>Satuan Hasil</th>
-                                <th>Grup PEriksa</th>
-                                <th>Metode Uji</th>
+                                <th>Nama Tarif</th>
+                                <th>Rekap Cetak</th>
+                                <th>Nilai Tarif</th>
+                                <th>Keterangan</th>
                                 <th>Created By</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach ($isData as $tz)
-                                <td id="">{{ $tz->kd_jenis_pemeriksaan_lab }}</td>
-                                <td id="">{{ $tz->nm_jenis_pemeriksaan_lab }}</td>
-                                <td id="">{{ $tz->satuan_hasil }}</td>
-                                <td id="">{{ $tz->grup_periksa_sub }}</td>
-                                <td id="">{{ $tz->metode_uji }}</td>
+                            @foreach ($isData as $tz)
+                                <td id="">{{ $tz->kd_tarif }}</td>
+                                <td id="">{{ $tz->nm_tarif }}</td>
+                                <td id="">{{ $tz->rekap_cetak }}</td>
+                                <td id="">@currency($tz->nilai_tarif)</td>
+                                <td id="">{{ $tz->keterangan_tarif }}</td>
                                 <td id="">{{ $tz->user }}</td>
                                 <td><button class="btn btn-xs btn-success" data-toggle="modal"
                                         data-target="#EditSupplier{{ $tz->kd_jenis_pemeriksaan_lab }}">Edit</button>
@@ -37,7 +37,7 @@
                                         data-target="#DeleteSupplier{{ $tz->kd_jenis_pemeriksaan_lab }}">Hapus</button>
                                 </td>
                         </tbody>
-                        @endforeach --}}
+                        @endforeach
                     </table>
                 </div>
             </div>
@@ -49,12 +49,12 @@
             <div class="modal-dialog modal-lg ">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Tambah Jenis Pemeriksaan</h4>
+                        <h4 class="modal-title">Tambah Tarif Laboratorium</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form action="{{ url('add-jenis-pemeriksaan') }}" method="post"
+                    <form action="{{ url('add-tariflab') }}" method="post"
                         onkeydown="return event.key != 'Enter';">
                         @csrf
                         <div class="modal-body">
@@ -62,7 +62,7 @@
                                 <div class="form-group col-sm-6">
                                     <label for="">Kode Tarif</label>
                                     <input type="text" class="form-control form-control-sm" name="kd_tarif"
-                                        id="kd_tarif" readonly value="">
+                                        id="kd_tarif" readonly value="{{ $kd_tarif }}">
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <label for="">Nama Tarif</label>
@@ -80,8 +80,8 @@
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <label for="">Nilai Tarif</label>
-                                    <input type="number" class="form-control form-control-sm" name="nm_tarif"
-                                        id="nm_tarif" value="" placeholder="Input Nilai Tarif" required>
+                                    <input type="number" class="form-control form-control-sm" name="nilai_tarif"
+                                        id="nilai_tarif" value="" placeholder="Input Nilai Tarif" required>
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <label for="">Keterangan</label>
@@ -93,7 +93,7 @@
 
                             <h5 class="text-center">Komponen Pemeriksaan</h5>
                             <div class="">
-                                <button type="buton" class="btn btn-primary btn-xs float-right mb-2"
+                                <button class="btn btn-primary btn-xs float-right mb-2"
                                     onClick="addKomponenTrf()" data-toggle="modal" data-target="#addKomponenTarif"><i
                                         class="far fa-plus-square"></i>&nbsp;Add</button>
                             </div>
@@ -103,29 +103,17 @@
                                         <tr>
                                             <th width="">Kode Jenis</th>
                                             <th width="">Jenis Pemeriksaan</th>
+                                            <th>Sex</th>
+                                            <th>Batas Bawah</th>
+                                            <th>Batas Atas</th>
+                                            <th>Nilai Normal</th>
+                                            <th>Satuan Hasil</th>
                                             <th></th>
                                         </tr>
                                     </thead>
 
-                                    <tbody class="value-nilai-rujukan-body" id="">
-                                        {{-- <tr>
-                                    <td>
-                                         <input class="form-control form-control-sm" id="batas_atas"
-                                             name="batas_atas[]" aria-placeholder="" value="" >
-                                     </td>
-                                     <td>
-                                         <input class="form-control form-control-sm" id="batas_atas"
-                                             name="batas_atas[]" aria-placeholder="" value="" >
-                                     </td>
-                                     <td>
-                                         <button class="btn btn-xs btn-success"><i class="fa fa-plus"></i></button>
-                                     </td>
-                                      <td>
-                                         <input type="text" class="form-control-sm form-control"
-                                             id="ket_normal" name="ket_normal[]" 
-                                             value="">
-                                     </td>
-                                </tr> --}}
+                                    <tbody class="value-nilai-rujukan-body spaceKomponen" id="spaceKomponen">
+
                                     </tbody>
                                 </table>
                             </div>
@@ -152,7 +140,8 @@
                     </div>
                     <div class="modal-body">
                         {{-- <div class="row"> --}}
-                        <table class="table table-hover table-stripped table-bordered" id="viewKomponen" style="width: 100%">
+                        <table class="table table-hover table-stripped table-bordered" id="viewKomponen"
+                            style="width: 100%">
                             <thead>
                                 <tr>
                                     <th>Kode</th>
@@ -160,15 +149,10 @@
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody class="getListObatx" id="getListObatx">
+                            <tbody class="" id="">
                             </tbody>
                         </table>
                         <div class="modal-footer">
-                            {{-- <button type="" class=""></button> --}}
-                            {{-- <button type="button" id="buat" class="btn btn-success float-right"><i
-                                class="fa fa-save"></i>
-                            &nbsp;
-                            Save</button> --}}
                         </div>
                     </div>
                 </div>
@@ -239,8 +223,60 @@
                 })
             }
 
-            function SelectItem() {
-                alert('oke');
+            function SelectItem(f) {
+                var kd_jenis_pemeriksaan_lab = $(f).data('kdpemeriksaan');
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "{{ url('getSelectedItem') }}/" + kd_jenis_pemeriksaan_lab,
+                    type: 'GET',
+                    data: {
+                        kd_jenis_pemeriksaan_lab: kd_jenis_pemeriksaan_lab
+                    },
+                    success: function(isSelectedItem) {
+                        $("#ListObatJual").empty();
+                        var getValues = isSelectedItem;
+                        for (var getVals = 0; getVals < getValues.length; getVals++) {
+                            $("#spaceKomponen").append(`
+                                        <tr>
+                                            <td>
+                                                <input class="form-control form-control-sm" id="kd_jenis_pemeriksaan_lab"
+                                                    name="kd_jenis_pemeriksaan_lab[]" aria-placeholder="" value="${getValues[getVals].kd_jenis_pemeriksaan_lab}">
+                                            </td>
+                                            <td>
+                                                <input class="form-control form-control-sm" id="nm_jenis_pemeriksaan_lab"
+                                                    name="nm_jenis_pemeriksaan_lab[]" aria-placeholder="" value="${getValues[getVals].nm_jenis_pemeriksaan_lab}">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control-sm form-control" id="jenis_kelamin"
+                                                    name="jenis_kelamin[]" value="${getValues[getVals].jenis_kelamin}">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control-sm form-control" id="batas_bawah"
+                                                    name="batas_bawah[]" value="${getValues[getVals].batas_bawah}">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control-sm form-control" id="batas_atas"
+                                                    name="batas_atas[]" value="${getValues[getVals].batas_atas}">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control-sm form-control"
+                                                    id="ket_normal" name="ket_normal[]" value="${getValues[getVals].ket_normal}">
+                                            </td>
+                                             <td>
+                                                <input type="text" class="form-control-sm form-control"
+                                                    id="satuan_hasil" name="satuan_hasil[]" value="${getValues[getVals].satuan_hasil}">
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+
+                        `);
+                        }
+                    }
+                })
             }
         </script>
     @endpush
