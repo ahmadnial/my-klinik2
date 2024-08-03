@@ -287,35 +287,35 @@ class penjualanController extends Controller
         // }
         DB::beginTransaction();
         // try {
-        $perusahaan = getenv('PERUSAHAAN');
-        $tipePenjualan = getenv('TIPE_PENJUALAN');
-        if ($perusahaan != 0) {
-            if ($tipePenjualan == 'FEFO') {
-                foreach ($request->kd_obat as $keys => $val) {
-                    $dataObat =  $request->kd_obat[$keys];
-                    $tpPenjualanKd = tb_stock_detail::whereIn('kd_obat', [$dataObat])->where('qty' ,'>' , '0')->orderBy('tgl_ed', 'asc')->value('kd_obat');
-                    $tpPenjualanTglEd = tb_stock_detail::whereIn('kd_obat', [$dataObat])->where('qty' ,'>' , '0')->orderBy('tgl_ed', 'asc')->pluck('tgl_ed');
-                    $tpPenjualanQty = tb_stock_detail::whereIn('kd_obat', [$dataObat])->where('qty' ,'>' , '0')->orderBy('tgl_ed', 'asc')->pluck('qty');
-                    $tpPenjualanQtySum = tb_stock_detail::whereIn('kd_obat', [$dataObat])->where('qty' ,'>' , '0')->orderBy('tgl_ed', 'asc')->sum('qty');
-                    $cekQtyAfter = tb_stock_detail::whereIn('kd_obat', [$dataObat])->where('qty' ,'<=' , '0')->orderBy('tgl_ed', 'asc')->value('qty');
-                    // $tpPenjualanQtyInt = (int)$tpPenjualanQty;
-                    // var_dump($tpPenjualanQty);
+        // $perusahaan = getenv('PERUSAHAAN');
+        // $tipePenjualan = getenv('TIPE_PENJUALAN');
+        // if ($perusahaan != 0) {
+        //     if ($tipePenjualan == 'FEFO') {
+        //         foreach ($request->kd_obat as $keys => $val) {
+        //             $dataObat =  $request->kd_obat[$keys];
+        //             $tpPenjualanKd = tb_stock_detail::whereIn('kd_obat', [$dataObat])->where('qty' ,'>' , '0')->orderBy('tgl_ed', 'asc')->value('kd_obat');
+        //             $tpPenjualanTglEd = tb_stock_detail::whereIn('kd_obat', [$dataObat])->where('qty' ,'>' , '0')->orderBy('tgl_ed', 'asc')->pluck('tgl_ed');
+        //             $tpPenjualanQty = tb_stock_detail::whereIn('kd_obat', [$dataObat])->where('qty' ,'>' , '0')->orderBy('tgl_ed', 'asc')->pluck('qty');
+        //             $tpPenjualanQtySum = tb_stock_detail::whereIn('kd_obat', [$dataObat])->where('qty' ,'>' , '0')->orderBy('tgl_ed', 'asc')->sum('qty');
+        //             $cekQtyAfter = tb_stock_detail::whereIn('kd_obat', [$dataObat])->where('qty' ,'<=' , '0')->orderBy('tgl_ed', 'asc')->value('qty');
+        //             // $tpPenjualanQtyInt = (int)$tpPenjualanQty;
+        //             // var_dump($tpPenjualanQty);
                     
-                    $dataQty =  $request->qty[$keys];
-                    $toInt = (int)$dataQty;
-                    // die();
-                    if (array($toInt) <= array($tpPenjualanQtySum)) {
-                        tb_stock_detail::whereIn('kd_obat', [$tpPenjualanKd])->where('tgl_ed', [$tpPenjualanTglEd])->decrement("qty", $toInt);
-                        // }else if($cekQtyAfter <= 0){
-                            // tb_stock_detail::whereIn('kd_obat', [$tpPenjualanKd])->where('tgl_ed', [$tpPenjualanTglEd])->decrement("qty", $toInt);  
-                        }
-                    }
-                }
-        }
-        // die();
-        DB::commit();
+        //             $dataQty =  $request->qty[$keys];
+        //             $toInt = (int)$dataQty;
+        //             // die();
+        //             if (array($toInt) <= array($tpPenjualanQtySum)) {
+        //                 tb_stock_detail::whereIn('kd_obat', [$tpPenjualanKd])->where('tgl_ed', [$tpPenjualanTglEd])->decrement("qty", $toInt);
+        //                 // }else if($cekQtyAfter <= 0){
+        //                     // tb_stock_detail::whereIn('kd_obat', [$tpPenjualanKd])->where('tgl_ed', [$tpPenjualanTglEd])->decrement("qty", $toInt);  
+        //                 }
+        //             }
+        //         }
+        // }
+        // // die();
+        // DB::commit();
 
-        die();
+        // die();
 
         $newData = [
             'kd_trs'        => $request->tp_kd_trs,
