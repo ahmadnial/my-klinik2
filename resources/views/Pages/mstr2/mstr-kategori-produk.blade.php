@@ -68,7 +68,7 @@
         </div>
     </div>
     @foreach ($katprod as $tz)
-        <!-- The modal Create -->
+        <!-- The modal Edit -->
         <div class="modal fade" id="EditLayanan{{ $tz->id }}">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">

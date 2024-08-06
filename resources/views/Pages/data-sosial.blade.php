@@ -305,6 +305,11 @@
                     @csrf
                     <div class="modal-body">
                         <div class="row">
+                            <div class="ihsButton form-group col-sm-6">
+                                <button type="button" class="btn btn-success btn-xs mb-1" onclick="getIhsNumber()"><i
+                                        class="fa fa-user"></i>&nbsp;&nbsp;IHS Number</button>
+                                <input type="text" class="form-control" name="ihs_number" id="ihs_number" readonly>
+                            </div>
                             <div class="form-group col-sm-6">
                                 <label for="">No. Rekam Medis</label>
                                 <input type="text" class="form-control" name="fs_mr" id="efs_mr" readonly>
@@ -540,10 +545,100 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="IHSModal" tabindex="-1" role="dialog" aria-labelledby="modalLabelLarge"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modalLabelLarge">Get Data IHS Pasien</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            Saya
+                            menjamin bahwa pasien sudah membaca dan menandatangani form consent
+                            pembukaan data dari SATUSEHAT
+                        </label>
+                    </div>
+                    <div class="verifIhs mt-3 float-right">
+                        <button type="button" class="btn btn-success" onclick="verifNIK()" id="verifIhs">Verifikasi
+                            NIK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     {{-- @endforeach --}}
 @endsection
 @push('scripts')
     <script>
+        function getIhsNumber() {
+            $('#IHSModal').modal('show');
+            $('#ihs_number').val('');
+        }
+
+        function verifNIK() {
+            // $('#IHSModal').modal('hide');
+            // $('#verifIhs').attr('disabled', true);
+            // $('#verifIhs').html('<i class="fa fa-spinner fa-spin"></i> Verifying...');
+            var patientId = $('#efs_mr').val();
+            var nik = $('#efs_no_identitas').val();
+            if (nik == '') {
+                $('#verifIhs').attr('disabled', false);
+                $('#verifIhs').html('Verifikasi NIK');
+                toastr.error('NIK Tidak Boleh Kosong!', {
+                    timeOut: 2000,
+                    preventDuplicates: true,
+                    positionClass: 'toast-top-right',
+                });
+                return false;
+            } else {
+                $('#verifIhs').attr('disabled', true);
+                $('#verifIhs').html('<i class="fa fa-spinner fa-spin"></i> Verifying...');
+                // alert(nik);
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "http://127.0.0.1:8000/api/Patient/" + nik,
+                    type: "GET",
+                    data: {
+                        nik: nik
+                    },
+                    success: function(response) {
+                        console.log(response[1].entry[0].resource.identifier[0].value);
+                        if (response[0] == 200) {
+                            $('#verifIhs').attr('disabled', false);
+                            $('#verifIhs').html('Verifikasi NIK');
+                            toastr.success('NIK Verified!', {
+                                timeOut: 2000,
+                                preventDuplicates: true,
+                                positionClass: 'toast-top-right',
+                            });
+                            $('#ihs_number').val(response[1].entry[0].resource.identifier[0].value);
+                            $('#IHSModal').modal('hide');
+                        } else {
+                            $('#verifIhs').attr('disabled', false);
+                            $('#verifIhs').html('Verifikasi NIK');
+                            // console.log(response);
+                            toastr.error('NIK Not Verified!', {
+                                timeOut: 2000,
+                                preventDuplicates: true,
+                                positionClass: 'toast-top-right',
+                            });
+                        }
+                    }
+                });
+            }
+        }
+
         function getDasosEdit(f) {
             var kodeMR = $(f).data('kdmr');
             // alert(kodeMR);
