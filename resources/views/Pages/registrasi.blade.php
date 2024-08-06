@@ -104,7 +104,7 @@
                                 value="{{ $dateNow }}">
                         </div>
                         <div class="form-group col-sm-6">
-                            <label for="">Nama / No.RM Pasien</label>
+                            <label for="">Nama / No.RM Pasien</label> <span id="IHSNumber" class="IHSNumber badge badge-primary"></span>
                             <select class="form-control-pasien" id="fr_mr" style="width: 100%;" name="fr_mr"
                                 onchange="getData()"></select>
                         </div>
@@ -589,7 +589,13 @@
                             $('#fr_jenis_kelamin').val(datavalue.fs_jenis_kelamin);
                             $('#fr_alergi').val(datavalue.fs_alergi);
                             $('#kunjungan_terakhir').val(datavalue.fs_tgl_kunjungan_terakhir);
-                        })
+                            if (datavalue.ihs_number == '') {
+                                $('#IHSNumber').text('NIK Belum Terverifikasi!');
+                            } else {
+                                $('#IHSNumber').text(datavalue.ihs_number);
+                            }
+                        });
+                        
                     } else {
                         Swal.fire({
                             title: "Duplicate",

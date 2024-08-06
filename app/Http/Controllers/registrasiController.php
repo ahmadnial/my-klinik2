@@ -7,6 +7,7 @@ use App\Models\dataSosialCreate;
 use App\Models\registrasiCreate;
 use App\Models\trs_chart;
 use App\Models\trs_chart_resep;
+use App\Models\saset_patient;
 use RealRashid\SweetAlert\Toaster;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\DB;
@@ -186,9 +187,20 @@ class registrasiController extends Controller
             'fs_status_kawin' => $request->fs_status_kawin,
             'fs_no_hp' => $request->fs_no_hp,
             'fs_alergi' => $request->fs_alergi,
+            'ihs_number' => $request->ihs_number,
             'fs_user' => Auth::user()->name,
             'updated_at' => Carbon::now(),
         ]);
+
+        if($request->ihs_number != ''){
+            //  DB::table('saset_patient')->insert(['fs_mr', $request->fs_mr, 'kemkesId', $request->ihs_number, 'user_id', auth()->user()->name]);
+            $status = new saset_patient();
+            $status->noMr = $request->fs_mr;
+            $status->kemkesId = $request->ihs_number;
+            $status->user_id = auth()->user()->name;
+            $status->save();
+        }
+           
         // dd($y);
         if ($y) {
             $sessionFlash = [

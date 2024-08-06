@@ -308,7 +308,7 @@
                             <div class="ihsButton form-group col-sm-6">
                                 <button type="button" class="btn btn-success btn-xs mb-1" onclick="getIhsNumber()"><i
                                         class="fa fa-user"></i>&nbsp;&nbsp;IHS Number</button>
-                                <input type="text" class="form-control" name="ihs_number" id="ihs_number" readonly>
+                                <input type="text" class="eihs_number form-control" name="eihs_number" id="eihs_number" readonly>
                             </div>
                             <div class="form-group col-sm-6">
                                 <label for="">No. Rekam Medis</label>
@@ -581,13 +581,10 @@
     <script>
         function getIhsNumber() {
             $('#IHSModal').modal('show');
-            $('#ihs_number').val('');
+            $('.eihs_number').val('');
         }
 
         function verifNIK() {
-            // $('#IHSModal').modal('hide');
-            // $('#verifIhs').attr('disabled', true);
-            // $('#verifIhs').html('<i class="fa fa-spinner fa-spin"></i> Verifying...');
             var patientId = $('#efs_mr').val();
             var nik = $('#efs_no_identitas').val();
             if (nik == '') {
@@ -613,8 +610,8 @@
                         nik: nik
                     },
                     success: function(response) {
-                        console.log(response[1].entry[0].resource.identifier[0].value);
-                        if (response[0] == 200) {
+                        // console.log(response[1].entry);
+                        if (response[0] == 200 && response[1].entry != '') {
                             $('#verifIhs').attr('disabled', false);
                             $('#verifIhs').html('Verifikasi NIK');
                             toastr.success('NIK Verified!', {
@@ -622,13 +619,12 @@
                                 preventDuplicates: true,
                                 positionClass: 'toast-top-right',
                             });
-                            $('#ihs_number').val(response[1].entry[0].resource.identifier[0].value);
+                            $('#eihs_number').val(response[1].entry[0].resource.identifier[0].value);
                             $('#IHSModal').modal('hide');
                         } else {
                             $('#verifIhs').attr('disabled', false);
                             $('#verifIhs').html('Verifikasi NIK');
-                            // console.log(response);
-                            toastr.error('NIK Not Verified!', {
+                            toastr.error('Not Found!', {
                                 timeOut: 2000,
                                 preventDuplicates: true,
                                 positionClass: 'toast-top-right',
@@ -640,6 +636,7 @@
         }
 
         function getDasosEdit(f) {
+            $('.eihs_number').val('');
             var kodeMR = $(f).data('kdmr');
             // alert(kodeMR);
             $('#EditDasos').modal('show');
@@ -672,6 +669,7 @@
                         $('#efs_status_kawin').val(dasos.fs_status_kawin);
                         $('#efs_alergi').val(dasos.fs_alergi);
                         $('#efs_no_hp').val(dasos.fs_no_hp);
+                        $('#eihs_number').val(dasos.ihs_number);
                         const timeStampLastSave = dasos.updated_at;
                         if (timeStampLastSave == null) {
                             var dateView = '';
@@ -705,6 +703,7 @@
             var efs_status_kawin = $('#efs_status_kawin').val();
             var efs_alergi = $('#efs_alergi').val();
             var efs_no_hp = $('#efs_no_hp').val();
+            var eihs_number = $('#eihs_number').val();
 
             $.ajax({
                 headers: {
@@ -729,7 +728,8 @@
                     fs_pendidikan: efs_pendidikan,
                     fs_status_kawin: efs_status_kawin,
                     fs_alergi: efs_alergi,
-                    fs_no_hp: efs_no_hp
+                    fs_no_hp: efs_no_hp,
+                    ihs_number: eihs_number
                 },
                 success: function(sessionFlash) {
                     if (sessionFlash == 'Error') {

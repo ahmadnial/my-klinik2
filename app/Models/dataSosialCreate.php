@@ -37,6 +37,7 @@ class dataSosialCreate extends Model
         'fs_tgl_kunjungan_terakhir',
         'fs_layanan_kunjungan_terakhir',
         'fs_tanggal_meninggal',
-        'fs_user'
+        'fs_user',
+        'ihs_number',
     ];
 }
