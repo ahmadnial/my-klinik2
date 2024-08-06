@@ -1042,9 +1042,9 @@
                                 height="25" alt="Black and White Portrait of a Man" loading="lazy" />
                         </a> --}}
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
-                                <li>
+                                {{-- <li>
                                     <a class="dropdown-item" href="#">My profile</a>
-                                </li>
+                                </li> --}}
                                 <li>
                                     <a class="dropdown-item" href="{{ url('setting-account') }}">Settings</a>
                                 </li>
