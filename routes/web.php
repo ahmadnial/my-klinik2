@@ -29,6 +29,8 @@ Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/ProsesLogin', [AuthController::class, 'ProsesLogin']);
 Route::get('/redirect', [RedirectController::class, 'cek']);
 Route::post('/logout', [AuthController::class, 'logout']);
+Route::get('/setting-account', [AuthController::class, 'settingAccount'])->name('setting-account');
+Route::post('/postChangeProfile', [AuthController::class, 'postChangeProfile'])->name('postChangeProfile');
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/', [DashboardController::class, 'index']);

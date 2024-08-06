@@ -7,6 +7,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Yoeunes\Toastr\Toastr;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -20,10 +21,9 @@ class AuthController extends Controller
         // validasi
         $credentials = $request->validate([
             'email' => 'required',
-            'password' => 'required'
+            'password' => 'required',
         ]);
         // dd($credentials);
-
 
         if (auth()->attempt($credentials)) {
             // buat ulang session login
@@ -50,5 +50,35 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/login');
+    }
+
+    public function settingAccount()
+    {
+        return view('Pages.settingAccount');
+    }
+
+    public function postChangeProfile(Request $request)
+    {
+        $this->validate($request, [
+            'display_name' => 'required|string',
+            'current_password' => 'required|string',
+            'new_password' => 'required|confirmed|min:4|string',
+        ]);
+        $auth = Auth::user();
+
+        // The passwords matches
+        if (!Hash::check($request->get('current_password'), $auth->password)) {
+            return back()->with('error', 'Current Password is Invalid');
+        }
+
+        // Current password and new password same
+        if (strcmp($request->get('current_password'), $request->new_password) == 0) {
+            return redirect()->back()->with('error', 'New Password cannot be same as your current password.');
+        }
+
+        $user = User::find($auth->id);
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+        return back()->with('success', 'Password Changed Successfully');
     }
 }
