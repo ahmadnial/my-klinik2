@@ -32,6 +32,11 @@ Route::post('/logout', [AuthController::class, 'logout']);
 Route::get('/setting-account', [AuthController::class, 'settingAccount'])->name('setting-account');
 Route::post('/postChangeProfile', [AuthController::class, 'postChangeProfile'])->name('postChangeProfile');
 
+Route::group(['middleware' => ['auth', 'checkrole:1']], function () {
+    Route::post('editUser', [AuthController::class, 'editUser'])->name('editUser');
+    Route::delete('voidUser/{id}', [AuthController::class, 'voidUser'])->name('voidUser');
+});
+
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/', [DashboardController::class, 'index']);
     // your routes

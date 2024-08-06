@@ -81,4 +81,47 @@ class AuthController extends Controller
         $user->save();
         return back()->with('success', 'Password Changed Successfully');
     }
+
+    public function editUser(Request $request)
+    {
+        // dd($request->all());
+        $this->validate($request, [
+            'name' => 'required|string',
+            'email' => 'required',
+            'password' => 'required|min:4|string',
+        ]);
+
+        // The passwords matches
+        // if (!Hash::check($request->get('current_password'), $auth->password)) {
+        //     return back()->with('error', 'Current Password is Invalid');
+        // }
+
+        // Current password and new password same
+        // if (strcmp($request->get('current_password'), $request->new_password) == 0) {
+        //     return redirect()->back()->with('error', 'New Password cannot be same as your current password.');
+        // }
+
+        $put = User::find($request->id)->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+        // $user->name = $request->name;
+        // $user->email = $request->email;
+        // $user->password = Hash::make($request->password);
+        // $user->save();
+        if ($put) {
+            return back()->with('success', 'Changed Successfully');
+        }else{
+            return back()->with('error', 'some error occured');
+        }
+    }
+
+    public function voidUser($id)
+{
+    $item = User::find($id);
+    $item->delete();
+
+    return response()->json(['success' => true]);
+}
 }

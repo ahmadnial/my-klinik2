@@ -18,7 +18,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="new_password" class="form-label">Display Name</label>
-                            <input type="text" class="form-control" id="display_name" name="display_name" value="{{Auth::user()->name}}">
+                            <input type="text" class="form-control" id="display_name" name="display_name" value="{{Auth::user()->name}}" readonly>
                         </div>
                         <div class="mb-3">
                             <label for="current_password" class="form-label">Current Password</label>

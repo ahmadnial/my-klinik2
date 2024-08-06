@@ -14,7 +14,7 @@ class settingController extends Controller
 {
     public function hakAkses()
     {
-        $isDataUser = DB::table('users')->leftJoin('role', 'users.role_id', 'role.id')->get();
+        $isDataUser = DB::table('users')->leftJoin('role', 'users.role_id', 'role.id')->select('users.*', 'role.hakakses')->get();
 
         return view('Pages.hak-akses', ['isDataUser' => $isDataUser]);
     }
