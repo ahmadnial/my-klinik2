@@ -170,9 +170,12 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
 // Route::controller(masterFarmasiController::class)->group(function () {
 Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
     Route::post('add-mstr-kategori-produk', [masterFarmasiController::class, 'katProdCreate'])->name('add-mstr-kategori-produk');
+    Route::post('edit-mstr-kategori', [masterFarmasiController::class, 'editKategori'])->name('edit-mstr-kategori');
     Route::post('add-mstr-satuan', [masterFarmasiController::class, 'satuanCreate'])->name('add-mstr-satuan');
+    Route::post('edit-mstr-satuan', [masterFarmasiController::class, 'editSatuan'])->name('edit-mstr-satuan');
     Route::post('add-mstr-lokasi-stock', [masterFarmasiController::class, 'lokstockCreate'])->name('add-mstr-lokasi-stock');
     Route::post('add-mstr-jenis-obat', [masterFarmasiController::class, 'jenBatCreate'])->name('add-mstr-jenis-obat');
+    Route::post('edit-jenis-obat', [masterFarmasiController::class, 'jenBatEdit'])->name('edit-jenis-obat');
     Route::post('add-mstr-supplier', [masterFarmasiController::class, 'supplierCreate'])->name('add-mstr-supplier');
     Route::post('add-mstr-obat', [masterFarmasiController::class, 'obatCreate'])->name('add-mstr-obat');
     Route::post('edit-mstr-obat/{efmkdobat}', [masterFarmasiController::class, 'obatEdit'])->name('edit-mstr-obat');

@@ -35,6 +35,24 @@ class masterFarmasiController extends Controller
 
     // ============= KATEGORI PRODUK =======================================
 
+    public function editKategori(Request $request)
+    {
+        $request->validate([
+            'fm_nm_kategori_produk' => 'required',
+        ]);
+
+        $putKategori = mstr_kategori_produk::where('id', $request->id)->update([
+            'fm_nm_kategori_produk' => $request->fm_nm_kategori_produk
+        ]);
+
+        if($putKategori){
+            toastr()->success('Data Berhasil Terupdate');
+            return back();
+        }else{
+            toastr()->error('Gagal!');
+            return back();
+        }
+    }
 
     // ============= SATUAN ================================================ 
 
@@ -53,6 +71,26 @@ class masterFarmasiController extends Controller
 
         mstr_satuan::create($request->all());
     }
+
+    public function editSatuan(Request $request)
+    {
+        $request->validate([
+            'fm_nm_satuan' => 'required',
+        ]);
+
+        $putSatuan = mstr_satuan::where('id', $request->id)->update([
+            'fm_nm_satuan' => $request->fm_nm_satuan
+        ]);
+
+        if($putSatuan){
+            toastr()->success('Data Berhasil Terupdate');
+            return back();
+        }else{
+            toastr()->error('Gagal!');
+            return back();
+        }
+    }
+
 
     public function satuanDestroy($id)
     {
@@ -120,6 +158,25 @@ class masterFarmasiController extends Controller
         ]);
 
         mstr_jenis_obat::create($request->all());
+    }
+
+     public function jenBatEdit(Request $request)
+    {
+        $request->validate([
+            'fm_nm_jenis_obat' => 'required',
+        ]);
+
+        $putJenbat = mstr_jenis_obat::where('id', $request->id)->update([
+            'fm_nm_jenis_obat' => $request->fm_nm_jenis_obat
+        ]);
+
+        if($putJenbat){
+            toastr()->success('Data Berhasil Terupdate');
+            return back();
+        }else{
+            toastr()->error('Gagal!');
+            return back();
+        }
     }
 
     public function jenbatDestroy($id)

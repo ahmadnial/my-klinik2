@@ -70,7 +70,7 @@
 
 
     @foreach ($satuan as $tz)
-        <!-- The modal Create -->
+        <!-- The modal Edit -->
         <div class="modal fade" id="EditSatuan{{ $tz->id }}">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
@@ -81,18 +81,22 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group col-sm">
-                            <label for="">Nama Satuan</label>
+                        <form action="{{url('edit-mstr-satuan')}}" method="post">
+                            @csrf
+                            <input type="hidden" name="id" id="id"
+                                value="{{ $tz->id }}">
+                                <div class="form-group col-sm">
+                                    <label for="">Nama Satuan</label>
                             <input type="text" class="form-control" name="fm_nm_satuan" id="fm_nm_satuan"
-                                value="{{ $tz->fm_nm_satuan }}">
+                            value="{{ $tz->fm_nm_satuan }}">
                         </div>
                     </div>
                     <div class="modal-footer">
-                        {{-- <button type="" class=""></button> --}}
-                        <button type="button" id="edits" class="btn btn-success float-right"><i class="fa fa-save"></i>
+                        <button type="submit" id="" class="btn btn-success float-right"><i class="fa fa-save"></i>
                             &nbsp;
                             Save</button>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

@@ -75,17 +75,22 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group col-sm">
-                            <label for="">Jenis Obat</label>
-                            <input type="text" class="form-control" name="fm_nm_jenis_obat"
+                        <form action="{{url('edit-jenis-obat')}}" method="post">
+                            @csrf
+                            <input type="hidden" name="id" value="{{ $tz->id }}">
+                            <div class="form-group col-sm">
+                                <label for="">Jenis Obat</label>
+                                <input type="text" class="form-control" name="fm_nm_jenis_obat"
                                 value="{{ $tz->fm_nm_jenis_obat }}" id="">
+                            </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        {{-- <button type="" class=""></button> --}}
-                        <button type="button" id="edits" class="btn btn-success float-right"><i class="fa fa-save"></i>
-                            &nbsp;
-                            Save</button>
+                        <div class="modal-footer">
+                            {{-- <button type="" class=""></button> --}}
+                            <button type="submit" id="edits" class="btn btn-success float-right"><i class="fa fa-save"></i>
+                                &nbsp;
+                                Save</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
