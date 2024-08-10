@@ -154,6 +154,16 @@
                                 </select>
                                 <div class="invalid-feedback">Please..dont let me blank</div>
                             </div>
+                            <div class="form-group col-sm-2">
+                                <label for="">Pajak Pembelian</label>
+                                <select class="form-control" id="pajak_pembelian_global" style="width: 100%;"
+                                    name="pajak_pembelian_global" onchange="pajakGlobal()">
+                                    <option value="">--Select--</option>
+                                    <option value="0">Tidak Dipungut Pajak</option>
+                                    <option value="1">PPN 11%</option>
+                                </select>
+                                <div class="invalid-feedback">Please..dont let me blank</div>
+                            </div>
                             <div class="form-group">
                                 <label class="form-check-label" for="flexCheckDefault">
                                     <input class="checkbox form-check-input" type="checkbox" value=""
@@ -860,6 +870,34 @@
                 }
             });
 
+            function pajakGlobal() {
+                var pajak = $('#pajak_pembelian_global').val();
+                if (pajak == '1') {
+                 var getTotal = $('#do_hdr_total_faktur').val();
+                 var calc = getTotal * (11 / 100);
+                 var toFix = parseFloat(getTotal) + parseFloat(calc);
+                 var toDecimal = toFix.toFixed(2);
+                 $('#do_hdr_total_faktur').val(toDecimal);
+
+                 var formattedNumber = toDecimal.toLocaleString('id-ID', {
+                                style: 'currency',
+                                currency: 'IDR'
+                            });
+
+                 $('#do_hdr_total_faktur_show_only').val(formattedNumber);
+                //  alert(getTotal);
+                }else{
+                    var getTotal = $('#do_hdr_total_faktur').val();
+                    $('#do_hdr_total_faktur').val(getTotal);
+
+                    var formattedNumber = getTotal.toLocaleString('id-ID', {
+                                style: 'currency',
+                                currency: 'IDR'
+                            });
+
+                 $('#do_hdr_total_faktur_show_only').val(formattedNumber);
+                }
+            }
             // Call Hasil Search Obat
             function getDataObat() {
                 var obat = $('#do_obat').val();
