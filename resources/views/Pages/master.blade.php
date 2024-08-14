@@ -807,7 +807,6 @@
         <script src="{{ asset('src/plugins/jquery/jquery.min.js') }}"></script>
         <script src="{{ asset('src/dist/js/ajax.min.js') }}"></script>
         <script src="{{ asset('src/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         {{-- <script src="{{ asset('src/plugins/jquery-ui/jquery-ui.min.js') }}"></script> --}}
         <script src="{{ asset('src/dist/js/select2.min.js') }}"></script>
         {{-- <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script> --}}

@@ -65,11 +65,15 @@
                                         @endif --}}
                                     </td>
                                     <td>
-                                        <button class="btn btn-xs btn-success"
-                                            data-toggle="modal"data-target="#Edit{{ $item->fr_kd_reg }}">Edit</button>
+                                        <button class="btn btn-xs btn-success" data-toggle="modal"
+                                            data-target="#Edit{{ $item->fr_kd_reg }}">Edit</button>
                                         <button class="btn btn-xs btn-danger" onclick="voidReg(this)"
                                             data-kodereg="{{ $item->fr_kd_reg }}"
                                             data-namereg="{{ $item->fr_nama }}">Void</button>
+                                        <button class="btn btn-xs"
+                                            style="background-color: rgb(191, 109, 191); color: white" data-toggle="modal"
+                                            data-target="#sasetreg{{ $item->fr_kd_reg }}"><i
+                                                class="fa fa-send"></i>&nbsp;Saset</button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -81,7 +85,7 @@
     </section>
 
     <!-- The modal Create -->
-    <div class="modal fade" id="TambahPasien">
+    <div class="modal fade" id="TambahPasien" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header" style="background-color: rgb(175, 171, 255)">
@@ -104,8 +108,9 @@
                                 value="{{ $dateNow }}">
                         </div>
                         <div class="form-group col-sm-6">
-                            <label for="">Nama / No.RM Pasien</label> <span id="IHSNumber" class="IHSNumber badge badge-primary"></span>
-                            <select class="form-control-pasien" id="fr_mr" style="width: 100%;" name="fr_mr"
+                            <label for="">Nama / No.RM Pasien</label> <span id="IHSNumber"
+                                class="IHSNumber badge badge-primary"></span>
+                            <select class="fr_mr form-control" id="fr_mr" style="width: 100%;" name="fr_mr"
                                 onchange="getData()"></select>
                         </div>
                         <div class="form-group col-sm-6">
@@ -535,15 +540,68 @@
                 </div>
             </div>
         </div>
+
+        {{-- Modal Kirim Data Satu Sehat --}}
+        <div class="modal fade" id="sasetreg{{ $e->fr_kd_reg }}">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Kirim Data Satu sehat</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container row">
+                            <h5>Data pasien : {{ $e->fr_kd_reg }} - {{ $e->fr_mr }} - {{ $e->fr_nama }}</h5>
+                            <input type="text" class="form-control" name="" id="koderegsaset"
+                                value="{{ $e->fr_kd_reg }}">
+                        </div>
+                    </div>
+                        <div class="modal-footer">
+                            {{-- <button type="button" class="" data-dismiss="modal"></button> --}}
+                            <button type="button" id="" class="btn btn-success float-rights"
+                                onclick="sasetSend(this)" data-koderegsaset="{{ $item->fr_kd_reg }}">
+                                Kirim</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
     @endforeach
+
 @endsection
 
 @push('scripts')
     <script>
+        function sasetSend() {
+            var koderegsaset = $('#koderegsaset').val();
+            // var koderegsaset = $(e).data('koderegsaset');
+            // alert(koderegsaset);
+            var baseURL = '{{ env('BASE_URL_API') }}';
+            $.ajax({
+                type: "POST",
+                url: baseURL + "/Encounter/create",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    koderegsaset: koderegsaset
+                },
+                success: function(response) {
+                    console.log(response);
+                    toastr.success('Encounter Berhasil Terkirim!', {
+                                timeOut: 2000,
+                                preventDuplicates: true,
+                                positionClass: 'toast-top-right',
+                            });
+                    // window.location.reload();
+                }
+            });
+        }
         // Ajax Search RM untuk Registrasi
         var path = "{{ route('registrasiSearch') }}";
 
         $('#fr_mr').select2({
+            tags: true,
+            dropdownParent: $("#TambahPasien"),
             placeholder: 'Nama / Nomor RM Pasien',
             ajax: {
                 url: path,
@@ -595,7 +653,7 @@
                                 $('#IHSNumber').text(datavalue.ihs_number);
                             }
                         });
-                        
+
                     } else {
                         Swal.fire({
                             title: "Duplicate",
