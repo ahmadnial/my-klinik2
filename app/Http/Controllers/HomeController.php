@@ -85,11 +85,16 @@ class HomeController extends Controller
         $layanan = mstr_layanan::all();
         $jaminan = mstr_jaminan::all();
         $isviewreg = registrasiCreate::where('fr_tgl_keluar', '=', '')->get();
+        $isviewregSaset = DB::table('ta_registrasi')
+        ->leftJoin('tc_mr', 'tc_mr.fs_mr', '=', 'ta_registrasi.fr_mr')
+        ->where('ta_registrasi.fr_tgl_keluar', '=', '')
+        ->where('ta_registrasi.deleted_at', '=', NULL)
+        ->get();
         $dateNow = Carbon::now()->format("Y-m-d");
 
         return view(
             'Pages.registrasi',
-            ['kd_reg' => $kd_reg, 'jaminan' => $jaminan, 'layanan' => $layanan, 'isviewreg' => $isviewreg, 'dateNow' => $dateNow]
+            ['kd_reg' => $kd_reg, 'jaminan' => $jaminan, 'layanan' => $layanan, 'isviewreg' => $isviewreg, 'dateNow' => $dateNow,'isviewregSaset' => $isviewregSaset]
         );
     }
 

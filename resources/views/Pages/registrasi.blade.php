@@ -45,7 +45,7 @@
                         </thead>
 
                         <tbody id="tb">
-                            @foreach ($isviewreg as $item)
+                            @foreach ($isviewregSaset as $item)
                                 <tr>
                                     <td>{{ $item->fr_kd_reg }}</td>
                                     <td>{{ $item->fr_mr }}</td>
@@ -394,7 +394,7 @@
     </div>
 
     <!-- The modal Edit -->
-    @foreach ($isviewreg as $e)
+    @foreach ($isviewregSaset as $e)
         <div class="modal fade" id="Edit{{ $e->fr_kd_reg }}">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -540,7 +540,9 @@
                 </div>
             </div>
         </div>
+    {{-- @endforeach
 
+    @foreach ($isviewregSaset as $e) --}}
         {{-- Modal Kirim Data Satu Sehat --}}
         <div class="modal fade" id="sasetreg{{ $e->fr_kd_reg }}">
             <div class="modal-dialog">
@@ -556,46 +558,76 @@
                             <h5>Data pasien : {{ $e->fr_kd_reg }} - {{ $e->fr_mr }} - {{ $e->fr_nama }}</h5>
                             <input type="text" class="form-control" name="" id="koderegsaset"
                                 value="{{ $e->fr_kd_reg }}">
+                            <input type="text" class="form-control" name="" id="patientID"
+                                value="{{ $e->ihs_number }}">
+                            <input type="text" class="form-control" name="" id="patientName"
+                                value="{{ $e->fr_nama }}">
                         </div>
                     </div>
-                        <div class="modal-footer">
-                            {{-- <button type="button" class="" data-dismiss="modal"></button> --}}
-                            <button type="button" id="" class="btn btn-success float-rights"
-                                onclick="sasetSend(this)" data-koderegsaset="{{ $item->fr_kd_reg }}">
-                                Kirim</button>
-                        </div>
+                    <div class="modal-footer">
+                        {{-- <button type="button" class="" data-dismiss="modal"></button> --}}
+                        <button type="button" id="" class="btn btn-success float-rights"
+                            onclick="sasetSend(this)" data-koderegsaset="{{ $e->fr_kd_reg }}" data-patientid="{{ $e->ihs_number }}" data-patientname="{{ $e->fr_nama }}" >
+                            Kirim</button>
                     </div>
                 </div>
             </div>
+        </div>
     @endforeach
 
 @endsection
 
 @push('scripts')
     <script>
-        function sasetSend() {
-            var koderegsaset = $('#koderegsaset').val();
-            // var koderegsaset = $(e).data('koderegsaset');
-            // alert(koderegsaset);
-            var baseURL = '{{ env('BASE_URL_API') }}';
-            $.ajax({
-                type: "POST",
-                url: baseURL + "/Encounter/create",
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    koderegsaset: koderegsaset
-                },
-                success: function(response) {
-                    console.log(response);
-                    toastr.success('Encounter Berhasil Terkirim!', {
+        function sasetSend(e) {
+            // var koderegsaset = $('#koderegsaset').val();
+            // var patientID = $('#patientID').val();
+            // var patientName = $('#patientName').val();
+
+            var koderegsaset = $(e).data('koderegsaset');
+            var patientID = $(e).data('patientid');
+            var patientName = $(e).data('patientname');
+
+            // if (patientID == '') {
+            //     toastr.error('NIK Belum Terverifikasi!', {
+            //         timeOut: 2000,
+            //         preventDuplicates: true,
+            //         positionClass: 'toast-top-right',
+            //     });
+            // } else {
+                var baseURL = '{{ env('BASE_URL_API') }}';
+                $.ajax({
+                    type: "POST",
+                    url: baseURL + "/Encounter/create",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        regID: koderegsaset,
+                        patientID: patientID,
+                        pateientName: patientName,
+                    },
+                    success: function(response) {
+                        if (response[0] == 200 || response[0] == 201) {
+                            console.log(response);
+                            toastr.success('Encounter Berhasil Terkirim!', {
                                 timeOut: 2000,
                                 preventDuplicates: true,
                                 positionClass: 'toast-top-right',
                             });
-                    // window.location.reload();
-                }
-            });
-        }
+                        } else {
+                            console.log(response);
+                            toastr.error('Encounter Gagal Terkirim!', {
+                                timeOut: 2000,
+                                preventDuplicates: true,
+                                positionClass: 'toast-top-right',
+                            });
+                        }
+                    }
+                    // error: function(err) {
+                    //     console.log(err);
+                    // }
+                });
+            }
+        // }
         // Ajax Search RM untuk Registrasi
         var path = "{{ route('registrasiSearch') }}";
 
