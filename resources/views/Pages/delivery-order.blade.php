@@ -154,7 +154,7 @@
                                 </select>
                                 <div class="invalid-feedback">Please..dont let me blank</div>
                             </div>
-                            <div class="form-group col-sm-2">
+                            {{-- <div class="form-group col-sm-2">
                                 <label for="">Pajak Pembelian</label>
                                 <select class="form-control" id="pajak_pembelian_global" style="width: 100%;"
                                     name="pajak_pembelian_global" onchange="pajakGlobal()">
@@ -163,7 +163,7 @@
                                     <option value="1">PPN 11%</option>
                                 </select>
                                 <div class="invalid-feedback">Please..dont let me blank</div>
-                            </div>
+                            </div> --}}
                             <div class="form-group">
                                 <label class="form-check-label" for="flexCheckDefault">
                                     <input class="checkbox form-check-input" type="checkbox" value=""

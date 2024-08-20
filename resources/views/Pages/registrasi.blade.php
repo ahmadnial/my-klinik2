@@ -588,13 +588,13 @@
             var patientID = $(e).data('patientid');
             var patientName = $(e).data('patientname');
 
-            // if (patientID == '') {
-            //     toastr.error('NIK Belum Terverifikasi!', {
-            //         timeOut: 2000,
-            //         preventDuplicates: true,
-            //         positionClass: 'toast-top-right',
-            //     });
-            // } else {
+            if (patientID == '') {
+                toastr.error('NIK Belum Terverifikasi!', {
+                    timeOut: 2000,
+                    preventDuplicates: true,
+                    positionClass: 'toast-top-right',
+                });
+            } else {
                 var baseURL = '{{ env('BASE_URL_API') }}';
                 $.ajax({
                     type: "POST",
@@ -627,7 +627,7 @@
                     // }
                 });
             }
-        // }
+        }
         // Ajax Search RM untuk Registrasi
         var path = "{{ route('registrasiSearch') }}";
 
