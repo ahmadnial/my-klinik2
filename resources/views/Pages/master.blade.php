@@ -272,9 +272,8 @@
                                 </a>
                             </li>
 
-                              <li class="nav-item">
+                              {{-- <li class="nav-item">
                                 <a href="#" class="nav-link">
-                                    {{-- <i class="nav-icon fas fa-bed"></i> --}}
                                     <i class="nav-icon fa fa-light fa-heartbeat"></i>
                                     <p>
                                         Laboratorium
@@ -290,7 +289,7 @@
                                     </li>
                                     
                                 </ul>
-                            </li>
+                            </li> --}}
                             {{-- @endif --}}
 
                             {{-- @if (auth()->user()->role_id == '4' || '1') --}}
