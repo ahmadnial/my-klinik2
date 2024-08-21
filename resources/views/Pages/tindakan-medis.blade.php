@@ -1023,7 +1023,7 @@
                                                                 <div class="file-upload-contain">
                                                                     <input id="multiplefileupload" type="file"
                                                                         name="images[]" class="d-none"
-                                                                        accept=".jpg,.gif,.png" multiple>
+                                                                        accept=".jpg,.gif,.png,.pdf" multiple>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1143,8 +1143,8 @@
                 </div>
                 <div class="modal-body">
                     @foreach ($isTarifLab as $tl)
-                    <div class="showListLaborat mt-2 mb-2">
-                        <div class="icheck-primary d-inline">
+                        <div class="showListLaborat mt-2 mb-2">
+                            <div class="icheck-primary d-inline">
                                 <input type="checkbox" id="nm_tarif_lab" name="nm_tarif_lab[]"
                                     value="{{ $tl->kd_tarif }}">
                                 <label for="nm_tarif_lab">
@@ -1152,7 +1152,7 @@
                                 </label>
                             </div>
                         </div>
-                        @endforeach
+                    @endforeach
                 </div>
                 <div class="modal-footer">
                     <div class="float-right mt-2">
@@ -3001,6 +3001,7 @@
             img.height = height;
             img.alt = alt;
             $("#imageShowOff").append(img);
+            $("#imageShowOff").append(`<iframe src="${src}" width="100%" height="600"></iframe>`);
         }
         // (function(document) {
         //     "use strict";

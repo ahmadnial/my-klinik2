@@ -40,6 +40,7 @@
                                 <th>Dokter</th>
                                 <th>Umur</th>
                                 <th>Kunjungan</th>
+                                <th>Encounter</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -58,11 +59,18 @@
                                         @endphp
                                     </td>
                                     <td>
-                                        {{-- @if ($item->fs_tgl_kunjungan_terakhir != '')
-                                            <span class="badge badge-primary">Pasien Lama</span>
+                                        @if ($item->fs_tgl_kunjungan_terakhir != '')
+                                        <span class="badge badge-info">Pasien Lama</span>
                                         @else
-                                            <span class="badge badge-warning text-white">Pasien Baru</span>
-                                        @endif --}}
+                                        <span class="badge badge-warning text-white">Pasien Baru</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($item->encounterID != '')
+                                        <span class="badge badge-primary">Encounter Sent</span>
+                                        {{-- @else
+                                        <span class="badge badge-warning text-white">Pasien Baru</span> --}}
+                                        @endif
                                     </td>
                                     <td>
                                         <button class="btn btn-xs btn-success" data-toggle="modal"
@@ -540,7 +548,7 @@
                 </div>
             </div>
         </div>
-    {{-- @endforeach
+        {{-- @endforeach
 
     @foreach ($isviewregSaset as $e) --}}
         {{-- Modal Kirim Data Satu Sehat --}}
@@ -548,26 +556,29 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Kirim Data Satu sehat</h4>
+                        <h4 class="modal-title">Kirim Encounter Satu sehat</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <div class="container row">
-                            <h5>Data pasien : {{ $e->fr_kd_reg }} - {{ $e->fr_mr }} - {{ $e->fr_nama }}</h5>
-                            <input type="text" class="form-control" name="" id="koderegsaset"
+                            <h5>Data pasien : <b class="badge badge-primary">{{ $e->ihs_number }}</b> {{ $e->fr_kd_reg }}
+                                - {{ $e->fr_mr }} - {{ $e->fr_nama }}</h5>
+                            <input type="hidden" class="form-control" name="" id="koderegsaset"
                                 value="{{ $e->fr_kd_reg }}">
-                            <input type="text" class="form-control" name="" id="patientID"
+                            <input type="hidden" class="form-control" name="" id="patientID"
                                 value="{{ $e->ihs_number }}">
-                            <input type="text" class="form-control" name="" id="patientName"
+                            <input type="hidden" class="form-control" name="" id="patientName"
                                 value="{{ $e->fr_nama }}">
                         </div>
                     </div>
                     <div class="modal-footer">
                         {{-- <button type="button" class="" data-dismiss="modal"></button> --}}
                         <button type="button" id="" class="btn btn-success float-rights"
-                            onclick="sasetSend(this)" data-koderegsaset="{{ $e->fr_kd_reg }}" data-patientid="{{ $e->ihs_number }}" data-patientname="{{ $e->fr_nama }}" >
+                            onclick="sasetSend(this)" data-koderegsaset="{{ $e->fr_kd_reg }}"
+                            data-patientid="{{ $e->ihs_number }}" data-patientname="{{ $e->fr_nama }}"
+                            data-petugasmedis="{{ $e->fr_dokter }}" data-layanan="{{ $e->fr_layanan }}">
                             Kirim</button>
                     </div>
                 </div>
@@ -587,6 +598,8 @@
             var koderegsaset = $(e).data('koderegsaset');
             var patientID = $(e).data('patientid');
             var patientName = $(e).data('patientname');
+            var petugasmedis = $(e).data('petugasmedis');
+            var layanan = $(e).data('layanan');
 
             if (patientID == '') {
                 toastr.error('NIK Belum Terverifikasi!', {
@@ -604,17 +617,21 @@
                         regID: koderegsaset,
                         patientID: patientID,
                         pateientName: patientName,
+                        petugasmedis: petugasmedis,
+                        layanan: layanan,
                     },
                     success: function(response) {
                         if (response[0] == 200 || response[0] == 201) {
-                            console.log(response);
+                            // console.log(response);
+                            $('#sasetreg' + koderegsaset).modal('close');
                             toastr.success('Encounter Berhasil Terkirim!', {
                                 timeOut: 2000,
                                 preventDuplicates: true,
                                 positionClass: 'toast-top-right',
                             });
                         } else {
-                            console.log(response);
+                            // console.log(response);
+                            $('#sasetreg' + koderegsaset).modal('hide');
                             toastr.error('Encounter Gagal Terkirim!', {
                                 timeOut: 2000,
                                 preventDuplicates: true,
