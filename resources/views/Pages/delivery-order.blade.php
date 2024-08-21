@@ -6,7 +6,7 @@
     <section class="content">
         <div class="card">
             <div class="card-header">
-                <button type="submit" class="btn btn-success float-right" data-toggle="modal" data-target="#TambahDO"><i
+                <button type="submit" class="btn btn-success float-right" data-toggle="modal" data-target="" onclick="openFormModal()"><i
                         class="fas fa-dolly"></i>&nbsp;Tambah
                     DO</button>
                 <h3 class="card-title"><i class="fas fa-shipping-fast"></i>&nbsp;PENERIMAAN BARANG</h3>
@@ -363,6 +363,11 @@
 
     @push('scripts')
         <script>
+            function openFormModal() {
+                $('#TambahDO').modal('show');
+                $('#do_hdr_total_faktur_show_only').val('');
+                $('#do_hdr_total_faktur').val('');
+            }
             // $(document).ready(function() {
             //     $('#deliverOrder').DataTable({
             //         "scrollX": true,
