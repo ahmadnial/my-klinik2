@@ -1,6 +1,16 @@
 @extends('pages.master')
 @section('mytitle', 'Data Sosial')
 @section('konten')
+    <style>
+        .modal-dialog {
+            overflow-y: initial !important
+        }
+
+        .modal-body {
+            height: 77vh;
+            overflow-y: auto;
+        }
+    </style>
     <section class="content">
         <div class="card">
             <div class="card-header">
@@ -68,8 +78,7 @@
     </section>
 
     <!-- The modal Create -->
-    <div class="modal fade" id="TambahPasien" tabindex="-1" role="dialog" aria-labelledby="modalLabelLarge"
-        aria-hidden="true">
+    <div class="modal fade" id="TambahPasien">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
 
@@ -291,11 +300,10 @@
 
     <!-- The modal Edit -->
     {{-- @foreach ($isdatasosial as $d) --}}
-    <div class="modal fade" id="EditDasos" role="dialog" aria-labelledby="modalLabelLarge" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+    <div class="modal fade" id="EditDasos">
+        <div class="modal-dialog modal-lg" id="modalAsla">
             <div class="modal-content">
-
-                <div class="modal-header bg-warning">
+                <div class="modal-header" style="background-color: rgb(251, 238, 171)">
                     <h4 class="modal-title" id="modalLabelLarge">Edit Data Pasien</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -308,7 +316,8 @@
                             <div class="ihsButton form-group col-sm-6">
                                 <button type="button" class="btn btn-success btn-xs mb-1" onclick="getIhsNumber()"><i
                                         class="fa fa-user"></i>&nbsp;&nbsp;IHS Number</button>
-                                <input type="text" class="eihs_number form-control" name="eihs_number" id="eihs_number" readonly>
+                                <input type="text" class="eihs_number form-control" name="eihs_number"
+                                    id="eihs_number" readonly>
                             </div>
                             <div class="form-group col-sm-6">
                                 <label for="">No. Rekam Medis</label>
@@ -500,7 +509,7 @@
                             <hr><br>
                         </div>
                     </div>
-                    <div class=" col-12 ml-3 mb-3">
+                    <div class=" col-12 ml-3 mb-2">
                         <i class="fa fa-user text-danger"></i>&nbsp;&nbsp;<i class="text-danger">Last Save by
                             :</i> <input type="text" class="text-danger col-8" id="last_save_by" style="border: none"
                             readonly>
@@ -546,8 +555,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="IHSModal" tabindex="-1" role="dialog" aria-labelledby="modalLabelLarge"
-        aria-hidden="true">
+    <div class="modal fade" id="IHSModal" role="dialog" aria-labelledby="modalLabelLarge" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
 
@@ -559,14 +567,29 @@
                 </div>
 
                 <div class="modal-body">
+                    <p style="font-size: 20px; font-family: 'Times New Roman', Times, serif; text-align: justify">
+                        &#9733; Saya mengetahui dan menyetujui bahwa berdasarkan Peraturan
+                                Menteri Kesehatan Nomor 24 Tahun 2022 tentang Rekam Medis,
+                                fasilitas pelayanan kesehatan wajib membuka akses dan
+                                mengirim data rekam medis kepada Kementerian Kesehatan
+                                melalui Platform SATUSEHAT.
+                    </p>
+                    <p style="font-size: 20px; font-family: 'Times New Roman', Times, serif; text-align: justify">
+                        &#9733; Menyetujui untuk menerima dan membuka data Pasien dari
+                                Fasilitas Pelayanan Kesehatan lainnya melalui SATUSEHAT
+                                untuk kepentingan pelayanan kesehatan dan/atau rujukan.
+                    </p>
+                    <br><br>
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1" style="font-size: 16px; font-family: 'Times New Roman', Times, serif; text-align: justify">
                             Saya
                             menjamin bahwa pasien sudah membaca dan menandatangani form consent
                             pembukaan data dari SATUSEHAT
                         </label>
                     </div>
+                </div>
+                <div class="modal-footer">
                     <div class="verifIhs mt-3 float-right">
                         <button type="button" class="btn btn-success" onclick="verifNIK()" id="verifIhs">Verifikasi
                             NIK</button>
@@ -587,6 +610,7 @@
         function verifNIK() {
             var patientId = $('#efs_mr').val();
             var nik = $('#efs_no_identitas').val();
+            var baseURL = '{{ env('BASE_URL_API') }}';
             if (nik == '') {
                 $('#verifIhs').attr('disabled', false);
                 $('#verifIhs').html('Verifikasi NIK');
@@ -604,7 +628,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    url: "http://127.0.0.1:8000/api/Patient/" + nik,
+                    url: baseURL + "/Patient/" + nik,
                     type: "GET",
                     data: {
                         nik: nik
@@ -629,6 +653,7 @@
                                 preventDuplicates: true,
                                 positionClass: 'toast-top-right',
                             });
+                            // $('#IHSModal').modal('close');
                         }
                     }
                 });
