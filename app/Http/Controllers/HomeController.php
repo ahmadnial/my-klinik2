@@ -87,7 +87,7 @@ class HomeController extends Controller
         $isviewreg = registrasiCreate::where('fr_tgl_keluar', '=', '')->get();
         $isviewregSaset = DB::table('ta_registrasi')
         ->leftJoin('tc_mr', 'tc_mr.fs_mr', '=', 'ta_registrasi.fr_mr')
-        ->leftJoin('saset_encounter', 'saset_encounter.regID', '=', 'ta_registrasi.fr_kd_reg')
+        // ->leftJoin('saset_encounter', 'saset_encounter.regID', '=', 'ta_registrasi.fr_kd_reg')
         ->where('ta_registrasi.fr_tgl_keluar', '=', '')
         ->where('ta_registrasi.deleted_at', '=', NULL)
         ->get();
