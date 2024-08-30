@@ -66,9 +66,9 @@
                                         @endif
                                     </td>
                                     <td>
-                                        {{-- @if($item->encounterID != '')
+                                        @if($item->encounterID != '')
                                         <span class="badge badge-primary">Encounter Sent</span>
-                                        @endif --}}
+                                        @endif
                                     </td>
                                     <td>
                                         <button class="btn btn-xs btn-success" data-toggle="modal"
