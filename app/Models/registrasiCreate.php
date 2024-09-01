@@ -38,6 +38,9 @@ class registrasiCreate extends Model
         'ttv_RR',
         'ttv_SN',
         'ttv_SPO2',
+        'fr_kd_medis',
+        'created_at',
+        'updated_at',
         'deleted_at'
     ];
 

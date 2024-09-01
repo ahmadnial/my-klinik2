@@ -98,6 +98,8 @@ class registrasiController extends Controller
         // echo $res->getBody();
         // {"type":"User"...'
 
+        $getNamaDokter = DB::table('mstr_dokter')->where('fm_kd_medis', $request->fr_dokter)->value('fm_nm_medis');
+
         $newReg = new registrasiCreate();
         $newReg->fr_kd_reg = $kd_reg;
         $newReg->fr_mr = $request->fr_mr;
@@ -107,7 +109,8 @@ class registrasiController extends Controller
         $newReg->fr_alamat = $request->fr_alamat;
         $newReg->fr_no_hp = $request->fr_no_hp;
         $newReg->fr_layanan = $request->fr_layanan;
-        $newReg->fr_dokter = $request->fr_dokter;
+        $newReg->fr_dokter = $getNamaDokter;
+        $newReg->fr_kd_medis = $request->fr_dokter;
         $newReg->fr_session_poli = $request->fr_session_poli;
         $newReg->fr_jaminan = $request->fr_jaminan;
         $newReg->fr_bb = $request->fr_bb;

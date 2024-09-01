@@ -576,7 +576,7 @@
                         <button type="button" id="" class="btn btn-success float-rights"
                             onclick="sasetSend(this)" data-koderegsaset="{{ $e->fr_kd_reg }}"
                             data-patientid="{{ $e->ihs_number }}" data-patientname="{{ $e->fr_nama }}"
-                            data-petugasmedis="{{ $e->fr_dokter }}" data-layanan="{{ $e->fr_layanan }}">
+                            data-petugasmedis="{{ $e->fr_kd_medis }}" data-layanan="{{ $e->fr_layanan }}">
                             Kirim</button>
                     </div>
                 </div>
@@ -734,7 +734,7 @@
                             $('.fr_dokter').append('<option value="">--Select--</option>');
                             $.each(islayananMedis, function(key, value) {
                                 $('.fr_dokter').append('<option value="' + value
-                                    .fm_nm_medis +
+                                    .fm_kd_medis +
                                     '">' + value.fm_nm_medis +
                                     '</option>');
                             })
