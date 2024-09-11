@@ -636,7 +636,7 @@
         <div class="card" id="chart_soap" style="overflow-y:scroll; overflow-x: hidden; height:650px;">
             <div class="">
                 <form action="" method="post" id="CHCreate" class="needs-validation" novalidate
-                    enctype="multipart/form-data">
+                    enctype="multipart/form-data" onsubmit="sendCondition();">
                     {{-- @if ($model->id)
                                 @method('PUT')
                             @endif --}}
@@ -1551,6 +1551,7 @@
 @push('scripts')
     <script>
         function sendCondition() {
+            // alert('masuk');
             var regID = $('#chart_kd_reg').val();
             var diagnosis = $('#chart_A_diagnosa').val();
             var patientID = $('#chart_mr').val();
@@ -1583,7 +1584,7 @@
                             diagnosis: diagnosis,
                         },
                         success: function(response) {
-                            if (response[0] == 200 || response[0] == 201) {
+                            if (response[0] == 201 || response[0] == 200) {
                                 // console.log(response);
                                 // $('#sasetreg' + koderegsaset).modal('close');
                                 toastr.success('Condition Berhasil Terkirim!', {

@@ -619,9 +619,10 @@
                         layanan: layanan,
                     },
                     success: function(response) {
-                        if (response[0] == 200 || response[0] == 201) {
+                        if (response[0] == 201 || response[0] == 200) {
                             // console.log(response);
-                            $('#sasetreg' + koderegsaset).modal('close');
+                            $('#sasetreg' + koderegsaset).modal('hide');
+                            window.location.href = "{{ url('registrasi') }}";
                             toastr.success('Encounter Berhasil Terkirim!', {
                                 timeOut: 2000,
                                 preventDuplicates: true,
@@ -630,6 +631,7 @@
                         } else {
                             // console.log(response);
                             $('#sasetreg' + koderegsaset).modal('hide');
+                            // window.location.href = "{{ url('registrasi') }}";
                             toastr.error('Encounter Gagal Terkirim!', {
                                 timeOut: 2000,
                                 preventDuplicates: true,
