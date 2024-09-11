@@ -960,9 +960,10 @@
                                             ASSESMENT</b></span>
                                     <div class="mb-1"></div>
                                     <select class="chart_A_diagnosa form-control mb-3" style="width: 100%;"
-                                        name="chart_A_diagnosa" id="chart_A_diagnosa" onkeyup="getICDX()">
+                                        name="chart_A_diagnosa" id="chart_A_diagnosa" onchange="getICDX()">
                                         {{-- <option value="">--Select--</option> --}}
                                     </select>
+                                    {{-- <input type="text" id="icdx_saset" name="icdx_saset" class="icdx_saset"> --}}
                                     <textarea id="chart_A" name="chart_A" class="form-control mt-3 mb-2" rows="4"></textarea>
                                 </div>
                                 <div class="form-group">
@@ -1056,6 +1057,10 @@
                                         class="fa fa-save"></i>
                                     &nbsp;
                                     Save</button>
+                                <a id="sendCondition" class="btn btn-warning btn-sm float-rights"
+                                    onclick="sendCondition()"><i class="fa fa-save"></i>
+                                    &nbsp;
+                                    sendCondition</a>
                                 {{--
                         </div> --}}
                             </div>
@@ -1545,6 +1550,65 @@
 
 @push('scripts')
     <script>
+        function sendCondition() {
+            var regID = $('#chart_kd_reg').val();
+            var diagnosis = $('#chart_A_diagnosa').val();
+            var patientID = $('#chart_mr').val();
+            if (diagnosis == '' || diagnosis == null) {
+                toastr.info('Diagnosis Belum Terisi!', {
+                    timeOut: 5000,
+                    preventDuplicates: true,
+                    positionClass: 'toast-top-right',
+                });
+            } else {
+                // alert(diagnosis)
+                // var patientID = $('#patientID').val();
+                // var patientName = $('#patientName').val();
+
+                if (diagnosis == '') {
+                    toastr.error('Diagnosa Belum Terisi!', {
+                        timeOut: 2000,
+                        preventDuplicates: true,
+                        positionClass: 'toast-top-right',
+                    });
+                } else {
+                    var baseURL = '{{ env('BASE_URL_API') }}';
+                    $.ajax({
+                        type: "POST",
+                        url: baseURL + "/Condition/create",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            regID: regID,
+                            patientID: patientID,
+                            diagnosis: diagnosis,
+                        },
+                        success: function(response) {
+                            if (response[0] == 200 || response[0] == 201) {
+                                // console.log(response);
+                                // $('#sasetreg' + koderegsaset).modal('close');
+                                toastr.success('Condition Berhasil Terkirim!', {
+                                    timeOut: 3000,
+                                    preventDuplicates: true,
+                                    positionClass: 'toast-top-right',
+                                });
+                            } else {
+                                // console.log(response);
+                                // $('#sasetreg' + koderegsaset).modal('hide');
+                                toastr.error('Satu Sehat Condition Gagal Terkirim!', {
+                                    timeOut: 5000,
+                                    preventDuplicates: true,
+                                    positionClass: 'toast-top-right',
+                                });
+                            }
+                        }
+                        // error: function(err) {
+                        //     console.log(err);
+                        // }
+                    });
+                }
+            }
+        }
+
         function getTanggalChart() {
             var dateSelect = $('#chart_tgl_trs_select').val();
             $(".chart_tgl_trs").empty();
@@ -2228,6 +2292,23 @@
                 cache: true
             }
         });
+
+        // function getICDX() {
+        //     var path = "{{ route('getIcdX') }}";
+        //     $('#chart_A_diagnosa').select2({
+        //         placeholder: 'Search Diagnosa',
+        //         ajax: {
+        //             url: path,
+        //             dataType: 'json',
+        //             delay: 100,
+        //             success: function(isICDX) {
+        //                 $('#icdx_saset').val(xicd.code)
+        //                     console.log(xicd.code);
+        //             },
+        //             cache: true
+        //         }
+        //     });
+        // }
 
         $(".nm_tarif_add").on("click", function() {
 

@@ -18,12 +18,10 @@ use Illuminate\Support\Facades\Http;
 
 class registrasiController extends Controller
 {
-
     public function index()
     {
         //
     }
-
 
     public function store(Request $request)
     {
@@ -33,7 +31,7 @@ class registrasiController extends Controller
             'fs_mr' => 'required',
             'fs_nama' => 'required',
             'fs_tgl_lahir' => 'required',
-            'fs_jenis_kelamin' => 'required'
+            'fs_jenis_kelamin' => 'required',
         ]);
 
         $data = dataSosialCreate::create($request->all());
@@ -53,14 +51,14 @@ class registrasiController extends Controller
         $num = str_pad(00000001, 8, 0, STR_PAD_LEFT);
         $cekid = registrasiCreate::withTrashed()->get();
         if ($cekid == '') {
-            $kd_reg =  'RG'  . $num;
+            $kd_reg = 'RG' . $num;
         } else {
             $continue = registrasiCreate::withTrashed()->latest('created_at')->limit(1)->first();
             // $continue = DB::table('ta_registrasi')->withTrashed()->latest('created_at')->first();
             // $de = substr($continue->fr_kd_reg, -8); //old way
             $de = preg_replace('/[^0-9]/', '', $continue->fr_kd_reg);
-            $kd_reg = 'RG' . str_pad(($de + 1), 8, '0', STR_PAD_LEFT);
-        };
+            $kd_reg = 'RG' . str_pad($de + 1, 8, '0', STR_PAD_LEFT);
+        }
 
         $request->validate([
             // 'fr_kd_reg' => 'required',
@@ -74,7 +72,7 @@ class registrasiController extends Controller
             'fr_layanan' => 'required',
             'fr_dokter' => 'required',
             'fr_jaminan' => 'required',
-            'fr_session_poli' => 'required'
+            'fr_session_poli' => 'required',
         ]);
 
         DB::beginTransaction();
@@ -98,7 +96,9 @@ class registrasiController extends Controller
         // echo $res->getBody();
         // {"type":"User"...'
 
-        $getNamaDokter = DB::table('mstr_dokter')->where('fm_kd_medis', $request->fr_dokter)->value('fm_nm_medis');
+        $getNamaDokter = DB::table('mstr_dokter')
+            ->where('fm_kd_medis', $request->fr_dokter)
+            ->value('fm_nm_medis');
 
         $newReg = new registrasiCreate();
         $newReg->fr_kd_reg = $kd_reg;
@@ -146,14 +146,16 @@ class registrasiController extends Controller
     public function editRegister(Request $request)
     {
         // dd($request->all());
-        $d =  DB::table('ta_registrasi')->where('fr_kd_reg', $request->fr_kd_reg)->update([
-            'fr_tgl_reg' => $request->fr_tgl_reg,
-            'fr_layanan' => $request->fr_layanan,
-            'fr_dokter' => $request->fr_dokter,
-            'fr_jaminan' => $request->fr_jaminan,
-            'fr_session_poli' => $request->fr_session_poli,
-            'keluhan_utama' => $request->keluhan_utama,
-        ]);
+        $d = DB::table('ta_registrasi')
+            ->where('fr_kd_reg', $request->fr_kd_reg)
+            ->update([
+                'fr_tgl_reg' => $request->fr_tgl_reg,
+                'fr_layanan' => $request->fr_layanan,
+                'fr_dokter' => $request->fr_dokter,
+                'fr_jaminan' => $request->fr_jaminan,
+                'fr_session_poli' => $request->fr_session_poli,
+                'keluhan_utama' => $request->keluhan_utama,
+            ]);
 
         if ($d) {
             toastr()->success('Edit Data Berhasil!');
@@ -172,61 +174,68 @@ class registrasiController extends Controller
         // dd($request->all());
         // $xc = DB::table('tc_mr')->where('fs_mr', $request->fs_mr)->get();
         // dd($xc);
-        $y = DB::table('tc_mr')->where('fs_mr', $request->fs_mr)->update([
-            // 'fs_mr' => $request->efs_mr,
-            'fs_nama' => $request->fs_nama,
-            'fs_tempat_lahir' => $request->fs_tempat_lahir,
-            'fs_tgl_lahir' => $request->fs_tgl_lahir,
-            'fs_jenis_kelamin' => $request->fs_jenis_kelamin,
-            'fs_jenis_identitas' => $request->fs_jenis_identitas,
-            'fs_no_identitas' => $request->fs_no_identitas,
-            'fs_nm_ibu_kandung' => $request->fs_nm_ibu_kandung,
-            'fs_alamat' => $request->fs_alamat,
-            'fs_agama' => $request->fs_agama,
-            'fs_suku' => $request->fs_suku,
-            'fs_bahasa' => $request->fs_bahasa,
-            'fs_pekerjaan' => $request->fs_pekerjaan,
-            'fs_pendidikan' => $request->fs_pendidikan,
-            'fs_status_kawin' => $request->fs_status_kawin,
-            'fs_no_hp' => $request->fs_no_hp,
-            'fs_alergi' => $request->fs_alergi,
-            'ihs_number' => $request->ihs_number,
-            'fs_user' => Auth::user()->name,
-            'updated_at' => Carbon::now(),
-        ]);
+        $y = DB::table('tc_mr')
+            ->where('fs_mr', $request->fs_mr)
+            ->update([
+                // 'fs_mr' => $request->efs_mr,
+                'fs_nama' => $request->fs_nama,
+                'fs_tempat_lahir' => $request->fs_tempat_lahir,
+                'fs_tgl_lahir' => $request->fs_tgl_lahir,
+                'fs_jenis_kelamin' => $request->fs_jenis_kelamin,
+                'fs_jenis_identitas' => $request->fs_jenis_identitas,
+                'fs_no_identitas' => $request->fs_no_identitas,
+                'fs_nm_ibu_kandung' => $request->fs_nm_ibu_kandung,
+                'fs_alamat' => $request->fs_alamat,
+                'fs_agama' => $request->fs_agama,
+                'fs_suku' => $request->fs_suku,
+                'fs_bahasa' => $request->fs_bahasa,
+                'fs_pekerjaan' => $request->fs_pekerjaan,
+                'fs_pendidikan' => $request->fs_pendidikan,
+                'fs_status_kawin' => $request->fs_status_kawin,
+                'fs_no_hp' => $request->fs_no_hp,
+                'fs_alergi' => $request->fs_alergi,
+                'ihs_number' => $request->ihs_number,
+                'fs_user' => Auth::user()->name,
+                'updated_at' => Carbon::now(),
+            ]);
 
-        if($request->ihs_number != ''){
+        if ($request->ihs_number != '') {
+            $validasiDuplicate = DB::table('saset_patient')
+                ->where('noMr', '=', $request->fs_mr)
+                ->count();
+                // dd($validasiDuplicate);
+            if ($validasiDuplicate > 0) {
+                return ['Patient Alerdy Validation!'];
+            }else{
+                $status = new saset_patient();
+                $status->noMr = $request->fs_mr;
+                $status->kemkesId = $request->ihs_number;
+                $status->name = $request->fs_nama;
+                $status->user_id = auth()->user()->name;
+                $status->save();
+            }
             //  DB::table('saset_patient')->insert(['fs_mr', $request->fs_mr, 'kemkesId', $request->ihs_number, 'user_id', auth()->user()->name]);
-            $status = new saset_patient();
-            $status->noMr = $request->fs_mr;
-            $status->kemkesId = $request->ihs_number;
-            $status->user_id = auth()->user()->name;
-            $status->save();
         }
-           
+
         // dd($y);
         if ($y) {
-            $sessionFlash = [
-                'Success'
-            ];
+            $sessionFlash = ['Success'];
         } else {
-            $sessionFlash = [
-                'Error'
-            ];
+            $sessionFlash = ['Error'];
         }
         return response()->json($sessionFlash);
     }
 
-
     public function deleteDasos(Request $request)
     {
-        $delete =  DB::table('tc_mr')->where('fs_mr', $request->fs_mr)->get();
+        $delete = DB::table('tc_mr')
+            ->where('fs_mr', $request->fs_mr)
+            ->get();
         // dd($delete);
         $delete->delete();
 
         return back();
     }
-
 
     public function voidRegister(Request $request)
     {
@@ -236,15 +245,13 @@ class registrasiController extends Controller
 
         // dd($cekTrs);
         if ($cekTrs == $request->regID) {
-            $sessionFlash = [
-                'Error'
-            ];
+            $sessionFlash = ['Error'];
             // return response()->json($sessionFlash);
         } else {
-            DB::table('ta_registrasi')->where('fr_kd_reg', $request->regID)->update(['deleted_at' => Carbon::now()]);
-            $sessionFlash = [
-                'Success'
-            ];
+            DB::table('ta_registrasi')
+                ->where('fr_kd_reg', $request->regID)
+                ->update(['deleted_at' => Carbon::now()]);
+            $sessionFlash = ['Success'];
             // $reg->delete();
             // return back();
         }
