@@ -635,8 +635,8 @@
 
         <div class="card" id="chart_soap" style="overflow-y:scroll; overflow-x: hidden; height:650px;">
             <div class="">
-                <form action="" method="post" id="CHCreate" class="needs-validation" novalidate
-                    enctype="multipart/form-data" onsubmit="sendCondition();">
+                <form onsubmit="sendCondition();" action="" method="post" id="CHCreate" class="needs-validation" novalidate
+                    enctype="multipart/form-data">
                     {{-- @if ($model->id)
                                 @method('PUT')
                             @endif --}}
@@ -960,7 +960,7 @@
                                             ASSESMENT</b></span>
                                     <div class="mb-1"></div>
                                     <select class="chart_A_diagnosa form-control mb-3" style="width: 100%;"
-                                        name="chart_A_diagnosa" id="chart_A_diagnosa" onchange="getICDX()">
+                                        name="chart_A_diagnosa" id="chart_A_diagnosa">
                                         {{-- <option value="">--Select--</option> --}}
                                     </select>
                                     {{-- <input type="text" id="icdx_saset" name="icdx_saset" class="icdx_saset"> --}}
@@ -1057,10 +1057,10 @@
                                         class="fa fa-save"></i>
                                     &nbsp;
                                     Save</button>
-                                <a id="sendCondition" class="btn btn-warning btn-sm float-rights"
+                                {{-- <a id="sendCondition" class="btn btn-warning btn-sm float-rights"
                                     onclick="sendCondition()"><i class="fa fa-save"></i>
                                     &nbsp;
-                                    sendCondition</a>
+                                    sendCondition</a> --}}
                                 {{--
                         </div> --}}
                             </div>
