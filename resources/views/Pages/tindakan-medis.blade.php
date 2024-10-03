@@ -1147,17 +1147,17 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    @foreach ($isTarifLab as $tl)
                     <div class="showListLaborat mt-2 mb-2">
-                        @foreach ($isTarifLab as $tl)
-                        <div class="icheck-primary d-inline">
+                        <div class="icheck d-inline">
                             <input type="checkbox" id="nm_tarif_lab" name="nm_tarif_lab[]"
                                     value="{{ $tl->kd_tarif }}">
                                 <label for="nm_tarif_lab">
                                     {{ $tl->nm_tarif }}
                                 </label>
                             </div>
-                            @endforeach
                         </div>
+                        @endforeach
                 </div>
                 <div class="modal-footer">
                     <div class="float-right mt-2">

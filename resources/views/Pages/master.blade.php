@@ -272,7 +272,7 @@
                                 </a>
                             </li>
 
-                              {{-- <li class="nav-item">
+                              <li class="nav-item">
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon fa fa-light fa-heartbeat"></i>
                                     <p>
@@ -282,14 +282,14 @@
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="{{ url('/purchase-order') }}" class="nav-link">
+                                        <a href="{{ url('/pemeriksaan-lab') }}" class="nav-link">
                                             <i class="fas fa-cart-plus nav-icon"></i>
-                                            <p>Pemeriksaan </p>
+                                            <p>Pemeriksaan Lab</p>
                                         </a>
                                     </li>
                                     
                                 </ul>
-                            </li> --}}
+                            </li>
                             {{-- @endif --}}
 
                             {{-- @if (auth()->user()->role_id == '4' || '1') --}}

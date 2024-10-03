@@ -15,6 +15,7 @@ use App\Models\t_label_timeline;
 use App\Models\tarif_lab_hdr;
 use App\Models\trs_chart;
 use App\Models\trs_chart_resep;
+use App\Models\trs_order_lab;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
@@ -62,13 +63,10 @@ class TindakanController extends Controller
         $getSatuanTugas = Auth::user()->role_id;
 
         if ($getSatuanTugas == '2') {
-            $isRegActive = registrasiCreate::where([
-                ['fr_tgl_keluar', '=', ''],
-                ['fr_dokter', '=', Auth::user()->name]
-            ])->get();
-        } else if ($getSatuanTugas == '3') {
+            $isRegActive = registrasiCreate::where([['fr_tgl_keluar', '=', ''], ['fr_dokter', '=', Auth::user()->name]])->get();
+        } elseif ($getSatuanTugas == '3') {
             $isRegActive = registrasiCreate::where('fr_tgl_keluar', '=', '')->get();
-        } else if ($getSatuanTugas == '1') {
+        } elseif ($getSatuanTugas == '1') {
             $isRegActive = registrasiCreate::where('fr_tgl_keluar', '=', '')->get();
         }
 
@@ -78,7 +76,7 @@ class TindakanController extends Controller
         $isTindakanTarif = mstr_tindakan::all();
         $isTarifLab = tarif_lab_hdr::all();
         $isHistoryTindakan = trs_chart::all();
-        $dateNow = Carbon::now()->format("Y-m-d");
+        $dateNow = Carbon::now()->format('Y-m-d');
 
         // $data = response()->json($chart_id);
         // $isLastChartID = $chart_id;
@@ -103,7 +101,7 @@ class TindakanController extends Controller
         $isdataObat = [];
 
         if ($request->filled('q')) {
-            $isdataObat = mstr_obat::select("fm_kd_obat", "fm_nm_obat", "fm_satuan_pembelian", "fm_hrg_beli", "qty", "fm_satuan_jual")
+            $isdataObat = mstr_obat::select('fm_kd_obat', 'fm_nm_obat', 'fm_satuan_pembelian', 'fm_hrg_beli', 'qty', 'fm_satuan_jual')
                 ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
                 ->where('mstr_obat.fm_nm_obat', 'LIKE', '%' . $request->get('q') . '%')
                 ->where('mstr_obat.isActive', '=', '1')
@@ -121,8 +119,6 @@ class TindakanController extends Controller
         // dd($isdata2);
         return response()->json($isdataObatList);
     }
-
-
 
     // public function getLastID()
     // {
@@ -150,7 +146,6 @@ class TindakanController extends Controller
     //     return view('pages.tindakan-medis', ['isTindakanChart' => $isTindakanChart]);
     // }
 
-
     // public function getLastID()
     // {
     //     $id = str_pad(00000001, 8, 0, STR_PAD_LEFT);
@@ -171,13 +166,13 @@ class TindakanController extends Controller
     {
         // $isRegSearch = registrasiCreate::where('fr_kd_reg', $request->fr_kd_reg)->get();
         $isRegSearch = registrasiCreate::with('tcmr')
-            ->where('fr_kd_reg', $request->fr_kd_reg)->get();
+            ->where('fr_kd_reg', $request->fr_kd_reg)
+            ->get();
 
         //  $isTimelineHistory = ChartTindakan::with('trstdk.nm_trf', 'resep')
         //     ->where('chart_mr', $request->chart_mr)
         return response()->json($isRegSearch);
     }
-
 
     public function chartCreate(Request $request)
     {
@@ -216,45 +211,57 @@ class TindakanController extends Controller
         DB::beginTransaction();
         // try {
         $id = str_pad(00000001, 8, 0, STR_PAD_LEFT);
-        $vardate = date("Y-m");
+        $vardate = date('Y-m');
         $cekid = ChartTindakan::count();
         if ($cekid == 0) {
-            $chartId =  'CH' . '-' . $vardate . $id;
+            $chartId = 'CH' . '-' . $vardate . $id;
         } else {
             $continue = ChartTindakan::all()->last();
             $de = substr($continue->chart_id, -7);
             // $de = preg_replace('/[^0-9]/', '', $continue->chart_id);
-            $chartId = 'CH' . '-' . $vardate . str_pad(($de + 1), 8, '0', STR_PAD_LEFT);
-        };
+            $chartId = 'CH' . '-' . $vardate . str_pad($de + 1, 8, '0', STR_PAD_LEFT);
+        }
 
         $idc = str_pad(00000001, 8, 0, STR_PAD_LEFT);
-        $vardate = date("m");
+        $vardate = date('m');
         $cekidc = trs_chart::count();
         if ($cekidc == 0) {
-            $kd_trs =  'TU' . '-' . $vardate . $idc;
+            $kd_trs = 'TU' . '-' . $vardate . $idc;
         } else {
             $continue = trs_chart::all()->last();
             $dec = substr($continue->kd_trs, -6);
             // $kd_trs = 'TU' . '-' . $vardate . str_pad(($dec + 1), 8, '0', STR_PAD_LEFT);
-            $kd_trs = 'TU' . '-' . $vardate . str_pad(($dec + 1), 8, '0', STR_PAD_LEFT);
-        };
+            $kd_trs = 'TU' . '-' . $vardate . str_pad($dec + 1, 8, '0', STR_PAD_LEFT);
+        }
+
+        $idc = str_pad(00000001, 8, 0, STR_PAD_LEFT);
+        $vardate = date('m');
+        $cekidc = trs_order_lab::count();
+        if ($cekidc == 0) {
+            $kd_order_lab = 'TL' . '-' . $vardate . $idc;
+        } else {
+            $continue = trs_order_lab::all()->last();
+            $dec = substr($continue->kd_trs, -6);
+            // $kd_trs = 'TU' . '-' . $vardate . str_pad(($dec + 1), 8, '0', STR_PAD_LEFT);
+            $kd_order_lab = 'TL' . '-' . $vardate . str_pad($dec + 1, 8, '0', STR_PAD_LEFT);
+        }
 
         $cekSatuanTugas = Auth::user()->role_id;
 
         if ($cekSatuanTugas == 3) {
-            $nerChart = new ChartTindakan;
+            $nerChart = new ChartTindakan();
             $nerChart->chart_id = $chartId;
             $nerChart->chart_tgl_trs = $request->chart_tgl_trs;
-            $nerChart->chart_kd_reg  = $request->chart_kd_reg;
-            $nerChart->chart_mr    = $request->chart_mr;
+            $nerChart->chart_kd_reg = $request->chart_kd_reg;
+            $nerChart->chart_mr = $request->chart_mr;
             $nerChart->chart_nm_pasien = $request->chart_nm_pasien;
             $nerChart->chart_layanan = $request->chart_layanan;
             $nerChart->chart_dokter = $request->chart_dokter;
-            $nerChart->user   = Auth::user()->name;
-            $nerChart->user_satuan_tugas   = Auth::user()->role_id;
+            $nerChart->user = Auth::user()->name;
+            $nerChart->user_satuan_tugas = Auth::user()->role_id;
             $nerChart->chart_S = $request->chart_S;
             $nerChart->chart_O = $request->chart_O;
-            $nerChart->chart_A    = $request->chart_A;
+            $nerChart->chart_A = $request->chart_A;
             $nerChart->chart_A_diagnosa = $request->chart_A_diagnosa;
             $nerChart->chart_P = $request->chart_P;
 
@@ -270,19 +277,19 @@ class TindakanController extends Controller
 
             $nerChart->save();
         } else {
-            $nerChart = new ChartTindakan;
+            $nerChart = new ChartTindakan();
             $nerChart->chart_id = $chartId;
             $nerChart->chart_tgl_trs = $request->chart_tgl_trs;
-            $nerChart->chart_kd_reg  = $request->chart_kd_reg;
-            $nerChart->chart_mr    = $request->chart_mr;
+            $nerChart->chart_kd_reg = $request->chart_kd_reg;
+            $nerChart->chart_mr = $request->chart_mr;
             $nerChart->chart_nm_pasien = $request->chart_nm_pasien;
             $nerChart->chart_layanan = $request->chart_layanan;
             $nerChart->chart_dokter = $request->chart_dokter;
-            $nerChart->user   = Auth::user()->name;
-            $nerChart->user_satuan_tugas   = Auth::user()->role_id;
+            $nerChart->user = Auth::user()->name;
+            $nerChart->user_satuan_tugas = Auth::user()->role_id;
             $nerChart->chart_S = $request->chart_S;
             $nerChart->chart_O = $request->chart_O;
-            $nerChart->chart_A    = $request->chart_A;
+            $nerChart->chart_A = $request->chart_A;
             $nerChart->chart_A_diagnosa = $request->chart_A_diagnosa;
             $nerChart->chart_P = $request->chart_P;
 
@@ -315,7 +322,7 @@ class TindakanController extends Controller
                         'user' => Auth::user()->name,
                     ];
                     trs_chart::create($newData);
-                };
+                }
             } else {
                 $newData = [
                     'kd_trs' => $kd_trs,
@@ -332,7 +339,7 @@ class TindakanController extends Controller
                     'user' => Auth::user()->name,
                 ];
                 trs_chart::create($newData);
-            };
+            }
 
             if (!empty($request->ch_kd_obat)) {
                 foreach ($request->ch_kd_obat as $far => $val) {
@@ -354,13 +361,13 @@ class TindakanController extends Controller
                         'ch_hrg_jual' => $request->ch_hrg_jual[$far],
                     ];
                     trs_chart_resep::create($newDataResep);
-                };
+                }
             }
 
             if ($request->hasFile('images')) {
                 foreach ($request->file('images') as $image) {
                     $fileOriginalName = $image->getClientOriginalExtension();
-                    $fileNewName = $request->chartId . '-'  . uniqid() . '.' . $fileOriginalName;
+                    $fileNewName = $request->chartId . '-' . uniqid() . '.' . $fileOriginalName;
                     $image->storeAs('images', $fileNewName, 'public');
                     chart_images::create([
                         'chart_id' => $chartId,
@@ -368,7 +375,7 @@ class TindakanController extends Controller
                         'chart_kd_reg' => $request->chart_kd_reg,
                         'chart_imageName' => $fileNewName,
                         'chart_note' => $request->imgNote,
-                        'chart_tglTrs' => $request->chart_tgl_trs
+                        'chart_tglTrs' => $request->chart_tgl_trs,
                     ]);
                 }
             }
@@ -390,6 +397,25 @@ class TindakanController extends Controller
             //     $insertLabel[] = $newDataLabel;
             // };
             // t_label_timeline::insert($insertLabel);
+            if ($request->nm_tarif_lab != '') {
+                foreach ($request->nm_tarif_lab as $lab => $val) {
+                    $newOrderLab = [
+                        'kd_trs' => $kd_order_lab,
+                        'chart_id' => $chartId,
+                        'layanan' => $request->chart_layanan,
+                        'tgl_trs' => $request->chart_tgl_trs,
+                        'kd_reg' => $request->chart_kd_reg,
+                        'mr_pasien' => $request->chart_mr,
+                        'nm_pasien' => $request->chart_nm_pasien,
+
+                        'kd_lab' => $request->nm_tarif_lab[$lab],
+                        'nm_dokter_jm' => $request->chart_dokter,
+                        'user' => Auth::user()->name,
+                    ];
+                    trs_order_lab::create($newOrderLab);
+                }
+            }
+
             if ($request->ch_kd_obat != '') {
                 $newDataLabel = [
                     'reffID' => $kd_trs,
@@ -405,7 +431,7 @@ class TindakanController extends Controller
                 $ketHTML = [];
                 foreach ($request->ch_kd_obat as $label => $val) {
                     $ketHTML[] = htmlentities('<tr><td>' . $request->ch_nm_obat[$label] . '</td><td>' . $request->ch_qty_obat[$label] . '</td><td>' . $request->ch_satuan_obat[$label] . '</td><td>' . $request->ch_cara_pakai[$label] . '</td></tr>');
-                };
+                }
                 // array_push($newDataLabel, ['ketHTML' => json_encode($ketHTML)]);
                 // $newDataLabel['ketHTML'][] = json_encode($ketHTML);
                 $newDataLabel['ketHTML'] = json_encode($ketHTML, JSON_UNESCAPED_SLASHES);
@@ -420,7 +446,7 @@ class TindakanController extends Controller
 
         $sessionFlash = [
             'message' => 'Saved!',
-            'alert-type' => 'success'
+            'alert-type' => 'success',
         ];
 
         return Redirect::to('/tindakan-medis')->with($sessionFlash);
@@ -429,7 +455,7 @@ class TindakanController extends Controller
 
         $sessionFlashErr = [
             'message' => 'Some Error Occured!',
-            'alert-type' => 'error'
+            'alert-type' => 'error',
         ];
         return Redirect::to('/tindakan-medis')->with($sessionFlashErr);
         // }
@@ -442,8 +468,6 @@ class TindakanController extends Controller
         // return back();
         // // }
     }
-
-
 
     // get timeline pemeriksaan
     public function getTimeline(Request $request)
@@ -479,7 +503,6 @@ class TindakanController extends Controller
             ->orderBy('t_label_timeline.Tgl', 'DESC')
             ->get();
 
-
         return response()->json($isLabel);
     }
 
@@ -498,7 +521,7 @@ class TindakanController extends Controller
         $isICDX = [];
 
         if ($request->filled('q')) {
-            $isICDX = mstr_icdx::select("code", "name_id")
+            $isICDX = mstr_icdx::select('code', 'name_id')
                 ->where('name_id', 'LIKE', '%' . $request->get('q') . '%')
                 ->orWhere('code', 'LIKE', '%' . $request->get('q') . '%')
                 ->get();
@@ -512,27 +535,29 @@ class TindakanController extends Controller
         DB::beginTransaction();
         // try {
         // dd($request->all());
-        DB::table('chart_tindakan')->where('chart_id', $request->chart_id)->update([
-            'chart_S' => $request->chart_S,
-            'chart_O' => $request->chart_O,
-            'chart_A' => $request->chart_A,
-            'chart_A_diagnosa' => $request->chart_A_diagnosa,
-            'chart_P' => $request->chart_P,
-            'ttv_BW' => $request->ttv_BW,
-            'ttv_BH' => $request->ttv_BH,
-            'ttv_BPs' => $request->ttv_BPs,
-            'ttv_BPd' => $request->ttv_BPd,
-            'ttv_BT' => $request->ttv_BT,
-            'ttv_HR' => $request->ttv_HR,
-            'ttv_RR' => $request->ttv_RR,
-            'ttv_SN' => $request->ttv_SN,
-            'ttv_SPO2' => $request->ttv_SPO2,
-        ]);
+        DB::table('chart_tindakan')
+            ->where('chart_id', $request->chart_id)
+            ->update([
+                'chart_S' => $request->chart_S,
+                'chart_O' => $request->chart_O,
+                'chart_A' => $request->chart_A,
+                'chart_A_diagnosa' => $request->chart_A_diagnosa,
+                'chart_P' => $request->chart_P,
+                'ttv_BW' => $request->ttv_BW,
+                'ttv_BH' => $request->ttv_BH,
+                'ttv_BPs' => $request->ttv_BPs,
+                'ttv_BPd' => $request->ttv_BPd,
+                'ttv_BT' => $request->ttv_BT,
+                'ttv_HR' => $request->ttv_HR,
+                'ttv_RR' => $request->ttv_RR,
+                'ttv_SN' => $request->ttv_SN,
+                'ttv_SPO2' => $request->ttv_SPO2,
+            ]);
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
                 $fileOriginalName = $image->getClientOriginalExtension();
-                $fileNewName = $request->chart_id . '-'  . uniqid() . '.' . $fileOriginalName;
+                $fileNewName = $request->chart_id . '-' . uniqid() . '.' . $fileOriginalName;
                 $image->storeAs('images', $fileNewName, 'public');
                 chart_images::create([
                     'chart_id' => $request->chart_id,
@@ -540,7 +565,7 @@ class TindakanController extends Controller
                     'chart_kd_reg' => $request->chart_kd_reg,
                     'chart_imageName' => $fileNewName,
                     'chart_note' => $request->imgNote,
-                    'chart_tglTrs' => $request->chart_tgl_trs
+                    'chart_tglTrs' => $request->chart_tgl_trs,
                 ]);
             }
         }
@@ -587,7 +612,7 @@ class TindakanController extends Controller
 
         $sessionFlash = [
             'message' => 'Edit Berhasil!',
-            'alert-type' => 'success'
+            'alert-type' => 'success',
         ];
 
         return Redirect::to('/tindakan-medis')->with($sessionFlash);
@@ -596,17 +621,25 @@ class TindakanController extends Controller
 
         $sessionFlashErr = [
             'message' => 'Some Error Occured!',
-            'alert-type' => 'error'
+            'alert-type' => 'error',
         ];
         return Redirect::to('/tindakan-medis')->with($sessionFlashErr);
     }
 
     public function chartDelete(Request $request)
     {
-        DB::table('chart_tindakan')->where('chart_id', $request->chartid)->delete();
-        DB::table('trs_chart_resep')->where('chart_id', $request->chartid)->delete();
-        DB::table('trs_chart')->where('chart_id', $request->chartid)->delete();
-        DB::table('chart_images')->where('chart_id', $request->chartid)->delete();
+        DB::table('chart_tindakan')
+            ->where('chart_id', $request->chartid)
+            ->delete();
+        DB::table('trs_chart_resep')
+            ->where('chart_id', $request->chartid)
+            ->delete();
+        DB::table('trs_chart')
+            ->where('chart_id', $request->chartid)
+            ->delete();
+        DB::table('chart_images')
+            ->where('chart_id', $request->chartid)
+            ->delete();
 
         return back();
     }
@@ -621,7 +654,9 @@ class TindakanController extends Controller
 
     public function selectTemplateOrder(Request $request)
     {
-        $isDataTemplate = DB::table('t_template_order_detail')->where('kd_to', $request->kd_to)->get();
+        $isDataTemplate = DB::table('t_template_order_detail')
+            ->where('kd_to', $request->kd_to)
+            ->get();
         // $isTemplateOrder = DB::table('t_template_order_hdr')->leftJoin('t_template_order_detail', 't_template_order_detail.kd_to', 't_template_order_hdr.kd_to')->get();
 
         return response()->json($isDataTemplate);

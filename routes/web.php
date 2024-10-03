@@ -23,6 +23,7 @@ use App\Http\Controllers\lapAccountingController;
 use App\Http\Controllers\lookUpController;
 use App\Http\Controllers\settingController;
 use App\Http\Controllers\RedirectController;
+use App\Http\Controllers\trsLabController;
 
 // Route::group(['middleware' => 'guest'], function () {
 Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -348,4 +349,10 @@ Route::group(['middleware' => ['auth', 'checkrole:1,2']], function () {
 //Universal Look Up
 Route::group(['middleware' => ['auth', 'checkrole:1,2,3,4,5']], function () {
     Route::get('getuniversalLookUp', [lookUpController::class, 'getuniversalLookUp'])->name('getuniversalLookUp');
+});
+
+//Transaksi Laboratorium
+Route::group(['middleware' => ['auth', 'checkrole:1,2,3,4,5']], function () {
+    Route::get('pemeriksaan-lab', [trsLabController::class, 'pemeriksaanLab'])->name('pemeriksaanLab');
+    Route::get('getListOrderLab/{kd_trs}', [trsLabController::class, 'getListOrderLab'])->name('getListOrderLab');
 });
