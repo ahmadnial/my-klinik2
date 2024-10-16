@@ -704,6 +704,7 @@
                                 <input type="hidden" id="chart_nm_pasien" name="chart_nm_pasien" value="">
                                 <input type="hidden" id="chart_layanan" name="chart_layanan" value="">
                                 <input type="hidden" id="chart_dokter" name="chart_dokter" value="">
+                                <input type="hidden" id="chart_jenis_kelamin" name="chart_jenis_kelamin" value="">
                                 <input type="hidden" id="userActive" name="user" value="{{ Auth::user()->name }}">
                                 {{-- Hidden value --}}
                                 <div class="form-group">
@@ -2072,6 +2073,7 @@
                         $('#chart_nm_pasien').val(dataregvalue.fr_nama);
                         $('#chart_layanan').val(dataregvalue.fr_layanan);
                         $('#chart_dokter').val(dataregvalue.fr_dokter);
+                        $('#chart_jenis_kelamin').val(dataregvalue.fr_jenis_kelamin);
 
                         // $('#keluhanutama').val(dataregvalue.keluhan_utama);
                         $('.ta_Chart_S').val(dataregvalue.keluhan_utama);

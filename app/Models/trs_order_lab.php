@@ -17,6 +17,7 @@ class trs_order_lab extends Model
         'layanan',
         'kd_reg',
         'mr_pasien',
+        'jns_kelamin',
         'nm_pasien',
         'kd_lab',
         'nm_dokter_jm',
@@ -24,4 +25,9 @@ class trs_order_lab extends Model
         'isImplementasi',
         'isVerifikasi'
     ];
+
+    public function detailOrder()
+    {
+        return $this->hasMany(tarif_lab_hdr::class, 'kd_tarif', 'kd_lab');
+    }
 }

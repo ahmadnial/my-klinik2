@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('kd_reg');
             $table->string('mr_pasien');
             $table->string('nm_pasien');
+            $table->string('jns_kelamin');
             $table->string('kd_lab')->nullable();
             $table->string('nm_dokter_jm')->nullable();
             $table->string('user')->nullable();

@@ -92,29 +92,29 @@
                         <div class="row">
                             <div class="form-group col-sm-2">
                                 <label for="">kd trs</label>
-                                <input type="text" class="form-control" name="tl_kd_trs" id="tl_kd_trs"
-                                    value="" readonly>
+                                <input type="text" class="form-control" name="tl_kd_trs" id="tl_kd_trs" value=""
+                                    readonly>
                             </div>
                             <div class="form-group col-sm-2">
                                 <label for="">kd Reg</label>
                                 <select class="form-control" id="tl_kd_order" style="width: 100%;" name="tl_kd_order"
                                     onchange="acMapResep()">
                                     <option value="">--Select--</option>
-                                    @foreach ($isListOrderLab as $odrl)
-                                        <option value="{{ $odrl->kd_trs }}">{{ $odrl->kd_reg . '-' . $odrl->nm_pasien }}
+                                    @foreach ($isListOrderLabs as $odrl)
+                                        <option value="{{ $odrl->kd_trs }}" data-jns-kel="{{ $odrl->jns_kelamin }}">{{ $odrl->kd_reg . '-' . $odrl->nm_pasien }}
                                         </option>
                                     @endforeach
                                 </select>
+                                <input type="hidden" id="tl_jns_kel" name="tl_jns_kel" value="">
                             </div>
                             <div class="form-group col-sm-2">
                                 <label for="">Tgl Transaksi</label>
-                                <input type="date" class="form-control" name="tgl_trs" id="tgl_trs"
-                                    value="">
+                                <input type="date" class="form-control" name="tgl_trs" id="tgl_trs" value="">
                             </div>
                             <div class="form-group col-sm-2">
                                 <label for="">Diagnosa</label>
-                                <input type="text" class="form-control" name="tl_diagnosa" id="tl_diagnosa" value=""
-                                    readonly>
+                                <input type="text" class="form-control" name="tl_diagnosa" id="tl_diagnosa"
+                                    value="" readonly>
                             </div>
                             <div class="form-group col-sm-2">
                                 <label for="">Dokter Pengirim</label>
@@ -553,7 +553,7 @@
 
     @push('scripts')
         <script>
-            getMonthSale()
+            // getMonthSale()
 
             $('#tp_kd_order').select2({
                 placeholder: 'Search E-Resep',
@@ -563,8 +563,14 @@
                 placeholder: 'Select Tipe Tarif',
             });
 
-             function acMapResep() {
+            function acMapResep() {
                 var kd_trs = $('#tl_kd_order').val();
+                var select = document.getElementById('tl_kd_order');
+                var selectedOption = select.options[select.selectedIndex];
+                var tl_jenis_kelamin = selectedOption.getAttribute('data-jns-kel');
+
+                document.getElementById('tl_jns_kel').value = tl_jenis_kelamin;
+                // var tl_jenis_kelamin = $('#tl_jns_kel').val();
 
                 $.ajax({
                     headers: {
@@ -573,7 +579,8 @@
                     url: "{{ url('getListOrderLab') }}/" + kd_trs,
                     type: 'GET',
                     data: {
-                        kd_trs: kd_trs
+                        kd_trs: kd_trs,
+                        tl_jenis_kelamin: tl_jenis_kelamin
                     },
                     success: function(isListOrderLab) {
                         $("#listPemeriksaan").empty();
@@ -594,23 +601,23 @@
                                 <tr>
                                     <td>
                                         <input class="searchObat form-control" style="border: none"
-                                            id="kd_obat" name="kd_trs[]" placeholder="kode obat" readonly
+                                            id="kd_trs" name="kd_trs[]" placeholder="kode obat" readonly
                                             style="border: none;" value="${getValues[getVals].kd_trs}">
                                     </td>
                                     <td>
-                                        <input class="searchObat form-control" id="nm_obat"
-                                            name="nm_obat[]" ondblclick="getListObat()" aria-placeholder="Search" value="${getValues[getVals].nm_tarif}" readonly>
+                                        <input class="searchObat form-control" id="nm_tarif"
+                                            name="nm_tarif[]" aria-placeholder="Search" value="${getValues[getVals].nm_tarif}" readonly>
                                     </td>
                                     <td>
-                                        <input type="text" class="do_satuan_pembelian form-control"
-                                            id="satuan" name="satuan[]"
+                                        <input type="text" class="form-control"
+                                            id="hasil" name="hasil[]"
                                             value="">
                                     </td>
                                     <td>
                                         <input type="text" class="satuan_hasil form-control" readonly style="border: none;" id="satuan_hasil" name="satuan_hasil[]" value="${getValues[getVals].satuan_hasil}">
                                     </td>
                                     <td>
-                                        <input type="text" class="ket_normal form-control" id="ket_normal" name="ket_normal[]" onKeyUp="getQTY(this)" value="${getValues[getVals].ket_normal}" readonly>
+                                        <input type="text" class="nilai_rujukan_normal form-control" id="nilai_rujukan_normal" name="nilai_rujukan_normal[]" onKeyUp="getQTY(this)" value="${getValues[getVals].ket_normal}" readonly>
                                     </td>
                                     
                                     <td>

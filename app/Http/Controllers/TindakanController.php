@@ -407,6 +407,8 @@ class TindakanController extends Controller
                         'kd_reg' => $request->chart_kd_reg,
                         'mr_pasien' => $request->chart_mr,
                         'nm_pasien' => $request->chart_nm_pasien,
+                        'nm_pasien' => $request->chart_nm_pasien,
+                        'jns_kelamin' => $request->chart_jenis_kelamin,
 
                         'kd_lab' => $request->nm_tarif_lab[$lab],
                         'nm_dokter_jm' => $request->chart_dokter,
