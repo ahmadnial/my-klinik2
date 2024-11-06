@@ -85,7 +85,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form method="POST" action="{{ url('add-penjualan') }}" onkeydown="return event.key != 'Enter';"
+                <form method="POST" action="{{ url('insert-trslab') }}" onkeydown="return event.key != 'Enter';"
                     class="needs-validation" novalidate>
                     @csrf
                     <div class="modal-body">
@@ -109,7 +109,7 @@
                             </div>
                             <div class="form-group col-sm-2">
                                 <label for="">Tgl Transaksi</label>
-                                <input type="date" class="form-control" name="tgl_trs" id="tgl_trs" value="">
+                                <input type="date" class="form-control" name="tgl_trs" id="tgl_trs" value="{{$dateNow}}">
                             </div>
                             <div class="form-group col-sm-2">
                                 <label for="">Diagnosa</label>

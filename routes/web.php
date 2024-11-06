@@ -355,4 +355,6 @@ Route::group(['middleware' => ['auth', 'checkrole:1,2,3,4,5']], function () {
 Route::group(['middleware' => ['auth', 'checkrole:1,2,3,4,5']], function () {
     Route::get('pemeriksaan-lab', [trsLabController::class, 'pemeriksaanLab'])->name('pemeriksaanLab');
     Route::get('getListOrderLab/{kd_trs}', [trsLabController::class, 'getListOrderLab'])->name('getListOrderLab');
+
+    Route::post('insert-trslab', [trsLabController::class, 'inserttrsLab'])->name('insert-trslab');
 });

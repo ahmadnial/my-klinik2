@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('kd_trs', 50);
             $table->string('kd_reg', 50);
+            $table->string('no_mr', 60);
             $table->string('tl_tgl_trs', 20);
             $table->string('kd_tarif', 50);
             $table->string('nm_tarif', 20);
