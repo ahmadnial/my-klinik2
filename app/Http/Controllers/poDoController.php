@@ -105,7 +105,7 @@ class poDoController extends Controller
     public function getListObatDO()
     {
         if (request()->ajax()) {
-            $isObatResep = DB::table('mstr_obat')
+            $isObatResep = DB::table('mstr_obat')->where('isActive', '=', '1')
                 // ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
                 // ->select('fm_kd_obat', 'fm_nm_obat', 'fm_hrg_jual_resep', 'fm_satuan_jual', 'qty')
                 // ->select('fm_kd_obat')
