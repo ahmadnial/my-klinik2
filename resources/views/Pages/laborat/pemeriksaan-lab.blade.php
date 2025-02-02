@@ -117,6 +117,11 @@
                                     value="" readonly>
                             </div>
                             <div class="form-group col-sm-2">
+                                <label for="">Layanan</label>
+                                <input type="text" class="form-control" name="tl_layanan" id="tl_layanan"
+                                    value="" readonly>
+                            </div>
+                            <div class="form-group col-sm-2">
                                 <label for="">Dokter Pengirim</label>
                                 <input type="text" class="form-control" name="tl_dokter" id="tl_dokter" value=""
                                     readonly>
@@ -143,11 +148,11 @@
                             </div>
                             <div class="form-group col-sm-2">
                                 <label for="">Nama</label>
-                                <input type="text" class="form-control" name="tl_nama" id="tl_nama" value="">
+                                <input type="text" class="form-control" name="tl_nama" id="tl_nama" value="" readonly>
                             </div>
                             <div class="form-group col-sm-2">
                                 <label for="">Alamat</label>
-                                <textarea type="text" class="form-control" name="tl_alamat" id="tl_alamat" value=""></textarea>
+                                <textarea type="text" class="form-control" name="tl_alamat" id="tl_alamat" value="" readonly></textarea>
                             </div>
                             <div class="form-group col-sm-2">
                                 <label for="">Jenis Kelamin</label>
@@ -213,8 +218,8 @@
                     {{-- <hr> --}}
                     <div class="modal-footer">
                         <div class="float-right col-2">
-                            <input type="hidden" class="form-control float-right" name="total_penjualan"
-                                id="total_penjualan">
+                            <input type="hidden" class="form-control float-right" name="tl_total_tarif"
+                                id="tl_total_tarif">
                             <input type="text" class="form-control float-right" name="total_penjualan_show_only"
                                 id="total_penjualan_show_only" value="" readonly>
                         </div>
