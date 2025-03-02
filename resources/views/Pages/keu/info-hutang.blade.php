@@ -1,5 +1,5 @@
 @extends('pages.master')
-@section('mytitle', 'Info Tindakan')
+@section('mytitle', 'Info Hutang')
 
 @section('konten')
     <section class="content">
@@ -48,17 +48,19 @@
                         <tbody id="result">
 
                         </tbody>
-                        {{-- <tfoot align="">
+                       <tfoot align="">
                             <tr>
                                 <th></th>
                                 <th></th>
                                 <th></th>
-                                <td><b><input type="text" id="grandTTL" class="form-control" style="border: none"
-                                            readonly></b>
-                                </td>
-                                <th id="grandTTL"></th>
+                                <th></th>
+                                <th></th>
+                                <th id="ttlHutang"></th>
+                                <th id="ttlBayar"></th>
+                                <th id="potongan"></th>
+                                <th id="sisaHutang"></th>
                             </tr>
-                        </tfoot> --}}
+                        </tfoot>
                     </table>
                     {{-- <input type="text" class="form-control col-4" id="grandttl"> --}}
                 </div>
@@ -97,7 +99,10 @@
                             supplier: supplier,
                         },
                         success: function(isDataHutang) {
-                            var sumall = 0;
+                            var ttlHutang = 0;
+                            var ttlBayar = 0;
+                            var potongan = 0;
+                            var sisaHutang = 0;
                             var table = $('#penjualan').DataTable();
                             var rows = table
                                 .rows()
@@ -176,6 +181,47 @@
                                 }
 
                                 injectDataBaru();
+
+                                var ttlHutangs = parseFloat(jmlHutang);
+                                ttlHutang += ttlHutangs;
+
+                                var numberTtlHutang = ttlHutang;
+                                var formattedNumberTtlHutang = numberTtlHutang.toLocaleString('id-ID', {
+                                    style: 'currency',
+                                    currency: 'IDR'
+                                });
+                                // ============
+                                var ttlBayars = parseFloat(jmlBayar);
+                                ttlBayar += ttlBayars;
+
+                                var numberTtlBayar = ttlBayar;
+                                var formattedNumberTtlBayar = numberTtlBayar.toLocaleString('id-ID', {
+                                    style: 'currency',
+                                    currency: 'IDR'
+                                });
+                                // ==============
+                                var ttlPotongan = parseFloat(jmlPot);
+                                potongan += ttlPotongan;
+
+                                var numberTtlPotongan = potongan;
+                                var formattedNumberTtlPotongan = numberTtlPotongan.toLocaleString('id-ID', {
+                                    style: 'currency',
+                                    currency: 'IDR'
+                                });
+                                 // ==============
+                                var sisaHutangs = parseFloat(akhirInt);
+                                sisaHutang += sisaHutangs;
+
+                                var numberSisaHutang= sisaHutang;
+                                var formattedNumberSisaHutang = numberSisaHutang.toLocaleString('id-ID', {
+                                    style: 'currency',
+                                    currency: 'IDR'
+                                });
+
+                                document.getElementById("ttlHutang").innerHTML = formattedNumberTtlHutang;
+                                document.getElementById("ttlBayar").innerHTML = formattedNumberTtlBayar;
+                                document.getElementById("potongan").innerHTML = formattedNumberTtlPotongan;
+                                document.getElementById("sisaHutang").innerHTML = formattedNumberSisaHutang;
 
                                 toastr.success('Data Load Complete!', 'Complete!', {
                                     timeOut: 2000,

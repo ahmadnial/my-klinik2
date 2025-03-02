@@ -223,7 +223,7 @@
                                         <tbody id="TESCHCreate">
                                             <tr>
                                                 <td>
-                                                    <select type="text" class="obatResep form-control"
+                                                    <select type="text" class="obatResep_e form-control"
                                                         id="obatResep_e" style="width: 100%"
                                                         onchange="pasteToE()"></select>
                                                 </td>
@@ -306,6 +306,10 @@
 
 @push('scripts')
     <script>
+        // $(document).ready(function() {
+        //     $('#obatResep').select2();
+        // });
+
         function deleteTemplate(d) {
             var kdto = $(d).data('kdto');
             var nmto = $(d).data('nmto');
@@ -481,7 +485,7 @@
             var cara_pakai_resepE = $('#cara_pakai_resep_e').val();
             var hrg_jualE = $('.ch_hrg_jual_e').val();
 
-            $('#obatResep_e').empty();
+            $('.obatResep_e').empty();
             $('#namaObatResep_e').val('');
             $('#qty_obat_e').val('');
             $('#satuan_jual_obat_e').val('');
@@ -622,11 +626,11 @@
                         })
                     };
                 },
-                cache: true
+                cache: false
             }
         });
 
-        // Get Satuan Jual
+
         function pasteTo() {
             var kd_obat = $('#obatResep').val();
             $.ajax({
@@ -658,7 +662,8 @@
             var cara_pakai_resep = $('#cara_pakai_resep').val();
             var hrg_jual = $('.ch_hrg_jual').val();
 
-            $('#obatResep').empty();
+            // $('#obatResep').empty();
+            $('#obatResep').val(null).trigger('change');
             $('#namaObatResep').val('');
             $('#qty_obat').val('');
             $('#satuan_jual_obat').val('');
@@ -741,7 +746,7 @@
                         <tbody class="mt-2">
                             <tr class="mt-2">
                                 <td class="mt-2">
-                                    <input type="hidden" class="obatResep form-control" id="kd_obat_to"
+                                    <input type="hidden" class="form-control" id="kd_obat_to"
                                         name="kd_obat_to[]" style="width: 100%" value="${obatResep}" readonly>
                                 </td>
                                 <input type="hidden" id="nm_obat_to" name="nm_obat_to[]" value="${namaobatResep}">
@@ -765,8 +770,9 @@
                         </tbody>
                     </table>`
             );
-
+            
             // $("#TESCHCreate").empty();
         });
+
     </script>
 @endpush
