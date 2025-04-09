@@ -101,7 +101,8 @@
                                     onchange="acMapResep()">
                                     <option value="">--Select--</option>
                                     @foreach ($isListOrderLabs as $odrl)
-                                        <option value="{{ $odrl->kd_trs }}" data-jns-kel="{{ $odrl->jns_kelamin }}">{{ $odrl->kd_reg . '-' . $odrl->nm_pasien }}
+                                        <option value="{{ $odrl->kd_trs }}" data-jns-kel="{{ $odrl->jns_kelamin }}">
+                                            {{ $odrl->kd_reg . '-' . $odrl->nm_pasien }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -109,7 +110,8 @@
                             </div>
                             <div class="form-group col-sm-2">
                                 <label for="">Tgl Transaksi</label>
-                                <input type="date" class="form-control" name="tgl_trs" id="tgl_trs" value="{{$dateNow}}">
+                                <input type="date" class="form-control" name="tgl_trs" id="tgl_trs"
+                                    value="{{ $dateNow }}">
                             </div>
                             <div class="form-group col-sm-2">
                                 <label for="">Diagnosa</label>
@@ -118,8 +120,8 @@
                             </div>
                             <div class="form-group col-sm-2">
                                 <label for="">Layanan</label>
-                                <input type="text" class="form-control" name="tl_layanan" id="tl_layanan"
-                                    value="" readonly>
+                                <input type="text" class="form-control" name="tl_layanan" id="tl_layanan" value=""
+                                    readonly>
                             </div>
                             <div class="form-group col-sm-2">
                                 <label for="">Dokter Pengirim</label>
@@ -143,12 +145,13 @@
                             </div>
                             <div class="form-group col-sm-2">
                                 <label for="">No.RM</label>
-                                <input type="text" class="form-control" name="tl_no_mr" id="tl_no_mr" value=""
-                                    readonly>
+                                <input type="text" class="form-control" name="tl_no_mr" id="tl_no_mr"
+                                    value="" readonly>
                             </div>
                             <div class="form-group col-sm-2">
                                 <label for="">Nama</label>
-                                <input type="text" class="form-control" name="tl_nama" id="tl_nama" value="" readonly>
+                                <input type="text" class="form-control" name="tl_nama" id="tl_nama" value=""
+                                    readonly>
                             </div>
                             <div class="form-group col-sm-2">
                                 <label for="">Alamat</label>
@@ -642,10 +645,30 @@
                     
                                 `);
                         }
-                        // GrandTotal();
+                        GrandTotal();
 
                     }
                 })
+            }
+
+            function GrandTotal() {
+                var sum = 0;
+
+                $('.sub_total').each(function() {
+                    sum += Number($(this).val());
+                });
+                var result = sum.toFixed(2);
+
+                $('#total_penjualan').val(result);
+
+                var ttlInt = parseFloat(result);
+
+                var formattedNumber = ttlInt.toLocaleString('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR'
+                });
+
+                $('#total_penjualan_show_only').val(formattedNumber);
             }
 
             (function() {

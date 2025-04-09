@@ -31,21 +31,25 @@ class DashboardController extends Controller
 
         $getMonthSales = tp_detail_item::select(DB::raw("SUM(sub_total)as monthSales"))
             // ->whereYear('tgl_trs', date('Y'))
+             ->whereYear('tgl_trs', '=', $yearNow)
             ->whereNull('kd_reg')
             ->GroupBy(DB::Raw("Month(tgl_trs)"))
             ->pluck('monthSales');
 
         $bulanPenjualan = tp_detail_item::Select(DB::raw("MONTHNAME(tgl_trs) as month"))
+            ->whereYear('tgl_trs', '=', $yearNow)
             ->groupBy(DB::raw("MONTHNAME(tgl_trs)"))
             ->pluck('month');
 
         $getMonthPembelian = do_detail_item::select(DB::raw("SUM(do_sub_total)as monthPembelian"))
             // ->whereYear('tgl_trs', date('Y'))
+            ->whereYear('tanggal_trs', '=', $yearNow)
             ->GroupBy(DB::Raw("Month(tanggal_trs)"))
             ->pluck('monthPembelian');
 
         // dd($getMonthPembelian);
         $bulanPembelian = do_detail_item::Select(DB::raw("MONTHNAME(tanggal_trs) as monthView"))
+            ->whereYear('tanggal_trs', '=', $yearNow)
             ->groupBy(DB::raw("MONTHNAME(tanggal_trs)"))
             ->pluck('monthView');
 
