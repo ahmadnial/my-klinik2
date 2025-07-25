@@ -413,7 +413,16 @@
             yAxis: {
                 title: {
                     text: 'IDR'
+                },
+                 labels: { 
+                formatter: function() {
+                    return Highcharts.numberFormat(this.value, 2);
                 }
+            }
+            },
+            tooltip: { 
+            valueDecimals: 2,
+            valuePrefix: 'Rp ' 
             },
             legend: {
                 layout: 'vertical',
@@ -447,52 +456,63 @@
 
         // chart pembelian barang
 
-        var getMonthPembelian = <?php echo json_encode($getMonthPembelian); ?>;
-        var bulanPembelian = <?php echo json_encode($bulanPembelian); ?>;
-        Highcharts.chart('getMonthPembelian', {
+
+    var getMonthPembelian = <?php echo json_encode($getMonthPembelian); ?>;
+    var bulanPembelian = <?php echo json_encode($bulanPembelian); ?>;
+    Highcharts.chart('getMonthPembelian', {
+        title: {
+            text: 'Grafik Pembelian Apotek'
+        },
+        subtitle: {
+            text: 'Source: Trs Pembelian Obat (DO)'
+        },
+        xAxis: {
+            categories: bulanPembelian
+        },
+        yAxis: {
             title: {
-                text: 'Grafik Pembelian Apotek'
+                text: 'IDR'
             },
-            subtitle: {
-                text: 'Source: Trs Pembelian Obat (DO)'
-            },
-            xAxis: {
-                categories: bulanPembelian
-            },
-            yAxis: {
-                title: {
-                    text: 'IDR'
+            labels: { 
+                formatter: function() {
+                    return Highcharts.numberFormat(this.value, 2);
                 }
-            },
-            legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'middle'
-            },
-            plotOptions: {
-                series: {
-                    allowPointSelect: true
-                }
-            },
-            series: [{
-                name: 'Nilai Pemb.',
-                data: getMonthPembelian
-            }],
-            responsive: {
-                rules: [{
-                    condition: {
-                        maxWidth: 500
-                    },
-                    chartOptions: {
-                        legend: {
-                            layout: 'horizontal',
-                            align: 'center',
-                            verticalAlign: 'bottom'
-                        }
-                    }
-                }]
             }
-        });
+        },
+        tooltip: { 
+            valueDecimals: 2,
+            valuePrefix: 'Rp ' 
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle'
+        },
+        plotOptions: {
+            series: {
+                allowPointSelect: true
+            }
+        },
+        series: [{
+            name: 'Nilai Pemb.',
+            data: getMonthPembelian
+        }],
+        responsive: {
+            rules: [{
+                condition: {
+                    maxWidth: 500
+                },
+                chartOptions: {
+                    legend: {
+                        layout: 'horizontal',
+                        align: 'center',
+                        verticalAlign: 'bottom'
+                    }
+                }
+            }]
+        }
+    });
+           
 
         // Obat Terlaris TOP 10
 
