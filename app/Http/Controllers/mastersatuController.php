@@ -84,7 +84,7 @@ class mastersatuController extends Controller
             'fm_sip_medis' => 'required',
             'fm_kadaluarsa_sip' => 'required',
             'fm_layanan' => 'required',
-            'fm_nik' => 'fm_nik',
+            // 'fm_nik' => 'requi',
         ]);
 
         $data = mstr_dokter::create($request->all());

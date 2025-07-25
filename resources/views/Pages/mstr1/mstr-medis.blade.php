@@ -115,7 +115,7 @@
                         </select>
                     </div>
                     <div class="form-group col-sm">
-                        <label for="">SIP</label>
+                        <label for="">NIK</label>
                         <input type="text" class="form-control" name="fm_nik" id="fm_nik"
                             placeholder="SIP Dokter">
                     </div>
