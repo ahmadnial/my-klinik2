@@ -70,7 +70,7 @@ class registrasiController extends Controller
             // $last = registrasiCreate::withTrashed()->latest('created_at')->first();
             $last = registrasiCreate::withTrashed()->select('fr_kd_reg')->orderBy('created_at', 'desc')->limit(1)->value('fr_kd_reg');
 
-            $lastNumber = preg_replace('/\D/', '', $last->fr_kd_reg);
+            $lastNumber = preg_replace('/\D/', '', $last);
             $kd_reg = 'RG' . str_pad($lastNumber + 1, 8, '0', STR_PAD_LEFT);
         }
 
