@@ -119,6 +119,7 @@ class HomeController extends Controller
         $isviewregSaset = DB::table('ta_registrasi')
             ->select(
                 'ta_registrasi.fr_kd_reg',
+                'ta_registrasi.fr_tgl_reg',
                 'ta_registrasi.fr_mr',
                 'ta_registrasi.fr_layanan',
                 'ta_registrasi.fr_dokter',
