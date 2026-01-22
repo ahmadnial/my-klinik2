@@ -127,6 +127,7 @@ class HomeController extends Controller
                 'ta_registrasi.fr_session_poli',
                 'ta_registrasi.fr_alergi',
                 'ta_registrasi.fr_alamat',
+                'ta_registrasi.fr_jenis_kelamin',
                 'ta_registrasi.fr_no_hp',
                 'ta_registrasi.fr_user',
                 'ta_registrasi.keluhan_utama',
