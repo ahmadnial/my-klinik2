@@ -29,23 +29,21 @@ class registrasiCreate extends Model
         'fr_alergi',
         'fr_user',
         'keluhan_utama',
-        'ttv_BW',
-        'ttv_BH',
-        'ttv_BPs',
-        'ttv_BPd',
-        'ttv_BT',
-        'ttv_HR',
-        'ttv_RR',
-        'ttv_SN',
-        'ttv_SPO2',
         'fr_kd_medis',
-        'created_at',
-        'updated_at',
+    ];
+
+    protected $hidden = [
         'deleted_at'
     ];
 
+    public $timestamps = true;
+
     public function tcmr()
     {
-        return $this->hasOne(dataSosialCreate::class, 'fs_mr', 'fr_mr');
+        return $this->hasOne(
+            dataSosialCreate::class,
+            'fs_mr',
+            'fr_mr'
+        );
     }
 }

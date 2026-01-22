@@ -3,18 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
+
 use App\Models\dataSosialCreate;
 use App\Models\registrasiCreate;
 use App\Models\trs_chart;
 use App\Models\trs_chart_resep;
 use App\Models\saset_patient;
-use RealRashid\SweetAlert\Toaster;
-use GuzzleHttp\Client;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
 
 class registrasiController extends Controller
 {
@@ -23,10 +20,11 @@ class registrasiController extends Controller
         //
     }
 
+    /* =====================================================
+     * DATA SOSIAL
+     * ===================================================== */
     public function store(Request $request)
     {
-        // $yes = $request->all();
-        // dd($yes);
         $request->validate([
             'fs_mr' => 'required',
             'fs_nama' => 'required',
@@ -36,117 +34,84 @@ class registrasiController extends Controller
 
         $data = dataSosialCreate::create($request->all());
 
-        if ($data->save()) {
+        if ($data) {
             toastr()->success('Data Tersimpan!');
-            return back();
         } else {
             toastr()->error('Gagal Tersimpan!');
-            return back();
         }
+
+        return back();
     }
 
+    /* =====================================================
+     * REGISTRASI PASIEN
+     * ===================================================== */
     public function registrasiCreate(Request $request)
     {
-        // dd($request->all());
-        $num = str_pad(00000001, 8, 0, STR_PAD_LEFT);
-        $cekid = registrasiCreate::withTrashed()->get();
-        if ($cekid == '') {
-            $kd_reg = 'RG' . $num;
-        } else {
-            $continue = registrasiCreate::withTrashed()->latest('created_at')->limit(1)->first();
-            // $continue = DB::table('ta_registrasi')->withTrashed()->latest('created_at')->first();
-            // $de = substr($continue->fr_kd_reg, -8); //old way
-            $de = preg_replace('/[^0-9]/', '', $continue->fr_kd_reg);
-            $kd_reg = 'RG' . str_pad($de + 1, 8, '0', STR_PAD_LEFT);
-        }
-
         $request->validate([
-            // 'fr_kd_reg' => 'required',
             'fr_mr' => 'required',
-            // 'fr_nama' => 'required',
             'fr_tgl_reg' => 'required',
             'fr_tgl_lahir' => 'required',
             'fr_jenis_kelamin' => 'required',
             'fr_alamat' => 'required',
-            // 'fr_no_hp' => 'required',
             'fr_layanan' => 'required',
             'fr_dokter' => 'required',
             'fr_jaminan' => 'required',
             'fr_session_poli' => 'required',
         ]);
 
+        // ===== Generate Kode Registrasi (AMAN MEMORY)
+        $exists = registrasiCreate::withTrashed()->exists();
+        $num = str_pad(1, 8, '0', STR_PAD_LEFT);
+
+        if (!$exists) {
+            $kd_reg = 'RG' . $num;
+        } else {
+            // $last = registrasiCreate::withTrashed()->latest('created_at')->first();
+            $last = registrasiCreate::withTrashed()->select('fr_kd_reg')->orderBy('id', 'desc')->limit(1)->value('fr_kd_reg');
+
+            $lastNumber = preg_replace('/\D/', '', $last->fr_kd_reg);
+            $kd_reg = 'RG' . str_pad($lastNumber + 1, 8, '0', STR_PAD_LEFT);
+        }
+
         DB::beginTransaction();
-        // try {
-        $baseURL = getenv('BASE_URL_API');
+        try {
+            $namaDokter = DB::table('mstr_dokter')->where('fm_kd_medis', $request->fr_dokter)->value('fm_nm_medis');
 
-        // Http::post($baseURL . '/encounter', [
-        //     'regID' => $kd_reg,
+            registrasiCreate::create([
+                'fr_kd_reg' => $kd_reg,
+                'fr_mr' => $request->fr_mr,
+                'fr_nama' => $request->fr_nama,
+                'fr_tgl_lahir' => $request->fr_tgl_lahir,
+                'fr_jenis_kelamin' => $request->fr_jenis_kelamin,
+                'fr_alamat' => $request->fr_alamat,
+                'fr_no_hp' => $request->fr_no_hp,
+                'fr_layanan' => $request->fr_layanan,
+                'fr_dokter' => $namaDokter,
+                'fr_kd_medis' => $request->fr_dokter,
+                'fr_session_poli' => $request->fr_session_poli,
+                'fr_jaminan' => $request->fr_jaminan,
+                'fr_bb' => $request->fr_bb,
+                'fr_alergi' => $request->fr_alergi,
+                'fr_user' => Auth::user()->name,
+                'fr_tgl_reg' => $request->fr_tgl_reg,
+                'keluhan_utama' => $request->keluhan_utama,
+            ]);
 
-        // ]);
-        // $client = new Client();
-        // $res = $client->request('POST', $baseURL . 'encounter', [
-        //     // 'form_params' => [
-        //     'regID' => $kd_reg
-        //     // ]
-        // ]);
-        // echo $res->getStatusCode();
-        // // 200
-        // echo $res->getHeader('content-type');
-        // // 'application/json; charset=utf8'
-        // echo $res->getBody();
-        // {"type":"User"...'
-
-        $getNamaDokter = DB::table('mstr_dokter')
-            ->where('fm_kd_medis', $request->fr_dokter)
-            ->value('fm_nm_medis');
-
-        $newReg = new registrasiCreate();
-        $newReg->fr_kd_reg = $kd_reg;
-        $newReg->fr_mr = $request->fr_mr;
-        $newReg->fr_nama = $request->fr_nama;
-        $newReg->fr_tgl_lahir = $request->fr_tgl_lahir;
-        $newReg->fr_jenis_kelamin = $request->fr_jenis_kelamin;
-        $newReg->fr_alamat = $request->fr_alamat;
-        $newReg->fr_no_hp = $request->fr_no_hp;
-        $newReg->fr_layanan = $request->fr_layanan;
-        $newReg->fr_dokter = $getNamaDokter;
-        $newReg->fr_kd_medis = $request->fr_dokter;
-        $newReg->fr_session_poli = $request->fr_session_poli;
-        $newReg->fr_jaminan = $request->fr_jaminan;
-        $newReg->fr_bb = $request->fr_bb;
-        $newReg->fr_alergi = $request->fr_alergi;
-        $newReg->fr_user = Auth::user()->name;
-        $newReg->fr_tgl_reg = $request->fr_tgl_reg;
-        $newReg->keluhan_utama = $request->keluhan_utama;
-
-        $newReg->save();
-
-        DB::commit();
-        $sessionFlash = 'success';
-
-        // return Redirect::to('/registrasi')->with($sessionFlash);
-        return response()->json($sessionFlash);
-        // } catch (\Exception $e) {
-        DB::rollback();
-
-        $sessionFlash = 'Error';
-        // return Redirect::to('/registrasi')->with($sessionFlashErr);
-        return response()->json($sessionFlash);
-        // $data = registrasiCreate::create($request->all());
-
-        // if ($newReg->save()) {
-        //     toastr()->success('Data Tersimpan!');
-        //     return back();
-        // } else {
-        //     toastr()->error('Gagal Tersimpan!');
-        //     return back();
-        // }
+            DB::commit();
+            return response()->json('success');
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            return response()->json('error', 500);
+        }
     }
 
+    /* =====================================================
+     * EDIT REGISTRASI
+     * ===================================================== */
     public function editRegister(Request $request)
     {
-        // dd($request->all());
-        $d = DB::table('ta_registrasi')
+        $updated = DB::table('ta_registrasi')
             ->where('fr_kd_reg', $request->fr_kd_reg)
             ->update([
                 'fr_tgl_reg' => $request->fr_tgl_reg,
@@ -157,27 +122,23 @@ class registrasiController extends Controller
                 'keluhan_utama' => $request->keluhan_utama,
             ]);
 
-        if ($d) {
+        if ($updated) {
             toastr()->success('Edit Data Berhasil!');
-            return back();
         } else {
             toastr()->error('Gagal Tersimpan!');
-            return back();
         }
+
+        return back();
     }
 
-    /**
-     * Display the specified resource.
-     */
+    /* =====================================================
+     * EDIT DATA SOSIAL
+     * ===================================================== */
     public function editDasos(Request $request)
     {
-        // dd($request->all());
-        // $xc = DB::table('tc_mr')->where('fs_mr', $request->fs_mr)->get();
-        // dd($xc);
-        $y = DB::table('tc_mr')
+        $updated = DB::table('tc_mr')
             ->where('fs_mr', $request->fs_mr)
             ->update([
-                // 'fs_mr' => $request->efs_mr,
                 'fs_nama' => $request->fs_nama,
                 'fs_tempat_lahir' => $request->fs_tempat_lahir,
                 'fs_tgl_lahir' => $request->fs_tgl_lahir,
@@ -199,62 +160,47 @@ class registrasiController extends Controller
                 'updated_at' => Carbon::now(),
             ]);
 
-        if ($request->ihs_number != '') {
-            $validasiDuplicate = DB::table('saset_patient')
-                ->where('noMr', '=', $request->fs_mr)
-                ->count();
-                // dd($validasiDuplicate);
-            if ($validasiDuplicate > 0) {
-                return ['Patient Alerdy Validation!'];
-            }else{
-                $status = new saset_patient();
-                $status->noMr = $request->fs_mr;
-                $status->kemkesId = $request->ihs_number;
-                $status->name = $request->fs_nama;
-                $status->user_id = auth()->user()->name;
-                $status->save();
+        if ($request->ihs_number) {
+            $exists = saset_patient::where('noMr', $request->fs_mr)->exists();
+
+            if (!$exists) {
+                saset_patient::create([
+                    'noMr' => $request->fs_mr,
+                    'kemkesId' => $request->ihs_number,
+                    'name' => $request->fs_nama,
+                    'user_id' => Auth::user()->name,
+                ]);
             }
-            //  DB::table('saset_patient')->insert(['fs_mr', $request->fs_mr, 'kemkesId', $request->ihs_number, 'user_id', auth()->user()->name]);
         }
 
-        // dd($y);
-        if ($y) {
-            $sessionFlash = ['Success'];
-        } else {
-            $sessionFlash = ['Error'];
-        }
-        return response()->json($sessionFlash);
+        return response()->json($updated ? ['Success'] : ['Error']);
     }
 
+    /* =====================================================
+     * DELETE DATA SOSIAL
+     * ===================================================== */
     public function deleteDasos(Request $request)
     {
-        $delete = DB::table('tc_mr')
-            ->where('fs_mr', $request->fs_mr)
-            ->get();
-        // dd($delete);
-        $delete->delete();
+        DB::table('tc_mr')->where('fs_mr', $request->fs_mr)->delete();
 
         return back();
     }
 
+    /* =====================================================
+     * VOID REGISTRASI
+     * ===================================================== */
     public function voidRegister(Request $request)
     {
-        // $reg = registrasiCreate::where('fr_kd_reg', '=', $request->regID)->first();
-        $cekTrs = trs_chart::where('kd_reg', $request->regID)->value('kd_reg');
-        $cekResep = trs_chart_resep::where('kd_reg', $request->regID)->pluck('kd_reg');
+        $hasTrx = trs_chart::where('kd_reg', $request->regID)->exists();
 
-        // dd($cekTrs);
-        if ($cekTrs == $request->regID) {
-            $sessionFlash = ['Error'];
-            // return response()->json($sessionFlash);
-        } else {
-            DB::table('ta_registrasi')
-                ->where('fr_kd_reg', $request->regID)
-                ->update(['deleted_at' => Carbon::now()]);
-            $sessionFlash = ['Success'];
-            // $reg->delete();
-            // return back();
+        if ($hasTrx) {
+            return response()->json(['Error']);
         }
-        return response()->json($sessionFlash);
+
+        DB::table('ta_registrasi')
+            ->where('fr_kd_reg', $request->regID)
+            ->update(['deleted_at' => Carbon::now()]);
+
+        return response()->json(['Success']);
     }
 }

@@ -40,4 +40,6 @@ class dataSosialCreate extends Model
         'fs_user',
         'ihs_number',
     ];
+
+    protected $hidden = ['deleted_at'];
 }
