@@ -115,7 +115,48 @@ class HomeController extends Controller
         $isviewreg = registrasiCreate::whereNull('fr_tgl_keluar')->select('fr_kd_reg', 'fr_mr', 'fr_nama', 'fr_tgl_reg')->limit(100)->get();
 
         // ❗ JOIN besar DIBATASI
-        $isviewregSaset = DB::table('ta_registrasi')->select('ta_registrasi.fr_kd_reg', 'ta_registrasi.fr_mr', 'tc_mr.fs_nama')->leftJoin('tc_mr', 'tc_mr.fs_mr', '=', 'ta_registrasi.fr_mr')->leftJoin('saset_encounter', 'saset_encounter.regID', '=', 'ta_registrasi.fr_kd_reg')->whereNull('ta_registrasi.fr_tgl_keluar')->whereNull('ta_registrasi.deleted_at')->limit(100)->get();
+        // $isviewregSaset = DB::table('ta_registrasi')->select('ta_registrasi.fr_kd_reg', 'ta_registrasi.fr_mr', 'tc_mr.fs_nama')->leftJoin('tc_mr', 'tc_mr.fs_mr', '=', 'ta_registrasi.fr_mr')->leftJoin('saset_encounter', 'saset_encounter.regID', '=', 'ta_registrasi.fr_kd_reg')->whereNull('ta_registrasi.fr_tgl_keluar')->whereNull('ta_registrasi.deleted_at')->limit(100)->get();
+        $isviewregSaset = DB::table('ta_registrasi')
+            ->select(
+                'ta_registrasi.fr_kd_reg',
+                'ta_registrasi.fr_mr',
+                'ta_registrasi.fr_layanan',
+                'ta_registrasi.fr_dokter',
+                'ta_registrasi.fr_jaminan',
+                'ta_registrasi.fr_session_poli',
+                'ta_registrasi.fr_alergi',
+                'ta_registrasi.fr_alamat',
+                'ta_registrasi.fr_no_hp',
+                'ta_registrasi.fr_user',
+                'ta_registrasi.keluhan_utama',
+                'ta_registrasi.fr_kd_medis',
+
+                // 🔑 ALIAS DARI tc_mr (INI KUNCINYA)
+                DB::raw('tc_mr.fs_nama AS fr_nama'),
+                DB::raw('tc_mr.fs_tgl_lahir AS fr_tgl_lahir'),
+                DB::raw('tc_mr.fs_no_hp AS fr_no_hp'),
+                DB::raw('tc_mr.fs_alamat AS fr_alamat'),
+                DB::raw('tc_mr.fs_alergi AS fr_alergi'),
+                'tc_mr.fs_tgl_kunjungan_terakhir',
+                'tc_mr.ihs_number',
+
+                // status encounter
+                'saset_encounter.encounterID',
+                DB::raw("
+            CASE
+                WHEN saset_encounter.encounterID IS NULL
+                THEN 'BELUM'
+                ELSE 'TERKIRIM'
+            END AS status
+        "),
+            )
+            ->leftJoin('tc_mr', 'tc_mr.fs_mr', '=', 'ta_registrasi.fr_mr')
+            ->leftJoin('saset_encounter', 'saset_encounter.regID', '=', 'ta_registrasi.fr_kd_reg')
+            ->whereNull('ta_registrasi.fr_tgl_keluar')
+            ->whereNull('ta_registrasi.deleted_at')
+            ->orderBy('ta_registrasi.created_at', 'desc')
+            ->limit(100)
+            ->get();
 
         $dateNow = Carbon::now()->format('Y-m-d');
 
