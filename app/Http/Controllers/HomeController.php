@@ -112,7 +112,7 @@ class HomeController extends Controller
         $jaminan = mstr_jaminan::select('fm_kd_jaminan', 'fm_nm_jaminan')->get();
 
         // ❗ LIMIT tampilan aktif (tidak ubah alur UI)
-        $isviewreg = registrasiCreate::whereNull('fr_tgl_keluar')->select('fr_kd_reg', 'fr_mr', 'fr_nama', 'fr_tgl_reg')->limit(100)->get();
+        $isviewreg = registrasiCreate::where('fr_tgl_keluar', '=', '')->select('fr_kd_reg', 'fr_mr', 'fr_nama', 'fr_tgl_reg')->limit(100)->get();
 
         // ❗ JOIN besar DIBATASI
         // $isviewregSaset = DB::table('ta_registrasi')->select('ta_registrasi.fr_kd_reg', 'ta_registrasi.fr_mr', 'tc_mr.fs_nama')->leftJoin('tc_mr', 'tc_mr.fs_mr', '=', 'ta_registrasi.fr_mr')->leftJoin('saset_encounter', 'saset_encounter.regID', '=', 'ta_registrasi.fr_kd_reg')->whereNull('ta_registrasi.fr_tgl_keluar')->whereNull('ta_registrasi.deleted_at')->limit(100)->get();
@@ -152,7 +152,7 @@ class HomeController extends Controller
             )
             ->leftJoin('tc_mr', 'tc_mr.fs_mr', '=', 'ta_registrasi.fr_mr')
             ->leftJoin('saset_encounter', 'saset_encounter.regID', '=', 'ta_registrasi.fr_kd_reg')
-            ->whereNull('ta_registrasi.fr_tgl_keluar')
+            ->where('ta_registrasi.fr_tgl_keluar', '=', '')
             ->whereNull('ta_registrasi.deleted_at')
             ->orderBy('ta_registrasi.created_at', 'desc')
             ->limit(100)
