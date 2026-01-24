@@ -58,8 +58,7 @@ class HomeController extends Controller
     public function getAllDasos()
     {
         if (request()->ajax()) {
-            // ❗ DataTables server-side (TIDAK load semua data)
-            $query = dataSosialCreate::select('fs_mr', 'fs_nama', 'fs_alamat', 'fs_tgl_lahir');
+            $query = dataSosialCreate::select('fs_mr', 'fs_nama', 'fs_alamat', 'fs_tgl_lahir', 'fs_jenis_kelamin');
 
             return DataTables::of($query)
                 ->addColumn('action', function ($row) {
@@ -93,13 +92,11 @@ class HomeController extends Controller
     {
         $num = str_pad(1, 8, '0', STR_PAD_LEFT);
 
-        // ❗ Cek eksistensi TANPA load data
         $exists = registrasiCreate::withTrashed()->exists();
 
         if (!$exists) {
             $kd_reg = 'RG' . $num;
         } else {
-            // ❗ Ambil kode terakhir SAJA
             $lastCode = registrasiCreate::withTrashed()->orderBy('created_at', 'desc')->value('fr_kd_reg');
 
             $number = preg_replace('/\D/', '', $lastCode);
