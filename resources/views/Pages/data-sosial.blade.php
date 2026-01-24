@@ -796,16 +796,16 @@
                         name: 'fs_nama'
                     },
                     {
-                        data: 'fs_tgl_lahir',
-                        name: 'fs_tgl_lahir'
+                        data: 'fr_tgl_lahir',
+                        name: 'fr_tgl_lahir'
                     },
                     {
-                        data: 'fs_jenis_kelamin',
-                        name: 'fs_jenis_kelamin'
+                        data: 'fr_jenis_kelamin',
+                        name: 'fr_jenis_kelamin'
                     },
                     {
-                        data: 'fs_alamat',
-                        name: 'fs_alamat'
+                        data: 'fr_alamat',
+                        name: 'fr_alamat'
                     },
                     {
                         data: 'action',

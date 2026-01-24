@@ -106,15 +106,12 @@ class HomeController extends Controller
             $kd_reg = 'RG' . str_pad($number + 1, 8, '0', STR_PAD_LEFT);
         }
 
-        // ❗ master data: select kolom perlu saja
         $layanan = mstr_layanan::select('fm_kd_layanan', 'fm_nm_layanan')->get();
 
         $jaminan = mstr_jaminan::select('fm_kd_jaminan', 'fm_nm_jaminan')->get();
 
-        // ❗ LIMIT tampilan aktif (tidak ubah alur UI)
         $isviewreg = registrasiCreate::where('fr_tgl_keluar', '=', '')->select('fr_kd_reg', 'fr_mr', 'fr_nama', 'fr_tgl_reg')->limit(100)->get();
 
-        // ❗ JOIN besar DIBATASI
         // $isviewregSaset = DB::table('ta_registrasi')->select('ta_registrasi.fr_kd_reg', 'ta_registrasi.fr_mr', 'tc_mr.fs_nama')->leftJoin('tc_mr', 'tc_mr.fs_mr', '=', 'ta_registrasi.fr_mr')->leftJoin('saset_encounter', 'saset_encounter.regID', '=', 'ta_registrasi.fr_kd_reg')->whereNull('ta_registrasi.fr_tgl_keluar')->whereNull('ta_registrasi.deleted_at')->limit(100)->get();
         $isviewregSaset = DB::table('ta_registrasi')
             ->select(
@@ -133,7 +130,7 @@ class HomeController extends Controller
                 'ta_registrasi.keluhan_utama',
                 'ta_registrasi.fr_kd_medis',
 
-                // 🔑 ALIAS DARI tc_mr (INI KUNCINYA)
+                
                 DB::raw('tc_mr.fs_nama AS fr_nama'),
                 DB::raw('tc_mr.fs_tgl_lahir AS fr_tgl_lahir'),
                 DB::raw('tc_mr.fs_no_hp AS fr_no_hp'),
