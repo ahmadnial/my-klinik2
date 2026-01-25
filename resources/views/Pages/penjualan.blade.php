@@ -237,22 +237,19 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content document">
                 <div class="modal-header bg-nial">
-                    <h4 class="modal-title"><i class="fa fa-note">&nbsp;</i>Detail Penjualan Item</h4>
-                    <button type="button" class="close btn btn-danger" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h4 class="modal-title"><i class="fa fa-note">&nbsp;</i>Detail Penjualan Item</h4> <button
+                        type="button" class="close btn btn-danger" data-dismiss="modal" aria-label="Close"> <span
+                            aria-hidden="true">&times;</span> </button>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <input class="btn btn-xs btn-outline-info mb-3" id="kd_trs_viewDetailItem"> <input
-                            class="btn btn-xs btn-outline-info mb-3 ml-2" id="view_kd_reg">
-                        <input class="btn btn-xs btn-outline-info mb-3 ml-2" id="createdby" disabled>
+                    <div class="row"> <input class="btn btn-xs btn-outline-info mb-3" id="kd_trs_viewDetailItem">
+                        <input class="btn btn-xs btn-outline-info mb-3 ml-2" id="view_kd_reg"> <input
+                            class="btn btn-xs btn-outline-info mb-3 ml-2" id="createdby" disabled>
                         <table class="table table-stripped table-bordered">
                             <thead>
                                 <tr>
                                     <th width="130px">kd obat</th>
                                     <th width="350px">Nama Obat</th>
-                                    {{-- <th>Dosis</th> --}}
                                     <th width="110px">Satuan</th>
                                     <th width="110px">Harga</th>
                                     <th width="100px">Qty</th>
@@ -261,35 +258,30 @@
                                     <th width="90px">Embalase</th>
                                     <th width="110px">Disc(Rp.)</th>
                                     <th width="200px">Sub Total</th>
-                                    {{-- <th width="50px"></th> --}}
                                 </tr>
                             </thead>
 
-                            <tbody id="viewDetailJual">
+                            <tbody id="viewDetailJual"></tbody>
 
-                            </tbody>
+                            <tfoot>
+                                <tr style="background:#f4f6f9;font-weight:bold">
+                                    <td colspan="9" class="text-right">GRAND TOTAL</td>
+                                    <td>
+                                        <input type="text" id="grandTotalView" class="form-control text-right"
+                                            readonly style="border:none;background:transparent;font-weight:bold">
+                                    </td>
+                                </tr>
+                            </tfoot>
                         </table>
-                        <hr>
-                        {{-- <div class="float-right col-4">
-                            <div class="float-right col-4">
-                                <input type="text" class="form-control float-right" name="total_penjualan"
-                                    id="total_penjualan" value="" readonly>
-                            </div>
-                        </div> --}}
-                        <br>
-                        <br>
-                        {{-- <hr> --}}
-                        <div class="modal-footer">
-                            {{-- <button type="submit" id="buat" class="btn btn-success float-right"><i
-                                    class="fa fa-save"></i>&nbsp;Save
-                            </button> --}}
-                        </div>
 
+                        <hr> 
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     {{-- End Modal view --}}
 
 
@@ -1270,6 +1262,10 @@
 
                 var kd_trs = $(tx).data('kd_trs');
                 $('#viewDetailJual').empty();
+                $('#grandTotalView').val(''); // reset
+
+                let grandTotal = 0;
+
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1277,66 +1273,50 @@
                     url: "{{ url('getDetailPenjualan') }}/" + kd_trs,
                     type: "GET",
                     data: {
-                        kd_trs: kd_trs
+                        kd_trs
                     },
                     success: function(isViewDetailPenjualan) {
+
                         $.each(isViewDetailPenjualan, function(key, datavalue) {
+
                             $('#kd_trs_viewDetailItem').val(datavalue.kd_trs);
                             $('#view_kd_reg').val(datavalue.kd_reg);
                             $('#createdby').val(datavalue.user);
+
                             var caraPakai = datavalue.cara_pakai ?? '';
+                            var subTotal = parseFloat(datavalue.sub_total) || 0;
+
+                            grandTotal += subTotal;
 
                             $("#viewDetailJual").append(`
-                                         <tr>
-                                            <td>
-                                                <input class="searchObat form-control" style="border: none"
-                                                    id="kd_obat" name="kd_obat[]" placeholder="kode obat" readonly
-                                                    style="border: none;" value="${datavalue.kd_obat}">
-                                            </td>
-                                            <td>
-                                                <input class="searchObat form-control" id="nm_obat"
-                                                    name="nm_obat[]" ondblclick="getListObat()" aria-placeholder="Search" value="${datavalue.nm_obat}" readonly>
-                                            </td>
-                                            <td>
-                                                <input type="text" class="do_satuan_pembelian form-control"
-                                                    id="satuan" name="satuan[]" readonly
-                                                    value="${datavalue.satuan}">
-                                            </td>
-                                            <td>
-                                                <input type="text" class="form-control" readonly style="border: none;" id="hrg_obat" name="hrg_obat[]" value=${datavalue.hrg_obat}>
-                                            </td>
-                                            <td>
-                                                <input type="text" class="qty form-control" id="qty" name="qty[]" onKeyUp="getQTY(this)" value="${datavalue.qty}" readonly>
-                                            </td>
-                                            <td>
-                                                <input type="text" class="cara_pakai form-control" id="cara_pakai" name="cara_pakai[]" value="${caraPakai}" readonly>
-                                            </td>
-                                          
-                                            <td>
-                                                <input type="text" class="form-control" id="tuslah"
-                                                    name="tuslah[]" readonly value="${datavalue.tuslah}">
-                                            </td>
-                                            <td>
-                                                <input type="text" class="form-control" id="embalase"
-                                                    name="embalase[]" readonly value="${datavalue.embalase}">
-                                            </td>
-                                              <td>
-                                                <input type="text" class="form-control" id="diskon"
-                                                    name="diskon[]" readonly>
-                                            </td>
-                                            <td>
-                                                <input type="text" class="sub_total form-control" id="sub_total"
-                                                    name="sub_total[]" readonly style="border: none;" value="${datavalue.sub_total}">
-                                            </td>
+                    <tr>
+                        <td><input class="form-control" readonly value="${datavalue.kd_obat}"></td>
+                        <td><input class="form-control" readonly value="${datavalue.nm_obat}"></td>
+                        <td><input class="form-control" readonly value="${datavalue.satuan}"></td>
+                        <td><input class="form-control" readonly value="${datavalue.hrg_obat}"></td>
+                        <td><input class="form-control" readonly value="${datavalue.qty}"></td>
+                        <td><input class="form-control" readonly value="${caraPakai}"></td>
+                        <td><input class="form-control" readonly value="${datavalue.tuslah}"></td>
+                        <td><input class="form-control" readonly value="${datavalue.embalase}"></td>
+                        <td><input class="form-control" readonly value="0"></td>
+                        <td>
+                            <input class="form-control text-right" readonly
+                                   value="${subTotal.toLocaleString('id-ID', {minimumFractionDigits:2})}">
+                        </td>
+                    </tr>
+                `);
+                        });
 
-                                            <input type="hidden" name="user" id="user" value="tes user">
-                                        </tr>
-                                        `);
-                        })
+                        // ✅ TAMPILKAN GRAND TOTAL
+                        $('#grandTotalView').val(
+                            grandTotal.toLocaleString('id-ID', {
+                                style: 'currency',
+                                currency: 'IDR'
+                            })
+                        );
                     }
-
                 });
-            };
+            }
 
             function validasiTrs(tx) {
                 var kd_trs = $(tx).data('kd_trsu');
