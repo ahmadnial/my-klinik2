@@ -64,61 +64,61 @@ class penjualanController extends Controller
             $query = tp_hdr::query()->where('tgl_trs', 'LIKE', '%' . $selectMonth . '%');
         }
 
-        return DataTables::of(
-            $query->select([
-                'kd_trs',
-                'tgl_trs',
-                'layanan_order',
-                'no_mr', 
-                'nm_pasien',
-                'tipe_tarif',
-                'total_penjualan',
-            ]),
-        )
+        return DataTables::of($query->select(['kd_trs', 'tgl_trs', 'layanan_order', 'no_mr', 'nm_pasien', 'tipe_tarif', 'total_penjualan']))
             ->addColumn('action', function ($row) {
-                // tombol yang selalu ada
                 $btn =
                     '
-                <button class="btn btn-xs btn-info"
-                    onclick="getDetailPen(this)"
-                    data-kd_trs="' .
+        <div class="btn-group btn-group-sm" role="group" aria-label="Action Buttons">
+
+            <button class="btn btn-xs btn-info"
+                title="Detail Penjualan"
+                onclick="getDetailPen(this)"
+                data-kd_trs="' .
                     $row->kd_trs .
                     '">
-                    <i class="fa fa-info"></i>
-                </button>
-                <button class="btn btn-xs btn-warning"
-                    onclick="cetakNota(this)"
-                    data-kd_trsc="' .
+                <i class="fas fa-info-circle"></i>
+            </button>
+
+            <button class="btn btn-xs btn-warning"
+                title="Cetak Nota"
+                onclick="cetakNota(this)"
+                data-kd_trsc="' .
                     $row->kd_trs .
                     '">
-                    <i class="fa fa-print"></i>
-                </button>
-            ';
+                <i class="fas fa-print"></i>
+            </button>
+    ';
 
                 // 🔐 HANYA ADMIN
                 if (auth()->check() && auth()->user()->role_id == 1) {
                     $btn .=
                         '
-                    <button class="btn btn-xs btn-primary"
-                        onclick="EditTrs(this)"
-                        data-kd_trsu="' .
+            <button class="btn btn-xs btn-primary"
+                title="Edit Transaksi"
+                onclick="EditTrs(this)"
+                data-kd_trsu="' .
                         $row->kd_trs .
                         '">
-                        <i class="fa fa-edit"></i>
-                    </button>
-                    <button class="btn btn-xs btn-danger"
-                        onclick="DeleteTrs(this)"
-                        data-kd_trsu="' .
+                <i class="fas fa-edit"></i>
+            </button>
+
+            <button class="btn btn-xs btn-danger"
+                title="Hapus Transaksi"
+                onclick="DeleteTrs(this)"
+                data-kd_trsu="' .
                         $row->kd_trs .
                         '">
-                        <i class="fa fa-trash"></i>
-                    </button>
-                ';
+                <i class="fas fa-trash-alt"></i>
+            </button>
+        ';
                 }
+
+                $btn .= '</div>';
 
                 return $btn;
             })
             ->rawColumns(['action'])
+
             ->make(true);
     }
 
