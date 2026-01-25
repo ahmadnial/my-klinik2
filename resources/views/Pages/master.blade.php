@@ -455,16 +455,16 @@
                                     </p>
                                 </a>
                                 <ul class="nav nav-treeview">
-                                    <li class="nav-item">
+                                    {{-- <li class="nav-item">
                                         <a href="{{ url('/laporan-penjualan-farmasi-rekap') }}" class="nav-link">
                                             <i class="fa fa-bar-chart  nav-icon"></i>
                                             <p>Penjualan Apotek Rekap</p>
                                         </a>
-                                    </li>
+                                    </li> --}}
                                     <li class="nav-item">
                                         <a href="{{ url('/laporan-penjualan-farmasi-detail') }}" class="nav-link">
                                             <i class="fa fa-bar-chart  nav-icon"></i>
-                                            <p>Penjualan Apotek Detail</p>
+                                            <p>Penjualan Apotek</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
@@ -1344,16 +1344,16 @@
                                     </p>
                                 </a>
                                 <ul class="nav nav-treeview">
-                                    <li class="nav-item">
+                                    {{-- <li class="nav-item">
                                         <a href="{{ url('/laporan-penjualan-farmasi-rekap') }}" class="nav-link">
                                             <i class="fa fa-bar-chart  nav-icon"></i>
                                             <p>Penjualan Apotek Rekap</p>
                                         </a>
-                                    </li>
+                                    </li> --}}
                                     <li class="nav-item">
                                         <a href="{{ url('/laporan-penjualan-farmasi-detail') }}" class="nav-link">
                                             <i class="fa fa-bar-chart  nav-icon"></i>
-                                            <p>Penjualan Apotek Detail</p>
+                                            <p>Penjualan Apotek</p>
                                         </a>
                                     </li>
                                     {{-- <li class="nav-item">

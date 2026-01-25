@@ -29,7 +29,9 @@
                         <option value="Nakes">Nakes</option>
                     </select>
                     <div class="input-group-addon">&nbsp;&nbsp;&nbsp;</div>
-                    <button class="btn btn-success btn-sm" onclick="getDataPenjualan()" id="btnProses">Proses</button>
+                    <button id="btnProsesRekap" class="btn btn-success mb-3">
+                        <i class="fa fa-search"></i> Proses
+                    </button>
                     <div class="spinLoad d-flex align-items-center ml-4">
                         {{-- <strong>Loading...</strong> --}}
                         <div class="spinLoad spinner-border text-success ms-auto" role="status" aria-hidden="true"
@@ -38,37 +40,24 @@
                     </div>
                 </div>
                 <div>
-                    <table id="penjualan" class="table table-hover table-striped">
-                        <thead class="bg-nial">
+                    <table id="penjualanRekap" class="table table-bordered table-striped w-100">
+                        <thead>
                             <tr>
-                                {{-- <th>kode Transaksi</th> --}}
-                                {{-- <th>Tanggal Transaksi</th> --}}
-                                <th>Kode Barang</th>
-                                <th>Nama Barang</th>
-                                <th>QTY</th>
+                                <th>Kode Obat</th>
+                                <th>Nama Obat</th>
                                 <th>Satuan</th>
-                                <th>Harga Satuan(HNA)</th>
-                                <th>Harga Satuan(Jual)</th>
-                                <th>Sub ttl HNA</th>
-                                <th>Sub Total</th>
+                                <th>Total Qty</th>
+                                <th>Harga Jual</th>
+                                <th>Total Penjualan</th>
                             </tr>
                         </thead>
-                        <tbody id="result">
 
-                        </tbody>
-                        <tfoot align="">
+                        <tbody></tbody>
+
+                        <tfoot>
                             <tr>
-                                <th></th>
-                                <th></th>
-                                <th id="totalQty"></th>
-                                {{-- <td><b><input type="text" id="grandTTL" class="form-control" style="border: none"
-                                            readonly></b>
-                                </td> --}}
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th id="HNA"></th>
-                                <th id="grandTTL"></th>
+                                <th colspan="5" class="text-right">GRAND TOTAL</th>
+                                <th id="grandTotalRekap">0</th>
                             </tr>
                         </tfoot>
                     </table>
@@ -80,134 +69,86 @@
 
     @push('scripts')
         <script>
-            function getDataPenjualan() {
-                $('#spinLoad').show();
-                var date1 = $('#date1').val();
-                var date2 = $('#date2').val();
-                var user = $('#user').val();
-                var tipeTarif = $('#tipeTarif').val();
+            let tablePenjualanRekap;
 
-                if (date1 == '') {
-                    toastr.info('Pilih Range Tanggal', 'Info!', {
-                        timeOut: 2000,
-                        preventDuplicates: true,
-                        positionClass: 'toast-top-right',
-                    });
-                } else {
-                    // $('#result').empty();
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            $(document).ready(function() {
+
+                tablePenjualanRekap = $('#penjualanRekap').DataTable({
+                    processing: true,
+                    serverSide: false,
+                    destroy: false,
+                    dom: 'lBfrtip',
+                    buttons: [{
+                            extend: 'copy',
+                            className: 'btn btn-sm btn-secondary'
                         },
-                        url: "{{ url('getLaporanPenjualanRekap') }}",
-                        type: 'GET',
-                        data: {
-                            date1: date1,
-                            date2: date2,
-                            user: user,
-                            tipeTarif: tipeTarif
+                        {
+                            extend: 'excel',
+                            className: 'btn btn-sm btn-success'
                         },
-                        success: function(isDataLaporanDetail) {
-                            $('#HNA').empty();
-                            $('#grandTTL').empty();
-                            var sumall = 0;
-                            var sumallHna = 0;
-                            var table = $('#penjualan').DataTable();
-                            var rows = table
-                                .rows()
-                                .remove()
-                                .draw();
-                            $.each(isDataLaporanDetail, function(key, datavalue) {
-                                const table = $('#penjualan').DataTable();
-
-                                var hrg_obatC = parseFloat(datavalue.hrg_obat);
-
-                                var hrg_obatShow = hrg_obatC.toLocaleString('id-ID', {
-                                    style: 'currency',
-                                    currency: 'IDR'
-                                });
-
-                                var hrg_obatHnaRaw = parseFloat(datavalue.fm_hrg_beli_detail);
-
-                                var hrg_obatHnaShow = hrg_obatHnaRaw.toLocaleString('id-ID', {
-                                    style: 'currency',
-                                    currency: 'IDR'
-                                });
-
-                                var dataRaw = datavalue.total * datavalue.hrg_obat;
-
-                                var hnaRaw = parseFloat(datavalue.fm_hrg_beli_detail * datavalue.total);
-
-                                var hna = hnaRaw.toLocaleString('id-ID', {
-                                    style: 'currency',
-                                    currency: 'IDR'
-                                });
-
-                                var subtotal = dataRaw.toLocaleString('id-ID', {
-                                    style: 'currency',
-                                    currency: 'IDR'
-                                });
-
-                                const dataBaru = [
-                                    [datavalue.kd_obat,
-                                        datavalue.nm_obat, datavalue.total, datavalue.satuan,
-                                        hrg_obatHnaShow,
-                                        hrg_obatShow, hna, subtotal
-                                    ],
-                                ]
-
-                                function injectDataBaru() {
-                                    for (const data of dataBaru) {
-                                        table.row.add([
-                                            data[0],
-                                            data[1],
-                                            data[2],
-                                            data[3],
-                                            data[4],
-                                            data[5],
-                                            data[6],
-                                            data[7],
-                                        ]).draw(false)
-                                    }
-                                }
-
-                                injectDataBaru()
-
-                                var ttlIntHna = parseFloat(hnaRaw);
-                                sumallHna += ttlIntHna;
-
-                                var numberHna = sumallHna;
-                                var formattedNumberHna = numberHna.toLocaleString('id-ID', {
-                                    style: 'currency',
-                                    currency: 'IDR'
-                                });
-
-                                var ttlInt = parseFloat(dataRaw);
-                                sumall += ttlInt;
-
-                                var number = sumall;
-                                var formattedNumber = number.toLocaleString('id-ID', {
-                                    style: 'currency',
-                                    currency: 'IDR'
-                                });
-
-                                document.getElementById("HNA").innerHTML = formattedNumberHna;
-                                document.getElementById("grandTTL").innerHTML = formattedNumber;
-
-                                toastr.success('Data Load Complete!', 'Complete!', {
-                                    timeOut: 2000,
-                                    preventDuplicates: true,
-                                    positionClass: 'toast-top-right',
-                                });
-                                // $('#date1').val('');
-                                // $('#date2').val('');
-                                $('#user').val('');
-                            })
-                            $('#spinLoad').hide();
+                        {
+                            extend: 'pdf',
+                            className: 'btn btn-sm btn-danger'
+                        },
+                        {
+                            extend: 'print',
+                            className: 'btn btn-sm btn-info'
                         }
-                    })
-                }
-            }
+                    ],
+
+                    ajax: {
+                        url: "{{ route('getLaporanPenjualanRekap') }}",
+                        type: 'GET',
+                        data: function(d) {
+                            d.date1 = $('#date1').val();
+                            d.date2 = $('#date2').val();
+                        },
+                        dataSrc: function(json) {
+                            return json;
+                        }
+                    },
+
+                    columns: [{
+                            data: 'kd_obat'
+                        },
+                        {
+                            data: 'nm_obat'
+                        },
+                        {
+                            data: 'satuan'
+                        },
+                        {
+                            data: 'total_qty'
+                        },
+                        {
+                            data: 'hrg_obat',
+                            render: $.fn.dataTable.render.number('.', ',', 0, 'Rp ')
+                        },
+                        {
+                            data: 'total_penjualan',
+                            render: $.fn.dataTable.render.number('.', ',', 0, 'Rp ')
+                        }
+                    ],
+
+                    footerCallback: function(row, data) {
+                        let total = 0;
+
+                        data.forEach(function(v) {
+                            total += parseFloat(v.total_penjualan || 0);
+                        });
+
+                        $('#grandTotalRekap').html(
+                            'Rp ' + total.toLocaleString('id-ID')
+                        );
+                    }
+                });
+
+                $('#btnProsesRekap').on('click', function() {
+                    tablePenjualanRekap.ajax.reload();
+                });
+
+            });
+
             $('.spinLoad')
                 .hide() // Hide it initially
                 .ajaxStart(function() {

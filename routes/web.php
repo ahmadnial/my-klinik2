@@ -59,7 +59,6 @@ Route::group(['middleware' => ['auth', 'checkrole:1,5']], function () {
     Route::get('getAllDasos', [HomeController::class, 'getAllDasos'])->name('getAllDasos');
 });
 
-
 // REG + DASOS CREATE,EDIT DELETE
 // Route::controller(registrasiController::class)->group(function () {
 Route::group(['middleware' => ['auth', 'checkrole:1,5']], function () {
@@ -74,7 +73,6 @@ Route::group(['middleware' => ['auth', 'checkrole:1,5']], function () {
     Route::post('create-aktifasi', [aktifasiRegisterController::class, 'aktifasiCreate'])->name('create-aktifasi');
     Route::post('deaktif', [aktifasiRegisterController::class, 'deaktif'])->name('deaktif');
 });
-
 
 // MSTR SATU GET
 // Route::controller(mastersatuController::class)->group(function () {
@@ -93,7 +91,6 @@ Route::group(['middleware' => ['auth', 'checkrole:1']], function () {
     Route::get('getListJenisPemeriksaan', [mastersatuController::class, 'getListJenisPemeriksaan'])->name('getListJenisPemeriksaan');
     Route::get('getSelectedItem/{kd_jenis_pemeriksaan_lab}', [mastersatuController::class, 'getSelectedItem'])->name('getSelectedItem');
 });
-
 
 // MSTR SATU POST
 // Route::controller(mastersatuController::class)->group(function () {
@@ -128,7 +125,6 @@ Route::group(['middleware' => ['auth', 'checkrole:1']], function () {
     Route::get('view-mstr-tindakan', [mastersatuController::class, 'tindakan'])->name('view-mstr-tindakan');
 });
 
-
 // Route::controller(TindakanController::class)->group(function () {
 Route::group(['middleware' => ['auth', 'checkrole:1,2,3']], function () {
     // Route::get('/', [HomeController::class, 'index']);
@@ -157,7 +153,6 @@ Route::group(['middleware' => ['auth', 'checkrole:1,2,3']], function () {
     Route::get('getRegAktifasi', [aktifasiRegisterController::class, 'getRegAktifasi'])->name('getRegAktifasi');
     Route::get('selectRegAktifasi/{fr_mr}', [aktifasiRegisterController::class, 'selectRegAktifasi'])->name('selectRegAktifasi');
 });
-
 
 // VIEW MSTR FARMASI
 // Route::controller(masterFarmasiController::class)->group(function () {
@@ -221,7 +216,6 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
     Route::get('getListPoActive', [poDoController::class, 'getListPoActive'])->name('getListPoActive');
 });
 
-
 // CREATE PO-DO + ADJ
 // Route::controller(poDoController::class)->group(function () {
 Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
@@ -267,7 +261,6 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4,3']], function () {
     Route::post('EditRegout', [kasirPoliController::class, 'EditRegout'])->name('EditRegout');
 });
 
-
 //Wilayah
 Route::controller(WilayahController::class)->group(function () {
     Route::get('provinces', 'provinces')->name('provinces');
@@ -290,6 +283,9 @@ Route::group(['middleware' => ['auth', 'checkrole:1,2,3']], function () {
 Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
     // Route::get('/', [HomeController::class, 'index']);
     // Route::get('/redirect', [RedirectController::class, 'cek']);
+    Route::get('/laporan-apotek/detail', [LapFarmasiController::class, 'detail'])->name('laporan.apotek.detail');
+    Route::get('/laporan-apotek/rekap', [LapFarmasiController::class, 'rekap'])->name('laporan.apotek.rekap');
+    // ==================================
     Route::get('laporan-penjualan-farmasi-rekap', [LapFarmasiController::class, 'lapPenjualanFarmasiRekap'])->name('laporan-penjualan-farmasi-rekap');
     Route::get('laporan-penjualan-farmasi-detail', [LapFarmasiController::class, 'lapPenjualanFarmasiDetail'])->name('laporan-penjualan-farmasi-detail');
     Route::get('getLaporanPenjualanRekap', [LapFarmasiController::class, 'getLapPenjualanRekap'])->name('getLaporanPenjualanRekap');

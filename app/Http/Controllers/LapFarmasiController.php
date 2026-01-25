@@ -11,12 +11,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
-
 use function PHPUnit\Framework\isNull;
 
 class LapFarmasiController extends Controller
 {
-
     public function lapPenjualanFarmasiRekap()
     {
         $isUser = DB::table('users')->get();
@@ -30,64 +28,96 @@ class LapFarmasiController extends Controller
         return view('pages.laporan.farmasi.laporan-penjualan-farmasi-detail', ['isUser' => $isUser]);
     }
 
-
-
     public function getLapPenjualanDetail(Request $request)
     {
-        // $t = $request->all();
-        // dd($t);
-        if ($request->ajax()) {
-            $isDataLaporan = DB::table('tp_detail_item')
-                ->whereBetween('tgl_trs', [$request->date1, $request->date2])
-                ->whereNull('kd_reg')
-                // ->where('kd_order_resep', '=', 'null')
-                ->get();
+        $query = DB::table('tp_detail_item as d')->join('tp_hdr as h', 'h.kd_trs', '=', 'd.kd_trs')->join('mstr_obat as o', 'o.fm_kd_obat', '=', 'd.kd_obat')->whereNull('h.kd_reg'); // NON KLINIK ONLY
+
+        /* =========================
+         * FILTER WAJIB
+         * ========================= */
+        if ($request->filled('date1') && $request->filled('date2')) {
+            $query->whereBetween('h.tgl_trs', [$request->date1, $request->date2]);
         }
-        return response()->json($isDataLaporan);
+
+        /* =========================
+         * FILTER OPTIONAL
+         * ========================= */
+        if ($request->filled('user')) {
+            $query->where('d.user', $request->user);
+        }
+
+        if ($request->filled('tipe_tarif')) {
+            $query->where('h.tipe_tarif', $request->tipe_tarif);
+        }
+
+        $data = $query
+            ->select([
+                'h.tgl_trs',
+                'd.kd_trs',
+                'd.kd_obat',
+                'o.nm_obat',
+                'd.qty',
+                'd.hrg_obat',
+                'd.diskon',
+                'd.tuslah',
+                'd.embalase',
+                DB::raw('
+            ( (d.qty * d.hrg_obat)
+              - IFNULL(d.diskon,0)
+              + IFNULL(d.tuslah,0)
+              + IFNULL(d.embalase,0)
+            ) as sub_total
+        '),
+            ])
+            ->orderBy('h.tgl_trs', 'asc')
+            ->get();
+
+        return response()->json($data);
     }
 
     public function getLapPenjualanRekap(Request $request)
     {
-        // $t = $request->all();
-        // dd($t);
-        if ($request->user == '' && $request->tipeTarif == '') {
-            $isDataLaporanDetail = DB::table('tp_detail_item')
-                ->leftJoin('mstr_obat', 'tp_detail_item.kd_obat', 'mstr_obat.fm_kd_obat')
-                ->select('kd_obat', 'nm_obat', 'hrg_obat', 'satuan', 'fm_hrg_beli_detail', DB::raw('sum(qty) as total'))
-                ->whereBetween('tgl_trs', [$request->date1, $request->date2])
-                ->whereNull('kd_reg')
-                ->groupBy('kd_obat', 'nm_obat', 'hrg_obat', 'satuan')
-                ->get();
-        } else if ($request->user != '' && $request->tipeTarif == '') {
-            $isDataLaporanDetail = DB::table('tp_detail_item')
-                ->leftJoin('mstr_obat', 'tp_detail_item.kd_obat', 'mstr_obat.fm_kd_obat')
-                ->select('kd_obat', 'nm_obat', 'hrg_obat', 'satuan', 'fm_hrg_beli_detail', DB::raw('sum(qty) as total'))
-                ->whereBetween('tgl_trs', [$request->date1, $request->date2])
-                ->whereNull('kd_reg')
-                ->where('tp_detail_item.user', $request->user)
-                ->groupBy('kd_obat', 'nm_obat', 'hrg_obat', 'satuan')
-                ->get();
-        } else if ($request->user == '' && $request->tipeTarif != '') {
-            $isDataLaporanDetail = DB::table('tp_detail_item')
-                ->leftJoin('mstr_obat', 'tp_detail_item.kd_obat', 'mstr_obat.fm_kd_obat')
-                ->select('kd_obat', 'nm_obat', 'hrg_obat', 'satuan', 'fm_hrg_beli_detail', DB::raw('sum(qty) as total'))
-                ->whereBetween('tgl_trs', [$request->date1, $request->date2])
-                ->whereNull('kd_reg')
-                ->where('tp_detail_item.tipeTarif', $request->tipeTarif)
-                ->groupBy('kd_obat', 'nm_obat', 'hrg_obat', 'satuan')
-                ->get();
-        } else if ($request->user != '' && $request->tipeTarif != '') {
-            $isDataLaporanDetail = DB::table('tp_detail_item')
-                ->leftJoin('mstr_obat', 'tp_detail_item.kd_obat', 'mstr_obat.fm_kd_obat')
-                ->select('kd_obat', 'nm_obat', 'hrg_obat', 'satuan', 'fm_hrg_beli_detail', DB::raw('sum(qty) as total'))
-                ->whereBetween('tgl_trs', [$request->date1, $request->date2])
-                ->whereNull('kd_reg')
-                ->where('tp_detail_item.user', $request->user)
-                ->where('tp_detail_item.tipeTarif', $request->tipeTarif)
-                ->groupBy('kd_obat', 'nm_obat', 'hrg_obat', 'satuan')
-                ->get();
+        $query = DB::table('tp_detail_item as d')->join('tp_hdr as h', 'h.kd_trs', '=', 'd.kd_trs')->join('mstr_obat as o', 'o.fm_kd_obat', '=', 'd.kd_obat')->whereNull('h.kd_reg');
+
+        /* FILTER */
+        if ($request->filled('date1') && $request->filled('date2')) {
+            $query->whereBetween('h.tgl_trs', [$request->date1, $request->date2]);
         }
-        return response()->json($isDataLaporanDetail);
+
+        if ($request->filled('user')) {
+            $query->where('d.user', $request->user);
+        }
+
+        if ($request->filled('tipe_tarif')) {
+            $query->where('h.tipe_tarif', $request->tipe_tarif);
+        }
+
+        $data = $query
+            ->select([
+                'd.kd_obat',
+                'o.nm_obat',
+                DB::raw('SUM(d.qty) as total_qty'),
+                DB::raw('SUM(d.qty * d.hrg_obat) as omzet'),
+                DB::raw('SUM(d.qty * o.fm_hrg_beli_detail) as total_hpp'),
+                DB::raw('
+            ( SUM(d.qty * d.hrg_obat)
+              - SUM(d.qty * o.fm_hrg_beli_detail)
+            ) as laba_obat
+        '),
+                DB::raw('
+            ROUND(
+                (
+                    (SUM(d.qty * d.hrg_obat) - SUM(d.qty * o.fm_hrg_beli_detail))
+                    / NULLIF(SUM(d.qty * d.hrg_obat),0)
+                ) * 100, 2
+            ) as margin_persen
+        '),
+            ])
+            ->groupBy('d.kd_obat', 'o.nm_obat')
+            ->orderByDesc('laba_obat')
+            ->get();
+
+        return response()->json($data);
     }
 
     public function bukuStok()
@@ -101,25 +131,11 @@ class LapFarmasiController extends Controller
         // dd($t);
         if ($request->ajax()) {
             if ($request->kondisiStock == '') {
-                $isDataBukuStok = DB::table('tb_stock')
-                    ->leftJoin('mstr_obat', 'tb_stock.kd_obat', 'mstr_obat.fm_kd_obat')
-                    ->where('mstr_obat.isActive', '=', '1')
-                    ->select('mstr_obat.*', 'tb_stock.*')
-                    ->get();
-            } else if ($request->kondisiStock == 'ada') {
-                $isDataBukuStok = DB::table('tb_stock')
-                    ->leftJoin('mstr_obat', 'tb_stock.kd_obat', 'mstr_obat.fm_kd_obat')
-                    ->where('mstr_obat.isActive', '=', '1')
-                    ->where('tb_stock.qty', '>', '0')
-                    ->select('mstr_obat.*', 'tb_stock.*')
-                    ->get();
-            } else if ($request->kondisiStock == 'kosong') {
-                $isDataBukuStok = DB::table('tb_stock')
-                    ->leftJoin('mstr_obat', 'tb_stock.kd_obat', 'mstr_obat.fm_kd_obat')
-                    ->where('mstr_obat.isActive', '=', '1')
-                    ->where('tb_stock.qty', '<=', '0')
-                    ->select('mstr_obat.*', 'tb_stock.*')
-                    ->get();
+                $isDataBukuStok = DB::table('tb_stock')->leftJoin('mstr_obat', 'tb_stock.kd_obat', 'mstr_obat.fm_kd_obat')->where('mstr_obat.isActive', '=', '1')->select('mstr_obat.*', 'tb_stock.*')->get();
+            } elseif ($request->kondisiStock == 'ada') {
+                $isDataBukuStok = DB::table('tb_stock')->leftJoin('mstr_obat', 'tb_stock.kd_obat', 'mstr_obat.fm_kd_obat')->where('mstr_obat.isActive', '=', '1')->where('tb_stock.qty', '>', '0')->select('mstr_obat.*', 'tb_stock.*')->get();
+            } elseif ($request->kondisiStock == 'kosong') {
+                $isDataBukuStok = DB::table('tb_stock')->leftJoin('mstr_obat', 'tb_stock.kd_obat', 'mstr_obat.fm_kd_obat')->where('mstr_obat.isActive', '=', '1')->where('tb_stock.qty', '<=', '0')->select('mstr_obat.*', 'tb_stock.*')->get();
             }
         }
         return response()->json($isDataBukuStok);
@@ -128,7 +144,7 @@ class LapFarmasiController extends Controller
     // LAPORAN REG MASUK
     public function lapRegMasuk()
     {
-        $isMstrMedis =  mstr_dokter::all();
+        $isMstrMedis = mstr_dokter::all();
 
         return view('pages.laporan.registrasi.laporan-registrasi-masuk', ['isMstrMedis' => $isMstrMedis]);
     }
@@ -143,34 +159,27 @@ class LapFarmasiController extends Controller
             if ($medis && !$session) {
                 $isDataRegMasuk = DB::table('ta_registrasi')
                     ->whereBetween('fr_tgl_reg', [$start, $end])
-                    ->where([
-                        ['fr_dokter', '=', $medis],
-                        ['deleted_at', '=', null],
-                    ])
+                    ->where([['fr_dokter', '=', $medis], ['deleted_at', '=', null]])
                     ->latest()
                     ->get();
             } elseif ($session && !$medis) {
                 $isDataRegMasuk = DB::table('ta_registrasi')
                     ->whereBetween('fr_tgl_reg', [$start, $end])
-                    ->where([
-                        ['fr_session_poli', '=', $session],
-                        ['deleted_at', '=', null],
-                    ])
+                    ->where([['fr_session_poli', '=', $session], ['deleted_at', '=', null]])
                     ->latest()
                     ->get();
             } elseif ($medis && $session) {
                 $isDataRegMasuk = DB::table('ta_registrasi')
                     ->whereBetween('fr_tgl_reg', [$start, $end])
-                    ->where([
-                        ['fr_dokter', '=', $medis],
-                        ['fr_session_poli', '=', $session],
-                        ['deleted_at', '=', null],
-                    ])
+                    ->where([['fr_dokter', '=', $medis], ['fr_session_poli', '=', $session], ['deleted_at', '=', null]])
                     ->latest()
                     ->get();
             } else {
                 $isDataRegMasuk = DB::table('ta_registrasi')
-                    ->whereBetween('fr_tgl_reg', [$start, $end])->where('deleted_at', '=', null)->latest()->get();
+                    ->whereBetween('fr_tgl_reg', [$start, $end])
+                    ->where('deleted_at', '=', null)
+                    ->latest()
+                    ->get();
             }
         }
         return response()->json($isDataRegMasuk);
@@ -218,11 +227,11 @@ class LapFarmasiController extends Controller
 
     function infoTindakan()
     {
-        $isMstrMedis =  mstr_dokter::all();
-        $isMstrTdk =  mstr_tindakan::all();
+        $isMstrMedis = mstr_dokter::all();
+        $isMstrTdk = mstr_tindakan::all();
         return view('pages.laporan.klinik.info-tindakan', [
             'isMstrMedis' => $isMstrMedis,
-            'isMstrTdk' => $isMstrTdk
+            'isMstrTdk' => $isMstrTdk,
         ]);
     }
 
@@ -237,40 +246,26 @@ class LapFarmasiController extends Controller
                 $isDataTindakan = DB::table('trs_chart')
                     ->leftJoin('mstr_tindakan', 'trs_chart.nm_tarif', 'mstr_tindakan.id')
                     ->whereBetween('trs_chart.tgl_trs', [$start, $end])
-                    ->where([
-                        ['nm_dokter_jm', '=', $medis],
-                        ['trs_chart.deleted_at', '=', null],
-                        ['trs_chart.nm_tarif', '!=', null || ''],
-                    ])
+                    ->where([['nm_dokter_jm', '=', $medis], ['trs_chart.deleted_at', '=', null], ['trs_chart.nm_tarif', '!=', null || '']])
                     ->get();
             } elseif ($tindakan && !$medis) {
                 $isDataTindakan = DB::table('trs_chart')
                     ->leftJoin('mstr_tindakan', 'trs_chart.nm_tarif', 'mstr_tindakan.id')
                     ->whereBetween('trs_chart.tgl_trs', [$start, $end])
-                    ->where([
-                        ['nm_tarif', '=', $tindakan],
-                        ['trs_chart.deleted_at', '=', null],
-                        ['trs_chart.nm_tarif', '!=', null || ''],
-                    ])
+                    ->where([['nm_tarif', '=', $tindakan], ['trs_chart.deleted_at', '=', null], ['trs_chart.nm_tarif', '!=', null || '']])
                     ->get();
             } elseif ($medis && $tindakan) {
                 $isDataTindakan = DB::table('trs_chart')
                     ->leftJoin('mstr_tindakan', 'trs_chart.nm_tarif', 'mstr_tindakan.id')
                     ->whereBetween('trs_chart.tgl_trs', [$start, $end])
-                    ->where([
-                        ['nm_dokter_jm', '=', $medis],
-                        ['nm_tarif', '=', $tindakan],
-                        ['trs_chart.deleted_at', '=', null],
-                        ['trs_chart.nm_tarif', '!=', null || ''],
-                    ])
+                    ->where([['nm_dokter_jm', '=', $medis], ['nm_tarif', '=', $tindakan], ['trs_chart.deleted_at', '=', null], ['trs_chart.nm_tarif', '!=', null || '']])
                     ->get();
             } else {
                 $isDataTindakan = DB::table('trs_chart')
                     ->leftJoin('mstr_tindakan', 'trs_chart.nm_tarif', 'mstr_tindakan.id')
-                    ->whereBetween('trs_chart.tgl_trs', [$start, $end])->where([
-                        ['trs_chart.deleted_at', '=', null],
-                        ['trs_chart.nm_tarif', '!=', null || ''],
-                    ])->get();
+                    ->whereBetween('trs_chart.tgl_trs', [$start, $end])
+                    ->where([['trs_chart.deleted_at', '=', null], ['trs_chart.nm_tarif', '!=', null || '']])
+                    ->get();
             }
         }
         return response()->json($isDataTindakan);
@@ -286,7 +281,7 @@ class LapFarmasiController extends Controller
         $isdataKS = [];
 
         if ($request->filled('q')) {
-            $isdataKS = kartuStockHdr::select("ksh_kd_obat", "ksh_nm_obat", "ksh_satuan")
+            $isdataKS = kartuStockHdr::select('ksh_kd_obat', 'ksh_nm_obat', 'ksh_satuan')
                 ->where('ksh_nm_obat', 'LIKE', '%' . $request->get('q') . '%')
                 ->get();
         }
@@ -300,7 +295,8 @@ class LapFarmasiController extends Controller
         $kdobat = $request->kdObat;
 
         if ($request->ajax()) {
-            $isKartuStock = DB::table('kartu_stock_hdr')->whereBetween('kartu_stock_detail.tanggal_trs', [$start, $end])
+            $isKartuStock = DB::table('kartu_stock_hdr')
+                ->whereBetween('kartu_stock_detail.tanggal_trs', [$start, $end])
                 ->where('ksh_kd_obat', $kdobat)
                 ->leftJoin('kartu_stock_detail', 'kartu_stock_detail.kd_obat', 'kartu_stock_hdr.ksh_kd_obat')
                 ->select('kartu_stock_hdr.*', 'kartu_stock_detail.*')
@@ -318,15 +314,31 @@ class LapFarmasiController extends Controller
     public function pricelistHrgReguler()
     {
         if (request()->ajax()) {
-            $isObatReguler = DB::table('mstr_obat')
-                ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
-                ->select('mstr_obat.*', 'tb_stock.*')
-                ->get();
+            $isObatReguler = DB::table('mstr_obat')->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')->select('mstr_obat.*', 'tb_stock.*')->get();
             return DataTables::of($isObatReguler)
                 ->addColumn('action', function ($row) {
-                    $actionBtn = '<a href="javascript:void(0)" id="' . $row->fm_kd_obat . '" onClick="SelectItemObat(this);SelectItemObatEdit(this)" data-kdmr="' . $row->fm_kd_obat . '"
-                    data-fm_kd_obat="' . $row->fm_kd_obat . '" data-fm_nm_obat="' . $row->fm_nm_obat . '" data-fm_satuan_jual="' . $row->fm_satuan_jual . '" data-fm_satuan_pembelian="' . $row->fm_satuan_pembelian . '"
-                    data-fm_hrg_jual="' . $row->fm_hrg_jual_non_resep . '" data-fm_hrg_beli_detail="' . $row->fm_hrg_beli_detail . '" data-fm_isi_satuan_pembelian="' . $row->fm_isi_satuan_pembelian . '"
+                    $actionBtn =
+                        '<a href="javascript:void(0)" id="' .
+                        $row->fm_kd_obat .
+                        '" onClick="SelectItemObat(this);SelectItemObatEdit(this)" data-kdmr="' .
+                        $row->fm_kd_obat .
+                        '"
+                    data-fm_kd_obat="' .
+                        $row->fm_kd_obat .
+                        '" data-fm_nm_obat="' .
+                        $row->fm_nm_obat .
+                        '" data-fm_satuan_jual="' .
+                        $row->fm_satuan_jual .
+                        '" data-fm_satuan_pembelian="' .
+                        $row->fm_satuan_pembelian .
+                        '"
+                    data-fm_hrg_jual="' .
+                        $row->fm_hrg_jual_non_resep .
+                        '" data-fm_hrg_beli_detail="' .
+                        $row->fm_hrg_beli_detail .
+                        '" data-fm_isi_satuan_pembelian="' .
+                        $row->fm_isi_satuan_pembelian .
+                        '"
                     class="edit btn btn-xs btn-sm" style="background-color:#10F3A4; color:#ffffff;">Select</a>';
                     return $actionBtn;
                 })
@@ -351,15 +363,27 @@ class LapFarmasiController extends Controller
     public function pricelistHrgResep()
     {
         if (request()->ajax()) {
-            $isObatResep = DB::table('mstr_obat')
-                ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
-                ->select('fm_kd_obat', 'fm_nm_obat', 'fm_hrg_jual_resep', 'fm_satuan_jual', 'qty', 'fm_isi_satuan_pembelian', 'fm_satuan_pembelian')
-                ->get();
+            $isObatResep = DB::table('mstr_obat')->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')->select('fm_kd_obat', 'fm_nm_obat', 'fm_hrg_jual_resep', 'fm_satuan_jual', 'qty', 'fm_isi_satuan_pembelian', 'fm_satuan_pembelian')->get();
             return DataTables::of($isObatResep)
                 ->addColumn('action', function ($row) {
-                    $actionBtn = '<a href="javascript:void(0)" id="' . $row->fm_kd_obat . '" onClick="SelectItemObat(this)" data-kdmr="' . $row->fm_kd_obat . '"
-                    data-fm_kd_obat="' . $row->fm_kd_obat . '" data-fm_nm_obat="' . $row->fm_nm_obat . '" data-fm_satuan_jual="' . $row->fm_satuan_jual . '"
-                    data-fm_hrg_jual="' . $row->fm_hrg_jual_resep . '" data-fm_satuan_pembelian="' . $row->fm_satuan_pembelian . '"
+                    $actionBtn =
+                        '<a href="javascript:void(0)" id="' .
+                        $row->fm_kd_obat .
+                        '" onClick="SelectItemObat(this)" data-kdmr="' .
+                        $row->fm_kd_obat .
+                        '"
+                    data-fm_kd_obat="' .
+                        $row->fm_kd_obat .
+                        '" data-fm_nm_obat="' .
+                        $row->fm_nm_obat .
+                        '" data-fm_satuan_jual="' .
+                        $row->fm_satuan_jual .
+                        '"
+                    data-fm_hrg_jual="' .
+                        $row->fm_hrg_jual_resep .
+                        '" data-fm_satuan_pembelian="' .
+                        $row->fm_satuan_pembelian .
+                        '"
                     class="edit btn btn-xs btn-sm" style="background-color:#10F3A4; color:#ffffff;">Select</a>';
                     return $actionBtn;
                 })
@@ -378,15 +402,27 @@ class LapFarmasiController extends Controller
     {
         // $isObatNakes = mstr_obat::select("fm_kd_obat", "fm_nm_obat", "fm_satuan_jual", "fm_hrg_beli", "fm_hrg_jual_nakes")->get();
         if (request()->ajax()) {
-            $isObatNakes = DB::table('mstr_obat')
-                ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
-                ->select('fm_kd_obat', 'fm_nm_obat', 'fm_hrg_jual_nakes', 'fm_satuan_jual', 'qty', 'fm_isi_satuan_pembelian', 'fm_satuan_pembelian')
-                ->get();
+            $isObatNakes = DB::table('mstr_obat')->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')->select('fm_kd_obat', 'fm_nm_obat', 'fm_hrg_jual_nakes', 'fm_satuan_jual', 'qty', 'fm_isi_satuan_pembelian', 'fm_satuan_pembelian')->get();
             return DataTables::of($isObatNakes)
                 ->addColumn('action', function ($row) {
-                    $actionBtn = '<a href="javascript:void(0)" id="' . $row->fm_kd_obat . '" onClick="SelectItemObat(this)" data-kdmr="' . $row->fm_kd_obat . '"
-                    data-fm_kd_obat="' . $row->fm_kd_obat . '" data-fm_nm_obat="' . $row->fm_nm_obat . '" data-fm_satuan_jual="' . $row->fm_satuan_jual . '"
-                    data-fm_hrg_jual="' . $row->fm_hrg_jual_nakes . '" data-fm_satuan_pembelian="' . $row->fm_satuan_pembelian . '"
+                    $actionBtn =
+                        '<a href="javascript:void(0)" id="' .
+                        $row->fm_kd_obat .
+                        '" onClick="SelectItemObat(this)" data-kdmr="' .
+                        $row->fm_kd_obat .
+                        '"
+                    data-fm_kd_obat="' .
+                        $row->fm_kd_obat .
+                        '" data-fm_nm_obat="' .
+                        $row->fm_nm_obat .
+                        '" data-fm_satuan_jual="' .
+                        $row->fm_satuan_jual .
+                        '"
+                    data-fm_hrg_jual="' .
+                        $row->fm_hrg_jual_nakes .
+                        '" data-fm_satuan_pembelian="' .
+                        $row->fm_satuan_pembelian .
+                        '"
                     class="edit btn btn-xs btn-sm" style="background-color:#10F3A4; color:#ffffff;">Select</a>';
                     return $actionBtn;
                 })
@@ -444,26 +480,12 @@ class LapFarmasiController extends Controller
         // dd($t);
         if ($request->ajax()) {
             if ($request->kondisiStock == '') {
-                $isDataBukuStok = DB::table('tb_stock')
-                    ->leftJoin('mstr_obat', 'tb_stock.kd_obat', 'mstr_obat.fm_kd_obat')
-                    ->where('mstr_obat.isActive', '=', '1')
-                    ->select('mstr_obat.*', 'tb_stock.*')
-                    ->get();
-            } else if ($request->kondisiStock == 'ada') {
-                $isDataBukuStok = DB::table('tb_stock')
-                    ->leftJoin('mstr_obat', 'tb_stock.kd_obat', 'mstr_obat.fm_kd_obat')
-                    ->where('mstr_obat.isActive', '=', '1')
-                    ->where('tb_stock.qty', '>', '0')
-                    ->select('mstr_obat.*', 'tb_stock.*')
-                    ->get();
-            } else if ($request->kondisiStock == 'habis') {
-                $isDataBukuStok = DB::table('tb_stock')
-                    ->leftJoin('mstr_obat', 'tb_stock.kd_obat', 'mstr_obat.fm_kd_obat')
-                    ->where('mstr_obat.isActive', '=', '1')
-                    ->where('tb_stock.qty', '<=', '0')
-                    ->select('mstr_obat.*', 'tb_stock.*')
-                    ->get();
-            } else if ($request->kondisiStock == 'hampirHabis') {
+                $isDataBukuStok = DB::table('tb_stock')->leftJoin('mstr_obat', 'tb_stock.kd_obat', 'mstr_obat.fm_kd_obat')->where('mstr_obat.isActive', '=', '1')->select('mstr_obat.*', 'tb_stock.*')->get();
+            } elseif ($request->kondisiStock == 'ada') {
+                $isDataBukuStok = DB::table('tb_stock')->leftJoin('mstr_obat', 'tb_stock.kd_obat', 'mstr_obat.fm_kd_obat')->where('mstr_obat.isActive', '=', '1')->where('tb_stock.qty', '>', '0')->select('mstr_obat.*', 'tb_stock.*')->get();
+            } elseif ($request->kondisiStock == 'habis') {
+                $isDataBukuStok = DB::table('tb_stock')->leftJoin('mstr_obat', 'tb_stock.kd_obat', 'mstr_obat.fm_kd_obat')->where('mstr_obat.isActive', '=', '1')->where('tb_stock.qty', '<=', '0')->select('mstr_obat.*', 'tb_stock.*')->get();
+            } elseif ($request->kondisiStock == 'hampirHabis') {
                 // $stokMinimal = DB::table('mstr_obat')->whereIn('fm_stok_minimal', [$request->kd_obat[$keyx]] );
                 $kodeBarang = DB::table('mstr_obat')->select('fm_kd_obat', 'fm_stok_minimal')->where('isActive', '=', '1')->where('fm_stok_minimal', '!=', null)->pluck('fm_kd_obat');
                 // $stokMinimal = DB::table('mstr_obat')->select('fm_stok_minimal')->where('isActive', '=', '1')->where('fm_stok_minimal', '!=', null)->pluck('fm_stok_minimal');
@@ -478,5 +500,103 @@ class LapFarmasiController extends Controller
             }
         }
         return response()->json($isDataBukuStok);
+    }
+
+    // ===============================
+    // TAB 1 — DETAIL TRANSAKSI
+    // ===============================
+    public function detail(Request $request)
+    {
+        if (!$request->ajax()) {
+            abort(403);
+        }
+
+        $query = DB::table('tp_detail_item as d')
+            ->join('tp_hdr as h', 'd.kd_trs', '=', 'h.kd_trs')
+            ->leftJoin('mstr_obat as o', 'd.kd_obat', '=', 'o.fm_kd_obat')
+            ->select([
+                'h.tgl_trs',
+                'd.kd_trs',
+                'd.nm_obat',
+                'd.qty',
+                'd.hrg_obat',
+                DB::raw('COALESCE(d.diskon,0) as diskon'),
+                DB::raw('COALESCE(d.tuslah,0) as tuslah'),
+                DB::raw('COALESCE(d.embalase,0) as embalase'),
+                DB::raw('
+                (
+                    (d.qty * d.hrg_obat)
+                    - COALESCE(d.diskon,0)
+                    + COALESCE(d.tuslah,0)
+                    + COALESCE(d.embalase,0)
+                ) as sub_total
+            '),
+            ])
+            ->whereBetween('h.tgl_trs', [$request->date1, $request->date2])
+            ->whereNull('h.kd_reg');
+
+        // 🔹 FILTER USER (tp_detail_item)
+        if (!empty($request->user)) {
+            $query->where('d.user', $request->user);
+        }
+
+        // 🔹 FILTER TIPE TARIF (tp_hdr)
+        if (!empty($request->tipe_tarif)) {
+            $query->where('h.tipe_tarif', $request->tipe_tarif);
+        }
+
+        $data = $query->orderBy('h.tgl_trs', 'desc')->get();
+
+        return response()->json($data);
+    }
+
+    // ===============================
+    // TAB 2 — REKAP PER OBAT + LABA
+    // ===============================
+    public function rekap(Request $request)
+    {
+        if (!$request->ajax()) {
+            abort(403);
+        }
+
+        $query = DB::table('tp_detail_item as d')
+            ->join('tp_hdr as h', 'd.kd_trs', '=', 'h.kd_trs')
+            ->leftJoin('mstr_obat as o', 'd.kd_obat', '=', 'o.fm_kd_obat')
+            ->select([
+                'd.kd_obat',
+                'd.nm_obat',
+                DB::raw('SUM(d.qty) as total_qty'),
+                DB::raw('SUM(d.qty * d.hrg_obat) as omzet'),
+                DB::raw('SUM(d.qty * COALESCE(o.fm_hrg_beli_detail,0)) as total_hpp'),
+                DB::raw('SUM(COALESCE(d.diskon,0)) as total_diskon'),
+                DB::raw('
+                (
+                    SUM(d.qty * d.hrg_obat)
+                    - SUM(d.qty * COALESCE(o.fm_hrg_beli_detail,0))
+                    - SUM(COALESCE(d.diskon,0))
+                ) as laba_obat
+            '),
+            ])
+            ->whereBetween('h.tgl_trs', [$request->date1, $request->date2])
+            ->whereNull('h.kd_reg');
+
+        // 🔹 FILTER USER
+        if (!empty($request->user)) {
+            $query->where('d.user', $request->user);
+        }
+
+        // 🔹 FILTER TIPE TARIF
+        if (!empty($request->tipe_tarif)) {
+            $query->where('h.tipe_tarif', $request->tipe_tarif);
+        }
+
+        $data = $query->groupBy('d.kd_obat', 'd.nm_obat')->orderByDesc('laba_obat')->get();
+
+        $data->transform(function ($row) {
+            $row->margin_persen = $row->omzet > 0 ? round(($row->laba_obat / $row->omzet) * 100, 2) : 0;
+            return $row;
+        });
+
+        return response()->json($data);
     }
 }
