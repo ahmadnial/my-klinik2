@@ -272,7 +272,7 @@
                                 </a>
                             </li>
 
-                              <li class="nav-item">
+                            <li class="nav-item">
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon fa fa-light fa-heartbeat"></i>
                                     <p>
@@ -287,7 +287,7 @@
                                             <p>Pemeriksaan Lab</p>
                                         </a>
                                     </li>
-                                    
+
                                 </ul>
                             </li>
                             {{-- @endif --}}
@@ -636,36 +636,36 @@
                                         </li>
                                     </ul>
                                 </li>
-                                  <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    {{-- <i class="nav-icon fas fa-bed"></i> --}}
-                                    <i class="nav-icon fa fa-light fa-heartbeat"></i>
-                                    <p>
-                                        Laboratorium
-                                        <i class="right fas fa-angle-left"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="{{ url('/satuan-pemeriksaan-lab') }}" class="nav-link">
-                                            <i class="fas fa-gear nav-icon"></i>
-                                            <p>Satuan Pemeriksaan</p>
-                                        </a>
-                                    </li>
-                                     <li class="nav-item">
-                                        <a href="{{ url('/jenis-pemeriksaan-lab') }}" class="nav-link">
-                                            <i class="fas fa-gear nav-icon"></i>
-                                            <p>Jenis Pemeriksaan</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{ url('/tarif-lab') }}" class="nav-link">
-                                            <i class="fas fa-gear nav-icon"></i>
-                                            <p>Tarif Lab</p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        {{-- <i class="nav-icon fas fa-bed"></i> --}}
+                                        <i class="nav-icon fa fa-light fa-heartbeat"></i>
+                                        <p>
+                                            Laboratorium
+                                            <i class="right fas fa-angle-left"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a href="{{ url('/satuan-pemeriksaan-lab') }}" class="nav-link">
+                                                <i class="fas fa-gear nav-icon"></i>
+                                                <p>Satuan Pemeriksaan</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{{ url('/jenis-pemeriksaan-lab') }}" class="nav-link">
+                                                <i class="fas fa-gear nav-icon"></i>
+                                                <p>Jenis Pemeriksaan</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{{ url('/tarif-lab') }}" class="nav-link">
+                                                <i class="fas fa-gear nav-icon"></i>
+                                                <p>Tarif Lab</p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
 
                                 <li class="nav-header">TOOLS</li>
                                 <li class="nav-item">
@@ -897,34 +897,34 @@
                 return this.href == url;
             }).parentsUntil(".nav-sidebar > .nav-treeview").addClass('menu-open').prev('a').addClass('active');
 
-            $(function() {
-                $("#example1").DataTable({
-                    "responsive": true,
-                    "paging": true,
-                    "searching": true,
-                    "lengthChange": true,
-                    "autoWidth": false,
-                    "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-                }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-                $('#penjualan').DataTable({
-                    "responsive": true,
-                    "paging": true,
-                    "searching": true,
-                    "lengthChange": false,
-                    "autoWidth": false,
-                    "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-                }).buttons().container().appendTo('#penjualan_wrapper .col-md-6:eq(0)');
-                $('#exm2').DataTable({
-                    // "keys": true,
-                    "paging": true,
-                    "lengthChange": false,
-                    "searching": true,
-                    "ordering": true,
-                    "info": true,
-                    "autoWidth": false,
-                    "responsive": false,
-                });
-            });
+            // $(function() {
+            //     $("#example1").DataTable({
+            //         "responsive": true,
+            //         "paging": true,
+            //         "searching": true,
+            //         "lengthChange": true,
+            //         "autoWidth": false,
+            //         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            //     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            //     $('#penjualan').DataTable({
+            //         "responsive": true,
+            //         "paging": true,
+            //         "searching": true,
+            //         "lengthChange": false,
+            //         "autoWidth": false,
+            //         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            //     }).buttons().container().appendTo('#penjualan_wrapper .col-md-6:eq(0)');
+            //     $('#exm2').DataTable({
+            //         // "keys": true,
+            //         "paging": true,
+            //         "lengthChange": false,
+            //         "searching": true,
+            //         "ordering": true,
+            //         "info": true,
+            //         "autoWidth": false,
+            //         "responsive": false,
+            //     });
+            // });
 
             // $('#penjualanX').DataTable({
             //     dom: 'Bfrtip',
@@ -1709,6 +1709,40 @@
         <script src="{{ asset('src/plugins/toastr/toastr.min.js') }}"></script>
         <script src="{{ asset('src/plugins/Assesment/signature_pad.min.js') }}"></script>
         <script src="{{ asset('src/plugins/Assesment/pencoretan.v3.min.js') }}"></script>
+        <script>
+            // GLOBAL DEFAULT DATATABLE CONFIG
+            $.extend(true, $.fn.dataTable.defaults, {
+                responsive: true,
+                processing: true,
+                autoWidth: false,
+                dom: 'lBfrtip',
+                buttons: [{
+                        extend: 'copy',
+                        text: 'Copy'
+                    },
+                    {
+                        extend: 'excel',
+                        text: 'Excel'
+                    },
+                    {
+                        extend: 'pdf',
+                        text: 'PDF'
+                    },
+                    {
+                        extend: 'print',
+                        text: 'Print'
+                    },
+                    {
+                        extend: 'colvis',
+                        text: 'Columns'
+                    }
+                ],
+                language: {
+                    processing: "Loading..."
+                }
+            });
+        </script>
+
         @stack('scripts')
         @if (Session::has('message'))
             <script>
@@ -1756,34 +1790,7 @@
                 return this.href == url;
             }).parentsUntil(".nav-sidebar > .nav-treeview").addClass('menu-open').prev('a').addClass('active');
 
-            $(function() {
-                $("#example1").DataTable({
-                    "responsive": true,
-                    "paging": true,
-                    "searching": true,
-                    "lengthChange": true,
-                    "autoWidth": false,
-                    "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-                }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-                $('#penjualan').DataTable({
-                    "responsive": true,
-                    "paging": true,
-                    "searching": true,
-                    "lengthChange": false,
-                    "autoWidth": false,
-                    "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-                }).buttons().container().appendTo('#penjualan_wrapper .col-md-6:eq(0)');
-                $('#exm2').DataTable({
-                    // "keys": true,
-                    "paging": true,
-                    "lengthChange": false,
-                    "searching": true,
-                    "ordering": true,
-                    "info": true,
-                    "autoWidth": false,
-                    "responsive": false,
-                });
-            });
+
 
             // $('#penjualanX').DataTable({
             //     dom: 'Bfrtip',

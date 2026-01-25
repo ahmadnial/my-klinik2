@@ -557,7 +557,7 @@
 
     @push('scripts')
         <script>
-            getMonthSale()
+            // getMonthSale()
 
             $('#tp_kd_order').select2({
                 placeholder: 'Search E-Resep',
@@ -580,27 +580,22 @@
                 $('#obatSearchShow').modal('show');
             }
 
-            function getMonthSale() {
+            let tablePenjualan;
 
-                const dataBulan = $('#monthSales').val();
+            $(document).ready(function() {
 
-                if ($.fn.DataTable.isDataTable('#example1')) {
-                    $('#example1').DataTable().clear().destroy();
-                }
-
-                $('#example1').DataTable({
+                tablePenjualan = $('#example1').DataTable({
                     processing: true,
                     serverSide: true,
                     responsive: true,
-                    destroy: true,
                     order: [
                         [0, "desc"]
                     ],
                     ajax: {
                         url: "{{ url('getMonthSales') }}",
                         type: 'GET',
-                        data: {
-                            dataBulan: dataBulan
+                        data: function(d) {
+                            d.dataBulan = $('#monthSales').val();
                         }
                     },
                     columns: [{
@@ -627,7 +622,7 @@
                         {
                             data: 'no_mr',
                             name: 'no_mr',
-                            defaultContent: '-',
+                            defaultContent: '-'
                         },
                         {
                             data: 'nm_pasien',
@@ -656,8 +651,8 @@
                         }
                     ]
                 });
-            }
 
+            });
 
 
             function acMapResep() {
