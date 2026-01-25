@@ -46,7 +46,6 @@ class HomeController extends Controller
         if (!$exists) {
             $mr = $num_mr;
         } else {
-            // ❗ ambil 1 data terakhir saja (AMAN MEMORY)
             $lastMr = dataSosialCreate::orderBy('fs_mr', 'desc')->value('fs_mr');
 
             $mr = str_pad($lastMr + 1, 7, '0', STR_PAD_LEFT);

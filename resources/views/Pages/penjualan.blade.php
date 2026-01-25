@@ -581,92 +581,84 @@
             }
 
             function getMonthSale() {
+
                 const dataBulan = $('#monthSales').val();
-                $.ajax({
-                    success: function() {
-                        $('#example1').DataTable({
-                            processing: true,
-                            serverSide: true,
-                            dom: 'lBfrtip',
-                            responsive: true,
-                            "bDestroy": true,
-                            "order": [
-                                [1, "dsc"]
-                            ],
-                            ajax: {
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                },
-                                url: "{{ url('getMonthSales') }}",
-                                type: 'GET',
-                                data: {
-                                    dataBulan: dataBulan
+
+                if ($.fn.DataTable.isDataTable('#example1')) {
+                    $('#example1').DataTable().clear().destroy();
+                }
+
+                $('#example1').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    responsive: true,
+                    destroy: true,
+                    order: [
+                        [0, "desc"]
+                    ],
+                    ajax: {
+                        url: "{{ url('getMonthSales') }}",
+                        type: 'GET',
+                        data: {
+                            dataBulan: dataBulan
+                        }
+                    },
+                    columns: [{
+                            data: 'tgl_trs',
+                            name: 'tgl_trs',
+                            render: function(data) {
+                                return data ? moment(data).format('D MMMM YYYY') : '-';
+                            }
+                        },
+                        {
+                            data: 'kd_trs',
+                            name: 'kd_trs'
+                        },
+                        {
+                            data: 'layanan_order',
+                            name: 'layanan_order',
+                            render: function(data) {
+                                if (data === 'Poliklinik Umum' || data === 'Poliklinik Bedah') {
+                                    return '<span class="badge badge-success">Resep Klinik</span>';
                                 }
-                            },
-                            columns: [{
-                                    data: 'tgl_trs',
-                                    name: 'tgl_trs',
-                                    render: function(data, type, row) {
-                                        return moment(data).format('D MMMM YYYY');
-                                    }
-                                },
-                                {
-                                    data: 'kd_trs',
-                                    name: 'kd_trs'
-                                },
-                                {
-                                    data: 'layanan_order',
-                                    name: 'layanan_order',
-                                    render: function(data, type, row) {
-                                        if (data == 'Poliklinik Umum' || data ==
-                                            'Poliklinik Bedah') {
-                                            return '<span class="badge badge-success">Resep Klinik</span>';
-                                        } else {
-                                            return '<span class="badge badge-danger">Apotek</span>';
-                                        }
-                                    }
-                                },
-                                {
-                                    data: 'no_mr',
-                                    name: 'no_mr'
-                                },
-                                {
-                                    data: 'nm_pasien',
-                                    name: 'nm_pasien'
-                                },
-                                {
-                                    data: 'tipe_tarif',
-                                    name: 'tipe_tarif',
-                                    render: function(data, type, row) {
-                                        if (data == 'Resep') {
-                                            return '<span class=""><i class="fas fa-prescription"></i> <b>Resep</b></span>';
-                                        } else if (data == 'Reguler') {
-                                            return '<span class=""><i class="fas fa-pills"></i>&nbsp;<b>Reguler</b></span>';
-                                        } else {
-                                            return '<span class=""><i class="far fa-hospital"></i>&nbsp;<b>Nakes</b></span>';
-                                        }
-                                    }
-                                },
-                                {
-                                    data: 'total_penjualan',
-                                    name: 'total_penjualan',
-                                    render: $.fn.dataTable.render.number(',', '.', 2, 'Rp ')
-                                },
-                                {
-                                    data: 'action',
-                                    name: 'action'
-                                },
-                            ],
-                            "responsive": true,
-                            "paging": true,
-                            "searching": true,
-                            "lengthChange": true,
-                            "autoWidth": true,
-                            "buttons": ["copy", "excel", "pdf", "print", "colvis"]
-                        }).buttons().container().appendTo('#penjualan_wrapper .col-md-6:eq(0)');
-                    }
-                })
-            };
+                                return '<span class="badge badge-danger">Apotek</span>';
+                            }
+                        },
+                        {
+                            data: 'no_mr',
+                            name: 'no_mr',
+                            defaultContent: '-',
+                        },
+                        {
+                            data: 'nm_pasien',
+                            name: 'nm_pasien',
+                            defaultContent: '-'
+                        },
+                        {
+                            data: 'tipe_tarif',
+                            name: 'tipe_tarif',
+                            render: function(data) {
+                                if (data === 'Resep') return '<b>Resep</b>';
+                                if (data === 'Reguler') return '<b>Reguler</b>';
+                                return '<b>Nakes</b>';
+                            }
+                        },
+                        {
+                            data: 'total_penjualan',
+                            name: 'total_penjualan',
+                            render: $.fn.dataTable.render.number(',', '.', 2, 'Rp ')
+                        },
+                        {
+                            data: 'action',
+                            name: 'action',
+                            orderable: false,
+                            searchable: false
+                        }
+                    ]
+                });
+            }
+
+
 
             function acMapResep() {
                 var kd_trs = $('#tp_kd_order').val();

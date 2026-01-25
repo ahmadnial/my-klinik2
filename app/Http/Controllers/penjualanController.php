@@ -27,21 +27,21 @@ class penjualanController extends Controller
     public function penjualan()
     {
         $num = str_pad(000001, 6, 0, STR_PAD_LEFT);
-        $Y = date("Y");
-        $M = date("m");
+        $Y = date('Y');
+        $M = date('m');
         $cekid = tp_hdr::count();
         if ($cekid == 0) {
-            $noRef =  'TP'  . '-' . substr($Y, -2) . $M . '-' . $num;
+            $noRef = 'TP' . '-' . substr($Y, -2) . $M . '-' . $num;
         } else {
             $continue = tp_hdr::all()->last();
             $de = substr($continue->kd_trs, -6);
-            $noRef = 'TP' . '-' . substr($Y, -2) . $M  . '-' . str_pad(($de + 1), 6, '0', STR_PAD_LEFT);
-        };
+            $noRef = 'TP' . '-' . substr($Y, -2) . $M . '-' . str_pad($de + 1, 6, '0', STR_PAD_LEFT);
+        }
 
-        $isListRegResep = trs_chart_resep::select("kd_trs", "chart_id", "kd_reg", "mr_pasien", "nm_pasien")->distinct()->where('isimplementasi', '=', '0')->get();
-        $dateNow = Carbon::now()->format("Y-m-d");
-        $monthNow = Carbon::now()->format("m");
-        $yearNow = Carbon::now()->format("Y");
+        $isListRegResep = trs_chart_resep::select('kd_trs', 'chart_id', 'kd_reg', 'mr_pasien', 'nm_pasien')->distinct()->where('isimplementasi', '=', '0')->get();
+        $dateNow = Carbon::now()->format('Y-m-d');
+        $monthNow = Carbon::now()->format('m');
+        $yearNow = Carbon::now()->format('Y');
         // $isListPenjualan = tp_hdr::whereyear('tgl_trs', '=', $yearNow)->whereMonth('tgl_trs', '=', $monthNow)->orderBy('created_at', 'desc')->get();
         return view('Pages.penjualan', [
             'noRef' => $noRef,
@@ -53,41 +53,70 @@ class penjualanController extends Controller
 
     public function getMonthSales(Request $request)
     {
-        // $today = Carbon::today()->toDateString();
         $selectMonth = $request->dataBulan;
-        // dd($selectMonth);
+
         if (!$selectMonth) {
-            $monthNow = Carbon::now()->format("m");
-            $yearNow = Carbon::now()->format("Y");
-            $isListPenjualan = tp_hdr::whereyear('tgl_trs', '=', $yearNow)->whereMonth('tgl_trs', '=', $monthNow)->latest('tgl_trs')->get();
+            $monthNow = Carbon::now()->format('m');
+            $yearNow = Carbon::now()->format('Y');
+
+            $query = tp_hdr::query()->whereYear('tgl_trs', $yearNow)->whereMonth('tgl_trs', $monthNow);
         } else {
-            $isListPenjualan = tp_hdr::where('tgl_trs', 'LIKE', '%' . $selectMonth . '%')->latest('created_at')->get();
+            $query = tp_hdr::query()->where('tgl_trs', 'LIKE', '%' . $selectMonth . '%');
         }
 
-        return DataTables::of($isListPenjualan)
+        return DataTables::of(
+            $query->select([
+                'kd_trs',
+                'tgl_trs',
+                'layanan_order',
+                'no_mr', 
+                'nm_pasien',
+                'tipe_tarif',
+                'total_penjualan',
+            ]),
+        )
             ->addColumn('action', function ($row) {
-                $today = Carbon::today()->toDateString();
-                if ($row->tgl_trs == $today) {
-                    $actionBtn = '
-                <button class="btn btn-xs btn-info" data-toggle="modal" data-target="#EditObat"
-                onclick="getDetailPen(this)" data-kd_trs="' . $row->kd_trs . '">&nbsp;&nbsp;<i class="fa fa-info">&nbsp;&nbsp;</i></button>
-                <button class="btn btn-xs btn-primary" data-toggle="modal" data-target=""
-                onclick="EditTrs(this);validasiTrs(this);" data-kd_trsu="' . $row->kd_trs . '"><i class="fa fa-edit"></i></button>
-                <button class="btn btn-xs btn-warning" data-toggle="modal" data-target="#EditObat"
-                onclick="cetakNota(this)" data-kd_trsc="' . $row->kd_trs . '" target="_blank"> <i class="fa fa-print"></i> </button>
-                 <button class="btn btn-xs btn-danger" data-toggle="modal" data-target=""
-                onclick="DeleteTrs(this);" data-kd_trsu="' . $row->kd_trs . '"><i class="fa fa-trash"></i></button>
-                ';
-                } else {
-                    $actionBtn = '
-                <button class="btn btn-xs btn-info" data-toggle="modal" data-target="#EditObat"
-                onclick="getDetailPen(this)" data-kd_trs="' . $row->kd_trs . '">&nbsp;&nbsp;<i class="fa fa-info">&nbsp;&nbsp;</i></button>
-                <button class="btn btn-xs btn-warning" data-toggle="modal" data-target="#EditObat"
-                onclick="cetakNota(this)" data-kd_trsc="' . $row->kd_trs . '" target="_blank"> <i class="fa fa-print"></i> </button>
+                // tombol yang selalu ada
+                $btn =
+                    '
+                <button class="btn btn-xs btn-info"
+                    onclick="getDetailPen(this)"
+                    data-kd_trs="' .
+                    $row->kd_trs .
+                    '">
+                    <i class="fa fa-info"></i>
+                </button>
+                <button class="btn btn-xs btn-warning"
+                    onclick="cetakNota(this)"
+                    data-kd_trsc="' .
+                    $row->kd_trs .
+                    '">
+                    <i class="fa fa-print"></i>
+                </button>
+            ';
+
+                // 🔐 HANYA ADMIN
+                if (auth()->check() && auth()->user()->role_id == 1) {
+                    $btn .=
+                        '
+                    <button class="btn btn-xs btn-primary"
+                        onclick="EditTrs(this)"
+                        data-kd_trsu="' .
+                        $row->kd_trs .
+                        '">
+                        <i class="fa fa-edit"></i>
+                    </button>
+                    <button class="btn btn-xs btn-danger"
+                        onclick="DeleteTrs(this)"
+                        data-kd_trsu="' .
+                        $row->kd_trs .
+                        '">
+                        <i class="fa fa-trash"></i>
+                    </button>
                 ';
                 }
 
-                return $actionBtn;
+                return $btn;
             })
             ->rawColumns(['action'])
             ->make(true);
@@ -96,16 +125,31 @@ class penjualanController extends Controller
     public function getListObatReguler()
     {
         if (request()->ajax()) {
-            $isObatReguler = DB::table('mstr_obat')
-                ->where('isActive', '=', '1')
-                ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
-                ->select('mstr_obat.*', 'tb_stock.*')
-                ->get();
+            $isObatReguler = DB::table('mstr_obat')->where('isActive', '=', '1')->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')->select('mstr_obat.*', 'tb_stock.*')->get();
             return DataTables::of($isObatReguler)
                 ->addColumn('action', function ($row) {
-                    $actionBtn = '<a href="javascript:void(0)" id="' . $row->fm_kd_obat . '" onClick="SelectItemObat(this)" data-kdmr="' . $row->fm_kd_obat . '"
-                    data-fm_kd_obat="' . $row->fm_kd_obat . '" data-fm_nm_obat="' . $row->fm_nm_obat . '" data-fm_satuan_jual="' . $row->fm_satuan_jual . '"
-                    data-fm_hrg_jual="' . $row->fm_hrg_jual_non_resep . '" data-qty="' . $row->qty . '" data-fm_hrg_beli_detail="' . $row->fm_hrg_beli_detail . '" data-fm_isi_satuan_pembelian="' . $row->fm_isi_satuan_pembelian . '"
+                    $actionBtn =
+                        '<a href="javascript:void(0)" id="' .
+                        $row->fm_kd_obat .
+                        '" onClick="SelectItemObat(this)" data-kdmr="' .
+                        $row->fm_kd_obat .
+                        '"
+                    data-fm_kd_obat="' .
+                        $row->fm_kd_obat .
+                        '" data-fm_nm_obat="' .
+                        $row->fm_nm_obat .
+                        '" data-fm_satuan_jual="' .
+                        $row->fm_satuan_jual .
+                        '"
+                    data-fm_hrg_jual="' .
+                        $row->fm_hrg_jual_non_resep .
+                        '" data-qty="' .
+                        $row->qty .
+                        '" data-fm_hrg_beli_detail="' .
+                        $row->fm_hrg_beli_detail .
+                        '" data-fm_isi_satuan_pembelian="' .
+                        $row->fm_isi_satuan_pembelian .
+                        '"
                     class="edit btn btn-xs btn-sm" style="background-color:#10F3A4; color:#ffffff;">Select</a>';
                     return $actionBtn;
                 })
@@ -118,16 +162,27 @@ class penjualanController extends Controller
     public function getListObatResep()
     {
         if (request()->ajax()) {
-            $isObatResep = DB::table('mstr_obat')
-                ->where('isActive', '=', '1')
-                ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
-                ->select('fm_kd_obat', 'fm_nm_obat', 'fm_hrg_jual_resep', 'fm_hrg_beli_detail', 'fm_satuan_jual', 'qty')
-                ->get();
+            $isObatResep = DB::table('mstr_obat')->where('isActive', '=', '1')->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')->select('fm_kd_obat', 'fm_nm_obat', 'fm_hrg_jual_resep', 'fm_hrg_beli_detail', 'fm_satuan_jual', 'qty')->get();
             return DataTables::of($isObatResep)
                 ->addColumn('action', function ($row) {
-                    $actionBtn = '<a href="javascript:void(0)" id="' . $row->fm_kd_obat . '" onClick="SelectItemObat(this)" data-kdmr="' . $row->fm_kd_obat . '"
-                    data-fm_kd_obat="' . $row->fm_kd_obat . '" data-fm_nm_obat="' . $row->fm_nm_obat . '" data-fm_satuan_jual="' . $row->fm_satuan_jual . '"
-                    data-fm_hrg_jual="' . $row->fm_hrg_jual_resep . '" data-fm_hrg_beli_detail="' . $row->fm_hrg_beli_detail . '"
+                    $actionBtn =
+                        '<a href="javascript:void(0)" id="' .
+                        $row->fm_kd_obat .
+                        '" onClick="SelectItemObat(this)" data-kdmr="' .
+                        $row->fm_kd_obat .
+                        '"
+                    data-fm_kd_obat="' .
+                        $row->fm_kd_obat .
+                        '" data-fm_nm_obat="' .
+                        $row->fm_nm_obat .
+                        '" data-fm_satuan_jual="' .
+                        $row->fm_satuan_jual .
+                        '"
+                    data-fm_hrg_jual="' .
+                        $row->fm_hrg_jual_resep .
+                        '" data-fm_hrg_beli_detail="' .
+                        $row->fm_hrg_beli_detail .
+                        '"
                     class="edit btn btn-xs btn-sm" style="background-color:#10F3A4; color:#ffffff;">Select</a>';
                     return $actionBtn;
                 })
@@ -141,16 +196,27 @@ class penjualanController extends Controller
     {
         // $isObatNakes = mstr_obat::select("fm_kd_obat", "fm_nm_obat", "fm_satuan_jual", "fm_hrg_beli", "fm_hrg_jual_nakes")->get();
         if (request()->ajax()) {
-            $isObatNakes = DB::table('mstr_obat')
-                ->where('isActive', '=', '1')
-                ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
-                ->select('fm_kd_obat', 'fm_nm_obat', 'fm_hrg_jual_nakes', 'fm_hrg_beli_detail', 'fm_satuan_jual', 'qty')
-                ->get();
+            $isObatNakes = DB::table('mstr_obat')->where('isActive', '=', '1')->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')->select('fm_kd_obat', 'fm_nm_obat', 'fm_hrg_jual_nakes', 'fm_hrg_beli_detail', 'fm_satuan_jual', 'qty')->get();
             return DataTables::of($isObatNakes)
                 ->addColumn('action', function ($row) {
-                    $actionBtn = '<a href="javascript:void(0)" id="' . $row->fm_kd_obat . '" onClick="SelectItemObat(this)" data-kdmr="' . $row->fm_kd_obat . '"
-                    data-fm_kd_obat="' . $row->fm_kd_obat . '" data-fm_nm_obat="' . $row->fm_nm_obat . '" data-fm_satuan_jual="' . $row->fm_satuan_jual . '"
-                    data-fm_hrg_jual="' . $row->fm_hrg_jual_nakes . '" data-fm_hrg_beli_detail="' . $row->fm_hrg_beli_detail . '"
+                    $actionBtn =
+                        '<a href="javascript:void(0)" id="' .
+                        $row->fm_kd_obat .
+                        '" onClick="SelectItemObat(this)" data-kdmr="' .
+                        $row->fm_kd_obat .
+                        '"
+                    data-fm_kd_obat="' .
+                        $row->fm_kd_obat .
+                        '" data-fm_nm_obat="' .
+                        $row->fm_nm_obat .
+                        '" data-fm_satuan_jual="' .
+                        $row->fm_satuan_jual .
+                        '"
+                    data-fm_hrg_jual="' .
+                        $row->fm_hrg_jual_nakes .
+                        '" data-fm_hrg_beli_detail="' .
+                        $row->fm_hrg_beli_detail .
+                        '"
                     class="edit btn btn-xs btn-sm" style="background-color:#10F3A4; color:#ffffff;">Select</a>';
                     return $actionBtn;
                 })
@@ -160,20 +226,34 @@ class penjualanController extends Controller
         }
     }
 
-
     public function getListObatRegulerEdit()
     {
         if (request()->ajax()) {
-            $isObatReguler = DB::table('mstr_obat')
-                ->where('isActive', '=', '1')
-                ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
-                ->select('mstr_obat.*', 'tb_stock.*')
-                ->get();
+            $isObatReguler = DB::table('mstr_obat')->where('isActive', '=', '1')->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')->select('mstr_obat.*', 'tb_stock.*')->get();
             return DataTables::of($isObatReguler)
                 ->addColumn('action', function ($row) {
-                    $actionBtn = '<a href="javascript:void(0)" id="' . $row->fm_kd_obat . '" onClick="SelectItemObatEdit(this)" data-kdmr="' . $row->fm_kd_obat . '"
-                    data-fm_kd_obat="' . $row->fm_kd_obat . '" data-fm_nm_obat="' . $row->fm_nm_obat . '" data-fm_satuan_jual="' . $row->fm_satuan_jual . '"
-                    data-fm_hrg_jual="' . $row->fm_hrg_jual_non_resep . '" data-qty="' . $row->qty . '" data-fm_hrg_beli_detail="' . $row->fm_hrg_beli_detail . '" data-fm_isi_satuan_pembelian="' . $row->fm_isi_satuan_pembelian . '"
+                    $actionBtn =
+                        '<a href="javascript:void(0)" id="' .
+                        $row->fm_kd_obat .
+                        '" onClick="SelectItemObatEdit(this)" data-kdmr="' .
+                        $row->fm_kd_obat .
+                        '"
+                    data-fm_kd_obat="' .
+                        $row->fm_kd_obat .
+                        '" data-fm_nm_obat="' .
+                        $row->fm_nm_obat .
+                        '" data-fm_satuan_jual="' .
+                        $row->fm_satuan_jual .
+                        '"
+                    data-fm_hrg_jual="' .
+                        $row->fm_hrg_jual_non_resep .
+                        '" data-qty="' .
+                        $row->qty .
+                        '" data-fm_hrg_beli_detail="' .
+                        $row->fm_hrg_beli_detail .
+                        '" data-fm_isi_satuan_pembelian="' .
+                        $row->fm_isi_satuan_pembelian .
+                        '"
                     class="edit btn btn-xs btn-sm" style="background-color:#10F3A4; color:#ffffff;">Select</a>';
                     return $actionBtn;
                 })
@@ -186,16 +266,25 @@ class penjualanController extends Controller
     public function getListObatResepEdit()
     {
         if (request()->ajax()) {
-            $isObatResep = DB::table('mstr_obat')
-                ->where('isActive', '=', '1')
-                ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
-                ->select('fm_kd_obat', 'fm_nm_obat', 'fm_hrg_jual_resep', 'fm_satuan_jual', 'qty')
-                ->get();
+            $isObatResep = DB::table('mstr_obat')->where('isActive', '=', '1')->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')->select('fm_kd_obat', 'fm_nm_obat', 'fm_hrg_jual_resep', 'fm_satuan_jual', 'qty')->get();
             return DataTables::of($isObatResep)
                 ->addColumn('action', function ($row) {
-                    $actionBtn = '<a href="javascript:void(0)" id="' . $row->fm_kd_obat . '" onClick="SelectItemObatEdit(this)" data-kdmr="' . $row->fm_kd_obat . '"
-                    data-fm_kd_obat="' . $row->fm_kd_obat . '" data-fm_nm_obat="' . $row->fm_nm_obat . '" data-fm_satuan_jual="' . $row->fm_satuan_jual . '"
-                    data-fm_hrg_jual="' . $row->fm_hrg_jual_resep . '"
+                    $actionBtn =
+                        '<a href="javascript:void(0)" id="' .
+                        $row->fm_kd_obat .
+                        '" onClick="SelectItemObatEdit(this)" data-kdmr="' .
+                        $row->fm_kd_obat .
+                        '"
+                    data-fm_kd_obat="' .
+                        $row->fm_kd_obat .
+                        '" data-fm_nm_obat="' .
+                        $row->fm_nm_obat .
+                        '" data-fm_satuan_jual="' .
+                        $row->fm_satuan_jual .
+                        '"
+                    data-fm_hrg_jual="' .
+                        $row->fm_hrg_jual_resep .
+                        '"
                     class="edit btn btn-xs btn-sm" style="background-color:#10F3A4; color:#ffffff;">Select</a>';
                     return $actionBtn;
                 })
@@ -209,16 +298,25 @@ class penjualanController extends Controller
     {
         // $isObatNakes = mstr_obat::select("fm_kd_obat", "fm_nm_obat", "fm_satuan_jual", "fm_hrg_beli", "fm_hrg_jual_nakes")->get();
         if (request()->ajax()) {
-            $isObatNakes = DB::table('mstr_obat')
-                ->where('isActive', '=', '1')
-                ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
-                ->select('fm_kd_obat', 'fm_nm_obat', 'fm_hrg_jual_nakes', 'fm_satuan_jual', 'qty')
-                ->get();
+            $isObatNakes = DB::table('mstr_obat')->where('isActive', '=', '1')->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')->select('fm_kd_obat', 'fm_nm_obat', 'fm_hrg_jual_nakes', 'fm_satuan_jual', 'qty')->get();
             return DataTables::of($isObatNakes)
                 ->addColumn('action', function ($row) {
-                    $actionBtn = '<a href="javascript:void(0)" id="' . $row->fm_kd_obat . '" onClick="SelectItemObatEdit(this)" data-kdmr="' . $row->fm_kd_obat . '"
-                    data-fm_kd_obat="' . $row->fm_kd_obat . '" data-fm_nm_obat="' . $row->fm_nm_obat . '" data-fm_satuan_jual="' . $row->fm_satuan_jual . '"
-                    data-fm_hrg_jual="' . $row->fm_hrg_jual_nakes . '"
+                    $actionBtn =
+                        '<a href="javascript:void(0)" id="' .
+                        $row->fm_kd_obat .
+                        '" onClick="SelectItemObatEdit(this)" data-kdmr="' .
+                        $row->fm_kd_obat .
+                        '"
+                    data-fm_kd_obat="' .
+                        $row->fm_kd_obat .
+                        '" data-fm_nm_obat="' .
+                        $row->fm_nm_obat .
+                        '" data-fm_satuan_jual="' .
+                        $row->fm_satuan_jual .
+                        '"
+                    data-fm_hrg_jual="' .
+                        $row->fm_hrg_jual_nakes .
+                        '"
                     class="edit btn btn-xs btn-sm" style="background-color:#10F3A4; color:#ffffff;">Select</a>';
                     return $actionBtn;
                 })
@@ -235,8 +333,7 @@ class penjualanController extends Controller
             ->leftJoin('trs_chart', 'trs_chart_resep.kd_trs', 'trs_chart.kd_trs')
             ->select('trs_chart_resep.*', 'tc_mr.*', 'trs_chart.nm_dokter_jm')
             ->distinct()
-            ->where('trs_chart_resep.kd_trs', $kd_trs->kd_trs)
-            // ->where('isimplementasi', '=', '0')
+            ->where('trs_chart_resep.kd_trs', $kd_trs->kd_trs) // ->where('isimplementasi', '=', '0')
             ->get();
         return response()->json($isListOrderResep);
     }
@@ -300,14 +397,14 @@ class penjualanController extends Controller
         //             $cekQtyAfter = tb_stock_detail::whereIn('kd_obat', [$dataObat])->where('qty' ,'<=' , '0')->orderBy('tgl_ed', 'asc')->value('qty');
         //             // $tpPenjualanQtyInt = (int)$tpPenjualanQty;
         //             // var_dump($tpPenjualanQty);
-                    
+
         //             $dataQty =  $request->qty[$keys];
         //             $toInt = (int)$dataQty;
         //             // die();
         //             if (array($toInt) <= array($tpPenjualanQtySum)) {
         //                 tb_stock_detail::whereIn('kd_obat', [$tpPenjualanKd])->where('tgl_ed', [$tpPenjualanTglEd])->decrement("qty", $toInt);
         //                 // }else if($cekQtyAfter <= 0){
-        //                     // tb_stock_detail::whereIn('kd_obat', [$tpPenjualanKd])->where('tgl_ed', [$tpPenjualanTglEd])->decrement("qty", $toInt);  
+        //                     // tb_stock_detail::whereIn('kd_obat', [$tpPenjualanKd])->where('tgl_ed', [$tpPenjualanTglEd])->decrement("qty", $toInt);
         //                 }
         //             }
         //         }
@@ -318,37 +415,37 @@ class penjualanController extends Controller
         // die();
 
         $newData = [
-            'kd_trs'        => $request->tp_kd_trs,
+            'kd_trs' => $request->tp_kd_trs,
             'kd_order_resep' => $request->tp_kd_order,
             'layanan_order' => $request->tp_layanan,
-            'dokter'        => $request->tp_dokter,
+            'dokter' => $request->tp_dokter,
             // 'sip_dokter' => $request->,
             'tgl_trs' => $request->tgl_trs,
-            'lokasi_stock'  => $request->tp_lokasi_stock,
-            'kd_reg'        => $request->tp_kd_reg,
-            'no_mr'         => $request->tp_no_mr,
-            'nm_pasien'  => $request->tp_nama,
-            'alamat'        => $request->tp_alamat,
+            'lokasi_stock' => $request->tp_lokasi_stock,
+            'kd_reg' => $request->tp_kd_reg,
+            'no_mr' => $request->tp_no_mr,
+            'nm_pasien' => $request->tp_nama,
+            'alamat' => $request->tp_alamat,
             'jenis_kelamin' => $request->tp_jenis_kelamin,
-            'tgl_lahir'     => $request->tp_tgl_lahir,
-            'tipe_tarif'    => $request->tp_tipe_tarif,
+            'tgl_lahir' => $request->tp_tgl_lahir,
+            'tipe_tarif' => $request->tp_tipe_tarif,
             'total_penjualan' => $request->total_penjualan,
-            'resepDari'    => $request->resep_dari,
-            'noResep'    => $request->no_resep,
+            'resepDari' => $request->resep_dari,
+            'noResep' => $request->no_resep,
         ];
         tp_hdr::create($newData);
 
         foreach ($request->kd_obat as $key => $xf) {
             $tpdetail = [
-                'kd_trs'    => $request->tp_kd_trs,
-                'kd_reg'    => $request->tp_kd_reg,
-                'kd_obat'   => $request->kd_obat[$key],
-                'nm_obat'   => $request->nm_obat[$key],
+                'kd_trs' => $request->tp_kd_trs,
+                'kd_reg' => $request->tp_kd_reg,
+                'kd_obat' => $request->kd_obat[$key],
+                'nm_obat' => $request->nm_obat[$key],
                 // 'dosis'     => $request->kd_obat[$key],
-                'hrg_obat'  => $request->hrg_obat[$key],
-                'qty'       => $request->qty[$key],
-                'diskon'    => $request->diskon[$key],
-                'satuan'    => $request->satuan[$key],
+                'hrg_obat' => $request->hrg_obat[$key],
+                'qty' => $request->qty[$key],
+                'diskon' => $request->diskon[$key],
+                'satuan' => $request->satuan[$key],
                 // 'tax'       => $request->tax[$key],
                 'sub_total' => $request->sub_total[$key],
                 // // 'etiket',
@@ -358,17 +455,19 @@ class penjualanController extends Controller
                 'user' => Auth::user()->name,
                 'tuslah' => $request->tuslah[$key],
                 'embalase' => $request->embalase[$key],
-                'tipeTarif'    => $request->tp_tipe_tarif,
-                'resepDari'    => $request->resep_dari,
-                'noResep'    => $request->no_resep,
+                'tipeTarif' => $request->tp_tipe_tarif,
+                'resepDari' => $request->resep_dari,
+                'noResep' => $request->no_resep,
             ];
             tp_detail_item::create($tpdetail);
         }
 
         foreach ($request->kd_obat as $keyx => $val) {
-            $currentStock = DB::table('tb_stock')->whereIn('kd_obat', [$request->kd_obat[$keyx]])->value('qty');
+            $currentStock = DB::table('tb_stock')
+                ->whereIn('kd_obat', [$request->kd_obat[$keyx]])
+                ->value('qty');
             // $currentStockF = preg_replace("/[^0-9]/", "", $currentStock);
-            $Y = (int)$request->qty[$keyx];
+            $Y = (int) $request->qty[$keyx];
             $qtyAkhir = $currentStock - $Y;
             $detailKartuStock = [
                 'tanggal_trs' => $request->tgl_trs,
@@ -381,7 +480,7 @@ class penjualanController extends Controller
                 'qty_awal' => $currentStock,
                 'qty_masuk' => '0',
                 'qty_keluar' => $request->qty[$keyx],
-                'qty_akhir'  => $qtyAkhir,
+                'qty_akhir' => $qtyAkhir,
                 'hpp_satuan' => $request->hrgHPP[$keyx],
             ];
             // print_r($currentStock);
@@ -390,22 +489,19 @@ class penjualanController extends Controller
         // die();
 
         foreach ($request->kd_obat as $keys => $val) {
-            $datax =  $request->kd_obat[$keys];
-            $dataQty =  $request->qty[$keys];
+            $datax = $request->kd_obat[$keys];
+            $dataQty = $request->qty[$keys];
             // $dataIsi =  $request->do_isi_pembelian[$keys];
             // $X = (int)$dataQty * (int)$dataIsi;
-            $toInt = (int)$dataQty;
+            $toInt = (int) $dataQty;
 
-            tb_stock::where('kd_obat', [$datax])->decrement("qty", $toInt);
+            tb_stock::where('kd_obat', [$datax])->decrement('qty', $toInt);
         }
-
-
 
         // trs_chart_resep::where('kd_trs', $request->tp_kd_trs)->update(['isImplementasi' => "1"]);
         DB::table('trs_chart_resep')
             ->where('kd_reg', $request->tp_kd_reg)
-            ->update(['isImplementasi' => "1"]);
-
+            ->update(['isImplementasi' => '1']);
 
         if ($request->tp_no_mr != '') {
             $newDataLabel = [
@@ -422,7 +518,7 @@ class penjualanController extends Controller
             $ketHTML = [];
             foreach ($request->kd_obat as $label => $val) {
                 $ketHTML[] = htmlentities('<tr><td>' . $request->nm_obat[$label] . '</td><td>' . $request->qty[$label] . '</td><td>' . $request->satuan[$label] . '</td><td>' . $request->cara_pakai[$label] . '</td></tr>');
-            };
+            }
             $newDataLabel['ketHTML'] = json_encode($ketHTML, JSON_UNESCAPED_SLASHES);
             // $x = str_replace('","', '', $newDataLabel);
             // dd($x);
@@ -433,7 +529,7 @@ class penjualanController extends Controller
 
         $sessionFlash = [
             'message' => 'Saved!',
-            'alert-type' => 'success'
+            'alert-type' => 'success',
         ];
 
         return Redirect::to('/penjualan')->with($sessionFlash);
@@ -442,12 +538,11 @@ class penjualanController extends Controller
 
         $sessionFlashErr = [
             'message' => 'Error!',
-            'alert-type' => 'error'
+            'alert-type' => 'error',
         ];
         return Redirect::to('/penjualan')->with($sessionFlashErr);
         // }
     }
-
 
     public function updateTrsPenjualan(Request $request)
     {
@@ -462,7 +557,6 @@ class penjualanController extends Controller
         //     'hrg_obate' => 'required',
         //     'qty' => 'required',
         // ]);
-
 
         // $newData = [
         //     'kd_trs'        => $request->tp_kd_trs,
@@ -523,14 +617,19 @@ class penjualanController extends Controller
         DB::beginTransaction();
         // try {
         foreach ($request->kd_obat as $keys => $val) {
-            $updateStock = DB::table('tp_detail_item')->whereIn('kd_obat', [$request->kd_obat[$keys]])->where('kd_trs', $request->tp_kd_trse)->value('qty');
-            $currenttStock = DB::table('tb_stock')->whereIn('kd_obat', [$request->kd_obat[$keys]])->value('qty');
+            $updateStock = DB::table('tp_detail_item')
+                ->whereIn('kd_obat', [$request->kd_obat[$keys]])
+                ->where('kd_trs', $request->tp_kd_trse)
+                ->value('qty');
+            $currenttStock = DB::table('tb_stock')
+                ->whereIn('kd_obat', [$request->kd_obat[$keys]])
+                ->value('qty');
             // $calculate = $updateStockF + $currenttStock;
-            $datax =  $request->kd_obat[$keys];
-            $dataQty =  $updateStock;
-            $toInt = (int)$dataQty;
+            $datax = $request->kd_obat[$keys];
+            $dataQty = $updateStock;
+            $toInt = (int) $dataQty;
             // print_r($updateStock);
-            tb_stock::where('kd_obat', [$datax])->increment("qty", $toInt);
+            tb_stock::where('kd_obat', [$datax])->increment('qty', $toInt);
         }
         // die();
         // DB::table('tp_hdr')->where('kd_trs', $request->tp_kd_trse)->delete();
@@ -576,7 +675,7 @@ class penjualanController extends Controller
             ['kd_trs' => $request->tp_kd_trse],
             [
                 'total_penjualan' => $request->total_penjualanE,
-            ]
+            ],
         );
 
         // foreach ($request->kd_obat as $key => $xf) {
@@ -609,21 +708,21 @@ class penjualanController extends Controller
                 //     'kd_obat'   => $request->kd_obat[$key]
                 // ],
                 [
-                    'kd_trs'    => $request->tp_kd_trse,
-                    'kd_reg'    => $request->tp_kd_rege,
-                    'kd_obat'   => $request->kd_obat[$key],
-                    'nm_obat'   => $request->nm_obat[$key],
-                    'hrg_obat'  => $request->hrg_obat[$key],
-                    'qty'       => $request->qty[$key],
-                    'diskon'    => $request->diskon[$key],
-                    'satuan'    => $request->satuan[$key],
+                    'kd_trs' => $request->tp_kd_trse,
+                    'kd_reg' => $request->tp_kd_rege,
+                    'kd_obat' => $request->kd_obat[$key],
+                    'nm_obat' => $request->nm_obat[$key],
+                    'hrg_obat' => $request->hrg_obat[$key],
+                    'qty' => $request->qty[$key],
+                    'diskon' => $request->diskon[$key],
+                    'satuan' => $request->satuan[$key],
                     'sub_total' => $request->sub_total[$key],
                     'cara_pakai' => $request->cara_pakai[$key],
                     'tgl_trs' => $request->tgl_trse,
                     'user' => Auth::user()->name,
                     'tuslah' => $request->tuslah[$key],
                     'embalase' => $request->embalase[$key],
-                ]
+                ],
             );
             // DB::table('tp_detail_item')->where('kd_trs', $request->tp_kd_trse)->update([
             //     'kd_obat'   => $request->kd_obat[$key],
@@ -680,13 +779,13 @@ class penjualanController extends Controller
         // }
 
         foreach ($request->kd_obat as $keys => $val) {
-            $datax =  $request->kd_obat[$keys];
-            $dataQty =  $request->qty[$keys];
+            $datax = $request->kd_obat[$keys];
+            $dataQty = $request->qty[$keys];
             // $dataIsi =  $request->do_isi_pembelian[$keys];
             // $X = (int)$dataQty * (int)$dataIsi;
-            $toInt = (int)$dataQty;
+            $toInt = (int) $dataQty;
 
-            tb_stock::where('kd_obat', [$datax])->decrement("qty", $toInt);
+            tb_stock::where('kd_obat', [$datax])->decrement('qty', $toInt);
         }
 
         // // trs_chart_resep::where('kd_trs', $request->tp_kd_trs)->update(['isImplementasi' => "1"]);
@@ -698,7 +797,7 @@ class penjualanController extends Controller
 
         $sessionFlash = [
             'message' => 'Transaksi Berhasil Diperbaharui!',
-            'alert-type' => 'success'
+            'alert-type' => 'success',
         ];
 
         return Redirect::to('/penjualan')->with($sessionFlash);
@@ -707,7 +806,7 @@ class penjualanController extends Controller
 
         $sessionFlashErr = [
             'message' => 'Some Error Occured!',
-            'alert-type' => 'error'
+            'alert-type' => 'error',
         ];
         return Redirect::to('/penjualan')->with($sessionFlashErr);
         // }
@@ -716,7 +815,6 @@ class penjualanController extends Controller
 
     public function DelTrsPenjualan(Request $request)
     {
-
         DB::beginTransaction();
         // try {
         // foreach ($request->kd_obat as $keys => $val) {
@@ -733,25 +831,27 @@ class penjualanController extends Controller
         DB::table('tp_detail_item')->where('kd_trs', $request->nomorTrs)->delete();
         // DB::table('kartu_stock_detail')->where('kd_trs', $request->nomorTrs)->delete();
 
-        DB::table('kartu_stock_detail')->where('kd_trs', $request->tp_kd_trse)->update([
-            'supplier' => 'Transaksi Void Oleh' . Auth::user()->name,
-        ]);
+        DB::table('kartu_stock_detail')
+            ->where('kd_trs', $request->tp_kd_trse)
+            ->update([
+                'supplier' => 'Transaksi Void Oleh' . Auth::user()->name,
+            ]);
 
         foreach ($request->kd_obat as $keys => $val) {
-            $datax =  $request->kd_obat[$keys];
-            $dataQty =  $request->qty[$keys];
+            $datax = $request->kd_obat[$keys];
+            $dataQty = $request->qty[$keys];
             // $dataIsi =  $request->do_isi_pembelian[$keys];
             // $X = (int)$dataQty * (int)$dataIsi;
-            $toInt = (int)$dataQty;
+            $toInt = (int) $dataQty;
 
-            tb_stock::where('kd_obat', [$datax])->increment("qty", $toInt);
+            tb_stock::where('kd_obat', [$datax])->increment('qty', $toInt);
         }
 
         DB::commit();
 
         $sessionFlash = [
             'message' => 'Transaksi Berhasil Dihapus!',
-            'alert-type' => 'success'
+            'alert-type' => 'success',
         ];
 
         return Redirect::to('/penjualan')->with($sessionFlash);
@@ -760,17 +860,14 @@ class penjualanController extends Controller
 
         $sessionFlashErr = [
             'message' => 'Some Error Occured!',
-            'alert-type' => 'error'
+            'alert-type' => 'error',
         ];
         return Redirect::to('/penjualan')->with($sessionFlashErr);
     }
 
-
     public function getDetailPenjualan(Request $request)
     {
-        $isViewDetailPenjualan = tp_hdr::where('tp_hdr.kd_trs', '=', $request->kd_trs)
-            ->leftJoin('tp_detail_item', 'tp_hdr.kd_trs', 'tp_detail_item.kd_trs')
-            ->get();
+        $isViewDetailPenjualan = tp_hdr::where('tp_hdr.kd_trs', '=', $request->kd_trs)->leftJoin('tp_detail_item', 'tp_hdr.kd_trs', 'tp_detail_item.kd_trs')->get();
 
         return response()->json($isViewDetailPenjualan);
     }
@@ -782,8 +879,7 @@ class penjualanController extends Controller
             // ->leftJoin('tb_stock', 'mstr_obat.fm_kd_obat', 'tb_stock.kd_obat')
             ->get();
 
-        $isListPenjualanHdr = tp_hdr::where('tp_hdr.kd_trs', '=', $request->kd_trs)
-            ->get();
+        $isListPenjualanHdr = tp_hdr::where('tp_hdr.kd_trs', '=', $request->kd_trs)->get();
 
         // return Pdf::loadView('pages.nota', ['isListPenjualan' => $isListPenjualan, 'isListPenjualanHdr' => $isListPenjualanHdr])->stream();
         // return $pdf->stream();
