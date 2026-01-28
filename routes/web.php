@@ -285,6 +285,8 @@ Route::group(['middleware' => ['auth', 'checkrole:1,4']], function () {
     // Route::get('/redirect', [RedirectController::class, 'cek']);
     Route::get('/laporan-apotek/detail', [LapFarmasiController::class, 'detail'])->name('laporan.apotek.detail');
     Route::get('/laporan-apotek/rekap', [LapFarmasiController::class, 'rekap'])->name('laporan.apotek.rekap');
+    Route::get('laporan/apotek/forecast', [LapFarmasiController::class, 'forecast'])->name('laporan.apotek.forecast');
+
     // ==================================
     Route::get('laporan-penjualan-farmasi-rekap', [LapFarmasiController::class, 'lapPenjualanFarmasiRekap'])->name('laporan-penjualan-farmasi-rekap');
     Route::get('laporan-penjualan-farmasi-detail', [LapFarmasiController::class, 'lapPenjualanFarmasiDetail'])->name('laporan-penjualan-farmasi-detail');

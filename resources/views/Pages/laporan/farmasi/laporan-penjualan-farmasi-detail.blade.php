@@ -56,6 +56,11 @@
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#tabRekap">Rekap Per Obat</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="tab-forecast" data-toggle="tab" href="#tabForecast" role="tab">
+                        <i class="fa fa-chart-line"></i> Forecast
+                    </a>
+                </li>
             </ul>
 
             <div class="tab-content mt-3">
@@ -116,11 +121,47 @@
                     </table>
 
                 </div>
+
+                {{-- =================== TAB FORECAST =================== --}}
+                <div class="tab-pane fade" id="tabForecast" role="tabpanel">
+
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <small class="text-muted">
+                            Forecast kebutuhan obat bulan depan (berdasarkan tren 2 bulan terakhir)
+                        </small>
+
+                        <button id="btnForecast" class="btn btn-sm btn-outline-primary">
+                            <i class="fa fa-magic"></i> Generate Forecast
+                        </button>
+                    </div>
+
+                    <table id="tblForecast" class="table table-bordered table-striped w-100">
+                        <thead>
+                            <tr>
+                                <th>Kode Obat</th>
+                                <th>Nama Obat</th>
+                                <th>Stok Saat Ini</th>
+                                <th>Qty -2 Bulan</th>
+                                <th>Qty -1 Bulan</th>
+                                <th>Rata-rata</th>
+                                <th>Growth %</th>
+                                <th>Forecast Ideal</th>
+                                <th>Hari Habis</th>
+                                <th>Rekomendasi</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
             </div>
         </div>
     </div>
+    </div>
 @endsection
 @push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script>
         let tblDetail, tblRekap;
 
@@ -158,7 +199,7 @@
                         d.date1 = $('#date1').val();
                         d.date2 = $('#date2').val();
                         d.user = $('#filterUser').val();
-                        d.tipe_tarif = $('#filterTipeTarif').val(); 
+                        d.tipe_tarif = $('#filterTipeTarif').val();
                     },
                     dataSrc: json => json
                 },
@@ -316,6 +357,144 @@
                 tblRekap.ajax.reload(null, false);
             });
 
+        });
+
+        // FORECAST
+
+        let tblForecast = null;
+
+        $('#btnForecast').on('click', function() {
+
+            // 🔒 VALIDASI PERIODE
+            if (!$('#date1').val() || !$('#date2').val()) {
+                alert('Isi periode laporan terlebih dahulu');
+                return;
+            }
+
+            if (tblForecast === null) {
+
+                tblForecast = $('#tblForecast').DataTable({
+                    processing: true,
+                    serverSide: false,
+                    responsive: true,
+                    destroy: true,
+                    paging: true,
+                    searching: true,
+                    ordering: true,
+
+                    ajax: {
+                        url: "{{ route('laporan.apotek.forecast') }}",
+                        type: "GET",
+                        data: function(d) {
+                            d.date1 = $('#date1').val();
+                            d.date2 = $('#date2').val();
+                            d.user = $('#filterUser').val();
+                            d.tipe_tarif = $('#filterTipeTarif').val();
+                        },
+                        dataSrc: json => json
+                    },
+
+                    columns: [{
+                            data: 'kd_obat'
+                        },
+                        {
+                            data: 'nm_obat'
+                        },
+                        {
+                            data: 'stok',
+                            className: 'text-right',
+                            render: d => d > 0 ?
+                                `<b>${d}</b>` :
+                                `<span class="text-danger">0</span>`
+                        },
+                        {
+                            data: 'qty_bln_2',
+                            className: 'text-right'
+                        },
+                        {
+                            data: 'qty_bln_1',
+                            className: 'text-right'
+                        },
+                        {
+                            data: 'avg_qty',
+                            className: 'text-right font-weight-bold'
+                        },
+                        {
+                            data: 'growth',
+                            className: 'text-right',
+                            render: d => `${d} %`
+                        },
+                        {
+                            data: 'forecast_qty',
+                            className: 'text-right font-weight-bold'
+                        },
+                        {
+                            data: 'hari_habis',
+                            className: 'text-right',
+                            render: d => d === null ?
+                                '-' :
+                                `${d} hari`
+                        },
+                        {
+                            data: 'recommendation',
+                            render: function(d) {
+                                if (d === 'ORDER') {
+                                    return '<span class="badge badge-success">ORDER</span>';
+                                }
+                                if (d === 'STOP') {
+                                    return '<span class="badge badge-danger">STOP</span>';
+                                }
+                                return '<span class="badge badge-warning">HOLD</span>';
+                            }
+                        }
+                    ]
+                });
+
+            } else {
+                // 🔁 Reload saja, tidak destroy
+                tblForecast.ajax.reload(null, false);
+            }
+        });
+
+
+
+        let trendChart;
+
+        $('#tblForecast tbody').on('click', 'tr', function() {
+            let data = tblForecast.row(this).data();
+
+            $('#modalTrend').modal('show');
+
+            if (trendChart) {
+                trendChart.destroy();
+            }
+
+            trendChart = new Chart(document.getElementById('trendChart'), {
+                type: 'line',
+                data: {
+                    labels: ['2 Bulan Lalu', 'Bulan Lalu', 'Forecast'],
+                    datasets: [{
+                        label: data.nm_obat,
+                        data: [
+                            data.qty_bln_2,
+                            data.qty_bln_1,
+                            data.forecast_qty
+                        ],
+                        borderColor: '#28a745',
+                        backgroundColor: 'rgba(40,167,69,0.2)',
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: true
+                        }
+                    }
+                }
+            });
         });
     </script>
 @endpush

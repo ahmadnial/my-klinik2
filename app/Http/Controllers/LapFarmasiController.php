@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Carbon;
 
 use function PHPUnit\Framework\isNull;
 
@@ -599,4 +600,96 @@ class LapFarmasiController extends Controller
 
         return response()->json($data);
     }
+
+    public function forecast(Request $request)
+{
+    if (!$request->ajax()) {
+        abort(403);
+    }
+
+    // =========================
+    // RANGE BULAN
+    // =========================
+    $end  = \Carbon\Carbon::parse($request->date2)->endOfDay();
+    $m1s  = $end->copy()->subMonth()->startOfMonth();
+    $m1e  = $end->copy()->subMonth()->endOfMonth();
+    $m2s  = $end->copy()->subMonths(2)->startOfMonth();
+    $m2e  = $end->copy()->subMonths(2)->endOfMonth();
+
+    $data = DB::table('mstr_obat as o')
+        ->leftJoin('tb_stock as s', 's.kd_obat', '=', 'o.fm_kd_obat')
+        ->leftJoin('tp_detail_item as d', 'd.kd_obat', '=', 'o.fm_kd_obat')
+        ->leftJoin('tp_hdr as h', 'd.kd_trs', '=', 'h.kd_trs')
+        ->select([
+            'o.fm_kd_obat as kd_obat',
+            'o.fm_nm_obat as nm_obat',
+            DB::raw('COALESCE(s.qty,0) as stok'),
+
+            // BULAN -1
+            DB::raw("
+                SUM(
+                    CASE
+                        WHEN h.tgl_trs BETWEEN '{$m1s}' AND '{$m1e}'
+                        THEN d.qty ELSE 0
+                    END
+                ) as qty_bln_1
+            "),
+
+            // BULAN -2
+            DB::raw("
+                SUM(
+                    CASE
+                        WHEN h.tgl_trs BETWEEN '{$m2s}' AND '{$m2e}'
+                        THEN d.qty ELSE 0
+                    END
+                ) as qty_bln_2
+            "),
+        ])
+        ->whereNull('h.kd_reg')
+        ->groupBy('o.fm_kd_obat', 'o.fm_nm_obat', 's.qty')
+        ->get();
+
+    // =========================
+    // HITUNG FORECAST & REKOMENDASI
+    // =========================
+    $data->transform(function ($row) {
+
+        $avg = round(($row->qty_bln_1 + $row->qty_bln_2) / 2);
+
+        $growth = $row->qty_bln_2 > 0
+            ? round((($row->qty_bln_1 - $row->qty_bln_2) / $row->qty_bln_2) * 100, 2)
+            : 0;
+
+        $forecast = max($avg, 0);
+
+        // estimasi hari habis (30 hari)
+        $daily = $avg / 30;
+        $hariHabis = $daily > 0 ? round($row->stok / $daily) : null;
+
+        // rekomendasi
+        if ($row->stok <= 0 || $row->stok < $forecast * 0.5) {
+            $rekom = 'ORDER';
+        } elseif ($row->stok > $forecast * 1.5) {
+            $rekom = 'STOP';
+        } else {
+            $rekom = 'HOLD';
+        }
+
+        return [
+            'kd_obat'        => $row->kd_obat,
+            'nm_obat'        => $row->nm_obat,
+            'stok'           => (int)$row->stok,
+            'qty_bln_1'      => (int)$row->qty_bln_1,
+            'qty_bln_2'      => (int)$row->qty_bln_2,
+            'avg_qty'        => $avg,
+            'growth'         => $growth,
+            'forecast_qty'   => $forecast,
+            'hari_habis'     => $hariHabis,
+            'recommendation' => $rekom,
+        ];
+    });
+
+    return response()->json($data);
+}
+
 }

@@ -126,15 +126,12 @@
                             <div class="form-group col-sm-2">
                                 <label for="">Tarif Dasar</label>
                                 <input type="text" class="form-control" onkeyup="inputTarifDasar()" name="nm_tarif_dasar"
-                                    id="nm_tarif_dasar" value="" @if (auth()->user()->role_id != '1') readonly @endif required>
+                                    id="nm_tarif_dasar" value="" required>
 
-                                @if (session('role_id') == 1)
                                     <div class="invalid-feedback">
                                         Please..dont let me blank
                                     </div>
-                                @else
                                     {{-- <small class="text-muted">Hanya bisa diinput oleh Admin</small> --}}
-                                @endif
                             </div>
 
                             <input type="hidden" id="user" name="user" value="tes">
