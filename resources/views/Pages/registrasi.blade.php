@@ -38,7 +38,7 @@
                                 <th>Nama Pasien</th>
                                 <th>Layanan</th>
                                 <th>Dokter</th>
-                                <th>Umur</th>
+                                {{-- <th>Umur</th> --}}
                                 <th>Kunjungan</th>
                                 <th>Encounter</th>
                                 <th>Action</th>
@@ -53,11 +53,11 @@
                                     <td>{{ $item->fr_nama }}</td>
                                     <td>{{ $item->fr_layanan }}</td>
                                     <td>{{ $item->fr_dokter }}</td>
-                                    <td>
+                                    {{-- <td>
                                         @php
                                             echo hitung_umur($item->fr_tgl_lahir);
                                         @endphp
-                                    </td>
+                                    </td> --}}
                                     <td>
                                         @if ($item->fs_tgl_kunjungan_terakhir != '')
                                         <span class="badge badge-info">Pasien Lama</span>
